@@ -7,6 +7,7 @@ import {
 import {
   AbsolutePathDbInfoMixed,
   AbsolutePathInfoMixed,
+  AbsolutePathNodeInfoMixed,
 } from "./AbsolutePathInfo";
 import {
   PathNameDbInfoMixed,
@@ -29,7 +30,8 @@ export type SectionInfoMixed<SN extends SectionName = SectionName> =
   | GlobalSectionInfo<SN>
   | DbSectionInfoMixed<SN>
   | AbsolutePathInfoMixed<SN>
-  | AbsolutePathDbInfoMixed<SN>;
+  | AbsolutePathDbInfoMixed<SN>
+  | AbsolutePathNodeInfoMixed<SN>;
 
 export type IdInfoMixedMulti = DistributiveOmit<
   FeSectionInfoMixed | GlobalSectionInfo | DbSectionInfoMixed,

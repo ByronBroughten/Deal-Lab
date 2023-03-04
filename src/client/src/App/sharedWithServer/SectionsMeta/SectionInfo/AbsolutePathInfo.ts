@@ -1,11 +1,15 @@
 import { ChildName } from "../sectionChildrenDerived/ChildName";
 import { SectionName } from "../SectionName";
+import { AbsolutePathNode } from "../sectionPathContexts/sectionPathNames";
 import { NanoIdProp } from "./NanoIdInfo";
 import { SectionNameProp } from "./SectionNameProp";
 import { MixedInfoProps, VarbProp } from "./VarbInfoBase";
 
 type AbsolutePathProp = {
   path: ChildName[];
+};
+type AbsolutePathNodeProp = {
+  pathNodes: AbsolutePathNode[];
 };
 
 export interface AbsolutePathInfo<SN extends SectionName>
@@ -16,6 +20,11 @@ export interface AbsolutePathDbInfo<SN extends SectionName>
   extends AbsolutePathInfo<SN> {
   dbId: string;
 }
+
+export interface AbsolutePathNodeInfoMixed<SN extends SectionName = SectionName>
+  extends SectionNameProp<SN>,
+    AbsolutePathNodeProp,
+    MixedInfoProps<"absolutePathNode"> {}
 
 export interface AbsolutePathInfoMixed<SN extends SectionName = SectionName>
   extends AbsolutePathInfo<SN>,

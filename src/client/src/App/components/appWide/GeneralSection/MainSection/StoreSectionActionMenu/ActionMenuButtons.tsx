@@ -2,7 +2,6 @@ import React from "react";
 import { AiOutlineInfoCircle, AiOutlineSave } from "react-icons/ai";
 import { BiCopy, BiReset } from "react-icons/bi";
 import { MdOutlineSystemUpdateAlt } from "react-icons/md";
-import { useFeUser } from "../../../../../modules/sectionActorHooks/useFeUser";
 import { useMainSectionActor } from "../../../../../modules/sectionActorHooks/useMainSectionActor";
 import { SectionNameByType } from "../../../../../sharedWithServer/SectionsMeta/SectionNameByType";
 import { LabeledIconBtn } from "../../../LabeledIconBtn";
@@ -11,8 +10,6 @@ import {
   ActionBtnName,
   ActionMenuLists,
   alwaysActions,
-  guestIsNotSavedActions,
-  guestIsSavedActions,
   isNotSavedActions,
   isSavedActions,
 } from "./ActionMenuTypes";
@@ -25,10 +22,9 @@ type Props<SN extends SectionNameByType<"hasIndexStore">> = {
 };
 
 export function useDefaultActionLists(): ActionMenuLists {
-  const { isGuest } = useFeUser();
   return {
-    isNotSavedArr: isGuest ? guestIsNotSavedActions : isNotSavedActions,
-    isSavedArr: isGuest ? guestIsSavedActions : isSavedActions,
+    isNotSavedArr: isNotSavedActions,
+    isSavedArr: isSavedActions,
     alwaysArr: alwaysActions,
   };
 }
@@ -59,7 +55,6 @@ export function useActionMenuBtns<
           label={"Save"}
           icon={<AiOutlineSave size="25" />}
           onClick={() => mainSection.saveNew()}
-          disabled={isGuest}
         />
       );
     },

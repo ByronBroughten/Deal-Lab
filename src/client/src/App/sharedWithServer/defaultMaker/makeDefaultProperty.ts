@@ -2,16 +2,16 @@ import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack"
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
 
 export function makeDefaultProperty(): SectionPack<"property"> {
-  const property = PackBuilderSection.initAsOmniChild("property", {
-    dbVarbs: {
-      taxesOngoingSwitch: "yearly",
-      homeInsOngoingSwitch: "yearly",
-      expensesOngoingSwitch: "yearly",
-      targetRentOngoingSwitch: "monthly",
-      miscRevenueOngoingSwitch: "monthly",
-      revenueOngoingSwitch: "monthly",
-    },
+  const property = PackBuilderSection.initAsOmniChild("property");
+  property.updateValues({
+    taxesOngoingSwitch: "yearly",
+    homeInsOngoingSwitch: "yearly",
+    expensesOngoingSwitch: "yearly",
+    targetRentOngoingSwitch: "monthly",
+    miscRevenueOngoingSwitch: "monthly",
+    revenueOngoingSwitch: "monthly",
   });
+
   const repairValue = property.addAndGetChild("repairValue");
   repairValue.addChild("singleTimeList");
 

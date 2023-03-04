@@ -7,21 +7,20 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
-// Before Marina
-// - Make the outputs have displayNames
-// -
-
-// Maybe fix the triple "getUserData" bug
-// - You just need to use the reduce along with userDataStatus
-// - in the useEffect dependency array
-
-// Marina
-// - Pretty much ready
-// - Ask for general input
-
-// Emily
+// Waiting on Emily
 // - Logo
 // - Account page
+// Waiting on Marina
+// - General input and impression
+
+// - Style the compare options
+//  - Ok, so I'll make it in the deal page for now
+//   - In a nav container
+//   - A big plus button calls a modal to select
+//     a deal to compare
+//   - The compared deals are comprised of a title
+//    - and then their values
+//  - there is a max width
 
 // Before Wordpress
 // - Change the method of mgmt base pay and loan amount
@@ -41,9 +40,6 @@ AppRegistry.runApplication("App", {
 
 // - Add Brrrr
 
-// Wordpress
-// - Make a site that does the job
-
 // 2. Finalize the variables
 // - Put the downpayment stuff on financing
 // - PITI, too
@@ -56,6 +52,9 @@ AppRegistry.runApplication("App", {
 //  - Differentiate between purchase and refinance loans (right?)
 //  - Add Post-Purchase loan
 
+// Wordpress
+// - Make a site that does the job
+
 // 7. Make a full output page.
 
 // - Make an example mgmt and loan
@@ -66,6 +65,12 @@ AppRegistry.runApplication("App", {
 // DealCheck uses two boxes for that.
 // - Financed repair cost
 // - Financed property cost
+
+// Maybe fix the triple "getUserData" bug
+// - For this, you must create a UserDataSolver that carries
+//   out the operation
+// - You just need to use the reduce along with userDataStatus
+// - in the useEffect dependency array
 
 // Consult branding, logo, and pro wordpress people
 // https://bstro.com/

@@ -25,18 +25,37 @@ const activeFocals = {
   dealFocal: absolute.dealActive,
 } as const;
 
+const storedLists = {
+  userVarbListMain: absolute.userVarbListStored,
+  userVarbItemMain: absolute.userVarbItemStored,
+  ongoingListMain: absolute.ongoingListStored,
+  ongoingItemMain: absolute.ongoingItemStored,
+  singleTimeListMain: absolute.singleTimeListStored,
+  singleTimeItemMain: absolute.singleTimeItemStored,
+} as const;
+
 export const sectionPathContexts = {
   get default() {
     return this.activeDealPage;
   },
+  compareDealPage: sectionPathContext({
+    calculatedVarbsFocal: absolute.calculatedVarbsCompare,
+    dealFocal: absolute.dealCompare,
+    propertyFocal: absolute.propertyCompare,
+    unitFocal: absolute.unitCompare,
+    repairCostFocal: absolute.repairValueCompare,
+    utilityCostFocal: absolute.utilityCostValueCompare,
+    capExCostFocal: absolute.capExCostValueCompare,
+    maintenanceCostFocal: absolute.maintenanceCostValueCompare,
+    financingFocal: absolute.financingCompare,
+    loanFocal: absolute.loanCompare,
+    closingCostFocal: absolute.closingCostCompare,
+    mgmtFocal: absolute.mgmtCompare,
+    ...storedLists,
+  }),
   activeDealPage: sectionPathContext({
     ...activeFocals,
-    userVarbListMain: absolute.userVarbListStored,
-    userVarbItemMain: absolute.userVarbItemStored,
-    ongoingListMain: absolute.ongoingListStored,
-    ongoingItemMain: absolute.ongoingItemStored,
-    singleTimeListMain: absolute.singleTimeListStored,
-    singleTimeItemMain: absolute.singleTimeItemStored,
+    ...storedLists,
   }),
   userVarbEditorPage: sectionPathContext({
     ...activeFocals,

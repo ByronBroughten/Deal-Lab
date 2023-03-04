@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import theme from "../../../../theme/Theme";
-import { MainSectionBtn } from "./MainSectionBtn";
+import { MainSectionBtnWide } from "./MainSectionBtnWide";
 
-export const SubSectionBtn = styled(MainSectionBtn)`
+export const SubSectionBtn = styled(MainSectionBtnWide)`
   box-shadow: none;
   border: ${theme.borderStyle};
   font-size: ${theme.smallTitleSize};

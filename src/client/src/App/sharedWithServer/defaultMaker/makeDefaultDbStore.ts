@@ -3,7 +3,8 @@ import { dbStoreNames } from "../SectionsMeta/sectionChildrenDerived/DbStoreName
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
 import { getDefaultMainTableMakers } from "./getDefaultMainTableMakers";
 import { exampleStoreDeal } from "./makeDefaultFeUser/makeExampleDeal";
-import { exampleStoreProperty } from "./makeDefaultFeUser/makeExampleProperty";
+import { makeExampleStoreProperty } from "./makeDefaultFeUser/makeExampleProperty";
+
 import {
   makeExampleUserOngoingLists,
   makeExampleUserSingleTimeLists,
@@ -64,7 +65,7 @@ export function makeDefaultDbStoreArrs({
   });
   dbStore.loadChildren({
     childName: "propertyMain",
-    sectionPacks: [exampleStoreProperty],
+    sectionPacks: [makeExampleStoreProperty()],
   });
   return dbStore.makeChildPackArrs(...dbStoreNames);
 }

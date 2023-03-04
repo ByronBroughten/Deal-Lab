@@ -16,32 +16,47 @@ export const sectionAbsolutePathInfos = {
   get feUser() {
     return absolute("feUser", ["main", "feUser"]);
   },
-  get active() {
+  get activeDealPage() {
     return absolute("dealPage", ["main", "activeDealPage"]);
   },
-  get latent() {
+  get latentDealPage() {
     return absolute("latentSections", ["main", "latentSections"]);
   },
+  get compareDealPage() {
+    return absolute("dealPage", ["main", "dealCompare", "compareDealPage"]);
+  },
   get dealActive() {
-    return absolute("deal", [...this.active.path, "deal"]);
+    return absolute("deal", [...this.activeDealPage.path, "deal"]);
   },
   get dealLatent() {
-    return absolute("deal", [...this.latent.path, "deal"]);
+    return absolute("deal", [...this.latentDealPage.path, "deal"]);
+  },
+  get dealCompare() {
+    return absolute("deal", [...this.compareDealPage.path, "deal"]);
   },
   get calculatedVarbsActive() {
     return absolute("calculatedVarbs", [
-      ...this.active.path,
+      ...this.activeDealPage.path,
+      "calculatedVarbs",
+    ]);
+  },
+  get calculatedVarbsCompare() {
+    return absolute("calculatedVarbs", [
+      ...this.compareDealPage.path,
       "calculatedVarbs",
     ]);
   },
   get calculatedVarbsLatent() {
     return absolute("calculatedVarbs", [
-      ...this.latent.path,
+      ...this.latentDealPage.path,
       "calculatedVarbs",
     ]);
   },
   get userVarbListLatent() {
-    return absolute("userVarbList", [...this.latent.path, "userVarbList"]);
+    return absolute("userVarbList", [
+      ...this.latentDealPage.path,
+      "userVarbList",
+    ]);
   },
   get userVarbItemLatent() {
     return absolute("userVarbItem", [
@@ -50,7 +65,10 @@ export const sectionAbsolutePathInfos = {
     ]);
   },
   get singleTimeListLatent() {
-    return absolute("singleTimeList", [...this.latent.path, "singleTimeList"]);
+    return absolute("singleTimeList", [
+      ...this.latentDealPage.path,
+      "singleTimeList",
+    ]);
   },
   get singleTimeItemLatent() {
     return absolute("singleTimeItem", [
@@ -59,7 +77,10 @@ export const sectionAbsolutePathInfos = {
     ]);
   },
   get ongoingListLatent() {
-    return absolute("ongoingList", [...this.latent.path, "ongoingList"]);
+    return absolute("ongoingList", [
+      ...this.latentDealPage.path,
+      "ongoingList",
+    ]);
   },
   get ongoingItemLatent() {
     return absolute("ongoingItem", [
@@ -67,15 +88,27 @@ export const sectionAbsolutePathInfos = {
       "ongoingItem",
     ]);
   },
-
   get mgmtActive() {
     return absolute("mgmt", [...this.dealActive.path, "mgmt"]);
   },
+  get mgmtLatent() {
+    return absolute("mgmt", [...this.dealLatent.path, "mgmt"]);
+  },
+  get mgmtCompare() {
+    return absolute("mgmt", [...this.dealCompare.path, "mgmt"]);
+  },
+
   get financingActive() {
     return absolute("financing", [...this.dealActive.path, "financing"]);
   },
   get financingLatent() {
     return absolute("financing", [...this.dealLatent.path, "financing"]);
+  },
+  get financingCompare() {
+    return absolute("financing", [...this.dealCompare.path, "financing"]);
+  },
+  get loanCompare() {
+    return absolute("loan", [...this.financingCompare.path, "loan"]);
   },
   get loanActive() {
     return absolute("loan", [...this.financingActive.path, "loan"]);
@@ -95,8 +128,11 @@ export const sectionAbsolutePathInfos = {
       "closingCostValue",
     ]);
   },
-  get mgmtLatent() {
-    return absolute("mgmt", [...this.dealLatent.path, "mgmt"]);
+  get closingCostCompare() {
+    return absolute("closingCostValue", [
+      ...this.loanCompare.path,
+      "closingCostValue",
+    ]);
   },
   get propertyActive() {
     return absolute("property", [...this.dealActive.path, "property"]);
@@ -104,11 +140,17 @@ export const sectionAbsolutePathInfos = {
   get propertyLatent() {
     return absolute("property", [...this.dealLatent.path, "property"]);
   },
+  get propertyCompare() {
+    return absolute("property", [...this.dealCompare.path, "property"]);
+  },
   get unitActive() {
     return absolute("unit", [...this.propertyActive.path, "unit"]);
   },
   get unitLatent() {
     return absolute("unit", [...this.propertyLatent.path, "unit"]);
+  },
+  get unitCompare() {
+    return absolute("unit", [...this.propertyCompare.path, "unit"]);
   },
   get repairValueActive() {
     return absolute("repairValue", [
@@ -119,6 +161,12 @@ export const sectionAbsolutePathInfos = {
   get repairValueLatent() {
     return absolute("repairValue", [
       ...this.propertyLatent.path,
+      "repairValue",
+    ]);
+  },
+  get repairValueCompare() {
+    return absolute("repairValue", [
+      ...this.propertyCompare.path,
       "repairValue",
     ]);
   },
@@ -134,6 +182,12 @@ export const sectionAbsolutePathInfos = {
       "utilityValue",
     ]);
   },
+  get utilityCostValueCompare() {
+    return absolute("utilityValue", [
+      ...this.propertyCompare.path,
+      "utilityValue",
+    ]);
+  },
   get maintenanceCostValueActive() {
     return absolute("maintenanceValue", [
       ...this.propertyActive.path,
@@ -146,11 +200,20 @@ export const sectionAbsolutePathInfos = {
       "maintenanceValue",
     ]);
   },
+  get maintenanceCostValueCompare() {
+    return absolute("maintenanceValue", [
+      ...this.propertyCompare.path,
+      "maintenanceValue",
+    ]);
+  },
   get capExCostValueActive() {
     return absolute("capExValue", [...this.propertyActive.path, "capExValue"]);
   },
   get capExCostValueLatent() {
     return absolute("capExValue", [...this.propertyLatent.path, "capExValue"]);
+  },
+  get capExCostValueCompare() {
+    return absolute("capExValue", [...this.propertyCompare.path, "capExValue"]);
   },
   get userVarbListStored() {
     return absolute("userVarbList", [...this.feUser.path, "userVarbListMain"]);

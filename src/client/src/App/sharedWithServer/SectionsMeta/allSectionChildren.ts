@@ -56,12 +56,12 @@ export const allSectionChildren = checkAllSectionChildren({
   // main has feUser and each of the main app pages
   main: sectionChildren({
     feUser: ["feUser"],
-    variablesMenu: ["variablesMenu"],
     activeDealPage: ["dealPage"],
-    calculatedVarbs: ["calculatedVarbs"],
-    latentSections: ["latentSections"],
     userVarbEditor: ["userVarbEditor"],
     userListEditor: ["userListEditor"],
+    variablesMenu: ["variablesMenu"],
+    dealCompare: ["compareSection"],
+    latentSections: ["latentSections"],
   }),
   dealPage: sectionChildren({
     deal: ["deal"],
@@ -115,6 +115,10 @@ export const allSectionChildren = checkAllSectionChildren({
     mgmtMainTable: ["compareTable"],
     dealMainTable: ["compareTable"],
     userVarbListMain: ["userVarbList"],
+  }),
+  compareSection: sectionChildren({
+    compareDealPage: ["dealPage"],
+    compareValue: ["compareValue"],
   }),
   compareTable: sectionChildren({
     column: ["column"],

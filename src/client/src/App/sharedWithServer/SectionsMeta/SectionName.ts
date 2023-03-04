@@ -28,6 +28,10 @@ export const sectionNames = [
   "ongoingCheckmarkItem",
   "outputList",
 
+  "compareSection",
+  "compareOption",
+  "compareValue",
+
   "outputItem",
   "virtualVarb",
 

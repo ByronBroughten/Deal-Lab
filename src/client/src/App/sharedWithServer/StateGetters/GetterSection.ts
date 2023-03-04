@@ -1,7 +1,7 @@
 import {
   switchKeyToVarbNames,
   SwitchName,
-  SwitchTargetKey
+  SwitchTargetKey,
 } from "../SectionsMeta/allBaseSectionVarbs/baseSwitchNames";
 import { DbSectionInfo } from "../SectionsMeta/allBaseSectionVarbs/DbSectionInfo";
 import { VarbName } from "../SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
@@ -12,12 +12,13 @@ import {
   DbChildInfo,
   DescendantIds,
   FeChildInfo,
-  GeneralChildIdArrs
+  GeneralChildIdArrs,
 } from "../SectionsMeta/sectionChildrenDerived/ChildName";
 import { ChildSectionName } from "../SectionsMeta/sectionChildrenDerived/ChildSectionName";
 import {
+  DescendantOfSnByNodeInfo,
   DescendantOfSnInfo,
-  DescOfSnDbIdInfo
+  DescOfSnDbIdInfo,
 } from "../SectionsMeta/sectionChildrenDerived/DescendantName";
 import {
   noParentWarning,
@@ -25,29 +26,29 @@ import {
   ParentNameSafe,
   PiblingName,
   SelfChildName,
-  StepSiblingName
+  StepSiblingName,
 } from "../SectionsMeta/sectionChildrenDerived/ParentName";
 import { DbVarbs } from "../SectionsMeta/sectionChildrenDerived/SectionPack/RawSection";
 import {
   AbsolutePathDbInfoMixed,
-  AbsolutePathInfoMixed
+  AbsolutePathNodeInfoMixed,
 } from "../SectionsMeta/SectionInfo/AbsolutePathInfo";
 import { ChildValueInfo } from "../SectionsMeta/SectionInfo/ChildInfo";
 import {
   FeParentInfo,
   FeParentInfoSafe,
   FeSectionInfo,
-  FeVarbInfo
+  FeVarbInfo,
 } from "../SectionsMeta/SectionInfo/FeInfo";
 import {
   mixedInfoS,
   SectionInfoMixedFocal,
-  VarbInfoMixedFocal
+  VarbInfoMixedFocal,
 } from "../SectionsMeta/SectionInfo/MixedSectionInfo";
 import { RelSectionInfo } from "../SectionsMeta/SectionInfo/RelInfo";
 import {
   DbSectionInfoMixed,
-  FeSectionInfoMixed
+  FeSectionInfoMixed,
 } from "../SectionsMeta/SectionInfo/VarbInfoBase";
 import { getVarbPathParams } from "../SectionsMeta/SectionInfo/VarbPathNameInfo";
 import { SectionMeta } from "../SectionsMeta/SectionMeta";
@@ -55,33 +56,35 @@ import { SectionName } from "../SectionsMeta/SectionName";
 import {
   SectionNameByType,
   sectionNameS,
-  SectionNameType
+  SectionNameType,
 } from "../SectionsMeta/SectionNameByType";
 import { sectionPathContexts } from "../SectionsMeta/sectionPathContexts";
 import {
+  AbsolutePathNode,
   pathSectionName,
-  SectionPathName
+  SectionPathName,
 } from "../SectionsMeta/sectionPathContexts/sectionPathNames";
 import {
   SectionValues,
   StateValue,
   StateValueOrAny,
   ValueNameOrAny,
-  VarbValue
+  VarbValue,
 } from "../SectionsMeta/values/StateValue";
 import { InEntityValue } from "../SectionsMeta/values/StateValue/InEntityValue";
 import { ValueName } from "../SectionsMeta/values/ValueName";
 import { PackMakerSection } from "../StatePackers.ts/PackMakerSection";
 import {
+  ContextPathIdxSpecifier,
   RawFeSection,
   SectionNotFoundError,
-  TooManySectionsFoundError
+  TooManySectionsFoundError,
 } from "../StateSections/StateSectionsTypes";
 import { Arr } from "../utils/Arr";
 import { Obj } from "../utils/Obj";
 import {
   GetterSectionBase,
-  GetterSectionProps
+  GetterSectionProps,
 } from "./Bases/GetterSectionBase";
 import { GetterSectionsRequiredProps } from "./Bases/GetterSectionsBase";
 import { GetterList } from "./GetterList";
@@ -240,18 +243,19 @@ export class GetterSection<
       case "dbId":
       case "globalSection":
       case "absolutePath":
-      case "absolutePathDbId": {
+      case "absolutePathDbId":
+      case "absolutePathNode": {
         return this.sections.sectionsByMixed(info);
       }
       case "varbPathName": {
         const { varbPathName } = info;
         const { pathName } = getVarbPathParams(varbPathName);
         const sectionName = pathSectionName(pathName);
-        const path = this.getPathFromContext(pathName);
-        const absoluteInfo: AbsolutePathInfoMixed = {
+        const pathNodes = this.getPathNodesFromContext(pathName);
+        const absoluteInfo: AbsolutePathNodeInfoMixed = {
           sectionName,
-          path,
-          infoType: "absolutePath",
+          pathNodes,
+          infoType: "absolutePathNode",
         };
         return this.sections.sectionsByMixed(absoluteInfo);
       }
@@ -259,15 +263,16 @@ export class GetterSection<
       case "pathNameDbId": {
         const { pathName, ...rest } = info;
         const sectionName = pathSectionName(pathName);
-        const path = this.getPathFromContext(pathName);
         if (rest.infoType === "pathName") {
-          return this.sections.sectionsByMixed({
-            ...rest,
+          const pathNodes = this.getPathNodesFromContext(pathName);
+          const info: AbsolutePathNodeInfoMixed = {
             sectionName,
-            path,
-            infoType: "absolutePath",
-          } as AbsolutePathInfoMixed);
+            pathNodes,
+            infoType: "absolutePathNode",
+          };
+          return this.sections.sectionsByMixed(info);
         } else if (rest.infoType === "pathNameDbId") {
+          const path = this.getPathFromContext(pathName);
           return this.sections.sectionsByMixed({
             ...rest,
             path,
@@ -414,13 +419,43 @@ export class GetterSection<
       sectionName: this.sectionName,
     };
   }
+  get contextPathIdxSpecifier(): ContextPathIdxSpecifier {
+    return this.raw.contextPathIdxSpecifier;
+  }
   get sectionContextName() {
     return this.raw.sectionContextName;
   }
-  getPathFromContext(pathName: SectionPathName): ChildName[] {
-    const sectionContext =
-      sectionPathContexts[this.sectionContextName][pathName];
-    return sectionContext["path"];
+  private getPathNodesFromContext(
+    pathName: SectionPathName
+  ): AbsolutePathNode[] {
+    const path = this.getPathFromContext(pathName);
+    const idxSpecifiers = this.contextPathIdxSpecifier;
+    const strIdxs = Obj.keys(idxSpecifiers) as string[];
+    const idxs = strIdxs.map((str) => parseInt(str));
+    return path.map((childName, idx): AbsolutePathNode => {
+      if (idxs.includes(idx)) {
+        const specifier = idxSpecifiers[idx];
+        if (specifier.selfChildName !== childName) {
+          throw new Error(
+            `Expected childName of ${childName} but got ${specifier.selfChildName}`
+          );
+        }
+        return {
+          childName,
+          feId: specifier.feId,
+        };
+      } else {
+        return {
+          childName,
+        };
+      }
+    });
+  }
+  private getPathFromContext(pathName: SectionPathName): ChildName[] {
+    const path = sectionPathContexts[this.sectionContextName][pathName][
+      "path"
+    ] as ChildName[];
+    return path;
   }
   dbInfoMixed(): DbSectionInfoMixed<SN> {
     return mixedInfoS.makeDb(this.sectionName, this.dbId);
@@ -648,12 +683,13 @@ export class GetterSection<
   ): SwitchTargetKey<SK> {
     const varbNames = switchKeyToVarbNames(varbNameBase, switchEnding);
     const switchValue = this.value(varbNames.switch, "string");
-    if (!(switchValue in varbNames) || switchValue === "switch")
+    if (!(switchValue in varbNames) || switchValue === "switch") {
       throw new Error(
         `switchValue of "${switchValue}" not a switch key: ${Object.keys(
           varbNames
         )}`
       );
+    }
     return switchValue as SwitchTargetKey<SK>;
   }
   activeSwitchTarget(
@@ -831,6 +867,29 @@ export class GetterSection<
     }
     return descendants;
   }
+  getDescendantsByNode(descendantNodes: AbsolutePathNode[]): GetterSection[] {
+    let descendants: GetterSection<any>[] = [];
+    let sections: GetterSection<any>[] = [this];
+    for (let idx = 0; idx < descendantNodes.length; idx++) {
+      const { childName, feId } = descendantNodes[idx];
+      for (const section of sections) {
+        if (section.hasChildName(childName)) {
+          if (feId) {
+            descendants.push(section.child({ childName, feId }));
+          } else {
+            descendants.push(...section.children(childName));
+          }
+        } else {
+          throw section.isNotValidChildNameError(childName);
+        }
+      }
+      if (!Arr.isLastIdx(descendantNodes, idx)) {
+        sections = descendants;
+        descendants = [];
+      }
+    }
+    return descendants;
+  }
   getOnlyDescendant(descendantNames: ChildName[]): GetterSection {
     const sections = this.getDescendants(descendantNames);
     this.list.exactlyOneOrThrow(sections, "descendantNames");
@@ -851,6 +910,19 @@ export class GetterSection<
     });
     return sections as GetterSection<any>[];
   }
+  descendantsOfSnByNode<S extends SectionName>({
+    sectionName,
+    descendantNodes,
+  }: DescendantOfSnByNodeInfo<S>): GetterSection<S>[] {
+    const sections = this.getDescendantsByNode(descendantNodes);
+    sections.forEach((section) => {
+      if (!section.isOfSectionName(sectionName)) {
+        throw section.notOfSectionNameError(sectionName);
+      }
+    });
+    return sections as GetterSection<any>[];
+  }
+
   descendantOfSn<S extends SectionName>(
     descendantInfo: DescendantOfSnInfo<S>
   ): GetterSection<S> {

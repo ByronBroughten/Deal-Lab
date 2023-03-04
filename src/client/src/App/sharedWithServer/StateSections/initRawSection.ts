@@ -5,38 +5,36 @@ import { ChildIdArrsNarrow } from "../SectionsMeta/sectionChildrenDerived/ChildN
 import { FeSectionInfo, FeVarbInfo } from "../SectionsMeta/SectionInfo/FeInfo";
 import { VarbNames } from "../SectionsMeta/SectionInfo/VarbInfoBase";
 import { SectionName } from "../SectionsMeta/SectionName";
-import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { SectionValues, StateValue } from "../SectionsMeta/values/StateValue";
 import { StrictPick, StrictPickPartial } from "../utils/types";
 import { RawFeSection, StateVarb, StateVarbs } from "./StateSectionsTypes";
 
 type InitVarbs<SN extends SectionName> = Partial<SectionValues<SN>>;
 
-type InitChildIdArrs<SN extends SectionNameByType> = Partial<
-  ChildIdArrsNarrow<SN>
->;
-export interface InitRawFeSectionProps<SN extends SectionNameByType>
+type InitChildIdArrs<SN extends SectionName> = Partial<ChildIdArrsNarrow<SN>>;
+export interface InitRawFeSectionProps<SN extends SectionName>
   extends StrictPick<RawFeSection<SN>, "sectionName">,
     StrictPickPartial<
       RawFeSection<SN>,
-      "feId" | "dbId" | "sectionContextName"
+      "feId" | "dbId" | "sectionContextName" | "contextPathIdxSpecifier"
     > {
   dbVarbs?: InitVarbs<SN>;
   childFeIds?: InitChildIdArrs<SN>;
 }
 
-// there are no varbs
-export function initRawSection<SN extends SectionNameByType>({
+export function initRawSection<SN extends SectionName>({
   sectionName,
   sectionContextName = "default",
+  contextPathIdxSpecifier = {},
   feId = Id.make(),
   dbId = Id.make(),
   childFeIds = {},
   dbVarbs = {},
 }: InitRawFeSectionProps<SN>): RawFeSection<SN> {
   return {
-    sectionName,
+    contextPathIdxSpecifier,
     sectionContextName,
+    sectionName,
     feId,
     dbId,
     childFeIds: initChildFeIds(sectionName, childFeIds),
@@ -48,7 +46,7 @@ export function initRawSection<SN extends SectionNameByType>({
   };
 }
 
-function initChildFeIds<SN extends SectionNameByType>(
+function initChildFeIds<SN extends SectionName>(
   sectionName: SN,
   proposed: Partial<ChildIdArrsNarrow<SN>> = {}
 ): ChildIdArrsNarrow<SN> {
@@ -59,12 +57,11 @@ function initChildFeIds<SN extends SectionNameByType>(
   } as ChildIdArrsNarrow<SN>;
 }
 
-interface InitRawVarbsProps<SN extends SectionNameByType>
-  extends FeSectionInfo<SN> {
+interface InitRawVarbsProps<SN extends SectionName> extends FeSectionInfo<SN> {
   dbVarbs: InitVarbs<SN>;
 }
 
-export function initRawVarbs<SN extends SectionNameByType>({
+export function initRawVarbs<SN extends SectionName>({
   dbVarbs,
   ...feSectionInfo
 }: InitRawVarbsProps<SN>): StateVarbs<SN> {
@@ -80,11 +77,10 @@ export function initRawVarbs<SN extends SectionNameByType>({
   }, {} as StateVarbs<SN>);
 }
 
-interface InitRawVarbProps<SN extends SectionNameByType>
-  extends FeVarbInfo<SN> {
+interface InitRawVarbProps<SN extends SectionName> extends FeVarbInfo<SN> {
   dbVarb?: StateValue;
 }
-function initRawVarb<SN extends SectionNameByType>({
+function initRawVarb<SN extends SectionName>({
   dbVarb,
   ...rest
 }: InitRawVarbProps<SN>): StateVarb<SN> {
@@ -95,14 +91,14 @@ function initRawVarb<SN extends SectionNameByType>({
   };
 }
 function dbToFeValue(
-  varbNames: VarbNames<SectionNameByType>,
+  varbNames: VarbNames<SectionName>,
   proposedDbValue: StateValue | undefined
 ) {
   const dbValue = getValidValue(varbNames, proposedDbValue);
   return dbValue;
 }
 function getValidValue(
-  varbNames: VarbNames<SectionNameByType>,
+  varbNames: VarbNames<SectionName>,
   dbValue: StateValue | undefined
 ): StateValue {
   const valueMetas = sectionsMeta.value(varbNames);

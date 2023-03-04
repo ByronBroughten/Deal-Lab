@@ -24,7 +24,7 @@ export function useUserDataActor(): UserDataActor {
   });
 }
 
-class UserDataActor extends SectionActorBase<"feUser"> {
+export class UserDataActor extends SectionActorBase<"feUser"> {
   get userDataSolver(): UserDataSolver {
     return new UserDataSolver(this.sectionActorBaseProps);
   }

@@ -1,6 +1,12 @@
 import { SectionName } from "../SectionName";
+import { AbsolutePathNode } from "../sectionPathContexts/sectionPathNames";
 import { ChildName, getChildNames } from "./ChildName";
 import { childToSectionName } from "./ChildSectionName";
+
+export type DescendantOfSnByNodeInfo<SN extends SectionName = SectionName> = {
+  sectionName: SN;
+  descendantNodes: AbsolutePathNode[];
+};
 
 export type DescendantOfSnInfo<SN extends SectionName = SectionName> = {
   sectionName: SN;

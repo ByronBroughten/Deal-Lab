@@ -120,6 +120,9 @@ export const allChildrenTraits = checkAllChildrenTraits({
     ongoingListMain: childTraits(storeNames("ongoingListMain")),
   }),
   main: childrenTraits("main", {
+    dealCompare: childTraits({
+      sectionContextName: "compareDealPage",
+    }),
     activeDealPage: childTraits({
       sectionContextName: "activeDealPage",
     }),

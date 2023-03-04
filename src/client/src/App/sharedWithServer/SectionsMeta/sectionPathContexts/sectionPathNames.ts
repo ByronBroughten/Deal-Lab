@@ -1,6 +1,7 @@
 import { Obj } from "../../utils/Obj";
 import { SubType } from "../../utils/types";
 import { VarbName } from "../baseSectionsDerived/baseSectionsVarbsTypes";
+import { ChildName } from "../sectionChildrenDerived/ChildName";
 import { SectionName } from "../SectionName";
 
 const sectionPathNameToSn = checkPathTypeToSectionName({
@@ -29,6 +30,12 @@ const sectionPathNameToSn = checkPathTypeToSectionName({
   singleTimeListMain: "singleTimeList",
   singleTimeItemMain: "singleTimeItem",
 });
+
+export type AbsolutePathNode = {
+  childName: ChildName;
+  feId?: string;
+};
+
 type SectionPathNameToSn = typeof sectionPathNameToSn;
 function checkPathTypeToSectionName<T extends Record<string, SectionName>>(
   paths: T

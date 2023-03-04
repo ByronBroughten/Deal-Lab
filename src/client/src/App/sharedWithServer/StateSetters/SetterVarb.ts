@@ -1,5 +1,6 @@
 import { ContentState, EditorState } from "draft-js";
-import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
+import { FeVarbInfo } from "../SectionsMeta/SectionInfo/FeInfo";
+import { SectionName } from "../SectionsMeta/SectionName";
 import { EditorValue } from "../SectionsMeta/values/EditorValue";
 import {
   StateValue,
@@ -18,13 +19,16 @@ import { SetterVarbBase } from "./SetterBases/SetterVarbBase";
 import { SetterSections } from "./SetterSections";
 
 export class SetterVarb<
-  SN extends SectionNameByType = SectionNameByType
+  SN extends SectionName = SectionName
 > extends SetterVarbBase<SN> {
   private get solverVarb() {
     return SolverVarb.init(this.getterVarbBase.getterVarbProps);
   }
   get varbName(): string {
     return this.meta.varbName;
+  }
+  get feVarbInfo(): FeVarbInfo<SN> {
+    return this.get.feVarbInfo;
   }
   get setterSections(): SetterSections {
     return new SetterSections(this.setterSectionsProps);

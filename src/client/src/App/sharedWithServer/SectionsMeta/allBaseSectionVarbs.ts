@@ -41,6 +41,15 @@ const varbs = baseVarbsS;
 export function makeAllBaseSectionVarbs() {
   return checkAllBaseSectionVarbs({
     ...defaults,
+    compareSection: baseSectionVarbs({
+      nameFilter: baseVarb("string"),
+    }),
+    compareOption: baseSectionVarbs({
+      dbId: baseVarb("string"),
+    }),
+    compareValue: baseSectionVarbs({
+      varbInfo: baseVarb("inEntityValue"),
+    }),
     variablesMenu: baseSectionVarbs({
       nameFilter: baseVarb("string"),
     }),

@@ -1,4 +1,3 @@
-import React from "react";
 import { BsCloudCheck, BsCloudSlash } from "react-icons/bs";
 import styled, { css } from "styled-components";
 import { SaveStatus } from "../../../../modules/SectionSolvers/MainSectionSolver";
@@ -41,7 +40,7 @@ export function ChangesSyncedStatusBtn({ className, saveStatus }: Props) {
 }
 
 const Styled = styled(ListMenuBtn)<{ $color: string }>`
-  background: ${theme.light};
+  background: transparent;
   white-space: nowrap;
   font-size: ${theme.labelSize};
 

@@ -38,7 +38,7 @@ type ExamplePropertyProps = {
   maintenance: { valueMode: MaintenanceValueMode };
 };
 
-function exampleProperty(props: ExamplePropertyProps) {
+function makeExampleProperty(props: ExamplePropertyProps) {
   const property = PackBuilderSection.initAsOmniChild("property");
   property.loadSelf(makeDefaultProperty());
   property.updateValues({
@@ -94,8 +94,8 @@ function exampleProperty(props: ExamplePropertyProps) {
       displayNameEditor: displayName,
       costToReplace: numToObj(replacementCost),
       lifespanSpanEditor: numToObj(lifeSpan),
+      valueOngoingSwitch: "yearly",
       lifespanSpanSwitch: "years",
-      valueOngoingSwitch: "years",
     });
   }
 
@@ -107,67 +107,69 @@ function exampleProperty(props: ExamplePropertyProps) {
   return property.makeSectionPack();
 }
 
-export const exampleDealProperty = exampleProperty({
-  property: {
-    displayName: stringObj("160 Example Ave E"),
-    purchasePrice: numObj(250000),
-    sqft: numObj(2500),
-    taxesOngoingEditor: numObj(2500),
-    homeInsOngoingEditor: numObjNext("1000+(", ["numUnits"], "*200)"),
-  },
-  units: [
-    {
-      numBedrooms: numObj(3),
-      monthlyRent: numObj(1800),
+export const makeExampleDealProperty = () =>
+  makeExampleProperty({
+    property: {
+      displayName: stringObj("160 Example Ave E"),
+      purchasePrice: numObj(250000),
+      sqft: numObj(2500),
+      taxesOngoingEditor: numObj(2500),
+      homeInsOngoingEditor: numObjNext("1000+(", ["numUnits"], "*200)"),
     },
-    {
-      numBedrooms: numObj(3),
-      monthlyRent: numObj(1800),
+    units: [
+      {
+        numBedrooms: numObj(3),
+        monthlyRent: numObj(1800),
+      },
+      {
+        numBedrooms: numObj(3),
+        monthlyRent: numObj(1800),
+      },
+    ],
+    repairs: [
+      ["Replace toilet", 200],
+      ["Replace locks", 150],
+      ["Repair oven", 200],
+      ["New flooring", numObjNext("3*", ["sqft"])],
+      ["Replace faucet", 100],
+    ],
+    utilities: [
+      ["Water", numObjNext("60*", ["numUnits"])],
+      ["Garbage", numObjNext("50*", ["numUnits"])],
+    ],
+    capEx: {
+      valueMode: "fivePercentRent",
+      items: [],
     },
-  ],
-  repairs: [
-    ["Replace toilet", 200],
-    ["Replace locks", 150],
-    ["Repair oven", 200],
-    ["New flooring", numObjNext("3*", ["sqft"])],
-    ["Replace faucet", 100],
-  ],
-  utilities: [
-    ["Water", numObjNext("60*", ["numUnits"])],
-    ["Garbage", numObjNext("50*", ["numUnits"])],
-  ],
-  capEx: {
-    valueMode: "fivePercentRent",
-    items: [],
-  },
-  maintenance: {
-    valueMode: "onePercentAndSqft",
-  },
-});
+    maintenance: {
+      valueMode: "onePercentAndSqft",
+    },
+  });
 
-export const exampleStoreProperty = exampleProperty({
-  property: {
-    displayName: stringObj("Example Property"),
-    purchasePrice: numObj(250000),
-    sqft: numObj(2500),
-    taxesOngoingEditor: numObj(2800),
-    homeInsOngoingEditor: numObj(1800),
-  },
-  units: [
-    {
-      numBedrooms: numObj(4),
-      monthlyRent: numObj(2300),
+export const makeExampleStoreProperty = () =>
+  makeExampleProperty({
+    property: {
+      displayName: stringObj("Example Property"),
+      purchasePrice: numObj(250000),
+      sqft: numObj(2500),
+      taxesOngoingEditor: numObj(2800),
+      homeInsOngoingEditor: numObj(1800),
     },
-    {
-      numBedrooms: numObj(2),
-      monthlyRent: numObj(1400),
+    units: [
+      {
+        numBedrooms: numObj(4),
+        monthlyRent: numObj(2300),
+      },
+      {
+        numBedrooms: numObj(2),
+        monthlyRent: numObj(1400),
+      },
+    ],
+    repairs: examplePropetyRepairProps,
+    utilities: examplePropertyUtilityProps,
+    capEx: {
+      valueMode: "itemize",
+      items: examplePropertyCapExListProps,
     },
-  ],
-  repairs: examplePropetyRepairProps,
-  utilities: examplePropertyUtilityProps,
-  capEx: {
-    valueMode: "itemize",
-    items: examplePropertyCapExListProps,
-  },
-  maintenance: { valueMode: "onePercentAndSqft" },
-});
+    maintenance: { valueMode: "onePercentAndSqft" },
+  });

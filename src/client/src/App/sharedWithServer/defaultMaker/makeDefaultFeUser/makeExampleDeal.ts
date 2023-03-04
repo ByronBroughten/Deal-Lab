@@ -3,7 +3,7 @@ import { PackBuilderSection } from "../../StatePackers.ts/PackBuilderSection";
 import { makeDefaultDealPack } from "../makeDefaultDealPack";
 import { dealExampleLoan } from "./makeExampleLoan";
 import { exampleDealMgmt } from "./makeExampleMgmt";
-import { exampleDealProperty } from "./makeExampleProperty";
+import { makeExampleDealProperty } from "./makeExampleProperty";
 
 export const exampleStoreDeal = makeExampleDeal();
 
@@ -13,7 +13,7 @@ function makeExampleDeal() {
   deal.updateValues({ displayName: stringObj("Example Deal") });
 
   const property = deal.onlyChild("property");
-  property.loadSelf(exampleDealProperty);
+  property.loadSelf(makeExampleDealProperty());
 
   const financing = deal.onlyChild("financing");
   financing.updateValues({

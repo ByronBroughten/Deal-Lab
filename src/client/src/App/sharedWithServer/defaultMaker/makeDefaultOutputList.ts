@@ -10,7 +10,7 @@ export const outputNames = [
   "cocRoiYearly",
 ] as const;
 
-const defaultDealOutputInfos: ValueInEntityInfo[] = outputNames.map(
+export const defaultDealOutputInfos: ValueInEntityInfo[] = outputNames.map(
   (varbPathName) => {
     return mixedInfoS.varbPathName(varbPathName);
   }

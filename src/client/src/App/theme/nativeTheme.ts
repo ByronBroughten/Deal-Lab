@@ -43,6 +43,7 @@ const themeColors = {
   primary: "#00684A",
   secondary: "#00A35C",
   notice: "#ff9868",
+  complementary: "#3f51b5",
   dark: "#001E2B",
   light: "#fff",
 } as const;
@@ -79,6 +80,7 @@ const themeColorVariants = {
   primary: colorVariants(themeColors.primary),
   secondary: colorVariants(themeColors.secondary),
   notice: colorVariants(themeColors.notice),
+  complementary: colorVariants(themeColors.complementary),
 };
 
 const borderRadiuses = {

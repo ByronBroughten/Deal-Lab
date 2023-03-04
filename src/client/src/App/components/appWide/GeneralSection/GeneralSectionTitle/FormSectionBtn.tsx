@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import theme from "../../../../theme/Theme";
-import { MainSectionBtn } from "./MainSectionBtn";
+import { MainSectionBtnWide } from "./MainSectionBtnWide";
 
-export const FormSectionBtn = styled(MainSectionBtn)`
+export const FormSectionBtn = styled(MainSectionBtnWide)`
   ${theme.sectionBorderChunk};
   font-size: ${theme.smallTitleSize};
   box-shadow: none;

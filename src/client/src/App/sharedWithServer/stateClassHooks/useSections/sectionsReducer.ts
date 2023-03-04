@@ -14,6 +14,9 @@ export interface VarbContentInfo extends FeVarbInfo {
   contentState: ContentState;
 }
 
+interface LoginUser {
+  type: "loginUser";
+}
 interface RemoveSelfAction extends FeSectionInfo {
   type: "removeSelf";
 }

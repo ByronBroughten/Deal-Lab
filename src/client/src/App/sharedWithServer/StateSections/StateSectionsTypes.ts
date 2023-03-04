@@ -1,5 +1,8 @@
-import { ChildIdArrsNarrow } from "../SectionsMeta/sectionChildrenDerived/ChildName";
-import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
+import {
+  ChildIdArrsNarrow,
+  ChildName,
+} from "../SectionsMeta/sectionChildrenDerived/ChildName";
+import { SectionName } from "../SectionsMeta/SectionName";
 import { SectionPathContextName } from "../SectionsMeta/sectionPathContexts";
 import { StateValue } from "../SectionsMeta/values/StateValue";
 import { OutEntity } from "../SectionsMeta/values/StateValue/valuesShared/entities";
@@ -7,15 +10,24 @@ import { OutEntity } from "../SectionsMeta/values/StateValue/valuesShared/entiti
 export class SectionNotFoundError extends Error {}
 export class TooManySectionsFoundError extends Error {}
 
-export type StateVarb<SN extends SectionNameByType> = {
+export type StateVarb<SN extends SectionName> = {
   value: StateValue;
   outEntities: OutEntity[];
   isPureUserVarb: boolean;
 };
-export type StateVarbs<SN extends SectionNameByType> = {
+export type StateVarbs<SN extends SectionName> = {
   [key: string]: StateVarb<SN>;
 };
-export type RawFeSection<SN extends SectionNameByType> = {
+
+export type ContextPathIdxSpecifier = {
+  [idx: number]: {
+    selfChildName: ChildName;
+    feId: string;
+  };
+};
+
+export type RawFeSection<SN extends SectionName> = {
+  readonly contextPathIdxSpecifier: ContextPathIdxSpecifier;
   readonly sectionContextName: SectionPathContextName;
   readonly sectionName: SN;
   readonly feId: string;
@@ -25,10 +37,10 @@ export type RawFeSection<SN extends SectionNameByType> = {
 };
 
 export type RawFeSections = {
-  readonly [SN in SectionNameByType]: readonly RawFeSection<SN>[];
+  readonly [SN in SectionName]: readonly RawFeSection<SN>[];
 };
 
-export type RawSectionListProps<SN extends SectionNameByType> = {
+export type RawSectionListProps<SN extends SectionName> = {
   sectionName: SN;
   list: RawFeSection<SN>[];
 };
