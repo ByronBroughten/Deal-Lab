@@ -226,7 +226,7 @@ export class SolverSection<
     childPackInfo: ChildPackInfo<SN, CN>
   ): void {
     const { childName, sectionPack } = childPackInfo;
-    this.updater.addChild(childName);
+    this.addChildAndSolve(childName);
     const child = this.youngestChild(childName);
     child.loadSelf(sectionPack);
   }

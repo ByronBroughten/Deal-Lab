@@ -32,6 +32,7 @@ export function UserComponents() {
       />
       {orderedNames.map((listName) => (
         <UserComponentClosed
+          key={listName}
           componentName={listName}
           className="UserComponents-component"
         />
