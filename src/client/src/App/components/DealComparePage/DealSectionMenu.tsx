@@ -1,4 +1,5 @@
-import { unstable_batchedUpdates, View } from "react-native";
+import { unstable_batchedUpdates } from "react-dom";
+import { View } from "react-native";
 import styled from "styled-components";
 import { Id } from "../../sharedWithServer/SectionsMeta/id";
 import { useGetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useGetterSection";
@@ -14,7 +15,10 @@ export function DealSectionMenu() {
   const nameFilterVarb = compareSection.varb("nameFilter");
   const nameFilter = nameFilterVarb.value("string");
   const filteredDeals = deals.filter((deal) =>
-    nameFilter.includes(deal.valueNext("displayName").mainText)
+    deal
+      .valueNext("displayName")
+      .mainText.toLowerCase()
+      .includes(nameFilter.toLowerCase())
   );
   return (
     <View>
@@ -25,51 +29,60 @@ export function DealSectionMenu() {
           style: { minWidth: 120 },
         }}
       />
-      {filteredDeals.map((deal) => {
-        const displayName = deal.valueNext("displayName").mainText;
-        return (
-          <View
-            style={{
-              minWidth: 200,
-              padding: 0,
-              flexWrap: "nowrap",
-            }}
-          >
-            <SectionBtn
-              onClick={() => {
-                unstable_batchedUpdates(() => {
-                  const feId = Id.make();
-                  const dealPage = compareSection.addAndGetChild(
-                    "compareDealPage",
-                    {
-                      feId,
-                      contextPathIdxSpecifier: {
-                        2: {
-                          selfChildName: "compareDealPage",
-                          feId,
-                        },
-                      },
-                    }
-                  );
-                  const dealToCompare = dealPage.onlyChild("deal");
-                  dealToCompare.loadSelfSectionPack(
-                    deal.packMaker.makeSectionPack()
-                  );
-                });
-              }}
+      <View
+        style={{
+          marginTop: nativeTheme.s25,
+          ...nativeTheme.subSection.borderLines,
+          borderRadius: nativeTheme.br0,
+        }}
+      >
+        {filteredDeals.map((deal) => {
+          const displayName = deal.valueNext("displayName").mainText;
+          return (
+            <View
+              key={deal.feId}
               style={{
-                display: "flex",
-                flex: 1,
-                justifyContent: "flex-start",
-                alignItems: "center",
-                whiteSpace: "nowrap",
+                minWidth: 200,
+                padding: 0,
+                flexWrap: "nowrap",
               }}
             >
-              {displayName}
-            </SectionBtn>
-          </View>
-        );
-      })}
+              <SectionBtn
+                middle={displayName}
+                style={{
+                  display: "flex",
+                  flex: 1,
+                  justifyContent: "flex-start",
+                  alignItems: "center",
+                  whiteSpace: "nowrap",
+                  paddingLeft: nativeTheme.s3,
+                }}
+                onClick={() => {
+                  unstable_batchedUpdates(() => {
+                    const feId = Id.make();
+                    const dealPage = compareSection.addAndGetChild(
+                      "compareDealPage",
+                      {
+                        feId,
+                        contextPathIdxSpecifier: {
+                          2: {
+                            selfChildName: "compareDealPage",
+                            feId,
+                          },
+                        },
+                      }
+                    );
+                    const dealToCompare = dealPage.onlyChild("deal");
+                    dealToCompare.loadSelfSectionPack(
+                      deal.packMaker.makeSectionPack()
+                    );
+                  });
+                }}
+              />
+            </View>
+          );
+        })}
+      </View>
     </View>
   );
 }

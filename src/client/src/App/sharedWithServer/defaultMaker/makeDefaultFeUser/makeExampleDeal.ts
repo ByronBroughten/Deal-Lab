@@ -19,7 +19,7 @@ function makeExampleDeal() {
   financing.updateValues({
     financingMode: "useLoan",
   });
-  const loan = financing.addAndGetChild("loan");
+  const loan = financing.onlyChild("loan");
   loan.loadSelf(dealExampleLoan);
 
   const mgmt = deal.onlyChild("mgmt");

@@ -7,9 +7,12 @@ import {
   useGetterSection,
   useGetterSectionOnlyOne,
 } from "../../sharedWithServer/stateClassHooks/useGetterSection";
+import { nativeTheme } from "../../theme/nativeTheme";
 import { MainSectionBtn } from "../appWide/GeneralSection/GeneralSectionTitle/MainSectionBtn";
 import { OuterMainSection } from "../appWide/GeneralSection/OuterMainSection";
+import { LabelWithInfo } from "../appWide/LabelWithInfo";
 import { ModalSection } from "../appWide/ModalSection";
+import { SectionTitle } from "../appWide/SectionTitle";
 import { DealSectionMenu } from "./DealSectionMenu";
 
 export function DealCompareSection() {
@@ -25,7 +28,19 @@ export function DealCompareSection() {
     useToggleView("dealMenu");
   return (
     <Styled>
-      <View>
+      <SectionTitle
+        className="UserEditorTitleRow-sectionTitle"
+        text={
+          <LabelWithInfo
+            {...{
+              label: "Compare",
+              infoTitle: "Compare",
+              infoText: `This page lets you compare deals side-by-side. Just click the "+" button to add a deal, and choose which values to compare by adding or subtracting values at the top of the page.`,
+            }}
+          />
+        }
+      />
+      <View style={{ marginTop: nativeTheme.s35 }}>
         {comparePageFeIds.map((feId) => (
           <DealPlaceholder
             {...{
@@ -42,17 +57,15 @@ export function DealCompareSection() {
           }}
         />
       </View>
-      {dealMenuIsOpen && (
-        <ModalSection
-          {...{
-            title: "Select a Deal to Compare",
-            closeModal: closeDealMenu,
-            show: dealMenuIsOpen,
-          }}
-        >
-          <DealSectionMenu />
-        </ModalSection>
-      )}
+      <ModalSection
+        {...{
+          title: "Select a Deal to Compare",
+          closeModal: closeDealMenu,
+          show: dealMenuIsOpen,
+        }}
+      >
+        <DealSectionMenu />
+      </ModalSection>
     </Styled>
   );
 }

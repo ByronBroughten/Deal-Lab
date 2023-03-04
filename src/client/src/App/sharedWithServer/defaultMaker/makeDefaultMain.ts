@@ -30,7 +30,9 @@ export function makeDefaultMain(): SectionPack<"main"> {
   const dealCompare = main.addAndGetChild("dealCompare");
   defaultDealOutputInfos.forEach((outputInfo) => {
     const compareValue = dealCompare.addAndGetChild("compareValue");
-    compareValue.updateValues({ varbInfo: inEntityValueInfo(outputInfo) });
+    compareValue.updateValues({
+      valueEntityInfo: inEntityValueInfo(outputInfo),
+    });
   });
 
   main.addChild("variablesMenu");

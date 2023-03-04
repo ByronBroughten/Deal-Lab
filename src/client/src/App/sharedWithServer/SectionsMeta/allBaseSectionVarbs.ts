@@ -48,7 +48,7 @@ export function makeAllBaseSectionVarbs() {
       dbId: baseVarb("string"),
     }),
     compareValue: baseSectionVarbs({
-      varbInfo: baseVarb("inEntityValue"),
+      valueEntityInfo: baseVarb("inEntityValue"),
     }),
     variablesMenu: baseSectionVarbs({
       nameFilter: baseVarb("string"),

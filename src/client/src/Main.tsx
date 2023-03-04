@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { getSuperTokensRoutesForReactRouterDom } from "supertokens-auth-react";
 import { ActiveDealRoutes } from "./ActiveDealRoutes";
 import { AuthProtectedPage } from "./App/components/AuthProtectedPage";
-import { FeUserMainTablePage } from "./App/components/FeUserMainTablePage";
+import { DealComparePage } from "./App/components/DealComparePage";
 import NotFound from "./App/components/general/NotFound";
 import { NavBarOutletPage } from "./App/components/NavBarOutletPage";
 import { UserVarbEditorPage } from "./App/components/UserVarbEditorPage";
@@ -40,10 +40,7 @@ export function Main() {
             path={feRoutes.userVariables}
             element={<UserVarbEditorPage />}
           />
-          <Route
-            path={feRoutes.compare}
-            element={<FeUserMainTablePage mainTableName={"dealMainTable"} />}
-          />
+          <Route path={feRoutes.compare} element={<DealComparePage />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>

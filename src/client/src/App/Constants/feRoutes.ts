@@ -17,12 +17,6 @@ const componentsRoute = "/components";
 const activeDealRoute = "/active-deal";
 export const feRoutes = {
   auth: "/login",
-
-  propertyTable: "/property-compare",
-  loanTable: "/loan-compare",
-  mgmtTable: "/mgmt-compare",
-  dealTable: "/deal-compare",
-
   paymentManagement: env.paymentManagementLink,
   privacyPolicy: "/privacy-policy",
   termsOfService: "/terms-of-service",

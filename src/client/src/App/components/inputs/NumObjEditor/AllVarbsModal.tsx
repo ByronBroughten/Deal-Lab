@@ -35,7 +35,13 @@ export function AllVarbsModal({
         show: allVarbsIsOpen,
       }}
     >
-      <View style={{ flexDirection: "row", alignItems: "center" }}>
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+      >
         <MaterialStringEditor
           {...{
             ...variablesMenu.varbNext("nameFilter").feVarbInfo,
@@ -46,7 +52,12 @@ export function AllVarbsModal({
         <StyledActionBtn
           className="AllVarbsModal-goToVariablesBtn"
           middle={"Variables"}
-          left={<AiOutlineArrowRight size={23} />}
+          right={
+            <AiOutlineArrowRight
+              className="AllVarbsModal-goToVariablesArrow"
+              size={21}
+            />
+          }
           onClick={goToVariables}
         />
       </View>
@@ -65,8 +76,10 @@ const Styled = styled(ModalSection)`
   .VarbSelectorAllCollections-root {
     margin-top: ${theme.s25};
   }
+  .AllVarbsModal-goToVariablesArrow {
+  }
   .AllVarbsModal-goToVariablesBtn {
-    margin-left: ${theme.s25};
+    margin-left: ${theme.s35};
     color: ${theme.primary.dark};
     :hover {
       color: ${theme.light};
