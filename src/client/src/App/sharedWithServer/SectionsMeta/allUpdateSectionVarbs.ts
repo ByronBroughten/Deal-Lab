@@ -114,7 +114,7 @@ function makeAllUpdateSections() {
             ),
             updateOverride(
               [overrideSwitchS.local("valueMode", "fivePercentRent")],
-              updateBasicsS.loadByVarbPathName("targetRentMonthly")
+              updateBasicsS.loadByVarbPathName("fivePercentRentMonthly")
             ),
             updateOverride(
               [overrideSwitchS.local("valueMode", "itemize")],
@@ -144,7 +144,7 @@ function makeAllUpdateSections() {
             ),
             updateOverride(
               [overrideSwitchS.local("valueMode", "fivePercentRent")],
-              updateBasicsS.loadByVarbPathName("targetRentYearly")
+              updateBasicsS.loadByVarbPathName("fivePercentRentYearly")
             ),
             updateOverride(
               [overrideSwitchS.local("valueMode", "itemize")],

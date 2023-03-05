@@ -7,6 +7,20 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
+// Custom ongoing cost doesn't show whether it's
+// by year or month. And it would be nice to switch.
+// Same with utilities.
+
+// Fix how the user variables are handled
+// - right now, all of those variables are based
+//   on the activeDealPage. Not what we want.
+
+// Extract the look of the AllVarbsModal. You'll use that
+// for adding values for comparing deals.
+
+// Try upgrading to mui-5. That will solve some of
+// your styling problems
+
 // Waiting on Emily
 // - Logo
 // - Account page

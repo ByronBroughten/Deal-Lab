@@ -13,7 +13,7 @@ function useFilteredDeals(): GetterSection<"deal">[] {
   const deals = feUser.children("dealMain");
 
   const compareSection = useGetterSectionOnlyOne("compareSection");
-  const nameFilter = compareSection.valueNext("nameFilter");
+  const nameFilter = compareSection.valueNext("dealNameFilter");
   const nameFilteredDeals = deals.filter((deal) =>
     deal
       .valueNext("displayName")
@@ -30,7 +30,7 @@ function useFilteredDeals(): GetterSection<"deal">[] {
 type Props = { closeMenu: () => void };
 export function DealCompareSelectMenu({ closeMenu }: Props) {
   const compareSection = useSetterSectionOnlyOne("compareSection");
-  const nameFilterVarb = compareSection.varb("nameFilter");
+  const nameFilterVarb = compareSection.varb("dealNameFilter");
   const filteredDeals = useFilteredDeals();
   return (
     <View>

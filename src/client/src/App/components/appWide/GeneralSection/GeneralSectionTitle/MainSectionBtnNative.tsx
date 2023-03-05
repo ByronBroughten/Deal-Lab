@@ -4,7 +4,7 @@ import { nativeTheme } from "../../../../theme/nativeTheme";
 import { PlainIconBtn, PlainIconBtnProps } from "../../../general/PlainIconBtn";
 
 export function MainSectionBtnNative({
-  style,
+  style: { marginRight, ...style } = {},
   className,
   ...rest
 }: PlainIconBtnProps) {
@@ -12,6 +12,7 @@ export function MainSectionBtnNative({
     <View
       style={{
         borderRadius: nativeTheme.br0,
+        marginRight,
         ...nativeTheme.boxShadow1,
         ...(style as ViewStyle),
       }}

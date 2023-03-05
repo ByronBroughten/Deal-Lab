@@ -42,7 +42,8 @@ export function makeAllBaseSectionVarbs() {
   return checkAllBaseSectionVarbs({
     ...defaults,
     compareSection: baseSectionVarbs({
-      nameFilter: baseVarb("string"),
+      dealNameFilter: baseVarb("string"),
+      valueNameFilter: baseVarb("string"),
     }),
     compareOption: baseSectionVarbs({
       dbId: baseVarb("string"),

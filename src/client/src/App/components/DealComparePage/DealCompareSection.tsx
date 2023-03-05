@@ -1,4 +1,3 @@
-import { BiPlus } from "react-icons/bi";
 import { View } from "react-native";
 import { useToggleView } from "../../modules/customHooks/useToggleView";
 import { useGetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useGetterSection";
@@ -18,6 +17,8 @@ export function DealCompareSection() {
   const comparePageFeIds = dealCompare.childFeIds("compareDealPage");
   const { dealMenuIsOpen, openDealMenu, closeDealMenu } =
     useToggleView("dealMenu");
+
+  // For now I'll let it pick from Deal, Property, Financing, and Mgmt
   return (
     <OuterMainSection>
       <SectionTitle
@@ -39,19 +40,31 @@ export function DealCompareSection() {
           flexDirection: "row",
         }}
       >
-        {comparePageFeIds.map((feId) => (
-          <ComparedDeal
-            {...{
-              key: feId,
-              feId,
-              compareValueFeIds,
-              style: { marginRight: nativeTheme.s3 },
-            }}
-          />
-        ))}
+        <View>
+          <View style={{ flexDirection: "row", paddingBottom: nativeTheme.s2 }}>
+            {comparePageFeIds.map((feId) => (
+              <ComparedDeal
+                {...{
+                  key: feId,
+                  feId,
+                  compareValueFeIds,
+                  style: { marginRight: nativeTheme.s3 },
+                }}
+              />
+            ))}
+          </View>
+          {/* {comparePageFeIds.length > 0 && (
+            <MainSectionBtnNative
+              {...{
+                middle: "+ Value",
+                style: { height: 50, marginRight: nativeTheme.s3 },
+              }}
+            />
+          )} */}
+        </View>
         <MainSectionBtnNative
           {...{
-            middle: <BiPlus />,
+            middle: "+ Deal",
             style: { width: 120, maxHeight: 500, minHeight: 300 },
             onClick: openDealMenu,
           }}
