@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import { DealMode } from "../../../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
+import { StateValue } from "../../../../sharedWithServer/SectionsMeta/values/StateValue";
+
 import theme from "../../../../theme/Theme";
 import MainSectionBody from "../../../appWide/GeneralSection/MainSection/MainSectionBody";
 import { MainSectionTopRows } from "../../../appWide/MainSectionTopRows";
@@ -9,7 +10,7 @@ import { BasicMgmtInfo } from "./Mgmt/BasicMgmtInfo";
 
 type Props = {
   feId: string;
-  dealMode: DealMode;
+  dealMode: StateValue<"dealMode">;
   backBtnProps: {
     backToWhat: string;
     onClick: () => void;

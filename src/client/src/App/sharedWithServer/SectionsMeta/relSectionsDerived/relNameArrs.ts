@@ -9,9 +9,6 @@ export const relNameArrs = {
   ...tableStoreNameArrs,
   hasChild: hasChildSectionNames,
   loadOnLogin: Arr.extractStrict(sectionNames, ["feUser"] as const),
-  itemWithLoadedVarb: Arr.extractStrict(sectionNames, [
-    "loadedNumObjVarb",
-  ] as const),
   valueSection: Arr.extractStrict(sectionNames, [
     "singleTimeValue",
     "ongoingValue",

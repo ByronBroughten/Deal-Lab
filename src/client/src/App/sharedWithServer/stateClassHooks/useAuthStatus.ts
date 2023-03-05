@@ -1,7 +1,7 @@
-import { AuthStatus } from "../SectionsMeta/baseSectionsVarbsValues";
+import { StateValue } from "../SectionsMeta/values/StateValue";
 import { useGetterSectionOnlyOne } from "./useGetterSection";
 
-export function useAuthStatus() {
+export function useAuthStatus(): StateValue<"authStatus"> {
   const userInfo = useGetterSectionOnlyOne("feUser");
-  return userInfo.valueNext("authStatus") as AuthStatus;
+  return userInfo.valueNext("authStatus");
 }

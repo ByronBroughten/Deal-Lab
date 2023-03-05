@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { CapExValueMode } from "../../../../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
+import { StateValue } from "../../../../../sharedWithServer/SectionsMeta/values/StateValue";
 import { useSetterSection } from "../../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import { LabelWithInfo } from "../../../../appWide/LabelWithInfo";
 import { SelectAndItemizeEditorSection } from "../../../../appWide/SelectAndItemizeEditorSection";
@@ -10,12 +10,26 @@ export function CapExValue({ feId }: { feId: string }) {
     sectionName: "capExValue",
     feId,
   });
-  const valueSourceName = capExValue.value("valueSourceName") as CapExValueMode;
+  const valueSourceName = capExValue.value("valueSourceName");
   const valueVarb = capExValue.get.switchVarb("value", "ongoing");
-  const showEquals: CapExValueMode[] = ["fivePercentRent"];
+  const showEquals: StateValue<"capExValueSource">[] = ["fivePercentRent"];
   const equalsValue = showEquals.includes(valueSourceName)
     ? valueVarb.displayVarb()
     : undefined;
+
+  const menuItems: [StateValue<"capExValueSource">, string][] = [
+    [
+      "fivePercentRent",
+      `5% of rent${valueSourceName === "fivePercentRent" ? "" : " (simplest)"}`,
+    ],
+    [
+      "listTotal",
+      `Itemize lifespan over cost${
+        valueSourceName === "listTotal" ? "" : " (more accurate)"
+      }`,
+    ],
+    ["valueEditor", "Custom amount"],
+  ];
 
   return (
     <Styled
@@ -34,21 +48,7 @@ export function CapExValue({ feId }: { feId: string }) {
           const value = e.target.value as string;
           capExValue.varb("valueSourceName").updateValue(value);
         },
-        menuItems: [
-          [
-            "fivePercentRent",
-            `5% of rent${
-              valueSourceName === "fivePercentRent" ? "" : " (simplest)"
-            }`,
-          ],
-          [
-            "listTotal",
-            `Itemize lifespan over cost${
-              valueSourceName === "listTotal" ? "" : " (more accurate)"
-            }`,
-          ],
-          ["valueEditor", "Custom amount"],
-        ],
+        menuItems,
         equalsValue,
         itemizedModalTitle: "Itemized CapEx Budget",
         itemizeValue: "listTotal",

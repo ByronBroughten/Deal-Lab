@@ -10,7 +10,7 @@ import { FeSectionInfo } from "../SectionsMeta/SectionInfo/FeInfo";
 import { VarbInfoMixedFocal } from "../SectionsMeta/SectionInfo/MixedSectionInfo";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
-import { SomeSectionValues } from "../SectionsMeta/values/StateValue";
+import { SectionValues } from "../SectionsMeta/values/StateValue";
 import { GetterSectionProps } from "../StateGetters/Bases/GetterSectionBase";
 import { GetterSection } from "../StateGetters/GetterSection";
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
@@ -102,7 +102,7 @@ export class SolverSection<
   solve() {
     this.solverSections.solve();
   }
-  updateValuesAndSolve(values: SomeSectionValues<SN>): void {
+  updateValuesAndSolve(values: Partial<SectionValues<SN>>): void {
     this.updater.updateValues(values);
     const varbNames = Obj.keys(values) as VarbName<SN>[];
     const varbInfos = varbNames.map((varbName) => this.get.varbInfo(varbName));

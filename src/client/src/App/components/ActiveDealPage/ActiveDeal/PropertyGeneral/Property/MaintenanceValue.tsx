@@ -1,4 +1,4 @@
-import { MaintenanceValueMode } from "../../../../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
+import { StateValue } from "../../../../../sharedWithServer/SectionsMeta/values/StateValue";
 import { useSetterSection } from "../../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import { LabelWithInfo } from "../../../../appWide/LabelWithInfo";
 import { SelectEditorSection } from "../../../../appWide/SelectEditorSection";
@@ -8,11 +8,9 @@ export function MaintenanceValue({ feId }: { feId: string }) {
     sectionName: "maintenanceValue",
     feId,
   });
-  const valueSourceName = maintenanceValue.value(
-    "valueSourceName"
-  ) as MaintenanceValueMode;
+  const valueSourceName = maintenanceValue.value("valueSourceName");
   const valueVarb = maintenanceValue.get.switchVarb("value", "ongoing");
-  const showEquals: MaintenanceValueMode[] = [
+  const showEquals: StateValue<"maintainanceValueSource">[] = [
     "onePercentAndSqft",
     "onePercentPrice",
     "sqft",
@@ -21,6 +19,13 @@ export function MaintenanceValue({ feId }: { feId: string }) {
   const equalsValue = showEquals.includes(valueSourceName)
     ? valueVarb.displayVarb()
     : undefined;
+
+  const menuItems: [StateValue<"maintainanceValueSource">, string][] = [
+    ["onePercentPrice", "1% purchase price"],
+    ["sqft", "$1 per sqft"],
+    ["onePercentAndSqft", "1% purchase price and $1 sqft, average"],
+    ["valueEditor", "Custom amount"],
+  ];
 
   return (
     <SelectEditorSection
@@ -39,12 +44,7 @@ export function MaintenanceValue({ feId }: { feId: string }) {
           const value = e.target.value as string;
           maintenanceValue.varb("valueSourceName").updateValue(value);
         },
-        menuItems: [
-          ["onePercentPrice", "1% purchase price"],
-          ["sqft", "$1 per sqft"],
-          ["onePercentAndSqft", "1% purchase price and $1 sqft, average"],
-          ["valueEditor", "Custom amount"],
-        ],
+        menuItems,
         equalsValue,
         editorProps:
           valueSourceName === "valueEditor"

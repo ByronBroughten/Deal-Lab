@@ -14,6 +14,7 @@ import { SectionName } from "../SectionsMeta/SectionName";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { SectionPathContextName } from "../SectionsMeta/sectionPathContexts";
 import {
+  SectionValues,
   SomeSectionValues,
   StateValue,
 } from "../SectionsMeta/values/StateValue";
@@ -203,7 +204,7 @@ export class UpdaterSection<
     const { feInfo } = this.get.youngestChild(childName);
     return this.updaterSection(feInfo);
   }
-  updateValues(values: SomeSectionValues<SN>): void {
+  updateValues(values: Partial<SectionValues<SN>>): void {
     for (const varbName of Obj.keys(values)) {
       const varb = this.varb(varbName as string);
       varb.updateValue(values[varbName] as StateValue);

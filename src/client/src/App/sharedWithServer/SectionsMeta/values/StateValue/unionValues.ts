@@ -1,12 +1,38 @@
 import { Obj } from "../../../utils/Obj";
 
-export type SyncStatus = "unsyncedChanges" | "changesSynced";
-export type AutoSyncControl = "autoSyncOff" | "autoSyncOn";
-
 const unionValueArrs = {
+  authStatus: ["guest", "user"],
+  syncStatus: ["unsyncedChanges", "changesSynced"],
+  autoSyncControl: ["autoSyncOff", "autoSyncOn"],
   completionStatus: ["allEmpty", "allValid", "someInvalid"],
   editorValueSource: ["valueEditor"],
+  loadedVarbSource: ["loadedVarb"],
   customValueSource: ["none", "valueEditor", "listTotal"],
+  utilityValueSource: ["none", "zero", "listTotal"],
+  repairValueSource: ["none", "zero", "valueEditor", "listTotal"],
+  maintainanceValueSource: [
+    "none",
+    "onePercentPrice",
+    "sqft",
+    "onePercentAndSqft",
+    "valueEditor",
+  ],
+  capExValueSource: ["none", "fivePercentRent", "valueEditor", "listTotal"],
+  closingCostValueSource: [
+    "none",
+    "fivePercentLoan",
+    "valueEditor",
+    "listTotal",
+  ],
+  dealMode: ["buyAndHold", "fixAndFlip", "brrrrr"],
+  financingMode: ["cashOnly", "useLoan", ""],
+  userDataStatus: [
+    "notLoaded",
+    "loading",
+    "loaded",
+    // unloading
+  ],
+  labSubscription: ["basicPlan", "fullPlan"],
 } as const;
 
 type UnionValueArrs = typeof unionValueArrs;
@@ -22,40 +48,9 @@ export type UnionValueNamesToTypes = {
   [UN in UnionValueName]: UnionValue<UN>;
 };
 
-export type RepairValueMode = "none" | "zero" | "valueEditor" | "listTotal";
-export type UtilityValueMode = "none" | "zero" | "listTotal";
-export type MaintenanceValueMode =
-  | "none"
-  | "onePercentPrice"
-  | "sqft"
-  | "onePercentAndSqft"
-  | "valueEditor";
-export type CapExValueMode =
-  | "none"
-  | "fivePercentRent"
-  | "valueEditor"
-  | "listTotal";
-export type ClosingCostValueMode =
-  | "none"
-  | "fivePercentLoan"
-  | "valueEditor"
-  | "listTotal";
-
-export const dealModes = ["buyAndHold", "fixAndFlip", "brrrrr"] as const;
-export type DealMode = typeof dealModes[number];
-
-export type FinancingMode = "cashOnly" | "useLoan" | "";
-
-export const userDataStatuses = [
-  "notLoaded",
-  "loading",
-  "loaded",
-  // unloading
-] as const;
-export type UserDataStatus = typeof userDataStatuses[number];
-
-export const userPlans = ["basicPlan", "fullPlan"] as const;
-export type AnalyzerPlan = typeof userPlans[number];
-export function isUserPlan(value: any): value is AnalyzerPlan {
-  return userPlans.includes(value);
+export function isLabSubscription(
+  value: any
+): value is UnionValue<"labSubscription"> {
+  const subscriptions = unionValueArr("labSubscription");
+  return subscriptions.includes(value);
 }

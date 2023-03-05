@@ -89,13 +89,8 @@ export function makeAllBaseSectionVarbs() {
       // then
       then: baseVarb("numObj"),
     }),
-    singleTimeListGroup: baseSectionVarbs({
-      total: baseVarb("numObj", dollars),
-      itemValueSwitch: baseVarb("string"),
-    }),
     singleTimeValueGroup: baseSectionVarbs({
       total: baseVarb("numObj", dollars),
-      itemValueSwitch: baseVarb("string"),
     }),
     singleTimeValue: baseSectionVarbs({
       displayName: baseVarb("stringObj"),
@@ -104,21 +99,14 @@ export function makeAllBaseSectionVarbs() {
       valueEditor: baseVarb("numObj"),
       valueSourceName: baseVarb("string"),
       isItemized: baseVarb("boolean"),
-      itemValueSwitch: baseVarb("string"),
     }),
     singleTimeList: baseSectionVarbs({
       ...varbs.savableSection,
       total: baseVarb("numObj", dollars),
-      itemValueSwitch: baseVarb("string"),
+      itemValueSource: baseVarb("editorValueSource"),
     }),
     ongoingValueGroup: baseSectionVarbs({
       ...varbs.ongoingDollars("total"),
-      itemValueSwitch: baseVarb("string"),
-      itemOngoingSwitch: baseVarb("string"),
-    }),
-    loadedNumObjVarb: baseSectionVarbs({
-      ...varbs.singleValueVirtualVarb,
-      ...varbs.loadableVarb,
     }),
     ongoingValue: baseSectionVarbs({
       ...varbs.ongoingDollars("value"),
@@ -126,19 +114,12 @@ export function makeAllBaseSectionVarbs() {
       displayNameEditor: baseVarb("stringObj"),
       valueEditor: baseVarb("numObj"),
       valueSourceName: baseVarb("string"),
-      itemValueSwitch: baseVarb("string"),
-      itemOngoingSwitch: baseVarb("string"),
       isItemized: baseVarb("boolean"),
-    }),
-    ongoingListGroup: baseSectionVarbs({
-      ...baseVarbsS.ongoingDollars("total"),
-      itemValueSwitch: baseVarb("string"),
-      itemOngoingSwitch: baseVarb("string"),
     }),
     ongoingList: baseSectionVarbs({
       ...baseVarbsS.savableSection,
       ...baseVarbsS.ongoingDollars("total"),
-      itemValueSwitch: baseVarb("string"),
+      itemValueSource: baseVarb("editorValueSource"),
       itemOngoingSwitch: baseVarb("string"),
     }),
     capExList: baseSectionVarbs({
@@ -151,11 +132,11 @@ export function makeAllBaseSectionVarbs() {
     ongoingCheckmarkItem: baseOngoingCheckmarkItem,
     userVarbList: baseSectionVarbs({
       ...baseVarbsS.savableSection,
-      itemValueSwitch: baseVarb("string"),
+      itemValueSource: baseVarb("editorValueSource"),
     }),
     outputList: baseSectionVarbs({
       ...baseVarbsS.savableSection,
-      itemValueSwitch: baseVarb("string"),
+      itemValueSource: baseVarb("loadedVarbSource"),
     }),
     singleTimeItem: baseSectionVarbs({
       value: baseVarb("numObj"),
@@ -221,26 +202,26 @@ export function makeAllBaseSectionVarbs() {
     }),
     repairValue: baseSectionVarbs({
       value: baseVarb("numObj", dollars),
-      valueSourceName: baseVarb("string"),
+      valueSourceName: baseVarb("repairValueSource"),
       valueLumpSumEditor: baseVarb("numObj", dollars),
     }),
     utilityValue: baseSectionVarbs({
       ...baseVarbsS.ongoingDollars("value"),
-      valueSourceName: baseVarb("string"),
+      valueSourceName: baseVarb("utilityValueSource"),
     }),
     maintenanceValue: baseSectionVarbs({
       ...baseVarbsS.ongoingDollars("value"),
-      valueSourceName: baseVarb("string"),
+      valueSourceName: baseVarb("maintainanceValueSource"),
       valueLumpSumEditor: baseVarb("numObj", dollars),
     }),
     capExValue: baseSectionVarbs({
       ...baseVarbsS.ongoingDollars("value"),
-      valueSourceName: baseVarb("string"),
+      valueSourceName: baseVarb("capExValueSource"),
       valueLumpSumEditor: baseVarb("numObj", dollars),
     }),
     closingCostValue: baseSectionVarbs({
       value: baseVarb("numObj", dollars),
-      valueSourceName: baseVarb("string"),
+      valueSourceName: baseVarb("closingCostValueSource"),
       valueLumpSumEditor: baseVarb("numObj", dollars),
     }),
     loan: baseSectionVarbs({
@@ -302,7 +283,7 @@ export function makeAllBaseSectionVarbs() {
       showOutputs: baseVarb("boolean"),
     }),
     deal: baseSectionVarbs({
-      dealMode: baseVarb("string"), // buyAndHold, fixAndFlip, brrrrr
+      dealMode: baseVarb("dealMode"),
       ...baseVarbsS.savableSection,
       ...baseVarbsS.ongoingDollars("piti"),
       ...baseVarbsS.ongoingDollars("expenses"),
@@ -325,7 +306,7 @@ export function makeAllBaseSectionVarbs() {
       downPaymentDecimal: baseVarb("numObj", decimal),
     }),
     financing: baseSectionVarbs({
-      financingMode: baseVarb("string"), // "cashOnly", "useLoan", ""
+      financingMode: baseVarb("financingMode"),
       ...baseVarbs(
         "numObj",
         [
@@ -369,13 +350,10 @@ export function makeAllBaseSectionVarbs() {
       dealCompletionStatus: baseVarb("completionStatus"),
     }),
     feUser: baseSectionVarbs({
-      ...baseVarbs("string", [
-        "authStatus",
-        "userDataStatus",
-        "analyzerPlan",
-        "email",
-        "userName",
-      ] as const),
+      authStatus: baseVarb("authStatus"),
+      userDataStatus: baseVarb("userDataStatus"),
+      analyzerPlan: baseVarb("labSubscription"),
+      ...baseVarbs("string", ["email", "userName"] as const),
       analyzerPlanExp: baseVarb("number"),
     }),
     userInfo: baseSectionVarbs({

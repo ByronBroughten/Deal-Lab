@@ -1,4 +1,3 @@
-import { ClosingCostValueMode } from "../../../../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
 import { useSetterSection } from "../../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import { SelectAndItemizeEditorSection } from "../../../../appWide/SelectAndItemizeEditorSection";
 import { ListEditorSingleTime } from "../../PropertyGeneral/Property/ValueShared.tsx/ListEditorSingleTime";
@@ -9,9 +8,7 @@ export function ClosingCostValue({ feId, fivePercentLoanDisplay }: Props) {
     sectionName: "closingCostValue",
     feId,
   });
-  const valueSourceName = closingCostValue.value(
-    "valueSourceName"
-  ) as ClosingCostValueMode;
+  const valueSourceName = closingCostValue.value("valueSourceName");
   const equalsValue =
     valueSourceName === "fivePercentLoan" ? fivePercentLoanDisplay : undefined;
   return (

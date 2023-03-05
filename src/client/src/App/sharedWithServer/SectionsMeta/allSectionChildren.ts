@@ -131,17 +131,11 @@ export const allSectionChildren = checkAllSectionChildren({
     outputItem: sectionChild("outputItem"),
   },
   outputItem: { virtualVarb: sectionChild("virtualVarb") },
-  ongoingListGroup: {
-    ongoingList: sectionChild("ongoingList"),
-  },
   ongoingValueGroup: {
     ongoingValue: sectionChild("ongoingValue"),
   },
   ongoingValue: {
     ongoingList: sectionChild("ongoingList"),
-  },
-  singleTimeListGroup: {
-    singleTimeList: sectionChild("singleTimeList"),
   },
   singleTimeValueGroup: {
     singleTimeValue: sectionChild("singleTimeValue"),

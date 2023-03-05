@@ -6,7 +6,6 @@ import {
 } from "../updateSectionVarbs/updateVarb";
 import { updateFnPropS } from "../updateSectionVarbs/updateVarb/UpdateFnProps";
 import { updateVarbsS } from "../updateSectionVarbs/updateVarbs";
-import { DealMode } from "../values/StateValue/unionValues";
 
 export function dealRelVarbs(): UpdateSectionVarbs<"deal"> {
   return {
@@ -20,7 +19,7 @@ export function dealRelVarbs(): UpdateSectionVarbs<"deal"> {
         updateFnPropS.varbPathBase("loanPayment"),
       ],
     }),
-    dealMode: updateVarb("string", { initValue: "buyAndHold" as DealMode }),
+    dealMode: updateVarb("dealMode", { initValue: "buyAndHold" }),
     downPaymentDollars: updateVarbS.leftRightPropFn("simpleSubtract", [
       updateFnPropS.varbPathName("purchasePrice"),
       updateFnPropS.varbPathName("loanBaseDollars"),

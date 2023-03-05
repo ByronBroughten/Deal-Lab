@@ -158,22 +158,19 @@ export class GetterVarb<
       );
     }
   }
-  multiValue<VT extends ValueNameOrAny = "any">(
-    ...valueNames: VT[]
-  ): StateValueOrAny<VT> {
+  multiValue<VT extends ValueName>(...valueNames: VT[]): StateValueOrAny<VT> {
     const { value } = this.raw;
-    if (
-      valueNames.includes(this.valueName as any) ||
-      valueNames.includes("any" as any)
-    ) {
-      return cloneDeep(value) as StateValueOrAny<VT>;
-    } else {
-      throw new ValueTypeError(
-        `Value of ${this.sectionName}.${
-          this.varbName
-        } not of type ${valueNames.join(" ")}`
-      );
+    for (const valueName of valueNames) {
+      const meta = this.sectionsMeta.valueByName(valueName);
+      if (meta.is(value)) {
+        return cloneDeep(value) as StateValueOrAny<VT>;
+      }
     }
+    throw new ValueTypeError(
+      `Value of ${this.sectionName}.${
+        this.varbName
+      } not of type ${valueNames.join(" ")}`
+    );
   }
   valueNext() {
     const value = this.value();

@@ -1,5 +1,4 @@
 import { switchKeyToVarbNames } from "../allBaseSectionVarbs/baseSwitchNames";
-import { AutoSyncControl } from "../values/StateValue/unionValues";
 import {
   ongoingPureCalc,
   ongoingSumNums,
@@ -25,11 +24,11 @@ export const updateVarbsS = {
       displayName: updateVarb("stringObj"),
       dateTimeFirstSaved: updateVarb("dateTime"),
       dateTimeLastSaved: updateVarb("dateTime"),
-      syncStatus: updateVarb("string", {
+      syncStatus: updateVarb("syncStatus", {
         initValue: "unsyncedChanges",
       }),
-      autoSyncControl: updateVarb("string", {
-        initValue: "autoSyncOff" as AutoSyncControl,
+      autoSyncControl: updateVarb("autoSyncControl", {
+        initValue: "autoSyncOff",
       }),
     } as const;
   },
@@ -150,7 +149,7 @@ export const updateVarbsS = {
     return {
       ...this._typeUniformity,
       ...this.listItemVirtualVarb,
-      valueSourceName: updateVarb("string", {
+      valueSourceName: updateVarb("editorValueSource", {
         initValue: "valueEditor",
       }),
       valueEditor: updateVarb("numObj"),

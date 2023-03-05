@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { VarbName } from "../../sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
 import { ChildName } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/ChildName";
 import { SectionNameByType } from "../../sharedWithServer/SectionsMeta/SectionNameByType";
+import { StateValue } from "../../sharedWithServer/SectionsMeta/values/StateValue";
 import { useSetterSection } from "../../sharedWithServer/stateClassHooks/useSetterSection";
 import theme from "../../theme/Theme";
 import { BigStringEditor } from "../inputs/BigStringEditor";
@@ -48,6 +49,12 @@ export function ValueSectionGeneric<
   const displayNameValue = section
     .varb("displayName")
     .value("stringObj").mainText;
+
+  const menuItems: [StateValue<"customValueSource">, string][] = [
+    ["valueEditor", "Enter amount"],
+    ["listTotal", "Itemize"],
+  ];
+
   return (
     <Styled className={`ValueSection-root ${className ?? ""}`}>
       <div className={"ValueSection-viewable"}>
@@ -80,10 +87,7 @@ export function ValueSectionGeneric<
                     quickViewVarbNames: ["purchasePrice", "sqft", "numUnits"],
                   }
                 : undefined,
-            menuItems: [
-              ["valueEditor", "Enter amount"],
-              ["listTotal", "Itemize"],
-            ],
+            menuItems,
             onChange: (e) => {
               const value = e.target.value as string;
               section.varb("valueSourceName").updateValue(value);

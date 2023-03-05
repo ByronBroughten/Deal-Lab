@@ -1,10 +1,7 @@
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { constants } from "../../Constants";
-import {
-  AnalyzerPlan,
-  userPlans,
-} from "../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
+import { StateValue } from "../../sharedWithServer/SectionsMeta/values/StateValue";
 import { useGetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useGetterSection";
 import { timeS } from "../../sharedWithServer/utils/date";
 import { getErrorMessage } from "../../utils/error";
@@ -16,15 +13,13 @@ export function useSubscriptions() {
 }
 
 export function useUserSubscription(): {
-  userPlan: AnalyzerPlan;
+  userPlan: StateValue<"labSubscription">;
   userPlanExpiration: number;
   userIsPro: boolean;
 } {
   const user = useGetterSectionOnlyOne("feUser");
-  const varb = user.varbNext("analyzerPlan");
-  const userPlan = varb.valueSafe(userPlans);
+  const userPlan = user.valueNext("analyzerPlan");
   const userPlanExpiration = user.valueNext("analyzerPlanExp");
-
   return {
     userPlan,
     userPlanExpiration,

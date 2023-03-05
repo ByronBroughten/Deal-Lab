@@ -6,10 +6,6 @@ import {
   SomeSectionValues,
 } from "../../sharedWithServer/SectionsMeta/values/StateValue";
 import { StringObj } from "../../sharedWithServer/SectionsMeta/values/StateValue/StringObj";
-import {
-  AutoSyncControl,
-  SyncStatus,
-} from "../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
 import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection";
 import { GetterSections } from "../../sharedWithServer/StateGetters/GetterSections";
 import { PackMakerSection } from "../../sharedWithServer/StatePackers.ts/PackMakerSection";
@@ -136,8 +132,8 @@ export class MainSectionSolver<
     this.solver.updateValuesAndSolve({
       dateTimeFirstSaved: dateTime,
       dateTimeLastSaved: dateTime,
-      syncStatus: "changesSynced" as SyncStatus,
-      autoSyncControl: "autoSyncOff" as AutoSyncControl,
+      syncStatus: "changesSynced",
+      autoSyncControl: "autoSyncOff",
     } as Partial<SectionValues<SN>>);
     const sectionPack = this.packMaker.makeSectionPack();
     this.feStoreSolver.addItem(sectionPack);

@@ -8,7 +8,7 @@ export interface ValueSectionOneTimeProps {
   showXBtn?: boolean;
 }
 
-export function ValueSectionSingleTime(props: ValueSectionOneTimeProps) {
+export function SingleTimeValue(props: ValueSectionOneTimeProps) {
   return (
     <ValueSectionGeneric
       {...{

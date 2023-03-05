@@ -1,4 +1,4 @@
-import { AnalyzerPlan } from "../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
+import { StateValue } from "../../sharedWithServer/SectionsMeta/values/StateValue";
 import { PackBuilderSection } from "../../sharedWithServer/StatePackers.ts/PackBuilderSection";
 import { StrictOmit } from "../../sharedWithServer/utils/types";
 import { FeUserSolver } from "../SectionSolvers/FeUserSolver";
@@ -38,8 +38,8 @@ export class FeUserActor extends SectionActorBase<"feUser"> {
       analyzerPlanExp: data.analyzerPlanExp,
     });
   }
-  get analyzerPlan(): AnalyzerPlan {
-    return this.get.valueNext("analyzerPlan") as AnalyzerPlan;
+  get analyzerPlan(): StateValue<"labSubscription"> {
+    return this.get.valueNext("analyzerPlan");
   }
   get isLoggedIn(): boolean {
     return this.solver.isLoggedIn;

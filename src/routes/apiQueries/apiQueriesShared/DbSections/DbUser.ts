@@ -24,8 +24,10 @@ import {
 } from "../../../../client/src/App/sharedWithServer/SectionsMeta/SectionInfo/DbStoreInfo";
 import { FeSectionInfo } from "../../../../client/src/App/sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { SectionName } from "../../../../client/src/App/sharedWithServer/SectionsMeta/SectionName";
-import { VarbValue } from "../../../../client/src/App/sharedWithServer/SectionsMeta/values/StateValue";
-import { AutoSyncControl } from "../../../../client/src/App/sharedWithServer/SectionsMeta/values/StateValue/unionValues";
+import {
+  StateValue,
+  VarbValue,
+} from "../../../../client/src/App/sharedWithServer/SectionsMeta/values/StateValue";
 import { GetterSection } from "../../../../client/src/App/sharedWithServer/StateGetters/GetterSection";
 import { PackBuilderSection } from "../../../../client/src/App/sharedWithServer/StatePackers.ts/PackBuilderSection";
 import { SectionPackArrs } from "../../../../client/src/App/sharedWithServer/StatePackers.ts/PackMakerSection";
@@ -277,10 +279,7 @@ export class DbUser extends DbSectionsQuerierBase {
           for (const child of section.children(childName)) {
             const getterChild = child.get;
             if (getterChild.isSectionType("hasIndexStore")) {
-              if (
-                getterChild.valueNext("autoSyncControl") ===
-                ("autoSyncOn" as AutoSyncControl)
-              ) {
+              if (getterChild.valueNext("autoSyncControl") === "autoSyncOn") {
                 const { sectionName, dbId } = getterChild;
                 const dbStoreName = sectionToMainDbStoreName(sectionName);
                 const childDbInfo = { dbStoreName, dbId };
@@ -288,9 +287,11 @@ export class DbUser extends DbSectionsQuerierBase {
                   const childPack = await this.getSectionPack(childDbInfo);
                   child.loadSelf(childPack as any as SectionPack<any>);
                 } else {
-                  child.updater
-                    .varb("autoSyncControl")
-                    .updateValue("autoSyncOff" as AutoSyncControl);
+                  const syncValue: StateValue<"autoSyncControl"> =
+                    "autoSyncOff";
+                  child.updater.updateValues({
+                    autoSyncControl: syncValue,
+                  } as any);
                 }
               }
             }

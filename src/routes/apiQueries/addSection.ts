@@ -7,7 +7,7 @@ import {
   DbStoreInfo,
   SectionQueryName,
 } from "../../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/DbStoreName";
-import { AnalyzerPlan } from "../../client/src/App/sharedWithServer/SectionsMeta/values/StateValue/unionValues";
+import { StateValue } from "../../client/src/App/sharedWithServer/SectionsMeta/values/StateValue";
 import { getAuthWare } from "../../middleware/authWare";
 import { checkUserInfoWare } from "../../middleware/checkUserInfoWare";
 import { ResStatusError } from "../../utils/resError";
@@ -52,7 +52,7 @@ async function addSection(req: Request, res: Response) {
 }
 
 type ValidateSubscriptionProps = {
-  analyzerPlan: AnalyzerPlan;
+  analyzerPlan: StateValue<"labSubscription">;
   dbStoreName: SectionQueryName;
   userId: string;
 };

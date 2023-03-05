@@ -1,4 +1,3 @@
-import { switchKeyToVarbNames } from "../allBaseSectionVarbs/baseSwitchNames";
 import { UpdateSectionVarbs } from "../updateSectionVarbs/updateSectionVarbs";
 import { updateVarb } from "../updateSectionVarbs/updateVarb";
 import { updateBasicsS } from "../updateSectionVarbs/updateVarb/UpdateBasics";
@@ -11,14 +10,12 @@ import {
 import { updateVarbsS } from "../updateSectionVarbs/updateVarbs";
 
 const valueNameBase = "value";
-const ongoingValueNames = switchKeyToVarbNames(valueNameBase, "ongoing");
-
 export function ongoingItemUpdateVarbs(): UpdateSectionVarbs<"ongoingItem"> {
   return {
     ...updateVarbsS._typeUniformity,
     ...updateVarbsS.displayNameAndEditor,
     valueEditor: updateVarb("numObj"),
-    valueSourceName: updateVarb("string", {
+    valueSourceName: updateVarb("editorValueSource", {
       initValue: "valueEditor",
     }),
     ...updateVarbsS.group("value", "ongoing", "monthly", {

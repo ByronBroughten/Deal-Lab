@@ -18,12 +18,10 @@ export const sectionNames = [
   "singleTimeValue",
   "singleTimeValueGroup",
   "singleTimeList",
-  "singleTimeListGroup",
   "singleTimeItem",
   "ongoingValueGroup",
   "ongoingValue",
   "ongoingList",
-  "ongoingListGroup",
   "ongoingItem",
   "ongoingCheckmarkItem",
   "outputList",
@@ -69,7 +67,6 @@ export const sectionNames = [
   "authInfoPrivate",
 
   "dealPage",
-  "loadedNumObjVarb",
 
   "userListEditor",
   "userVarbEditor",

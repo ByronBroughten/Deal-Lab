@@ -1,12 +1,11 @@
 import { AnalyzerPlanValues } from "../../sharedWithServer/apiQueriesShared/AnalyzerPlanValues";
 import { defaultMaker } from "../../sharedWithServer/defaultMaker/defaultMaker";
-import { AuthStatus } from "../../sharedWithServer/SectionsMeta/baseSectionsVarbsValues";
 import { ChildName } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/ChildName";
 import { ChildSectionName } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/ChildSectionName";
 import { SectionPack } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/SectionPack";
 import { FeSectionInfo } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { SectionNameByType } from "../../sharedWithServer/SectionsMeta/SectionNameByType";
-import { AutoSyncControl } from "../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
+import { StateValue } from "../../sharedWithServer/SectionsMeta/values/StateValue";
 import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection";
 import { PackBuilderSection } from "../../sharedWithServer/StatePackers.ts/PackBuilderSection";
 import { SolverSectionBase } from "../../sharedWithServer/StateSolvers/SolverBases/SolverSectionBase";
@@ -27,8 +26,8 @@ export class FeUserSolver extends SolverSectionBase<"feUser"> {
   get isLoggedIn(): boolean {
     return !this.isGuest;
   }
-  get authStatus(): AuthStatus {
-    return this.get.valueNext("authStatus") as AuthStatus;
+  get authStatus(): StateValue<"authStatus"> {
+    return this.get.valueNext("authStatus");
   }
   get isGuest(): boolean {
     return this.authStatus === "guest";
@@ -83,10 +82,7 @@ export class FeUserSolver extends SolverSectionBase<"feUser"> {
           for (const child of section.children(childName)) {
             const getterChild = child.get;
             if (getterChild.isSectionType("hasIndexStore")) {
-              if (
-                getterChild.valueNext("autoSyncControl") ===
-                ("autoSyncOn" as AutoSyncControl)
-              ) {
+              if (getterChild.valueNext("autoSyncControl") === "autoSyncOn") {
                 const store = this.sectionFeSolver(getterChild.feInfo);
                 if (store.hasByDbId(getterChild.dbId)) {
                   child.removeSelf();

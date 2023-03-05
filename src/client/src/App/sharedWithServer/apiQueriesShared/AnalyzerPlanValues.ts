@@ -1,11 +1,9 @@
-import {
-  AnalyzerPlan,
-  isUserPlan,
-} from "../SectionsMeta/values/StateValue/unionValues";
+import { StateValue } from "../SectionsMeta/values/StateValue";
+import { isLabSubscription } from "../SectionsMeta/values/StateValue/unionValues";
 import { Obj } from "../utils/Obj";
 
 export interface AnalyzerPlanValues {
-  analyzerPlan: AnalyzerPlan;
+  analyzerPlan: StateValue<"labSubscription">;
   analyzerPlanExp: number;
 }
 
@@ -13,7 +11,7 @@ export function validateSubscriptionValues(props: any): AnalyzerPlanValues {
   if (!Obj.isObjToAny(props))
     throw new Error(`Expected subscriptionProps, received ${props}`);
   const { analyzerPlan, analyzerPlanExp } = props;
-  if (!isUserPlan(analyzerPlan)) {
+  if (!isLabSubscription(analyzerPlan)) {
     throw new Error(`"${analyzerPlan}" is not of type AnalyzerPlan`);
   }
   if (!(typeof analyzerPlanExp === "number")) {

@@ -18,7 +18,7 @@ export function makeUtilityList(
   const utilityList = feUser.addAndGetChild("ongoingListMain", {
     dbId,
     dbVarbs: {
-      itemValueSwitch: valueSource,
+      itemValueSource: valueSource,
       itemOngoingSwitch: "monthly",
       totalOngoingSwitch: "monthly",
       displayName: stringObj("Utility Examples"),

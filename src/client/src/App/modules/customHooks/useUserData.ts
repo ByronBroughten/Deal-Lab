@@ -3,10 +3,7 @@ import { unstable_batchedUpdates } from "react-dom";
 import { useGoToPage } from "../../components/appWide/customHooks/useGoToPage";
 import { QueryRes } from "../../sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import { makeReq } from "../../sharedWithServer/apiQueriesShared/makeReqAndRes";
-import {
-  UserDataStatus,
-  userDataStatuses,
-} from "../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
+import { StateValue } from "../../sharedWithServer/SectionsMeta/values/StateValue";
 import { useSetterSectionOnlyOneProps } from "../../sharedWithServer/stateClassHooks/useSetterSectionsProps";
 import { SetterSection } from "../../sharedWithServer/StateSetters/SetterSection";
 import { getErrorMessage } from "../../utils/error";
@@ -37,11 +34,11 @@ export class UserDataActor extends SectionActorBase<"feUser"> {
   private get setter(): SetterSection<"feUser"> {
     return new SetterSection(this.sectionActorBaseProps);
   }
-  get userDataStatus(): UserDataStatus {
-    return this.get.valueSafe("userDataStatus", userDataStatuses);
+  get userDataStatus(): StateValue<"userDataStatus"> {
+    return this.get.valueNext("userDataStatus");
   }
-  updateUserDataStatus(userDataStatus: UserDataStatus): void {
-    this.setter.varb("userDataStatus").updateValue(userDataStatus);
+  updateUserDataStatus(userDataStatus: StateValue<"userDataStatus">): void {
+    this.setter.updateValues({ userDataStatus });
   }
   async controlUserData(): Promise<void> {
     if (await this.shouldTriggerLoad()) {

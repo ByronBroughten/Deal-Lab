@@ -6,7 +6,7 @@ import { mgmtRelVarbs } from "./allUpdateSectionVarbs/mgmtUpdateVarbs";
 import { capExItemUpdateVarbs } from "./allUpdateSectionVarbs/ongoingItemUpdateVarbs";
 import { propertyUpdateVarbs } from "./allUpdateSectionVarbs/propertyUpdateVarbs";
 import { VarbName } from "./baseSectionsDerived/baseSectionsVarbsTypes";
-import { AuthStatus } from "./baseSectionsVarbsValues";
+
 import { mixedInfoS } from "./SectionInfo/MixedSectionInfo";
 import { relVarbInfoS } from "./SectionInfo/RelVarbInfo";
 import { SectionName, sectionNames } from "./SectionName";
@@ -34,7 +34,6 @@ import {
 } from "./updateSectionVarbs/updateVarb/UpdateOverrides";
 import { updateVarbsS } from "./updateSectionVarbs/updateVarbs";
 import { numObj } from "./values/StateValue/NumObj";
-import { AnalyzerPlan } from "./values/StateValue/unionValues";
 
 type GenericAllUpdateSections = {
   [SN in SectionName]: UpdateSectionVarbs<SN>;
@@ -73,7 +72,7 @@ function makeAllUpdateSections() {
       ...updateVarbsS.ongoingInputNext("targetRent"),
     }),
     ...updateSectionProp("utilityValue", {
-      valueSourceName: updateVarb("string", { initValue: "none" }),
+      valueSourceName: updateVarb("utilityValueSource", { initValue: "none" }),
       ...updateVarbsS.group("value", "ongoing", "monthly", {
         targets: { updateFnName: "throwIfReached" },
         monthly: {
@@ -111,7 +110,7 @@ function makeAllUpdateSections() {
       }),
     }),
     ...updateSectionProp("capExValue", {
-      valueSourceName: updateVarb("string", { initValue: "none" }),
+      valueSourceName: updateVarb("capExValueSource", { initValue: "none" }),
       ...updateVarbsS.group("value", "ongoing", "monthly", {
         targets: { updateFnName: "throwIfReached" },
         monthly: {
@@ -186,7 +185,9 @@ function makeAllUpdateSections() {
     }),
     ...updateSectionProp("capExItem", capExItemUpdateVarbs()),
     ...updateSectionProp("maintenanceValue", {
-      valueSourceName: updateVarb("string", { initValue: "none" }),
+      valueSourceName: updateVarb("maintainanceValueSource", {
+        initValue: "none",
+      }),
       ...updateVarbsS.group("value", "ongoing", "monthly", {
         targets: { updateFnName: "throwIfReached" },
         monthly: {
@@ -257,7 +258,7 @@ function makeAllUpdateSections() {
       }),
     }),
     ...updateSectionProp("repairValue", {
-      valueSourceName: updateVarb("string", { initValue: "none" }),
+      valueSourceName: updateVarb("repairValueSource", { initValue: "none" }),
       value: updateVarb("numObj", {
         updateFnName: "throwIfReached",
         updateOverrides: [
@@ -281,16 +282,12 @@ function makeAllUpdateSections() {
       }),
     }),
     ...updateSectionProp("feUser", {
-      authStatus: updateVarb("string", {
-        initValue: "guest" as AuthStatus,
-      }),
-      analyzerPlan: updateVarb("string", {
-        initValue: "basicPlan" as AnalyzerPlan,
-      }),
+      authStatus: updateVarb("authStatus", { initValue: "guest" }),
+      analyzerPlan: updateVarb("labSubscription", { initValue: "basicPlan" }),
       analyzerPlanExp: updateVarb("number", {
         initValue: timeS.hundredsOfYearsFromNow,
       }),
-      userDataStatus: updateVarb("string", {
+      userDataStatus: updateVarb("userDataStatus", {
         initValue: "notLoaded",
       }),
     }),
@@ -298,7 +295,7 @@ function makeAllUpdateSections() {
       guestSectionsAreLoaded: updateVarb("boolean", { initValue: false }),
     }),
     ...updateSectionProp("outputList", {
-      itemValueSwitch: updateVarb("string", {
+      itemValueSource: updateVarb("loadedVarbSource", {
         initValue: "loadedVarb",
       } as const),
     }),
@@ -306,7 +303,7 @@ function makeAllUpdateSections() {
       total: updateVarbS.sumNums([
         updateFnPropS.children("singleTimeValue", "value"),
       ]),
-      itemValueSwitch: updateVarb("string", {
+      itemValueSource: updateVarb("string", {
         initValue: "valueEditor",
       }),
     }),
@@ -314,12 +311,12 @@ function makeAllUpdateSections() {
       total: updateVarbS.sumNums([
         updateFnPropS.children("singleTimeItem", "value"),
       ]),
-      itemValueSwitch: updateVarb("string", {
+      itemValueSource: updateVarb("editorValueSource", {
         initValue: "valueEditor",
       }),
     }),
     ...updateSectionProp("closingCostValue", {
-      valueSourceName: updateVarb("string", {
+      valueSourceName: updateVarb("closingCostValueSource", {
         initValue: "none",
       }),
       valueLumpSumEditor: updateVarb("numObj"),
@@ -385,7 +382,7 @@ function makeAllUpdateSections() {
       valueSourceName: updateVarb("string", {
         initValue: "valueEditor",
       }),
-      itemValueSwitch: updateVarb("string", {
+      itemValueSource: updateVarb("string", {
         initValue: "valueEditor",
       }),
     }),
@@ -400,7 +397,7 @@ function makeAllUpdateSections() {
       valueSourceName: updateVarb("string", {
         initValue: "valueEditor",
       }),
-      itemValueSwitch: updateVarb("string", {
+      itemValueSource: updateVarb("string", {
         initValue: "valueEditor",
       }),
       ...updateVarbsS.ongoingInputNext("value", {
@@ -483,7 +480,7 @@ function makeAllUpdateSections() {
         "monthly"
       ),
       value: updateVarb("numObj"),
-      itemValueSwitch: updateVarb("string", {
+      itemValueSource: updateVarb("string", {
         initValue: "valueEditor",
       }),
       itemOngoingSwitch: updateVarb("string", {
@@ -496,7 +493,7 @@ function makeAllUpdateSections() {
         [updateFnPropS.children("ongoingItem", "value")],
         "monthly"
       ),
-      itemValueSwitch: updateVarb("string", {
+      itemValueSource: updateVarb("editorValueSource", {
         initValue: "valueEditor",
       }),
       itemOngoingSwitch: updateVarb("string", {
@@ -504,7 +501,7 @@ function makeAllUpdateSections() {
       }),
     }),
     ...updateSectionProp("userVarbList", {
-      itemValueSwitch: updateVarb("string", {
+      itemValueSource: updateVarb("editorValueSource", {
         initValue: "valueEditor",
       } as const),
     }),

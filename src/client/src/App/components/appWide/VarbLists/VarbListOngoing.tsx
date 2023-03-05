@@ -17,10 +17,10 @@ export function VarbListOngoing({ feId, ...rest }: Props) {
 
   const itemName = list.meta.varbListItem;
   const addItem = () => {
-    const itemValueSwitch = list.varb("itemValueSwitch").value("string");
+    const itemValueSource = list.value("itemValueSource");
     list.addChild(itemName, {
       dbVarbs: {
-        valueSourceName: itemValueSwitch,
+        valueSourceName: itemValueSource,
         valueOngoingSwitch: itemOngoingSwitch,
       },
     });

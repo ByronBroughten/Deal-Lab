@@ -1,19 +1,14 @@
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
 
 export function makeDefaultOngoingValue() {
-  const itemValueSwitch = "valueEditor";
-  const ongoingValue = PackBuilderSection.initAsOmniChild("ongoingValue", {
-    dbVarbs: {
-      itemValueSwitch,
-      valueSourceName: "none",
-      isItemized: false,
-      valueOngoingSwitch: "monthly",
-    },
+  const itemValueSource = "valueEditor";
+  const ongoingValue = PackBuilderSection.initAsOmniChild("ongoingValue");
+  ongoingValue.updateValues({
+    valueSourceName: "none",
+    valueOngoingSwitch: "monthly",
   });
-  ongoingValue.addChild("ongoingList", {
-    dbVarbs: {
-      itemValueSwitch,
-    },
-  });
+
+  const list = ongoingValue.addAndGetChild("ongoingList");
+  list.updateValues({ itemValueSource });
   return ongoingValue.makeSectionPack();
 }

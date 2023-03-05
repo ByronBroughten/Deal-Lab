@@ -8,7 +8,7 @@ const ongoingItemBase = {
 
   ...baseVarbsS.ongoingDollars("value"),
   valueEditor: baseVarb("numObj"),
-  valueSourceName: baseVarb("string"),
+  valueSourceName: baseVarb("editorValueSource"),
   ...baseVarbsS.displayNameAndEditor,
 } as const;
 

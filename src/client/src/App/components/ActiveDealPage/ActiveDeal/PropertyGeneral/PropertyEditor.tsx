@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { DealMode } from "../../../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
+import { StateValue } from "../../../../sharedWithServer/SectionsMeta/values/StateValue";
 import { useGetterSection } from "../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { nativeTheme } from "../../../../theme/nativeTheme";
 import MainSectionBody from "../../../appWide/GeneralSection/MainSection/MainSectionBody";
@@ -15,7 +15,7 @@ import { UtilityValue } from "./Property/UtilityValue";
 
 type Props = {
   feId: string;
-  dealMode: DealMode;
+  dealMode: StateValue<"dealMode">;
   backBtnProps: {
     backToWhat: string;
     onClick: () => void;

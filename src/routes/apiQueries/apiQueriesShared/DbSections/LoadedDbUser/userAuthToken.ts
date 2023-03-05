@@ -2,7 +2,7 @@ import config from "config";
 import jwt from "jsonwebtoken";
 import { isObject } from "lodash";
 import { AnalyzerPlanValues } from "../../../../../client/src/App/sharedWithServer/apiQueriesShared/AnalyzerPlanValues";
-import { isUserPlan } from "../../../../../client/src/App/sharedWithServer/SectionsMeta/values/StateValue/unionValues";
+import { isLabSubscription } from "../../../../../client/src/App/sharedWithServer/SectionsMeta/values/StateValue/unionValues";
 
 import { StrictOmit } from "../../../../../client/src/App/sharedWithServer/utils/types";
 import { ResStatusError } from "../../../../../utils/resError";
@@ -41,7 +41,7 @@ function hasTokenProps(value: any) {
     typeof value.userId === "string" &&
     typeof value.iat === "number" &&
     typeof value.analyzerPlanExp === "number" &&
-    isUserPlan(value.analyzerPlan)
+    isLabSubscription(value.analyzerPlan)
   );
 }
 export function checkUserAuthToken(token: any): UserInfoJwt {

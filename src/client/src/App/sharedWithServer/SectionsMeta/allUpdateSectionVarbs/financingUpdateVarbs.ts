@@ -27,7 +27,7 @@ function sumLoanVarb(
         )
       ),
       updateOverride(
-        [overrideSwitchS.varbIsValue("financingMode", ...["cashOnly", ""])],
+        [overrideSwitchS.varbIsValue("financingMode", "cashOnly", "")],
         updateBasicsS.zero
       ),
     ],
@@ -49,7 +49,7 @@ function sumOngoingLoanVarb<BN extends string>(
       },
       {
         switches: [
-          overrideSwitchS.varbIsValue("financingMode", ...["cashOnly", ""]),
+          overrideSwitchS.varbIsValue("financingMode", "cashOnly", ""),
         ],
         updateBasics: updateBasicsS.zero,
       },
@@ -61,7 +61,7 @@ export function financingUpdateVarbs(): UpdateSectionVarbs<"financing"> {
   return {
     ...updateVarbsS._typeUniformity,
     one: updateVarbS.one(),
-    financingMode: updateVarb("string", { initValue: "" }),
+    financingMode: updateVarb("financingMode", { initValue: "" }),
     loanBaseDollars: sumLoanVarb("loanBaseDollars"),
     loanTotalDollars: sumLoanVarb("loanTotalDollars"),
     closingCosts: sumLoanVarb("closingCosts"),

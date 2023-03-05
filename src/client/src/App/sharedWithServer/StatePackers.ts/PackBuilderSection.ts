@@ -15,7 +15,7 @@ import {
   SectionNameByType,
   SectionNameType,
 } from "../SectionsMeta/SectionNameByType";
-import { SomeSectionValues } from "../SectionsMeta/values/StateValue";
+import { SectionValues } from "../SectionsMeta/values/StateValue";
 import {
   GetterSection,
   GetterSectionRequiredProps,
@@ -85,7 +85,7 @@ export class PackBuilderSection<
   get maker(): PackMakerSection<SN> {
     return new PackMakerSection(this.getterSectionProps);
   }
-  updateValues(values: SomeSectionValues<SN>): void {
+  updateValues(values: Partial<SectionValues<SN>>): void {
     this.updater.updateValues(values);
   }
   isSectionType<ST extends SectionNameType>(

@@ -7,7 +7,6 @@ import { SectionPackRes } from "../../client/src/App/sharedWithServer/apiQueries
 import { Id } from "../../client/src/App/sharedWithServer/SectionsMeta/id";
 import { numObj } from "../../client/src/App/sharedWithServer/SectionsMeta/values/StateValue/NumObj";
 import { stringObj } from "../../client/src/App/sharedWithServer/SectionsMeta/values/StateValue/StringObj";
-import { AutoSyncControl } from "../../client/src/App/sharedWithServer/SectionsMeta/values/StateValue/unionValues";
 import { PackBuilderSection } from "../../client/src/App/sharedWithServer/StatePackers.ts/PackBuilderSection";
 import { runApp } from "../../runApp";
 import { SetterTesterSection } from "./../../client/src/App/sharedWithServer/StateSetters/TestUtils/SetterTesterSection";
@@ -104,9 +103,7 @@ describe(testedRoute, () => {
     const property = deal.onlyChild("property");
     property.varb("purchasePrice").updateValue(original.purchasePrice);
     property.varb("displayName").updateValue(original.displayName);
-    property.updateValues({
-      autoSyncControl: "autoSyncOn" as AutoSyncControl,
-    });
+    property.updateValues({ autoSyncControl: "autoSyncOn" });
 
     reqs.addSection.body = {
       dbStoreName: "dealMain",

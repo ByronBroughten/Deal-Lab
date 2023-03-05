@@ -1,6 +1,6 @@
 import { FormControl, FormControlLabel, RadioGroup } from "@material-ui/core";
 import styled from "styled-components";
-import { DealMode } from "../../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
+import { StateValue } from "../../../sharedWithServer/SectionsMeta/values/StateValue";
 import { useSetterSection } from "../../../sharedWithServer/stateClassHooks/useSetterSection";
 import { FormSection } from "../../appWide/FormSection";
 import { SubSectionBtn } from "../../appWide/GeneralSection/GeneralSectionTitle/SubSectionBtn";
@@ -12,7 +12,7 @@ import { Loan } from "./Financing/Loan";
 
 type Props = {
   feId: string;
-  dealMode: DealMode;
+  dealMode: StateValue<"dealMode">;
   backBtnProps: {
     backToWhat: string;
     onClick: () => void;
@@ -26,7 +26,12 @@ export function FinancingEditor({ feId, backBtnProps }: Props) {
   });
 
   const financingModeVarb = financing.varb("financingMode");
-  const financingMode = financingModeVarb.value("string");
+  const financingMode = financing.value("financingMode");
+
+  const values: Record<string, StateValue<"financingMode">> = {
+    cashOnly: "cashOnly",
+    useLoan: "useLoan",
+  };
 
   const loanIds = financing.childFeIds("loan");
   const addLoan = () => financing.addChild("loan");
@@ -52,12 +57,12 @@ export function FinancingEditor({ feId, backBtnProps }: Props) {
               }
             >
               <FormControlLabel
-                value="cashOnly"
+                value={values.cashOnly}
                 control={<Radio color="primary" />}
                 label="Cash Only"
               />
               <FormControlLabel
-                value="useLoan"
+                value={values.useLoan}
                 control={<Radio color="primary" />}
                 label="Use Loan(s)"
               />

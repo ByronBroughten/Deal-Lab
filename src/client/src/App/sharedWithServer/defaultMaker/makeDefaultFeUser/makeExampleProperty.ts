@@ -1,4 +1,7 @@
-import { SectionValues } from "../../SectionsMeta/values/StateValue";
+import {
+  SectionValues,
+  StateValue,
+} from "../../SectionsMeta/values/StateValue";
 import {
   NumObj,
   numObj,
@@ -6,10 +9,6 @@ import {
 } from "../../SectionsMeta/values/StateValue/NumObj";
 import { numObjNext } from "../../SectionsMeta/values/StateValue/numObjNext";
 import { stringObj } from "../../SectionsMeta/values/StateValue/StringObj";
-import {
-  CapExValueMode,
-  MaintenanceValueMode,
-} from "../../SectionsMeta/values/StateValue/unionValues";
 import { PackBuilderSection } from "../../StatePackers.ts/PackBuilderSection";
 import { StrictPick } from "../../utils/types";
 import { makeDefaultProperty } from "../makeDefaultProperty";
@@ -32,10 +31,10 @@ type ExamplePropertyProps = {
   repairs: readonly (readonly [string, number | NumObj])[];
   utilities: readonly (readonly [string, number | NumObj])[];
   capEx: {
-    valueSourceName: CapExValueMode;
+    valueSourceName: StateValue<"capExValueSource">;
     items: readonly (readonly [string, number | NumObj, number | NumObj])[];
   };
-  maintenance: { valueSourceName: MaintenanceValueMode };
+  maintenance: { valueSourceName: StateValue<"maintainanceValueSource"> };
 };
 
 function makeExampleProperty(props: ExamplePropertyProps) {

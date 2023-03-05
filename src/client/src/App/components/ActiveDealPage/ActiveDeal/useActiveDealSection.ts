@@ -1,6 +1,5 @@
 import { FeRouteName } from "../../../Constants/feRoutes";
 import { StateValue } from "../../../sharedWithServer/SectionsMeta/values/StateValue";
-import { dealModes } from "../../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
 import { useGetterSectionOnlyOne } from "../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { useGoToPage } from "../../appWide/customHooks/useGoToPage";
 
@@ -43,7 +42,7 @@ export function useActiveDealSection(sectionName: ActiveDealSectionName) {
   const goToIndex = useGoToPage("activeDeal");
   return {
     feId: deal.onlyChildFeId(sectionName),
-    dealMode: deal.varbNext("dealMode").valueSafe(dealModes),
+    dealMode: deal.valueNext("dealMode"),
     isComplete: completionStatus === "allValid",
     backBtnProps: {
       backToWhat: "Deal",

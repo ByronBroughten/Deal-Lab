@@ -196,10 +196,6 @@ export const allDisplaySectionVarbs = {
       },
     }),
   }),
-
-  ...displaySectionVarbsProp("singleTimeListGroup", {
-    total: varb("Total"),
-  }),
   ...displaySectionVarbsProp("singleTimeValueGroup", {
     total: varb("Total"),
   }),
@@ -217,14 +213,10 @@ export const allDisplaySectionVarbs = {
     "ongoingValue",
     group("ongoingInput", "value", relVarbInfoS.local("displayName"))
   ),
-  ...displaySectionVarbsProp("ongoingListGroup", {
-    ...group("ongoing", "total", relVarbInfoS.local("displayName")),
-  }),
   ...displaySectionVarbsProp("ongoingList", {
     ...ongoingDollars("total", relVarbInfoS.local("displayName")),
   }),
   ...displaySectionVarbsProp("singleTimeItem", {
-    // Why isn't this working?
     value: varb(relVarbInfoS.local("displayName")),
     valueEditor: varb(relVarbInfoS.local("displayName")),
   }),
