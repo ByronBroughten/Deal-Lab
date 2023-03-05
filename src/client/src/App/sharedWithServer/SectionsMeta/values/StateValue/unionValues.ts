@@ -6,28 +6,21 @@ export type AutoSyncControl = "autoSyncOff" | "autoSyncOn";
 const unionValueArrs = {
   completionStatus: ["allEmpty", "allValid", "someInvalid"],
   editorValueSource: ["valueEditor"],
+  customValueSource: ["none", "valueEditor", "listTotal"],
 } as const;
 
+type UnionValueArrs = typeof unionValueArrs;
+export type UnionValueName = keyof UnionValueArrs;
+export const unionValueNames = Obj.keys(unionValueArrs);
 export function unionValueArr<UN extends UnionValueName>(
   valueName: UN
 ): UnionValueArrs[UN] {
   return unionValueArrs[valueName];
 }
-
-export const unionValueNames = Obj.keys(unionValueArrs);
-
-export type CustomValueMode = "none" | "valueEditor" | "listTotal";
-
-type UnionValueArrs = typeof unionValueArrs;
-export type UnionValueName = keyof UnionValueArrs;
 export type UnionValue<UN extends UnionValueName> = UnionValueArrs[UN][number];
 export type UnionValueNamesToTypes = {
   [UN in UnionValueName]: UnionValue<UN>;
 };
-
-export type ValueSource = "labeledEquation" | "valueSource";
-
-export const completionStatuses = unionValueArrs.completionStatus;
 
 export type RepairValueMode = "none" | "zero" | "valueEditor" | "listTotal";
 export type UtilityValueMode = "none" | "zero" | "listTotal";

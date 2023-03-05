@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { VarbName } from "../../sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
 import { ChildName } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/ChildName";
 import { SectionNameByType } from "../../sharedWithServer/SectionsMeta/SectionNameByType";
-import { CustomValueMode } from "../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
 import { useSetterSection } from "../../sharedWithServer/stateClassHooks/useSetterSection";
 import theme from "../../theme/Theme";
 import { BigStringEditor } from "../inputs/BigStringEditor";
@@ -45,7 +44,7 @@ export function ValueSectionGeneric<
 }: Props<SN>) {
   const section = useSetterSection({ sectionName, feId });
   const listChildName = getChildName(sectionName);
-  const valueSource = section.value("valueSourceName") as CustomValueMode;
+  const valueSource = section.value("valueSourceName");
   const displayNameValue = section
     .varb("displayName")
     .value("stringObj").mainText;

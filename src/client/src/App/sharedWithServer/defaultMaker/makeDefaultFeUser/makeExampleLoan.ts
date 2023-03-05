@@ -44,7 +44,7 @@ function makeExampleLoan(props: ExampleLoanProps) {
     closingCostItem.updateValues({
       displayNameEditor: item.displayName,
       valueEditor: item.value,
-      valueSourceName: "labeledEquation",
+      valueSourceName: "valueEditor",
     });
   }
   return loan.makeSectionPack();

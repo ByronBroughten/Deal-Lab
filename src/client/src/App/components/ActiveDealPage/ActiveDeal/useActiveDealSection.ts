@@ -1,9 +1,6 @@
 import { FeRouteName } from "../../../Constants/feRoutes";
-import { VarbName } from "../../../sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
-import {
-  completionStatuses,
-  dealModes,
-} from "../../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
+import { StateValue } from "../../../sharedWithServer/SectionsMeta/values/StateValue";
+import { dealModes } from "../../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
 import { useGetterSectionOnlyOne } from "../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { useGoToPage } from "../../appWide/customHooks/useGoToPage";
 
@@ -19,21 +16,17 @@ export function useActiveDealPage() {
   };
 }
 
-const completionStatusNames: Record<
-  ActiveDealSectionName,
-  VarbName<"calculatedVarbs">
-> = {
+const completionStatusNames = {
   property: "propertyCompletionStatus",
   financing: "financingCompletionStatus",
   mgmt: "mgmtCompletionStatus",
-};
+} as const;
 
 export function useActiveDealCompletionStatus(
   sectionName: ActiveDealSectionName
-) {
+): StateValue<"completionStatus"> {
   const { calcVarbs } = useActiveDealPage();
-  const varb = calcVarbs.varbNext(completionStatusNames[sectionName]);
-  return varb.valueSafe(completionStatuses);
+  return calcVarbs.valueNext(completionStatusNames[sectionName]);
 }
 
 export const activeDealRouteNames: Record<ActiveDealSectionName, FeRouteName> =

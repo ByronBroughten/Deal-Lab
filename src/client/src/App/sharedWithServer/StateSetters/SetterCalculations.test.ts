@@ -101,7 +101,7 @@ describe("SetterCalculations", () => {
       propertyCostList.addChild("ongoingItem", {
         dbVarbs: {
           valueOngoingSwitch: "monthly",
-          valueSourceName: "labeledEquation",
+          valueSourceName: "valueEditor",
           valueEditor: numObj(amount),
         },
       });
@@ -126,7 +126,7 @@ describe("SetterCalculations", () => {
       mgmtCostList.addChild("ongoingItem", {
         dbVarbs: {
           valueOngoingSwitch: "monthly",
-          valueSourceName: "labeledEquation",
+          valueSourceName: "valueEditor",
           valueEditor: numObj(amount),
         },
       });

@@ -133,12 +133,14 @@ export const updateVarbsS = {
         updateFnName: "throwIfReached",
         updateOverrides: [
           updateOverride(
-            [overrideSwitchS.local("valueSourceName", "labeledEquation")],
+            [overrideSwitchS.local("valueSourceName", "valueEditor")],
             updateBasicsS.loadFromLocalValueEditor()
           ),
         ],
       }),
-      valueSourceName: updateVarb("string", { initValue: "labeledEquation" }),
+      valueSourceName: updateVarb("customValueSource", {
+        initValue: "valueEditor",
+      }),
       valueEditor: updateVarb("numObj"),
     };
   },
@@ -149,7 +151,7 @@ export const updateVarbsS = {
       ...this._typeUniformity,
       ...this.listItemVirtualVarb,
       valueSourceName: updateVarb("string", {
-        initValue: "labeledEquation",
+        initValue: "valueEditor",
       }),
       valueEditor: updateVarb("numObj"),
       [ongoingValueNames.switch]: updateVarb("string", {

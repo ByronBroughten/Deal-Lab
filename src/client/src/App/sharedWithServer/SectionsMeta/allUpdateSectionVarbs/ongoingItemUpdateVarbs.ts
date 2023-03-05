@@ -19,7 +19,7 @@ export function ongoingItemUpdateVarbs(): UpdateSectionVarbs<"ongoingItem"> {
     ...updateVarbsS.displayNameAndEditor,
     valueEditor: updateVarb("numObj"),
     valueSourceName: updateVarb("string", {
-      initValue: "labeledEquation",
+      initValue: "valueEditor",
     }),
     ...updateVarbsS.group("value", "ongoing", "monthly", {
       targets: { updateFnName: "throwIfReached" },

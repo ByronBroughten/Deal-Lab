@@ -1,7 +1,7 @@
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
 
 export function makeDefaultOneTimeValue() {
-  const itemValueSwitch = "labeledEquation";
+  const itemValueSwitch = "valueEditor";
   const singleTimeValue = PackBuilderSection.initAsOmniChild(
     "singleTimeValue",
     {

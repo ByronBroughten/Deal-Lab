@@ -307,7 +307,7 @@ function makeAllUpdateSections() {
         updateFnPropS.children("singleTimeValue", "value"),
       ]),
       itemValueSwitch: updateVarb("string", {
-        initValue: "labeledEquation",
+        initValue: "valueEditor",
       }),
     }),
     ...updateSectionProp("singleTimeList", {
@@ -315,7 +315,7 @@ function makeAllUpdateSections() {
         updateFnPropS.children("singleTimeItem", "value"),
       ]),
       itemValueSwitch: updateVarb("string", {
-        initValue: "labeledEquation",
+        initValue: "valueEditor",
       }),
     }),
     ...updateSectionProp("closingCostValue", {
@@ -386,7 +386,7 @@ function makeAllUpdateSections() {
         initValue: "valueEditor",
       }),
       itemValueSwitch: updateVarb("string", {
-        initValue: "labeledEquation",
+        initValue: "valueEditor",
       }),
     }),
     ...updateSectionProp("ongoingValue", {
@@ -401,7 +401,7 @@ function makeAllUpdateSections() {
         initValue: "valueEditor",
       }),
       itemValueSwitch: updateVarb("string", {
-        initValue: "labeledEquation",
+        initValue: "valueEditor",
       }),
       ...updateVarbsS.ongoingInputNext("value", {
         monthly: {
@@ -484,7 +484,7 @@ function makeAllUpdateSections() {
       ),
       value: updateVarb("numObj"),
       itemValueSwitch: updateVarb("string", {
-        initValue: "labeledEquation",
+        initValue: "valueEditor",
       }),
       itemOngoingSwitch: updateVarb("string", {
         initValue: "monthly",
@@ -497,7 +497,7 @@ function makeAllUpdateSections() {
         "monthly"
       ),
       itemValueSwitch: updateVarb("string", {
-        initValue: "labeledEquation",
+        initValue: "valueEditor",
       }),
       itemOngoingSwitch: updateVarb("string", {
         initValue: "monthly",
@@ -505,7 +505,7 @@ function makeAllUpdateSections() {
     }),
     ...updateSectionProp("userVarbList", {
       itemValueSwitch: updateVarb("string", {
-        initValue: "labeledEquation",
+        initValue: "valueEditor",
       } as const),
     }),
     ...updateSectionProp("outputItem", {
@@ -549,7 +549,7 @@ function makeAllUpdateSections() {
         },
       }),
       valueSourceName: updateVarb("string", {
-        initValue: "labeledEquation",
+        initValue: "valueEditor",
       }),
     }),
     ...updateSectionProp("conditionalRowList", {

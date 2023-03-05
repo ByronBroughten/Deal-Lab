@@ -9,10 +9,10 @@ export class UserVarbValueSolver extends GetterSectionBase<"userVarbItem"> {
   }
   solveValue(): NumObj {
     const varbType = this.get.valueNext("valueSourceName") as
-      | "labeledEquation"
+      | "valueEditor"
       | "ifThen";
 
-    if (varbType === "labeledEquation") {
+    if (varbType === "valueEditor") {
       const varb = this.get.varb("valueEditor");
       const numObjVarb = new GetterVarbNumObj(varb.getterVarbProps);
       const solvableText = numObjVarb.solvableTextFromTextAndEntities(

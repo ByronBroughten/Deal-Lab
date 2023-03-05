@@ -14,7 +14,7 @@ export function makeUtilityList(
 ) {
   const feUser = PackBuilderSection.initAsOmniChild("feUser");
 
-  const valueSource = "labeledEquation";
+  const valueSource = "valueEditor";
   const utilityList = feUser.addAndGetChild("ongoingListMain", {
     dbId,
     dbVarbs: {

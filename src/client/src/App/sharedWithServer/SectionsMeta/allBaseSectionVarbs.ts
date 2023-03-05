@@ -162,7 +162,7 @@ export function makeAllBaseSectionVarbs() {
       valueEditor: baseVarb("numObj"),
       displayName: baseVarb("stringObj"),
       displayNameEditor: baseVarb("string"),
-      valueSourceName: baseVarb("string"),
+      valueSourceName: baseVarb("customValueSource"),
     }),
     outputItem: baseSectionVarbs({
       valueEntityInfo: baseVarb("inEntityValue"),
