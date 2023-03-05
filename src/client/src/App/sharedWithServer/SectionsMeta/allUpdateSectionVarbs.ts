@@ -283,8 +283,10 @@ function makeAllUpdateSections() {
     }),
     ...updateSectionProp("feUser", {
       authStatus: updateVarb("authStatus", { initValue: "guest" }),
-      analyzerPlan: updateVarb("labSubscription", { initValue: "basicPlan" }),
-      analyzerPlanExp: updateVarb("number", {
+      labSubscription: updateVarb("labSubscription", {
+        initValue: "basicPlan",
+      }),
+      labSubscriptionExp: updateVarb("number", {
         initValue: timeS.hundredsOfYearsFromNow,
       }),
       userDataStatus: updateVarb("userDataStatus", {

@@ -35,13 +35,13 @@ export function isUserJwt(value: any): value is UserInfoJwt {
 function hasTokenProps(value: any) {
   return (
     "userId" in value &&
-    "analyzerPlan" in value &&
-    "analyzerPlanExp" in value &&
+    "labSubscription" in value &&
+    "labSubscriptionExp" in value &&
     "iat" in value &&
     typeof value.userId === "string" &&
     typeof value.iat === "number" &&
-    typeof value.analyzerPlanExp === "number" &&
-    isLabSubscription(value.analyzerPlan)
+    typeof value.labSubscriptionExp === "number" &&
+    isLabSubscription(value.labSubscription)
   );
 }
 export function checkUserAuthToken(token: any): UserInfoJwt {

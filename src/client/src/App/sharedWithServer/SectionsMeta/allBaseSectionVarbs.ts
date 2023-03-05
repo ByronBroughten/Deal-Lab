@@ -352,9 +352,9 @@ export function makeAllBaseSectionVarbs() {
     feUser: baseSectionVarbs({
       authStatus: baseVarb("authStatus"),
       userDataStatus: baseVarb("userDataStatus"),
-      analyzerPlan: baseVarb("labSubscription"),
+      labSubscription: baseVarb("labSubscription"),
       ...baseVarbs("string", ["email", "userName"] as const),
-      analyzerPlanExp: baseVarb("number"),
+      labSubscriptionExp: baseVarb("number"),
     }),
     userInfo: baseSectionVarbs({
       ...baseVarbs("string", ["email", "userName"] as const),

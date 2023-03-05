@@ -34,12 +34,12 @@ export class FeUserActor extends SectionActorBase<"feUser"> {
     );
     userTokenS.setTokenFromHeaders(headers);
     this.setter.updateValues({
-      analyzerPlan: data.analyzerPlan,
-      analyzerPlanExp: data.analyzerPlanExp,
+      labSubscription: data.labSubscription,
+      labSubscriptionExp: data.labSubscriptionExp,
     });
   }
-  get analyzerPlan(): StateValue<"labSubscription"> {
-    return this.get.valueNext("analyzerPlan");
+  get labSubscription(): StateValue<"labSubscription"> {
+    return this.get.valueNext("labSubscription");
   }
   get isLoggedIn(): boolean {
     return this.solver.isLoggedIn;

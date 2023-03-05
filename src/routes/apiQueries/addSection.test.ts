@@ -112,8 +112,8 @@ describe(testedRoute, () => {
     await exec();
     req = makeAddSectionReq();
     token = dbUser.createUserInfoToken({
-      analyzerPlan: "fullPlan",
-      analyzerPlanExp: timeS.now() + timeS.thirtyDays,
+      labSubscription: "fullPlan",
+      labSubscriptionExp: timeS.now() + timeS.thirtyDays,
     });
     await testStatus(200);
   });

@@ -79,15 +79,15 @@ export class LoadedDbUser extends GetterSectionBase<"dbStore"> {
   get subscriptionValues(): AnalyzerPlanValues {
     if (isProEmail(this.email)) {
       return {
-        analyzerPlan: "fullPlan",
-        analyzerPlanExp: timeS.now() + timeS.oneDay,
+        labSubscription: "fullPlan",
+        labSubscriptionExp: timeS.now() + timeS.oneDay,
       };
     }
 
     const subscriptions = this.get.children("stripeSubscription");
     let subscriptionValues: AnalyzerPlanValues = {
-      analyzerPlan: "basicPlan",
-      analyzerPlanExp: timeS.hundredsOfYearsFromNow,
+      labSubscription: "basicPlan",
+      labSubscriptionExp: timeS.hundredsOfYearsFromNow,
     };
 
     const now = timeS.now();
@@ -102,7 +102,7 @@ export class LoadedDbUser extends GetterSectionBase<"dbStore"> {
       if (
         stripeS.isActiveSubStatus(values.status) &&
         currentPeriodEnd > now &&
-        currentPeriodEnd > subscriptionValues.analyzerPlanExp
+        currentPeriodEnd > subscriptionValues.labSubscriptionExp
       ) {
         const actives = Arr.findAll(constants.stripePrices, (subConfig) => {
           return priceIds.includes(subConfig.priceId);
@@ -112,8 +112,8 @@ export class LoadedDbUser extends GetterSectionBase<"dbStore"> {
         });
         if (activePro) {
           subscriptionValues = {
-            analyzerPlan: "fullPlan",
-            analyzerPlanExp: values.currentPeriodEnd,
+            labSubscription: "fullPlan",
+            labSubscriptionExp: values.currentPeriodEnd,
           };
         }
       }

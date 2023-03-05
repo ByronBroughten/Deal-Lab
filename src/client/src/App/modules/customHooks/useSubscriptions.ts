@@ -18,8 +18,8 @@ export function useUserSubscription(): {
   userIsPro: boolean;
 } {
   const user = useGetterSectionOnlyOne("feUser");
-  const userPlan = user.valueNext("analyzerPlan");
-  const userPlanExpiration = user.valueNext("analyzerPlanExp");
+  const userPlan = user.valueNext("labSubscription");
+  const userPlanExpiration = user.valueNext("labSubscriptionExp");
   return {
     userPlan,
     userPlanExpiration,

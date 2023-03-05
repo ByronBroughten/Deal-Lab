@@ -42,12 +42,12 @@ export class FeUserSolver extends SolverSectionBase<"feUser"> {
     });
   }
   loadSubscriptionInfo({
-    analyzerPlan,
-    analyzerPlanExp,
+    labSubscription,
+    labSubscriptionExp,
   }: AnalyzerPlanValues): void {
     this.solver.updateValuesAndSolve({
-      analyzerPlan,
-      analyzerPlanExp,
+      labSubscription,
+      labSubscriptionExp,
     });
   }
   mainSolver<SN extends SectionNameByType<"hasIndexStore">>(

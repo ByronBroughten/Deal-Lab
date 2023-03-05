@@ -7,8 +7,8 @@ export function makeDefaultFeUserPack(): SectionPack<"feUser"> {
   feUser.updateValues({
     email: "",
     userName: "Guest",
-    analyzerPlan: "basicPlan",
-    analyzerPlanExp: timeS.hundredsOfYearsFromNow,
+    labSubscription: "basicPlan",
+    labSubscriptionExp: timeS.hundredsOfYearsFromNow,
     authStatus: "guest",
     userDataStatus: "notLoaded",
   });
