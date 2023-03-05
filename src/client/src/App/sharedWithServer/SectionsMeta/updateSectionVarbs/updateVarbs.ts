@@ -1,5 +1,5 @@
 import { switchKeyToVarbNames } from "../allBaseSectionVarbs/baseSwitchNames";
-import { AutoSyncControl } from "../values/StateValue/subStringValues";
+import { AutoSyncControl } from "../values/StateValue/unionValues";
 import {
   ongoingPureCalc,
   ongoingSumNums,

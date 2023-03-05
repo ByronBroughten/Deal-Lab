@@ -1,7 +1,7 @@
 import { SectionValues } from "../../SectionsMeta/values/StateValue";
 import { NumObj, numObj } from "../../SectionsMeta/values/StateValue/NumObj";
 import { stringObj } from "../../SectionsMeta/values/StateValue/StringObj";
-import { ClosingCostValueMode } from "../../SectionsMeta/values/StateValue/subStringValues";
+import { ClosingCostValueMode } from "../../SectionsMeta/values/StateValue/unionValues";
 import { PackBuilderSection } from "../../StatePackers.ts/PackBuilderSection";
 import { StrictPick } from "../../utils/types";
 import { makeDefaultLoanPack } from "../makeDefaultLoanPack";
@@ -16,7 +16,7 @@ type ExampleLoanProps = {
     | "hasMortgageIns"
   >;
   closingCosts: {
-    valueMode: ClosingCostValueMode;
+    valueSourceName: ClosingCostValueMode;
     valueLumpSumEditor?: NumObj;
     items?: {
       displayName: string;
@@ -59,7 +59,7 @@ export const dealExampleLoan = makeExampleLoan({
     hasMortgageIns: false,
   },
   closingCosts: {
-    valueMode: "lumpSum",
+    valueSourceName: "valueEditor",
     valueLumpSumEditor: numObj(6000),
   },
 });

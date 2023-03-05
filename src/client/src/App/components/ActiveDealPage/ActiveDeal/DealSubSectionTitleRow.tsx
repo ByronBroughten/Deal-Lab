@@ -1,7 +1,8 @@
 import React from "react";
 import { FaPlay } from "react-icons/fa";
 import styled from "styled-components";
-import { CompletionStatus } from "../../../sharedWithServer/SectionsMeta/values/StateValue/subStringValues";
+import { StateValue } from "../../../sharedWithServer/SectionsMeta/values/StateValue";
+
 import { nativeTheme } from "../../../theme/nativeTheme";
 import { CheckMarkCircle } from "../../appWide/checkMarkCircle";
 import { EditSectionBtn } from "../../appWide/EditSectionBtn";
@@ -9,7 +10,7 @@ import { SectionTitle } from "../../appWide/SectionTitle";
 import { MainSectionLargeEditBtn } from "./MainSectionLargeEditBtn";
 
 type Props = {
-  completionStatus: CompletionStatus;
+  completionStatus: StateValue<"completionStatus">;
   sectionTitle: React.ReactNode;
   openEditor: () => void;
 };

@@ -4,7 +4,7 @@ import { constants } from "../../Constants";
 import {
   AnalyzerPlan,
   userPlans,
-} from "../../sharedWithServer/SectionsMeta/values/StateValue/subStringValues";
+} from "../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
 import { useGetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useGetterSection";
 import { timeS } from "../../sharedWithServer/utils/date";
 import { getErrorMessage } from "../../utils/error";

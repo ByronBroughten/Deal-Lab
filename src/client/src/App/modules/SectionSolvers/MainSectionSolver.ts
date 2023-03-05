@@ -9,7 +9,7 @@ import { StringObj } from "../../sharedWithServer/SectionsMeta/values/StateValue
 import {
   AutoSyncControl,
   SyncStatus,
-} from "../../sharedWithServer/SectionsMeta/values/StateValue/subStringValues";
+} from "../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
 import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection";
 import { GetterSections } from "../../sharedWithServer/StateGetters/GetterSections";
 import { PackMakerSection } from "../../sharedWithServer/StatePackers.ts/PackMakerSection";

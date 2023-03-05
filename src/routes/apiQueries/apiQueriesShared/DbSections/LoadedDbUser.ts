@@ -8,7 +8,7 @@ import { AnalyzerPlanValues } from "../../../../client/src/App/sharedWithServer/
 import { UserData } from "../../../../client/src/App/sharedWithServer/apiQueriesShared/validateUserData";
 import { AuthStatus } from "../../../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsVarbsValues";
 import { feStoreNameS } from "../../../../client/src/App/sharedWithServer/SectionsMeta/relSectionsDerived/FeStoreName";
-import { UserDataStatus } from "../../../../client/src/App/sharedWithServer/SectionsMeta/values/StateValue/subStringValues";
+import { UserDataStatus } from "../../../../client/src/App/sharedWithServer/SectionsMeta/values/StateValue/unionValues";
 import {
   GetterSectionBase,
   GetterSectionProps,

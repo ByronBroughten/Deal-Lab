@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { DealMode } from "../../../../sharedWithServer/SectionsMeta/values/StateValue/subStringValues";
+import { DealMode } from "../../../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
 import { useGetterSection } from "../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { nativeTheme } from "../../../../theme/nativeTheme";
 import MainSectionBody from "../../../appWide/GeneralSection/MainSection/MainSectionBody";

@@ -1,7 +1,7 @@
 import { pick } from "lodash";
-import { Schema } from "mongoose";
 import { z } from "zod";
 import { Arr } from "../../../../utils/Arr";
+import { monSchemas } from "../../../../utils/mongoose";
 import { zS } from "../../../../utils/zod";
 import { Id } from "../../../id";
 import { PathInVarbInfo } from "../../../sectionChildrenDerived/RelInOutVarbInfo";
@@ -57,13 +57,7 @@ export type FixedInEntity = FixedInEntityInfo & EntityIdProp;
 export type ValueInEntity = ValueInEntityInfo & InEntityBase;
 export type InEntity = FixedInEntity | ValueInEntity;
 
-export const mInEntities = {
-  type: Schema.Types.Mixed,
-  required: true,
-  validate: {
-    validator: (v: any) => zValueInEntities.safeParse(v).success,
-  },
-};
+export const mInEntities = monSchemas.fromZod(zValueInEntities);
 
 export type EntitySource = "localValueEntityInfo" | "editor";
 

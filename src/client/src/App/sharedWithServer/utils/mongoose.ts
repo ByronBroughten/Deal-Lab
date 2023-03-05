@@ -1,4 +1,5 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
+import { ZodSchema } from "zod";
 import { dbLimits } from "./dbLimts";
 
 export function makeMongooseObjectId() {
@@ -41,5 +42,14 @@ export const monSchemas = {
     maxLength: dbLimits.dbId.length,
     minLength: dbLimits.dbId.length,
     required: true,
+  },
+  fromZod(zodSchema: ZodSchema<any>) {
+    return {
+      type: Schema.Types.Mixed,
+      required: true,
+      validate: {
+        validator: (v: any) => zodSchema.safeParse(v).success,
+      },
+    };
   },
 };

@@ -1,4 +1,4 @@
-import { RepairValueMode } from "../../../../../sharedWithServer/SectionsMeta/values/StateValue/subStringValues";
+import { RepairValueMode } from "../../../../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
 import { useSetterSection } from "../../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import { SelectAndItemizeEditorSection } from "../../../../appWide/SelectAndItemizeEditorSection";
 import { ListEditorSingleTime } from "./ValueShared.tsx/ListEditorSingleTime";
@@ -9,32 +9,34 @@ export function RepairValue({ feId }: Props) {
     sectionName: "repairValue",
     feId,
   });
-  const valueMode = repairValue.value("valueMode") as RepairValueMode;
-  const equalsValue = valueMode === "turnkey" ? "$0" : undefined;
+  const valueSourceName = repairValue.value(
+    "valueSourceName"
+  ) as RepairValueMode;
+  const equalsValue = valueSourceName === "zero" ? "$0" : undefined;
   return (
     <SelectAndItemizeEditorSection
       {...{
         label: "Upfront Repair Costs",
-        selectValue: valueMode,
+        selectValue: valueSourceName,
         onChange: (e) => {
           const value = e.target.value as string;
-          repairValue.varb("valueMode").updateValue(value);
+          repairValue.varb("valueSourceName").updateValue(value);
         },
         editorProps:
-          valueMode === "lumpSum"
+          valueSourceName === "valueEditor"
             ? {
                 feVarbInfo: repairValue.varbInfo("valueLumpSumEditor"),
                 editorType: "equation",
               }
             : undefined,
         menuItems: [
-          ["turnkey", "Turnkey (no repairs)"],
-          ["lumpSum", "Enter lump sum"],
-          ["itemize", "Itemize"],
+          ["zero", "Turnkey (no repairs)"],
+          ["valueEditor", "Enter lump sum"],
+          ["listTotal", "Itemize"],
         ],
         equalsValue,
         total: repairValue.get.varbNext("value").displayVarb(),
-        itemizeValue: "itemize",
+        itemizeValue: "listTotal",
         itemizedModalTitle: "Repairs",
         itemsComponent: (
           <ListEditorSingleTime

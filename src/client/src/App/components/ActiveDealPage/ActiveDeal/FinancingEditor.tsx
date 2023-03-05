@@ -1,6 +1,6 @@
 import { FormControl, FormControlLabel, RadioGroup } from "@material-ui/core";
 import styled from "styled-components";
-import { DealMode } from "../../../sharedWithServer/SectionsMeta/values/StateValue/subStringValues";
+import { DealMode } from "../../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
 import { useSetterSection } from "../../../sharedWithServer/stateClassHooks/useSetterSection";
 import { FormSection } from "../../appWide/FormSection";
 import { SubSectionBtn } from "../../appWide/GeneralSection/GeneralSectionTitle/SubSectionBtn";

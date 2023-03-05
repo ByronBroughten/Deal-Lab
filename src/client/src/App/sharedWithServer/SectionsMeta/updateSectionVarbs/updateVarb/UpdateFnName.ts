@@ -41,8 +41,8 @@ const updateFnNames = checkUpdateFnNames({
     "emptyStringObj",
   ] as const,
   number: [...commonUpdateFnNames, "numberOne"] as const,
-  string: [...commonUpdateFnNames, "completionStatus"] as const,
   boolean: [...commonUpdateFnNames, "varbExists"] as const,
+  completionStatus: [...commonUpdateFnNames, "completionStatus"] as const,
 });
 
 export const getUpdateFnNames = <VN extends ValueName>(

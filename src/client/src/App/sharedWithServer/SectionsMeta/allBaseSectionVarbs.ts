@@ -221,26 +221,26 @@ export function makeAllBaseSectionVarbs() {
     }),
     repairValue: baseSectionVarbs({
       value: baseVarb("numObj", dollars),
-      valueMode: baseVarb("string"),
+      valueSourceName: baseVarb("string"),
       valueLumpSumEditor: baseVarb("numObj", dollars),
     }),
     utilityValue: baseSectionVarbs({
       ...baseVarbsS.ongoingDollars("value"),
-      valueMode: baseVarb("string"),
+      valueSourceName: baseVarb("string"),
     }),
     maintenanceValue: baseSectionVarbs({
       ...baseVarbsS.ongoingDollars("value"),
-      valueMode: baseVarb("string"),
+      valueSourceName: baseVarb("string"),
       valueLumpSumEditor: baseVarb("numObj", dollars),
     }),
     capExValue: baseSectionVarbs({
       ...baseVarbsS.ongoingDollars("value"),
-      valueMode: baseVarb("string"),
+      valueSourceName: baseVarb("string"),
       valueLumpSumEditor: baseVarb("numObj", dollars),
     }),
     closingCostValue: baseSectionVarbs({
       value: baseVarb("numObj", dollars),
-      valueMode: baseVarb("string"),
+      valueSourceName: baseVarb("string"),
       valueLumpSumEditor: baseVarb("numObj", dollars),
     }),
     loan: baseSectionVarbs({
@@ -363,10 +363,10 @@ export function makeAllBaseSectionVarbs() {
         "financingExists",
         "mgmtExists",
       ]),
-      propertyCompletionStatus: baseVarb("string"),
-      financingCompletionStatus: baseVarb("string"),
-      mgmtCompletionStatus: baseVarb("string"),
-      dealCompletionStatus: baseVarb("string"),
+      propertyCompletionStatus: baseVarb("completionStatus"),
+      financingCompletionStatus: baseVarb("completionStatus"),
+      mgmtCompletionStatus: baseVarb("completionStatus"),
+      dealCompletionStatus: baseVarb("completionStatus"),
     }),
     feUser: baseSectionVarbs({
       ...baseVarbs("string", [

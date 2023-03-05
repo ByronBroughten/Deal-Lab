@@ -49,7 +49,7 @@ describe("SetterCalculations", () => {
 
     const wrappedValue = loan.addAndGetChild("wrappedInLoanValue");
     wrappedValue.updateValues({
-      valueSourceName: "lumpSum",
+      valueSourceName: "valueEditor",
       valueEditor: numObj(5000),
     });
 

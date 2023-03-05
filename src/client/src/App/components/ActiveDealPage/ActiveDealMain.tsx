@@ -1,6 +1,5 @@
 import { FormControl, MenuItem, Select } from "@material-ui/core";
 import styled from "styled-components";
-import { CompletionStatus } from "../../sharedWithServer/SectionsMeta/values/StateValue/subStringValues";
 import { useSetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useSetterSection";
 import theme from "../../theme/Theme";
 import { FormSection } from "../appWide/FormSection";
@@ -15,9 +14,7 @@ export function ActiveDealMain() {
   const deal = dealPage.get.onlyChild("deal");
   const calculatedVarbs = dealPage.onlyChild("calculatedVarbs");
 
-  const completionStatus = calculatedVarbs.value(
-    "dealCompletionStatus"
-  ) as CompletionStatus;
+  const completionStatus = calculatedVarbs.value("dealCompletionStatus");
 
   return (
     <Styled className={`ActiveDealMain-root`}>

@@ -1,7 +1,7 @@
 import {
   AnalyzerPlan,
   isUserPlan,
-} from "../SectionsMeta/values/StateValue/subStringValues";
+} from "../SectionsMeta/values/StateValue/unionValues";
 import { Obj } from "../utils/Obj";
 
 export interface AnalyzerPlanValues {

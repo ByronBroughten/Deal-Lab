@@ -1,4 +1,4 @@
-import { UtilityValueMode } from "../../../../../sharedWithServer/SectionsMeta/values/StateValue/subStringValues";
+import { UtilityValueMode } from "../../../../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
 import { useSetterSection } from "../../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import { SelectAndItemizeEditorSection } from "../../../../appWide/SelectAndItemizeEditorSection";
 import { ListEditorOngoing } from "./ValueShared.tsx/ListEditorOngoing";
@@ -8,25 +8,27 @@ export function UtilityValue({ feId }: { feId: string }) {
     sectionName: "utilityValue",
     feId,
   });
-  const valueMode = utilityValue.value("valueMode") as UtilityValueMode;
+  const valueSourceName = utilityValue.value(
+    "valueSourceName"
+  ) as UtilityValueMode;
   const valueVarb = utilityValue.get.switchVarb("value", "ongoing");
-  const equalsValue = valueMode === "tenantUtilities" ? "$0" : undefined;
+  const equalsValue = valueSourceName === "zero" ? "$0" : undefined;
   return (
     <SelectAndItemizeEditorSection
       {...{
         label: "Utility Costs",
-        selectValue: valueMode,
+        selectValue: valueSourceName,
         onChange: (e) => {
           const value = e.target.value as string;
-          utilityValue.varb("valueMode").updateValue(value);
+          utilityValue.varb("valueSourceName").updateValue(value);
         },
         menuItems: [
-          ["tenantUtilities", "Tenant pays all utilities"],
-          ["itemize", "Itemize"],
+          ["zero", "Tenant pays all utilities"],
+          ["listTotal", "Itemize"],
         ],
         equalsValue,
         itemizedModalTitle: "Utilities",
-        itemizeValue: "itemize",
+        itemizeValue: "listTotal",
         total: valueVarb.displayVarb(),
         itemsComponent: (
           <ListEditorOngoing

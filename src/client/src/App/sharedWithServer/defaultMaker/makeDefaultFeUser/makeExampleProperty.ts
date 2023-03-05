@@ -9,7 +9,7 @@ import { stringObj } from "../../SectionsMeta/values/StateValue/StringObj";
 import {
   CapExValueMode,
   MaintenanceValueMode,
-} from "../../SectionsMeta/values/StateValue/subStringValues";
+} from "../../SectionsMeta/values/StateValue/unionValues";
 import { PackBuilderSection } from "../../StatePackers.ts/PackBuilderSection";
 import { StrictPick } from "../../utils/types";
 import { makeDefaultProperty } from "../makeDefaultProperty";
@@ -32,10 +32,10 @@ type ExamplePropertyProps = {
   repairs: readonly (readonly [string, number | NumObj])[];
   utilities: readonly (readonly [string, number | NumObj])[];
   capEx: {
-    valueMode: CapExValueMode;
+    valueSourceName: CapExValueMode;
     items: readonly (readonly [string, number | NumObj, number | NumObj])[];
   };
-  maintenance: { valueMode: MaintenanceValueMode };
+  maintenance: { valueSourceName: MaintenanceValueMode };
 };
 
 function makeExampleProperty(props: ExamplePropertyProps) {
@@ -58,7 +58,7 @@ function makeExampleProperty(props: ExamplePropertyProps) {
 
   const repairValue = property.onlyChild("repairValue");
   repairValue.updateValues({
-    valueMode: "itemize",
+    valueSourceName: "listTotal",
   });
   const repairList = repairValue.onlyChild("singleTimeList");
   for (const [displayName, value] of props.repairs) {
@@ -71,7 +71,7 @@ function makeExampleProperty(props: ExamplePropertyProps) {
   }
 
   const utilityValue = property.onlyChild("utilityValue");
-  utilityValue.updateValues({ valueMode: "itemize" });
+  utilityValue.updateValues({ valueSourceName: "listTotal" });
   const utilityList = utilityValue.onlyChild("ongoingList");
   for (const [displayName, value] of props.utilities) {
     const utilityItem = utilityList.addAndGetChild("ongoingItem");
@@ -85,7 +85,7 @@ function makeExampleProperty(props: ExamplePropertyProps) {
 
   const capExValue = property.onlyChild("capExValue");
   capExValue.updateValues({
-    valueMode: props.capEx.valueMode,
+    valueSourceName: props.capEx.valueSourceName,
   });
   const capExList = capExValue.onlyChild("capExList");
   for (const [displayName, lifeSpan, replacementCost] of props.capEx.items) {
@@ -101,7 +101,7 @@ function makeExampleProperty(props: ExamplePropertyProps) {
 
   const maintenance = property.onlyChild("maintenanceValue");
   maintenance.updateValues({
-    valueMode: props.maintenance.valueMode,
+    valueSourceName: props.maintenance.valueSourceName,
   });
 
   return property.makeSectionPack();
@@ -138,11 +138,11 @@ export const makeExampleDealProperty = () =>
       ["Garbage", numObjNext("50*", ["numUnits"])],
     ],
     capEx: {
-      valueMode: "fivePercentRent",
+      valueSourceName: "fivePercentRent",
       items: [],
     },
     maintenance: {
-      valueMode: "onePercentAndSqft",
+      valueSourceName: "onePercentAndSqft",
     },
   });
 
@@ -168,8 +168,8 @@ export const makeExampleStoreProperty = () =>
     repairs: examplePropetyRepairProps,
     utilities: examplePropertyUtilityProps,
     capEx: {
-      valueMode: "itemize",
+      valueSourceName: "listTotal",
       items: examplePropertyCapExListProps,
     },
-    maintenance: { valueMode: "onePercentAndSqft" },
+    maintenance: { valueSourceName: "onePercentAndSqft" },
   });

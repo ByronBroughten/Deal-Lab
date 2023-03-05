@@ -15,7 +15,7 @@ import {
   stringObj,
   StringObj,
 } from "../SectionsMeta/values/StateValue/StringObj";
-import { CompletionStatus } from "../SectionsMeta/values/StateValue/subStringValues";
+import { UnionValue } from "../SectionsMeta/values/StateValue/unionValues";
 import calculations, {
   isCalculationName,
   NumberProps,
@@ -81,7 +81,7 @@ export class SolveValueVarb<
       else return false;
     },
     numberOne: (): 1 => 1,
-    completionStatus: (): CompletionStatus => {
+    completionStatus: (): UnionValue<"completionStatus"> => {
       const { updateFnProps } = this.inEntityVarb;
       const { nonZeros, validInputs, othersValid, nonNone, notFalse } =
         updateFnProps as CompletionStatusProps;
@@ -103,7 +103,7 @@ export class SolveValueVarb<
       for (const updateProp of othersValid) {
         const varbs = this.activePropVarbs(updateProp);
         for (const varb of varbs) {
-          const value = varb.valueNext() as CompletionStatus;
+          const value = varb.valueNext() as UnionValue<"completionStatus">;
           if (value === "allEmpty") {
             updateBools({ isEmpty: true, isValid: false });
           } else if (value === "someInvalid") {

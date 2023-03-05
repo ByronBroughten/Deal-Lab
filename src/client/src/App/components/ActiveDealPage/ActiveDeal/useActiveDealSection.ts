@@ -3,7 +3,7 @@ import { VarbName } from "../../../sharedWithServer/SectionsMeta/baseSectionsDer
 import {
   completionStatuses,
   dealModes,
-} from "../../../sharedWithServer/SectionsMeta/values/StateValue/subStringValues";
+} from "../../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
 import { useGetterSectionOnlyOne } from "../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { useGoToPage } from "../../appWide/customHooks/useGoToPage";
 
@@ -46,8 +46,7 @@ export const activeDealRouteNames: Record<ActiveDealSectionName, FeRouteName> =
 export function useActiveDealSection(sectionName: ActiveDealSectionName) {
   const { deal, calcVarbs } = useActiveDealPage();
   const completionStatusName = completionStatusNames[sectionName];
-  const statusVarb = calcVarbs.varbNext(completionStatusName);
-  const completionStatus = statusVarb.valueSafe(completionStatuses);
+  const completionStatus = calcVarbs.valueNext(completionStatusName);
   const goToIndex = useGoToPage("activeDeal");
   return {
     feId: deal.onlyChildFeId(sectionName),

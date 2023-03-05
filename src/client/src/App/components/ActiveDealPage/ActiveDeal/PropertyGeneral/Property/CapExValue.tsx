@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { CapExValueMode } from "../../../../../sharedWithServer/SectionsMeta/values/StateValue/subStringValues";
+import { CapExValueMode } from "../../../../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
 import { useSetterSection } from "../../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import { LabelWithInfo } from "../../../../appWide/LabelWithInfo";
 import { SelectAndItemizeEditorSection } from "../../../../appWide/SelectAndItemizeEditorSection";
@@ -10,10 +10,10 @@ export function CapExValue({ feId }: { feId: string }) {
     sectionName: "capExValue",
     feId,
   });
-  const valueMode = capExValue.value("valueMode") as CapExValueMode;
+  const valueSourceName = capExValue.value("valueSourceName") as CapExValueMode;
   const valueVarb = capExValue.get.switchVarb("value", "ongoing");
   const showEquals: CapExValueMode[] = ["fivePercentRent"];
-  const equalsValue = showEquals.includes(valueMode)
+  const equalsValue = showEquals.includes(valueSourceName)
     ? valueVarb.displayVarb()
     : undefined;
 
@@ -29,27 +29,29 @@ export function CapExValue({ feId }: { feId: string }) {
             }}
           />
         ),
-        selectValue: valueMode,
+        selectValue: valueSourceName,
         onChange: (e) => {
           const value = e.target.value as string;
-          capExValue.varb("valueMode").updateValue(value);
+          capExValue.varb("valueSourceName").updateValue(value);
         },
         menuItems: [
           [
             "fivePercentRent",
-            `5% of rent${valueMode === "fivePercentRent" ? "" : " (simplest)"}`,
-          ],
-          [
-            "itemize",
-            `Itemize lifespan over cost${
-              valueMode === "itemize" ? "" : " (more accurate)"
+            `5% of rent${
+              valueSourceName === "fivePercentRent" ? "" : " (simplest)"
             }`,
           ],
-          ["lumpSum", "Custom amount"],
+          [
+            "listTotal",
+            `Itemize lifespan over cost${
+              valueSourceName === "listTotal" ? "" : " (more accurate)"
+            }`,
+          ],
+          ["valueEditor", "Custom amount"],
         ],
         equalsValue,
         itemizedModalTitle: "Itemized CapEx Budget",
-        itemizeValue: "itemize",
+        itemizeValue: "listTotal",
         total: valueVarb.displayVarb(),
         itemsComponent: (
           <CapExValueList

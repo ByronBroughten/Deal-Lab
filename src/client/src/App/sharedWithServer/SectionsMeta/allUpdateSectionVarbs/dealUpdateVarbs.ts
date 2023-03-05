@@ -6,7 +6,7 @@ import {
 } from "../updateSectionVarbs/updateVarb";
 import { updateFnPropS } from "../updateSectionVarbs/updateVarb/UpdateFnProps";
 import { updateVarbsS } from "../updateSectionVarbs/updateVarbs";
-import { DealMode } from "../values/StateValue/subStringValues";
+import { DealMode } from "../values/StateValue/unionValues";
 
 export function dealRelVarbs(): UpdateSectionVarbs<"deal"> {
   return {

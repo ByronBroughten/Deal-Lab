@@ -7,7 +7,7 @@ import {
   DbStoreInfo,
   SectionQueryName,
 } from "../../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/DbStoreName";
-import { AnalyzerPlan } from "../../client/src/App/sharedWithServer/SectionsMeta/values/StateValue/subStringValues";
+import { AnalyzerPlan } from "../../client/src/App/sharedWithServer/SectionsMeta/values/StateValue/unionValues";
 import { getAuthWare } from "../../middleware/authWare";
 import { checkUserInfoWare } from "../../middleware/checkUserInfoWare";
 import { ResStatusError } from "../../utils/resError";

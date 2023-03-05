@@ -6,7 +6,7 @@ import { makeReq } from "../../sharedWithServer/apiQueriesShared/makeReqAndRes";
 import {
   UserDataStatus,
   userDataStatuses,
-} from "../../sharedWithServer/SectionsMeta/values/StateValue/subStringValues";
+} from "../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
 import { useSetterSectionOnlyOneProps } from "../../sharedWithServer/stateClassHooks/useSetterSectionsProps";
 import { SetterSection } from "../../sharedWithServer/StateSetters/SetterSection";
 import { getErrorMessage } from "../../utils/error";

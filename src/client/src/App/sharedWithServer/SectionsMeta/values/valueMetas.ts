@@ -5,7 +5,9 @@ import { inEntityInfoValueSchema } from "./StateValue/InEntityValue";
 import { numObjMeta } from "./StateValue/NumObj";
 import { stringObjMeta } from "./StateValue/StringObj";
 import { varbInfoValueMeta } from "./StateValue/VarbInfoValue";
-import { ValueName, valueNames } from "./ValueName";
+import { checkValueMetas } from "./valueMetaGeneric";
+import { unionMetas } from "./valueMetaUnions";
+import { valueNames } from "./ValueName";
 
 export const valueMetas = checkValueMetas({
   number: {
@@ -43,22 +45,8 @@ export const valueMetas = checkValueMetas({
   numObj: numObjMeta,
   inEntityValue: inEntityInfoValueSchema,
   varbInfo: varbInfoValueMeta,
+  ...unionMetas,
 });
-
-type ValueMetaGeneric<VN extends ValueName> = {
-  is: (value: any) => value is StateValue<VN>;
-  initDefault: () => StateValue<VN>;
-  zod: any;
-  mon: any;
-};
-
-type ValueMetasGeneric = {
-  [VN in ValueName]: ValueMetaGeneric<VN>;
-};
-
-function checkValueMetas<VM extends ValueMetasGeneric>(vm: VM) {
-  return vm;
-}
 
 export function isStateValue(value: any): value is StateValue {
   for (const valueName of valueNames) {

@@ -1,4 +1,4 @@
-import { ClosingCostValueMode } from "../../../../../sharedWithServer/SectionsMeta/values/StateValue/subStringValues";
+import { ClosingCostValueMode } from "../../../../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
 import { useSetterSection } from "../../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import { SelectAndItemizeEditorSection } from "../../../../appWide/SelectAndItemizeEditorSection";
 import { ListEditorSingleTime } from "../../PropertyGeneral/Property/ValueShared.tsx/ListEditorSingleTime";
@@ -9,22 +9,24 @@ export function ClosingCostValue({ feId, fivePercentLoanDisplay }: Props) {
     sectionName: "closingCostValue",
     feId,
   });
-  const valueMode = closingCostValue.value("valueMode") as ClosingCostValueMode;
+  const valueSourceName = closingCostValue.value(
+    "valueSourceName"
+  ) as ClosingCostValueMode;
   const equalsValue =
-    valueMode === "fivePercentLoan" ? fivePercentLoanDisplay : undefined;
+    valueSourceName === "fivePercentLoan" ? fivePercentLoanDisplay : undefined;
   return (
     <SelectAndItemizeEditorSection
       {...{
         className: "ClosingCostValue-root",
         label: "Closing Costs",
         // make a note that this does not include Prepaid items
-        selectValue: valueMode,
+        selectValue: valueSourceName,
         onChange: (e) => {
           const value = e.target.value as string;
-          closingCostValue.varb("valueMode").updateValue(value);
+          closingCostValue.varb("valueSourceName").updateValue(value);
         },
         editorProps:
-          valueMode === "lumpSum"
+          valueSourceName === "valueEditor"
             ? {
                 feVarbInfo: closingCostValue.varbInfo("valueLumpSumEditor"),
                 editorType: "equation",
@@ -33,12 +35,12 @@ export function ClosingCostValue({ feId, fivePercentLoanDisplay }: Props) {
             : undefined,
         menuItems: [
           ["fivePercentLoan", "5% of Base Loan"],
-          ["lumpSum", "Enter lump sum"],
-          ["itemize", "Itemize"],
+          ["valueEditor", "Enter lump sum"],
+          ["listTotal", "Itemize"],
         ],
         equalsValue,
         total: closingCostValue.get.varbNext("value").displayVarb(),
-        itemizeValue: "itemize",
+        itemizeValue: "listTotal",
         itemizedModalTitle: "Closing Costs",
         itemsComponent: (
           <ListEditorSingleTime

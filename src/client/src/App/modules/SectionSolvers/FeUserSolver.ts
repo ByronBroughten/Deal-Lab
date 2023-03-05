@@ -6,7 +6,7 @@ import { ChildSectionName } from "../../sharedWithServer/SectionsMeta/sectionChi
 import { SectionPack } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/SectionPack";
 import { FeSectionInfo } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { SectionNameByType } from "../../sharedWithServer/SectionsMeta/SectionNameByType";
-import { AutoSyncControl } from "../../sharedWithServer/SectionsMeta/values/StateValue/subStringValues";
+import { AutoSyncControl } from "../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
 import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection";
 import { PackBuilderSection } from "../../sharedWithServer/StatePackers.ts/PackBuilderSection";
 import { SolverSectionBase } from "../../sharedWithServer/StateSolvers/SolverBases/SolverSectionBase";

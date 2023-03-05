@@ -12,7 +12,6 @@ function useScenarioKey() {
   const { userPlan } = useUserSubscription();
   if (userDataStatus === "notLoaded") return "guest";
   else if (userDataStatus === "loading") return "loggingInUser";
-  else if (userDataStatus === "unloading") return "loggingOutUser";
   else if (userDataStatus === "loaded") {
     if (userPlan === "basicPlan") return "basicUser";
     else if (userPlan === "fullPlan") return "proUser";
@@ -25,9 +24,6 @@ export function NavBarBtns() {
     guest: () => null,
     loggingInUser: () => (
       <NavBtn className="NavBar-isLoadingBtn" text="Loading..." />
-    ),
-    loggingOutUser: () => (
-      <NavBtn className="NavBar-isLoadingBtn" text="Logging out..." />
     ),
     basicUser: () => (
       <>

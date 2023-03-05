@@ -34,7 +34,7 @@ import {
 } from "./updateSectionVarbs/updateVarb/UpdateOverrides";
 import { updateVarbsS } from "./updateSectionVarbs/updateVarbs";
 import { numObj } from "./values/StateValue/NumObj";
-import { AnalyzerPlan } from "./values/StateValue/subStringValues";
+import { AnalyzerPlan } from "./values/StateValue/unionValues";
 
 type GenericAllUpdateSections = {
   [SN in SectionName]: UpdateSectionVarbs<SN>;
@@ -73,17 +73,21 @@ function makeAllUpdateSections() {
       ...updateVarbsS.ongoingInputNext("targetRent"),
     }),
     ...updateSectionProp("utilityValue", {
-      valueMode: updateVarb("string", { initValue: "none" }),
+      valueSourceName: updateVarb("string", { initValue: "none" }),
       ...updateVarbsS.group("value", "ongoing", "monthly", {
         targets: { updateFnName: "throwIfReached" },
         monthly: {
           updateOverrides: [
             updateOverride(
-              [overrideSwitchS.local("valueMode", "none")],
+              [overrideSwitchS.local("valueSourceName", "none")],
               updateBasics("emptyNumObj")
             ),
             updateOverride(
-              [overrideSwitchS.local("valueMode", "itemize")],
+              [overrideSwitchS.local("valueSourceName", "zero")],
+              updateBasics("solvableTextZero")
+            ),
+            updateOverride(
+              [overrideSwitchS.local("valueSourceName", "listTotal")],
               updateBasicsS.loadFromChild("ongoingList", "totalMonthly")
             ),
           ],
@@ -91,11 +95,15 @@ function makeAllUpdateSections() {
         yearly: {
           updateOverrides: [
             updateOverride(
-              [overrideSwitchS.local("valueMode", "none")],
+              [overrideSwitchS.local("valueSourceName", "none")],
               updateBasics("emptyNumObj")
             ),
             updateOverride(
-              [overrideSwitchS.local("valueMode", "itemize")],
+              [overrideSwitchS.local("valueSourceName", "zero")],
+              updateBasics("solvableTextZero")
+            ),
+            updateOverride(
+              [overrideSwitchS.local("valueSourceName", "listTotal")],
               updateBasicsS.loadFromChild("ongoingList", "totalYearly")
             ),
           ],
@@ -103,33 +111,33 @@ function makeAllUpdateSections() {
       }),
     }),
     ...updateSectionProp("capExValue", {
-      valueMode: updateVarb("string", { initValue: "none" }),
+      valueSourceName: updateVarb("string", { initValue: "none" }),
       ...updateVarbsS.group("value", "ongoing", "monthly", {
         targets: { updateFnName: "throwIfReached" },
         monthly: {
           updateOverrides: [
             updateOverride(
-              [overrideSwitchS.local("valueMode", "none")],
+              [overrideSwitchS.local("valueSourceName", "none")],
               updateBasics("emptyNumObj")
             ),
             updateOverride(
-              [overrideSwitchS.local("valueMode", "fivePercentRent")],
+              [overrideSwitchS.local("valueSourceName", "fivePercentRent")],
               updateBasicsS.loadByVarbPathName("fivePercentRentMonthly")
             ),
             updateOverride(
-              [overrideSwitchS.local("valueMode", "itemize")],
+              [overrideSwitchS.local("valueSourceName", "listTotal")],
               updateBasicsS.loadFromChild("capExList", "totalMonthly")
             ),
             updateOverride(
               [
-                overrideSwitchS.local("valueMode", "lumpSum"),
+                overrideSwitchS.local("valueSourceName", "valueEditor"),
                 overrideSwitchS.switchIsActive("value", "ongoing", "monthly"),
               ],
               updateBasicsS.loadFromLocal("valueLumpSumEditor")
             ),
             updateOverride(
               [
-                overrideSwitchS.local("valueMode", "lumpSum"),
+                overrideSwitchS.local("valueSourceName", "valueEditor"),
                 overrideSwitchS.switchIsActive("value", "ongoing", "yearly"),
               ],
               updateBasicsS.yearlyToMonthly("value")
@@ -139,27 +147,27 @@ function makeAllUpdateSections() {
         yearly: {
           updateOverrides: [
             updateOverride(
-              [overrideSwitchS.local("valueMode", "none")],
+              [overrideSwitchS.local("valueSourceName", "none")],
               updateBasics("emptyNumObj")
             ),
             updateOverride(
-              [overrideSwitchS.local("valueMode", "fivePercentRent")],
+              [overrideSwitchS.local("valueSourceName", "fivePercentRent")],
               updateBasicsS.loadByVarbPathName("fivePercentRentYearly")
             ),
             updateOverride(
-              [overrideSwitchS.local("valueMode", "itemize")],
+              [overrideSwitchS.local("valueSourceName", "listTotal")],
               updateBasicsS.loadFromChild("capExList", "totalYearly")
             ),
             updateOverride(
               [
-                overrideSwitchS.local("valueMode", "lumpSum"),
+                overrideSwitchS.local("valueSourceName", "valueEditor"),
                 overrideSwitchS.switchIsActive("value", "ongoing", "yearly"),
               ],
               updateBasicsS.loadFromLocal("valueLumpSumEditor")
             ),
             updateOverride(
               [
-                overrideSwitchS.local("valueMode", "lumpSum"),
+                overrideSwitchS.local("valueSourceName", "valueEditor"),
                 overrideSwitchS.switchIsActive("value", "ongoing", "monthly"),
               ],
               updateBasicsS.monthlyToYearly("value")
@@ -178,25 +186,25 @@ function makeAllUpdateSections() {
     }),
     ...updateSectionProp("capExItem", capExItemUpdateVarbs()),
     ...updateSectionProp("maintenanceValue", {
-      valueMode: updateVarb("string", { initValue: "none" }),
+      valueSourceName: updateVarb("string", { initValue: "none" }),
       ...updateVarbsS.group("value", "ongoing", "monthly", {
         targets: { updateFnName: "throwIfReached" },
         monthly: {
           updateOverrides: [
             updateOverride(
-              [overrideSwitchS.local("valueMode", "none")],
+              [overrideSwitchS.local("valueSourceName", "none")],
               updateBasics("emptyNumObj")
             ),
             updateOverride(
               [
-                overrideSwitchS.local("valueMode", "lumpSum"),
+                overrideSwitchS.local("valueSourceName", "valueEditor"),
                 overrideSwitchS.switchIsActive("value", "ongoing", "monthly"),
               ],
               updateBasicsS.loadFromLocal("valueLumpSumEditor")
             ),
             updateOverride(
               [
-                overrideSwitchS.local("valueMode", "lumpSum"),
+                overrideSwitchS.local("valueSourceName", "valueEditor"),
                 overrideSwitchS.yearlyIsActive("value"),
               ],
               updateBasicsS.yearlyToMonthly("value")
@@ -204,7 +212,7 @@ function makeAllUpdateSections() {
             updateOverride(
               [
                 overrideSwitchS.local(
-                  "valueMode",
+                  "valueSourceName",
                   ...["onePercentPrice", "sqft", "onePercentAndSqft"]
                 ),
               ],
@@ -215,33 +223,33 @@ function makeAllUpdateSections() {
         yearly: {
           updateOverrides: [
             updateOverride(
-              [overrideSwitchS.local("valueMode", "none")],
+              [overrideSwitchS.local("valueSourceName", "none")],
               updateBasics("emptyNumObj")
             ),
             updateOverride(
               [
-                overrideSwitchS.local("valueMode", "lumpSum"),
+                overrideSwitchS.local("valueSourceName", "valueEditor"),
                 overrideSwitchS.yearlyIsActive("value"),
               ],
               updateBasicsS.loadFromLocal("valueLumpSumEditor")
             ),
             updateOverride(
               [
-                overrideSwitchS.local("valueMode", "lumpSum"),
+                overrideSwitchS.local("valueSourceName", "valueEditor"),
                 overrideSwitchS.monthlyIsActive("value"),
               ],
               updateBasicsS.monthlyToYearly("value")
             ),
             updateOverride(
-              [overrideSwitchS.local("valueMode", "onePercentPrice")],
+              [overrideSwitchS.local("valueSourceName", "onePercentPrice")],
               updateBasicsS.loadByVarbPathName("onePercentPrice")
             ),
             updateOverride(
-              [overrideSwitchS.local("valueMode", "sqft")],
+              [overrideSwitchS.local("valueSourceName", "sqft")],
               updateBasicsS.loadByVarbPathName("sqft")
             ),
             updateOverride(
-              [overrideSwitchS.local("valueMode", "onePercentAndSqft")],
+              [overrideSwitchS.local("valueSourceName", "onePercentAndSqft")],
               updateBasicsS.loadByVarbPathName("onePercentPriceSqftAverage")
             ),
           ],
@@ -249,24 +257,24 @@ function makeAllUpdateSections() {
       }),
     }),
     ...updateSectionProp("repairValue", {
-      valueMode: updateVarb("string", { initValue: "none" }),
+      valueSourceName: updateVarb("string", { initValue: "none" }),
       value: updateVarb("numObj", {
         updateFnName: "throwIfReached",
         updateOverrides: [
           updateOverride(
-            [overrideSwitchS.local("valueMode", "none")],
+            [overrideSwitchS.local("valueSourceName", "none")],
             updateBasics("emptyNumObj")
           ),
           updateOverride(
-            [overrideSwitchS.local("valueMode", "turnkey")],
+            [overrideSwitchS.local("valueSourceName", "zero")],
             updateBasicsS.zero
           ),
           updateOverride(
-            [overrideSwitchS.local("valueMode", "lumpSum")],
+            [overrideSwitchS.local("valueSourceName", "valueEditor")],
             updateBasicsS.loadFromLocal("valueLumpSumEditor")
           ),
           updateOverride(
-            [overrideSwitchS.local("valueMode", "itemize")],
+            [overrideSwitchS.local("valueSourceName", "listTotal")],
             updateBasicsS.loadFromChild("singleTimeList", "total")
           ),
         ],
@@ -311,7 +319,7 @@ function makeAllUpdateSections() {
       }),
     }),
     ...updateSectionProp("closingCostValue", {
-      valueMode: updateVarb("string", {
+      valueSourceName: updateVarb("string", {
         initValue: "none",
       }),
       valueLumpSumEditor: updateVarb("numObj"),
@@ -319,23 +327,23 @@ function makeAllUpdateSections() {
         updateFnName: "throwIfReached",
         updateOverrides: [
           updateOverride(
-            [overrideSwitchS.valueModeIs("none")],
+            [overrideSwitchS.valueSourceIs("none")],
             updateBasics("emptyNumObj")
           ),
           updateOverride(
-            [overrideSwitchS.valueModeIs("fivePercentLoan")],
+            [overrideSwitchS.valueSourceIs("fivePercentLoan")],
             updateBasics("emptyNumObj")
             // make loan update based on this switch
           ),
           updateOverride(
-            [overrideSwitchS.valueModeIs("itemized")],
+            [overrideSwitchS.valueSourceIs("itemized")],
             updateBasicsS.loadFromChild(
               "singleTimeList",
               "total"
             ) as UpdateBasics<"numObj">
           ),
           updateOverride(
-            [overrideSwitchS.valueModeIs("lumpSum")],
+            [overrideSwitchS.valueSourceIs("valueEditor")],
             updateBasicsS.loadSolvableTextByVarbInfo(
               "valueLumpSumEditor"
             ) as UpdateBasics<"numObj">
@@ -363,7 +371,7 @@ function makeAllUpdateSections() {
             ) as UpdateBasics<"numObj">
           ),
           updateOverride(
-            [overrideSwitchS.valueSourceIs("lumpSum")],
+            [overrideSwitchS.valueSourceIs("valueEditor")],
             updateBasicsS.loadSolvableTextByVarbInfo(
               "valueEditor"
             ) as UpdateBasics<"numObj">
@@ -375,7 +383,7 @@ function makeAllUpdateSections() {
       }),
       valueEditor: updateVarb("numObj"),
       valueSourceName: updateVarb("string", {
-        initValue: "lumpSum",
+        initValue: "valueEditor",
       }),
       itemValueSwitch: updateVarb("string", {
         initValue: "labeledEquation",
@@ -390,7 +398,7 @@ function makeAllUpdateSections() {
         initValue: false,
       }),
       valueSourceName: updateVarb("string", {
-        initValue: "lumpSum",
+        initValue: "valueEditor",
       }),
       itemValueSwitch: updateVarb("string", {
         initValue: "labeledEquation",
@@ -412,7 +420,7 @@ function makeAllUpdateSections() {
             ),
             updateOverride(
               [
-                overrideSwitchS.valueSourceIs("lumpSum"),
+                overrideSwitchS.valueSourceIs("valueEditor"),
                 overrideSwitchS.monthlyIsActive("value"),
               ],
               updateBasicsS.loadFromLocal(
@@ -421,7 +429,7 @@ function makeAllUpdateSections() {
             ),
             updateOverride(
               [
-                overrideSwitchS.valueSourceIs("lumpSum"),
+                overrideSwitchS.valueSourceIs("valueEditor"),
                 overrideSwitchS.yearlyIsActive("value"),
               ],
               updateBasicsS.yearlyToMonthly("value") as UpdateBasics<"numObj">
@@ -444,7 +452,7 @@ function makeAllUpdateSections() {
             ),
             updateOverride(
               [
-                overrideSwitchS.valueSourceIs("lumpSum"),
+                overrideSwitchS.valueSourceIs("valueEditor"),
                 overrideSwitchS.yearlyIsActive("value"),
               ],
               updateBasicsS.loadFromLocal(
@@ -453,7 +461,7 @@ function makeAllUpdateSections() {
             ),
             updateOverride(
               [
-                overrideSwitchS.valueSourceIs("lumpSum"),
+                overrideSwitchS.valueSourceIs("valueEditor"),
                 overrideSwitchS.monthlyIsActive("value"),
               ],
               updateBasicsS.monthlyToYearly("value") as UpdateBasics<"numObj">
@@ -599,7 +607,7 @@ function makeAllUpdateSections() {
           "two"
         ),
       }),
-      dealCompletionStatus: updateVarb("string", {
+      dealCompletionStatus: updateVarb("completionStatus", {
         initValue: "allEmpty",
         updateFnName: "completionStatus",
         updateFnProps: completionStatusProps({
@@ -638,7 +646,7 @@ function makeAllUpdateSections() {
         updateFnName: "varbExists",
         updateFnProps: { varbInfo: updateFnPropS.pathName("mgmtFocal", "one") },
       }),
-      propertyCompletionStatus: updateVarb("string", {
+      propertyCompletionStatus: updateVarb("completionStatus", {
         initValue: "allEmpty",
         updateOverrides: [
           updateOverride(
@@ -655,10 +663,10 @@ function makeAllUpdateSections() {
         updateFnProps: completionStatusProps({
           nonZeros: [updateFnPropS.pathName("propertyFocal", "numUnits")],
           nonNone: [
-            updateFnPropS.pathName("repairCostFocal", "valueMode"),
-            updateFnPropS.pathName("utilityCostFocal", "valueMode"),
-            updateFnPropS.pathName("maintenanceCostFocal", "valueMode"),
-            updateFnPropS.pathName("capExCostFocal", "valueMode"),
+            updateFnPropS.pathName("repairCostFocal", "valueSourceName"),
+            updateFnPropS.pathName("utilityCostFocal", "valueSourceName"),
+            updateFnPropS.pathName("maintenanceCostFocal", "valueSourceName"),
+            updateFnPropS.pathName("capExCostFocal", "valueSourceName"),
           ],
           validInputs: [
             ...updateFnPropsS.varbPathArr("purchasePrice", "sqft"),
@@ -668,14 +676,14 @@ function makeAllUpdateSections() {
             updateFnPropS.pathName("unitFocal", "numBedrooms"),
             updateFnPropS.pathName("capExCostFocal", "valueLumpSumEditor", [
               overrideSwitch(
-                mixedInfoS.pathNameVarb("capExCostFocal", "valueMode"),
-                "lumpSum"
+                mixedInfoS.pathNameVarb("capExCostFocal", "valueSourceName"),
+                "valueEditor"
               ),
             ]),
             updateFnPropS.pathName("repairCostFocal", "valueLumpSumEditor", [
               overrideSwitch(
-                mixedInfoS.pathNameVarb("repairCostFocal", "valueMode"),
-                "lumpSum"
+                mixedInfoS.pathNameVarb("repairCostFocal", "valueSourceName"),
+                "valueEditor"
               ),
             ]),
             updateFnPropS.pathName(
@@ -683,15 +691,18 @@ function makeAllUpdateSections() {
               "valueLumpSumEditor",
               [
                 overrideSwitch(
-                  mixedInfoS.pathNameVarb("maintenanceCostFocal", "valueMode"),
-                  "lumpSum"
+                  mixedInfoS.pathNameVarb(
+                    "maintenanceCostFocal",
+                    "valueSourceName"
+                  ),
+                  "valueEditor"
                 ),
               ]
             ),
           ],
         }),
       }),
-      mgmtCompletionStatus: updateVarb("string", {
+      mgmtCompletionStatus: updateVarb("completionStatus", {
         initValue: "allEmpty",
         updateOverrides: [
           updateOverride(
@@ -734,7 +745,7 @@ function makeAllUpdateSections() {
           ],
         }),
       }),
-      financingCompletionStatus: updateVarb("string", {
+      financingCompletionStatus: updateVarb("completionStatus", {
         initValue: "allEmpty",
         updateFnName: "throwIfReached",
         updateOverrides: [
@@ -792,7 +803,7 @@ function makeAllUpdateSections() {
                   updateFnPropS.pathName(
                     "closingCostFocal",
                     "valueLumpSumEditor",
-                    [overrideSwitchS.valueModeIs("lumpSum")]
+                    [overrideSwitchS.valueSourceIs("valueEditor")]
                   ),
                 ],
               })

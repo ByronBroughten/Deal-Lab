@@ -1,4 +1,4 @@
-import { MaintenanceValueMode } from "../../../../../sharedWithServer/SectionsMeta/values/StateValue/subStringValues";
+import { MaintenanceValueMode } from "../../../../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
 import { useSetterSection } from "../../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import { LabelWithInfo } from "../../../../appWide/LabelWithInfo";
 import { SelectEditorSection } from "../../../../appWide/SelectEditorSection";
@@ -8,7 +8,9 @@ export function MaintenanceValue({ feId }: { feId: string }) {
     sectionName: "maintenanceValue",
     feId,
   });
-  const valueMode = maintenanceValue.value("valueMode") as MaintenanceValueMode;
+  const valueSourceName = maintenanceValue.value(
+    "valueSourceName"
+  ) as MaintenanceValueMode;
   const valueVarb = maintenanceValue.get.switchVarb("value", "ongoing");
   const showEquals: MaintenanceValueMode[] = [
     "onePercentAndSqft",
@@ -16,7 +18,7 @@ export function MaintenanceValue({ feId }: { feId: string }) {
     "sqft",
   ];
 
-  const equalsValue = showEquals.includes(valueMode)
+  const equalsValue = showEquals.includes(valueSourceName)
     ? valueVarb.displayVarb()
     : undefined;
 
@@ -32,20 +34,20 @@ export function MaintenanceValue({ feId }: { feId: string }) {
             }}
           />
         ),
-        selectValue: valueMode,
+        selectValue: valueSourceName,
         onChange: (e) => {
           const value = e.target.value as string;
-          maintenanceValue.varb("valueMode").updateValue(value);
+          maintenanceValue.varb("valueSourceName").updateValue(value);
         },
         menuItems: [
           ["onePercentPrice", "1% purchase price"],
           ["sqft", "$1 per sqft"],
           ["onePercentAndSqft", "1% purchase price and $1 sqft, average"],
-          ["lumpSum", "Custom amount"],
+          ["valueEditor", "Custom amount"],
         ],
         equalsValue,
         editorProps:
-          valueMode === "lumpSum"
+          valueSourceName === "valueEditor"
             ? {
                 feVarbInfo: maintenanceValue.varbInfo("valueLumpSumEditor"),
                 editorType: "equation",

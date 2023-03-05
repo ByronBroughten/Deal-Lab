@@ -124,7 +124,7 @@ export function loanRelVarbs(): UpdateSectionVarbs<"loan"> {
             [
               overrideSwitchS.child(
                 "closingCostValue",
-                "valueMode",
+                "valueSourceName",
                 "fivePercentLoan"
               ),
             ],

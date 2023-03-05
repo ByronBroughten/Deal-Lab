@@ -3,7 +3,7 @@ import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack"
 import {
   AnalyzerPlan,
   UserDataStatus,
-} from "../SectionsMeta/values/StateValue/subStringValues";
+} from "../SectionsMeta/values/StateValue/unionValues";
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
 import { timeS } from "../utils/date";
 

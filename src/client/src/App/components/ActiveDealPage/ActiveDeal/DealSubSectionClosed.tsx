@@ -1,4 +1,4 @@
-import { CompletionStatus } from "../../../sharedWithServer/SectionsMeta/values/StateValue/subStringValues";
+import { StateValue } from "../../../sharedWithServer/SectionsMeta/values/StateValue";
 import { GetterSection } from "../../../sharedWithServer/StateGetters/GetterSection";
 import { useGoToPage } from "../../appWide/customHooks/useGoToPage";
 import { LabeledVarbProps } from "../../appWide/LabeledVarb";
@@ -79,7 +79,7 @@ function useSectionProps(sectionName: ActiveDealSectionName) {
 
 function useProps(sectionName: ActiveDealSectionName): SectionProps & {
   openEditor: () => void;
-  completionStatus: CompletionStatus;
+  completionStatus: StateValue<"completionStatus">;
 } {
   const sectionProps = useSectionProps(sectionName);
   const openEditor = useGoToPage(activeDealRouteNames[sectionName]);

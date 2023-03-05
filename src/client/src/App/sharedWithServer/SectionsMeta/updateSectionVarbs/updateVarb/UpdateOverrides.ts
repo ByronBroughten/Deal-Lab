@@ -159,9 +159,6 @@ export const overrideSwitchS = {
   valueSourceIs(valueSource: string): UpdateOverrideSwitch {
     return overrideSwitchS.local("valueSourceName", valueSource);
   },
-  valueModeIs(valueMode: string): UpdateOverrideSwitch {
-    return overrideSwitchS.local("valueMode", valueMode);
-  },
 };
 
 export function updateOverride<

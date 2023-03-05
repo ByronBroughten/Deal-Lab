@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { VarbName } from "../../sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
 import { ChildName } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/ChildName";
 import { SectionNameByType } from "../../sharedWithServer/SectionsMeta/SectionNameByType";
-import { CustomValueMode } from "../../sharedWithServer/SectionsMeta/values/StateValue/subStringValues";
+import { CustomValueMode } from "../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
 import { useSetterSection } from "../../sharedWithServer/stateClassHooks/useSetterSection";
 import theme from "../../theme/Theme";
 import { BigStringEditor } from "../inputs/BigStringEditor";
@@ -74,7 +74,7 @@ export function ValueSectionGeneric<
           {...{
             selectValue: valueSource,
             editorProps:
-              valueSource === "lumpSum"
+              valueSource === "valueEditor"
                 ? {
                     feVarbInfo: section.varbInfo("valueEditor"),
                     editorType: "equation",
@@ -82,15 +82,15 @@ export function ValueSectionGeneric<
                   }
                 : undefined,
             menuItems: [
-              ["lumpSum", "Enter amount"],
-              ["itemize", "Itemize"],
+              ["valueEditor", "Enter amount"],
+              ["listTotal", "Itemize"],
             ],
             onChange: (e) => {
               const value = e.target.value as string;
               section.varb("valueSourceName").updateValue(value);
             },
             total: section.get.varbNext(valueName).displayVarb(),
-            itemizeValue: "itemize",
+            itemizeValue: "listTotal",
             itemizedModalTitle: displayNameValue,
             itemsComponent: makeItemizedListNode({
               feId: section.onlyChild(listChildName).feId,

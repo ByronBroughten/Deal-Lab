@@ -1,3 +1,5 @@
+import { unionValueNames } from "./StateValue/unionValues";
+
 export const valueNames = [
   "number",
   "dateTime",
@@ -8,5 +10,6 @@ export const valueNames = [
   "numObj",
   "inEntityValue",
   "varbInfo",
+  ...unionValueNames,
 ] as const;
 export type ValueName = typeof valueNames[number];

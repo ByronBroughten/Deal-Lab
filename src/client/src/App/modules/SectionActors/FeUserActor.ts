@@ -1,4 +1,4 @@
-import { AnalyzerPlan } from "../../sharedWithServer/SectionsMeta/values/StateValue/subStringValues";
+import { AnalyzerPlan } from "../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
 import { PackBuilderSection } from "../../sharedWithServer/StatePackers.ts/PackBuilderSection";
 import { StrictOmit } from "../../sharedWithServer/utils/types";
 import { FeUserSolver } from "../SectionSolvers/FeUserSolver";

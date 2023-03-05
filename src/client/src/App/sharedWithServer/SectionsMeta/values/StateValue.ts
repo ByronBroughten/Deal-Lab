@@ -6,13 +6,14 @@ import { SectionName } from "../SectionName";
 import { InEntityValue } from "./StateValue/InEntityValue";
 import { NumObj } from "./StateValue/NumObj";
 import { StringObj } from "./StateValue/StringObj";
+import { UnionValueNamesToTypes } from "./StateValue/unionValues";
 import { VarbInfoValue } from "./StateValue/VarbInfoValue";
 import { ValueName } from "./ValueName";
 
 export type StateValue<VN extends ValueName = ValueName> =
   ValueNamesToTypes[VN];
 
-type ValueNamesToTypes = {
+interface ValueNamesToTypes extends UnionValueNamesToTypes {
   string: string;
   number: number;
   boolean: boolean;
@@ -22,7 +23,7 @@ type ValueNamesToTypes = {
   numObj: NumObj;
   inEntityValue: InEntityValue;
   varbInfo: VarbInfoValue;
-};
+}
 type Check<T extends Record<ValueName, any>> = T;
 type _Test = Check<ValueNamesToTypes>;
 
