@@ -3,9 +3,12 @@ import { baseOptions } from "./baseUnits";
 import { baseVarb, baseVarbsS } from "./baseVarbs";
 
 const ongoingItemBase = {
+  // It's a choice between making it more similar to singleTimeItem
+  // or making it work like the other ones
+
   ...baseVarbsS.ongoingDollars("value"),
   valueEditor: baseVarb("numObj"),
-  valueSourceSwitch: baseVarb("string"),
+  valueSourceName: baseVarb("string"),
   ...baseVarbsS.displayNameAndEditor,
 } as const;
 

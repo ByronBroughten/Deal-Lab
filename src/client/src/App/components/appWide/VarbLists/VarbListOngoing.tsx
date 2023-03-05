@@ -20,7 +20,7 @@ export function VarbListOngoing({ feId, ...rest }: Props) {
     const itemValueSwitch = list.varb("itemValueSwitch").value("string");
     list.addChild(itemName, {
       dbVarbs: {
-        valueSourceSwitch: itemValueSwitch,
+        valueSourceName: itemValueSwitch,
         valueOngoingSwitch: itemOngoingSwitch,
       },
     });

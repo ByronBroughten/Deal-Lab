@@ -7,7 +7,7 @@ export function makeDefaultOneTimeValue() {
     {
       dbVarbs: {
         itemValueSwitch,
-        valueSourceSwitch: "none",
+        valueSourceName: "none",
         isItemized: false,
       },
     }

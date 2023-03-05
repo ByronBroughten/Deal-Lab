@@ -7,7 +7,7 @@ import {
 } from "./switchUpdateVarbs";
 import { UpdateSectionVarbs } from "./updateSectionVarbs";
 import { UpdateVarb, updateVarb, updateVarbS } from "./updateVarb";
-import { updateBasics, updateBasicsS } from "./updateVarb/UpdateBasics";
+import { updateBasicsS } from "./updateVarb/UpdateBasics";
 import { updateFnPropS } from "./updateVarb/UpdateFnProps";
 import {
   overrideSwitchS,
@@ -133,18 +133,12 @@ export const updateVarbsS = {
         updateFnName: "throwIfReached",
         updateOverrides: [
           updateOverride(
-            [overrideSwitchS.local("valueSourceSwitch", "labeledEquation")],
+            [overrideSwitchS.local("valueSourceName", "labeledEquation")],
             updateBasicsS.loadFromLocalValueEditor()
-          ),
-          updateOverride(
-            [overrideSwitchS.local("valueSourceSwitch", "loadedVarb")],
-            updateBasics("virtualNumObj", {
-              varbInfo: updateFnPropS.local("valueEntityInfo"),
-            })
           ),
         ],
       }),
-      valueSourceSwitch: updateVarb("string", { initValue: "labeledEquation" }),
+      valueSourceName: updateVarb("string", { initValue: "labeledEquation" }),
       valueEditor: updateVarb("numObj"),
     };
   },
@@ -154,7 +148,7 @@ export const updateVarbsS = {
     return {
       ...this._typeUniformity,
       ...this.listItemVirtualVarb,
-      valueSourceSwitch: updateVarb("string", {
+      valueSourceName: updateVarb("string", {
         initValue: "labeledEquation",
       }),
       valueEditor: updateVarb("numObj"),

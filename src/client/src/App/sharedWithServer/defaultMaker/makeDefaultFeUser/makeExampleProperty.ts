@@ -64,7 +64,7 @@ function makeExampleProperty(props: ExamplePropertyProps) {
   for (const [displayName, value] of props.repairs) {
     const repairItem = repairList.addAndGetChild("singleTimeItem");
     repairItem.updateValues({
-      valueSourceSwitch: "labeledEquation",
+      valueSourceName: "labeledEquation",
       displayNameEditor: displayName,
       valueEditor: numToObj(value),
     });
@@ -76,7 +76,7 @@ function makeExampleProperty(props: ExamplePropertyProps) {
   for (const [displayName, value] of props.utilities) {
     const utilityItem = utilityList.addAndGetChild("ongoingItem");
     utilityItem.updateValues({
-      valueSourceSwitch: "labeledEquation",
+      valueSourceName: "labeledEquation",
       valueOngoingSwitch: "monthly",
       displayNameEditor: displayName,
       valueEditor: numToObj(value),

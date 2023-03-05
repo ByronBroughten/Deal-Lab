@@ -29,7 +29,7 @@ export function makeUtilityList(
       dbVarbs: {
         displayNameEditor: itemProps[0],
         valueOngoingSwitch: "monthly",
-        valueSourceSwitch: valueSource,
+        valueSourceName: valueSource,
         valueEditor: itemProps[1],
       },
     });

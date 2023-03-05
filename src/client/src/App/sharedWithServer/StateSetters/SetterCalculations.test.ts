@@ -30,7 +30,7 @@ describe("SetterCalculations", () => {
     const propertyCostListGroup = property.onlyChild("upfrontExpenseGroup");
     const propertyCostValue = propertyCostListGroup.addAndGetChild(
       "singleTimeValue",
-      { dbVarbs: { valueSourceSwitch: "itemized" } }
+      { dbVarbs: { valueSourceName: "itemized" } }
     );
     const propertyCostList = propertyCostValue.onlyChild("singleTimeList");
     const propertyCosts = [8000, 2000];
@@ -49,14 +49,14 @@ describe("SetterCalculations", () => {
 
     const wrappedValue = loan.addAndGetChild("wrappedInLoanValue");
     wrappedValue.updateValues({
-      valueSourceSwitch: "lumpSum",
+      valueSourceName: "lumpSum",
       valueEditor: numObj(5000),
     });
 
     const mgmt = dealTester.setter.onlyChild("mgmt");
     const expenseGroup = mgmt.onlyChild("upfrontExpenseGroup");
     const expenseValue = expenseGroup.addAndGetChild("singleTimeValue", {
-      dbVarbs: { valueSourceSwitch: "itemized" },
+      dbVarbs: { valueSourceName: "itemized" },
     });
     const mgmtCostList = expenseValue.onlyChild("singleTimeList");
     const mgmtCosts = [4000, 6000];
@@ -93,7 +93,7 @@ describe("SetterCalculations", () => {
 
     const propertyCostListGroup = property.onlyChild("ongoingExpenseGroup");
     const ongoingValue = propertyCostListGroup.addAndGetChild("ongoingValue", {
-      dbVarbs: { valueSourceSwitch: "itemized" },
+      dbVarbs: { valueSourceName: "itemized" },
     });
     const propertyCostList = ongoingValue.onlyChild("ongoingList");
     const propertyCosts = [200, 100, 150];
@@ -101,7 +101,7 @@ describe("SetterCalculations", () => {
       propertyCostList.addChild("ongoingItem", {
         dbVarbs: {
           valueOngoingSwitch: "monthly",
-          valueSourceSwitch: "labeledEquation",
+          valueSourceName: "labeledEquation",
           valueEditor: numObj(amount),
         },
       });
@@ -118,7 +118,7 @@ describe("SetterCalculations", () => {
 
     const expenseGroup = mgmt.onlyChild("ongoingExpenseGroup");
     const mgmtCostListGroup = expenseGroup.addAndGetChild("ongoingValue", {
-      dbVarbs: { valueSourceSwitch: "itemized" },
+      dbVarbs: { valueSourceName: "itemized" },
     });
     const mgmtCostList = mgmtCostListGroup.onlyChild("ongoingList");
     const mgmtCosts = [100, 100];
@@ -126,7 +126,7 @@ describe("SetterCalculations", () => {
       mgmtCostList.addChild("ongoingItem", {
         dbVarbs: {
           valueOngoingSwitch: "monthly",
-          valueSourceSwitch: "labeledEquation",
+          valueSourceName: "labeledEquation",
           valueEditor: numObj(amount),
         },
       });
@@ -174,7 +174,7 @@ function addTestLoan(dealTester: SetterTesterSection<"deal">): void {
   loan.varb("mortgageInsOngoingEditor").updateValue(numObj(1200));
 
   const wrappedValue = loan.addAndGetChild("wrappedInLoanValue", {
-    dbVarbs: { valueSourceSwitch: "itemized" },
+    dbVarbs: { valueSourceName: "itemized" },
   });
   const wrapped = wrappedValue.onlyChild("singleTimeList");
   const amounts = [6000, 14000];

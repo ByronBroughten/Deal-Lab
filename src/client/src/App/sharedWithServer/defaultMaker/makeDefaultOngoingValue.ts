@@ -5,7 +5,7 @@ export function makeDefaultOngoingValue() {
   const ongoingValue = PackBuilderSection.initAsOmniChild("ongoingValue", {
     dbVarbs: {
       itemValueSwitch,
-      valueSourceSwitch: "none",
+      valueSourceName: "none",
       isItemized: false,
       valueOngoingSwitch: "monthly",
     },

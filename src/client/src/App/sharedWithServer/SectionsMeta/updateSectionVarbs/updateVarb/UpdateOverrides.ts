@@ -157,7 +157,7 @@ export const overrideSwitchS = {
     return this.local(varbName, false);
   },
   valueSourceIs(valueSource: string): UpdateOverrideSwitch {
-    return overrideSwitchS.local("valueSourceSwitch", valueSource);
+    return overrideSwitchS.local("valueSourceName", valueSource);
   },
   valueModeIs(valueMode: string): UpdateOverrideSwitch {
     return overrideSwitchS.local("valueMode", valueMode);
@@ -178,7 +178,7 @@ type Test = UpdateFnName<"stringObj">;
 export const updateOverrideS = {
   loadedVarbProp(updateFnName: UpdateFnName<"stringObj">) {
     return updateOverride(
-      [overrideSwitchS.local("valueSourceSwitch", "loadedVarb")],
+      [overrideSwitchS.local("valueSourceName", "loadedVarb")],
       updateBasics(
         updateFnName,
         updateFnPropsS.localByVarbName(["valueEntityInfo"])

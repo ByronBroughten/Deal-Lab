@@ -18,7 +18,7 @@ export function ongoingItemUpdateVarbs(): UpdateSectionVarbs<"ongoingItem"> {
     ...updateVarbsS._typeUniformity,
     ...updateVarbsS.displayNameAndEditor,
     valueEditor: updateVarb("numObj"),
-    valueSourceSwitch: updateVarb("string", {
+    valueSourceName: updateVarb("string", {
       initValue: "labeledEquation",
     }),
     ...updateVarbsS.group("value", "ongoing", "monthly", {

@@ -4,7 +4,7 @@ import { VarbListItemGeneric } from "../../ListGroup/ListGroupShared/VarbListIte
 
 interface MemoProps {
   feId: string;
-  valueSourceSwitch: string;
+  valueSourceName: string;
   endAdornment: string;
   valueVarbName: "valueMonthly";
   displayValueVarb: string;
@@ -37,7 +37,7 @@ export function ListItemOngoing({ feId }: Props) {
         feId,
         displayValueVarb: valueVarb.get.displayVarb(),
         valueVarbName,
-        valueSourceSwitch: section.get.valueNext("valueSourceSwitch"),
+        valueSourceName: section.get.valueNext("valueSourceName"),
         endAdornment,
       }}
     />

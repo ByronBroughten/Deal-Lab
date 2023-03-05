@@ -374,7 +374,7 @@ function makeAllUpdateSections() {
         initValue: false,
       }),
       valueEditor: updateVarb("numObj"),
-      valueSourceSwitch: updateVarb("string", {
+      valueSourceName: updateVarb("string", {
         initValue: "lumpSum",
       }),
       itemValueSwitch: updateVarb("string", {
@@ -389,7 +389,7 @@ function makeAllUpdateSections() {
       isItemized: updateVarb("boolean", {
         initValue: false,
       }),
-      valueSourceSwitch: updateVarb("string", {
+      valueSourceName: updateVarb("string", {
         initValue: "lumpSum",
       }),
       itemValueSwitch: updateVarb("string", {
@@ -533,17 +533,14 @@ function makeAllUpdateSections() {
         initValue: numObj(0),
         updateFnName: "userVarb",
         updateFnProps: {
-          ...updateFnPropsS.localByVarbName([
-            "valueSourceSwitch",
-            "valueEditor",
-          ]),
+          ...updateFnPropsS.localByVarbName(["valueSourceName", "valueEditor"]),
           conditionalValue: updateFnPropS.children(
             "conditionalRowList",
             "value"
           ),
         },
       }),
-      valueSourceSwitch: updateVarb("string", {
+      valueSourceName: updateVarb("string", {
         initValue: "labeledEquation",
       }),
     }),

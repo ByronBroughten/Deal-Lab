@@ -45,7 +45,7 @@ export function ValueSectionGeneric<
 }: Props<SN>) {
   const section = useSetterSection({ sectionName, feId });
   const listChildName = getChildName(sectionName);
-  const valueSource = section.value("valueSourceSwitch") as CustomValueMode;
+  const valueSource = section.value("valueSourceName") as CustomValueMode;
   const displayNameValue = section
     .varb("displayName")
     .value("stringObj").mainText;
@@ -87,7 +87,7 @@ export function ValueSectionGeneric<
             ],
             onChange: (e) => {
               const value = e.target.value as string;
-              section.varb("valueSourceSwitch").updateValue(value);
+              section.varb("valueSourceName").updateValue(value);
             },
             total: section.get.varbNext(valueName).displayVarb(),
             itemizeValue: "itemize",

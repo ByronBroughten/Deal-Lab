@@ -53,14 +53,14 @@ export function DealCompareSection() {
               />
             ))}
           </View>
-          {/* {comparePageFeIds.length > 0 && (
+          {comparePageFeIds.length > 0 && (
             <MainSectionBtnNative
               {...{
                 middle: "+ Value",
                 style: { height: 50, marginRight: nativeTheme.s3 },
               }}
             />
-          )} */}
+          )}
         </View>
         <MainSectionBtnNative
           {...{

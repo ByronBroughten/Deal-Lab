@@ -51,7 +51,6 @@ export const allDisplaySectionVarbs = {
     upfrontExpenses: varb("Upfront expenses"),
     upfrontRevenue: varb("Upfront revenues"),
     ...group("monthsYears", "holdingPeriod", "Holding period"),
-    ...ongoingInputDollars("taxes", "Taxes"),
     ...group("ongoingInput", "taxes", "Taxes", {
       monthly: { displayNameWithVariant: "Taxes monthly" },
       yearly: { displayNameWithVariant: "Taxes yearly" },
@@ -230,7 +229,7 @@ export const allDisplaySectionVarbs = {
     valueEditor: varb(relVarbInfoS.local("displayName")),
   }),
   ...displaySectionVarbsProp("ongoingItem", {
-    ...ongoingDollars("value", relVarbInfoS.local("displayName")),
+    ...group("ongoing", "value", relVarbInfoS.local("displayName")),
     valueEditor: varb("Item cost"), // That's not great
   }),
 };
