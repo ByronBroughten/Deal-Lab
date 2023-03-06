@@ -13,7 +13,8 @@ import {
   SectionQuerier,
   SectionQuerierProps,
 } from "../QueriersBasic/SectionQuerier";
-import { DisplayItemProps } from "../SectionSolvers/DisplayListBuilder";
+import { DisplayItemProps } from "../SectionSolvers/FeIndexSolver";
+
 import {
   MainSectionSolver,
   SaveStatus,
@@ -47,9 +48,6 @@ export class MainSectionActor<
   }
   get setter(): SetterSection<SN> {
     return new SetterSection(this.sectionActorBaseProps);
-  }
-  get hasFeDisplayIndex() {
-    return this.get.meta.hasFeDisplayIndex;
   }
   private get sectionQuerierProps(): SectionQuerierProps<
     Extract<DbStoreNameByType<"sectionQuery">, DbNameBySectionName<SN>>

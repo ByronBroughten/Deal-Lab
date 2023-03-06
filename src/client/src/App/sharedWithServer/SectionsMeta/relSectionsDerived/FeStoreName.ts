@@ -7,18 +7,12 @@ import { dbStoreNameS } from "../sectionChildrenDerived/DbStoreName";
 import { SectionName } from "../SectionName";
 
 export const hasStoreNameArrs = {
-  hasFeDisplayIndex: Obj.entryKeysWithPropOfType(
-    allSectionTraits,
-    "displayIndexName",
-    "string"
-  ),
-  hasFullIndex: Obj.entryKeysWithPropOfType(
-    allSectionTraits,
-    "feIndexStoreName",
-    "string"
-  ),
   get hasIndexStore() {
-    return [...this.hasFeDisplayIndex, ...this.hasFullIndex] as const;
+    return Obj.entryKeysWithPropOfType(
+      allSectionTraits,
+      "feIndexStoreName",
+      "string"
+    );
   },
   hasCompareTable: Obj.entryKeysWithPropOfType(
     allSectionTraits,
@@ -27,21 +21,13 @@ export const hasStoreNameArrs = {
   ),
 } as const;
 
-// both of these pertain to feStoreNames
 const hasToStoreNames = {
-  displayIndex: getSomeSectionTraits(
-    hasStoreNameArrs.hasFeDisplayIndex,
-    "displayIndexName"
-  ),
   fullIndex: getSomeSectionTraits(
-    hasStoreNameArrs.hasFullIndex,
+    hasStoreNameArrs.hasIndexStore,
     "feIndexStoreName"
   ),
   get indexStore() {
-    return {
-      ...this.displayIndex,
-      ...this.fullIndex,
-    } as const;
+    return this.fullIndex;
   },
 } as const;
 

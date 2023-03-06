@@ -1,7 +1,6 @@
 import { omit } from "lodash";
 import {
   baseCapExItem,
-  baseOngoingCheckmarkItem,
   baseOngoingItem,
 } from "./allBaseSectionVarbs/baseOngoingItem";
 import {
@@ -57,12 +56,6 @@ export function makeAllBaseSectionVarbs() {
     proxyStoreItem: baseSectionVarbs({
       dbId: baseVarb("string"),
     }),
-    displayNameItem: baseSectionVarbs({
-      displayName: baseVarb("string"),
-    }),
-    displayNameList: baseSectionVarbs({
-      searchFilter: baseVarb("string"),
-    }),
     compareTable: baseSectionVarbs({
       titleFilter: baseVarb("string"),
     } as const),
@@ -93,11 +86,10 @@ export function makeAllBaseSectionVarbs() {
       total: baseVarb("numObj", dollars),
     }),
     singleTimeValue: baseSectionVarbs({
-      displayName: baseVarb("stringObj"),
-      displayNameEditor: baseVarb("stringObj"),
+      ...varbs.displayNameAndEditor,
       value: baseVarb("numObj", dollars),
       valueEditor: baseVarb("numObj"),
-      valueSourceName: baseVarb("string"),
+      valueSourceName: baseVarb("customValueSource"),
       isItemized: baseVarb("boolean"),
     }),
     singleTimeList: baseSectionVarbs({
@@ -109,12 +101,9 @@ export function makeAllBaseSectionVarbs() {
       ...varbs.ongoingDollars("total"),
     }),
     ongoingValue: baseSectionVarbs({
-      ...varbs.ongoingDollars("value"),
-      displayName: baseVarb("stringObj"),
-      displayNameEditor: baseVarb("stringObj"),
-      valueEditor: baseVarb("numObj"),
-      valueSourceName: baseVarb("string"),
-      isItemized: baseVarb("boolean"),
+      ...varbs.displayNameAndEditor,
+      ...varbs.ongoingDollarsInput("value"),
+      valueSourceName: baseVarb("customValueSource"),
     }),
     ongoingList: baseSectionVarbs({
       ...baseVarbsS.savableSection,
@@ -129,7 +118,6 @@ export function makeAllBaseSectionVarbs() {
     }),
     capExItem: baseCapExItem,
     ongoingItem: baseOngoingItem,
-    ongoingCheckmarkItem: baseOngoingCheckmarkItem,
     userVarbList: baseSectionVarbs({
       ...baseVarbsS.savableSection,
       itemValueSource: baseVarb("editorValueSource"),
@@ -139,10 +127,9 @@ export function makeAllBaseSectionVarbs() {
       itemValueSource: baseVarb("loadedVarbSource"),
     }),
     singleTimeItem: baseSectionVarbs({
+      ...baseVarbsS.displayNameAndEditor,
       value: baseVarb("numObj"),
       valueEditor: baseVarb("numObj"),
-      displayName: baseVarb("stringObj"),
-      displayNameEditor: baseVarb("string"),
       valueSourceName: baseVarb("customValueSource"),
     }),
     outputItem: baseSectionVarbs({
@@ -157,15 +144,13 @@ export function makeAllBaseSectionVarbs() {
         "endAdornment",
       ] as const),
     }),
-
-    customVarb: baseSectionVarbs({
-      ...baseVarbsS.singleValueVirtualVarb,
-      ...baseVarbsS.loadableVarb,
-    }),
+    customVarb: baseSectionVarbs(baseVarbsS.loadableVarb),
     userVarbItem: baseSectionVarbs({
-      ...baseVarbsS.singleValueVirtualVarb,
+      value: baseVarb("numObj"),
+      valueEditor: baseVarb("numObj"),
+      valueSourceName: baseVarb("editorValueSource"),
+      ...baseVarbsS.displayNameAndEditor,
       ...baseVarbsS.loadableVarb,
-      ...baseVarbsS.switchableEquationEditor,
     }),
     conditionalRowList: baseSectionVarbs({
       value: baseVarb("numObj"),

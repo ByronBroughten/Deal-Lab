@@ -27,7 +27,6 @@ export interface GenericSectionTraits<SN extends SectionName>
 export interface GeneralSectionTraits {
   displayName: string;
   varbListItem: string | null;
-  displayIndexName: ChildName<"feUser"> | null;
   compareTableName: ChildSectionNameName<"feUser", "compareTable"> | null;
   feIndexStoreName: ChildName<"feUser"> | null;
   dbIndexStoreName: ChildName<"dbStore"> | null;
@@ -43,7 +42,6 @@ type DefaultProps = typeof defaultProps;
 const defaultProps = makeDefault({
   displayName: "Unnamed Section",
   varbListItem: null,
-  displayIndexName: null,
   compareTableName: null,
   feIndexStoreName: null,
   dbIndexStoreName: null,

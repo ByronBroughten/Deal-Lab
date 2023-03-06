@@ -50,16 +50,20 @@ export const allDisplaySectionVarbs = {
     numBedrooms: varb("Bedrooms"),
     upfrontExpenses: varb("Upfront expenses"),
     upfrontRevenue: varb("Upfront revenues"),
-    ...group("monthsYears", "holdingPeriod", "Holding period"),
-    ...group("ongoingInput", "taxes", "Taxes", {
+    ...editorDisplayGroup(
+      "monthsYearsInput",
+      "holdingPeriod",
+      "Holding period"
+    ),
+    ...editorDisplayGroup("ongoingInput", "taxes", "Taxes", {
       monthly: { displayNameWithVariant: "Taxes monthly" },
       yearly: { displayNameWithVariant: "Taxes yearly" },
     }),
-    ...group("ongoingInput", "homeIns", "Home insurance", {
+    ...editorDisplayGroup("ongoingInput", "homeIns", "Home insurance", {
       monthly: { displayNameWithVariant: "Home insurance monthly" },
       yearly: { displayNameWithVariant: "Home insurance yearly" },
     }),
-    ...group("ongoing", "targetRent", "Rent", {
+    ...editorDisplayGroup("ongoingInput", "targetRent", "Rent", {
       monthly: { displayNameWithVariant: "Rent monthly" },
       yearly: { displayNameWithVariant: "Rent yearly" },
     }),
@@ -207,23 +211,31 @@ export const allDisplaySectionVarbs = {
     total: varb(relVarbInfoS.local("displayName")),
   }),
   ...displaySectionVarbsProp("ongoingValueGroup", {
-    ...ongoingDollars("total", relVarbInfoS.local("displayName")),
+    ...group("ongoing", "total", relVarbInfoS.local("displayName")),
   }),
   ...displaySectionVarbsProp(
     "ongoingValue",
-    group("ongoingInput", "value", relVarbInfoS.local("displayName"))
+    editorDisplayGroup(
+      "ongoingInput",
+      "value",
+      relVarbInfoS.local("displayName")
+    )
   ),
   ...displaySectionVarbsProp("ongoingList", {
-    ...ongoingDollars("total", relVarbInfoS.local("displayName")),
+    ...group("ongoing", "total", relVarbInfoS.local("displayName")),
   }),
   ...displaySectionVarbsProp("singleTimeItem", {
     value: varb(relVarbInfoS.local("displayName")),
     valueEditor: varb(relVarbInfoS.local("displayName")),
   }),
-  ...displaySectionVarbsProp("ongoingItem", {
-    ...group("ongoing", "value", relVarbInfoS.local("displayName")),
-    valueEditor: varb("Item cost"), // That's not great
-  }),
+  ...displaySectionVarbsProp(
+    "ongoingItem",
+    editorDisplayGroup(
+      "ongoingInput",
+      "value",
+      relVarbInfoS.local("displayName")
+    )
+  ),
 };
 
 export function getDisplayVarb<SN extends SectionName, VN extends VarbName<SN>>(

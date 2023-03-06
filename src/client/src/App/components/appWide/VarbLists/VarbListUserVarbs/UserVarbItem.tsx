@@ -12,7 +12,7 @@ export function UserVarbItem({ feId }: Props) {
     varbName: "valueEditor",
   });
   return (
-    <VarbListItemGeneric {...feInfo} />
+    <VarbListItemGeneric {...{ ...feInfo, valueEditorName: "valueEditor" }} />
     // doEquals: varb.isPureUserVarb
   );
 }

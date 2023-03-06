@@ -20,6 +20,7 @@ import {
   SectionPathName,
   SectionPathVarbName,
 } from "../../sectionPathContexts/sectionPathNames";
+import { ValueSource } from "../../values/StateValue/unionValues";
 import { ValueName } from "../../values/ValueName";
 import { updateBasics, UpdateBasics, updateBasicsS } from "./UpdateBasics";
 import { UpdateFnName } from "./UpdateFnName";
@@ -156,7 +157,7 @@ export const overrideSwitchS = {
   localIsFalse(varbName: string): UpdateOverrideSwitch {
     return this.local(varbName, false);
   },
-  valueSourceIs(valueSource: string): UpdateOverrideSwitch {
+  valueSourceIs(valueSource: ValueSource): UpdateOverrideSwitch {
     return overrideSwitchS.local("valueSourceName", valueSource);
   },
 };

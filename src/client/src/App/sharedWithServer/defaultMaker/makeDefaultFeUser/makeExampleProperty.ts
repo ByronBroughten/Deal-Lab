@@ -78,7 +78,7 @@ function makeExampleProperty(props: ExamplePropertyProps) {
       valueSourceName: "valueEditor",
       valueOngoingSwitch: "monthly",
       displayNameEditor: displayName,
-      valueEditor: numToObj(value),
+      valueOngoingEditor: numToObj(value),
     });
   }
 

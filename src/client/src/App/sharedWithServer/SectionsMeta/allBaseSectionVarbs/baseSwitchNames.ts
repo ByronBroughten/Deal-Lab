@@ -96,6 +96,12 @@ export type SwitchVarbName<
 > = keyof {
   [S in SK as `${BN}${SwitchVarbNameEndings[SN][S] & string}`]: any;
 };
+export type SwitchTargetName<
+  BN extends string,
+  SN extends SwitchName,
+  SK extends SwitchTargetKey<SN> = SwitchTargetKey<SN>
+> = SwitchVarbName<BN, SN, SK>;
+
 export function getSwitchVarbName<
   BN extends string,
   SN extends SwitchName,

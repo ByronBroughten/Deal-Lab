@@ -9,7 +9,7 @@ import { ViewAndXMenu } from "./ListMenuSimple/ViewAndXMenu";
 
 export interface ListMenuGenericProps
   extends MainSectionMenuOptions,
-    FeInfoByType<"hasFullIndex"> {
+    FeInfoByType<"hasIndexStore"> {
   className?: string;
   themeName: ThemeName;
   toggleListView: () => void;

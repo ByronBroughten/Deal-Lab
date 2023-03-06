@@ -28,7 +28,7 @@ import {
   childToSectionName,
   sectionChildNameNames,
 } from "./sectionChildrenDerived/ChildSectionName";
-import { DbVarbs } from "./sectionChildrenDerived/SectionPack/RawSection";
+import { SectionValuesGeneric } from "./sectionChildrenDerived/SectionPack/RawSection";
 import {
   CorePropName,
   sectionMetasCore,
@@ -76,18 +76,10 @@ export class SectionMeta<SN extends SectionName> {
   get compareTableName(): CorePropNoNull<SN, "compareTableName"> {
     return this.propNoNull("compareTableName");
   }
-  get hasFeDisplayIndex(): boolean {
-    if (this.sectionTraits.displayIndexName) {
-      return true;
-    } else return false;
-  }
   get hasFeFullIndex(): boolean {
     if (this.sectionTraits.feIndexStoreName) {
       return true;
     } else return false;
-  }
-  get displayIndexName(): CorePropNoNull<SN, "displayIndexName"> {
-    return this.propNoNull("displayIndexName");
   }
   get feIndexStoreName(): CorePropNoNull<SN, "feIndexStoreName"> {
     return this.propNoNull("feIndexStoreName");
@@ -175,8 +167,8 @@ export class SectionMeta<SN extends SectionName> {
   emptyChildIdsNarrow(): ChildIdArrsNarrow<SN> {
     return this.emptyChildIdsWide() as any as ChildIdArrsNarrow<SN>;
   }
-  defaultDbVarbs(): DbVarbs {
-    const defaultDbVarbs: DbVarbs = {};
+  defaultDbVarbs(): SectionValuesGeneric {
+    const defaultDbVarbs: SectionValuesGeneric = {};
     for (const [varbName, varbMeta] of Obj.entries(this.varbMetas)) {
       defaultDbVarbs[varbName] = varbMeta.initValue;
     }

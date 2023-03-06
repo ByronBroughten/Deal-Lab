@@ -34,9 +34,7 @@ export type StateValueOrAny<VN extends ValueNameOrAny> = ValueTypesPlusAny[VN];
 export type SectionValues<SN extends SectionName> = {
   [VN in VarbName<SN>]: ValueNamesToTypes[VarbValueName<SN, VN>];
 };
-export type SomeSectionValues<SN extends SectionName> = Partial<
-  SectionValues<SN>
->;
+
 export type VarbValue<
   SN extends SectionName,
   VN extends VarbName<SN>

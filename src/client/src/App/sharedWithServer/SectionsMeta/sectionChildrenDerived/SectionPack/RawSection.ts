@@ -18,14 +18,14 @@ export type SpChildInfo<
   spNum: number;
 };
 
-export type DbVarbs = {
+export type SectionValuesGeneric = {
   [varbName: string]: StateValue;
 };
 export type GeneralRawSection = {
   spNum: number;
   feId: string;
   dbId: string;
-  dbVarbs: DbVarbs;
+  dbVarbs: SectionValuesGeneric;
   childSpNums: GeneralChildNumArrs;
 };
 export type GeneralRawSections = {
@@ -34,7 +34,7 @@ export type GeneralRawSections = {
 export type OneRawSection<SN extends SectionName = SectionName> = {
   spNum: number;
   dbId: string;
-  dbVarbs: DbVarbs;
+  dbVarbs: SectionValuesGeneric;
   childSpNums: ChildSpNums<SN>;
 };
 export type RawSections = {

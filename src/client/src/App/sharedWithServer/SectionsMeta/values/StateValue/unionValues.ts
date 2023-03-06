@@ -1,10 +1,6 @@
 import { Obj } from "../../../utils/Obj";
 
-const unionValueArrs = {
-  authStatus: ["guest", "user"],
-  syncStatus: ["unsyncedChanges", "changesSynced"],
-  autoSyncControl: ["autoSyncOff", "autoSyncOn"],
-  completionStatus: ["allEmpty", "allValid", "someInvalid"],
+const valueSources = {
   editorValueSource: ["valueEditor"],
   loadedVarbSource: ["loadedVarb"],
   customValueSource: ["none", "valueEditor", "listTotal"],
@@ -24,6 +20,18 @@ const unionValueArrs = {
     "valueEditor",
     "listTotal",
   ],
+} as const;
+
+type ValueSources = typeof valueSources;
+export type ValueSource = ValueSources[keyof ValueSources][number];
+
+const unionValueArrs = {
+  ...valueSources,
+  authStatus: ["guest", "user"],
+  labSubscription: ["basicPlan", "fullPlan"],
+  syncStatus: ["unsyncedChanges", "changesSynced"],
+  autoSyncControl: ["autoSyncOff", "autoSyncOn"],
+  completionStatus: ["allEmpty", "allValid", "someInvalid"],
   dealMode: ["buyAndHold", "fixAndFlip", "brrrrr"],
   financingMode: ["cashOnly", "useLoan", ""],
   userDataStatus: [
@@ -32,7 +40,6 @@ const unionValueArrs = {
     "loaded",
     // unloading
   ],
-  labSubscription: ["basicPlan", "fullPlan"],
 } as const;
 
 type UnionValueArrs = typeof unionValueArrs;

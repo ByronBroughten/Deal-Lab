@@ -13,11 +13,7 @@ import { FeSectionInfo } from "../SectionsMeta/SectionInfo/FeInfo";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { SectionPathContextName } from "../SectionsMeta/sectionPathContexts";
-import {
-  SectionValues,
-  SomeSectionValues,
-  StateValue,
-} from "../SectionsMeta/values/StateValue";
+import { SectionValues, StateValue } from "../SectionsMeta/values/StateValue";
 import { GetterSectionProps } from "../StateGetters/Bases/GetterSectionBase";
 import { InitRawFeSectionProps } from "../StateSections/initRawSection";
 import { StateSections } from "../StateSections/StateSections";
@@ -210,7 +206,7 @@ export class UpdaterSection<
       varb.updateValue(values[varbName] as StateValue);
     }
   }
-  resetVarbs(dbVarbs: SomeSectionValues<SN>): void {
+  resetVarbs(dbVarbs: Partial<SectionValues<SN>>): void {
     this.updateProps({
       varbs: StateSections.initRawVarbs({
         dbVarbs,

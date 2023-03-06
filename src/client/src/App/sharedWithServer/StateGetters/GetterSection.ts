@@ -1,7 +1,9 @@
 import {
+  getSwitchVarbName,
   switchKeyToVarbNames,
   SwitchName,
   SwitchTargetKey,
+  SwitchTargetName,
 } from "../SectionsMeta/allBaseSectionVarbs/baseSwitchNames";
 import { DbSectionInfo } from "../SectionsMeta/allBaseSectionVarbs/DbSectionInfo";
 import { VarbName } from "../SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
@@ -28,7 +30,7 @@ import {
   SelfChildName,
   StepSiblingName,
 } from "../SectionsMeta/sectionChildrenDerived/ParentName";
-import { DbVarbs } from "../SectionsMeta/sectionChildrenDerived/SectionPack/RawSection";
+import { SectionValuesGeneric } from "../SectionsMeta/sectionChildrenDerived/SectionPack/RawSection";
 import {
   AbsolutePathDbInfoMixed,
   AbsolutePathNodeInfoMixed,
@@ -657,8 +659,8 @@ export class GetterSection<
       return values;
     }, {} as SectionValues<SN>);
   }
-  get dbVarbs(): DbVarbs {
-    return this.allValues as DbVarbs;
+  get dbVarbs(): SectionValuesGeneric {
+    return this.allValues as SectionValuesGeneric;
   }
   values<VNS extends SectionValuesReq>(
     varbToValuesNames: VNS
@@ -699,13 +701,12 @@ export class GetterSection<
     const varbName = this.activeSwitchTargetName(varbNameBase, switchEnding);
     return this.varb(varbName);
   }
-  activeSwitchTargetName(
-    varbNameBase: string,
-    switchEnding: SwitchName
-  ): string {
-    const varbNames = switchKeyToVarbNames(varbNameBase, switchEnding);
+  activeSwitchTargetName<BN extends string, SN extends SwitchName>(
+    varbNameBase: BN,
+    switchEnding: SN
+  ): SwitchTargetName<BN, SN> {
     const switchValue = this.switchValue(varbNameBase, switchEnding);
-    return varbNames[switchValue as keyof typeof varbNames];
+    return getSwitchVarbName(varbNameBase, switchEnding, switchValue);
   }
   switchVarbInfo(
     varbNameBase: string,

@@ -78,9 +78,6 @@ export const allSectionChildren = checkAllSectionChildren({
     userVarbListMain: ["userVarbList"],
   }),
   userListEditor: sectionChildren(listChildren),
-  displayNameList: sectionChildren({
-    displayNameItem: ["displayNameItem"],
-  }),
   feUser: sectionChildren({
     // feUser includes everything that has a corresponding child in dbStore or that has any intermediary sections used to edit and add to them.
     propertyMainTable: ["compareTable"],

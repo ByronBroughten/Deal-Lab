@@ -7,10 +7,7 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
-// 3. Implement the string values
-// 4. ongoingItem's valueEditor to valueOngoingEditor
-// 5. Implement its displayNames like the others
-// 6. Make all displayNames stringObj
+// 7. Get rid of "dbVarbs"
 
 // Custom ongoing cost doesn't show whether it's
 // by year or month. And it would be nice to switch.

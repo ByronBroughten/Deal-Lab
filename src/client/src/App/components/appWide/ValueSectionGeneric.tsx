@@ -18,6 +18,7 @@ type MakeItemizedListNodeProps = {
 interface Props<SN extends ValueSectionName> {
   sectionName: SN;
   valueName: VarbName<SN>;
+  valueEditorName: VarbName<SN>;
   makeItemizedListNode: (props: MakeItemizedListNodeProps) => React.ReactNode;
   className?: string;
   feId: string;
@@ -35,6 +36,7 @@ function getChildName<SN extends ValueSectionName>(
 export function ValueSectionGeneric<
   SN extends SectionNameByType<"valueSection">
 >({
+  valueEditorName,
   className,
   feId,
   displayName,
@@ -46,9 +48,7 @@ export function ValueSectionGeneric<
   const section = useSetterSection({ sectionName, feId });
   const listChildName = getChildName(sectionName);
   const valueSource = section.value("valueSourceName");
-  const displayNameValue = section
-    .varb("displayName")
-    .value("stringObj").mainText;
+  const displayNameValue = section.value("displayName").mainText;
 
   const menuItems: [StateValue<"customValueSource">, string][] = [
     ["valueEditor", "Enter amount"],
@@ -82,7 +82,7 @@ export function ValueSectionGeneric<
             editorProps:
               valueSource === "valueEditor"
                 ? {
-                    feVarbInfo: section.varbInfo("valueEditor"),
+                    feVarbInfo: section.varbInfo(valueEditorName),
                     editorType: "equation",
                     quickViewVarbNames: ["purchasePrice", "sqft", "numUnits"],
                   }

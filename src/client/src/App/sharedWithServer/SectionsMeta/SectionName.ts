@@ -7,8 +7,6 @@ export const sectionNames = [
   "feUser",
   "dbStore",
   "proxyStoreItem",
-  "displayNameItem",
-  "displayNameList",
   "omniParent",
   "compareTable",
   "tableRow",
@@ -23,7 +21,6 @@ export const sectionNames = [
   "ongoingValue",
   "ongoingList",
   "ongoingItem",
-  "ongoingCheckmarkItem",
   "outputList",
 
   "compareSection",

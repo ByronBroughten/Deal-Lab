@@ -9,7 +9,8 @@ import {
 } from "../../sharedWithServer/StateSolvers/SolverBases/SolverSectionBase";
 import { SolverSectionsProps } from "../../sharedWithServer/StateSolvers/SolverBases/SolverSectionsBase";
 import { SolverSection } from "../../sharedWithServer/StateSolvers/SolverSection";
-import { DisplayItemProps } from "./DisplayListBuilder";
+
+export type DisplayItemProps = { dbId: string; displayName: string };
 
 interface FullIndexSolverProps<CN extends ChildName<"feUser">>
   extends SolverSectionProps<"feUser"> {
@@ -46,7 +47,7 @@ export class FeIndexSolver<
   get indexSection() {
     return this.solver;
   }
-  get indexSectionItems(): GetterSection<SectionNameByType<"hasFullIndex">>[] {
+  get indexSectionItems(): GetterSection<SectionNameByType<"hasIndexStore">>[] {
     return this.get.children(this.itemName) as GetterSection<any>[];
   }
   get displayItems(): DisplayItemProps[] {

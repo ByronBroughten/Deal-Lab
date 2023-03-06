@@ -5,10 +5,12 @@ import { NumObjEntityEditor } from "../../../inputs/NumObjEntityEditor";
 interface Props extends FeSectionInfo {
   className?: string;
   endAdornment?: string;
+  valueEditorName: "valueEditor" | "valueOngoingEditor";
 }
 export function FirstValueEditorCell({
   className,
   endAdornment,
+  valueEditorName,
   ...feInfo
 }: Props) {
   return (
@@ -18,7 +20,7 @@ export function FirstValueEditorCell({
           editorType="equation"
           feVarbInfo={{
             ...feInfo,
-            varbName: "valueEditor",
+            varbName: valueEditorName,
           }}
           className="LabeledValueEditor-equationEditor"
           labeled={false}

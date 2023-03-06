@@ -30,7 +30,7 @@ export function makeUtilityList(
         displayNameEditor: itemProps[0],
         valueOngoingSwitch: "monthly",
         valueSourceName: valueSource,
-        valueEditor: itemProps[1],
+        valueOngoingEditor: itemProps[1],
       },
     });
   }

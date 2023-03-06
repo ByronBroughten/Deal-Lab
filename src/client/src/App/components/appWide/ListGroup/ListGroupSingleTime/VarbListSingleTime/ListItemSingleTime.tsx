@@ -8,7 +8,9 @@ const ListItemSingleTimeMemo = React.memo(function ListItemSingleTimeMemo({
   valueSourceName,
 }: MemoProps) {
   const feInfo = { sectionName: "singleTimeItem", feId } as const;
-  return <VarbListItemGeneric {...feInfo} />;
+  return (
+    <VarbListItemGeneric {...{ ...feInfo, valueEditorName: "valueEditor" }} />
+  );
 });
 
 export function ListItemSingleTime({ feId }: { feId: string }) {

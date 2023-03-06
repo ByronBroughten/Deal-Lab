@@ -15,6 +15,7 @@ export function SingleTimeValue(props: ValueSectionOneTimeProps) {
         ...props,
         sectionName: "singleTimeValue",
         valueName: "value",
+        valueEditorName: "valueEditor",
         makeItemizedListNode: (props) => (
           <ListEditorSingleTime
             {...{

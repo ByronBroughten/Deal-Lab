@@ -3,7 +3,10 @@ import { dealRelVarbs } from "./allUpdateSectionVarbs/dealUpdateVarbs";
 import { financingUpdateVarbs } from "./allUpdateSectionVarbs/financingUpdateVarbs";
 import { loanRelVarbs } from "./allUpdateSectionVarbs/loanUpdateVarbs";
 import { mgmtRelVarbs } from "./allUpdateSectionVarbs/mgmtUpdateVarbs";
-import { capExItemUpdateVarbs } from "./allUpdateSectionVarbs/ongoingItemUpdateVarbs";
+import {
+  capExItemUpdateVarbs,
+  ongoingItemUpdateVarbs,
+} from "./allUpdateSectionVarbs/ongoingItemUpdateVarbs";
 import { propertyUpdateVarbs } from "./allUpdateSectionVarbs/propertyUpdateVarbs";
 import { VarbName } from "./baseSectionsDerived/baseSectionsVarbsTypes";
 
@@ -332,29 +335,20 @@ function makeAllUpdateSections() {
           updateOverride(
             [overrideSwitchS.valueSourceIs("fivePercentLoan")],
             updateBasics("emptyNumObj")
-            // make loan update based on this switch
           ),
           updateOverride(
-            [overrideSwitchS.valueSourceIs("itemized")],
-            updateBasicsS.loadFromChild(
-              "singleTimeList",
-              "total"
-            ) as UpdateBasics<"numObj">
+            [overrideSwitchS.valueSourceIs("listTotal")],
+            updateBasicsS.loadFromChild("singleTimeList", "total")
           ),
           updateOverride(
             [overrideSwitchS.valueSourceIs("valueEditor")],
-            updateBasicsS.loadSolvableTextByVarbInfo(
-              "valueLumpSumEditor"
-            ) as UpdateBasics<"numObj">
+            updateBasicsS.loadSolvableTextByVarbInfo("valueLumpSumEditor")
           ),
         ],
       }),
     }),
     ...updateSectionProp("singleTimeValue", {
-      displayName: updateVarb("stringObj", {
-        updateFnName: "loadMainTextByVarbInfo",
-        updateFnProps: { varbInfo: updateFnPropS.local("displayNameEditor") },
-      }),
+      ...updateVarbsS.displayNameAndEditor,
       value: updateVarb("numObj", {
         updateFnName: "throwIfReached",
         updateOverrides: [
@@ -363,7 +357,7 @@ function makeAllUpdateSections() {
             updateBasics("emptyNumObj")
           ),
           updateOverride(
-            [overrideSwitchS.valueSourceIs("itemized")],
+            [overrideSwitchS.valueSourceIs("listTotal")],
             updateBasicsS.loadFromChild(
               "singleTimeList",
               "total"
@@ -377,29 +371,14 @@ function makeAllUpdateSections() {
           ),
         ],
       }),
-      isItemized: updateVarb("boolean", {
-        initValue: false,
-      }),
       valueEditor: updateVarb("numObj"),
-      valueSourceName: updateVarb("string", {
-        initValue: "valueEditor",
-      }),
-      itemValueSource: updateVarb("string", {
+      valueSourceName: updateVarb("customValueSource", {
         initValue: "valueEditor",
       }),
     }),
     ...updateSectionProp("ongoingValue", {
-      displayName: updateVarb("stringObj", {
-        updateFnName: "loadMainTextByVarbInfo",
-        updateFnProps: { varbInfo: updateFnPropS.local("displayNameEditor") },
-      }),
-      isItemized: updateVarb("boolean", {
-        initValue: false,
-      }),
-      valueSourceName: updateVarb("string", {
-        initValue: "valueEditor",
-      }),
-      itemValueSource: updateVarb("string", {
+      ...updateVarbsS.displayNameAndEditor,
+      valueSourceName: updateVarb("customValueSource", {
         initValue: "valueEditor",
       }),
       ...updateVarbsS.ongoingInputNext("value", {
@@ -411,7 +390,7 @@ function makeAllUpdateSections() {
               updateBasics("emptyNumObj")
             ),
             updateOverride(
-              [overrideSwitchS.valueSourceIs("itemized")],
+              [overrideSwitchS.valueSourceIs("listTotal")],
               updateBasicsS.loadFromChild(
                 "ongoingList",
                 "totalMonthly"
@@ -422,16 +401,14 @@ function makeAllUpdateSections() {
                 overrideSwitchS.valueSourceIs("valueEditor"),
                 overrideSwitchS.monthlyIsActive("value"),
               ],
-              updateBasicsS.loadFromLocal(
-                "valueEditor"
-              ) as UpdateBasics<"numObj">
+              updateBasicsS.loadFromLocal("valueOngoingEditor")
             ),
             updateOverride(
               [
                 overrideSwitchS.valueSourceIs("valueEditor"),
                 overrideSwitchS.yearlyIsActive("value"),
               ],
-              updateBasicsS.yearlyToMonthly("value") as UpdateBasics<"numObj">
+              updateBasicsS.yearlyToMonthly("value")
             ),
           ],
         },
@@ -443,7 +420,7 @@ function makeAllUpdateSections() {
               updateBasics("emptyNumObj")
             ),
             updateOverride(
-              [overrideSwitchS.valueSourceIs("itemized")],
+              [overrideSwitchS.valueSourceIs("listTotal")],
               updateBasicsS.loadFromChild(
                 "ongoingList",
                 "totalYearly"
@@ -454,16 +431,14 @@ function makeAllUpdateSections() {
                 overrideSwitchS.valueSourceIs("valueEditor"),
                 overrideSwitchS.yearlyIsActive("value"),
               ],
-              updateBasicsS.loadFromLocal(
-                "valueEditor"
-              ) as UpdateBasics<"numObj">
+              updateBasicsS.loadFromLocal("valueOngoingEditor")
             ),
             updateOverride(
               [
                 overrideSwitchS.valueSourceIs("valueEditor"),
                 overrideSwitchS.monthlyIsActive("value"),
               ],
-              updateBasicsS.monthlyToYearly("value") as UpdateBasics<"numObj">
+              updateBasicsS.monthlyToYearly("value")
             ),
           ],
         },
@@ -531,11 +506,26 @@ function makeAllUpdateSections() {
         updateOverrides: [updateOverrideS.loadedVarbProp("loadEndAdornment")],
       }),
     }),
-    ...updateSectionProp("singleTimeItem", updateVarbsS.singleTimeItem()),
-    ...updateSectionProp("ongoingItem", updateVarbsS.ongoingItem()),
-    ...updateSectionProp("customVarb", updateVarbsS.basicVirtualVarb),
+    ...updateSectionProp("singleTimeItem", {
+      ...updateVarbsS._typeUniformity,
+      ...updateVarbsS.displayNameAndEditor,
+      value: updateVarb("numObj", {
+        updateFnName: "throwIfReached",
+        updateOverrides: [
+          updateOverride(
+            [overrideSwitchS.local("valueSourceName", "valueEditor")],
+            updateBasicsS.loadFromLocalValueEditor()
+          ),
+        ],
+      }),
+      valueSourceName: updateVarb("customValueSource", {
+        initValue: "valueEditor",
+      }),
+      valueEditor: updateVarb("numObj"),
+    }),
+    ...updateSectionProp("ongoingItem", ongoingItemUpdateVarbs()),
     ...updateSectionProp("userVarbItem", {
-      ...updateVarbsS.listItemVirtualVarb,
+      ...updateVarbsS.displayNameAndEditor,
       value: updateVarb("numObj", {
         initValue: numObj(0),
         updateFnName: "userVarb",
@@ -547,7 +537,7 @@ function makeAllUpdateSections() {
           ),
         },
       }),
-      valueSourceName: updateVarb("string", {
+      valueSourceName: updateVarb("editorValueSource", {
         initValue: "valueEditor",
       }),
     }),

@@ -1,5 +1,5 @@
 import { useGetterSection } from "../../../sharedWithServer/stateClassHooks/useGetterSection";
-import { ValueSectionOngoing } from "../ValueSectionOngoing";
+import { ValueSectionOngoing } from "../OngoingValue";
 import { ValueGroupGeneric } from "./ListGroupShared/ValueGroupGeneric";
 
 type Props = {

@@ -14,38 +14,31 @@ export function ongoingItemUpdateVarbs(): UpdateSectionVarbs<"ongoingItem"> {
   return {
     ...updateVarbsS._typeUniformity,
     ...updateVarbsS.displayNameAndEditor,
-    valueEditor: updateVarb("numObj"),
     valueSourceName: updateVarb("editorValueSource", {
       initValue: "valueEditor",
     }),
-    ...updateVarbsS.group("value", "ongoing", "monthly", {
-      targets: { updateFnName: "throwIfReached" },
+    ...updateVarbsS.group("value", "ongoingInput", "monthly", {
       monthly: updateVarb("numObj", {
+        updateFnName: "throwIfReached",
         updateOverrides: [
           updateOverride(
             [overrideSwitchS.monthlyIsActive("value")],
-            updateBasicsS.loadFromLocal("valueEditor")
+            updateBasicsS.loadFromLocal("valueOngoingEditor")
           ),
           updateOverrideS.activeYearlyToMonthly(valueNameBase),
         ],
       }),
       yearly: updateVarb("numObj", {
+        updateFnName: "throwIfReached",
         updateOverrides: [
           updateOverride(
             [overrideSwitchS.yearlyIsActive("value")],
-            updateBasicsS.loadFromLocal("valueEditor")
+            updateBasicsS.loadFromLocal("valueOngoingEditor")
           ),
           updateOverrideS.activeMonthlyToYearly(valueNameBase),
         ],
       }),
     }),
-  };
-}
-
-export function ongoingCheckmarkItemUpdateVarbs(): UpdateSectionVarbs<"ongoingCheckmarkItem"> {
-  return {
-    ...ongoingItemUpdateVarbs(),
-    isActive: updateVarb("boolean"),
   };
 }
 

@@ -1,11 +1,7 @@
 import isEqual from "fast-deep-equal";
 import { SectionPack } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/SectionPack";
 import { SectionNameByType } from "../../sharedWithServer/SectionsMeta/SectionNameByType";
-import {
-  SectionValues,
-  SomeSectionValues,
-} from "../../sharedWithServer/SectionsMeta/values/StateValue";
-import { StringObj } from "../../sharedWithServer/SectionsMeta/values/StateValue/StringObj";
+import { SectionValues } from "../../sharedWithServer/SectionsMeta/values/StateValue";
 import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection";
 import { GetterSections } from "../../sharedWithServer/StateGetters/GetterSections";
 import { PackMakerSection } from "../../sharedWithServer/StatePackers.ts/PackMakerSection";
@@ -14,34 +10,27 @@ import { SolverSection } from "../../sharedWithServer/StateSolvers/SolverSection
 import { UpdaterSection } from "../../sharedWithServer/StateUpdaters/UpdaterSection";
 import { timeS } from "../../sharedWithServer/utils/date";
 import { ChildSectionName } from "./../../sharedWithServer/SectionsMeta/sectionChildrenDerived/ChildSectionName";
-import { DisplayItemProps } from "./DisplayListBuilder";
-import { FeIndexSolver } from "./FeIndexSolver";
+import { DisplayItemProps, FeIndexSolver } from "./FeIndexSolver";
 import { FeUserSolver } from "./FeUserSolver";
 
 export type SaveStatus = "unsaved" | "changesSynced" | "unsyncedChanges";
 export class MainSectionSolver<
   SN extends SectionNameByType<"hasIndexStore">
 > extends SolverSectionBase<SN> {
-  get solver() {
+  get solver(): SolverSection<SN> {
     return new SolverSection(this.solverSectionProps);
   }
-  get updater() {
+  get updater(): UpdaterSection<SN> {
     return new UpdaterSection(this.solverSectionProps);
   }
-  get get() {
+  get get(): GetterSection<SN> {
     return new GetterSection(this.getterSectionProps);
   }
-  get packMaker() {
+  get packMaker(): PackMakerSection<SN> {
     return new PackMakerSection(this.getterSectionProps);
   }
-  get getterSections() {
+  get getterSections(): GetterSections {
     return new GetterSections(this.solverSectionsProps);
-  }
-  get hasFullIndex() {
-    return this.get.meta.hasFeFullIndex;
-  }
-  get hasFeDisplayIndex() {
-    return this.get.meta.hasFeDisplayIndex;
   }
   get feStoreSolver(): FeIndexSolver<any> {
     const { feIndexStoreName } = this.get;
@@ -106,13 +95,13 @@ export class MainSectionSolver<
   }
   makeACopy() {
     this.updater.newDbId();
-    const titleValue = this.get.valueNext("displayName") as StringObj;
+    const titleValue = this.get.valueNext("displayName");
     this.solver.updateValuesAndSolve({
       displayName: {
         ...titleValue,
         mainText: "Copy of " + titleValue.mainText,
       },
-    } as SomeSectionValues<SN>);
+    } as Partial<SectionValues<SN>>);
   }
   copyMinusNameChange() {
     this.updater.newDbId();
