@@ -7,7 +7,7 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
-// 7. Get rid of "dbVarbs"
+// 7. Get rid of "sectionValues"
 
 // Custom ongoing cost doesn't show whether it's
 // by year or month. And it would be nice to switch.

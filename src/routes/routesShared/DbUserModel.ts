@@ -69,7 +69,7 @@ function monRawSection<SN extends SectionName>(sectionName: SN): Schema<any> {
     spNum: monSchemas.reqNumber,
     dbId: monSchemas.reqId,
     childSpNums: monChildSpNums(sectionName),
-    dbVarbs: monDbVarbs(sectionName),
+    sectionValues: monDbVarbs(sectionName),
   };
   return new Schema(schemaFrame);
 }
@@ -110,7 +110,7 @@ export const modelPath = {
     return `${this.firstSectionPackSection(
       storeName,
       sectionName
-    )}.dbVarbs.${varbName}`;
+    )}.sectionValues.${varbName}`;
   },
 };
 

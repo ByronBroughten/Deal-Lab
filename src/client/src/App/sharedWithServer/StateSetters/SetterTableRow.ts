@@ -36,7 +36,7 @@ export class SetterTableRow extends SetterSectionBase<"tableRow"> {
       this.get.numObjOrNotFoundByMixedAssertOne(cellValueInfo);
     this.setter.addChild("cell", {
       dbId: colDbId,
-      dbVarbs: {
+      sectionValues: {
         valueEntityInfo: cellValueInfo,
         displayVarb,
       },

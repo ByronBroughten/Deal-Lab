@@ -17,7 +17,7 @@ export function makeUtilityList(
   const valueSource = "valueEditor";
   const utilityList = feUser.addAndGetChild("ongoingListMain", {
     dbId,
-    dbVarbs: {
+    sectionValues: {
       itemValueSource: valueSource,
       itemOngoingSwitch: "monthly",
       totalOngoingSwitch: "monthly",
@@ -26,7 +26,7 @@ export function makeUtilityList(
   });
   for (const itemProps of itemPropArr) {
     utilityList.addChild("ongoingItem", {
-      dbVarbs: {
+      sectionValues: {
         displayNameEditor: itemProps[0],
         valueOngoingSwitch: "monthly",
         valueSourceName: valueSource,
@@ -50,7 +50,7 @@ export function makeExampleSingleTimeList(
   for (const itemProps of itemPropArr) {
     const value = itemProps[1];
     list.addChild("singleTimeItem", {
-      dbVarbs: {
+      sectionValues: {
         displayNameEditor: itemProps[0],
         valueEditor: typeof value === "number" ? numObj(value) : value,
       },
@@ -69,14 +69,14 @@ export function makeCapExList(
   const itemOngoingSwitch = "yearly";
   const capExList = feUser.addAndGetChild("capExListMain", {
     dbId,
-    dbVarbs: {
+    sectionValues: {
       itemOngoingSwitch,
       totalOngoingSwitch: "yearly",
     },
   });
   for (const itemProps of itemPropArr) {
     capExList.addChild("capExItem", {
-      dbVarbs: {
+      sectionValues: {
         displayNameEditor: itemProps[0],
         valueOngoingSwitch: itemOngoingSwitch,
         lifespanSpanEditor: numToObj(itemProps[1]),

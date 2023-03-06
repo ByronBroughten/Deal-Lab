@@ -82,7 +82,7 @@ export class CompareTableBuilder extends UpdaterSectionBase<"compareTable"> {
     const displayName = source.valueNext("displayName").mainText;
     const row = this.builder.addAndGetChild("tableRow", {
       dbId: source.dbId,
-      dbVarbs: { displayName },
+      sectionValues: { displayName },
     });
     for (const column of this.get.children("column")) {
       const varbInfo = column.valueEntityInfo();
@@ -92,7 +92,7 @@ export class CompareTableBuilder extends UpdaterSectionBase<"compareTable"> {
         displayVarb = varb.displayVarb();
       }
       row.addChild("cell", {
-        dbVarbs: {
+        sectionValues: {
           columnFeId: column.feId,
           valueEntityInfo: varbInfo,
           displayVarb,

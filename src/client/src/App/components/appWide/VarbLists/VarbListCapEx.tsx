@@ -17,7 +17,7 @@ export function VarbListCapEx({ feId, ...rest }: Props) {
   const itemName = list.meta.varbListItem;
   const addItem = () => {
     list.addChild(itemName, {
-      dbVarbs: { valueOngoingSwitch: itemOngoingSwitch },
+      sectionValues: { valueOngoingSwitch: itemOngoingSwitch },
     });
   };
   return (

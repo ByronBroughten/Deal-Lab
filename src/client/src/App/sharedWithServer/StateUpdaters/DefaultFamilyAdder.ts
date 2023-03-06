@@ -43,7 +43,7 @@ export class DefaultFamilyAdder<
   }
   addChild<CN extends ChildName<SN>>(
     childName: CN,
-    { dbVarbs, ...rest }: AddChildOptions<SN, CN> = {}
+    { sectionValues, ...rest }: AddChildOptions<SN, CN> = {}
   ): void {
     this.updater.addChild(childName, rest);
     const { feId, feInfo } = this.get.youngestChild(childName);
@@ -51,9 +51,9 @@ export class DefaultFamilyAdder<
       childName,
       feId,
     });
-    if (dbVarbs) {
+    if (sectionValues) {
       const childUpdater = this.updater.updaterSection(feInfo);
-      childUpdater.updateValues(dbVarbs);
+      childUpdater.updateValues(sectionValues);
     }
   }
   private get parent(): DefaultFamilyAdder<ParentNameSafe<SN>> {

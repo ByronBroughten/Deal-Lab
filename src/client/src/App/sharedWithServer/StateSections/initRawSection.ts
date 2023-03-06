@@ -18,7 +18,7 @@ export interface InitRawFeSectionProps<SN extends SectionName>
       RawFeSection<SN>,
       "feId" | "dbId" | "sectionContextName" | "contextPathIdxSpecifier"
     > {
-  dbVarbs?: InitVarbs<SN>;
+  sectionValues?: InitVarbs<SN>;
   childFeIds?: InitChildIdArrs<SN>;
 }
 
@@ -29,7 +29,7 @@ export function initRawSection<SN extends SectionName>({
   feId = Id.make(),
   dbId = Id.make(),
   childFeIds = {},
-  dbVarbs = {},
+  sectionValues = {},
 }: InitRawFeSectionProps<SN>): RawFeSection<SN> {
   return {
     contextPathIdxSpecifier,
@@ -41,7 +41,7 @@ export function initRawSection<SN extends SectionName>({
     varbs: initRawVarbs({
       sectionName,
       feId,
-      dbVarbs,
+      sectionValues,
     }),
   };
 }
@@ -58,11 +58,11 @@ function initChildFeIds<SN extends SectionName>(
 }
 
 interface InitRawVarbsProps<SN extends SectionName> extends FeSectionInfo<SN> {
-  dbVarbs: InitVarbs<SN>;
+  sectionValues: InitVarbs<SN>;
 }
 
 export function initRawVarbs<SN extends SectionName>({
-  dbVarbs,
+  sectionValues,
   ...feSectionInfo
 }: InitRawVarbsProps<SN>): StateVarbs<SN> {
   const { sectionName } = feSectionInfo;
@@ -70,7 +70,9 @@ export function initRawVarbs<SN extends SectionName>({
   return varbNames.reduce((varbs, varbName) => {
     varbs[varbName] = initRawVarb({
       ...feSectionInfo,
-      ...(varbName in dbVarbs ? { dbVarb: (dbVarbs as any)[varbName] } : {}),
+      ...(varbName in sectionValues
+        ? { dbVarb: (sectionValues as any)[varbName] }
+        : {}),
       varbName,
     });
     return varbs;

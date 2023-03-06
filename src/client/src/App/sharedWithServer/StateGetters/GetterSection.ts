@@ -659,7 +659,7 @@ export class GetterSection<
       return values;
     }, {} as SectionValues<SN>);
   }
-  get dbVarbs(): SectionValuesGeneric {
+  get sectionValues(): SectionValuesGeneric {
     return this.allValues as SectionValuesGeneric;
   }
   values<VNS extends SectionValuesReq>(

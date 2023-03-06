@@ -67,11 +67,11 @@ export function makeExampleUserVarbLists(): SectionPack<"userVarbList">[] {
   const feUser = PackBuilderSection.initAsOmniChild("feUser");
   for (const listArr of lists) {
     const varbList = feUser.addAndGetChild("userVarbListMain", {
-      dbVarbs: { displayName: stringObj(listArr[0]) },
+      sectionValues: { displayName: stringObj(listArr[0]) },
     });
     for (const item of listArr[1]) {
       varbList.addChild("userVarbItem", {
-        dbVarbs: {
+        sectionValues: {
           displayNameEditor: item[0],
           valueEditor: item[1],
         },

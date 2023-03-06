@@ -99,10 +99,10 @@ describe(testedRoute, () => {
       ({ dbId }) => dbId === reqs.updateSection.body.sectionPack.dbId
     );
 
-    expect(updatedSection?.dbVarbs.displayName).toEqual(
+    expect(updatedSection?.sectionValues.displayName).toEqual(
       updatedValues.displayName
     );
-    expect(updatedSection?.dbVarbs.purchasePrice).toEqual(
+    expect(updatedSection?.sectionValues.purchasePrice).toEqual(
       updatedValues.purchasePrice
     );
   });

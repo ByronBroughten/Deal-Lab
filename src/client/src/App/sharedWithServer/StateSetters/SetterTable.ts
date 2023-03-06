@@ -67,7 +67,7 @@ export class SetterTable extends SetterSectionBase<"compareTable"> {
   addRow({ displayName, dbId }: { displayName: string; dbId: string }): void {
     this.setter.addChild("tableRow", {
       dbId,
-      dbVarbs: {
+      sectionValues: {
         displayName,
       },
     });
@@ -81,7 +81,7 @@ export class SetterTable extends SetterSectionBase<"compareTable"> {
   }
   addColumn(varbInfo: VarbInfoMixedFocal): void {
     this.setter.addChild("column", {
-      dbVarbs: { varbInfo: { ...varbInfo, entityId: Id.make() } },
+      sectionValues: { varbInfo: { ...varbInfo, entityId: Id.make() } },
     });
   }
   removeColumn(feId: string): void {

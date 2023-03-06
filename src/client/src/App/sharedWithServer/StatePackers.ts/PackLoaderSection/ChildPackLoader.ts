@@ -54,7 +54,7 @@ export class ChildPackLoader<
   }
   loadChild() {
     const addProps = {
-      ...pick(this.childRawSection, ["dbId", "dbVarbs"]),
+      ...pick(this.childRawSection, ["dbId", "sectionValues"]),
       idx: this.spChildInfo.idx,
     };
     this.updaterSection.addChild(

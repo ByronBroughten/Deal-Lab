@@ -3,7 +3,7 @@ import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
 
 export function makeDefaultMgmtPack(): SectionPack<"mgmt"> {
   const mgmt = PackBuilderSection.initAsOmniChild("mgmt", {
-    dbVarbs: {
+    sectionValues: {
       basePayUnitSwitch: "percent",
       basePayDollarsOngoingSwitch: "monthly",
       vacancyLossDollarsOngoingSwitch: "monthly",

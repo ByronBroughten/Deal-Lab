@@ -206,10 +206,10 @@ export class UpdaterSection<
       varb.updateValue(values[varbName] as StateValue);
     }
   }
-  resetVarbs(dbVarbs: Partial<SectionValues<SN>>): void {
+  resetVarbs(sectionValues: Partial<SectionValues<SN>>): void {
     this.updateProps({
       varbs: StateSections.initRawVarbs({
-        dbVarbs,
+        sectionValues,
         ...this.feSectionInfo,
       }),
     });

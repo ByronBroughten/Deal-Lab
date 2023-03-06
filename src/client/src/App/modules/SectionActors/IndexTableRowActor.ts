@@ -46,7 +46,7 @@ export class IndexTableRowActor extends SectionActorBase<"tableRow"> {
       this.setter.setSections();
     } else {
       this.parentTable.addChild("compareRow", {
-        dbVarbs: { dbId: this.get.dbId },
+        sectionValues: { dbId: this.get.dbId },
       });
     }
   }

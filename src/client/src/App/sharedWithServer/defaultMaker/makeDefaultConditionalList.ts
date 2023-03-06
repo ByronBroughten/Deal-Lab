@@ -7,7 +7,7 @@ export function makeDefaultConditionalList() {
   const childTypeNames: ConditionalRowTypeName[] = ["if", "then", "or else"];
   for (const childTypeName of childTypeNames) {
     conditionalList.addChild("conditionalRow", {
-      dbVarbs: { type: childTypeName },
+      sectionValues: { type: childTypeName },
     });
   }
   return conditionalList.makeSectionPack();

@@ -35,7 +35,7 @@ export function ListEditorOngoing({
 
   const onChange = (displayName?: string) =>
     ongoingList.addChild("ongoingItem", {
-      dbVarbs: {
+      sectionValues: {
         valueOngoingSwitch: itemOngoingSwitch,
         ...(displayName && { displayNameEditor: displayName }),
       },

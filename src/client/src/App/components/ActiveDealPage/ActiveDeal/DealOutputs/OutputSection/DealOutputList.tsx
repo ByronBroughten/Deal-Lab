@@ -28,7 +28,7 @@ export function DealOutputList({ feId }: { feId: string }) {
 
   const onSelectNext = ({ varbInfo }: VariableOption) =>
     outPutList.addChild("outputItem", {
-      dbVarbs: { valueEntityInfo: inEntityValueInfo(varbInfo) },
+      sectionValues: { valueEntityInfo: inEntityValueInfo(varbInfo) },
     });
 
   const propArr = useLoadedOutputRowProps(feId);

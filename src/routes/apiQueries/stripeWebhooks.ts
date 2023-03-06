@@ -59,7 +59,7 @@ async function handleStripeEvent(event: Stripe.Event, res: Response) {
       const subValues = stripeSubToValues(subscription);
       const updatedSub = PackBuilderSection.initAsOmniChild(
         "stripeSubscription",
-        { dbVarbs: subValues }
+        { sectionValues: subValues }
       );
       const updatedPack = updatedSub.makeSectionPack();
       const customerId = subscription.customer;
@@ -70,7 +70,7 @@ async function handleStripeEvent(event: Stripe.Event, res: Response) {
       const subPacks = await querier.getSectionPackArr("stripeSubscription");
       const currentIdx = subPacks.findIndex(
         (sub) =>
-          sub.rawSections.stripeSubscription[0].dbVarbs.subId ===
+          sub.rawSections.stripeSubscription[0].sectionValues.subId ===
           subValues.subId
       );
 

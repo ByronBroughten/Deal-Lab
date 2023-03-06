@@ -25,7 +25,7 @@ export type GeneralRawSection = {
   spNum: number;
   feId: string;
   dbId: string;
-  dbVarbs: SectionValuesGeneric;
+  sectionValues: SectionValuesGeneric;
   childSpNums: GeneralChildNumArrs;
 };
 export type GeneralRawSections = {
@@ -34,7 +34,7 @@ export type GeneralRawSections = {
 export type OneRawSection<SN extends SectionName = SectionName> = {
   spNum: number;
   dbId: string;
-  dbVarbs: SectionValuesGeneric;
+  sectionValues: SectionValuesGeneric;
   childSpNums: ChildSpNums<SN>;
 };
 export type RawSections = {
@@ -45,7 +45,7 @@ export type RawSection = RawSections[string][number];
 const zRawSectionFrame: Record<keyof OneRawSection, any> = {
   spNum: zS.number,
   dbId: zS.nanoId,
-  dbVarbs: z.record(zValue),
+  sectionValues: z.record(zValue),
   childSpNums: z.record(z.array(zS.number)),
 };
 

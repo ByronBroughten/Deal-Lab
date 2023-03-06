@@ -49,7 +49,7 @@ export function getDefaultMainTableMakers(): TablePackMakers {
       const { sectionName, varbNames } = columnVarbnames[tableName];
       for (const varbName of varbNames) {
         table.addChild("column", {
-          dbVarbs: {
+          sectionValues: {
             varbInfo: {
               infoType: "globalSection",
               sectionName,

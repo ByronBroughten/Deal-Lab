@@ -35,7 +35,7 @@ export function ListEditorSingleTime({
 
   const onChange = (displayName?: string) =>
     singleTimeList.addChild("singleTimeItem", {
-      dbVarbs: {
+      sectionValues: {
         ...(displayName && { displayNameEditor: displayName }),
       },
     });

@@ -39,7 +39,7 @@ export function CapExValueList({ feId, menuType }: Props) {
 
   const onChange = (displayName?: string) =>
     capExList.addChild("capExItem", {
-      dbVarbs: {
+      sectionValues: {
         valueOngoingSwitch: itemOngoingSwitch,
         ...(displayName && { displayNameEditor: displayName }),
       },

@@ -39,9 +39,9 @@ export class SelfPackLoader<
     return this.sectionPack.rawSections[this.sectionName][0];
   }
   loadSelfSectionPack(): void {
-    const { dbId, dbVarbs } = this.headRawSection;
+    const { dbId, sectionValues } = this.headRawSection;
     this.updaterSection.updateDbId(dbId);
-    this.updaterSection.resetVarbs(dbVarbs as Partial<SectionValues<SN>>);
+    this.updaterSection.resetVarbs(sectionValues as Partial<SectionValues<SN>>);
     this.updaterSection.removeAllChildren();
     this.addSectionPackChildren();
   }

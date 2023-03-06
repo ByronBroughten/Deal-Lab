@@ -36,7 +36,7 @@ describe("SetterCalculations", () => {
     const propertyCosts = [8000, 2000];
     for (const amount of propertyCosts) {
       propertyCostList.addChild("singleTimeItem", {
-        dbVarbs: { valueEditor: numObj(amount) },
+        sectionValues: { valueEditor: numObj(amount) },
       });
     }
 
@@ -56,13 +56,13 @@ describe("SetterCalculations", () => {
     const mgmt = dealTester.setter.onlyChild("mgmt");
     const expenseGroup = mgmt.onlyChild("upfrontExpenseGroup");
     const expenseValue = expenseGroup.addAndGetChild("singleTimeValue", {
-      dbVarbs: { valueSourceName: "listTotal" },
+      sectionValues: { valueSourceName: "listTotal" },
     });
     const mgmtCostList = expenseValue.onlyChild("singleTimeList");
     const mgmtCosts = [4000, 6000];
     for (const amount of mgmtCosts) {
       mgmtCostList.addChild("singleTimeItem", {
-        dbVarbs: { valueEditor: numObj(amount) },
+        sectionValues: { valueEditor: numObj(amount) },
       });
     }
 
@@ -78,7 +78,7 @@ describe("SetterCalculations", () => {
     const rents = [1300, 1700];
     for (const amount of rents) {
       property.addChild("unit", {
-        dbVarbs: {
+        sectionValues: {
           targetRentOngoingSwitch: "monthly",
           targetRentOngoingEditor: numObj(amount),
         },
@@ -93,13 +93,13 @@ describe("SetterCalculations", () => {
 
     const propertyCostListGroup = property.onlyChild("ongoingExpenseGroup");
     const ongoingValue = propertyCostListGroup.addAndGetChild("ongoingValue", {
-      dbVarbs: { valueSourceName: "listTotal" },
+      sectionValues: { valueSourceName: "listTotal" },
     });
     const propertyCostList = ongoingValue.onlyChild("ongoingList");
     const propertyCosts = [200, 100, 150];
     for (const amount of propertyCosts) {
       propertyCostList.addChild("ongoingItem", {
-        dbVarbs: {
+        sectionValues: {
           valueOngoingSwitch: "monthly",
           valueSourceName: "valueEditor",
           valueOngoingEditor: numObj(amount),
@@ -118,13 +118,13 @@ describe("SetterCalculations", () => {
 
     const expenseGroup = mgmt.onlyChild("ongoingExpenseGroup");
     const mgmtCostListGroup = expenseGroup.addAndGetChild("ongoingValue", {
-      dbVarbs: { valueSourceName: "listTotal" },
+      sectionValues: { valueSourceName: "listTotal" },
     });
     const mgmtCostList = mgmtCostListGroup.onlyChild("ongoingList");
     const mgmtCosts = [100, 100];
     for (const amount of mgmtCosts) {
       mgmtCostList.addChild("ongoingItem", {
-        dbVarbs: {
+        sectionValues: {
           valueOngoingSwitch: "monthly",
           valueSourceName: "valueEditor",
           valueOngoingEditor: numObj(amount),
@@ -174,13 +174,13 @@ function addTestLoan(dealTester: SetterTesterSection<"deal">): void {
   loan.varb("mortgageInsOngoingEditor").updateValue(numObj(1200));
 
   const wrappedValue = loan.addAndGetChild("wrappedInLoanValue", {
-    dbVarbs: { valueSourceName: "listTotal" },
+    sectionValues: { valueSourceName: "listTotal" },
   });
   const wrapped = wrappedValue.onlyChild("singleTimeList");
   const amounts = [6000, 14000];
   for (const amount of amounts) {
     wrapped.addChild("singleTimeItem", {
-      dbVarbs: { valueEditor: numObj(amount) },
+      sectionValues: { valueEditor: numObj(amount) },
     });
   }
 }
