@@ -1,4 +1,3 @@
-import { switchKeyToVarbNames } from "../SectionsMeta/allBaseSectionVarbs/baseSwitchNames";
 import { mixedInfoS } from "../SectionsMeta/SectionInfo/MixedSectionInfo";
 import { ValueInEntityInfo } from "../SectionsMeta/values/StateValue/valuesShared/entities";
 import {
@@ -6,9 +5,6 @@ import {
   GetterSectionsRequiredProps,
 } from "../StateGetters/Bases/GetterSectionsBase";
 import { GetterSections } from "../StateGetters/GetterSections";
-import { Obj } from "../utils/Obj";
-import { VarbName } from "./../SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
-import { PathDbVarbInfoMixed } from "./../SectionsMeta/SectionInfo/PathNameInfo";
 import { varbPathOptions } from "./pathNameOptions";
 
 export type SectionOption = {
@@ -29,11 +25,7 @@ export class VariableGetterSections extends GetterSectionsBase {
     return new GetterSections(this.getterSectionsProps);
   }
   variableOptions(): VariableOption[] {
-    return [
-      ...varbPathOptions,
-      ...this.userVarbOptions(),
-      ...this.userListTotalOptions(),
-    ];
+    return [...varbPathOptions, ...this.userVarbOptions()];
   }
   private userVarbOptions(): VariableOption[] {
     const { main } = this.getterSections;
@@ -57,58 +49,5 @@ export class VariableGetterSections extends GetterSectionsBase {
         })
       );
     }, [] as VariableOption[]);
-  }
-
-  private userListTotalOptions(): VariableOption[] {
-    const totalNames = {
-      ongoingList: {
-        collectionName: "Ongoing cost totals",
-        feUserStoreName: "ongoingListMain",
-      },
-      singleTimeList: {
-        collectionName: "One time cost totals",
-        feUserStoreName: "singleTimeListMain",
-      },
-    } as const;
-    const options: VariableOption[] = [];
-    for (const sectionName of Obj.keys(totalNames)) {
-      const names = totalNames[sectionName];
-      const { collectionName, feUserStoreName } = names;
-      const { main } = this.getterSections;
-      const feUser = main.onlyChild("feUser");
-      const lists = feUser.children(feUserStoreName);
-      for (const list of lists) {
-        const displayName = list.valueNext("displayName").mainText;
-        if (sectionName === "ongoingList") {
-          const ongoingNames = switchKeyToVarbNames("total", "ongoing");
-          for (const key of Obj.keys(ongoingNames)) {
-            if (key === "switch") continue;
-            const varbName = ongoingNames[key];
-            const varb = list.varb(varbName);
-            const varbInfo = {
-              ...mixedInfoS.pathNameDbId("ongoingItemMain", varb.dbId),
-              varbName: varb.varbName as VarbName,
-            };
-            options.push({
-              varbInfo,
-              displayName,
-              collectionName,
-            });
-          }
-        } else {
-          const varb = list.varb("total");
-          const varbInfo: PathDbVarbInfoMixed = {
-            ...mixedInfoS.pathNameDbId("singleTimeItemMain", varb.dbId),
-            varbName: varb.varbName as VarbName,
-          };
-          options.push({
-            varbInfo,
-            displayName,
-            collectionName,
-          });
-        }
-      }
-    }
-    return options;
   }
 }

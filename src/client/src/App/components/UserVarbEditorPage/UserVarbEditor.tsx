@@ -14,6 +14,9 @@ export function UserVarbEditor() {
     <Styled className="UserListMainSection-root">
       <UserEditorTitleRow
         {...{
+          onSave: (setterSections) => {
+            setterSections.applyVariablesToDealPages();
+          },
           titleText: (
             <LabelWithInfo
               {...{

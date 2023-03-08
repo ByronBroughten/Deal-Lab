@@ -1,7 +1,6 @@
 import { AiOutlineArrowRight } from "react-icons/ai";
 import { View } from "react-native";
 import styled from "styled-components";
-import { SetEditorState } from "../../../modules/draftjs/draftUtils";
 import { FeSectionInfo } from "../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { useGetterSectionOnlyOne } from "../../../sharedWithServer/stateClassHooks/useGetterSection";
 import theme from "../../../theme/Theme";
@@ -9,17 +8,18 @@ import { useGoToPage } from "../../appWide/customHooks/useGoToPage";
 import { StyledActionBtn } from "../../appWide/GeneralSection/MainSection/StoreSectionActionMenu/ActionBtns.tsx/StyledActionBtn";
 import { ModalSection } from "../../appWide/ModalSection";
 import { MaterialStringEditor } from "../MaterialStringEditor";
+import { OnVarbSelect } from "./NumObjVarbSelector/VarbSelectorCollection";
 import { VarbSelectorAllCollections } from "./VarbSelectorAllCollections";
 
 interface Props {
   focalInfo: FeSectionInfo;
-  setEditorState: SetEditorState;
+  onVarbSelect: OnVarbSelect;
   closeAllVarbs: () => void;
   allVarbsIsOpen: boolean;
 }
 export function AllVarbsModal({
   focalInfo,
-  setEditorState,
+  onVarbSelect,
   closeAllVarbs,
   allVarbsIsOpen,
 }: Props) {
@@ -65,7 +65,7 @@ export function AllVarbsModal({
         {...{
           nameFilter,
           focalInfo,
-          setEditorState,
+          onVarbSelect,
         }}
       />
     </Styled>

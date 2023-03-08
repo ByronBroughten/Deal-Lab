@@ -6,13 +6,18 @@ import { useToggleView } from "../../../modules/customHooks/useToggleView";
 import { FeSectionInfo } from "../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { mixedInfoS } from "../../../sharedWithServer/SectionsMeta/SectionInfo/MixedSectionInfo";
 import { VarbPathName } from "../../../sharedWithServer/SectionsMeta/SectionInfo/VarbPathNameInfo";
+import { useGetterSection } from "../../../sharedWithServer/stateClassHooks/useGetterSection";
 import theme from "../../../theme/Theme";
 import { HollowBtn } from "../../appWide/HollowBtn";
 import { ModalText } from "../../appWide/ModalText";
 import { DropdownContainer } from "../../general/DropdownContainer";
 import { PopperRef } from "../VarbAutoComplete";
 import { AllVarbsModal } from "./AllVarbsModal";
-import { VarbSelectorCollection } from "./NumObjVarbSelector/VarbSelectorCollection";
+import { insertVarbEntity } from "./NumObjVarbSelector/insertVarbEntity";
+import {
+  OnVarbSelect,
+  VarbSelectorCollection,
+} from "./NumObjVarbSelector/VarbSelectorCollection";
 import { VarbSelectorRow } from "./NumObjVarbSelector/VarbSelectorRow";
 import { VarbSelectorShell } from "./NumObjVarbSelector/VarbSelectorShell";
 
@@ -35,6 +40,16 @@ export const NumObjVarbSelector = React.memo(
       const { openInfo, infoIsOpen, closeInfo } = useToggleView("info");
       const { openAllVarbs, allVarbsIsOpen, closeAllVarbs } =
         useToggleView("allVarbs");
+
+      const focalSection = useGetterSection(feInfo);
+      const onVarbSelect: OnVarbSelect = (varbInfo) => {
+        const { displayNameFull } = focalSection.varbByFocalMixed(varbInfo);
+        insertVarbEntity({
+          setEditorState,
+          displayName: displayNameFull,
+          varbInfo,
+        });
+      };
       return (
         <Styled ref={ref} className="NumObjVarbSelector-root">
           <div className="NumObjVarbSelector-absolute">
@@ -69,10 +84,10 @@ export const NumObjVarbSelector = React.memo(
                     <VarbSelectorCollection
                       {...{
                         focalInfo: feInfo,
+                        onVarbSelect,
                         rowInfos: varbPathNames.map((varbPathName) =>
                           mixedInfoS.varbPathName(varbPathName)
                         ),
-                        setEditorState,
                       }}
                     />
                     <ViewAllRow
@@ -86,7 +101,7 @@ export const NumObjVarbSelector = React.memo(
                   <AllVarbsModal
                     {...{
                       focalInfo: feInfo,
-                      setEditorState,
+                      onVarbSelect,
                       closeAllVarbs,
                       allVarbsIsOpen,
                     }}

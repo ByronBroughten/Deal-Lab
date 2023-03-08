@@ -18,6 +18,12 @@ export class GetterList<
   private get stateList(): RawFeSection<SN>[] {
     return this.sectionsShare.sections.rawSectionList(this.sectionName);
   }
+  get feIds() {
+    return this.stateList.map((raw) => raw.feId);
+  }
+  get feInfos() {
+    return this.stateList.map((raw) => raw.feId);
+  }
   get getterSections() {
     return new GetterSections(this.getterSectionsProps);
   }

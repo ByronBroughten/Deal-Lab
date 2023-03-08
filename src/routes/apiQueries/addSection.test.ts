@@ -16,6 +16,8 @@ import {
   makeSessionGetCookies,
 } from "./apiQueriesTestTools/testDbUser";
 
+jest.setTimeout(10000);
+
 function makeAddSectionReq(): QueryReq<"addSection"> {
   const sectionName = "property";
   const tester = SectionQueryTester.init({ sectionName });

@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { SnFeUserChildNames } from "../../sharedWithServer/SectionsMeta/relSectionsDerived/FeStoreName";
 import { SectionName } from "../../sharedWithServer/SectionsMeta/SectionName";
 import { useAuthStatus } from "../../sharedWithServer/stateClassHooks/useAuthStatus";
+import { SetterSections } from "../../sharedWithServer/StateSetters/SetterSections";
 import { BackToSectionBtn } from "../ActiveDealPage/ActiveDeal/BackToSectionBtn";
 import { ExclaimBlurb } from "../appWide/ExclaimBlurb";
 import { SectionTitleRow } from "../appWide/GeneralSection/MainSection/SectionTitleRow";
@@ -19,17 +20,20 @@ type Props<SN extends SectionName> = {
   sectionName: SN;
   childNames: SnFeUserChildNames<SN>[];
   goBack?: () => void;
+  onSave?: (setterSections: SetterSections) => void;
 };
 export function UserEditorTitleRow<SN extends SectionName>({
   titleText,
   sectionName,
   childNames,
   goBack,
+  onSave,
 }: Props<SN>) {
   const authStatus = useAuthStatus();
   const { saveChanges, discardChanges, areSaved } = useSaveEditorToDb(
     sectionName,
-    childNames
+    childNames,
+    onSave
   );
   return (
     <Styled className="UserEditorTitleRow-root">

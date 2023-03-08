@@ -8,11 +8,12 @@ import { nativeTheme } from "../../theme/nativeTheme";
 import { PlainIconBtn } from "../general/PlainIconBtn";
 import { MaterialStringEditor } from "../inputs/MaterialStringEditor";
 
-function useFilteredDeals(): GetterSection<"deal">[] {
-  const feUser = useGetterSectionOnlyOne("feUser");
+function useGetFilteredDeals(): GetterSection<"deal">[] {
+  const main = useGetterSectionOnlyOne("main");
+  const feUser = main.onlyChild("feUser");
   const deals = feUser.children("dealMain");
 
-  const compareSection = useGetterSectionOnlyOne("compareSection");
+  const compareSection = main.onlyChild("dealCompare");
   const nameFilter = compareSection.valueNext("dealNameFilter");
   const nameFilteredDeals = deals.filter((deal) =>
     deal
@@ -28,10 +29,10 @@ function useFilteredDeals(): GetterSection<"deal">[] {
 }
 
 type Props = { closeMenu: () => void };
-export function DealCompareSelectMenu({ closeMenu }: Props) {
+export function DealCompareDealMenu({ closeMenu }: Props) {
   const compareSection = useSetterSectionOnlyOne("compareSection");
   const nameFilterVarb = compareSection.varb("dealNameFilter");
-  const filteredDeals = useFilteredDeals();
+  const filteredDeals = useGetFilteredDeals();
   return (
     <View>
       <MaterialStringEditor

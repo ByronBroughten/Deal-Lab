@@ -66,10 +66,10 @@ export const allSectionChildren = checkAllSectionChildren({
   dealPage: sectionChildren({
     deal: ["deal"],
     calculatedVarbs: ["calculatedVarbs"],
+    userVarbList: ["userVarbList"],
   }),
   latentSections: sectionChildren({
-    calculatedVarbs: ["calculatedVarbs"],
-    deal: ["deal"],
+    dealPage: ["dealPage"],
     userVarbList: ["userVarbList"],
     singleTimeList: ["singleTimeList"],
     ongoingList: ["ongoingList"],

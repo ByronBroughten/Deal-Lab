@@ -96,7 +96,6 @@ const boxShadows = {
     },
     shadowOpacity: 0.22,
     shadowRadius: 2.22,
-
     elevation: 3,
   }),
 };
@@ -129,6 +128,15 @@ export const nativeTheme = {
   },
   sideBar: {
     width: "150px",
+  },
+  comparedDealHead: {
+    height: 80,
+  },
+  comparedDealValue: {
+    height: 73,
+  },
+  comparedDealRoot: {
+    padding: spacings.s3,
   },
   mainSection: {
     main: view({

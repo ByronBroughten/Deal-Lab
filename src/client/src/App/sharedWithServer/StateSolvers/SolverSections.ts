@@ -5,6 +5,7 @@ import { FeSectionInfo, FeVarbInfo } from "../SectionsMeta/SectionInfo/FeInfo";
 import { VarbInfoMixed } from "../SectionsMeta/SectionInfo/MixedSectionInfo";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
+import { GetterList } from "../StateGetters/GetterList";
 import { GetterSections } from "../StateGetters/GetterSections";
 import { GetterVarb } from "../StateGetters/GetterVarb";
 import { PackBuilderSections } from "../StatePackers.ts/PackBuilderSections";
@@ -22,9 +23,44 @@ export class SolverSections extends SolverSectionsBase {
   get getterSections() {
     return new GetterSections(this.getterSectionsBase.getterSectionsProps);
   }
+  private getterList<SN extends SectionName>(sectionName: SN): GetterList<SN> {
+    return new GetterList({
+      ...this.getterSectionsBase,
+      sectionName,
+    });
+  }
   get builderSections() {
     return new PackBuilderSections(this.getterSectionsBase.getterSectionsProps);
   }
+  applyVariablesToDealPages() {
+    const { feIds } = this.getterList("dealPage");
+    const userVarbPacks = this.getSavedUserVarbPacks();
+    for (const feId of feIds) {
+      this.applyVarbPacksToDealPage(feId, userVarbPacks);
+    }
+  }
+  applyVariablesToDealPage(feId: string) {
+    const userVarbPacks = this.getSavedUserVarbPacks();
+    this.applyVarbPacksToDealPage(feId, userVarbPacks);
+  }
+  private getSavedUserVarbPacks(): SectionPack<"userVarbList">[] {
+    const feUser = this.oneAndOnly("feUser");
+    const userVarbLists = feUser.get.children("userVarbListMain");
+    return userVarbLists.map((list) => list.packMaker.makeSectionPack());
+  }
+  private applyVarbPacksToDealPage(
+    feId: string,
+    userVarbPacks: SectionPack<"userVarbList">[]
+  ): void {
+    const dealPage = this.solverSection({
+      sectionName: "dealPage",
+      feId,
+    });
+    dealPage.replaceChildPackArrsAndSolve({
+      userVarbList: userVarbPacks,
+    });
+  }
+
   oneAndOnly<SN extends SectionName>(sectionName: SN) {
     const { feInfo } = this.getterSections.oneAndOnly(sectionName);
     return this.solverSection(feInfo);

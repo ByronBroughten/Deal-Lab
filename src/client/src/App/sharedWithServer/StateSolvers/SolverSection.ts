@@ -178,32 +178,6 @@ export class SolverSection<
     const feInfo = this.get.childInfoToFe(childInfo);
     return this.solverSection(feInfo);
   }
-  removeChild<CN extends ChildName<SN>>(childInfo: FeChildInfo<SN, CN>) {
-    if (this.get.hasChild(childInfo)) {
-      const child = this.child(childInfo);
-      child.removeSelf();
-    } else {
-      const { childName, feId } = childInfo;
-      throw new Error(
-        `Section ${this.get.sectionName}.${this.get.feId} does not have child ${childName}.${feId}.`
-      );
-    }
-  }
-  removeChildAndSolve<CN extends ChildName<SN>>(
-    childInfo: FeChildInfo<SN, CN>
-  ): void {
-    this.removeChild(childInfo);
-    this.solve();
-  }
-  resetToDefaultAndSolve(): void {
-    this.combo.resetToDefaultAndExtractIds();
-    this.solve();
-  }
-  replaceWithDefaultAndSolve(): void {
-    this.combo.resetToDefaultAndExtractIds();
-    this.updater.newDbId();
-    this.solve();
-  }
   loadSelf(sectionPack: SectionPack<SN>): void {
     this.combo.loadSelfSectionPackAndExtractIds(sectionPack);
     this.solve();
@@ -213,7 +187,15 @@ export class SolverSection<
     options?: AddChildOptions<SN, CN>
   ): void {
     this.adder.addChildAndFinalizeAllAdds(childName, options);
+    this.finalizeAddChild(childName);
     this.solve();
+  }
+  private finalizeAddChild<CN extends ChildName<SN>>(childName: CN) {
+    const sectionName = this.get.meta.childType(childName) as SectionName;
+    if (sectionName === "dealPage") {
+      const { feId } = this.get.youngestChild(childName);
+      this.solverSections.applyVariablesToDealPage(feId);
+    }
   }
   addAndGetChild<CN extends ChildName<SN>>(
     childName: CN,
@@ -241,6 +223,32 @@ export class SolverSection<
     childPackArrs: ChildSectionPackArrs<SN, CN>
   ): void {
     this.adder.loadChildArrsAndFinalize(childPackArrs);
+    this.solve();
+  }
+  removeChild<CN extends ChildName<SN>>(childInfo: FeChildInfo<SN, CN>) {
+    if (this.get.hasChild(childInfo)) {
+      const child = this.child(childInfo);
+      child.removeSelf();
+    } else {
+      const { childName, feId } = childInfo;
+      throw new Error(
+        `Section ${this.get.sectionName}.${this.get.feId} does not have child ${childName}.${feId}.`
+      );
+    }
+  }
+  removeChildAndSolve<CN extends ChildName<SN>>(
+    childInfo: FeChildInfo<SN, CN>
+  ): void {
+    this.removeChild(childInfo);
+    this.solve();
+  }
+  resetToDefaultAndSolve(): void {
+    this.combo.resetToDefaultAndExtractIds();
+    this.solve();
+  }
+  replaceWithDefaultAndSolve(): void {
+    this.combo.resetToDefaultAndExtractIds();
+    this.updater.newDbId();
     this.solve();
   }
   replaceChildPackArrsAndSolve<CN extends ChildName<SN>>(

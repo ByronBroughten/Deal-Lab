@@ -1,25 +1,29 @@
 import isEqual from "fast-deep-equal";
 import React from "react";
+import { unstable_batchedUpdates } from "react-dom";
 import { apiQueries } from "../../modules/apiQueriesClient";
 import { SectionArrQuerier } from "../../modules/QueriersBasic/SectionArrQuerier";
 import { SnFeUserChildNames } from "../../sharedWithServer/SectionsMeta/relSectionsDerived/FeStoreName";
 import { SectionName } from "../../sharedWithServer/SectionsMeta/SectionName";
-import { useSetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useSetterSection";
+import { useSetterSections } from "../../sharedWithServer/stateClassHooks/useSetterSections";
 import { SectionPackArrs } from "../../sharedWithServer/StatePackers.ts/PackMakerSection";
+import { SetterSections } from "../../sharedWithServer/StateSetters/SetterSections";
 
 export function useSaveEditorToDb<
   SN extends SectionName,
   CN extends SnFeUserChildNames<SN>
 >(
   sectionName: SN,
-  childNames: CN[]
+  childNames: CN[],
+  onSave?: (setterSections: SetterSections) => void
 ): {
   saveChanges: () => void;
   discardChanges: () => void;
   areSaved: boolean;
 } {
-  const editor = useSetterSectionOnlyOne(sectionName);
-  const feUser = useSetterSectionOnlyOne("feUser");
+  const setterSections = useSetterSections();
+  const editor = setterSections.oneAndOnly(sectionName);
+  const feUser = setterSections.oneAndOnly("feUser");
   const getEditorPacks = (): SectionPackArrs<"feUser", CN> => {
     return editor.packMaker.makeChildPackArrs(childNames) as SectionPackArrs<
       "feUser",
@@ -35,9 +39,12 @@ export function useSaveEditorToDb<
   const saveChanges = () => {
     const arrQuerier = new SectionArrQuerier({ apiQueries });
     const listPacks = getEditorPacks();
-    feUser.tryAndRevertIfFail(async () => {
-      feUser.replaceChildArrs(listPacks);
-      await arrQuerier.replace(listPacks);
+    unstable_batchedUpdates(() => {
+      feUser.tryAndRevertIfFail(async () => {
+        feUser.replaceChildArrs(listPacks);
+        await arrQuerier.replace(listPacks);
+        onSave && onSave(setterSections);
+      });
     });
   };
   const discardChanges = () => {

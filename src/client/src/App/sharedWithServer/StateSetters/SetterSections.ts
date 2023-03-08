@@ -1,15 +1,16 @@
 import { DbSectionInfo } from "../SectionsMeta/allBaseSectionVarbs/DbSectionInfo";
 import { FeSectionInfo, FeVarbInfo } from "../SectionsMeta/SectionInfo/FeInfo";
 import { SectionName } from "../SectionsMeta/SectionName";
-import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { StateValue } from "../SectionsMeta/values/StateValue";
 import { isStateValue } from "../SectionsMeta/values/valueMetas";
 import {
   VariableGetterSections,
   VariableOption,
 } from "../StateEntityGetters/VariableGetterSections";
+import { GetterList } from "../StateGetters/GetterList";
 import { GetterSections } from "../StateGetters/GetterSections";
 import { GetterVarb } from "../StateGetters/GetterVarb";
+import { SolverSections } from "../StateSolvers/SolverSections";
 import { SetterSectionsBase } from "./SetterBases/SetterSectionsBase";
 import { SetterSection } from "./SetterSection";
 import { SetterVarb } from "./SetterVarb";
@@ -23,7 +24,16 @@ export class SetterSections extends SetterSectionsBase {
   get get(): GetterSections {
     return new GetterSections(this.setterSectionsProps);
   }
-  section<SN extends SectionNameByType>(
+  getterList<SN extends SectionName>(sectionName: SN): GetterList<SN> {
+    return new GetterList({
+      ...this.getterSectionsBase,
+      sectionName,
+    });
+  }
+  get solverSections(): SolverSections {
+    return new SolverSections(this.solverSectionsBase.solverSectionsProps);
+  }
+  section<SN extends SectionName>(
     feInfo: FeSectionInfo<SN>
   ): SetterSection<SN> {
     return new SetterSection({
@@ -31,12 +41,20 @@ export class SetterSections extends SetterSectionsBase {
       ...feInfo,
     });
   }
-  sectionByDbInfo<SN extends SectionNameByType>(
+  applyVariablesToDealPages(): void {
+    this.solverSections.applyVariablesToDealPages();
+    this.setSections();
+  }
+  applyVariablesToDealPage(feId: string): void {
+    this.solverSections.applyVariablesToDealPage(feId);
+    this.setSections();
+  }
+  sectionByDbInfo<SN extends SectionName>(
     dbInfo: DbSectionInfo<SN>
   ): SetterSection<SN> {
     return this.section(this.get.sectionByDbInfo(dbInfo).feInfo);
   }
-  varb<SN extends SectionNameByType>(varbInfo: FeVarbInfo<SN>): SetterVarb<SN> {
+  varb<SN extends SectionName>(varbInfo: FeVarbInfo<SN>): SetterVarb<SN> {
     return new SetterVarb({
       ...this.setterSectionsProps,
       ...varbInfo,

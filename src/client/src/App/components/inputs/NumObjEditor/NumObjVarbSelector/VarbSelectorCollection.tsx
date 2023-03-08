@@ -1,25 +1,22 @@
 import styled from "styled-components";
-import { SetEditorState } from "../../../../modules/draftjs/draftUtils";
-import { FeSectionInfo } from "../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { ValueInEntityInfo } from "../../../../sharedWithServer/SectionsMeta/values/StateValue/valuesShared/entities";
-import { useGetterSection } from "../../../../sharedWithServer/stateClassHooks/useGetterSection";
+import { useGetterSectionOnlyOne } from "../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import theme from "../../../../theme/Theme";
-import { insertVarbEntity } from "./insertVarbEntity";
 import { VarbSelectorRow } from "./VarbSelectorRow";
+
+export type OnVarbSelect = (varbInfo: ValueInEntityInfo) => void;
 
 interface Props {
   collectionName?: string;
-  focalInfo: FeSectionInfo;
   rowInfos: ValueInEntityInfo[];
-  setEditorState: SetEditorState;
+  onVarbSelect: OnVarbSelect;
 }
 export function VarbSelectorCollection({
   collectionName,
-  focalInfo,
   rowInfos,
-  setEditorState,
+  onVarbSelect,
 }: Props) {
-  const section = useGetterSection(focalInfo);
+  const latent = useGetterSectionOnlyOne("latentSections");
   return (
     <Styled className="VarbSelectorRows-root">
       {collectionName && (
@@ -30,17 +27,13 @@ export function VarbSelectorCollection({
         </div>
       )}
       {rowInfos.map((varbInfo) => {
-        const { displayNameFull } = section.varbByFocalMixed(varbInfo);
+        const { displayNameFull, varbId } = latent.varbByFocalMixed(varbInfo);
         return (
           <VarbSelectorRow
             {...{
+              key: varbId,
               displayName: displayNameFull,
-              onClick: () =>
-                insertVarbEntity({
-                  setEditorState,
-                  displayName: displayNameFull,
-                  varbInfo,
-                }),
+              onClick: () => onVarbSelect(varbInfo),
             }}
           />
         );

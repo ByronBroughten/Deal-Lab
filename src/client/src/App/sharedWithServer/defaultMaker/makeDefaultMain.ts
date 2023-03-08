@@ -1,7 +1,6 @@
 import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
 import { inEntityValueInfo } from "../SectionsMeta/values/StateValue/InEntityValue";
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
-import { makeDefaultDealPack } from "./makeDefaultDealPack";
 import { makeDefaultDealPage } from "./makeDefaultDealPage";
 import { makeDefaultFeUserPack } from "./makeDefaultFeUser";
 import { defaultDealOutputInfos } from "./makeDefaultOutputList";
@@ -37,10 +36,9 @@ export function makeDefaultMain(): SectionPack<"main"> {
   main.addChild("variablesMenu");
 
   const latentSections = main.addAndGetChild("latentSections");
-  latentSections.addChild("calculatedVarbs");
   latentSections.loadChild({
-    childName: "deal",
-    sectionPack: makeDefaultDealPack(),
+    childName: "dealPage",
+    sectionPack: makeDefaultDealPage(),
   });
 
   return main.makeSectionPack();

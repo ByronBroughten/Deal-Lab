@@ -13,7 +13,7 @@ export function useSetterSection<SN extends SectionName>(
   });
 }
 
-export function useSetterSections<SN extends SectionName>({
+export function useSetterSectionMulti<SN extends SectionName>({
   sectionName,
   feIds,
 }: {

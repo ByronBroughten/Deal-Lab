@@ -25,10 +25,6 @@ const sectionPathNameToSn = checkPathTypeToSectionName({
   calculatedVarbsFocal: "calculatedVarbs",
   userVarbListMain: "userVarbList",
   userVarbItemMain: "userVarbItem",
-  ongoingListMain: "ongoingList",
-  ongoingItemMain: "ongoingItem",
-  singleTimeListMain: "singleTimeList",
-  singleTimeItemMain: "singleTimeItem",
 });
 
 export type AbsolutePathNode = {

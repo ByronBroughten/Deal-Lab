@@ -7,15 +7,7 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
-// 7. Get rid of "sectionValues"
-
-// Custom ongoing cost doesn't show whether it's
-// by year or month. And it would be nice to switch.
-// Same with utilities.
-
-// Fix how the user variables are handled
-// - right now, all of those variables are based
-//   on the activeDealPage. Not what we want.
+// Make userVarbItem focalVarbInfo target the ones that are children of dealPage
 
 // Extract the look of the AllVarbsModal. You'll use that
 // for adding values for comparing deals.

@@ -1,107 +1,109 @@
-import { AbsolutePathInfo } from "./SectionInfo/AbsolutePathInfo";
-import { sectionAbsolutePathInfos } from "./sectionPathContexts/sectionAbsolutePathInfos";
+import { Obj } from "../utils/Obj";
+import { ChildName, isChildName } from "./sectionChildrenDerived/ChildName";
+import { childToSectionName } from "./sectionChildrenDerived/ChildSectionName";
+import {
+  absolutePathInfo,
+  AbsolutePathInfo,
+} from "./SectionInfo/AbsolutePathInfo";
+import { SectionName } from "./SectionName";
 import {
   SectionNameOfPath,
   SectionPathName,
+  sectionPathNames,
 } from "./sectionPathContexts/sectionPathNames";
 
-const absolute = sectionAbsolutePathInfos;
+const abs = absolutePathInfo;
+function makeDealPageFocals(dealPagePath: ChildName[]) {
+  const dealPath: ChildName[] = [...dealPagePath, "deal"];
+  const propertyPath: ChildName[] = [...dealPath, "property"];
+  const financingPath: ChildName[] = [...dealPath, "financing"];
+  const userVarbListPath: ChildName[] = [...dealPagePath, "userVarbList"];
+  return {
+    get userVarbListMain() {
+      return abs("userVarbList", userVarbListPath);
+    },
+    get userVarbItemMain() {
+      return abs("userVarbItem", [...userVarbListPath, "userVarbItem"]);
+    },
+    get calculatedVarbsFocal() {
+      return abs("calculatedVarbs", [...dealPagePath, "calculatedVarbs"]);
+    },
+    get dealFocal() {
+      return abs("deal", dealPath);
+    },
+    get propertyFocal() {
+      return abs("property", propertyPath);
+    },
+    get unitFocal() {
+      return abs("unit", [...propertyPath, "unit"]);
+    },
+    get repairCostFocal() {
+      return abs("repairValue", [...propertyPath, "repairValue"]);
+    },
+    get utilityCostFocal() {
+      return abs("utilityValue", [...propertyPath, "utilityValue"]);
+    },
+    get capExCostFocal() {
+      return abs("capExValue", [...propertyPath, "capExValue"]);
+    },
+    get maintenanceCostFocal() {
+      return abs("maintenanceValue", [...propertyPath, "maintenanceValue"]);
+    },
+    get financingFocal() {
+      return abs("financing", financingPath);
+    },
+    get loanFocal() {
+      return abs("loan", [...financingPath, "loan"]);
+    },
+    get closingCostFocal() {
+      return abs("closingCostValue", [
+        ...this.loanFocal.path,
+        "closingCostValue",
+      ]);
+    },
+    get mgmtFocal() {
+      return abs("mgmt", [...dealPath, "mgmt"]);
+    },
+  };
+}
 
-const activeFocals = {
-  calculatedVarbsFocal: absolute.calculatedVarbsActive,
-
-  propertyFocal: absolute.propertyActive,
-  unitFocal: absolute.unitActive,
-  repairCostFocal: absolute.repairValueActive,
-  utilityCostFocal: absolute.utilityCostValueActive,
-  capExCostFocal: absolute.capExCostValueActive,
-  maintenanceCostFocal: absolute.maintenanceCostValueActive,
-
-  financingFocal: absolute.financingActive,
-  loanFocal: absolute.loanActive,
-  closingCostFocal: absolute.closingCostActive,
-
-  mgmtFocal: absolute.mgmtActive,
-  dealFocal: absolute.dealActive,
-} as const;
-
-const storedLists = {
-  userVarbListMain: absolute.userVarbListStored,
-  userVarbItemMain: absolute.userVarbItemStored,
-  ongoingListMain: absolute.ongoingListStored,
-  ongoingItemMain: absolute.ongoingItemStored,
-  singleTimeListMain: absolute.singleTimeListStored,
-  singleTimeItemMain: absolute.singleTimeItemStored,
-} as const;
-
+const activeDealPage = makeDealPageFocals(["main", "activeDealPage"]);
+const latentDealPage = makeDealPageFocals([
+  "main",
+  "latentSections",
+  "dealPage",
+]);
+const compareDealPage = makeDealPageFocals([
+  "main",
+  "dealCompare",
+  "compareDealPage",
+]);
+const editorVarbListPath: ChildName[] = [
+  "main",
+  "userVarbEditor",
+  "userVarbList",
+];
 export const sectionPathContexts = {
   get default() {
     return this.activeDealPage;
   },
-  compareDealPage: sectionPathContext({
-    calculatedVarbsFocal: absolute.calculatedVarbsCompare,
-    dealFocal: absolute.dealCompare,
-    propertyFocal: absolute.propertyCompare,
-    unitFocal: absolute.unitCompare,
-    repairCostFocal: absolute.repairValueCompare,
-    utilityCostFocal: absolute.utilityCostValueCompare,
-    capExCostFocal: absolute.capExCostValueCompare,
-    maintenanceCostFocal: absolute.maintenanceCostValueCompare,
-    financingFocal: absolute.financingCompare,
-    loanFocal: absolute.loanCompare,
-    closingCostFocal: absolute.closingCostCompare,
-    mgmtFocal: absolute.mgmtCompare,
-    ...storedLists,
-  }),
-  activeDealPage: sectionPathContext({
-    ...activeFocals,
-    ...storedLists,
-  }),
+  compareDealPage: sectionPathContext(compareDealPage),
+  activeDealPage: sectionPathContext(activeDealPage),
   userVarbEditorPage: sectionPathContext({
-    ...activeFocals,
-    userVarbListMain: absolute.userVarbListEditor,
-    userVarbItemMain: absolute.userVarbItemEditor,
-    ongoingListMain: absolute.ongoingListStored,
-    ongoingItemMain: absolute.ongoingItemStored,
-    singleTimeListMain: absolute.singleTimeListStored,
-    singleTimeItemMain: absolute.singleTimeItemStored,
+    ...activeDealPage,
+    userVarbListMain: abs("userVarbList", editorVarbListPath),
+    userVarbItemMain: abs("userVarbItem", [
+      ...editorVarbListPath,
+      "userVarbItem",
+    ]),
   }),
-  userListEditorPage: sectionPathContext({
-    ...activeFocals,
-    userVarbListMain: absolute.userVarbListStored,
-    userVarbItemMain: absolute.userVarbItemStored,
-    ongoingListMain: absolute.ongoingListEditor,
-    ongoingItemMain: absolute.ongoingItemEditor,
-    singleTimeListMain: absolute.singleTimeListEditor,
-    singleTimeItemMain: absolute.singleTimeItemEditor,
-  }),
-  latentSection: sectionPathContext({
-    calculatedVarbsFocal: absolute.calculatedVarbsLatent,
-    propertyFocal: absolute.propertyLatent,
-    unitFocal: absolute.unitLatent,
-    repairCostFocal: absolute.repairValueLatent,
-    utilityCostFocal: absolute.utilityCostValueLatent,
-    capExCostFocal: absolute.capExCostValueLatent,
-    maintenanceCostFocal: absolute.maintenanceCostValueLatent,
-
-    financingFocal: absolute.financingLatent,
-    loanFocal: absolute.loanLatent,
-    closingCostFocal: absolute.closingCostLatent,
-
-    mgmtFocal: absolute.mgmtLatent,
-
-    dealFocal: absolute.dealLatent,
-    userVarbListMain: absolute.userVarbListLatent,
-    userVarbItemMain: absolute.userVarbItemLatent,
-    ongoingListMain: absolute.ongoingListLatent,
-    ongoingItemMain: absolute.ongoingItemLatent,
-    singleTimeListMain: absolute.singleTimeListLatent,
-    singleTimeItemMain: absolute.singleTimeItemLatent,
-  }),
+  userListEditorPage: sectionPathContext(activeDealPage),
+  latentSection: sectionPathContext(latentDealPage),
 } as const;
 
 type SectionPathContexts = typeof sectionPathContexts;
 export type SectionPathContextName = keyof SectionPathContexts;
+const sectionPathContextNames = Obj.keys(sectionPathContexts);
 type SectionPathContext<SPCN extends SectionPathContextName> =
   SectionPathContexts[SPCN];
 
@@ -116,4 +118,33 @@ export function getSectionPathContext<SPCN extends SectionPathContextName>(
   contextName: SPCN
 ): SectionPathContext<SPCN> {
   return sectionPathContexts[contextName];
+}
+
+export function checkSectionContextPaths() {
+  for (const contextName of sectionPathContextNames) {
+    for (const pathName of sectionPathNames) {
+      checkSectionContextPath(contextName, pathName);
+    }
+  }
+}
+function checkSectionContextPath(
+  contextName: SectionPathContextName,
+  pathName: SectionPathName
+): void {
+  const { path, sectionName } = sectionPathContexts[contextName][pathName];
+  let focalSn: SectionName = "root";
+  for (const name of path) {
+    if (isChildName(focalSn, name)) {
+      focalSn = childToSectionName(focalSn, name);
+    } else {
+      throw new Error(
+        `Failed childPath check: "${name}" is not a childName of ${focalSn}`
+      );
+    }
+  }
+  if (focalSn !== (sectionName as SectionName)) {
+    throw new Error(
+      `The childPath "${path}" ends with name of type ${focalSn} but was declared as ${sectionName}`
+    );
+  }
 }

@@ -1,63 +1,53 @@
 import { Text, View, ViewStyle } from "react-native";
-import styled from "styled-components";
-import {
-  useGetterSection,
-  useGetterSectionMulti,
-} from "../../sharedWithServer/stateClassHooks/useGetterSection";
+import { useGetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useGetterSection";
 import { nativeTheme } from "../../theme/nativeTheme";
-import theme from "../../theme/Theme";
-import { RemoveSectionXBtn } from "../appWide/RemoveSectionXBtn";
+import { CompareDealRmBtn } from "./CompareDealRmBtn";
 
 type Props = {
   feId: string;
-  compareValueFeIds: string[];
   style?: ViewStyle;
 };
-export function ComparedDeal({ feId, compareValueFeIds, style }: Props) {
-  const compareValues = useGetterSectionMulti(
-    "compareValue",
-    compareValueFeIds
-  );
+export function ComparedDeal({ feId, style }: Props) {
+  const compareSection = useGetterSectionOnlyOne("compareSection");
+  const dealPage = compareSection.child({
+    childName: "compareDealPage",
+    feId,
+  });
 
-  const dealPage = useGetterSection({ sectionName: "dealPage", feId });
+  const compareValues = compareSection.children("compareValue");
   const deal = dealPage.onlyChild("deal");
   return (
     <View
       style={{
         ...nativeTheme.mainSection.main,
-        padding: nativeTheme.s3,
         ...style,
+        padding: nativeTheme.comparedDealRoot.padding,
+        paddingBottom: 0,
       }}
     >
-      <StyledRmSectionBtn
-        {...{
-          ...dealPage.feInfo,
-          style: {
-            borderRadius: nativeTheme.br0,
-          },
-        }}
-      />
-      <View
-        style={{
-          flex: 1,
-          paddingTop: nativeTheme.s25,
-          paddingBottom: nativeTheme.s25,
-          alignItems: "center",
-          justifyContent: "center",
-          maxWidth: 200,
-          height: 56,
-        }}
-      >
-        <Text
-          numberOfLines={2}
+      <View style={{ height: nativeTheme.comparedDealHead.height }}>
+        <CompareDealRmBtn {...dealPage.feInfo} />
+        <View
           style={{
-            lineHeight: nativeTheme.fs20,
-            fontSize: nativeTheme.fs18,
-            color: nativeTheme.primary.main,
+            flex: 1,
+            paddingTop: nativeTheme.s25,
+            paddingBottom: nativeTheme.s25,
+            alignItems: "center",
+            justifyContent: "center",
+            maxWidth: 200,
           }}
         >
-          {deal.valueNext("displayName").mainText}
-        </Text>
+          <Text
+            numberOfLines={2}
+            style={{
+              lineHeight: nativeTheme.fs20,
+              fontSize: nativeTheme.fs18,
+              color: nativeTheme.primary.main,
+            }}
+          >
+            {deal.valueNext("displayName").mainText}
+          </Text>
+        </View>
       </View>
       {compareValues.map((compareValue) => {
         const info = compareValue.valueEntityInfo();
@@ -66,6 +56,7 @@ export function ComparedDeal({ feId, compareValueFeIds, style }: Props) {
           <View
             key={compareValue.feId}
             style={{
+              height: nativeTheme.comparedDealValue.height,
               padding: nativeTheme.s2,
               paddingTop: nativeTheme.s4,
               paddingBottom: nativeTheme.s4,
@@ -91,12 +82,3 @@ export function ComparedDeal({ feId, compareValueFeIds, style }: Props) {
     </View>
   );
 }
-
-const StyledRmSectionBtn = styled(RemoveSectionXBtn)`
-  border: solid 1px ${theme["gray-400"]};
-
-  :hover {
-    background-color: ${theme.info.main};
-    color: ${theme.light};
-  }
-`;
