@@ -3,7 +3,10 @@ import { mixedInfoS } from "../../../sharedWithServer/SectionsMeta/SectionInfo/M
 import { collectionNamesFixed } from "../../../sharedWithServer/SectionsMeta/SectionInfo/VarbPathNameInfo";
 import { ValueInEntityInfo } from "../../../sharedWithServer/SectionsMeta/values/StateValue/valuesShared/entities";
 import { useGetterSectionOnlyOne } from "../../../sharedWithServer/stateClassHooks/useGetterSection";
-import { varbPathOptionArr } from "../../../sharedWithServer/StateEntityGetters/pathNameOptions";
+import {
+  ValueCustomVarbPathInfo,
+  varbPathOptionArr,
+} from "../../../sharedWithServer/StateEntityGetters/pathNameOptions";
 import { GetterSection } from "../../../sharedWithServer/StateGetters/GetterSection";
 import { Arr } from "../../../sharedWithServer/utils/Arr";
 import ccs from "../../../theme/cssChunks";
@@ -88,10 +91,14 @@ function useUserVarbCollections(focal: GetterSection<any>): CollectionProps {
 
   return userVarbLists.map((list) => {
     const collectionName = list.valueNext("displayName").mainText;
-    const rowInfos = list.children("userVarbItem").map((item) => ({
-      ...mixedInfoS.pathNameDbId("userVarbItemMain", item.dbId),
-      varbName: "value",
-    }));
+    const rowInfos = list.children("userVarbItem").map((item) => {
+      const info: ValueCustomVarbPathInfo = {
+        infoType: "varbPathDbId",
+        varbPathName: "userVarbValue",
+        dbId: item.dbId,
+      };
+      return info;
+    });
     return { collectionName, rowInfos, collectionId: list.feId };
   });
 }

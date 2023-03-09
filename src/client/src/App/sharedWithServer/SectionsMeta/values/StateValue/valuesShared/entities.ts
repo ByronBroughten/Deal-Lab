@@ -1,5 +1,9 @@
 import { pick } from "lodash";
 import { z } from "zod";
+import {
+  ValueCustomVarbPathInfo,
+  ValueFixedVarbPathInfo,
+} from "../../../../StateEntityGetters/pathNameOptions";
 import { Arr } from "../../../../utils/Arr";
 import { monSchemas } from "../../../../utils/mongoose";
 import { zS } from "../../../../utils/zod";
@@ -47,9 +51,11 @@ export const zValueInEntity = z.union([
 
 export const zValueInEntities = z.array(zValueInEntity);
 
-export type ValueInEntityInfo =
-  | PathDbVarbInfoMixed<any>
-  | VarbPathNameInfoMixed;
+export type ValueInEntityInfoNext =
+  | ValueFixedVarbPathInfo
+  | ValueCustomVarbPathInfo;
+
+export type ValueInEntityInfo = ValueInEntityInfoNext;
 
 type FixedInEntityInfo = PathInVarbInfo;
 export type FixedInEntity = FixedInEntityInfo & EntityIdProp;

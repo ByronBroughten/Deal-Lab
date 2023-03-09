@@ -4,7 +4,6 @@ import { Obj } from "../../../utils/Obj";
 import { zS } from "../../../utils/zod";
 import { Id } from "../../id";
 import { isVarbPathName } from "../../SectionInfo/VarbPathNameInfo";
-import { isSectionPathName } from "../../sectionPathContexts/sectionPathNames";
 import {
   EntityIdProp,
   ValueInEntityInfo,
@@ -36,8 +35,8 @@ function infoTypeCheck(value: any): boolean {
     case "varbPathName": {
       return isVarbPathName(info.varbPathName);
     }
-    case "pathNameDbId": {
-      return isSectionPathName(info.pathName) && Id.is(info.id);
+    case "varbPathDbId": {
+      return isVarbPathName(info.varbPathName) && Id.is(info.dbId);
     }
     default: {
       throw new Error(

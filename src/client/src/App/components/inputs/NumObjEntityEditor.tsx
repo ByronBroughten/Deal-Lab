@@ -5,9 +5,8 @@ import { useOnOutsideClickEffect } from "../../modules/customHooks/useOnOutsideC
 import { useToggleView } from "../../modules/customHooks/useToggleView";
 import { SetEditorState } from "../../modules/draftjs/draftUtils";
 import { FeVarbInfo } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
-import { VarbPathName } from "../../sharedWithServer/SectionsMeta/SectionInfo/VarbPathNameInfo";
 import { SectionInfoContextProvider } from "../../sharedWithServer/stateClassHooks/useSectionContext";
-import { VarbPathOptionName } from "../../sharedWithServer/StateEntityGetters/pathNameOptions";
+import { ValueFixedVarbPathName } from "../../sharedWithServer/StateEntityGetters/pathNameOptions";
 import { GetterVarb } from "../../sharedWithServer/StateGetters/GetterVarb";
 import { EditorTextStatus } from "../../sharedWithServer/StateGetters/GetterVarbNumObj";
 import theme from "../../theme/Theme";
@@ -31,7 +30,7 @@ type Props = PropAdornments & {
   bypassNumeric?: boolean;
   doEquals?: boolean;
   editorType?: NumEditorType;
-  quickViewVarbNames?: VarbPathOptionName[];
+  quickViewVarbNames?: ValueFixedVarbPathName[];
 };
 
 const seperator = ".";
@@ -156,7 +155,9 @@ const MemoNumObjEntityEditor = React.memo(function MemoNumObjEntityEditor({
                 ...rest,
                 setEditorState,
                 varbPathNames: quickViewVarbNameString
-                  ? (quickViewVarbNameString.split(seperator) as VarbPathName[])
+                  ? (quickViewVarbNameString.split(
+                      seperator
+                    ) as ValueFixedVarbPathName[])
                   : undefined,
               }}
               ref={popperRef}

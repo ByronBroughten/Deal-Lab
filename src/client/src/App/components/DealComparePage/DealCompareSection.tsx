@@ -15,6 +15,7 @@ export function DealCompareSection() {
   const compareValueFeIds = dealCompare.childFeIds("compareValue");
   const comparePageFeIds = dealCompare.childFeIds("compareDealPage");
 
+  const areCompareDeals = comparePageFeIds.length > 0;
   return (
     <OuterMainSection>
       <SectionTitle
@@ -32,13 +33,15 @@ export function DealCompareSection() {
       <View
         style={{
           flexWrap: "nowrap",
-          marginTop: nativeTheme.s35,
+          marginTop: nativeTheme.s4,
           flexDirection: "row",
         }}
       >
         <View>
           <View style={{ flexDirection: "row", paddingBottom: nativeTheme.s2 }}>
-            <ComparedDealXBtns {...{ compareValueFeIds }} />
+            {areCompareDeals && (
+              <ComparedDealXBtns {...{ compareValueFeIds }} />
+            )}
             {comparePageFeIds.map((feId) => (
               <ComparedDeal
                 {...{
@@ -49,7 +52,7 @@ export function DealCompareSection() {
               />
             ))}
           </View>
-          {comparePageFeIds.length > 0 && <DealCompareValueMenu />}
+          {areCompareDeals && <DealCompareValueMenu />}
         </View>
         <DealCompareDealModal />
       </View>

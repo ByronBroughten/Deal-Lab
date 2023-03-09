@@ -8,3 +8,7 @@ export interface NanoIdInfo extends MixedInfoProps<NanoIdType> {
 export interface NanoIdProp {
   id: string;
 }
+
+export interface DbIdProp {
+  dbId: string;
+}

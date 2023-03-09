@@ -2,7 +2,7 @@ import { FormControl, MenuItem, Select } from "@material-ui/core";
 import React from "react";
 import styled from "styled-components";
 import { FeVarbInfo } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
-import { VarbPathOptionName } from "../../sharedWithServer/StateEntityGetters/pathNameOptions";
+import { ValueFixedVarbPathName } from "../../sharedWithServer/StateEntityGetters/pathNameOptions";
 import theme from "../../theme/Theme";
 import {
   NumEditorType,
@@ -20,7 +20,7 @@ export type SelectEditorProps = {
   editorProps?: {
     feVarbInfo: FeVarbInfo;
     editorType: NumEditorType;
-    quickViewVarbNames?: VarbPathOptionName[];
+    quickViewVarbNames?: ValueFixedVarbPathName[];
   };
   menuItems: [string, string][];
   equalsValue?: string;

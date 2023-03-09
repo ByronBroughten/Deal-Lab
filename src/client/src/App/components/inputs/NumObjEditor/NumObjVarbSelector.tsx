@@ -5,8 +5,8 @@ import styled from "styled-components";
 import { useToggleView } from "../../../modules/customHooks/useToggleView";
 import { FeSectionInfo } from "../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { mixedInfoS } from "../../../sharedWithServer/SectionsMeta/SectionInfo/MixedSectionInfo";
-import { VarbPathName } from "../../../sharedWithServer/SectionsMeta/SectionInfo/VarbPathNameInfo";
 import { useGetterSection } from "../../../sharedWithServer/stateClassHooks/useGetterSection";
+import { ValueFixedVarbPathName } from "../../../sharedWithServer/StateEntityGetters/pathNameOptions";
 import theme from "../../../theme/Theme";
 import { HollowBtn } from "../../appWide/HollowBtn";
 import { ModalText } from "../../appWide/ModalText";
@@ -23,7 +23,7 @@ import { VarbSelectorShell } from "./NumObjVarbSelector/VarbSelectorShell";
 
 interface Props extends FeSectionInfo {
   setEditorState: React.Dispatch<React.SetStateAction<EditorState>>;
-  varbPathNames?: VarbPathName[];
+  varbPathNames?: ValueFixedVarbPathName[];
 }
 
 export const NumObjVarbSelector = React.memo(

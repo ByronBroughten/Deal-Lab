@@ -7,33 +7,26 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
-// Make userVarbItem focalVarbInfo target the ones that are children of dealPage
+// Finalize the types for the InValueVarbInfo
+// - It's going to be dbId userVarbValue
+// - It's going to be the specific varbPathName options
 
-// Extract the look of the AllVarbsModal. You'll use that
-// for adding values for comparing deals.
+// - Change the method of mgmt base pay and loan amount
+//   - You want to prepare them for being able to handle
+//     other types of inputs
 
-// Try upgrading to mui-5. That will solve some of
-// your styling problems
+// Try upgrading to mui-5. That will make styling easier
+
+// - Put the downpayment stuff on financing
+// - PITI, too
+// - Make loans have a "downPayment" option
 
 // Waiting on Emily
 // - Logo
 // - Account page
-// Waiting on Marina
-// - General input and impression
-
-// - Style the compare options
-//  - Ok, so I'll make it in the deal page for now
-//   - In a nav container
-//   - A big plus button calls a modal to select
-//     a deal to compare
-//   - The compared deals are comprised of a title
-//    - and then their values
-//  - there is a max width
+// - Compare page feedback?
 
 // Before Wordpress
-// - Change the method of mgmt base pay and loan amount
-//   - You want to prepare them for being able to handle
-//     other types of inputs
 // - Add Fix and Flip
 //   - Percent of repairs for loan amount
 //   - Percent of repairs plus purchase price
@@ -43,15 +36,8 @@ AppRegistry.runApplication("App", {
 //   - Holding costs (clone of ongoing costs)
 //   - Add fix and flip outputs
 //   - Change displayed outputs based on mode
-//   - Add mode to "Compare" and change parameters
-//     being compared
 
 // - Add Brrrr
-
-// 2. Finalize the variables
-// - Put the downpayment stuff on financing
-// - PITI, too
-// - Make loans have a "downPayment" option
 
 // 4. Allow for Fix and Flip
 //  - Add ARV

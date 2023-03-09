@@ -32,7 +32,7 @@ import {
 } from "../SectionsMeta/sectionChildrenDerived/ParentName";
 import { SectionValuesGeneric } from "../SectionsMeta/sectionChildrenDerived/SectionPack/RawSection";
 import {
-  AbsolutePathDbInfoMixed,
+  AbsolutePathNodeDbIdInfo,
   AbsolutePathNodeInfoMixed,
 } from "../SectionsMeta/SectionInfo/AbsolutePathInfo";
 import { ChildValueInfo } from "../SectionsMeta/SectionInfo/ChildInfo";
@@ -196,6 +196,16 @@ export class GetterSection<
           pathName,
         },
       };
+    } else if (mixedInfo.infoType === "varbPathDbId") {
+      const { pathName, varbName } = getVarbPathParams(mixedInfo.varbPathName);
+      return {
+        varbName,
+        sectionInfo: {
+          infoType: "pathNameDbId",
+          pathName,
+          id: mixedInfo.dbId,
+        },
+      };
     } else {
       const { varbName, ...sectionInfo } = mixedInfo;
       return {
@@ -246,27 +256,41 @@ export class GetterSection<
       case "globalSection":
       case "absolutePath":
       case "absolutePathDbId":
-      case "absolutePathNode": {
+      case "absolutePathNode":
+      case "absolutePathNodeDbId": {
         return this.sections.sectionsByMixed(info);
       }
-      case "varbPathName": {
-        const { varbPathName } = info;
+      case "varbPathName":
+      case "varbPathDbId": {
+        const { varbPathName, ...rest } = info;
         const { pathName } = getVarbPathParams(varbPathName);
         const sectionName = pathSectionName(pathName);
         const pathNodes = this.getPathNodesFromContext(pathName);
-        const absoluteInfo: AbsolutePathNodeInfoMixed = {
-          sectionName,
-          pathNodes,
-          infoType: "absolutePathNode",
-        };
-        return this.sections.sectionsByMixed(absoluteInfo);
+        if (rest.infoType === "varbPathName") {
+          const absoluteInfo: AbsolutePathNodeInfoMixed = {
+            sectionName,
+            pathNodes,
+            infoType: "absolutePathNode",
+          };
+          return this.sections.sectionsByMixed(absoluteInfo);
+        } else if (rest.infoType === "varbPathDbId") {
+          const info: AbsolutePathNodeDbIdInfo = {
+            dbId: rest.dbId,
+            pathNodes,
+            infoType: "absolutePathNodeDbId",
+            sectionName,
+          };
+          return this.sections.sectionsByMixed(info);
+        } else {
+          throw new Error("This shouldn't happen");
+        }
       }
       case "pathName":
       case "pathNameDbId": {
         const { pathName, ...rest } = info;
         const sectionName = pathSectionName(pathName);
+        const pathNodes = this.getPathNodesFromContext(pathName);
         if (rest.infoType === "pathName") {
-          const pathNodes = this.getPathNodesFromContext(pathName);
           const info: AbsolutePathNodeInfoMixed = {
             sectionName,
             pathNodes,
@@ -274,13 +298,13 @@ export class GetterSection<
           };
           return this.sections.sectionsByMixed(info);
         } else if (rest.infoType === "pathNameDbId") {
-          const path = this.getPathFromContext(pathName);
-          return this.sections.sectionsByMixed({
-            ...rest,
-            path,
-            infoType: "absolutePathDbId",
+          const info: AbsolutePathNodeDbIdInfo = {
+            dbId: rest.id,
+            pathNodes,
+            infoType: "absolutePathNodeDbId",
             sectionName,
-          } as AbsolutePathDbInfoMixed);
+          };
+          return this.sections.sectionsByMixed(info);
         } else throw new Error("This shouldn't happen.");
       }
       default: {

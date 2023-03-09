@@ -2,7 +2,6 @@ import { Id } from "../SectionsMeta/id";
 import { VarbInfoMixedFocal } from "../SectionsMeta/SectionInfo/MixedSectionInfo";
 import { FeVarbInfoMixed } from "../SectionsMeta/SectionInfo/VarbInfoBase";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
-import { SectionPathName } from "../SectionsMeta/sectionPathContexts/sectionPathNames";
 import { StateValue } from "../SectionsMeta/values/StateValue";
 import {
   entityS,
@@ -243,11 +242,11 @@ export class SolverVarb<
     }
   }
   private isUserVarbAndWasDeleted(varbInfo: ValueInEntity): boolean {
-    if (varbInfo.infoType === "pathNameDbId") {
-      const pathName = varbInfo.pathName as SectionPathName;
-      if (pathName === "userVarbItemMain") {
-        return !this.hasValueEntityVarb(varbInfo);
-      }
+    if (
+      varbInfo.infoType === "varbPathDbId" &&
+      varbInfo.varbPathName === "userVarbValue"
+    ) {
+      return !this.hasValueEntityVarb(varbInfo);
     }
     return false;
   }

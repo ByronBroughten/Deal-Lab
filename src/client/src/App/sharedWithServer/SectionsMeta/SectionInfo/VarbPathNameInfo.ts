@@ -9,6 +9,7 @@ import {
   SectionPathVarbName,
 } from "../sectionPathContexts/sectionPathNames";
 import { VarbValue } from "../values/StateValue";
+import { DbIdProp } from "./NanoIdInfo";
 import { MixedInfoProps } from "./VarbInfoBase";
 
 type MakeVarbPathParams<
@@ -20,7 +21,7 @@ type MakeVarbPathParams<
   collectionName: string;
 };
 
-export const allVarbPathParams = {
+const allVarbPathParams = {
   ...sectionVarbNameParams("financingFocal", "Financing", [
     "financingMode",
     "loanBaseDollars",
@@ -52,36 +53,56 @@ export const allVarbPathParams = {
     "vacancyLossPercent",
     ...targetNames("basePayDollars", "ongoing"),
   ]),
-  managementExpensesMonthly: varbPathParams(
+  managementExpensesMonthly: fixedVarbPathParams(
     "Management",
     "mgmtFocal",
     "expensesMonthly"
   ),
-  managementExpensesYearly: varbPathParams(
+  managementExpensesYearly: fixedVarbPathParams(
     "Management",
     "mgmtFocal",
     "expensesYearly"
   ),
 
-  propertyExpensesMonthly: varbPathParams(
+  propertyExpensesMonthly: fixedVarbPathParams(
     "Property",
     "propertyFocal",
     "expensesMonthly"
   ),
-  propertyExpensesYearly: varbPathParams(
+  propertyExpensesYearly: fixedVarbPathParams(
     "Property",
     "propertyFocal",
     "expensesYearly"
   ),
 
-  dealExpensesMonthly: varbPathParams("Deal", "dealFocal", "expensesMonthly"),
-  dealExpensesYearly: varbPathParams("Deal", "dealFocal", "expensesYearly"),
+  dealExpensesMonthly: fixedVarbPathParams(
+    "Deal",
+    "dealFocal",
+    "expensesMonthly"
+  ),
+  dealExpensesYearly: fixedVarbPathParams(
+    "Deal",
+    "dealFocal",
+    "expensesYearly"
+  ),
 
-  dealRevenueMonthly: varbPathParams("Deal", "dealFocal", "revenueMonthly"),
-  dealRevenueYearly: varbPathParams("Deal", "dealFocal", "revenueYearly"),
+  dealRevenueMonthly: fixedVarbPathParams(
+    "Deal",
+    "dealFocal",
+    "revenueMonthly"
+  ),
+  dealRevenueYearly: fixedVarbPathParams("Deal", "dealFocal", "revenueYearly"),
 
-  dealUpfrontExpenses: varbPathParams("Deal", "dealFocal", "upfrontExpenses"),
-  dealUpfrontRevenue: varbPathParams("Deal", "dealFocal", "upfrontRevenue"),
+  dealUpfrontExpenses: fixedVarbPathParams(
+    "Deal",
+    "dealFocal",
+    "upfrontExpenses"
+  ),
+  dealUpfrontRevenue: fixedVarbPathParams(
+    "Deal",
+    "dealFocal",
+    "upfrontRevenue"
+  ),
 
   ...sectionVarbNameParams("dealFocal", "Deal", [
     "downPaymentDollars",
@@ -92,6 +113,7 @@ export const allVarbPathParams = {
     ...targetNames("cashFlow", "ongoing"),
     ...targetNames("cocRoi", "ongoing"),
   ]),
+  userVarbValue: varbPathParams("userVarbItemMain", "value"),
 };
 
 export const varbPathNames = Obj.keys(allVarbPathParams);
@@ -146,13 +168,18 @@ export function getVarbPathExtras<VPN extends VarbPathName>(
   } as VarbPathExtras<VPN>;
 }
 
-export interface VarbPathNameInfo<VPN extends VarbPathName = VarbPathName> {
+export interface VarbPathNameProp<VPN extends VarbPathName = VarbPathName> {
   varbPathName: VPN;
 }
+
 export interface VarbPathNameInfoMixed<VPN extends VarbPathName = VarbPathName>
-  extends MixedInfoProps<"varbPathName"> {
-  varbPathName: VPN;
-}
+  extends VarbPathNameProp<VPN>,
+    MixedInfoProps<"varbPathName"> {}
+export interface VarbPathNameDbInfoMixed<
+  VPN extends VarbPathName = VarbPathName
+> extends VarbPathNameProp<VPN>,
+    MixedInfoProps<"varbPathDbId">,
+    DbIdProp {}
 
 type SectionVarbPathParams<
   PN extends SectionPathName,
@@ -170,6 +197,17 @@ export const collectionNamesFixed = [
 type CollectionNameFixed = typeof collectionNamesFixed[number];
 
 function varbPathParams<
+  PN extends SectionPathName,
+  VN extends SectionPathVarbName<PN>
+>(pathName: PN, varbName: VN) {
+  return {
+    collectionName: "Custom",
+    pathName,
+    varbName,
+  };
+}
+
+function fixedVarbPathParams<
   PN extends SectionPathName,
   VN extends SectionPathVarbName<PN>
 >(
@@ -193,14 +231,14 @@ function sectionVarbNameParams<
   varbNames: VN[]
 ): SectionVarbPathParams<PN, VN> {
   return varbNames.reduce((options, varbName) => {
-    options[varbName] = varbPathParams(collectionName, pathName, varbName);
+    options[varbName] = fixedVarbPathParams(collectionName, pathName, varbName);
     return options;
   }, {} as SectionVarbPathParams<PN, VN>);
 }
 
-export function varbPathInfo(
-  varbPathName: VarbPathName
-): VarbPathNameInfoMixed {
+export function varbPathInfo<VPN extends VarbPathName>(
+  varbPathName: VPN
+): VarbPathNameInfoMixed<VPN> {
   return {
     infoType: "varbPathName",
     varbPathName,

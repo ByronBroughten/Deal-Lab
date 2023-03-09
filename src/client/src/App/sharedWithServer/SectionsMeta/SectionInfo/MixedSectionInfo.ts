@@ -7,6 +7,7 @@ import {
 import {
   AbsolutePathDbInfoMixed,
   AbsolutePathInfoMixed,
+  AbsolutePathNodeDbIdInfo,
   AbsolutePathNodeInfoMixed,
 } from "./AbsolutePathInfo";
 import {
@@ -22,7 +23,11 @@ import {
   GlobalSectionInfo,
   VarbProp,
 } from "./VarbInfoBase";
-import { VarbPathName, VarbPathNameInfoMixed } from "./VarbPathNameInfo";
+import {
+  VarbPathName,
+  VarbPathNameDbInfoMixed,
+  VarbPathNameInfoMixed,
+} from "./VarbPathNameInfo";
 
 // a mixed section finder that doesn't need a focal section
 export type SectionInfoMixed<SN extends SectionName = SectionName> =
@@ -31,7 +36,8 @@ export type SectionInfoMixed<SN extends SectionName = SectionName> =
   | DbSectionInfoMixed<SN>
   | AbsolutePathInfoMixed<SN>
   | AbsolutePathDbInfoMixed<SN>
-  | AbsolutePathNodeInfoMixed<SN>;
+  | AbsolutePathNodeInfoMixed<SN>
+  | AbsolutePathNodeDbIdInfo<SN>;
 
 export type IdInfoMixedMulti = DistributiveOmit<
   FeSectionInfoMixed | GlobalSectionInfo | DbSectionInfoMixed,
@@ -131,8 +137,10 @@ type BasicSectionInfoMixedFocal =
 
 export type SectionInfoMixedFocal =
   | BasicSectionInfoMixedFocal
-  | VarbPathNameInfoMixed;
+  | VarbPathNameInfoMixed
+  | VarbPathNameDbInfoMixed;
 
 export type VarbInfoMixedFocal =
   | (BasicSectionInfoMixedFocal & VarbProp)
-  | VarbPathNameInfoMixed;
+  | VarbPathNameInfoMixed
+  | VarbPathNameDbInfoMixed;

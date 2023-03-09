@@ -1,9 +1,9 @@
+import { ValueFixedVarbPathName } from "../../../StateEntityGetters/pathNameOptions";
 import { fullDisplayNameString } from "../../allDisplaySectionVarbs";
 import { Id } from "../../id";
 import {
   getVarbPathParams,
   varbPathInfo,
-  VarbPathName,
 } from "../../SectionInfo/VarbPathNameInfo";
 import { pathSectionName } from "../../sectionPathContexts/sectionPathNames";
 import { NumObj } from "./NumObj";
@@ -51,4 +51,4 @@ export function numObjNext(...propArr: EntityNumObjPropArr): NumObj {
   };
 }
 
-type EntityNumObjPropArr = (number | string | [VarbPathName])[];
+type EntityNumObjPropArr = (number | string | [ValueFixedVarbPathName])[];

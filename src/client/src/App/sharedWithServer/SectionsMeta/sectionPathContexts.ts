@@ -81,7 +81,7 @@ const compareDealPage = makeDealPageFocals([
 const editorVarbListPath: ChildName[] = [
   "main",
   "userVarbEditor",
-  "userVarbList",
+  "userVarbListMain",
 ];
 export const sectionPathContexts = {
   get default() {

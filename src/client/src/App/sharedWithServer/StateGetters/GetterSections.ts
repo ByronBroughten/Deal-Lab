@@ -84,6 +84,13 @@ export class GetterSections extends GetterSectionsBase {
         sectionName,
         descendantNodes: pathNodes,
       });
+    } else if (infoMixed.infoType === "absolutePathNodeDbId") {
+      const { sectionName, pathNodes, dbId } = infoMixed;
+      const sections = this.root.descendantsOfSnByNode({
+        sectionName,
+        descendantNodes: pathNodes,
+      });
+      return sections.filter((section) => section.dbId === dbId);
     } else if (infoMixed.infoType === "absolutePathDbId") {
       const { sectionName, path } = infoMixed;
       return this.root.descendantsByPathAndDbId({

@@ -1,4 +1,3 @@
-import { mixedInfoS } from "../SectionsMeta/SectionInfo/MixedSectionInfo";
 import { ValueInEntityInfo } from "../SectionsMeta/values/StateValue/valuesShared/entities";
 import {
   GetterSectionsBase,
@@ -42,8 +41,9 @@ export class VariableGetterSections extends GetterSectionsBase {
             displayName: item.virtualVarb.displayName,
             collectionName,
             varbInfo: {
-              ...mixedInfoS.pathNameDbId("userVarbItemMain", item.dbId),
-              varbName: "value",
+              infoType: "varbPathDbId",
+              varbPathName: "userVarbValue",
+              dbId: item.dbId,
             },
           };
         })
