@@ -18,6 +18,23 @@ type SectionVarbNames = {
   [SN in SectionName]: keyof BaseSectionVarbs<SN>;
 };
 
+const allVarbNamesRepeats = sectionNames.reduce((allVarbNames, sectionName) => {
+  const varbNames = Obj.keys(allBaseSectionVarbs[sectionName]);
+  return allVarbNames.concat(...varbNames);
+}, [] as VarbNameWide[]);
+
+const allVarbNames = [...new Set(allVarbNamesRepeats)];
+function isVarbName(value: any): value is VarbNameWide {
+  return allVarbNames.includes(value);
+}
+export function valVarbName(value: any): VarbNameWide {
+  if (isVarbName(value)) {
+    return value;
+  } else {
+    throw new Error(`value "${value}" is not a varbName`);
+  }
+}
+
 export type VarbNameWide<SN extends SectionName = SectionName> =
   SectionVarbNames[SN];
 

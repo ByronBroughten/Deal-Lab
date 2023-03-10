@@ -1,4 +1,3 @@
-import { omit } from "lodash";
 import {
   baseCapExItem,
   baseOngoingItem,
@@ -245,20 +244,14 @@ export function makeAllBaseSectionVarbs() {
     } as const),
     mgmt: baseSectionVarbs({
       ...baseVarbsS.savableSection,
+      useCustomCosts: baseVarb("boolean"),
       one: baseVarb("number"),
       ...baseVarbsS.ongoingDollars("basePayDollars"),
       basePayPercent: baseVarb("numObj", percent),
-
-      vacancyLossDollarsEditor: baseVarb("numObj", dollars),
-      vacancyLossPercentEditor: baseVarb("numObj", percent),
       ...baseVarbsS.ongoingDollars("vacancyLossDollars"),
-      ...omit(varbs.dollarsPercentDecimal("vacancyLoss"), [
-        "vacancyLossDollars",
-      ] as const),
-
+      vacancyLossPercent: baseVarb("numObj", percent),
       upfrontExpenses: baseVarb("numObj", dollars),
       ...baseVarbsS.ongoingDollars("expenses"),
-      useCustomCosts: baseVarb("boolean"),
     } as const),
     mgmtBasePayValue: baseSectionVarbs({
       valueSourceName: baseVarb("mgmtBasePayValueSource"),

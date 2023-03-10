@@ -12,7 +12,7 @@ import {
   switchTargetKeys,
   SwitchVarbNameRecord,
 } from "../allBaseSectionVarbs/baseSwitchNames";
-import { VarbNameWide } from "../baseSectionsDerived/baseSectionsVarbsTypes";
+import { valVarbName } from "../baseSectionsDerived/baseSectionsVarbsTypes";
 import { VarbPathName } from "../SectionInfo/VarbPathNameInfo";
 import { UpdateVarb, updateVarb, UpdateVarbOptions } from "./updateVarb";
 import {
@@ -111,7 +111,7 @@ export function ongoingInputNext<BN extends string>(
         updateOverrideS.activeYearlyToMonthly(baseName),
         updateOverride(
           [overrideSwitchS.monthlyIsActive(baseName)],
-          updateBasicsS.loadSolvableTextByVarbInfo(names.editor as VarbNameWide)
+          updateBasicsS.loadSolvableTextByVarbInfo(valVarbName(names.editor))
         ),
       ],
       ...options.monthly,
@@ -122,7 +122,7 @@ export function ongoingInputNext<BN extends string>(
         updateOverrideS.activeMonthlyToYearly(baseName),
         updateOverride(
           [overrideSwitchS.yearlyIsActive(baseName)],
-          updateBasicsS.loadSolvableTextByVarbInfo(names.editor as VarbNameWide)
+          updateBasicsS.loadSolvableTextByVarbInfo(valVarbName(names.editor))
         ),
       ],
       ...options.yearly,
@@ -289,7 +289,7 @@ export function monthsYearsInput<BN extends string>(
             ),
           ],
           updateBasics("yearsToMonths", {
-            num: updateFnPropS.local(varbNames.years as VarbNameWide),
+            num: updateFnPropS.local(valVarbName(varbNames.years)),
           })
         ),
         updateOverride(
@@ -301,7 +301,7 @@ export function monthsYearsInput<BN extends string>(
             ),
           ],
           updateBasicsS.loadSolvableTextByVarbInfo(
-            varbNames.editor as VarbNameWide
+            valVarbName(varbNames.editor)
           )
         ),
       ],
@@ -319,7 +319,7 @@ export function monthsYearsInput<BN extends string>(
             ),
           ],
           updateBasics("monthsToYears", {
-            num: updateFnPropS.local(varbNames.months as VarbNameWide),
+            num: updateFnPropS.local(valVarbName(varbNames.months)),
           })
         ),
         updateOverride(
@@ -331,7 +331,7 @@ export function monthsYearsInput<BN extends string>(
             ),
           ],
           updateBasicsS.loadSolvableTextByVarbInfo(
-            varbNames.editor as VarbNameWide
+            valVarbName(varbNames.editor)
           )
         ),
       ],

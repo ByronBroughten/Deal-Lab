@@ -3,9 +3,10 @@ import { StateValue } from "../../../../../sharedWithServer/SectionsMeta/values/
 import { useSetterSection } from "../../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import { ValueFixedVarbPathName } from "../../../../../sharedWithServer/StateEntityGetters/pathNameOptions";
 import { GetterSection } from "../../../../../sharedWithServer/StateGetters/GetterSection";
+import { LabelWithInfo } from "../../../../appWide/LabelWithInfo";
 import { SelectEditorSection } from "../../../../appWide/SelectEditorSection";
 
-function getProps(getter: GetterSection<"mgmtBasePayValue">): {
+function getProps(getter: GetterSection<"vacancyLossValue">): {
   equalsValue?: string;
   editorProps?: {
     quickViewVarbNames: ValueFixedVarbPathName[];
@@ -25,8 +26,7 @@ function getProps(getter: GetterSection<"mgmtBasePayValue">): {
   switch (valueSourceName) {
     case "none":
       return {};
-    case "zero":
-      return { equalsValue: "$0" };
+    case "fivePercentRent":
     case "tenPercentRent":
       return { equalsValue: dollarsVarb.displayVarb() };
     case "percentOfRentEditor":
@@ -52,19 +52,24 @@ function getProps(getter: GetterSection<"mgmtBasePayValue">): {
   }
 }
 
-export function BasePayValue({ feId }: { feId: string }) {
-  const basePayValue = useSetterSection({
-    sectionName: "mgmtBasePayValue",
+export function VacancyLossValue({ feId }: { feId: string }) {
+  const vacancyLoss = useSetterSection({
+    sectionName: "vacancyLossValue",
     feId,
   });
-  const props = getProps(basePayValue.get);
-  const valueSourceName = basePayValue.value("valueSourceName");
-  const menuItems: [StateValue<"mgmtBasePayValueSource">, string][] = [
-    ["zero", "Owner managed (no pay)"],
+  const props = getProps(vacancyLoss.get);
+  const valueSourceName = vacancyLoss.value("valueSourceName");
+  const menuItems: [StateValue<"vacancyLossValueSource">, string][] = [
+    [
+      "fivePercentRent",
+      `5% rent${
+        valueSourceName === "fivePercentRent" ? "" : " (common low estimate)"
+      }`,
+    ],
     [
       "tenPercentRent",
       `10% rent${
-        valueSourceName === "tenPercentRent" ? "" : " (common estimate)"
+        valueSourceName === "tenPercentRent" ? "" : " (common high estimate)"
       }`,
     ],
     ["dollarsEditor", "Custom dollar amount"],
@@ -74,7 +79,15 @@ export function BasePayValue({ feId }: { feId: string }) {
   return (
     <SelectEditorSection
       {...{
-        label: "Base Pay",
+        label: (
+          <LabelWithInfo
+            {...{
+              label: "Vacancy Loss",
+              infoTitle: "Vacancy Loss",
+              infoText: `No property will be fully occupied 100% of the time. When tenants move out, it can sometimes take days or weeks to prepare their unit for another renter. To account for this, assume you will miss out on a certain portion of the property's rent.\n\nIf you're owner-managing the property and you're determined to keep vacancy low, a common method is to asume you will miss out on 5% of the rent; and if you're using a property manager or management company (who probably won't be quite as motivated as you), something like 10% is common to assume.`,
+            }}
+          />
+        ),
         editorProps: props.editorProps && {
           ...props.editorProps,
           editorType: "numeric",
@@ -82,7 +95,7 @@ export function BasePayValue({ feId }: { feId: string }) {
         selectValue: valueSourceName,
         onChange: (e) => {
           const value = e.target.value as string;
-          basePayValue.varb("valueSourceName").updateValue(value);
+          vacancyLoss.varb("valueSourceName").updateValue(value);
         },
         menuItems,
         equalsValue: props.equalsValue,

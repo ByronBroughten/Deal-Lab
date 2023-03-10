@@ -9,6 +9,7 @@ import {
   ongoingItemUpdateVarbs,
 } from "./allUpdateSectionVarbs/ongoingItemUpdateVarbs";
 import { propertyUpdateVarbs } from "./allUpdateSectionVarbs/propertyUpdateVarbs";
+import { vacancyLossUpdateVarbs } from "./allUpdateSectionVarbs/vacancyLossUpdateVarbs";
 import { VarbName } from "./baseSectionsDerived/baseSectionsVarbsTypes";
 
 import { mixedInfoS } from "./SectionInfo/MixedSectionInfo";
@@ -67,6 +68,7 @@ function makeAllUpdateSections() {
     ...makeAllDefaultUpdateSections(),
     ...updateSectionProp("loan", loanRelVarbs()),
     ...updateSectionProp("mgmt", mgmtRelVarbs()),
+    ...updateSectionProp("vacancyLossValue", vacancyLossUpdateVarbs()),
     ...updateSectionProp("mgmtBasePayValue", mgmtBasePayValueVarbs()),
     ...updateSectionProp("deal", dealRelVarbs()),
     ...updateSectionProp("financing", financingUpdateVarbs()),
@@ -740,16 +742,23 @@ function makeAllUpdateSections() {
                 "percentOfRentEditor"
               ),
             ]),
-            updateFnPropS.pathName("mgmtFocal", "vacancyLossPercentEditor", [
+            updateFnPropS.pathName(
+              "vacancyLossFocal",
+              "valueDollarsOngoingEditor",
+              [
+                overrideSwitch(
+                  mixedInfoS.pathNameVarb(
+                    "vacancyLossFocal",
+                    "valueSourceName"
+                  ),
+                  "dollarsEditor"
+                ),
+              ]
+            ),
+            updateFnPropS.pathName("vacancyLossFocal", "valuePercentEditor", [
               overrideSwitch(
-                mixedInfoS.pathNameVarb("mgmtFocal", "vacancyLossUnitSwitch"),
-                "percent"
-              ),
-            ]),
-            updateFnPropS.pathName("mgmtFocal", "vacancyLossDollarsEditor", [
-              overrideSwitch(
-                mixedInfoS.pathNameVarb("mgmtFocal", "vacancyLossUnitSwitch"),
-                "dollars"
+                mixedInfoS.pathNameVarb("vacancyLossFocal", "valueSourceName"),
+                "percentOfRentEditor"
               ),
             ]),
           ],

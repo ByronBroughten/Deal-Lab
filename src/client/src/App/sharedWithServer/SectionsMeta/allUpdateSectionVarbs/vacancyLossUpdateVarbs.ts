@@ -10,10 +10,10 @@ import {
 } from "../updateSectionVarbs/updateVarb/UpdateOverrides";
 import { updateVarbsS } from "../updateSectionVarbs/updateVarbs";
 
-export function mgmtVacancyLossVarbs(): UpdateSectionVarbs<"mgmtBasePayValue"> {
+export function vacancyLossUpdateVarbs(): UpdateSectionVarbs<"vacancyLossValue"> {
   return {
     ...updateVarbsS._typeUniformity,
-    valueSourceName: updateVarb("mgmtBasePayValueSource", {
+    valueSourceName: updateVarb("vacancyLossValueSource", {
       initValue: "none",
     }),
     valuePercentEditor: updateVarb("numObj"),
@@ -21,10 +21,16 @@ export function mgmtVacancyLossVarbs(): UpdateSectionVarbs<"mgmtBasePayValue"> {
       updateFnName: "throwIfReached",
       updateOverrides: [
         updateOverrideS.emptyNumObjIfSourceIsNone,
-        updateOverrideS.zeroIfSourceIsZero,
         updateOverride(
           [overrideSwitchS.valueSourceIs("percentOfRentEditor")],
           updateBasicsS.loadSolvableTextByVarbInfo("valuePercentEditor")
+        ),
+        updateOverride(
+          [overrideSwitchS.valueSourceIs("fivePercentRent")],
+          updateBasicsS.equationSimple(
+            "decimalToPercent",
+            updateFnPropS.local("valueDecimal")
+          )
         ),
         updateOverride(
           [overrideSwitchS.valueSourceIs("tenPercentRent")],
@@ -46,13 +52,16 @@ export function mgmtVacancyLossVarbs(): UpdateSectionVarbs<"mgmtBasePayValue"> {
       updateFnName: "throwIfReached",
       updateOverrides: [
         updateOverrideS.emptyNumObjIfSourceIsNone,
-        updateOverrideS.zeroIfSourceIsZero,
         updateOverride(
           [overrideSwitchS.valueSourceIs("percentOfRentEditor")],
           updateBasicsS.equationSimple(
             "percentToDecimal",
             updateFnPropS.local("valuePercentEditor")
           )
+        ),
+        updateOverride(
+          [overrideSwitchS.valueSourceIs("fivePercentRent")],
+          updateBasicsS.pointZeroFive
         ),
         updateOverride(
           [overrideSwitchS.valueSourceIs("tenPercentRent")],
@@ -83,11 +92,15 @@ export function mgmtVacancyLossVarbs(): UpdateSectionVarbs<"mgmtBasePayValue"> {
       ],
     }),
     ...updateGroupS.group("valueDollars", "ongoingInput", "monthly", {
+      switch: { initValue: "monthly" },
       monthly: {
         updateFnName: "throwIfReached",
         updateOverrides: [
           updateOverrideS.emptyNumObjIfSourceIsNone,
-          updateOverrideS.zeroIfSourceIsZero,
+          updateOverride(
+            [overrideSwitchS.valueSourceIs("fivePercentRent")],
+            updateBasicsS.loadByVarbPathName("fivePercentRentMonthly")
+          ),
           updateOverride(
             [overrideSwitchS.valueSourceIs("tenPercentRent")],
             updateBasicsS.loadByVarbPathName("tenPercentRentMonthly")
@@ -120,7 +133,10 @@ export function mgmtVacancyLossVarbs(): UpdateSectionVarbs<"mgmtBasePayValue"> {
         updateFnName: "throwIfReached",
         updateOverrides: [
           updateOverrideS.emptyNumObjIfSourceIsNone,
-          updateOverrideS.zeroIfSourceIsZero,
+          updateOverride(
+            [overrideSwitchS.valueSourceIs("fivePercentRent")],
+            updateBasicsS.loadByVarbPathName("fivePercentRentYearly")
+          ),
           updateOverride(
             [overrideSwitchS.valueSourceIs("tenPercentRent")],
             updateBasicsS.loadByVarbPathName("tenPercentRentYearly")

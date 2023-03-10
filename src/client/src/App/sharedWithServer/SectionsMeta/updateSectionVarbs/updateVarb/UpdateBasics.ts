@@ -1,5 +1,8 @@
 import { switchKeyToVarbNames } from "../../allBaseSectionVarbs/baseSwitchNames";
-import { VarbNameWide } from "../../baseSectionsDerived/baseSectionsVarbsTypes";
+import {
+  valVarbName,
+  VarbNameWide,
+} from "../../baseSectionsDerived/baseSectionsVarbsTypes";
 import { ChildName } from "../../sectionChildrenDerived/ChildName";
 import { VarbPathName } from "../../SectionInfo/VarbPathNameInfo";
 import {
@@ -49,6 +52,9 @@ export const updateBasicsS = {
   },
   get pointOne() {
     return updateBasicsNext("solvableTextPointOne");
+  },
+  get pointZeroFive() {
+    return updateBasicsNext("solvableTextPointZeroFive");
   },
   get throw() {
     return updateBasicsNext("throwIfReached");
@@ -119,13 +125,13 @@ export const updateBasicsS = {
   monthsToYears<Base extends string>(base: Base) {
     const varbNames = switchKeyToVarbNames(base, "monthsYears");
     return updateBasicsNext("monthsToYears", {
-      num: updateFnPropS.local(varbNames.months as VarbNameWide),
+      num: updateFnPropS.local(valVarbName(varbNames.months)),
     });
   },
   yearsToMonths<Base extends string>(base: Base) {
     const varbNames = switchKeyToVarbNames(base, "monthsYears");
     return updateBasicsNext("yearsToMonths", {
-      num: updateFnPropS.local(varbNames.years as VarbNameWide),
+      num: updateFnPropS.local(valVarbName(varbNames.years)),
     });
   },
   yearlyToMonthly<Base extends string>(
@@ -133,8 +139,8 @@ export const updateBasicsS = {
   ): UpdateBasics<"numObj"> {
     const varbNames = switchKeyToVarbNames(baseVarbName, "ongoing");
     return updateBasicsNext("yearlyToMonthly", {
-      num: updateFnPropS.local(varbNames.yearly as VarbNameWide),
-      switch: updateFnPropS.local(varbNames.switch as VarbNameWide),
+      num: updateFnPropS.local(valVarbName(varbNames.yearly)),
+      switch: updateFnPropS.local(valVarbName(varbNames.switch)),
     });
   },
   monthlyToYearly<Base extends string>(
@@ -142,7 +148,7 @@ export const updateBasicsS = {
   ): UpdateBasics<"numObj"> {
     const varbNames = switchKeyToVarbNames(baseVarbName, "ongoing");
     return updateBasicsNext("monthlyToYearly", {
-      num: updateFnPropS.local(varbNames.monthly as VarbNameWide),
+      num: updateFnPropS.local(valVarbName(varbNames.monthly)),
     });
   },
 };

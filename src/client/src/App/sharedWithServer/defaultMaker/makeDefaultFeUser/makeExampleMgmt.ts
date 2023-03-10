@@ -2,19 +2,18 @@ import {
   SectionValues,
   StateValue,
 } from "../../SectionsMeta/values/StateValue";
-import { numObj } from "../../SectionsMeta/values/StateValue/NumObj";
 import { stringObj } from "../../SectionsMeta/values/StateValue/StringObj";
 import { PackBuilderSection } from "../../StatePackers.ts/PackBuilderSection";
 import { StrictPick } from "../../utils/types";
 import { makeDefaultMgmtPack } from "../makeDefaultMgmtPack";
 
 type ExampleMgmtProps = {
-  mgmt: StrictPick<
-    SectionValues<"mgmt">,
-    "displayName" | "vacancyLossPercentEditor"
-  >;
+  mgmt: StrictPick<SectionValues<"mgmt">, "displayName">;
   basePay: {
     valueSourceName: StateValue<"mgmtBasePayValueSource">;
+  };
+  vacancyLoss: {
+    valueSourceName: StateValue<"vacancyLossValueSource">;
   };
 };
 function exampleMgmt(props: ExampleMgmtProps) {
@@ -25,9 +24,7 @@ function exampleMgmt(props: ExampleMgmtProps) {
 }
 
 export const exampleDealMgmt = exampleMgmt({
-  mgmt: {
-    displayName: stringObj("Owner managed"),
-    vacancyLossPercentEditor: numObj(5),
-  },
-  basePay: { valueSourceName: "tenPercentRent" },
+  mgmt: { displayName: stringObj("Owner managed") },
+  basePay: { valueSourceName: "zero" },
+  vacancyLoss: { valueSourceName: "fivePercentRent" },
 });

@@ -118,7 +118,10 @@ describe("SetterCalculations", () => {
       valuePercentEditor: numObj(5),
       valueSourceName: "percentOfRentEditor",
     });
-    mgmt.varb("vacancyLossPercentEditor").updateValue(numObj(5));
+
+    const vacancyLossValue = mgmt.onlyChild("vacancyLossValue");
+    vacancyLossValue.updateValues({ valueSourceName: "fivePercentRent" });
+
     const expenseGroup = mgmt.onlyChild("ongoingExpenseGroup");
     const mgmtCostListGroup = expenseGroup.addAndGetChild("ongoingValue", {
       sectionValues: { valueSourceName: "listTotal" },

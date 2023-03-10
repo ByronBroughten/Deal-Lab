@@ -174,6 +174,12 @@ export class SolveValueVarb<
         solvableText: "0",
       };
     },
+    solvableTextPointZeroFive: (): NumObj => {
+      return {
+        ...this.getterVarb.value("numObj"),
+        solvableText: "0.05",
+      };
+    },
     solvableTextPointOne: (): NumObj => {
       return {
         ...this.getterVarb.value("numObj"),
