@@ -7,13 +7,20 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
-// Finalize the types for the InValueVarbInfo
-// - It's going to be dbId userVarbValue
-// - It's going to be the specific varbPathName options
-
 // - Change the method of mgmt base pay and loan amount
 //   - You want to prepare them for being able to handle
 //     other types of inputs
+
+// Lay the groundwork for boolean userVarbs
+// There will be two types of userVarbs—numeric and pass/fail
+
+// change lumpSum editor to dollarsEditor
+
+// 1. Let sectionPacks have null.
+// 2. Make it so that whenever a stored sectionPack is loaded,
+//    missing sections are added but converted to null
+// 3. When self-loading a sectionPack, don't replace
+//    the sections of self that the sectionPack has a null for
 
 // Try upgrading to mui-5. That will make styling easier
 

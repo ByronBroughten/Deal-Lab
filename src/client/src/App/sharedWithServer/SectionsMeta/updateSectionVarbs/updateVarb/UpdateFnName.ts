@@ -25,6 +25,7 @@ const updateFnNames = checkUpdateFnNames({
     "loadNumObj",
     "getNumObjOfSwitch",
     "solvableTextZero",
+    "solvableTextPointOne",
     "emptyNumObj",
     ...calculationNames,
     ...commonUpdateFnNames,

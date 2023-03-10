@@ -174,6 +174,18 @@ export function updateOverride<
 
 type Test = UpdateFnName<"stringObj">;
 export const updateOverrideS = {
+  get emptyNumObjIfSourceIsNone() {
+    return updateOverride(
+      [overrideSwitchS.local("valueSourceName", "none")],
+      updateBasics("emptyNumObj")
+    );
+  },
+  get zeroIfSourceIsZero() {
+    return updateOverride(
+      [overrideSwitchS.valueSourceIs("zero")],
+      updateBasicsS.zero
+    );
+  },
   loadedVarbProp(updateFnName: UpdateFnName<"stringObj">) {
     return updateOverride(
       [overrideSwitchS.local("valueSourceName", "loadedVarb")],

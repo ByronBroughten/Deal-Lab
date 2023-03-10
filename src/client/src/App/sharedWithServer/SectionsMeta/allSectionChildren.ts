@@ -191,6 +191,8 @@ export const allSectionChildren = checkAllSectionChildren({
 
   mgmtGeneral: { mgmt: sectionChild("mgmt") },
   mgmt: sectionChildren({
+    mgmtBasePayValue: ["mgmtBasePayValue"],
+    vacancyLossValue: ["vacancyLossValue"],
     upfrontExpenseGroup: ["singleTimeValueGroup"],
     ongoingExpenseGroup: ["ongoingValueGroup"],
     customVarb: ["customVarb"],

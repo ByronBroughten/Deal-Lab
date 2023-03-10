@@ -1,6 +1,20 @@
 import { Obj } from "../../../utils/Obj";
 
 const valueSources = {
+  mgmtBasePayValueSource: [
+    "none",
+    "zero",
+    "tenPercentRent",
+    "percentOfRentEditor",
+    "dollarsEditor",
+  ],
+  vacancyLossValueSource: [
+    "none",
+    "fivePercentRent",
+    "tenPercentRent",
+    "percentOfRentEditor",
+    "dollarsEditor",
+  ],
   editorValueSource: ["valueEditor"],
   loadedVarbSource: ["loadedVarb"],
   customValueSource: ["none", "valueEditor", "listTotal"],

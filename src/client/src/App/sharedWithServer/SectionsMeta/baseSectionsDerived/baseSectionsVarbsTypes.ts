@@ -14,6 +14,13 @@ export type BaseSectionVarbs<SN extends SectionName> = AllBaseSectionVarbs[SN];
 export type VarbName<SN extends SectionName = SectionName> = string &
   keyof BaseSectionVarbs<SN>;
 
+type SectionVarbNames = {
+  [SN in SectionName]: keyof BaseSectionVarbs<SN>;
+};
+
+export type VarbNameWide<SN extends SectionName = SectionName> =
+  SectionVarbNames[SN];
+
 type GetBaseVarb<
   SN extends SectionName,
   VN extends VarbName<SN>

@@ -1,4 +1,5 @@
 import { Obj } from "../../../utils/Obj";
+import { VarbNameWide } from "../../baseSectionsDerived/baseSectionsVarbsTypes";
 import { Id } from "../../id";
 import { ChildName } from "../../sectionChildrenDerived/ChildName";
 import { PathInVarbInfo } from "../../sectionChildrenDerived/RelInOutVarbInfo";
@@ -95,15 +96,20 @@ export const updateFnPropsS = {
       updateFnPropS.children(childName, varbName)
     );
   },
-  localByVarbName(varbNames: string[]): UpdateFnProps {
+  localByVarbName(varbNames: VarbNameWide[]): UpdateFnProps {
     return varbNames.reduce((localInfos, varbName) => {
       localInfos[varbName] = updateFnPropS.local(varbName);
       return localInfos;
     }, {} as UpdateFnProps);
   },
-  localArr(varbNames: string[]): UpdateFnProp[] {
+  localArr(varbNames: VarbNameWide[]): UpdateFnProp[] {
     return varbNames.map((varbName) => {
       return updateFnPropS.local(varbName);
+    });
+  },
+  localBaseNameArr(varbNames: string[]): UpdateFnProp[] {
+    return varbNames.map((varbName) => {
+      return updateFnPropS.localBaseName(varbName);
     });
   },
 };
@@ -133,8 +139,11 @@ export type UpdateFnProp = PathInVarbInfo & {
   andSwitches: UpdateOverrideSwitch[];
 };
 export const updateFnPropS = {
-  local(varbName: string): UpdateFnProp {
+  local(varbName: VarbNameWide): UpdateFnProp {
     return updateFnProp(relVarbInfoS.local(varbName));
+  },
+  localBaseName(baseName: string) {
+    return updateFnProp(relVarbInfoS.local(baseName));
   },
   localArr(...varbNames: string[]): UpdateFnProp[] {
     return varbNames.map((varbName) =>

@@ -109,7 +109,10 @@ export function loanRelVarbs(): UpdateSectionVarbs<"loan"> {
     ]),
     ...updateVarbsS.ongoingSumNums(
       "expenses",
-      [updateFnPropS.local("loanPayment"), updateFnPropS.local("mortgageIns")],
+      [
+        updateFnPropS.localBaseName("loanPayment"),
+        updateFnPropS.localBaseName("mortgageIns"),
+      ],
       "monthly"
     ),
     fivePercentBaseLoan: updateVarbS.singlePropFn(

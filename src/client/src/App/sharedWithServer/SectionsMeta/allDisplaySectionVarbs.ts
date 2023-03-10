@@ -115,8 +115,15 @@ export const allDisplaySectionVarbs = {
     mortgageInsUpfrontEditor: varb("Upfront mortgage insurance"),
     ...editorDisplayGroup("ongoingInput", "mortgageIns", "Mortgage insurance"),
   }),
+  ...displaySectionVarbsProp("mgmtBasePayValue", {
+    valuePercentEditor: varb("Base pay percent of rent"),
+    ...editorDisplayGroup("ongoingInput", "valueDollars", "Base pay"),
+  }),
+  ...displaySectionVarbsProp("vacancyLossValue", {
+    valuePercentEditor: varb("Vacancy loss percent of rent"),
+    ...editorDisplayGroup("ongoingInput", "valueDollars", "Vacancy loss"),
+  }),
   ...displaySectionVarbsProp("mgmt", {
-    basePayDollarsEditor: varb("Base pay"),
     ...group("ongoing", "basePayDollars", "Base pay", {
       targets: { displayNameWithSection: "Management base pay" },
       monthly: {
@@ -128,13 +135,7 @@ export const allDisplaySectionVarbs = {
         displayNameFullContext: "Management base pay yearly",
       },
     }),
-    basePayPercentEditor: varb("Base pay percent of rent"),
-    ...group("dollarsPercentDecimal", "vacancyLoss", "Vacancy loss", {
-      dollars: { displayNameWithVariant: "Base pay dollars" },
-      percent: { displayNameWithVariant: "Base pay percent" },
-    }),
-    vacancyLossDollarsEditor: varb("Vacancy loss"),
-    vacancyLossPercentEditor: varb("Vacancy rate"),
+    vacancyLossPercent: varb("Vacancy loss percent of rent"),
     upfrontExpenses: varb("Upfront expenses"),
     ...group("ongoing", "expenses", "Expenses", {
       targets: { displayNameWithSection: "Management expenses" },

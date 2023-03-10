@@ -39,6 +39,7 @@ const allVarbPathParams = {
     "onePercentPricePlusSqft",
     "onePercentPriceSqftAverage",
     ...targetNames("fivePercentRent", "ongoing"),
+    ...targetNames("tenPercentRent", "ongoing"),
   ]),
   ...sectionVarbNameParams("propertyFocal", "Property", [
     "purchasePrice",

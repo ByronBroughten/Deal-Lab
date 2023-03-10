@@ -56,6 +56,8 @@ export const sectionNames = [
 
   "mgmtGeneral",
   "mgmt",
+  "mgmtBasePayValue",
+  "vacancyLossValue",
 
   "stripeSubscription",
   "stripeInfoPrivate",

@@ -1,4 +1,5 @@
 import { switchKeyToVarbNames } from "../../allBaseSectionVarbs/baseSwitchNames";
+import { VarbNameWide } from "../../baseSectionsDerived/baseSectionsVarbsTypes";
 import { ChildName } from "../../sectionChildrenDerived/ChildName";
 import { VarbPathName } from "../../SectionInfo/VarbPathNameInfo";
 import {
@@ -46,6 +47,9 @@ export const updateBasicsS = {
   get zero() {
     return updateBasicsNext("solvableTextZero");
   },
+  get pointOne() {
+    return updateBasicsNext("solvableTextPointOne");
+  },
   get throw() {
     return updateBasicsNext("throwIfReached");
   },
@@ -87,12 +91,12 @@ export const updateBasicsS = {
   manualUpdateOnly() {
     return updateBasicsNext("manualUpdateOnly");
   },
-  loadFromLocal(varbName: string) {
+  loadFromLocal(varbName: VarbNameWide) {
     return updateBasicsNext("loadSolvableTextByVarbInfo", {
       varbInfo: updateFnPropS.local(varbName),
     });
   },
-  loadFromChild(childName: ChildName, varbName: string) {
+  loadFromChild(childName: ChildName, varbName: VarbNameWide) {
     return updateBasicsNext("loadSolvableTextByVarbInfo", {
       varbInfo: updateFnPropS.onlyChild(childName, varbName),
     });
@@ -105,7 +109,9 @@ export const updateBasicsS = {
   loadFromLocalValueEditor(): UpdateBasics<"numObj"> {
     return this.loadSolvableTextByVarbInfo("valueEditor");
   },
-  loadSolvableTextByVarbInfo(varbInfoName: string): UpdateBasics<"numObj"> {
+  loadSolvableTextByVarbInfo(
+    varbInfoName: VarbNameWide
+  ): UpdateBasics<"numObj"> {
     return updateBasicsNext("loadSolvableTextByVarbInfo", {
       varbInfo: updateFnPropS.local(varbInfoName),
     });
@@ -113,13 +119,13 @@ export const updateBasicsS = {
   monthsToYears<Base extends string>(base: Base) {
     const varbNames = switchKeyToVarbNames(base, "monthsYears");
     return updateBasicsNext("monthsToYears", {
-      num: updateFnPropS.local(varbNames.months),
+      num: updateFnPropS.local(varbNames.months as VarbNameWide),
     });
   },
   yearsToMonths<Base extends string>(base: Base) {
     const varbNames = switchKeyToVarbNames(base, "monthsYears");
     return updateBasicsNext("yearsToMonths", {
-      num: updateFnPropS.local(varbNames.years),
+      num: updateFnPropS.local(varbNames.years as VarbNameWide),
     });
   },
   yearlyToMonthly<Base extends string>(
@@ -127,8 +133,8 @@ export const updateBasicsS = {
   ): UpdateBasics<"numObj"> {
     const varbNames = switchKeyToVarbNames(baseVarbName, "ongoing");
     return updateBasicsNext("yearlyToMonthly", {
-      num: updateFnPropS.local(varbNames.yearly),
-      switch: updateFnPropS.local(varbNames.switch),
+      num: updateFnPropS.local(varbNames.yearly as VarbNameWide),
+      switch: updateFnPropS.local(varbNames.switch as VarbNameWide),
     });
   },
   monthlyToYearly<Base extends string>(
@@ -136,7 +142,7 @@ export const updateBasicsS = {
   ): UpdateBasics<"numObj"> {
     const varbNames = switchKeyToVarbNames(baseVarbName, "ongoing");
     return updateBasicsNext("monthlyToYearly", {
-      num: updateFnPropS.local(varbNames.monthly),
+      num: updateFnPropS.local(varbNames.monthly as VarbNameWide),
     });
   },
 };

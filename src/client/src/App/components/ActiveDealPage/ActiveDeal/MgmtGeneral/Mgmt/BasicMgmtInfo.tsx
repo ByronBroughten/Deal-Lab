@@ -1,28 +1,20 @@
 import styled from "styled-components";
+import { useGetterSection } from "../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import theme from "../../../../../theme/Theme";
 import { FormSection } from "../../../../appWide/FormSection";
 import { LabelWithInfo } from "../../../../appWide/LabelWithInfo";
 import { PercentOngoingDollarInput } from "../../general/PercentOngoingDollarInput";
+import { BasePayValue } from "./MgmtBasePayValue";
 
 type Props = { feId: string; className?: string };
 export function BasicMgmtInfo({ feId, className }: Props) {
   const feInfo = { sectionName: "mgmt", feId } as const;
+  const mgmt = useGetterSection(feInfo);
   return (
     <Styled
       {...{ sectionName: "mgmt", className: `BasicMgmtInfo-root ${className}` }}
     >
-      <FormSection>
-        <PercentOngoingDollarInput
-          {...{
-            label: "Base Pay",
-            percentOfWhat: "gross rent",
-            unitBaseName: "basePay",
-            ongoingBaseName: "basePayDollars",
-            className: "BasicMgmtInfo-basePay",
-            ...feInfo,
-          }}
-        />
-      </FormSection>
+      <BasePayValue {...{ feId: mgmt.onlyChildFeId("mgmtBasePayValue") }} />
       <FormSection>
         <PercentOngoingDollarInput
           {...{

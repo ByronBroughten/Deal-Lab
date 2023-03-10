@@ -246,12 +246,8 @@ export function makeAllBaseSectionVarbs() {
     mgmt: baseSectionVarbs({
       ...baseVarbsS.savableSection,
       one: baseVarb("number"),
-      basePayDollarsEditor: baseVarb("numObj", dollars),
-      basePayPercentEditor: baseVarb("numObj", percent),
       ...baseVarbsS.ongoingDollars("basePayDollars"),
-      ...omit(varbs.dollarsPercentDecimal("basePay"), [
-        "basePayDollars",
-      ] as const),
+      basePayPercent: baseVarb("numObj", percent),
 
       vacancyLossDollarsEditor: baseVarb("numObj", dollars),
       vacancyLossPercentEditor: baseVarb("numObj", percent),
@@ -264,6 +260,21 @@ export function makeAllBaseSectionVarbs() {
       ...baseVarbsS.ongoingDollars("expenses"),
       useCustomCosts: baseVarb("boolean"),
     } as const),
+    mgmtBasePayValue: baseSectionVarbs({
+      valueSourceName: baseVarb("mgmtBasePayValueSource"),
+      ...baseVarbsS.ongoingDollarsInput("valueDollars"),
+      valuePercentEditor: baseVarb("numObj", percent),
+      valuePercent: baseVarb("numObj", percent),
+      valueDecimal: baseVarb("numObj", decimal),
+    }),
+    vacancyLossValue: baseSectionVarbs({
+      valueSourceName: baseVarb("vacancyLossValueSource"),
+      ...baseVarbsS.ongoingDollarsInput("valueDollars"),
+      valuePercentEditor: baseVarb("numObj", percent),
+      valuePercent: baseVarb("numObj", percent),
+      valueDecimal: baseVarb("numObj", decimal),
+    }),
+
     dealPage: baseSectionVarbs({
       showOutputs: baseVarb("boolean"),
     }),
@@ -318,6 +329,8 @@ export function makeAllBaseSectionVarbs() {
           "twoPercentPrice",
           "fivePercentRentMonthly",
           "fivePercentRentYearly",
+          "tenPercentRentMonthly",
+          "tenPercentRentYearly",
           "onePercentSqftAverage",
           "onePercentPricePlusSqft",
           "onePercentPriceSqftAverage",
@@ -328,7 +341,7 @@ export function makeAllBaseSectionVarbs() {
         "propertyExists",
         "financingExists",
         "mgmtExists",
-      ]),
+      ] as const),
       propertyCompletionStatus: baseVarb("completionStatus"),
       financingCompletionStatus: baseVarb("completionStatus"),
       mgmtCompletionStatus: baseVarb("completionStatus"),

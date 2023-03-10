@@ -2,6 +2,7 @@ import { timeS } from "../utils/date";
 import { dealRelVarbs } from "./allUpdateSectionVarbs/dealUpdateVarbs";
 import { financingUpdateVarbs } from "./allUpdateSectionVarbs/financingUpdateVarbs";
 import { loanRelVarbs } from "./allUpdateSectionVarbs/loanUpdateVarbs";
+import { mgmtBasePayValueVarbs } from "./allUpdateSectionVarbs/mgmtBasePayUpdateVarbs";
 import { mgmtRelVarbs } from "./allUpdateSectionVarbs/mgmtUpdateVarbs";
 import {
   capExItemUpdateVarbs,
@@ -66,6 +67,7 @@ function makeAllUpdateSections() {
     ...makeAllDefaultUpdateSections(),
     ...updateSectionProp("loan", loanRelVarbs()),
     ...updateSectionProp("mgmt", mgmtRelVarbs()),
+    ...updateSectionProp("mgmtBasePayValue", mgmtBasePayValueVarbs()),
     ...updateSectionProp("deal", dealRelVarbs()),
     ...updateSectionProp("financing", financingUpdateVarbs()),
     ...updateSectionProp("property", propertyUpdateVarbs()),
@@ -586,6 +588,18 @@ function makeAllUpdateSections() {
           updateFnPropS.varbPathName("targetRentYearly")
         ),
       }),
+      tenPercentRentMonthly: updateVarb("numObj", {
+        ...updateBasicsS.equationSimple(
+          "tenPercent",
+          updateFnPropS.varbPathName("targetRentMonthly")
+        ),
+      }),
+      tenPercentRentYearly: updateVarb("numObj", {
+        ...updateBasicsS.equationSimple(
+          "tenPercent",
+          updateFnPropS.varbPathName("targetRentYearly")
+        ),
+      }),
       onePercentPricePlusSqft: updateVarb("numObj", {
         ...updateBasicsS.sumVarbPathName("onePercentPrice", "sqft"),
       }),
@@ -707,16 +721,23 @@ function makeAllUpdateSections() {
         updateFnName: "completionStatus",
         updateFnProps: completionStatusProps({
           validInputs: [
-            updateFnPropS.pathName("mgmtFocal", "basePayPercentEditor", [
+            updateFnPropS.pathName(
+              "mgmtBasePayFocal",
+              "valueDollarsOngoingEditor",
+              [
+                overrideSwitch(
+                  mixedInfoS.pathNameVarb(
+                    "mgmtBasePayFocal",
+                    "valueSourceName"
+                  ),
+                  "dollarsEditor"
+                ),
+              ]
+            ),
+            updateFnPropS.pathName("mgmtBasePayFocal", "valuePercentEditor", [
               overrideSwitch(
-                mixedInfoS.pathNameVarb("mgmtFocal", "basePayUnitSwitch"),
-                "percent"
-              ),
-            ]),
-            updateFnPropS.pathName("mgmtFocal", "basePayDollarsEditor", [
-              overrideSwitch(
-                mixedInfoS.pathNameVarb("mgmtFocal", "basePayUnitSwitch"),
-                "dollars"
+                mixedInfoS.pathNameVarb("mgmtBasePayFocal", "valueSourceName"),
+                "percentOfRentEditor"
               ),
             ]),
             updateFnPropS.pathName("mgmtFocal", "vacancyLossPercentEditor", [

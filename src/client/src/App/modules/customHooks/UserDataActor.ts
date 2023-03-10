@@ -9,19 +9,34 @@ import { SetterSection } from "../../sharedWithServer/StateSetters/SetterSection
 import { getErrorMessage } from "../../utils/error";
 import { apiQueries } from "../apiQueriesClient";
 import { UserDataSolver } from "../SectionActors/FeUserActor/UserDataSolver";
-import { SectionActorBase } from "../SectionActors/SectionActorBase";
+import {
+  SectionActorBase,
+  SectionActorBaseProps,
+} from "../SectionActors/SectionActorBase";
 import { userTokenS } from "../services/userTokenS";
 import { authS } from "./useAuthActor";
 
 export function useUserDataActor(): UserDataActor {
   const sectionProps = useSetterSectionOnlyOneProps("feUser");
+  const goToAuthPage = useGoToPage("auth");
   return new UserDataActor({
     ...sectionProps,
+    goToAuthPage,
     apiQueries: apiQueries,
   });
 }
 
+interface Props extends SectionActorBaseProps<"feUser"> {
+  goToAuthPage: () => void;
+}
+
 export class UserDataActor extends SectionActorBase<"feUser"> {
+  private goToAuthPage: () => void;
+  constructor({ goToAuthPage, ...rest }: Props) {
+    super(rest);
+    this.goToAuthPage = goToAuthPage;
+  }
+
   get userDataSolver(): UserDataSolver {
     return new UserDataSolver(this.sectionActorBaseProps);
   }
@@ -46,9 +61,6 @@ export class UserDataActor extends SectionActorBase<"feUser"> {
     }
     if (await this.shouldTriggerUnload()) {
       return await this.unloadUserData();
-    }
-    if (this.userDataStatus === "loading") {
-      return await this.tryLoadUserData();
     }
   }
   async tryLoadUserData() {
@@ -76,26 +88,33 @@ export class UserDataActor extends SectionActorBase<"feUser"> {
   }
   async unloadUserData(): Promise<void> {
     userTokenS.removeUserAuthDataToken();
-    await authS.endSession();
-    return this.mainSetter.resetToDefault();
+    unstable_batchedUpdates(async () => {
+      await authS.endSession();
+      this.mainSetter.resetToDefault();
+      this.goToAuthPage();
+    });
   }
 }
 
 export function useControlUserData() {
   const userDataActor = useUserDataActor();
+  const { userDataStatus } = userDataActor;
+
   React.useEffect(() => {
-    // I need to set this up to use a dependency array.
+    if (userDataStatus === "loading") {
+      userDataActor.tryLoadUserData();
+    }
+  }, [userDataStatus]);
+
+  React.useEffect(() => {
+    // To prevent multiple calls, a dependency array should be used
     userDataActor.controlUserData();
   });
 }
 
 export function useLogout() {
   const userDataActor = useUserDataActor();
-  const goToAuth = useGoToPage("auth");
   return async function logout() {
-    unstable_batchedUpdates(async () => {
-      await userDataActor.unloadUserData();
-      goToAuth();
-    });
+    await userDataActor.unloadUserData();
   };
 }

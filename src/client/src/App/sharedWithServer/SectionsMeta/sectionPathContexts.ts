@@ -17,6 +17,7 @@ function makeDealPageFocals(dealPagePath: ChildName[]) {
   const dealPath: ChildName[] = [...dealPagePath, "deal"];
   const propertyPath: ChildName[] = [...dealPath, "property"];
   const financingPath: ChildName[] = [...dealPath, "financing"];
+  const mgmtPath: ChildName[] = [...dealPath, "mgmt"];
   const userVarbListPath: ChildName[] = [...dealPagePath, "userVarbList"];
   return {
     get userVarbListMain() {
@@ -64,6 +65,12 @@ function makeDealPageFocals(dealPagePath: ChildName[]) {
     get mgmtFocal() {
       return abs("mgmt", [...dealPath, "mgmt"]);
     },
+    get mgmtBasePayFocal() {
+      return abs("mgmtBasePayValue", [...mgmtPath, "mgmtBasePayValue"]);
+    },
+    get vacancyLossFocal() {
+      return abs("vacancyLossValue", [...mgmtPath, "vacancyLossValue"]);
+    },
   };
 }
 
@@ -83,7 +90,13 @@ const editorVarbListPath: ChildName[] = [
   "userVarbEditor",
   "userVarbListMain",
 ];
-export const sectionPathContexts = {
+
+type ValueToCheck = Record<
+  string,
+  Record<SectionPathName, AbsolutePathInfo<any>>
+>;
+const typeCheckContexts = <V extends ValueToCheck>(v: V) => v;
+export const sectionPathContexts = typeCheckContexts({
   get default() {
     return this.activeDealPage;
   },
@@ -99,7 +112,7 @@ export const sectionPathContexts = {
   }),
   userListEditorPage: sectionPathContext(activeDealPage),
   latentSection: sectionPathContext(latentDealPage),
-} as const;
+});
 
 type SectionPathContexts = typeof sectionPathContexts;
 export type SectionPathContextName = keyof SectionPathContexts;

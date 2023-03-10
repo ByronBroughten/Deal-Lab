@@ -113,9 +113,12 @@ describe("SetterCalculations", () => {
     // 1012.6 expense
 
     const mgmt = dealTester.setter.onlyChild("mgmt");
-    mgmt.varb("basePayPercentEditor").updateValue(numObj(5));
+    const basePayValue = mgmt.onlyChild("mgmtBasePayValue");
+    basePayValue.updateValues({
+      valuePercentEditor: numObj(5),
+      valueSourceName: "percentOfRentEditor",
+    });
     mgmt.varb("vacancyLossPercentEditor").updateValue(numObj(5));
-
     const expenseGroup = mgmt.onlyChild("ongoingExpenseGroup");
     const mgmtCostListGroup = expenseGroup.addAndGetChild("ongoingValue", {
       sectionValues: { valueSourceName: "listTotal" },

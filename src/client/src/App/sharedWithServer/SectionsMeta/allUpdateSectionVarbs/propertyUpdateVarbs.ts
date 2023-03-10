@@ -33,8 +33,8 @@ export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
     ...updateVarbsS.ongoingSumNums(
       "expenses",
       [
-        updateFnPropS.local("taxes"),
-        updateFnPropS.local("homeIns"),
+        updateFnPropS.localBaseName("taxes"),
+        updateFnPropS.localBaseName("homeIns"),
         updateFnPropS.onlyChild("utilityValue", "value"),
         updateFnPropS.onlyChild("maintenanceValue", "value"),
         updateFnPropS.onlyChild("capExValue", "value"),
@@ -63,7 +63,7 @@ export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
     ),
     ...updateVarbsS.ongoingSumNums(
       "revenue",
-      updateFnPropsS.localArr(["targetRent", "miscRevenue"]),
+      updateFnPropsS.localBaseNameArr(["targetRent", "miscRevenue"]),
       "monthly"
     ),
   };
