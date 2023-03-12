@@ -64,6 +64,12 @@ export class SectionMeta<SN extends SectionName> {
   get sectionName(): SN {
     return this.props.sectionName;
   }
+  childMeta<CN extends ChildName<SN>>(
+    childName: CN
+  ): SectionMeta<ChildSectionName<SN, CN>> {
+    const sectionName = this.childType(childName);
+    return SectionMeta.init(sectionName);
+  }
   get sectionTraits(): GetSectionTraits<SN> {
     return getSectionTraits(this.sectionName);
   }

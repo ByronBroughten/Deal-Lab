@@ -1,7 +1,9 @@
 import { timeS } from "../utils/date";
 import { dealRelVarbs } from "./allUpdateSectionVarbs/dealUpdateVarbs";
+import { downPaymentUpdateVarbs } from "./allUpdateSectionVarbs/downPaymentUpdateVarbs";
 import { financingUpdateVarbs } from "./allUpdateSectionVarbs/financingUpdateVarbs";
-import { loanRelVarbs } from "./allUpdateSectionVarbs/loanUpdateVarbs";
+import { loanBaseUpdateVarbs } from "./allUpdateSectionVarbs/loanBaseUpdateVarbs";
+import { loanUpdateVarbs } from "./allUpdateSectionVarbs/loanUpdateVarbs";
 import { mgmtBasePayValueVarbs } from "./allUpdateSectionVarbs/mgmtBasePayUpdateVarbs";
 import { mgmtRelVarbs } from "./allUpdateSectionVarbs/mgmtUpdateVarbs";
 import {
@@ -66,7 +68,9 @@ function makeAllDefaultUpdateSections() {
 function makeAllUpdateSections() {
   return checkAllUpdateSections({
     ...makeAllDefaultUpdateSections(),
-    ...updateSectionProp("loan", loanRelVarbs()),
+    ...updateSectionProp("loan", loanUpdateVarbs()),
+    ...updateSectionProp("loanBaseValue", loanBaseUpdateVarbs()),
+    ...updateSectionProp("downPaymentValue", downPaymentUpdateVarbs()),
     ...updateSectionProp("mgmt", mgmtRelVarbs()),
     ...updateSectionProp("vacancyLossValue", vacancyLossUpdateVarbs()),
     ...updateSectionProp("mgmtBasePayValue", mgmtBasePayValueVarbs()),
@@ -792,18 +796,21 @@ function makeAllUpdateSections() {
               "completionStatus",
               completionStatusProps({
                 validInputs: [
-                  updateFnPropS.pathName("loanFocal", "loanBasePercentEditor", [
-                    overrideSwitch(
-                      relVarbInfoS.local("loanBaseUnitSwitch"),
-                      "percent"
-                    ),
-                  ]),
-                  updateFnPropS.pathName("loanFocal", "loanBaseDollarsEditor", [
-                    overrideSwitch(
-                      relVarbInfoS.local("loanBaseUnitSwitch"),
-                      "dollars"
-                    ),
-                  ]),
+                  updateFnPropS.pathName(
+                    "loanBaseFocal",
+                    "valueDollarsEditor",
+                    [overrideSwitchS.local("valueSourceName", "dollarsEditor")]
+                  ),
+                  updateFnPropS.pathName(
+                    "loanBaseFocal",
+                    "valuePercentEditor",
+                    [
+                      overrideSwitchS.local(
+                        "valueSourceName",
+                        "percentOfAssetEditor"
+                      ),
+                    ]
+                  ),
                   updateFnPropS.pathName(
                     "loanFocal",
                     "interestRatePercentOngoingEditor"

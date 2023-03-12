@@ -1,6 +1,20 @@
 import { Obj } from "../../../utils/Obj";
 
 const valueSources = {
+  loanPurpose: ["purchasePrice", "upfrontRepairs", "purchasePriceAndRepairs"],
+  loanAmountInputMode: ["downPayment", "loanAmount"],
+  loanBaseValueSource: [
+    "none",
+    "percentOfAssetEditor",
+    "dollarsEditor",
+    "eightyFivePercentAsset",
+  ],
+  downPaymentValueSource: [
+    "none",
+    "percentOfAssetEditor",
+    "dollarsEditor",
+    "fifteenPercentAsset",
+  ],
   mgmtBasePayValueSource: [
     "none",
     "zero",

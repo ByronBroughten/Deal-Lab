@@ -7,7 +7,7 @@ import { LabelWithInfo } from "../../../../appWide/LabelWithInfo";
 import { TogglerBooleanTitleVarb } from "../../../../appWide/TogglerBooleanTitleVarb";
 import { TogglerBooleanVarb } from "../../../../appWide/TogglerBooleanVarb";
 import { NumObjEntityEditor } from "../../../../inputs/NumObjEntityEditor";
-import { PercentDollarInput } from "../../general/PercentDollarInput";
+import { LoanBaseValue } from "./LoanBaseValue";
 
 type Props = { feId: string; className?: string };
 export default function BasicLoanInfo({ feId, className }: Props) {
@@ -20,17 +20,7 @@ export default function BasicLoanInfo({ feId, className }: Props) {
     <Styled
       {...{ className: `BasicLoanInfo-root ${className}`, sectionName: "loan" }}
     >
-      <FormSection>
-        <PercentDollarInput
-          {...{
-            ...feInfo,
-            unitBaseName: "loanBase",
-            dollarVarbName: "loanBaseDollars",
-            label: "Base Loan Amount",
-            percentOfWhat: "purchase price",
-          }}
-        />
-      </FormSection>
+      <LoanBaseValue feId={loan.onlyChildFeId("loanBaseValue")} />
       <FormSectionLabeled
         className="BasicLoanInfo-otherInfo"
         label="Other Loan Info"

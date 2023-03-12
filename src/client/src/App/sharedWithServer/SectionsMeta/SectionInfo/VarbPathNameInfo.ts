@@ -115,6 +115,11 @@ const allVarbPathParams = {
     ...targetNames("cocRoi", "ongoing"),
   ]),
   userVarbValue: varbPathParams("userVarbItemMain", "value"),
+  upfrontRepairCost: fixedVarbPathParams(
+    "Property",
+    "repairCostFocal",
+    "value"
+  ),
 };
 
 export const varbPathNames = Obj.keys(allVarbPathParams);

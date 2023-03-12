@@ -90,18 +90,20 @@ export const allDisplaySectionVarbs = {
     }),
     loanTotalDollars: varb("Loan total"),
   }),
+  ...displaySectionVarbsProp("loanBaseValue", {
+    valueDollars: varb("Base loan amount"),
+    valueDollarsEditor: varb("Base loan amount"),
+    valuePercent: varb("Base loan percent"),
+    valuePercentEditor: varb("Base loan percent"),
+  }),
   ...displaySectionVarbsProp("loan", {
     ...editorDisplayGroup("monthsYearsInput", "loanTerm", "Loan term"),
-    ...group("dollarsPercentDecimal", "loanBase", "Base loan amount"),
-    loanBaseDollarsEditor: varb("Base loan amount"),
-    loanBasePercentEditor: varb("base loan amount"),
     ...editorDisplayGroup(
       "ongoingInput",
       "interestRatePercent",
       "Interest rate"
     ),
     ...group("ongoing", "interestRateDecimal", "Interest rate decimal"),
-
     ...group("ongoing", "piFixedStandard", "Principal and interest"),
     ...ongoingDollars("interestOnlySimple", "Interest"),
     ...ongoingDollars("expenses", "Expenses"),

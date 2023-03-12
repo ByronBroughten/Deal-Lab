@@ -17,6 +17,7 @@ function makeDealPageFocals(dealPagePath: ChildName[]) {
   const dealPath: ChildName[] = [...dealPagePath, "deal"];
   const propertyPath: ChildName[] = [...dealPath, "property"];
   const financingPath: ChildName[] = [...dealPath, "financing"];
+  const loanPath: ChildName[] = [...financingPath, "loan"];
   const mgmtPath: ChildName[] = [...dealPath, "mgmt"];
   const userVarbListPath: ChildName[] = [...dealPagePath, "userVarbList"];
   return {
@@ -55,6 +56,12 @@ function makeDealPageFocals(dealPagePath: ChildName[]) {
     },
     get loanFocal() {
       return abs("loan", [...financingPath, "loan"]);
+    },
+    get loanBaseFocal() {
+      return abs("loanBaseValue", [...loanPath, "loanBaseValue"]);
+    },
+    get downPaymentFocal() {
+      return abs("downPaymentValue", [...loanPath, "downPaymentValue"]);
     },
     get closingCostFocal() {
       return abs("closingCostValue", [
@@ -97,11 +104,9 @@ type ValueToCheck = Record<
 >;
 const typeCheckContexts = <V extends ValueToCheck>(v: V) => v;
 export const sectionPathContexts = typeCheckContexts({
-  get default() {
-    return this.activeDealPage;
-  },
-  compareDealPage: sectionPathContext(compareDealPage),
+  default: sectionPathContext(activeDealPage),
   activeDealPage: sectionPathContext(activeDealPage),
+  userListEditorPage: sectionPathContext(activeDealPage),
   userVarbEditorPage: sectionPathContext({
     ...activeDealPage,
     userVarbListMain: abs("userVarbList", editorVarbListPath),
@@ -110,9 +115,23 @@ export const sectionPathContexts = typeCheckContexts({
       "userVarbItem",
     ]),
   }),
-  userListEditorPage: sectionPathContext(activeDealPage),
+  compareDealPage: sectionPathContext(compareDealPage),
   latentSection: sectionPathContext(latentDealPage),
 });
+
+export const indexesForSpecifiers = {
+  loan: {
+    default: 6,
+    activeDealPage: 6,
+    userListEditorPage: 6,
+    userVarbEditorPage: 6,
+    compareDealPage: 7,
+    latentSection: 7,
+  },
+  compareDealPage: {
+    compareDealPage: 2,
+  },
+} as const;
 
 type SectionPathContexts = typeof sectionPathContexts;
 export type SectionPathContextName = keyof SectionPathContexts;

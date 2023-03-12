@@ -27,6 +27,8 @@ const updateFnNames = checkUpdateFnNames({
     "solvableTextZero",
     "solvableTextPointOne",
     "solvableTextPointZeroFive",
+    "solvableTextPointEightFive",
+    "solvableTextPointOneFive",
     "emptyNumObj",
     ...calculationNames,
     ...commonUpdateFnNames,

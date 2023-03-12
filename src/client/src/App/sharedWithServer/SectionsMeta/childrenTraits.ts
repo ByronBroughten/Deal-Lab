@@ -8,7 +8,10 @@ import {
 import { ChildSectionNameName } from "./sectionChildrenDerived/ChildSectionName";
 import { dbStoreNames } from "./sectionChildrenDerived/DbStoreName";
 import { SectionName, sectionNames } from "./SectionName";
-import { SectionPathContextName } from "./sectionPathContexts";
+import {
+  indexesForSpecifiers,
+  SectionPathContextName,
+} from "./sectionPathContexts";
 
 export const tableRowDbSources = Arr.extractStrict(dbStoreNames, [
   "mgmtMain",
@@ -26,10 +29,9 @@ export type GenericChildTraits = {
   feIndexStoreName: ChildName<"feUser"> | null;
   dbIndexStoreName: ChildName<"dbStore"> | null;
   sectionContextName: SectionPathContextName | null;
-  sectionContextSpecifier: {
-    contextNameTrigger: SectionPathContextName;
-    idx: number;
-  } | null;
+  sectionContextSpecifier: Partial<
+    Record<SectionPathContextName, number>
+  > | null;
 };
 type GenericChildrenTraits<SN extends SectionName> = {
   [CN in ChildName<SN>]: GenericChildTraits;
@@ -126,10 +128,12 @@ export const allChildrenTraits = checkAllChildrenTraits({
   }),
   compareSection: childrenTraits("compareSection", {
     compareDealPage: childTraits({
-      sectionContextSpecifier: {
-        contextNameTrigger: "compareDealPage",
-        idx: 2,
-      },
+      sectionContextSpecifier: indexesForSpecifiers.compareDealPage,
+    }),
+  }),
+  financing: childrenTraits("financing", {
+    loan: childTraits({
+      sectionContextSpecifier: indexesForSpecifiers.loan,
     }),
   }),
   main: childrenTraits("main", {
@@ -187,7 +191,6 @@ export const allChildrenTraits = checkAllChildrenTraits({
       sectionContextName: "activeDealPage",
     }),
   }),
-
   repairValue: childrenTraits("repairValue", {
     singleTimeList: childTraits(storeNames("repairsListMain")),
   }),

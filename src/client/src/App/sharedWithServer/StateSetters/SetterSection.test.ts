@@ -12,7 +12,6 @@ import { SetterTesterSection } from "./TestUtils/SetterTesterSection";
 // replaceWithDefault, resetToDefault
 
 describe("SetterSection", () => {
-  // removing just deal doesn't seem to work for some reason.
   const sectionPathNames = ["propertyFocal", "mgmtFocal"] as const;
   type PathName = typeof sectionPathNames[number];
   type SnTesterProps<TN extends PathName> = {

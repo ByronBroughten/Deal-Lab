@@ -157,6 +157,8 @@ export const allSectionChildren = checkAllSectionChildren({
   }),
   financing: { loan: sectionChild("loan") },
   loan: sectionChildren({
+    downPaymentValue: ["downPaymentValue"],
+    loanBaseValue: ["loanBaseValue"],
     closingCostValue: ["closingCostValue"],
     wrappedInLoanValue: ["singleTimeValue"],
     customVarb: ["customVarb"],

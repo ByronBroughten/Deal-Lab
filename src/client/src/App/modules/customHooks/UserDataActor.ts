@@ -14,7 +14,7 @@ import {
   SectionActorBaseProps,
 } from "../SectionActors/SectionActorBase";
 import { userTokenS } from "../services/userTokenS";
-import { authS } from "./useAuthActor";
+import { authS } from "./authS";
 
 export function useUserDataActor(): UserDataActor {
   const sectionProps = useSetterSectionOnlyOneProps("feUser");
@@ -65,7 +65,7 @@ export class UserDataActor extends SectionActorBase<"feUser"> {
   }
   async tryLoadUserData() {
     try {
-      return await this.loadUserData();
+      await this.loadUserData();
     } catch (ex) {
       await this.unloadUserData();
       throw new Error(getErrorMessage(ex));
@@ -101,15 +101,14 @@ export function useControlUserData() {
   const { userDataStatus } = userDataActor;
 
   React.useEffect(() => {
+    userDataActor.controlUserData();
+  });
+
+  React.useEffect(() => {
     if (userDataStatus === "loading") {
       userDataActor.tryLoadUserData();
     }
   }, [userDataStatus]);
-
-  React.useEffect(() => {
-    // To prevent multiple calls, a dependency array should be used
-    userDataActor.controlUserData();
-  });
 }
 
 export function useLogout() {

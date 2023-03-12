@@ -44,9 +44,14 @@ describe("SetterCalculations", () => {
 
     const financing = dealTester.setter.onlyChild("financing");
     financing.varb("financingMode").updateValue("useLoan");
-    const loan = financing.addAndGetChild("loan");
-    loan.varb("loanBasePercentEditor").updateValue(numObj(0));
-
+    const loan = financing.addAndGetChild("loan", {
+      sectionValues: { loanAmountInputMode: "loanAmount" },
+    });
+    const baseValue = loan.onlyChild("loanBaseValue");
+    baseValue.updateValues({
+      valueSourceName: "percentOfAssetEditor",
+      valuePercentEditor: numObj(0),
+    });
     const wrappedValue = loan.addAndGetChild("wrappedInLoanValue");
     wrappedValue.updateValues({
       valueSourceName: "valueEditor",
@@ -166,15 +171,21 @@ function addTestLoan(dealTester: SetterTesterSection<"deal">): void {
   const financing = dealTester.setter.onlyChild("financing");
   financing.varb("financingMode").updateValue("useLoan");
 
-  const loan = financing.addAndGetChild("loan");
-  loan.varb("interestRatePercentOngoingSwitch").updateValue("yearly");
-  loan.varb("interestRatePercentOngoingEditor").updateValue(numObj(5));
+  const loan = financing.addAndGetChild("loan", {
+    sectionValues: {
+      loanAmountInputMode: "loanAmount",
+      interestRatePercentOngoingSwitch: "yearly",
+      interestRatePercentOngoingEditor: numObj(5),
+      loanTermSpanSwitch: "years",
+      loanTermSpanEditor: numObj(30),
+    },
+  });
 
-  loan.varb("loanTermSpanSwitch").updateValue("years");
-  loan.varb("loanTermSpanEditor").updateValue(numObj(30));
-
-  loan.varb("loanBaseUnitSwitch").updateValue("percent");
-  loan.varb("loanBasePercentEditor").updateValue(numObj(75));
+  const baseValue = loan.onlyChild("loanBaseValue");
+  baseValue.updateValues({
+    valueSourceName: "percentOfAssetEditor",
+    valuePercentEditor: numObj(75),
+  });
 
   loan.varb("hasMortgageIns").updateValue(true);
   loan.varb("mortgageInsOngoingEditor").updateValue(numObj(1200));
@@ -195,12 +206,16 @@ function addInterestOnlyLoan(dealTester: SetterTesterSection<"deal">): void {
   const financing = dealTester.setter.onlyChild("financing");
   financing.varb("financingMode").updateValue("useLoan");
 
-  const loan = financing.addAndGetChild("loan");
-  loan.varb("isInterestOnly").updateValue(true);
-
-  loan.varb("loanBaseUnitSwitch").updateValue("dollars");
-  loan.varb("loanBaseDollarsEditor").updateValue(numObj(10000));
-
-  loan.varb("interestRatePercentOngoingSwitch").updateValue("yearly");
-  loan.varb("interestRatePercentOngoingEditor").updateValue(numObj(6));
+  const loan = financing.addAndGetChild("loan", {
+    sectionValues: {
+      interestRatePercentOngoingSwitch: "yearly",
+      interestRatePercentOngoingEditor: numObj(6),
+      isInterestOnly: true,
+    },
+  });
+  const baseValue = loan.onlyChild("loanBaseValue");
+  baseValue.updateValues({
+    valueSourceName: "dollarsEditor",
+    valueDollarsEditor: numObj(10000),
+  });
 }

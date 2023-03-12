@@ -1,4 +1,3 @@
-import { switchKeyToVarbNames } from "../allBaseSectionVarbs/baseSwitchNames";
 import { UpdateSectionVarbs } from "../updateSectionVarbs/updateSectionVarbs";
 import { updateVarb, updateVarbS } from "../updateSectionVarbs/updateVarb";
 import {
@@ -18,11 +17,27 @@ import { updateVarbsS } from "../updateSectionVarbs/updateVarbs";
 import { numObj } from "../values/StateValue/NumObj";
 import { PiCalculationName } from "../values/StateValue/valuesShared/calculations/piCalculations";
 
-export function loanRelVarbs(): UpdateSectionVarbs<"loan"> {
+export function loanUpdateVarbs(): UpdateSectionVarbs<"loan"> {
   return {
     ...updateVarbsS._typeUniformity,
+    loanPurpose: updateVarb("loanPurpose", { initValue: "purchasePrice" }),
+    loanAmountInputMode: updateVarb("loanAmountInputMode", {
+      initValue: "downPayment",
+    }),
+    loanPurchasedAssetValue: updateVarb("numObj", {
+      updateFnName: "throwIfReached",
+      updateOverrides: [
+        updateOverride(
+          [overrideSwitchS.local("loanPurpose", "purchasePrice")],
+          updateBasicsS.loadByVarbPathName("purchasePrice")
+        ),
+      ],
+    }),
     ...updateVarbsS.savableSection,
-    ...loanBase(),
+    loanBaseDollars: updateVarb(
+      "numObj",
+      updateBasicsS.loadFromChild("loanBaseValue", "valueDollars")
+    ),
     ...updateVarbsS.ongoingInputNext("interestRatePercent", {
       switchInit: "yearly",
     }),
@@ -224,78 +239,4 @@ export function loanRelVarbs(): UpdateSectionVarbs<"loan"> {
       },
     }),
   };
-}
-
-function loanBase() {
-  const baseNames = switchKeyToVarbNames("loanBase", "dollarsPercentDecimal");
-  const percentEditorName = `${baseNames.percent}Editor` as const;
-  const dollarsEditorName = `${baseNames.dollars}Editor` as const;
-  const propToDivideBy = updateFnPropS.pathNameBase(
-    "propertyFocal",
-    "purchasePrice"
-  );
-  return {
-    [baseNames.switch]: updateVarb("string", {
-      initValue: "percent",
-    }),
-    [percentEditorName]: updateVarb("numObj"),
-    [dollarsEditorName]: updateVarb("numObj"),
-    [baseNames.decimal]: updateVarb("numObj", {
-      updateFnName: "throwIfReached",
-      updateOverrides: [
-        updateOverride(
-          [overrideSwitchS.local(baseNames.switch, "percent")],
-          updateBasicsS.equationSimple(
-            "percentToDecimal",
-            updateFnPropS.local(baseNames.percent)
-          )
-        ),
-        updateOverride(
-          [overrideSwitchS.local(baseNames.switch, "dollars")],
-          updateBasicsS.equationLeftRight(
-            "simpleDivide",
-            updateFnPropS.local(baseNames.dollars),
-            propToDivideBy
-          )
-        ),
-      ],
-    }),
-    [baseNames.percent]: updateVarb("numObj", {
-      updateFnName: "throwIfReached",
-      updateOverrides: [
-        updateOverride(
-          [overrideSwitchS.local(baseNames.switch, "percent")],
-          updateBasicsS.loadFromLocal(
-            percentEditorName
-          ) as UpdateBasics<"numObj">
-        ),
-        updateOverride(
-          [overrideSwitchS.local(baseNames.switch, "dollars")],
-          updateBasicsS.equationSimple(
-            "decimalToPercent",
-            updateFnPropS.local(baseNames.decimal)
-          )
-        ),
-      ],
-    }),
-    [baseNames.dollars]: updateVarb("numObj", {
-      updateFnName: "throwIfReached",
-      updateOverrides: [
-        updateOverride(
-          [overrideSwitchS.local(baseNames.switch, "dollars")],
-          updateBasicsS.loadFromLocal(
-            dollarsEditorName
-          ) as UpdateBasics<"numObj">
-        ),
-        updateOverride(
-          [overrideSwitchS.local(baseNames.switch, "percent")],
-          updateBasicsS.equationLeftRight(
-            "simpleMultiply",
-            updateFnPropS.local(baseNames.decimal),
-            propToDivideBy
-          )
-        ),
-      ],
-    }),
-  } as const;
 }

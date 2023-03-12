@@ -13,10 +13,23 @@ type ExampleLoanProps = {
     SectionValues<"loan">,
     | "displayName"
     | "interestRatePercentOngoingEditor"
-    | "loanBasePercentEditor"
     | "loanTermSpanEditor"
     | "hasMortgageIns"
+    | "loanAmountInputMode"
   >;
+  baseLoan?: Partial<
+    StrictPick<
+      SectionValues<"loanBaseValue">,
+      "valueSourceName" | "valuePercentEditor" | "valueDollarsEditor"
+    >
+  >;
+  downPayment?: Partial<
+    StrictPick<
+      SectionValues<"downPaymentValue">,
+      "valueSourceName" | "valuePercentEditor" | "valueDollarsEditor"
+    >
+  >;
+
   closingCosts: {
     valueSourceName: StateValue<"closingCostValueSource">;
     valueLumpSumEditor?: NumObj;
@@ -33,9 +46,10 @@ function makeExampleLoan(props: ExampleLoanProps) {
   loan.updateValues({
     ...props.loan,
     interestRatePercentOngoingSwitch: "yearly",
-    loanBaseUnitSwitch: "percent",
     loanTermSpanSwitch: "years",
   });
+  const loanBaseValue = loan.onlyChild("loanBaseValue");
+  loanBaseValue.updateValues({ ...props.baseLoan });
 
   const closingCostValue = loan.onlyChild("closingCostValue");
   const { items = [], ...costProps } = props.closingCosts;
@@ -54,11 +68,15 @@ function makeExampleLoan(props: ExampleLoanProps) {
 
 export const dealExampleLoan = makeExampleLoan({
   loan: {
-    displayName: stringObj("Conventional 80% LTV"),
+    displayName: stringObj("Conventional 20% LTV"),
     interestRatePercentOngoingEditor: numObj(6),
-    loanBasePercentEditor: numObj(80),
     loanTermSpanEditor: numObj(30),
     hasMortgageIns: false,
+    loanAmountInputMode: "loanAmount",
+  },
+  baseLoan: {
+    valueSourceName: "percentOfAssetEditor",
+    valuePercentEditor: numObj(80),
   },
   closingCosts: {
     valueSourceName: "valueEditor",

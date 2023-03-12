@@ -12,6 +12,8 @@ export const OuterMainSection = styled(MainSection)`
   padding-bottom: 0;
   box-shadow: none;
   background: ${theme.mainBackground};
+  padding-left: ${theme.s6};
+  padding-right: ${theme.s6};
   @media (max-width: ${theme.mediaPhone}) {
     padding-left: ${theme.s15};
     padding-right: ${theme.s15};

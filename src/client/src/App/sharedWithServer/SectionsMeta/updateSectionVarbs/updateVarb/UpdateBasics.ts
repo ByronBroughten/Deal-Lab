@@ -56,6 +56,12 @@ export const updateBasicsS = {
   get pointZeroFive() {
     return updateBasicsNext("solvableTextPointZeroFive");
   },
+  get pointEightFive() {
+    return updateBasicsNext("solvableTextPointEightFive");
+  },
+  get pointOneFive() {
+    return updateBasicsNext("solvableTextPointOneFive");
+  },
   get throw() {
     return updateBasicsNext("throwIfReached");
   },

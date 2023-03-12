@@ -3,6 +3,10 @@ import {
   SwitchName,
   SwitchTargetKey,
 } from "../../allBaseSectionVarbs/baseSwitchNames";
+import {
+  valVarbName,
+  VarbNameWide,
+} from "../../baseSectionsDerived/baseSectionsVarbsTypes";
 import { ChildName } from "../../sectionChildrenDerived/ChildName";
 import { mixedInfoS } from "../../SectionInfo/MixedSectionInfo";
 import { PathNameVarbInfoMixed } from "../../SectionInfo/PathNameInfo";
@@ -92,10 +96,10 @@ export const overrideSwitchS = {
     ...switchValues: SK[]
   ): UpdateOverrideSwitch {
     const varbName = getSwitchVarbName(baseName, switchName, "switch");
-    return this.local(varbName, ...(switchValues as string[]));
+    return this.local(valVarbName(varbName), ...(switchValues as string[]));
   },
   local(
-    varbName: string,
+    varbName: VarbNameWide,
     ...switchValues: OverrideSwitchValue[]
   ): UpdateOverrideSwitch {
     return {
@@ -118,7 +122,7 @@ export const overrideSwitchS = {
     switchKey: K
   ): UpdateOverrideSwitch {
     const varbName = getSwitchVarbName(baseName, "ongoing", "switch");
-    return this.local(varbName, switchKey);
+    return this.local(valVarbName(varbName), switchKey);
   },
   monthsIsActive(baseName: string) {
     return this.switchIsActive(baseName, "monthsYears", "months");
@@ -151,10 +155,10 @@ export const overrideSwitchS = {
       switchValues,
     };
   },
-  localIsTrue(varbName: string): UpdateOverrideSwitch {
+  localIsTrue(varbName: VarbNameWide): UpdateOverrideSwitch {
     return this.local(varbName, true);
   },
-  localIsFalse(varbName: string): UpdateOverrideSwitch {
+  localIsFalse(varbName: VarbNameWide): UpdateOverrideSwitch {
     return this.local(varbName, false);
   },
   valueSourceIs(valueSource: ValueSource): UpdateOverrideSwitch {

@@ -180,6 +180,18 @@ export class SolveValueVarb<
         solvableText: "0.05",
       };
     },
+    solvableTextPointEightFive: (): NumObj => {
+      return {
+        ...this.getterVarb.value("numObj"),
+        solvableText: "0.85",
+      };
+    },
+    solvableTextPointOneFive: (): NumObj => {
+      return {
+        ...this.getterVarb.value("numObj"),
+        solvableText: "0.15",
+      };
+    },
     solvableTextPointOne: (): NumObj => {
       return {
         ...this.getterVarb.value("numObj"),

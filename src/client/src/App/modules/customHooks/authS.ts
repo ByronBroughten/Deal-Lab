@@ -5,12 +5,6 @@ export const authS = {
   get sessionExists(): Promise<boolean> {
     return Session.doesSessionExist();
   },
-  // async sessionExists(): Promise<boolean> {
-  //   if (await Session.doesSessionExist()) {
-  //     const { isVerified } = await isEmailVerified();
-  //     return isVerified;
-  //   } else return false;
-  // }
   get authId(): Promise<string> {
     return Session.getUserId();
   },

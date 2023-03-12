@@ -310,6 +310,8 @@ const spacings = {
   s4: "1rem",
   s45: "1.5rem",
   s5: "2rem",
+  s6: "4rem",
+  s7: "8rem",
 } as const;
 
 const theme = {

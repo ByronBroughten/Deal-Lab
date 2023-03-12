@@ -172,11 +172,11 @@ export class UpdaterSection<
     const { sectionMeta } = this;
     const { sectionContextSpecifier: specifier } =
       sectionMeta.childTraits(childName);
-
     if (specifier) {
-      if (specifier.contextNameTrigger === sectionContextName) {
+      const idxOrUn = specifier[sectionContextName];
+      if (idxOrUn !== undefined) {
         return {
-          [specifier.idx]: {
+          [idxOrUn]: {
             selfChildName: childName as ChildName,
             feId,
           },

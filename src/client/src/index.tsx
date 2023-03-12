@@ -7,14 +7,33 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
-// - Change the method of mgmt base pay and loan amount
-//   - You want to prepare them for being able to handle
-//     other types of inputs
+// Change lumpSum editor to dollarsEditor
+
+// loanPurpose
+// "For"
+// - Property purchase price
+// - Upfront repairs
+// - Purchase price and repairs
+
+// - Custom - If this one were implemented, it would have to remove
+//    all the percentage options and negate their selection
+
+// It will also have these two valueSections, which can reach loan
+// via an feId path:
+// Loan amount - 75%, 95%, custom percent (% of what loan is for), dollars
+// Down payment - 25%, 5%, custom percent (% of what loan is for), dollars
+
+// Should I use a radio? Yeah, I guess so.
+// * Enter down payment
+// * Enter loan amount
 
 // Lay the groundwork for boolean userVarbs
-// There will be two types of userVarbs—numeric and pass/fail
+// we have userVarbList and userVarbItem
+// - change to numVarbList and numVarbItem
 
-// change lumpSum editor to dollarsEditor
+// - add boolVarbList and boolVarbItem
+// - add boolObj (mainText, entities)
+//  - mainText allows for operators
 
 // 1. Let sectionPacks have null.
 // 2. Make it so that whenever a stored sectionPack is loaded,

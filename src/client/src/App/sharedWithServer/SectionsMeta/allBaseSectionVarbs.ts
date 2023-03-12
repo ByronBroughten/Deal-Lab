@@ -210,9 +210,10 @@ export function makeAllBaseSectionVarbs() {
     }),
     loan: baseSectionVarbs({
       ...baseVarbsS.savableSection,
-      loanBasePercentEditor: baseVarb("numObj", percent),
-      loanBaseDollarsEditor: baseVarb("numObj", dollars),
-      ...varbs.dollarsPercentDecimal("loanBase"),
+      loanPurpose: baseVarb("loanPurpose"),
+      loanAmountInputMode: baseVarb("loanAmountInputMode"),
+      loanPurchasedAssetValue: baseVarb("numObj", dollars),
+      loanBaseDollars: baseVarb("numObj", dollars),
 
       ...varbs.ongoingPercentInput("interestRatePercent"),
       ...baseVarbsS.ongoingDecimal("interestRateDecimal"),
@@ -242,6 +243,23 @@ export function makeAllBaseSectionVarbs() {
         dollars
       ),
     } as const),
+    loanBaseValue: baseSectionVarbs({
+      valueSourceName: baseVarb("loanBaseValueSource"),
+      valueDollars: baseVarb("numObj", dollars),
+      valueDollarsEditor: baseVarb("numObj", dollars),
+      valuePercentEditor: baseVarb("numObj", percent),
+      valuePercent: baseVarb("numObj", percent),
+      valueDecimal: baseVarb("numObj", decimal),
+    }),
+    downPaymentValue: baseSectionVarbs({
+      valueSourceName: baseVarb("downPaymentValueSource"),
+      valueDollars: baseVarb("numObj", dollars),
+      valueDollarsEditor: baseVarb("numObj", dollars),
+      valuePercentEditor: baseVarb("numObj", percent),
+      valuePercent: baseVarb("numObj", percent),
+      valueDecimal: baseVarb("numObj", decimal),
+    }),
+
     mgmt: baseSectionVarbs({
       ...baseVarbsS.savableSection,
       useCustomCosts: baseVarb("boolean"),
