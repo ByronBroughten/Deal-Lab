@@ -41,7 +41,7 @@ export function makeDefaultDbStoreArrs({
   stripeInfoPrivate.updateValues({ customerId: "" });
 
   dbStore.loadChildren({
-    childName: "userVarbListMain",
+    childName: "numVarbListMain",
     sectionPacks: makeExampleUserVarbLists(),
   });
   dbStore.loadChildren({

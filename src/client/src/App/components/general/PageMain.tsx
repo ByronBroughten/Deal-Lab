@@ -1,13 +1,27 @@
+import { Text, View } from "react-native";
 import styled from "styled-components";
 import theme from "../../theme/Theme";
-import { StandardProps } from "./StandardProps";
+import { NativeStandardProps } from "./StandardProps";
 
-type Props = StandardProps;
-export function PageMainFn({ children, ...rest }: Props) {
-  return <PageMain {...rest}>{children}</PageMain>;
+type Props = NativeStandardProps;
+
+export function PageMain({ children, ...rest }: Props) {
+  return <Styled {...rest}>{children}</Styled>;
 }
 
-export const PageMain = styled.div`
+function Footer() {
+  return (
+    <View
+      style={{
+        backgroundColor: "red",
+      }}
+    >
+      <Text>Deal Lab LLC</Text>
+    </View>
+  );
+}
+
+const Styled = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1;

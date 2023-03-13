@@ -11,12 +11,12 @@ type Props = {
   feId: string;
 };
 export function ConditionalRowList({ viewIsOpen, toggleView, feId }: Props) {
-  const userVarbItem = useGetterSection({
+  const numVarbItem = useGetterSection({
     sectionName: "conditionalRowList",
     feId,
   });
 
-  const conditionalRowIds = userVarbItem.childFeIds("conditionalRow");
+  const conditionalRowIds = numVarbItem.childFeIds("conditionalRow");
   return (
     <Styled className="variable-content">
       <div className="inner-div">

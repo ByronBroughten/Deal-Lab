@@ -86,12 +86,12 @@ function useFixedCollections(): CollectionProps {
 function useUserVarbCollections(focal: GetterSection<any>): CollectionProps {
   const userVarbLists = focal.sectionsByFocalMixed({
     infoType: "pathName",
-    pathName: "userVarbListMain",
-  }) as GetterSection<"userVarbList">[];
+    pathName: "numVarbListMain",
+  }) as GetterSection<"numVarbList">[];
 
   return userVarbLists.map((list) => {
     const collectionName = list.valueNext("displayName").mainText;
-    const rowInfos = list.children("userVarbItem").map((item) => {
+    const rowInfos = list.children("numVarbItem").map((item) => {
       const info: ValueCustomVarbPathInfo = {
         infoType: "varbPathDbId",
         varbPathName: "userVarbValue",

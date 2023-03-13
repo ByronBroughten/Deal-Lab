@@ -33,7 +33,7 @@ class GetterColumn extends GetterSection<"column"> {
       case "dbId": {
         const userVarbInfo = {
           ...varbInfo,
-          sectionName: "userVarbItem",
+          sectionName: "numVarbItem",
           varbName: "value",
         } as const;
         if (this.sections.hasSectionMixed(userVarbInfo)) {

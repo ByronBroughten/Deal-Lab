@@ -15,7 +15,7 @@ export class UserDataSolver extends SolverSectionsBase {
 
     const varbEditor = main.onlyChild("userVarbEditor");
     varbEditor.replaceChildPackArrsAndSolve(
-      feUser.builder.makeChildPackArrs("userVarbListMain")
+      feUser.builder.makeChildPackArrs("numVarbListMain")
     );
     const listEditor = main.onlyChild("userListEditor");
     listEditor.replaceChildPackArrsAndSolve(

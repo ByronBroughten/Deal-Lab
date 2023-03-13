@@ -3,7 +3,7 @@ import { GetterSectionBase } from "../../StateGetters/Bases/GetterSectionBase";
 import { GetterSection } from "../../StateGetters/GetterSection";
 import { GetterVarbNumObj } from "../../StateGetters/GetterVarbNumObj";
 
-export class UserVarbValueSolver extends GetterSectionBase<"userVarbItem"> {
+export class UserVarbValueSolver extends GetterSectionBase<"numVarbItem"> {
   get get() {
     return new GetterSection(this.getterSectionProps);
   }

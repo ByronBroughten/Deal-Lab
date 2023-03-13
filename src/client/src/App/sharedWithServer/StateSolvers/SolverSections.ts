@@ -43,21 +43,21 @@ export class SolverSections extends SolverSectionsBase {
     const userVarbPacks = this.getSavedUserVarbPacks();
     this.applyVarbPacksToDealPage(feId, userVarbPacks);
   }
-  private getSavedUserVarbPacks(): SectionPack<"userVarbList">[] {
+  private getSavedUserVarbPacks(): SectionPack<"numVarbList">[] {
     const feUser = this.oneAndOnly("feUser");
-    const userVarbLists = feUser.get.children("userVarbListMain");
+    const userVarbLists = feUser.get.children("numVarbListMain");
     return userVarbLists.map((list) => list.packMaker.makeSectionPack());
   }
   private applyVarbPacksToDealPage(
     feId: string,
-    userVarbPacks: SectionPack<"userVarbList">[]
+    userVarbPacks: SectionPack<"numVarbList">[]
   ): void {
     const dealPage = this.solverSection({
       sectionName: "dealPage",
       feId,
     });
     dealPage.replaceChildPackArrsAndSolve({
-      userVarbList: userVarbPacks,
+      numVarbList: userVarbPacks,
     });
   }
 

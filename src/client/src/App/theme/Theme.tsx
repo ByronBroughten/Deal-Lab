@@ -281,7 +281,7 @@ const themeSections = {
       },
     });
   },
-  get userVarbList() {
+  get numVarbList() {
     return this.primaryLight;
   },
   get userSingleList() {

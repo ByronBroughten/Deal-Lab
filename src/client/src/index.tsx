@@ -10,9 +10,6 @@ AppRegistry.runApplication("App", {
 // - After the next commit
 //   - check whether the upgrade to pro button works (it works in dev)
 
-// - Fix logging in
-//   - Make getUserData responsible for creating the user data if need be
-
 // - Add FixNFlip
 //   - Add ARV
 //   - Add holding period
@@ -41,8 +38,10 @@ AppRegistry.runApplication("App", {
 //   - Change controls for refinance loan vs regular loan
 
 // - Try upgrading to mui-5. That will make styling easier
+
 // - Implement the account page
-// - Add a footer
+//   - This involves changing the other pages
+// - Then add a footer
 
 // - Add down payment
 // - Add loanPurpose
@@ -57,10 +56,9 @@ AppRegistry.runApplication("App", {
 // - Put the downpayment stuff on financing
 // - PITI, too
 
-// - Change lumpSum editor to dollarsEditor
 // - Lay the groundwork for boolean userVarbs
-//   - Change userVarbList to numVarbList
-//   - Change userVarbItem to numVarbItem
+//   - Change numVarbItem to numVarbItem
+
 // - Add boolVarbList and boolVarbItem
 // - add boolVarbList and boolVarbItem
 // - add boolObj (mainText, entities)

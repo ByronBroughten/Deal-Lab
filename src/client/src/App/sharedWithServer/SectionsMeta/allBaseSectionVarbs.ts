@@ -117,7 +117,11 @@ export function makeAllBaseSectionVarbs() {
     }),
     capExItem: baseCapExItem,
     ongoingItem: baseOngoingItem,
-    userVarbList: baseSectionVarbs({
+    numVarbList: baseSectionVarbs({
+      ...baseVarbsS.savableSection,
+      itemValueSource: baseVarb("editorValueSource"),
+    }),
+    boolVarbList: baseSectionVarbs({
       ...baseVarbsS.savableSection,
       itemValueSource: baseVarb("editorValueSource"),
     }),
@@ -144,7 +148,14 @@ export function makeAllBaseSectionVarbs() {
       ] as const),
     }),
     customVarb: baseSectionVarbs(baseVarbsS.loadableVarb),
-    userVarbItem: baseSectionVarbs({
+    boolVarbItem: baseSectionVarbs({
+      ...baseVarbsS.displayNameAndEditor,
+      value: baseVarb("boolean"),
+      leftOperandi: baseVarb("numObj"),
+      rightOperandi: baseVarb("numObj"),
+      operator: baseVarb("string"),
+    }),
+    numVarbItem: baseSectionVarbs({
       value: baseVarb("numObj"),
       valueEditor: baseVarb("numObj"),
       valueSourceName: baseVarb("editorValueSource"),
@@ -187,7 +198,7 @@ export function makeAllBaseSectionVarbs() {
     repairValue: baseSectionVarbs({
       value: baseVarb("numObj", dollars),
       valueSourceName: baseVarb("repairValueSource"),
-      valueLumpSumEditor: baseVarb("numObj", dollars),
+      valueDollarsEditor: baseVarb("numObj", dollars),
     }),
     utilityValue: baseSectionVarbs({
       ...baseVarbsS.ongoingDollars("value"),
@@ -196,17 +207,17 @@ export function makeAllBaseSectionVarbs() {
     maintenanceValue: baseSectionVarbs({
       ...baseVarbsS.ongoingDollars("value"),
       valueSourceName: baseVarb("maintainanceValueSource"),
-      valueLumpSumEditor: baseVarb("numObj", dollars),
+      valueDollarsEditor: baseVarb("numObj", dollars),
     }),
     capExValue: baseSectionVarbs({
       ...baseVarbsS.ongoingDollars("value"),
       valueSourceName: baseVarb("capExValueSource"),
-      valueLumpSumEditor: baseVarb("numObj", dollars),
+      valueDollarsEditor: baseVarb("numObj", dollars),
     }),
     closingCostValue: baseSectionVarbs({
       value: baseVarb("numObj", dollars),
       valueSourceName: baseVarb("closingCostValueSource"),
-      valueLumpSumEditor: baseVarb("numObj", dollars),
+      valueDollarsEditor: baseVarb("numObj", dollars),
     }),
     loan: baseSectionVarbs({
       ...baseVarbsS.savableSection,

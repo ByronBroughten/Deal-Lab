@@ -31,7 +31,7 @@ export function RepairValue({ feId }: Props) {
         editorProps:
           valueSourceName === "valueEditor"
             ? {
-                feVarbInfo: repairValue.varbInfo("valueLumpSumEditor"),
+                feVarbInfo: repairValue.varbInfo("valueDollarsEditor"),
                 editorType: "equation",
               }
             : undefined,

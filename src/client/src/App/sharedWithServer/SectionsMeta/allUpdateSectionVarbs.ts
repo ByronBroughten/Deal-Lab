@@ -143,7 +143,7 @@ function makeAllUpdateSections() {
                 overrideSwitchS.local("valueSourceName", "valueEditor"),
                 overrideSwitchS.switchIsActive("value", "ongoing", "monthly"),
               ],
-              updateBasicsS.loadFromLocal("valueLumpSumEditor")
+              updateBasicsS.loadFromLocal("valueDollarsEditor")
             ),
             updateOverride(
               [
@@ -173,7 +173,7 @@ function makeAllUpdateSections() {
                 overrideSwitchS.local("valueSourceName", "valueEditor"),
                 overrideSwitchS.switchIsActive("value", "ongoing", "yearly"),
               ],
-              updateBasicsS.loadFromLocal("valueLumpSumEditor")
+              updateBasicsS.loadFromLocal("valueDollarsEditor")
             ),
             updateOverride(
               [
@@ -212,7 +212,7 @@ function makeAllUpdateSections() {
                 overrideSwitchS.local("valueSourceName", "valueEditor"),
                 overrideSwitchS.switchIsActive("value", "ongoing", "monthly"),
               ],
-              updateBasicsS.loadFromLocal("valueLumpSumEditor")
+              updateBasicsS.loadFromLocal("valueDollarsEditor")
             ),
             updateOverride(
               [
@@ -243,7 +243,7 @@ function makeAllUpdateSections() {
                 overrideSwitchS.local("valueSourceName", "valueEditor"),
                 overrideSwitchS.yearlyIsActive("value"),
               ],
-              updateBasicsS.loadFromLocal("valueLumpSumEditor")
+              updateBasicsS.loadFromLocal("valueDollarsEditor")
             ),
             updateOverride(
               [
@@ -283,7 +283,7 @@ function makeAllUpdateSections() {
           ),
           updateOverride(
             [overrideSwitchS.local("valueSourceName", "valueEditor")],
-            updateBasicsS.loadFromLocal("valueLumpSumEditor")
+            updateBasicsS.loadFromLocal("valueDollarsEditor")
           ),
           updateOverride(
             [overrideSwitchS.local("valueSourceName", "listTotal")],
@@ -332,7 +332,7 @@ function makeAllUpdateSections() {
       valueSourceName: updateVarb("closingCostValueSource", {
         initValue: "none",
       }),
-      valueLumpSumEditor: updateVarb("numObj"),
+      valueDollarsEditor: updateVarb("numObj"),
       value: updateVarb("numObj", {
         updateFnName: "throwIfReached",
         updateOverrides: [
@@ -350,7 +350,7 @@ function makeAllUpdateSections() {
           ),
           updateOverride(
             [overrideSwitchS.valueSourceIs("valueEditor")],
-            updateBasicsS.loadSolvableTextByVarbInfo("valueLumpSumEditor")
+            updateBasicsS.loadSolvableTextByVarbInfo("valueDollarsEditor")
           ),
         ],
       }),
@@ -485,7 +485,7 @@ function makeAllUpdateSections() {
         initValue: "monthly",
       }),
     }),
-    ...updateSectionProp("userVarbList", {
+    ...updateSectionProp("numVarbList", {
       itemValueSource: updateVarb("editorValueSource", {
         initValue: "valueEditor",
       } as const),
@@ -532,7 +532,7 @@ function makeAllUpdateSections() {
       valueEditor: updateVarb("numObj"),
     }),
     ...updateSectionProp("ongoingItem", ongoingItemUpdateVarbs()),
-    ...updateSectionProp("userVarbItem", {
+    ...updateSectionProp("numVarbItem", {
       ...updateVarbsS.displayNameAndEditor,
       value: updateVarb("numObj", {
         initValue: numObj(0),
@@ -683,13 +683,13 @@ function makeAllUpdateSections() {
             updateFnPropS.pathName("propertyFocal", "homeInsOngoingEditor"),
             updateFnPropS.pathName("unitFocal", "targetRentOngoingEditor"),
             updateFnPropS.pathName("unitFocal", "numBedrooms"),
-            updateFnPropS.pathName("capExCostFocal", "valueLumpSumEditor", [
+            updateFnPropS.pathName("capExCostFocal", "valueDollarsEditor", [
               overrideSwitch(
                 mixedInfoS.pathNameVarb("capExCostFocal", "valueSourceName"),
                 "valueEditor"
               ),
             ]),
-            updateFnPropS.pathName("repairCostFocal", "valueLumpSumEditor", [
+            updateFnPropS.pathName("repairCostFocal", "valueDollarsEditor", [
               overrideSwitch(
                 mixedInfoS.pathNameVarb("repairCostFocal", "valueSourceName"),
                 "valueEditor"
@@ -697,7 +697,7 @@ function makeAllUpdateSections() {
             ]),
             updateFnPropS.pathName(
               "maintenanceCostFocal",
-              "valueLumpSumEditor",
+              "valueDollarsEditor",
               [
                 overrideSwitch(
                   mixedInfoS.pathNameVarb(
@@ -828,7 +828,7 @@ function makeAllUpdateSections() {
                   ),
                   updateFnPropS.pathName(
                     "closingCostFocal",
-                    "valueLumpSumEditor",
+                    "valueDollarsEditor",
                     [overrideSwitchS.valueSourceIs("valueEditor")]
                   ),
                 ],

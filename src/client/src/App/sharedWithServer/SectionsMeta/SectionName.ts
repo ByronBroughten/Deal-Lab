@@ -31,9 +31,13 @@ export const sectionNames = [
   "virtualVarb",
 
   "customVarb",
-  "userVarbItem",
   "conditionalRowList",
-  "userVarbList",
+
+  "numVarbList",
+  "numVarbItem",
+
+  "boolVarbList",
+  "boolVarbItem",
 
   "calculatedVarbs",
 

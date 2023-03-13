@@ -18,7 +18,7 @@ export function makeDefaultMain(): SectionPack<"main"> {
   });
 
   const varbEditor = main.addAndGetChild("userVarbEditor");
-  varbEditor.replaceChildArrs(feUser.makeChildPackArrs("userVarbListMain"));
+  varbEditor.replaceChildArrs(feUser.makeChildPackArrs("numVarbListMain"));
 
   const listEditor = main.addAndGetChild("userListEditor");
   listEditor.replaceChildArrs(

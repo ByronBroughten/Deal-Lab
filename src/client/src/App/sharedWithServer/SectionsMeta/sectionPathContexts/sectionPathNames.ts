@@ -28,8 +28,8 @@ const sectionPathNameToSn = checkPathTypeToSectionName({
   vacancyLossFocal: "vacancyLossValue",
 
   calculatedVarbsFocal: "calculatedVarbs",
-  userVarbListMain: "userVarbList",
-  userVarbItemMain: "userVarbItem",
+  numVarbListMain: "numVarbList",
+  userVarbItemMain: "numVarbItem",
 });
 
 export type AbsolutePathNode = {

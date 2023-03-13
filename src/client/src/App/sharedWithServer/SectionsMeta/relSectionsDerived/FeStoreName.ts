@@ -59,7 +59,7 @@ const feStoreNameArrs = {
       "ongoingListMain",
       "outputListMain",
       "singleTimeListMain",
-      "userVarbListMain",
+      "numVarbListMain",
     ] as const);
   },
   displayNameDbSource: tableRowDbSources,

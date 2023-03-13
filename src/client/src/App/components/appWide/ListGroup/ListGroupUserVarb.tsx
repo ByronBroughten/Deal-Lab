@@ -5,10 +5,10 @@ import { ThemeName } from "../../../theme/Theme";
 import { VarbListUserVarbs } from "../VarbLists/VarbListUserVarbs";
 import { ListGroupGeneric } from "./ListGroupShared/ListGroupGeneric";
 
-type ListParentName = ParentOfTypeName<"userVarbList">;
+type ListParentName = ParentOfTypeName<"numVarbList">;
 type Props<SN extends ListParentName> = {
   listParentInfo: FeSectionInfo<SN>;
-  listAsChildName: ChildSectionNameName<SN, "userVarbList">;
+  listAsChildName: ChildSectionNameName<SN, "numVarbList">;
   titleText: string;
   themeName: ThemeName;
   className?: string;

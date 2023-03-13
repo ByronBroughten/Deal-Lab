@@ -19,13 +19,13 @@ function makeDealPageFocals(dealPagePath: ChildName[]) {
   const financingPath: ChildName[] = [...dealPath, "financing"];
   const loanPath: ChildName[] = [...financingPath, "loan"];
   const mgmtPath: ChildName[] = [...dealPath, "mgmt"];
-  const userVarbListPath: ChildName[] = [...dealPagePath, "userVarbList"];
+  const userVarbListPath: ChildName[] = [...dealPagePath, "numVarbList"];
   return {
-    get userVarbListMain() {
-      return abs("userVarbList", userVarbListPath);
+    get numVarbListMain() {
+      return abs("numVarbList", userVarbListPath);
     },
     get userVarbItemMain() {
-      return abs("userVarbItem", [...userVarbListPath, "userVarbItem"]);
+      return abs("numVarbItem", [...userVarbListPath, "numVarbItem"]);
     },
     get calculatedVarbsFocal() {
       return abs("calculatedVarbs", [...dealPagePath, "calculatedVarbs"]);
@@ -95,7 +95,7 @@ const compareDealPage = makeDealPageFocals([
 const editorVarbListPath: ChildName[] = [
   "main",
   "userVarbEditor",
-  "userVarbListMain",
+  "numVarbListMain",
 ];
 
 type ValueToCheck = Record<
@@ -109,10 +109,10 @@ export const sectionPathContexts = typeCheckContexts({
   userListEditorPage: sectionPathContext(activeDealPage),
   userVarbEditorPage: sectionPathContext({
     ...activeDealPage,
-    userVarbListMain: abs("userVarbList", editorVarbListPath),
-    userVarbItemMain: abs("userVarbItem", [
+    numVarbListMain: abs("numVarbList", editorVarbListPath),
+    userVarbItemMain: abs("numVarbItem", [
       ...editorVarbListPath,
-      "userVarbItem",
+      "numVarbItem",
     ]),
   }),
   compareDealPage: sectionPathContext(compareDealPage),

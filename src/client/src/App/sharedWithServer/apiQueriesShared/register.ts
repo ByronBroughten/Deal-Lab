@@ -9,7 +9,7 @@ export const guestAccessNames = Arr.extractStrict(feStoreChildNames, [
   "ongoingListMain",
   "outputListMain",
   "singleTimeListMain",
-  "userVarbListMain",
+  "numVarbListMain",
 ] as const);
 type GuestAccessName = typeof guestAccessNames[number];
 

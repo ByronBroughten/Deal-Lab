@@ -73,10 +73,10 @@ export const allSectionTraits = checkAllSectionTraits({
     feIndexStoreName: "ongoingListMain",
     dbIndexStoreName: "ongoingListMain",
   }),
-  userVarbList: sectionTraits({
-    feIndexStoreName: "userVarbListMain",
-    dbIndexStoreName: "userVarbListMain",
-    varbListItem: "userVarbItem",
+  numVarbList: sectionTraits({
+    feIndexStoreName: "numVarbListMain",
+    dbIndexStoreName: "numVarbListMain",
+    varbListItem: "numVarbItem",
   }),
 });
 

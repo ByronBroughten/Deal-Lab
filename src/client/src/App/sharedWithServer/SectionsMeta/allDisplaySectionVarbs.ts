@@ -151,7 +151,7 @@ export const allDisplaySectionVarbs = {
       },
     }),
   }),
-  ...displaySectionVarbsProp("userVarbItem", {
+  ...displaySectionVarbsProp("numVarbItem", {
     value: varb(relVarbInfoS.local("displayName")),
   }),
   ...displaySectionVarbsProp("deal", {

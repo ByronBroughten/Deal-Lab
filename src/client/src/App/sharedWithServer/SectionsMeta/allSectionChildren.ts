@@ -66,16 +66,16 @@ export const allSectionChildren = checkAllSectionChildren({
   dealPage: sectionChildren({
     deal: ["deal"],
     calculatedVarbs: ["calculatedVarbs"],
-    userVarbList: ["userVarbList"],
+    numVarbList: ["numVarbList"],
   }),
   latentSections: sectionChildren({
     dealPage: ["dealPage"],
-    userVarbList: ["userVarbList"],
+    numVarbList: ["numVarbList"],
     singleTimeList: ["singleTimeList"],
     ongoingList: ["ongoingList"],
   }),
   userVarbEditor: sectionChildren({
-    userVarbListMain: ["userVarbList"],
+    numVarbListMain: ["numVarbList"],
   }),
   userListEditor: sectionChildren(listChildren),
   feUser: sectionChildren({
@@ -89,7 +89,8 @@ export const allSectionChildren = checkAllSectionChildren({
     propertyMain: ["property"],
     loanMain: ["loan"],
     mgmtMain: ["mgmt"],
-    userVarbListMain: ["userVarbList"],
+    numVarbListMain: ["numVarbList"],
+    boolVarbListMain: ["boolVarbList"],
     ...listChildren,
   }),
   dbStore: sectionChildren({
@@ -111,7 +112,7 @@ export const allSectionChildren = checkAllSectionChildren({
     loanMainTable: ["compareTable"],
     mgmtMainTable: ["compareTable"],
     dealMainTable: ["compareTable"],
-    userVarbListMain: ["userVarbList"],
+    numVarbListMain: ["numVarbList"],
   }),
   compareSection: sectionChildren({
     compareDealPage: ["dealPage"],
@@ -144,8 +145,9 @@ export const allSectionChildren = checkAllSectionChildren({
       isListItem: true,
     }),
   },
-  userVarbList: { userVarbItem: sectionChild("userVarbItem") },
-  userVarbItem: {
+  numVarbList: { numVarbItem: sectionChild("numVarbItem") },
+  boolVarbList: { boolVarbItem: sectionChild("boolVarbItem") },
+  numVarbItem: {
     conditionalRowList: sectionChild("conditionalRowList"),
   },
   conditionalRowList: { conditionalRow: sectionChild("conditionalRow") },

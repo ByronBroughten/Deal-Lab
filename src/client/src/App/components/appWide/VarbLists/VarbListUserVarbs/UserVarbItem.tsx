@@ -4,7 +4,7 @@ import { VarbListItemGeneric } from "../../ListGroup/ListGroupShared/VarbListIte
 type Props = { feId: string };
 export function UserVarbItem({ feId }: Props) {
   const feInfo = {
-    sectionName: "userVarbItem",
+    sectionName: "numVarbItem",
     feId,
   } as const;
   const varb = useGetterVarb({

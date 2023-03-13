@@ -5,9 +5,9 @@ import { ConditionalRowList } from "./IfThen/ConditionalRowList";
 
 type Props = { feId: string };
 export default function IfThen({ feId }: Props) {
-  const sectionName = "userVarbItem";
+  const sectionName = "numVarbItem";
   const { viewIsOpen, toggleView } = useToggleView();
-  const userVarbItem = useGetterSection({
+  const numVarbItem = useGetterSection({
     sectionName,
     feId,
   });
@@ -15,13 +15,13 @@ export default function IfThen({ feId }: Props) {
   return (
     <>
       <td className="VarbListTable-nameCell">
-        <MaterialStringEditor {...userVarbItem.varbInfo("displayNameEditor")} />
+        <MaterialStringEditor {...numVarbItem.varbInfo("displayNameEditor")} />
       </td>
       <td className="VarbListTable-firstContentCell">
         <div className="VarbListItem-contentCellDiv">
           <ConditionalRowList
             {...{
-              feId: userVarbItem.onlyChild("conditionalRowList").feId,
+              feId: numVarbItem.onlyChild("conditionalRowList").feId,
               viewIsOpen,
               toggleView,
             }}

@@ -6,12 +6,11 @@ import {
   ValueInEntity,
   zValueInEntities,
 } from "./valuesShared/entities";
+import { EntitiesProp, MainTextProp } from "./valuesShared/valueObj";
 
-export type NumObj = {
-  mainText: string;
-  entities: ValueInEntity[];
+export interface NumObj extends MainTextProp, EntitiesProp {
   solvableText: string;
-};
+}
 
 export function numToObj(value: number | NumObj): NumObj {
   return typeof value === "number" ? numObj(value) : value;

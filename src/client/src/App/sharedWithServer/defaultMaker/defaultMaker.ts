@@ -25,7 +25,7 @@ class DefaultSectionPackMaker<SN extends SectionNameByType> {
 }
 
 export const defaultMaker = new DefaultSectionPackMaker({
-  userVarbItem: makeDefaultUserVarbItem,
+  numVarbItem: makeDefaultUserVarbItem,
   property: makeDefaultProperty,
   singleTimeValue: makeDefaultOneTimeValue,
   ongoingValue: makeDefaultOngoingValue,

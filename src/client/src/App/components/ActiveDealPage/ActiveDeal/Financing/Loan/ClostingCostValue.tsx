@@ -25,7 +25,7 @@ export function ClosingCostValue({ feId, fivePercentLoanDisplay }: Props) {
         editorProps:
           valueSourceName === "valueEditor"
             ? {
-                feVarbInfo: closingCostValue.varbInfo("valueLumpSumEditor"),
+                feVarbInfo: closingCostValue.varbInfo("valueDollarsEditor"),
                 editorType: "equation",
                 quickViewVarbNames: ["loanTotalDollars", "numUnits"],
               }

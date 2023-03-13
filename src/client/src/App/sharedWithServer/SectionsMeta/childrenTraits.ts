@@ -122,7 +122,7 @@ export const allChildrenTraits = checkAllChildrenTraits({
     holdingCostsListMain: childTraits(storeNames("holdingCostsListMain")),
     closingCostsListMain: childTraits(storeNames("closingCostsListMain")),
     outputListMain: childTraits(storeNames("outputListMain")),
-    userVarbListMain: childTraits(storeNames("userVarbListMain")),
+    numVarbListMain: childTraits(storeNames("numVarbListMain")),
     singleTimeListMain: childTraits(storeNames("singleTimeListMain")),
     ongoingListMain: childTraits(storeNames("ongoingListMain")),
   }),
@@ -181,7 +181,7 @@ export const allChildrenTraits = checkAllChildrenTraits({
     outputListMain: childTraits({
       sectionContextName: "activeDealPage",
     }),
-    userVarbListMain: childTraits({
+    numVarbListMain: childTraits({
       sectionContextName: "activeDealPage",
     }),
     singleTimeListMain: childTraits({

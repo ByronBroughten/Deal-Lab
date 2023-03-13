@@ -63,14 +63,14 @@ const lists = [
   ],
 ] as const;
 
-export function makeExampleUserVarbLists(): SectionPack<"userVarbList">[] {
+export function makeExampleUserVarbLists(): SectionPack<"numVarbList">[] {
   const feUser = PackBuilderSection.initAsOmniChild("feUser");
   for (const listArr of lists) {
-    const varbList = feUser.addAndGetChild("userVarbListMain", {
+    const varbList = feUser.addAndGetChild("numVarbListMain", {
       sectionValues: { displayName: stringObj(listArr[0]) },
     });
     for (const item of listArr[1]) {
-      varbList.addChild("userVarbItem", {
+      varbList.addChild("numVarbItem", {
         sectionValues: {
           displayNameEditor: item[0],
           valueEditor: item[1],
@@ -79,5 +79,5 @@ export function makeExampleUserVarbLists(): SectionPack<"userVarbList">[] {
     }
   }
 
-  return feUser.makeChildPackArr("userVarbListMain");
+  return feUser.makeChildPackArr("numVarbListMain");
 }

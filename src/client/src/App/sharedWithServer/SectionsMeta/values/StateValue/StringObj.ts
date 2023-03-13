@@ -2,19 +2,10 @@ import { z } from "zod";
 import { monSchemas } from "../../../utils/mongoose";
 import { Obj } from "../../../utils/Obj";
 import { zS } from "../../../utils/zod";
-import {
-  mInEntities,
-  ValueInEntity,
-  zValueInEntities,
-} from "./valuesShared/entities";
+import { mInEntities, zValueInEntities } from "./valuesShared/entities";
+import { EntitiesProp, MainTextProp } from "./valuesShared/valueObj";
 
-export type EntitiesProp = {
-  entities: ValueInEntity[];
-};
-
-export interface StringObj extends EntitiesProp {
-  mainText: string;
-}
+export interface StringObj extends EntitiesProp, MainTextProp {}
 
 export function hasEntitiesProp(value: any): value is EntitiesProp {
   if (Obj.isObjToAny(value) && Array.isArray(value.entities)) {

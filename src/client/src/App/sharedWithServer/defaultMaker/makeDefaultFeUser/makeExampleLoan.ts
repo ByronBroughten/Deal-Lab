@@ -32,7 +32,7 @@ type ExampleLoanProps = {
 
   closingCosts: {
     valueSourceName: StateValue<"closingCostValueSource">;
-    valueLumpSumEditor?: NumObj;
+    valueDollarsEditor?: NumObj;
     items?: {
       displayName: string;
       value: NumObj;
@@ -80,6 +80,6 @@ export const dealExampleLoan = makeExampleLoan({
   },
   closingCosts: {
     valueSourceName: "valueEditor",
-    valueLumpSumEditor: numObj(6000),
+    valueDollarsEditor: numObj(6000),
   },
 });

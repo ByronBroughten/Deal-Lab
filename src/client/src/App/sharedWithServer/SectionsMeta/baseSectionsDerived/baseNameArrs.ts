@@ -37,7 +37,7 @@ function makeBaseNameArrs() {
         "capExList",
         "singleTimeList",
         "ongoingList",
-        "userVarbList",
+        "numVarbList",
         "outputList",
       ] as const);
     },

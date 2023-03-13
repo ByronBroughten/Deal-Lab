@@ -262,19 +262,19 @@ export class SolveValueVarb<
     },
     userVarb: (): NumObj => {
       const section = this.getterSection;
-      if (section.sectionName === "userVarbItem") {
+      if (section.sectionName === "numVarbItem") {
         const userVarbSolver = new UserVarbValueSolver(
-          this.getterSectionProps as GetterSectionProps<"userVarbItem">
+          this.getterSectionProps as GetterSectionProps<"numVarbItem">
         );
         const editor = (
-          section as any as GetterSection<"userVarbItem">
+          section as any as GetterSection<"numVarbItem">
         ).varbNext("valueEditor");
         const editorEntities = editor.value("numObj").entities;
         let isPureUserVarb = true;
         for (const entity of editorEntities) {
           if (section.hasVarbByFocalMixed(entity)) {
             const varb = section.varbByFocalMixed(entity);
-            if (!(varb.sectionName === "userVarbItem")) {
+            if (!(varb.sectionName === "numVarbItem")) {
               isPureUserVarb = false;
               break;
             } else if (!varb.isPureUserVarb) {

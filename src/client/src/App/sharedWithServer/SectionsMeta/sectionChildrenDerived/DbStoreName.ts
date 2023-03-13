@@ -30,13 +30,13 @@ const mainIndexStoreNames = Arr.extractStrict(dbStoreNames, [
   "loanMain",
   "mgmtMain",
   "propertyMain",
-  "userVarbListMain",
+  "numVarbListMain",
   ...listChildrenNames,
 ] as const);
 
 const arrQueryStoreNames = Arr.extractStrict(dbStoreNames, [
   ...listChildrenNames,
-  "userVarbListMain",
+  "numVarbListMain",
 ] as const);
 
 const sectionQueryStoreNames = mainIndexStoreNames;

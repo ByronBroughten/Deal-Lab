@@ -49,7 +49,7 @@ export function MaintenanceValue({ feId }: { feId: string }) {
         editorProps:
           valueSourceName === "valueEditor"
             ? {
-                feVarbInfo: maintenanceValue.varbInfo("valueLumpSumEditor"),
+                feVarbInfo: maintenanceValue.varbInfo("valueDollarsEditor"),
                 editorType: "equation",
                 quickViewVarbNames: ["sqft", "numUnits", "numBedrooms"],
               }

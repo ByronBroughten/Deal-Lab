@@ -27,15 +27,15 @@ export function UserVarbEditor() {
             />
           ),
           sectionName: "userVarbEditor",
-          childNames: ["userVarbListMain"],
+          childNames: ["numVarbListMain"],
         }}
       />
       <FormSection>
         <MainSectionBody>
           <ListGroupLists
             {...{
-              feIds: userVarbEditor.childFeIds("userVarbListMain"),
-              addList: () => userVarbEditor.addChild("userVarbListMain"),
+              feIds: userVarbEditor.childFeIds("numVarbListMain"),
+              addList: () => userVarbEditor.addChild("numVarbListMain"),
               makeListNode: (nodeProps) => <VarbListUserVarbs {...nodeProps} />,
             }}
           />

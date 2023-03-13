@@ -7,7 +7,7 @@ type Props = {
 };
 
 export function VarbListUserVarbs({ feId, ...rest }: Props) {
-  const feInfo = { sectionName: "userVarbList", feId } as const;
+  const feInfo = { sectionName: "numVarbList", feId } as const;
   return (
     <VarbListGeneric
       {...{
