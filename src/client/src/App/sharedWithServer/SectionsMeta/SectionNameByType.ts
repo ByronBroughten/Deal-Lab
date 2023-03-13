@@ -97,11 +97,10 @@ export function isSectionPackByType<ST extends SectionNameType = "all">(
 export function validateSectionPackByType<ST extends SectionNameType = "all">(
   value: any,
   sectionType?: ST
-): value is SectionPackByType<ST> {
-  if (validateSectionPack(value)) {
-    sectionNameS.validate(value.sectionName, sectionType);
-  }
-  return true;
+): SectionPackByType<ST> {
+  validateSectionPack(value);
+  sectionNameS.validate(value.sectionName, sectionType);
+  return value;
 }
 
 type ValidateSectionPackArrProps = {

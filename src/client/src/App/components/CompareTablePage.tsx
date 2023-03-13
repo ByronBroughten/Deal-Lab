@@ -21,7 +21,7 @@ function useLoadRows(props: UseTableActorProps) {
   React.useEffect(() => {
     async function loadRows() {
       unstable_batchedUpdates(async () => {
-        await table.getRows();
+        // await table.getRows();
         setIsLoaded(true);
       });
     }

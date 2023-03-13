@@ -2,7 +2,7 @@ import {
   CompareTableBuilder,
   SortOptions,
 } from "../../modules/SectionSolvers/CompareTableBuilder";
-import { Id } from "../SectionsMeta/id";
+import { Id } from "../SectionsMeta/Id";
 import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
 import { VarbInfoMixedFocal } from "../SectionsMeta/SectionInfo/MixedSectionInfo";
 import { GetterSection } from "../StateGetters/GetterSection";

@@ -1,4 +1,5 @@
 import { constants } from "../../Constants";
+import { Obj } from "../../sharedWithServer/utils/Obj";
 
 const userDataKey = constants.tokenKey.userAuthData;
 export type UserInfoTokenProp = { [userDataKey]: string };
@@ -18,6 +19,16 @@ export const userTokenS = {
   },
   removeUserAuthDataToken(): void {
     localStorage.removeItem(userDataKey);
+  },
+  validateHasUserTokenProp(value: any): UserInfoTokenProp {
+    value = Obj.validateObjToAny(value);
+    if (typeof value[constants.tokenKey.userAuthData] === "string") {
+      return value;
+    } else {
+      throw new Error(
+        `value[${constants.tokenKey.userAuthData}] did not yield a string.`
+      );
+    }
   },
   hasUserTokenHeaderProp(value: any): value is UserInfoTokenProp {
     return (

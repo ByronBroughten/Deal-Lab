@@ -5,7 +5,7 @@ import {
   ValueInEntityInfo,
 } from "../../../../sharedWithServer/SectionsMeta/values/StateValue/valuesShared/entities";
 
-import { Id } from "../../../../sharedWithServer/SectionsMeta/id";
+import { Id } from "../../../../sharedWithServer/SectionsMeta/Id";
 
 type Props = {
   setEditorState: SetEditorState;

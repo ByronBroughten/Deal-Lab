@@ -64,8 +64,21 @@ function difference(origObj: any, newObj: any) {
   }
   return changes(newObj, origObj);
 }
-
+function validateTruthyRes(res: any): any {
+  if (res) {
+    return res;
+  } else {
+    throw new Error(`res "${res}" is not truthy.`);
+  }
+}
 export const Obj = {
+  validateTruthy(value: any) {
+    if (value) {
+      return value;
+    } else {
+      throw new Error(`value "${value}" is not truthy.`);
+    }
+  },
   isKey<O extends Record<string, any>>(obj: O, value: any): value is keyof O {
     return this.keys(obj).includes(value);
   },

@@ -23,7 +23,11 @@ export function getSignUpData(
 }
 
 export async function initUserInDb(props: DbStoreSeed) {
-  const dbUserModel = new DbUserModel(makeDefaultDbStoreArrs(props));
+  const dbUserModel = new DbUserModel({
+    authId: props.authId,
+    email: props.email,
+    ...makeDefaultDbStoreArrs(props),
+  });
   await dbUserModel.save();
 }
 

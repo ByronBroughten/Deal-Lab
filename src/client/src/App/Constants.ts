@@ -48,8 +48,8 @@ const maxSectionSaveLimit = 1000;
 const basicSectionSaveLimit = 3;
 export const config = {
   ...env,
-  supportEmail: "support@ultimatepropertyanalyzer.com",
-  feedbackEmail: "feedback@ultimatepropertyanalyzer.com",
+  supportEmail: "support@deallab.com",
+  feedbackEmail: "feedback@deallab.com",
   discordLink: "https://discord.gg/W6pxEXT8EV",
   clientProdUrl,
   clientDevUrl,
@@ -95,7 +95,6 @@ export const config = {
     "getUserData",
     "getSubscriptionData",
     "makeSession",
-    "getTableRows",
   ],
   get superTokensAppInfo() {
     return {

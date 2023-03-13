@@ -7,53 +7,27 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
-// Change lumpSum editor to dollarsEditor
+// - After the next commit
+//   - check whether the upgrade to pro button works (it works in dev)
 
-// loanPurpose
-// "For"
-// - Property purchase price
-// - Upfront repairs
-// - Purchase price and repairs
+// - Fix logging in
+//   - Make getUserData responsible for creating the user data if need be
 
-// - Custom - If this one were implemented, it would have to remove
-//    all the percentage options and negate their selection
+// - Add FixNFlip
+//   - Add ARV
+//   - Add holding period
+//   - Add holding costs
+//     - Holding utilities
+//     - Holding misc
+//   - Add cost overrun
 
-// It will also have these two valueSections, which can reach loan
-// via an feId path:
-// Loan amount - 75%, 95%, custom percent (% of what loan is for), dollars
-// Down payment - 25%, 5%, custom percent (% of what loan is for), dollars
+// - There could be contractor management costs
 
-// Should I use a radio? Yeah, I guess so.
-// * Enter down payment
-// * Enter loan amount
+// How should I handle the loan being able to cover repair costs?
+// DealCheck uses two boxes for that.
+// - Financed repair cost
+// - Financed property cost
 
-// Lay the groundwork for boolean userVarbs
-// we have userVarbList and userVarbItem
-// - change to numVarbList and numVarbItem
-
-// - add boolVarbList and boolVarbItem
-// - add boolObj (mainText, entities)
-//  - mainText allows for operators
-
-// 1. Let sectionPacks have null.
-// 2. Make it so that whenever a stored sectionPack is loaded,
-//    missing sections are added but converted to null
-// 3. When self-loading a sectionPack, don't replace
-//    the sections of self that the sectionPack has a null for
-
-// Try upgrading to mui-5. That will make styling easier
-
-// - Put the downpayment stuff on financing
-// - PITI, too
-// - Make loans have a "downPayment" option
-
-// Waiting on Emily
-// - Logo
-// - Account page
-// - Compare page feedback?
-
-// Before Wordpress
-// - Add Fix and Flip
 //   - Percent of repairs for loan amount
 //   - Percent of repairs plus purchase price
 //   - Percent of ARV (when in other modes)
@@ -63,34 +37,64 @@ AppRegistry.runApplication("App", {
 //   - Add fix and flip outputs
 //   - Change displayed outputs based on mode
 
-// - Add Brrrr
+// - Add Brrrrr
+//   - Change controls for refinance loan vs regular loan
 
-// 4. Allow for Fix and Flip
-//  - Add ARV
-//  - Add holding costs (Like ongoing costs but just has utilities and custom)
-// 4.5 Allow for Brrrr
-//  - Differentiate between purchase and refinance loans (right?)
-//  - Add Post-Purchase loan
+// - Try upgrading to mui-5. That will make styling easier
+// - Implement the account page
+// - Add a footer
+
+// - Add down payment
+// - Add loanPurpose
+// "For"
+//   - Property purchase price
+//   - Upfront repairs
+//   - Purchase price and repairs
+// - Implement down payment on loan
+// Should I use a radio? Yeah, I guess so.
+// * Enter down payment
+// * Enter loan amount
+// - Put the downpayment stuff on financing
+// - PITI, too
+
+// - Change lumpSum editor to dollarsEditor
+// - Lay the groundwork for boolean userVarbs
+//   - Change userVarbList to numVarbList
+//   - Change userVarbItem to numVarbItem
+// - Add boolVarbList and boolVarbItem
+// - add boolVarbList and boolVarbItem
+// - add boolObj (mainText, entities)
+//  - mainText allows for operators
+
+// - Allow for upgrades to the state without having to delete
+//   all user data
+//  - Make stored sectionPacks rawSections be a partial (apart from the main one)
+//  - Make sectionPacks be able to have null
+//  - Make it so that whenever a stored sectionPack is loaded,
+//    missing sections are added but converted to null
+//  - When self-loading a sectionPack, don't replace
+//    the sections of self that the sectionPack has a null for
+
+// - Custom outputs groups
+//  - You already have the outputList component—now you need outputSection
+//  - outputSection will have three "slots" for loading an output list
+//  - The compare page doesn't need such slots. You just pick the output group
+//  - Different one display depending on whether mode is buy/hold, fixFlip, brrrr
+//  - Save and load output groups for deal compare and output
+
+// Need Emily
+// - Logo
+
+// Add more examples
+// - Example mgmt
+// - Example loan
 
 // Wordpress
-// - Make a site that does the job
-
-// 7. Make a full output page.
-
-// - Make an example mgmt and loan
-// - Make the deal example contain a different property (dbId, title, units, etc), and maybe a different loan and mgmt.
-
-// Updating Loan UI
-// How should I handle the loan being able to cover repair costs?
-// DealCheck uses two boxes for that.
-// - Financed repair cost
-// - Financed property cost
-
-// Maybe fix the triple "getUserData" bug
-// - For this, you must create a UserDataSolver that carries
-//   out the operation
-// - You just need to use the reduce along with userDataStatus
-// - in the useEffect dependency array
+// - Landing page/description
+// - Contact us
+// - About us?
+// - Extended blog pieces?
+// - Pricing?
 
 // Consult branding, logo, and pro wordpress people
 // https://bstro.com/
@@ -218,11 +222,6 @@ AppRegistry.runApplication("App", {
 // - If they accept, you can grant them readonly or edit access
 //   to whatever they'd like
 //   - This would obviously work best if I can get websockets going
-
-// 1. When a subscription is active (or inactive), getUserData and updateSubscription
-//    should return the subscription header like they're supposed to
-//    - This will require parsing the json
-//    - You will want to borrow from the stripe webhook
 
 // Launch the app.
 // - Post it, asking people for input

@@ -1,4 +1,4 @@
-import { Id } from "../../SectionsMeta/id";
+import { Id } from "../../SectionsMeta/Id";
 import { FeSectionInfo } from "../../SectionsMeta/SectionInfo/FeInfo";
 import {
   SectionNameByType,

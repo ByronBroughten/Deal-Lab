@@ -1,4 +1,3 @@
-import { makeReq } from "../../sharedWithServer/apiQueriesShared/makeReqAndRes";
 import { sectionsMeta } from "../../sharedWithServer/SectionsMeta";
 import { DbStoreNameByType } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/DbStoreName";
 import { VarbInfoMixedFocal } from "../../sharedWithServer/SectionsMeta/SectionInfo/MixedSectionInfo";
@@ -77,15 +76,6 @@ export class TableActor extends SectionActorBase<"compareTable"> {
   }
   get tableSetter(): SetterTable {
     return new SetterTable(this.sectionActorBaseProps);
-  }
-  async getRows() {
-    const res = await this.apiQueries.getTableRows(
-      makeReq({
-        columns: this.tableBuilder.columnPacks,
-        dbStoreName: this.rowSourceName,
-      })
-    );
-    this.tableSetter.updateRows(res.data.tableRowPacks);
   }
   get get(): GetterSection<"compareTable"> {
     return new GetterSection(this.sectionActorBaseProps);

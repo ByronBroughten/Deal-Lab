@@ -1,6 +1,6 @@
 import { pick } from "lodash";
 import { sectionsMeta } from "../SectionsMeta";
-import { Id } from "../SectionsMeta/id";
+import { Id } from "../SectionsMeta/Id";
 import { ChildIdArrsNarrow } from "../SectionsMeta/sectionChildrenDerived/ChildName";
 import { FeSectionInfo, FeVarbInfo } from "../SectionsMeta/SectionInfo/FeInfo";
 import { VarbNames } from "../SectionsMeta/SectionInfo/VarbInfoBase";

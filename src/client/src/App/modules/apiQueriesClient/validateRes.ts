@@ -1,27 +1,28 @@
 import { AxiosResponse } from "axios";
 import {
   DbIdRes,
-  DbStoreNameRes,
   MakeRes,
   makeRes,
   SectionPackRes,
   UrlRes,
 } from "../../sharedWithServer/apiQueriesShared/makeReqAndRes";
-import { Id } from "../../sharedWithServer/SectionsMeta/id";
-import {
-  DbStoreNameByType,
-  dbStoreNameS,
-} from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/DbStoreName";
-import { isSectionPack } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/SectionPack";
+import { Id } from "../../sharedWithServer/SectionsMeta/Id";
+import { validateSectionPack } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/SectionPack";
 import { Obj } from "../../sharedWithServer/utils/Obj";
+import { Str } from "../../sharedWithServer/utils/Str";
+
+export function validateDbIdRes(res: AxiosResponse<unknown>): DbIdRes {
+  const axiosRes = validateAxiosRes(res);
+  const data = validateDbIdData(axiosRes.data);
+  return makeRes({ dbId: data.dbId });
+}
 
 type DbIdData = { dbId: string };
-export function isDbIdData(value: any): value is DbIdData {
-  if (Obj.isObjToAny(value)) {
-    const { dbId } = value;
-    if (Id.is(dbId)) return true;
-  }
-  return false;
+export function validateDbIdData(value: any): DbIdData {
+  value = Obj.validateObjToAny(value);
+  return {
+    dbId: Id.validate(value),
+  };
 }
 
 export function validateAxiosRes(res: AxiosResponse<unknown>): MakeRes<any> {
@@ -30,60 +31,20 @@ export function validateAxiosRes(res: AxiosResponse<unknown>): MakeRes<any> {
   return obj;
 }
 
-export function validateDbIdRes(res: AxiosResponse<unknown>): DbIdRes {
-  const axiosRes = validateAxiosRes(res);
-  const { data } = axiosRes;
-  if (isDbIdData(data)) {
-    return makeRes({ dbId: data.dbId });
-  } else throw makeResValidationQueryError();
-}
-export function validateDbStoreNameRes(
-  res: AxiosResponse<unknown>
-): DbStoreNameRes {
-  const axiosRes = validateAxiosRes(res);
-  const { data } = axiosRes;
-  if (Obj.isObjToAny(data)) {
-    const { dbStoreName } = data;
-    if (dbStoreNameS.is(dbStoreName, "allQuery"))
-      return makeRes({ dbStoreName });
-  }
-  throw makeResValidationQueryError();
-}
-
 export function validateSessionUrlRes(res: AxiosResponse<unknown>): UrlRes {
-  const { data } = res as UrlRes;
-  if (Obj.isObjToAny(data)) {
-    const { sessionUrl } = data;
-    if (typeof sessionUrl === "string") return makeRes({ sessionUrl });
-  }
-  throw makeResValidationQueryError();
-}
-
-export function validateDbArrQueryNameRes(
-  res: AxiosResponse<unknown>
-): DbStoreNameRes<DbStoreNameByType<"arrQuery">> {
-  const { data } = res;
-  if (Obj.isObjToAny(data)) {
-    const { dbStoreName } = data;
-    if (dbStoreNameS.is(dbStoreName, "arrQuery"))
-      return makeRes({ dbStoreName });
-  }
-  throw makeResValidationQueryError();
+  const urlRes = Obj.validateObjToAny(res) as UrlRes;
+  const data = Obj.validateObjToAny(urlRes) as UrlRes["data"];
+  return makeRes({
+    sessionUrl: Str.validate(data.sessionUrl),
+  });
 }
 
 export function validateDbSectionPackRes(
   res: AxiosResponse<unknown>
 ): SectionPackRes {
-  const { data } = res;
-  if (Obj.isObjToAny(data)) {
-    const { sectionPack } = data;
-    if (isSectionPack(sectionPack)) {
-      return makeRes({ sectionPack }) as SectionPackRes;
-    }
-  }
-  throw makeResValidationQueryError();
-}
-
-export function makeResValidationQueryError() {
-  return new Error("Response failed validation.");
+  res = Obj.validateObjToAny(res);
+  const data = Obj.validateObjToAny(res.data);
+  return makeRes({
+    sectionPack: validateSectionPack(data.sectionPack),
+  });
 }

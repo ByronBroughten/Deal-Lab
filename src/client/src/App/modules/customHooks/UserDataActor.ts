@@ -19,22 +19,27 @@ import { authS } from "./authS";
 export function useUserDataActor(): UserDataActor {
   const sectionProps = useSetterSectionOnlyOneProps("feUser");
   const goToAuthPage = useGoToPage("auth");
+  const goToAccountPage = useGoToPage("activeDeal");
   return new UserDataActor({
     ...sectionProps,
     goToAuthPage,
+    goToAccountPage,
     apiQueries: apiQueries,
   });
 }
 
 interface Props extends SectionActorBaseProps<"feUser"> {
   goToAuthPage: () => void;
+  goToAccountPage: () => void;
 }
 
 export class UserDataActor extends SectionActorBase<"feUser"> {
   private goToAuthPage: () => void;
-  constructor({ goToAuthPage, ...rest }: Props) {
+  private goToAccountPage: () => void;
+  constructor({ goToAuthPage, goToAccountPage, ...rest }: Props) {
     super(rest);
     this.goToAuthPage = goToAuthPage;
+    this.goToAccountPage = goToAccountPage;
   }
 
   get userDataSolver(): UserDataSolver {
@@ -55,6 +60,17 @@ export class UserDataActor extends SectionActorBase<"feUser"> {
   updateUserDataStatus(userDataStatus: StateValue<"userDataStatus">): void {
     this.setter.updateValues({ userDataStatus });
   }
+  get userDataFetchTryCount() {
+    return this.get.valueNext("userDataFetchTryCount");
+  }
+  addGetUserDataTry() {
+    this.setter.updateValues({
+      userDataFetchTryCount: this.userDataFetchTryCount + 1,
+    });
+  }
+  resetUserDataTryCount() {
+    this.setter.updateValues({ userDataFetchTryCount: 0 });
+  }
   async controlUserData(): Promise<void> {
     if (await this.shouldTriggerLoad()) {
       return this.updateUserDataStatus("loading");
@@ -67,8 +83,12 @@ export class UserDataActor extends SectionActorBase<"feUser"> {
     try {
       await this.loadUserData();
     } catch (ex) {
-      await this.unloadUserData();
-      throw new Error(getErrorMessage(ex));
+      if (this.userDataFetchTryCount > 5) {
+        await this.unloadUserData();
+        throw new Error(getErrorMessage(ex));
+      } else {
+        setTimeout(() => this.addGetUserDataTry(), 3000);
+      }
     }
   }
   private async shouldTriggerLoad(): Promise<boolean> {
@@ -79,7 +99,10 @@ export class UserDataActor extends SectionActorBase<"feUser"> {
   }
   async loadUserData(): Promise<void> {
     const res = await this.apiQueries.getUserData(makeReq({}));
-    this.setUserData(res);
+    unstable_batchedUpdates(async () => {
+      this.setUserData(res);
+      this.goToAccountPage();
+    });
   }
   private setUserData({ data, headers }: QueryRes<"getUserData">) {
     userTokenS.setTokenFromHeaders(headers);
@@ -98,7 +121,7 @@ export class UserDataActor extends SectionActorBase<"feUser"> {
 
 export function useControlUserData() {
   const userDataActor = useUserDataActor();
-  const { userDataStatus } = userDataActor;
+  const { userDataStatus, userDataFetchTryCount } = userDataActor;
 
   React.useEffect(() => {
     userDataActor.controlUserData();
@@ -108,7 +131,7 @@ export function useControlUserData() {
     if (userDataStatus === "loading") {
       userDataActor.tryLoadUserData();
     }
-  }, [userDataStatus]);
+  }, [userDataStatus, userDataFetchTryCount]);
 }
 
 export function useLogout() {

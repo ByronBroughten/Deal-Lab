@@ -9,17 +9,12 @@ import {
   ApiQueryName,
   QueryRes,
 } from "../sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
-import { makeRes } from "../sharedWithServer/apiQueriesShared/makeReqAndRes";
-import {
-  isUserInfoHeaders,
-  validateUserData,
-} from "../sharedWithServer/apiQueriesShared/validateUserData";
+import { validateUserData } from "../sharedWithServer/apiQueriesShared/validateUserData";
 import { Obj } from "../sharedWithServer/utils/Obj";
 import { StrictOmit } from "../sharedWithServer/utils/types";
 import {
-  isDbIdData,
-  makeResValidationQueryError,
   validateAxiosRes,
+  validateDbIdData,
   validateDbIdRes,
   validateDbSectionPackRes,
   validateSessionUrlRes,
@@ -40,16 +35,10 @@ function makeApiQueries(): ApiQueries {
     getUserData: {
       doingWhat: "retrieving user data",
       validateRes(res: AxiosResponse<unknown>): QueryRes<"getUserData"> {
-        if (
-          res &&
-          validateUserData(res.data) &&
-          isUserInfoHeaders(res.headers)
-        ) {
-          return {
-            data: res.data,
-            headers: res.headers,
-          };
-        } else throw makeResValidationQueryError();
+        return {
+          data: validateUserData(res.data),
+          headers: userTokenS.validateHasUserTokenProp(res.headers),
+        };
       },
     },
     getSubscriptionData: {
@@ -57,28 +46,19 @@ function makeApiQueries(): ApiQueries {
       validateRes(
         res: AxiosResponse<unknown>
       ): QueryRes<"getSubscriptionData"> {
-        if (res) {
-          const { data, headers } = res;
-          if (data && isUserInfoHeaders(headers)) {
-            return { data: validateSubscriptionValues(data), headers };
-          }
-        }
-        throw makeResValidationQueryError();
+        return {
+          data: validateSubscriptionValues(res.data),
+          headers: userTokenS.validateHasUserTokenProp(res.headers),
+        };
       },
     },
     addSection: {
       doingWhat: "adding a section",
       validateRes(res: AxiosResponse<unknown>): QueryRes<"addSection"> {
-        if (res) {
-          const { headers, data } = res;
-          if (isDbIdData(data) && userTokenS.hasUserTokenHeaderProp(headers)) {
-            return {
-              data,
-              headers,
-            };
-          }
-        }
-        throw makeResValidationQueryError();
+        return {
+          data: validateDbIdData(res.data),
+          headers: userTokenS.validateHasUserTokenProp(res.headers),
+        };
       },
     },
     updateSection: {
@@ -113,21 +93,6 @@ function makeApiQueries(): ApiQueries {
       doingWhat: "going to your account portal",
       validateRes: validateSessionUrlRes,
     },
-    getTableRows: {
-      doingWhat: "getting table rows",
-      validateRes(res: AxiosResponse<unknown>): QueryRes<"getTableRows"> {
-        const { data } = res as QueryRes<"getTableRows">;
-        if (Obj.isObjToAny(data)) {
-          const { tableRowPacks } = data;
-          if (
-            tableRowPacks.every((rowPack) => rowPack.sectionName === "tableRow")
-          ) {
-            return makeRes({ tableRowPacks });
-          }
-        }
-        throw makeResValidationQueryError();
-      },
-    },
   } as const;
 
   return Obj.keys(apiQueryProps).reduce((queries, queryName) => {
@@ -158,7 +123,10 @@ function makeApiQuery<QN extends ApiQueryName>({
       apiQueriesShared[queryName].pathFull,
       req.body
     );
-    if (!res) throw makeResValidationQueryError();
+
+    if (!res) {
+      throw new Error("The response is undefined.");
+    }
     return validateRes(res);
   } as ApiQuery<QN>;
 }

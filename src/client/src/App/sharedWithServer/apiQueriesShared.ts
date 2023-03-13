@@ -15,11 +15,7 @@ import {
   UrlRes,
 } from "./apiQueriesShared/makeReqAndRes";
 import { UserData } from "./apiQueriesShared/validateUserData";
-import {
-  DbStoreNameByType,
-  SectionQueryName,
-} from "./SectionsMeta/sectionChildrenDerived/DbStoreName";
-import { SectionPack } from "./SectionsMeta/sectionChildrenDerived/SectionPack";
+import { SectionQueryName } from "./SectionsMeta/sectionChildrenDerived/DbStoreName";
 
 export type ApiQueries = {
   addSection: QueryAddSection;
@@ -38,12 +34,6 @@ export type ApiQueries = {
     req: MakeReq<{}>
   ) => Promise<{ data: AnalyzerPlanValues; headers: UserInfoTokenProp }>;
   makeSession: (req: MakeReq<{ authId: string }>) => Promise<{ data: {} }>;
-  getTableRows: (
-    req: MakeReq<{
-      dbStoreName: DbStoreNameByType<"mainIndex">;
-      columns: SectionPack<"column">[];
-    }>
-  ) => Promise<{ data: { tableRowPacks: SectionPack<"tableRow">[] } }>;
 };
 
 type ApiQueriesTest<

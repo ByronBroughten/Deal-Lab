@@ -1,5 +1,4 @@
 import { Button } from "@material-ui/core";
-import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import styled from "styled-components";
 import { goToPaymentPage } from "../../modules/services/stripeService";
@@ -40,7 +39,7 @@ export function UpgradeUserToProPanel() {
             <View style={styles.subSectionSpace}>
               <Text
                 style={styles.normalText}
-              >{`Save and load hundreds of deals, properties, loans, managements, variables, and lists.\nAnd hey, there's a 7 day free trial.`}</Text>
+              >{`With Deal Lab Pro, save and load hundreds of deals, deal components, and variables. Try it out with a 7 day free trial, why don't'chya?`}</Text>
             </View>
           </View>
         </View>

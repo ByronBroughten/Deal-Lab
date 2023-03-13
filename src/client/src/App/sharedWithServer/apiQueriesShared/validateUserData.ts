@@ -1,6 +1,4 @@
 import { z } from "zod";
-import { constants } from "../../Constants";
-import { UserInfoTokenProp } from "../../modules/services/userTokenS";
 import {
   FeStoreNameByType,
   feStoreNameS,
@@ -16,10 +14,10 @@ import { zS } from "../utils/zod";
 export type UserData = {
   feUser: SectionPack<"feUser">;
 };
-export function validateUserData(value: any): value is UserData {
-  const { feUser } = value as UserData;
-  validateSectionPackByType(feUser, "feUser");
-  return true;
+
+export function validateUserData(value: any): UserData {
+  const feUser = validateSectionPackByType(value.feUser, "feUser");
+  return { feUser };
 }
 
 function validateMainStoreArrs(value: any): void {
@@ -38,10 +36,3 @@ function validateMainStoreArrs(value: any): void {
 export type MainStoreArrs = {
   [CN in FeStoreNameByType<"mainStoreName">]: ChildSectionPack<"feUser", CN>[];
 };
-
-export function isUserInfoHeaders(value: any): value is UserInfoTokenProp {
-  return (
-    typeof value === "object" &&
-    typeof value[constants.tokenKey.userAuthData] === "string"
-  );
-}

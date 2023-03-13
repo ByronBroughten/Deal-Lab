@@ -120,6 +120,7 @@ export const sectionPathContexts = typeCheckContexts({
 });
 
 export const indexesForSpecifiers = {
+  // root is included for counting the index in the path
   loan: {
     default: 6,
     activeDealPage: 6,

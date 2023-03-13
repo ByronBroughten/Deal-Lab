@@ -7,7 +7,7 @@ import { allBaseSectionVarbs } from "../../SectionsMeta/allBaseSectionVarbs";
 import { ChildSectionPack } from "../../SectionsMeta/sectionChildrenDerived/ChildSectionPack";
 import {
   SectionPack,
-  validateSectionPackNext,
+  validateSectionPack,
 } from "../../SectionsMeta/sectionChildrenDerived/SectionPack";
 import { validateSectionPackArrs } from "../../SectionsMeta/SectionNameByType";
 import { GetterSections } from "../../StateGetters/GetterSections";
@@ -75,7 +75,7 @@ export class SectionsStore {
     const { activeDeal, ...rest } = storedState;
     try {
       return {
-        activeDeal: validateSectionPackNext(activeDeal),
+        activeDeal: validateSectionPack(activeDeal),
         ...validateSectionPackArrs(rest, "main", storeChildNames),
       };
     } catch (e) {

@@ -25,9 +25,15 @@ import { monSchemas } from "../../client/src/App/sharedWithServer/utils/mongoose
 
 export type DbSectionsModelCore = RawDbUser & { _id: mongoose.Types.ObjectId };
 
-export type RawDbUser = {
+type UniqueValues = {
+  authId: string;
+  email: string;
+};
+type RawDbUserStores = {
   [CN in DbStoreName]: DbSectionPack<CN>[];
 };
+export interface RawDbUser extends RawDbUserStores, UniqueValues {}
+type SchemaKeys = keyof RawDbUser;
 
 export const DbUserModel = mongoose.model<DbSectionsModelCore>(
   "user",
@@ -35,11 +41,18 @@ export const DbUserModel = mongoose.model<DbSectionsModelCore>(
 );
 
 function makeMongooseUserSchema(): Schema<Record<DbStoreName, any>> {
-  const schemaFrame = dbStoreNames.reduce((frame, storeName) => {
-    const sectionName = dbStoreSectionName(storeName);
-    frame[storeName] = [monSectionPack(sectionName)];
-    return frame;
-  }, {} as Record<DbStoreName, any>);
+  const schemaFrame = dbStoreNames.reduce(
+    (frame, storeName) => {
+      const sectionName = dbStoreSectionName(storeName);
+      frame[storeName] = [monSectionPack(sectionName)];
+      return frame;
+    },
+    {
+      authId: monSchemas.reqString,
+      email: monSchemas.reqString,
+    } as Record<SchemaKeys, any>
+  );
+
   return new Schema(schemaFrame);
 }
 function monSectionPack<SN extends DbSectionName>(sectionName: SN) {

@@ -2,7 +2,7 @@ import { Schema } from "mongoose";
 import { z } from "zod";
 import { Obj } from "../../../utils/Obj";
 import { zS } from "../../../utils/zod";
-import { Id } from "../../id";
+import { Id } from "../../Id";
 import { isVarbPathName } from "../../SectionInfo/VarbPathNameInfo";
 import {
   EntityIdProp,

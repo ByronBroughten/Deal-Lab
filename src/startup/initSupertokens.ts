@@ -52,9 +52,9 @@ export function initSupertokens() {
                   throw Error("No original.emailPasswordSingInPOST");
                 }
                 const res = await original.thirdPartySignInUpPOST(input);
-                if (res.status === "OK") {
-                  await finishSignIn(res.user);
-                }
+                // if (res.status === "OK") {
+                //   await finishSignIn(res.user);
+                // }
                 return res;
               },
               emailPasswordSignInPOST: async function (input) {
@@ -62,9 +62,9 @@ export function initSupertokens() {
                   throw Error("No original.emailPasswordSingInPOST");
                 }
                 const res = await original.emailPasswordSignInPOST(input);
-                if (res.status === "OK") {
-                  await finishSignIn(res.user, input.formFields);
-                }
+                // if (res.status === "OK") {
+                //   await finishSignIn(res.user, input.formFields);
+                // }
                 return res;
               },
               emailPasswordSignUpPOST: async function (input) {
@@ -72,9 +72,9 @@ export function initSupertokens() {
                   throw Error("No original.emailPasswordSingUpPOST");
                 }
                 const res = await original.emailPasswordSignUpPOST(input);
-                if (res.status === "OK") {
-                  await finishSignIn(res.user, input.formFields);
-                }
+                // if (res.status === "OK") {
+                //   await finishSignIn(res.user, input.formFields);
+                // }
                 return res;
               },
             };

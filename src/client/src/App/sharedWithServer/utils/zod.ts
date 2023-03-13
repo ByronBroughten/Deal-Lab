@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { Id } from "../SectionsMeta/id";
+import { Id } from "../SectionsMeta/Id";
 import { dbLimits } from "./dbLimts";
 
 export const validationMessage = {
