@@ -3,21 +3,23 @@ import { SetterTesterSection } from "./TestUtils/SetterTesterSection";
 
 describe("SetterCalculations", () => {
   it("should calculate loan payments accurately", () => {
-    const dealTester = SetterTesterSection.initActiveDeal();
+    const dealPage = SetterTesterSection.initActiveDealPage();
+    const dealTester = dealPage.onlyChild("deal");
     addTestLoan(dealTester);
     addInterestOnlyLoan(dealTester);
 
-    const financing = dealTester.get.onlyChild("financing");
+    const calculated = dealPage.get.onlyChild("calculatedVarbs");
+
     const expectedLoanPayment = 912.6 + 50;
     const loanPaymentMonthly =
-      financing.varbNext("loanPaymentMonthly").numberValue;
+      calculated.varbNext("loanPaymentMonthly").numberValue;
     expect(loanPaymentMonthly).toBe(expectedLoanPayment);
 
     const loanPaymentYearly =
-      financing.varbNext("loanPaymentYearly").numberValue;
+      calculated.varbNext("loanPaymentYearly").numberValue;
     expect(loanPaymentYearly).toBeCloseTo(12 * expectedLoanPayment, 1);
 
-    const loanExpensesMonthly = financing.varbNext(
+    const loanExpensesMonthly = calculated.varbNext(
       "loanExpensesMonthly"
     ).numberValue;
     expect(loanExpensesMonthly).toBe(expectedLoanPayment + 100);

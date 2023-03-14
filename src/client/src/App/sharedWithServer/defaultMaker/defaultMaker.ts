@@ -1,6 +1,6 @@
 import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
-import { makeDefaultDealPack } from "./makeDefaultDealPack";
+import { makeDefaultDealPack } from "./makeDefaultDeal";
 import { makeDefaultDealPage } from "./makeDefaultDealPage";
 import { makeDefaultFeUserPack } from "./makeDefaultFeUser";
 import { makeDefaultLoanPack } from "./makeDefaultLoanPack";

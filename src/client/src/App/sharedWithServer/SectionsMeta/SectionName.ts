@@ -22,6 +22,7 @@ export const sectionNames = [
   "ongoingList",
   "ongoingItem",
   "outputList",
+  "outputSection",
 
   "compareSection",
   "compareOption",

@@ -7,7 +7,9 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
-// - After the next commit
+// - Try upgrading to mui-5.
+
+// - After the next git push heroku master
 //   - check whether the upgrade to pro button works (it works in dev)
 
 // - Add FixNFlip
@@ -37,14 +39,12 @@ AppRegistry.runApplication("App", {
 // - Add Brrrrr
 //   - Change controls for refinance loan vs regular loan
 
-// - Try upgrading to mui-5. That will make styling easier
-
 // - Implement the account page
 //   - This involves changing the other pages
 // - Then add a footer
 
-// - Add down payment
-// - Add loanPurpose
+// - Add down payment UI
+// - Add loanPurpose UI
 // "For"
 //   - Property purchase price
 //   - Upfront repairs
@@ -53,16 +53,6 @@ AppRegistry.runApplication("App", {
 // Should I use a radio? Yeah, I guess so.
 // * Enter down payment
 // * Enter loan amount
-// - Put the downpayment stuff on financing
-// - PITI, too
-
-// - Lay the groundwork for boolean userVarbs
-//   - Change numVarbItem to numVarbItem
-
-// - Add boolVarbList and boolVarbItem
-// - add boolVarbList and boolVarbItem
-// - add boolObj (mainText, entities)
-//  - mainText allows for operators
 
 // - Allow for upgrades to the state without having to delete
 //   all user data
@@ -74,9 +64,7 @@ AppRegistry.runApplication("App", {
 //    the sections of self that the sectionPack has a null for
 
 // - Custom outputs groups
-//  - You already have the outputList component—now you need outputSection
 //  - outputSection will have three "slots" for loading an output list
-//  - The compare page doesn't need such slots. You just pick the output group
 //  - Different one display depending on whether mode is buy/hold, fixFlip, brrrr
 //  - Save and load output groups for deal compare and output
 

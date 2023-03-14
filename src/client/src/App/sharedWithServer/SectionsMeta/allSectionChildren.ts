@@ -56,12 +56,16 @@ export const allSectionChildren = checkAllSectionChildren({
   // main has feUser and each of the main app pages
   main: sectionChildren({
     feUser: ["feUser"],
+    latentSections: ["latentSections"],
+
+    // All of this could be periodically saved to load on login
+    // Especially outputSection
     activeDealPage: ["dealPage"],
+    outputSection: ["outputSection"],
     userVarbEditor: ["userVarbEditor"],
     userListEditor: ["userListEditor"],
     variablesMenu: ["variablesMenu"],
     dealCompare: ["compareSection"],
-    latentSections: ["latentSections"],
   }),
   dealPage: sectionChildren({
     deal: ["deal"],
@@ -128,6 +132,11 @@ export const allSectionChildren = checkAllSectionChildren({
   outputList: {
     outputItem: sectionChild("outputItem"),
   },
+  outputSection: {
+    buyAndHoldOutputList: sectionChild("outputList"),
+    fixAndFlipOutputList: sectionChild("outputList"),
+    brrrrOutputList: sectionChild("outputList"),
+  },
   outputItem: { virtualVarb: sectionChild("virtualVarb") },
   ongoingValueGroup: {
     ongoingValue: sectionChild("ongoingValue"),
@@ -155,7 +164,6 @@ export const allSectionChildren = checkAllSectionChildren({
     property: ["property"],
     financing: ["financing"],
     mgmt: ["mgmt"],
-    dealOutputList: ["outputList"],
   }),
   financing: { loan: sectionChild("loan") },
   loan: sectionChildren({

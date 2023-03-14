@@ -11,27 +11,7 @@ export function dealRelVarbs(): UpdateSectionVarbs<"deal"> {
   return {
     ...updateVarbsS._typeUniformity,
     ...updateVarbsS.savableSection,
-    ...updateVarbsS.ongoingSumNumsNext("piti", "monthly", {
-      updateFnProps: [
-        updateFnPropS.varbPathBase("taxes"),
-        updateFnPropS.varbPathBase("homeIns"),
-        updateFnPropS.varbPathBase("mortgageIns"),
-        updateFnPropS.varbPathBase("loanPayment"),
-      ],
-    }),
     dealMode: updateVarb("dealMode", { initValue: "buyAndHold" }),
-    downPaymentDollars: updateVarbS.leftRightPropFn("simpleSubtract", [
-      updateFnPropS.varbPathName("purchasePrice"),
-      updateFnPropS.varbPathName("loanBaseDollars"),
-    ]),
-    downPaymentDecimal: updateVarbS.leftRightPropFn("simpleDivide", [
-      updateFnPropS.local("downPaymentDollars"),
-      updateFnPropS.varbPathName("purchasePrice"),
-    ]),
-    downPaymentPercent: updateVarbS.singlePropFn(
-      "decimalToPercent",
-      updateFnPropS.local("downPaymentDecimal")
-    ),
     totalInvestment: updateVarbS.leftRightPropFn(
       "simpleSubtract",
       updateFnPropS.localArr(
@@ -86,7 +66,6 @@ export function dealRelVarbs(): UpdateSectionVarbs<"deal"> {
       updateFnPropS.pathNameBase("mgmtFocal", "upfrontExpenses"),
       updateFnPropS.varbPathName("loanUpfrontExpenses"),
     ]),
-
     outOfPocketExpenses: updateVarbS.leftRightPropFn("simpleSubtract", [
       updateFnPropS.local("upfrontExpenses"),
       updateFnPropS.varbPathName("loanTotalDollars"),

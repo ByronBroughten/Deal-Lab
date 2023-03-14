@@ -22,16 +22,7 @@ type MakeVarbPathParams<
 };
 
 const allVarbPathParams = {
-  ...sectionVarbNameParams("financingFocal", "Financing", [
-    "financingMode",
-    "loanBaseDollars",
-    "closingCosts",
-    "loanUpfrontExpenses",
-    "loanTotalDollars",
-    ...targetNames("mortgageIns", "ongoing"),
-    ...targetNames("loanPayment", "ongoing"),
-    ...targetNames("loanExpenses", "ongoing"),
-  ]),
+  ...sectionVarbNameParams("financingFocal", "Financing", ["financingMode"]),
   ...sectionVarbNameParams("calculatedVarbsFocal", "Property", [
     "two",
     "onePercentPrice",
@@ -40,6 +31,18 @@ const allVarbPathParams = {
     "onePercentPriceSqftAverage",
     ...targetNames("fivePercentRent", "ongoing"),
     ...targetNames("tenPercentRent", "ongoing"),
+  ]),
+  ...sectionVarbNameParams("calculatedVarbsFocal", "Financing", [
+    "downPaymentDollars",
+    "downPaymentPercent",
+    "loanBaseDollars",
+    "closingCosts",
+    "loanUpfrontExpenses",
+    "loanTotalDollars",
+    ...targetNames("piti", "ongoing"),
+    ...targetNames("mortgageIns", "ongoing"),
+    ...targetNames("loanPayment", "ongoing"),
+    ...targetNames("loanExpenses", "ongoing"),
   ]),
   ...sectionVarbNameParams("propertyFocal", "Property", [
     "purchasePrice",
@@ -104,13 +107,8 @@ const allVarbPathParams = {
     "dealFocal",
     "upfrontRevenue"
   ),
-
   ...sectionVarbNameParams("dealFocal", "Deal", [
-    "downPaymentDollars",
-    "downPaymentPercent",
-
     "totalInvestment",
-    ...targetNames("piti", "ongoing"),
     ...targetNames("cashFlow", "ongoing"),
     ...targetNames("cocRoi", "ongoing"),
   ]),

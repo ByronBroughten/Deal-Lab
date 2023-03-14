@@ -76,19 +76,17 @@ export const allDisplaySectionVarbs = {
     ...ongoingInputDollars("targetRent", "Rent"),
   }),
   ...displaySectionVarbsProp("calculatedVarbs", {
+    ...group("ongoing", "loanPayment", "Loan Payments", {
+      monthly: { displayNameWithVariant: "Monthly loan payments" },
+      yearly: { displayNameWithVariant: "Yearly loan payments" },
+    }),
+    loanTotalDollars: varb("Loan total"),
     onePercentPrice: varb("1% Purchase Price"),
     twoPercentPrice: varb("2% Purchase Price"),
     ...group("ongoing", "fivePercentRent", "5% Rent", {
       monthly: { displayNameWithVariant: "5% Rent monthly" },
       yearly: { displayNameWithVariant: "5% Rent yearly" },
     }),
-  }),
-  ...displaySectionVarbsProp("financing", {
-    ...group("ongoing", "loanPayment", "Loan Payments", {
-      monthly: { displayNameWithVariant: "Monthly loan payments" },
-      yearly: { displayNameWithVariant: "Yearly loan payments" },
-    }),
-    loanTotalDollars: varb("Loan total"),
   }),
   ...displaySectionVarbsProp("loanBaseValue", {
     valueDollars: varb("Base loan amount"),

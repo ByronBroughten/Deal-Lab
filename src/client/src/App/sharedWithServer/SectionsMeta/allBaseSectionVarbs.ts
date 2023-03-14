@@ -303,7 +303,6 @@ export function makeAllBaseSectionVarbs() {
     deal: baseSectionVarbs({
       dealMode: baseVarb("dealMode"),
       ...baseVarbsS.savableSection,
-      ...baseVarbsS.ongoingDollars("piti"),
       ...baseVarbsS.ongoingDollars("expenses"),
       ...baseVarbsS.ongoingDollars("revenue"),
       ...baseVarbsS.ongoingDollars("cashFlow"),
@@ -319,12 +318,15 @@ export function makeAllBaseSectionVarbs() {
         ] as const,
         dollars
       ),
-      downPaymentDollars: baseVarb("numObj", dollars),
-      downPaymentPercent: baseVarb("numObj", percent),
-      downPaymentDecimal: baseVarb("numObj", decimal),
     }),
     financing: baseSectionVarbs({
       financingMode: baseVarb("financingMode"),
+      one: baseVarb("number"),
+    }),
+    calculatedVarbs: baseSectionVarbs({
+      downPaymentDollars: baseVarb("numObj", dollars),
+      downPaymentPercent: baseVarb("numObj", percent),
+      downPaymentDecimal: baseVarb("numObj", decimal),
       ...baseVarbs(
         "numObj",
         [
@@ -336,16 +338,14 @@ export function makeAllBaseSectionVarbs() {
         ] as const,
         dollars
       ),
-      one: baseVarb("number"),
+      ...baseVarbsS.ongoingDollars("piti"),
       ...baseVarbsS.ongoingDollars("loanExpenses"),
       ...baseVarbsS.ongoingDollars("mortgageIns"),
       ...baseVarbsS.ongoingDollars("loanPayment"),
-    }),
-    calculatedVarbs: baseSectionVarbs({
+
       ...baseVarbs(
         "numObj",
         [
-          "fivePercentDecimal",
           "two",
           "onePercentPrice",
           "twoPercentPrice",
@@ -353,7 +353,6 @@ export function makeAllBaseSectionVarbs() {
           "fivePercentRentYearly",
           "tenPercentRentMonthly",
           "tenPercentRentYearly",
-          "onePercentSqftAverage",
           "onePercentPricePlusSqft",
           "onePercentPriceSqftAverage",
         ] as const,

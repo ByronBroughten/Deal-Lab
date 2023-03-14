@@ -94,7 +94,7 @@ describe("SetterSection", () => {
 
     function runWithNames(fn: SectionChildPropsFn): void {
       const sectionAndChildNames = [
-        ["dealFocal", ["dealOutputList"]],
+        ["financingFocal", ["loan"]],
         ["propertyFocal", ["unit"]],
       ] as const;
       for (const [pathName, childNames] of sectionAndChildNames) {

@@ -10,6 +10,7 @@ import { DealSubSectionClosed } from "./ActiveDeal/DealSubSectionClosed";
 
 export function ActiveDealMain() {
   const main = useSetterSectionOnlyOne("main");
+  const outputSection = main.get.onlyChild("outputSection");
   const dealPage = main.onlyChild("activeDealPage");
   const deal = dealPage.get.onlyChild("deal");
   const calculatedVarbs = dealPage.onlyChild("calculatedVarbs");
@@ -53,7 +54,7 @@ export function ActiveDealMain() {
       </FormSection>
       {
         <OutputSection
-          feId={deal.onlyChildFeId("dealOutputList")}
+          feId={outputSection.onlyChildFeId("buyAndHoldOutputList")}
           disableOpenOutputs={completionStatus !== "allValid"}
           outputsIsOpen={dealPage.value("showOutputs")}
           openOutputs={() =>

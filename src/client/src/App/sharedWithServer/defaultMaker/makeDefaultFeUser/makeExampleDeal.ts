@@ -1,6 +1,6 @@
 import { stringObj } from "../../SectionsMeta/values/StateValue/StringObj";
 import { PackBuilderSection } from "../../StatePackers.ts/PackBuilderSection";
-import { makeDefaultDealPack } from "../makeDefaultDealPack";
+import { makeDefaultDealPack } from "../makeDefaultDeal";
 import { dealExampleLoan } from "./makeExampleLoan";
 import { exampleDealMgmt } from "./makeExampleMgmt";
 import { makeExampleDealProperty } from "./makeExampleProperty";

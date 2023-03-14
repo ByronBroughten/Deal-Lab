@@ -37,6 +37,8 @@ function getFinancingProps(
 ): SectionProps {
   let displayName = "";
   const financingMode = financing.valueNext("financingMode");
+  const { calculatedFocal } = financing;
+
   if (financingMode === "cashOnly") {
     displayName = "Cash Only";
   } else {
@@ -49,7 +51,7 @@ function getFinancingProps(
   return {
     sectionTitle: "Financing",
     displayName,
-    detailVarbPropArr: financing.varbInfoArr([
+    detailVarbPropArr: calculatedFocal.varbInfoArr([
       "loanPaymentMonthly",
       "loanTotalDollars",
       // "downPayment"

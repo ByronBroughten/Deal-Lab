@@ -1,5 +1,5 @@
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
-import { makeDefaultDealPack } from "./makeDefaultDealPack";
+import { makeDefaultDealPack } from "./makeDefaultDeal";
 
 export function makeDefaultDealPage() {
   const dealPage = PackBuilderSection.initAsOmniChild("dealPage");

@@ -3,7 +3,10 @@ import { inEntityValueInfo } from "../SectionsMeta/values/StateValue/InEntityVal
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
 import { makeDefaultDealPage } from "./makeDefaultDealPage";
 import { makeDefaultFeUserPack } from "./makeDefaultFeUser";
-import { defaultDealOutputInfos } from "./makeDefaultOutputList";
+import {
+  defaultDealOutputInfos,
+  makeDefaultOutputList,
+} from "./makeDefaultOutputList";
 
 export function makeDefaultMain(): SectionPack<"main"> {
   const main = PackBuilderSection.initAsOmniChild("main");
@@ -34,6 +37,12 @@ export function makeDefaultMain(): SectionPack<"main"> {
   });
 
   main.addChild("variablesMenu");
+
+  const outputSection = main.addAndGetChild("outputSection");
+  outputSection.loadChild({
+    childName: "buyAndHoldOutputList",
+    sectionPack: makeDefaultOutputList(),
+  });
 
   const latentSections = main.addAndGetChild("latentSections");
   latentSections.loadChild({

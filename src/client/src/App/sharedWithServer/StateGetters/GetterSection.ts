@@ -117,6 +117,12 @@ export class GetterSection<
   get list() {
     return new GetterList(this.getterListProps);
   }
+  get calculatedFocal(): GetterSection<"calculatedVarbs"> {
+    return this.sectionByFocalMixed({
+      infoType: "pathName",
+      pathName: "calculatedVarbsFocal",
+    }) as GetterSection<"calculatedVarbs">;
+  }
   get packMaker() {
     return new PackMakerSection(this.getterSectionProps);
   }

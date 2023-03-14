@@ -52,6 +52,9 @@ export class SetterTesterSection<
   static initActiveDeal(): SetterTesterSection<"deal"> {
     return this.initMain().onlyChild("activeDealPage").onlyChild("deal");
   }
+  static initActiveDealPage(): SetterTesterSection<"dealPage"> {
+    return this.initMain().onlyChild("activeDealPage");
+  }
   static initByPathName<PN extends SectionPathName>(
     pathName: PN
   ): SetterTesterSection<PathSectionName<PN>> {
