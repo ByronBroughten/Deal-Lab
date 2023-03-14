@@ -1,4 +1,5 @@
 import { css } from "styled-components";
+import { nativeTheme } from "./nativeTheme";
 import theme, { ThemeName } from "./Theme";
 
 function mainColorSection(themeName: ThemeName) {
@@ -110,7 +111,7 @@ const ccs = {
       padding: ${theme.s1} ${theme.s2} 0 ${theme.s2};
       border-radius: ${theme.br0};
     `,
-    main({ label, sectionName }: { label?: string; sectionName?: ThemeName }) {
+    main({ label }: { label?: string }) {
       return css`
         display: inline-block;
         .MaterialDraftEditor-wrapper {
@@ -120,11 +121,6 @@ const ccs = {
           border: 1px solid ${theme.primaryBorder};
           /* border-bottom: 1px solid transparent; */
           background-color: ${theme.light};
-
-          ${sectionName &&
-          css`
-            background-color: ${theme[sectionName].light};
-          `}
         }
 
         .MuiFilledInput-adornedStart {
@@ -174,7 +170,7 @@ const ccs = {
             white-space: nowrap;
           }
           .MuiFormLabel-root.Mui-focused {
-            color: ${theme.next.dark};
+            color: ${nativeTheme.primary.main};
           }
 
           // label location without text

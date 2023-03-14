@@ -14,6 +14,7 @@ import {
   SectionsDispatchContext,
   useDealLabSections,
 } from "./App/sharedWithServer/stateClassHooks/useSections";
+import { nativeTheme } from "./App/theme/nativeTheme";
 import { Theme } from "./App/theme/Theme";
 import { GlobalFonts } from "./fonts/fonts";
 import GlobalStyle from "./globalStyles";
@@ -25,7 +26,13 @@ const App: React.FC = () => {
     storeSectionsLocally: true,
   });
 
-  const muiTheme = createTheme();
+  const muiTheme = createTheme({
+    palette: {
+      primary: {
+        main: nativeTheme.secondary.main,
+      },
+    },
+  });
   return (
     <SuperTokensWrapper>
       <React.StrictMode>

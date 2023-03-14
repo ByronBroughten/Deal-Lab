@@ -16,7 +16,7 @@ export default function BasicPropertyInfo({ feId, className }: Props) {
       }}
     >
       <div>
-        <StandardLabel>Basic Info</StandardLabel>
+        <StandardLabel>Basics</StandardLabel>
         <div className="BasicPropertyInfo-editors">
           <NumObjEntityEditor
             className={`BasicPropertyInfo-numObjEditor BasicPropertyInfo-marginEditor`}
@@ -55,6 +55,6 @@ const Styled = styled(FormSection)`
     margin-right: ${theme.s4};
   }
   .MuiFormControl-root.labeled {
-    min-width: 127px;
+    min-width: 135px;
   }
 `;

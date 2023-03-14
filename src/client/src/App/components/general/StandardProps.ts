@@ -1,3 +1,4 @@
+import { SxProps } from "@mui/material";
 import { CSSProperties } from "@mui/material/styles/createTypography";
 import React from "react";
 import { ViewStyle } from "react-native";
@@ -21,6 +22,7 @@ export interface MuiStandardProps {
 }
 
 export interface MuiBtnProps extends MuiStandardProps {
+  sx?: SxProps;
   style?: CSSProperties;
   onClick?: () => void;
   disabled?: boolean;

@@ -39,6 +39,7 @@ export function SelectEditor({
         size="small"
         variant="filled"
         style={{ minWidth: "120px" }}
+        hiddenLabel
       >
         <Select
           className={`SelectEditor-select ${

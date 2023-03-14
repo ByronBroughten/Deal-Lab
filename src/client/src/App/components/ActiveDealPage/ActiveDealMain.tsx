@@ -28,7 +28,12 @@ export function ActiveDealMain() {
         }}
       />
       <FormSection className="ActiveDeal-modeSelectorSection">
-        <FormControl className="ActiveDeal-modeSelectorControl" size={"small"}>
+        <FormControl
+          className="ActiveDeal-modeSelectorControl"
+          size={"small"}
+          variant="filled"
+          hiddenLabel
+        >
           <StandardLabel className="ActiveDeal-dealModeLabel">
             Mode
           </StandardLabel>

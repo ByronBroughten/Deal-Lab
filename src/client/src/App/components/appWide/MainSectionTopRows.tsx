@@ -120,10 +120,6 @@ const Styled = styled.div`
     justify-content: space-between;
   }
 
-  .MainSectionTopRows-leftBlock {
-    /* width: 130px; */
-    color: ${theme.primary};
-  }
   .MainSectionTopRows-sectionTitle {
     font-size: 22px;
   }

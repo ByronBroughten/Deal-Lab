@@ -48,9 +48,12 @@ export function SectionIndexRows<
       return (
         <>
           <TextField
+            hiddenLabel
             {...{
+              size: "small",
               className: "SectionIndexRows-filter",
               placeholder: "Filter",
+              variant: "filled",
               value: filter,
               onChange: ({ currentTarget }) => {
                 setFilter(currentTarget.value);
@@ -110,16 +113,12 @@ const Styled = styled.div<{ sectionName: ThemeName }>`
   position: relative;
   z-index: 2; // 2 beats editor title labels
   background: ${theme.light};
-  border-radius: 0 0 ${theme.br0} ${theme.br0};
+  border-radius: ${theme.br0};
   border: 1px solid ${theme["gray-500"]};
   max-height: 200px;
   overflow-y: auto;
   overflow-x: hidden;
   ${ccs.dropdown.scrollbar};
-
-  .SectionIndexRows-filter {
-    padding: 0 ${theme.s3} 0 ${theme.s3};
-  }
 
   .SectionIndexRows-noEntriesRow {
     display: flex;

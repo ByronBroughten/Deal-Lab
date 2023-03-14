@@ -71,6 +71,7 @@ export const MaterialDraftEditor = React.memo(function MaterialDraftEditor({
             name: id,
             label: label ?? "",
             variant: "filled",
+            hiddenLabel: label ? false : true,
             ...rest,
           }}
           onClick={() => {
@@ -100,9 +101,8 @@ export const MaterialDraftEditor = React.memo(function MaterialDraftEditor({
   );
 });
 
-const Styled = styled.div<{ label?: any; sectionName?: ThemeName }>`
-  ${({ label, sectionName }) =>
-    ccs.materialDraftEditor.main({ label, sectionName })};
+const Styled = styled.div<{ label?: any }>`
+  ${({ label }) => ccs.materialDraftEditor.main({ label })};
   .public-DraftEditorPlaceholder-root {
     position: absolute;
     white-space: nowrap;
