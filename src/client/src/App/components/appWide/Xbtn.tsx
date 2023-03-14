@@ -3,9 +3,9 @@ import styled from "styled-components";
 import { nativeTheme } from "../../theme/nativeTheme";
 import theme from "../../theme/Theme";
 import { PlainIconBtn } from "../general/PlainIconBtn";
-import { NativeBtnProps } from "../general/StandardProps";
+import { MuiBtnProps } from "../general/StandardProps";
 
-export function XBtn({ children, className, style, ...rest }: NativeBtnProps) {
+export function XBtn({ children, className, style, ...rest }: MuiBtnProps) {
   return (
     <Styled
       {...{
@@ -18,7 +18,7 @@ export function XBtn({ children, className, style, ...rest }: NativeBtnProps) {
           color: nativeTheme["gray-800"],
           borderRadius: "100%",
           whiteSpace: "nowrap",
-          ...style,
+          ...(style as any),
         },
         ...rest,
       }}

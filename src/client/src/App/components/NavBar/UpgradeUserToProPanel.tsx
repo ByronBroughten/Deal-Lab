@@ -1,4 +1,4 @@
-import { Button } from "@material-ui/core";
+import { Button } from "@mui/material";
 import { StyleSheet, Text, View } from "react-native";
 import styled from "styled-components";
 import { goToPaymentPage } from "../../modules/services/stripeService";

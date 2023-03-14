@@ -1,4 +1,4 @@
-import { Checkbox, FormControlLabel } from "@material-ui/core";
+import { Checkbox, FormControlLabel } from "@mui/material";
 import styled from "styled-components";
 import { PiCalculationName } from "../../../../../sharedWithServer/SectionsMeta/values/StateValue/valuesShared/calculations/piCalculations";
 import { useSetterVarb } from "../../../../../sharedWithServer/stateClassHooks/useSetterVarb";

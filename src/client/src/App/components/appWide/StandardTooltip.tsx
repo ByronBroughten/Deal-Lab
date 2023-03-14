@@ -1,4 +1,4 @@
-import { Tooltip } from "@material-ui/core";
+import { Tooltip } from "@mui/material";
 import theme from "../../theme/Theme";
 
 export default function StandardToolTip({
@@ -29,13 +29,17 @@ export default function StandardToolTip({
       placement="top"
       PopperProps={{
         popperOptions: {
-          modifiers: {
-            flip: { enabled: false },
-            offset: {
-              enabled: true,
-              offset: "0px, -10px",
+          modifiers: [
+            {
+              name: "flip",
+              enabled: false,
             },
-          },
+            {
+              name: "offset",
+              offset: "0px, -10px",
+              enabled: true,
+            },
+          ],
         },
       }}
       arrow

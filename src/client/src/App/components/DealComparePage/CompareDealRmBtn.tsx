@@ -3,9 +3,9 @@ import { FeSectionInfo } from "../../sharedWithServer/SectionsMeta/SectionInfo/F
 import { nativeTheme } from "../../theme/nativeTheme";
 import theme from "../../theme/Theme";
 import { RemoveSectionXBtn } from "../appWide/RemoveSectionXBtn";
-import { NativeStandardProps } from "../general/StandardProps";
+import { MuiStandardProps } from "../general/StandardProps";
 
-interface Props extends NativeStandardProps, FeSectionInfo {}
+interface Props extends MuiStandardProps, FeSectionInfo {}
 export function CompareDealRmBtn({ style, ...rest }: Props) {
   return (
     <StyledRmSectionBtn

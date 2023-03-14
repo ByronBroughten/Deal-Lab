@@ -1,4 +1,4 @@
-import { FormControlLabel, FormGroup } from "@material-ui/core";
+import { FormControlLabel, FormGroup } from "@mui/material";
 import { CheckboxStyled, CheckboxStyledProps } from "./CheckboxStyled";
 
 interface Props extends CheckboxStyledProps {

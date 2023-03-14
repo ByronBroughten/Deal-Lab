@@ -1,4 +1,4 @@
-import { FormControl, FormControlLabel, RadioGroup } from "@material-ui/core";
+import { FormControl, FormControlLabel, RadioGroup } from "@mui/material";
 import styled from "styled-components";
 import { StateValue } from "../../../sharedWithServer/SectionsMeta/values/StateValue";
 import { useSetterSection } from "../../../sharedWithServer/stateClassHooks/useSetterSection";

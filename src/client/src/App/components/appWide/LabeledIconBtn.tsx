@@ -1,4 +1,4 @@
-import { Button } from "@material-ui/core";
+import { Button } from "@mui/material";
 import { transparentize } from "polished";
 import React from "react";
 import styled from "styled-components";

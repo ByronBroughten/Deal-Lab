@@ -1,4 +1,4 @@
-import { FilledTextFieldProps, TextField } from "@material-ui/core";
+import { FilledTextFieldProps, TextField } from "@mui/material";
 import { Editor, EditorState } from "draft-js";
 import { pick } from "lodash";
 import React from "react";

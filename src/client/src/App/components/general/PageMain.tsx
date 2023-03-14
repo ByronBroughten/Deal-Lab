@@ -1,13 +1,26 @@
-import { Text, View } from "react-native";
-import styled from "styled-components";
-import theme from "../../theme/Theme";
-import { NativeStandardProps } from "./StandardProps";
+import React from "react";
+import { Text, View, ViewStyle } from "react-native";
+import { nativeTheme } from "../../theme/nativeTheme";
 
-type Props = NativeStandardProps;
+type Props = { style?: ViewStyle; children: React.ReactNode };
 
-export function PageMain({ children, ...rest }: Props) {
-  return <Styled {...rest}>{children}</Styled>;
+export function PageMain({ style, ...rest }: Props) {
+  return (
+    <View
+      {...{
+        style: {
+          ...style,
+          flex: 1,
+          zIndex: 5,
+          backgroundColor: nativeTheme.light,
+          overflow: "visible",
+        },
+        ...rest,
+      }}
+    />
+  );
 }
+// overflow-x: visible;
 
 function Footer() {
   return (
@@ -20,12 +33,3 @@ function Footer() {
     </View>
   );
 }
-
-const Styled = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  z-index: 5;
-  background: ${theme.light};
-  overflow-x: visible;
-`;

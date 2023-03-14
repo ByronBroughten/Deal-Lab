@@ -1,4 +1,4 @@
-import { FormControlLabel, FormGroup, Switch } from "@material-ui/core";
+import { FormControlLabel, FormGroup, Switch } from "@mui/material";
 import React from "react";
 import styled from "styled-components";
 import theme from "../../theme/Theme";

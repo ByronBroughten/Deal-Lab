@@ -1,5 +1,4 @@
-import React from "react";
-import { MenuItem } from "@material-ui/core";
+import { MenuItem } from "@mui/material";
 
 export const ifOptions = ["if", "or if", "then"];
 export const orElseOptions = ["or else", ""];

@@ -1,22 +1,19 @@
-import { FormControl, MenuItem, Select } from "@material-ui/core";
+import { FormControl, MenuItem, Select } from "@mui/material";
 import React from "react";
 import styled from "styled-components";
 import { FeVarbInfo } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { ValueFixedVarbPathName } from "../../sharedWithServer/StateEntityGetters/pathNameOptions";
 import theme from "../../theme/Theme";
+import { MuiSelectOnChange } from "../../utils/mui";
 import {
   NumEditorType,
   NumObjEntityEditor,
 } from "../inputs/NumObjEntityEditor";
 
-type OnChange = (
-  event: React.ChangeEvent<{ name?: string | undefined; value: unknown }>
-) => void;
-
 export type SelectEditorProps = {
   className?: string;
   selectValue: string;
-  onChange?: OnChange;
+  onChange?: MuiSelectOnChange;
   editorProps?: {
     feVarbInfo: FeVarbInfo;
     editorType: NumEditorType;

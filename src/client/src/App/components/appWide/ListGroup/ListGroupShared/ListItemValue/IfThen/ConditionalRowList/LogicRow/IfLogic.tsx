@@ -1,8 +1,8 @@
-import React from "react";
 import styled from "styled-components";
 import { useSetterSection } from "../../../../../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import { useUpdateVarbCurrentTarget } from "../../../../../../../../sharedWithServer/stateClassHooks/useUpdateVarbCurrentTarget";
 import { listOperators } from "../../../../../../../../sharedWithServer/StateSolvers/ValueUpdaterVarb/ConditionalValueSolver";
+import { MuiSelectOnChange } from "../../../../../../../../utils/mui";
 import MaterialSelect from "../../../../../../../inputs/MaterialSelect";
 import { NumObjEntityEditor } from "../../../../../../../inputs/NumObjEntityEditor";
 import { StringArrEditor } from "../../../../../../../inputs/StringArrEditor";
@@ -26,9 +26,7 @@ export default function IfLogic({ rowId }: { rowId: string }) {
     logicType = "valueLogic";
   }
 
-  const onChange = (
-    event: React.ChangeEvent<{ name?: string; value: any }>
-  ) => {
+  const onChange: MuiSelectOnChange = (event) => {
     updateVarbCurrentTarget({ currentTarget: event.target });
   };
 

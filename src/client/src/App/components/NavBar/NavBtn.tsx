@@ -1,4 +1,4 @@
-import { ButtonProps } from "@material-ui/core/Button";
+import { ButtonProps } from "@mui/material/Button";
 import { rem } from "polished";
 import React from "react";
 import styled, { css } from "styled-components";

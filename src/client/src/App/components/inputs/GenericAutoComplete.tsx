@@ -1,5 +1,5 @@
-import { TextField } from "@material-ui/core";
-import { Autocomplete } from "@material-ui/lab";
+import { Autocomplete } from "@mui/lab";
+import { TextField } from "@mui/material";
 import React from "react";
 import styled from "styled-components";
 import useToggle from "../../modules/customHooks/useToggle";
@@ -76,7 +76,7 @@ export const GenericAutoComplete = React.forwardRef(
           // open //debug option
           // disablePortal
           onChange={(_, value, reason) => {
-            if (reason === "select-option" && value) {
+            if (reason === "selectOption" && value) {
               onSelect(value);
               if (clearOnBlur) clearSelect();
             }

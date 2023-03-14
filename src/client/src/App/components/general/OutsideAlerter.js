@@ -1,5 +1,5 @@
-import React, { useRef, useEffect } from "react";
-import { Box } from "@material-ui/core";
+import { Box } from "@mui/material";
+import { useEffect, useRef } from "react";
 
 // Hook that alerts clicks outside of the passed ref
 const useOnOutsideClickRef = (ref, onOutsideClick) => {

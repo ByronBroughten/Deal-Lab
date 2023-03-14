@@ -31,9 +31,9 @@ export function SelectAndItemizeEditor({
     <Styled className={`SelectAndItemizeEditor ${className ?? ""}`}>
       <SelectEditor
         {...{
-          onChange: (e) => {
+          onChange: (e, ...args) => {
             unstable_batchedUpdates(() => {
-              onChange && onChange(e);
+              onChange && onChange(e, ...args);
               e.target.value === itemizeValue && openItems();
             });
           },

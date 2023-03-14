@@ -6,7 +6,7 @@ import { PageMain } from "./PageMain";
 
 export function NavContainerPage({ className, ...rest }: NavContainerProps) {
   return (
-    <PageMain className={`NavContainerPage-root ${className ?? ""}`}>
+    <PageMain>
       <NavTopAndSideContainer {...rest} />
     </PageMain>
   );

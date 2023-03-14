@@ -1,5 +1,4 @@
-import { FormControl, InputLabel, Select } from "@material-ui/core";
-import styled from "styled-components";
+import { FormControl, InputLabel, Select } from "@mui/material";
 import { StandardSelectProps } from "../../../../general/StandardProps";
 
 export default function ListMenuSelect({
@@ -10,14 +9,12 @@ export default function ListMenuSelect({
   return (
     <FormControl>
       <InputLabel>Default Variable</InputLabel>
-      <Styled
+      <Select
         className={"ListMenuSelect-root " + className}
         {...{ ...props, label: "Test" }}
       >
         {children}
-      </Styled>
+      </Select>
     </FormControl>
   );
 }
-
-const Styled = styled(Select)``;

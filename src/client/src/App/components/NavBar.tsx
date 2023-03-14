@@ -1,4 +1,4 @@
-import { AppBar, Toolbar } from "@material-ui/core";
+import { AppBar, Toolbar } from "@mui/material";
 import { rem } from "polished";
 import { BsHouse } from "react-icons/bs";
 import styled from "styled-components";

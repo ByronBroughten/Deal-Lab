@@ -1,5 +1,4 @@
-import { Button } from "@material-ui/core";
-import React from "react";
+import { Button } from "@mui/material";
 import { CgMathPlus } from "react-icons/cg";
 import styled from "styled-components";
 import theme from "../../theme/Theme";

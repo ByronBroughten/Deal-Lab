@@ -1,5 +1,7 @@
-import { CSSProperties } from "@material-ui/core/styles/withStyles";
-import React, { ChangeEvent, ReactNode } from "react";
+import { CSSProperties } from "@mui/material/styles/createTypography";
+import React from "react";
+import { ViewStyle } from "react-native";
+import { MuiSelectOnChange } from "../../utils/mui";
 
 export type StandardProps = { className?: string; children?: React.ReactNode };
 export type StandardBtnProps = StandardProps & {
@@ -8,13 +10,17 @@ export type StandardBtnProps = StandardProps & {
   href?: string;
 };
 
-export interface NativeStandardProps {
+export interface NativeViewProps {
+  style: ViewStyle;
+}
+
+export interface MuiStandardProps {
   className?: string;
   children?: React.ReactNode;
   style?: CSSProperties;
 }
 
-export interface NativeBtnProps extends NativeStandardProps {
+export interface MuiBtnProps extends MuiStandardProps {
   style?: CSSProperties;
   onClick?: () => void;
   disabled?: boolean;
@@ -24,14 +30,6 @@ export interface NativeBtnProps extends NativeStandardProps {
 export type StandardSelectProps = StandardProps & {
   name: string;
   value: string;
-  onChange:
-    | ((
-        event: ChangeEvent<{
-          name?: string | undefined;
-          value: unknown;
-        }>,
-        child: ReactNode
-      ) => void)
-    | undefined;
+  onChange: MuiSelectOnChange | undefined;
   className?: string;
 };

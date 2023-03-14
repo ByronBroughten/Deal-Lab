@@ -1,5 +1,7 @@
-import { StylesProvider, ThemeProvider } from "@material-ui/core";
-import { createTheme } from "@material-ui/core/styles";
+import { ThemeProvider } from "@mui/material";
+import StyledEngineProvider from "@mui/material/StyledEngineProvider";
+
+import { createTheme } from "@mui/material/styles";
 import React from "react";
 import { BrowserRouter } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
@@ -28,7 +30,7 @@ const App: React.FC = () => {
     <SuperTokensWrapper>
       <React.StrictMode>
         <Normalize />
-        <StylesProvider injectFirst>
+        <StyledEngineProvider injectFirst>
           <ThemeProvider theme={muiTheme}>
             <Theme>
               <BrowserRouter>
@@ -43,7 +45,7 @@ const App: React.FC = () => {
               </BrowserRouter>
             </Theme>
           </ThemeProvider>
-        </StylesProvider>
+        </StyledEngineProvider>
       </React.StrictMode>
     </SuperTokensWrapper>
   );
