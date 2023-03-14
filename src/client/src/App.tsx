@@ -1,4 +1,5 @@
-import { StylesProvider } from "@material-ui/core";
+import { StylesProvider, ThemeProvider } from "@material-ui/core";
+import { createTheme } from "@material-ui/core/styles";
 import React from "react";
 import { BrowserRouter } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
@@ -22,23 +23,26 @@ const App: React.FC = () => {
     storeSectionsLocally: true,
   });
 
+  const muiTheme = createTheme();
   return (
     <SuperTokensWrapper>
       <React.StrictMode>
         <Normalize />
         <StylesProvider injectFirst>
-          <Theme>
-            <BrowserRouter>
-              <SectionsContext.Provider value={sectionsContext}>
-                <SectionsDispatchContext.Provider value={sectionsDispatch}>
-                  <GlobalFonts />
-                  <GlobalStyle />
-                  <Main />
-                  <ToastContainer />
-                </SectionsDispatchContext.Provider>
-              </SectionsContext.Provider>
-            </BrowserRouter>
-          </Theme>
+          <ThemeProvider theme={muiTheme}>
+            <Theme>
+              <BrowserRouter>
+                <SectionsContext.Provider value={sectionsContext}>
+                  <SectionsDispatchContext.Provider value={sectionsDispatch}>
+                    <GlobalFonts />
+                    <GlobalStyle />
+                    <Main />
+                    <ToastContainer />
+                  </SectionsDispatchContext.Provider>
+                </SectionsContext.Provider>
+              </BrowserRouter>
+            </Theme>
+          </ThemeProvider>
         </StylesProvider>
       </React.StrictMode>
     </SuperTokensWrapper>
