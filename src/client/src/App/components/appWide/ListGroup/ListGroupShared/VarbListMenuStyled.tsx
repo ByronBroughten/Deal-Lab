@@ -12,10 +12,6 @@ export const VarbListMenuStyled = styled.div`
     display: flex;
     flex: 1;
   }
-  .VarbListMenu-titleRowRight {
-    display: flex;
-    justify-content: flex-end;
-  }
 
   .VarbListMenu-title {
     .DraftEditor-root {

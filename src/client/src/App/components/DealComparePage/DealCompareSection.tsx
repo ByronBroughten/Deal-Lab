@@ -1,7 +1,7 @@
 import { View } from "react-native";
 import { useGetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useGetterSection";
 import { nativeTheme } from "../../theme/nativeTheme";
-import { OuterMainSection } from "../appWide/GeneralSection/OuterMainSection";
+import { BackgroundContainer } from "../appWide/BackgroundContainter";
 import { LabelWithInfo } from "../appWide/LabelWithInfo";
 import { SectionTitle } from "../appWide/SectionTitle";
 import { ComparedDeal } from "./ComparedDeal";
@@ -17,9 +17,8 @@ export function DealCompareSection() {
 
   const areCompareDeals = comparePageFeIds.length > 0;
   return (
-    <OuterMainSection>
+    <BackgroundContainer>
       <SectionTitle
-        className="UserEditorTitleRow-sectionTitle"
         text={
           <LabelWithInfo
             {...{
@@ -56,6 +55,6 @@ export function DealCompareSection() {
         </View>
         <DealCompareDealModal />
       </View>
-    </OuterMainSection>
+    </BackgroundContainer>
   );
 }

@@ -45,11 +45,7 @@ export function UnitList({ feId, className }: Props) {
                   const unitIndex = unitNumberOffset + unitInnerIndex;
                   const unitNumber = unitIndex + 1;
                   return unitId === "addUnitBtn" ? (
-                    <AddUnitBtn
-                      className="UnitList-addUnitBtn"
-                      onClick={addUnit}
-                      key={unitId}
-                    />
+                    <AddUnitBtn onClick={addUnit} key={unitId} />
                   ) : (
                     <UnitItem
                       key={unitId}

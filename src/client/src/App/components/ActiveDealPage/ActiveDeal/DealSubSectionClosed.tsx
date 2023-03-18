@@ -1,3 +1,4 @@
+import { SxProps } from "@mui/material";
 import { StateValue } from "../../../sharedWithServer/SectionsMeta/values/StateValue";
 import { GetterSection } from "../../../sharedWithServer/StateGetters/GetterSection";
 import { useGoToPage } from "../../appWide/customHooks/useGoToPage";
@@ -12,7 +13,21 @@ import {
   useActiveDealPage,
 } from "./useActiveDealSection";
 
-type Props = { sectionName: ActiveDealSectionName };
+type Props = { sx?: SxProps; sectionName: ActiveDealSectionName };
+export function DealSubSectionClosed({ sectionName, ...rest }: Props) {
+  const props = useProps(sectionName);
+  const { completionStatus } = props;
+  const isComplete = completionStatus === "allValid";
+  return (
+    <MainSubSectionClosed
+      {...{
+        ...rest,
+        titleRow: <DealSubSectionTitleRow {...props} />,
+        detailsSection: isComplete && <DealSubSectionDetails {...props} />,
+      }}
+    />
+  );
+}
 
 type SectionProps = {
   sectionTitle: string;
@@ -91,18 +106,4 @@ function useProps(sectionName: ActiveDealSectionName): SectionProps & {
     openEditor,
     completionStatus,
   };
-}
-
-export function DealSubSectionClosed({ sectionName }: Props) {
-  const props = useProps(sectionName);
-  const { completionStatus } = props;
-  const isComplete = completionStatus === "allValid";
-  return (
-    <MainSubSectionClosed
-      {...{
-        titleRow: <DealSubSectionTitleRow {...props} />,
-        detailsSection: isComplete && <DealSubSectionDetails {...props} />,
-      }}
-    />
-  );
 }

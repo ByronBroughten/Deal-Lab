@@ -107,6 +107,10 @@ export const Obj = {
     if (value && typeof value === "object") return true;
     else return false;
   },
+  isObjToRecord(value: any): value is Record<string, any> {
+    if (value && typeof value === "object") return true;
+    else return false;
+  },
   validateObjToAny(value: any): any {
     if (this.isObjToAny(value)) return value;
     else throw new Error(`"${value}" is not an Object`);

@@ -109,7 +109,7 @@ function makeExampleProperty(props: ExamplePropertyProps) {
 export const makeExampleDealProperty = () =>
   makeExampleProperty({
     property: {
-      displayName: stringObj("160 Example Ave E"),
+      displayName: stringObj("Deal Example Property"),
       purchasePrice: numObj(250000),
       sqft: numObj(2500),
       taxesOngoingEditor: numObj(2500),

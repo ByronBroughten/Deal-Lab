@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { useGetterSection } from "../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import theme from "../../../../../theme/Theme";
 import { FormSection } from "../../../../appWide/FormSection";
-import { FormSectionLabeled } from "../../../../appWide/FormSectionLabeled";
 import { LabelWithInfo } from "../../../../appWide/LabelWithInfo";
 import { TogglerBooleanTitleVarb } from "../../../../appWide/TogglerBooleanTitleVarb";
 import { TogglerBooleanVarb } from "../../../../appWide/TogglerBooleanVarb";
@@ -21,10 +20,7 @@ export default function BasicLoanInfo({ feId, className }: Props) {
       {...{ className: `BasicLoanInfo-root ${className}`, sectionName: "loan" }}
     >
       <LoanBaseValue feId={loan.onlyChildFeId("loanBaseValue")} />
-      <FormSectionLabeled
-        className="BasicLoanInfo-otherInfo"
-        label="Other Loan Info"
-      >
+      <FormSection className="BasicLoanInfo-otherInfo">
         <div className="BasicLoanInfo-rateAndTermRow BasicLoanInfo-editorsRow">
           <NumObjEntityEditor
             feVarbInfo={loan.varbInfo("interestRatePercentOngoingEditor")}
@@ -44,7 +40,7 @@ export default function BasicLoanInfo({ feId, className }: Props) {
             }}
           />
         </div>
-      </FormSectionLabeled>
+      </FormSection>
       <FormSection>
         <div>
           <TogglerBooleanTitleVarb
@@ -99,7 +95,7 @@ const Styled = styled.div`
     flex-wrap: wrap;
     margin-top: ${theme.s15};
     .DraftTextField-root {
-      min-width: 95px;
+      min-width: 110px;
     }
   }
 

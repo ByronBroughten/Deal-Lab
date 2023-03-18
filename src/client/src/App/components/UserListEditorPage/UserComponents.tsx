@@ -1,6 +1,6 @@
-import styled from "styled-components";
 import { Arr } from "../../sharedWithServer/utils/Arr";
 import theme from "../../theme/Theme";
+import { BackgroundContainer } from "../appWide/BackgroundContainter";
 import { LabelWithInfo } from "../appWide/LabelWithInfo";
 import { SectionTitle } from "../appWide/SectionTitle";
 import { UserComponentClosed, userComponentNames } from "./UserComponentClosed";
@@ -16,15 +16,15 @@ const orderedNames = Arr.extractOrder(userComponentNames, [
 
 export function UserComponents() {
   return (
-    <Styled>
+    <BackgroundContainer>
       <SectionTitle
         {...{
           text: (
             <LabelWithInfo
               {...{
-                label: "Components",
+                label: "Component Templates",
                 infoTitle: "Components",
-                infoText: `Here you'll find different types of components that you can create, edit, and use as templates throughout the app. This is to reduce data entry, such as when itemizing costs for things like utilities and CapEx.`,
+                infoText: `Here you'll find different types of components that you can create, edit, and use as templates throughout the app. This can reduce data entry by letting you reuse pieces of deals throughout the app, such as when itemizing costs for things like utilities and CapEx.`,
               }}
             />
           ),
@@ -32,17 +32,11 @@ export function UserComponents() {
       />
       {orderedNames.map((listName) => (
         <UserComponentClosed
+          sx={{ marginTop: theme.dealElementSpacing }}
           key={listName}
           componentName={listName}
-          className="UserComponents-component"
         />
       ))}
-    </Styled>
+    </BackgroundContainer>
   );
 }
-
-const Styled = styled.div`
-  .UserComponents-component {
-    margin-top: ${theme.dealElementSpacing};
-  }
-`;

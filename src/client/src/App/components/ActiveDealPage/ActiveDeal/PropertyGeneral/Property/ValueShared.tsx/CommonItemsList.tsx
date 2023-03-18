@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { nativeTheme } from "../../../../../../theme/nativeTheme";
-import StandardLabel from "../../../../../general/StandardLabel";
 import { CheckboxList } from "./CheckboxList";
 
 export type AddWithDisplayName = (displayName: string) => void;
@@ -22,7 +21,6 @@ export function CommonItemsList({
   );
   return (
     <Styled className={`CommonItemsList-root ${className ?? ""}`}>
-      <StandardLabel>Common Items</StandardLabel>
       <CheckboxList
         {...{
           className: "CommonItemsList-checkBoxList",

@@ -2,6 +2,7 @@ import { ButtonProps } from "@mui/material/Button";
 import { rem } from "polished";
 import React from "react";
 import styled, { css } from "styled-components";
+import { nativeTheme } from "../../theme/nativeTheme";
 import theme from "../../theme/Theme";
 import PlainBtn from "../general/PlainBtn";
 
@@ -45,7 +46,7 @@ const Styled = styled(PlainBtn)<{ $isactive?: boolean }>`
   }
 
   :hover {
-    background-color: ${theme.primaryNext};
+    background-color: ${nativeTheme.secondary.main};
     color: ${theme.light};
   }
 

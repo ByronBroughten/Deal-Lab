@@ -3,8 +3,9 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import styled from "styled-components";
 import { getSuperTokensRoutesForReactRouterDom } from "supertokens-auth-react";
 import { ActiveDealRoutes } from "./ActiveDealRoutes";
+import { AccountPage } from "./App/components/AccountPage";
 import { AuthProtectedPage } from "./App/components/AuthProtectedPage";
-import { DealComparePage } from "./App/components/DealComparePage";
+import { DealCompareSection } from "./App/components/DealComparePage/DealCompareSection";
 import NotFound from "./App/components/general/NotFound";
 import { NavBarOutletPage } from "./App/components/NavBarOutletPage";
 import { UserVarbEditorPage } from "./App/components/UserVarbEditorPage";
@@ -40,7 +41,8 @@ export function Main() {
             path={feRoutes.userVariables}
             element={<UserVarbEditorPage />}
           />
-          <Route path={feRoutes.compare} element={<DealComparePage />} />
+          <Route path={feRoutes.compare} element={<DealCompareSection />} />
+          <Route path={feRoutes.account} element={<AccountPage />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>

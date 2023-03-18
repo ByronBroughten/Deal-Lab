@@ -67,8 +67,8 @@ export function BasePayValue({ feId }: { feId: string }) {
         valueSourceName === "tenPercentRent" ? "" : " (common estimate)"
       }`,
     ],
-    ["dollarsEditor", "Custom dollar amount"],
     ["percentOfRentEditor", "Custom percent of rent"],
+    ["dollarsEditor", "Custom dollar amount"],
   ];
 
   return (

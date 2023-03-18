@@ -1,15 +1,18 @@
-import styled from "styled-components";
-import theme from "../../theme/Theme";
+import { Box, SxProps } from "@mui/material";
+import { nativeTheme } from "../../theme/nativeTheme";
 
-type Props = { className?: string; text: React.ReactNode };
-export function SectionTitle({ className, text }: Props) {
+type Props = { className?: string; sx?: SxProps; text: React.ReactNode };
+export function SectionTitle({ className, sx, text }: Props) {
   return (
-    <Styled className={`SectionTitle-root ${className ?? ""}`}>{text}</Styled>
+    <Box
+      className={`${className ?? ""}`}
+      sx={{
+        fontSize: nativeTheme.fs20,
+        color: nativeTheme.primary.main,
+        ...sx,
+      }}
+    >
+      {text}
+    </Box>
   );
 }
-const Styled = styled.div`
-  ${theme.titleChunk};
-  .public-DraftEditor-content {
-    min-height: 25px;
-  }
-`;

@@ -24,7 +24,7 @@ export function VarbListEditorPageMenu<
             {...{
               className: "VarbListMenu-title",
               feVarbInfo: list.varbInfo("displayName"),
-              placeholder: "List name",
+              placeholder: "Template name",
             }}
           />
           {totalVarbName && (
@@ -36,9 +36,12 @@ export function VarbListEditorPageMenu<
             />
           )}
         </div>
-        <div className="VarbListMenu-titleRowRight">
-          <RemoveSectionXBtn {...list.feInfo} />
-        </div>
+        <RemoveSectionXBtn
+          {...{
+            sx: { width: 22, height: 22, padding: 0 },
+            ...list.feInfo,
+          }}
+        />
       </div>
     </VarbListMenuStyled>
   );

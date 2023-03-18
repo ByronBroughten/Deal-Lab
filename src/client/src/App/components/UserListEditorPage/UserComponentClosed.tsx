@@ -1,3 +1,12 @@
+import { SxProps } from "@mui/material";
+import { AiOutlineFieldTime } from "react-icons/ai";
+import { FaFaucet, FaHandHoldingUsd, FaMoneyCheckAlt } from "react-icons/fa";
+import {
+  MdAttachMoney,
+  MdOutlineHomeRepairService,
+  MdOutlineRoofing,
+} from "react-icons/md";
+import { VscOutput } from "react-icons/vsc";
 import { FeRouteName } from "../../Constants/feRoutes";
 import { listChildrenNames } from "../../sharedWithServer/SectionsMeta/allSectionChildren";
 import { Arr } from "../../sharedWithServer/utils/Arr";
@@ -5,15 +14,34 @@ import { MainSubSectionClosed } from "../ActiveDealPage/ActiveDeal/MainSubSectio
 import { useMakeGoToPage } from "../appWide/customHooks/useGoToPage";
 import { ComponentClosedTitleRow } from "./ComponentsSubSectionTitleRow";
 
-export const componentTitles = {
-  repairsListMain: "Repairs",
-  utilitiesListMain: "Utilities",
-  holdingCostsListMain: "Holding Costs",
-  capExListMain: "Capital Expenses",
-  closingCostsListMain: "Closing Costs",
-  outputListMain: "Outputs Collections",
-  singleTimeListMain: "Custom One-time Costs",
-  ongoingListMain: "Custom Ongoing Costs",
+const iconProps = { size: 27 } as const;
+const componentProps = {
+  repairsListMain: [
+    "Repairs",
+    () => <MdOutlineHomeRepairService {...iconProps} />,
+  ],
+  utilitiesListMain: ["Utilities", () => <FaFaucet {...iconProps} />],
+  holdingCostsListMain: [
+    "Holding Costs",
+    () => <FaHandHoldingUsd {...iconProps} />,
+  ],
+  capExListMain: [
+    "Capital Expenses",
+    () => <MdOutlineRoofing {...iconProps} />,
+  ],
+  closingCostsListMain: [
+    "Closing Costs",
+    () => <FaMoneyCheckAlt {...iconProps} />,
+  ],
+  outputListMain: ["Outputs Collections", () => <VscOutput {...iconProps} />],
+  singleTimeListMain: [
+    "Custom One-time Costs",
+    () => <MdAttachMoney {...iconProps} />,
+  ],
+  ongoingListMain: [
+    "Custom Ongoing Costs",
+    () => <AiOutlineFieldTime {...iconProps} />,
+  ],
 } as const;
 
 export const userComponentNames = Arr.extractStrict(listChildrenNames, [
@@ -29,19 +57,21 @@ type UserComponentName = typeof userComponentNames[number];
 export type ListRouteName = Extract<FeRouteName, UserComponentName>;
 
 type Props = {
+  sx?: SxProps;
   componentName: ListRouteName;
-  className?: string;
 };
 
 export function UserComponentClosed({ componentName, ...rest }: Props) {
   const makeGoToPage = useMakeGoToPage();
+  const [title, makeIcon] = componentProps[componentName];
   return (
     <MainSubSectionClosed
       {...rest}
       titleRow={
         <ComponentClosedTitleRow
           {...{
-            title: componentTitles[componentName],
+            icon: makeIcon(),
+            title,
             editSection: makeGoToPage(componentName),
           }}
         />

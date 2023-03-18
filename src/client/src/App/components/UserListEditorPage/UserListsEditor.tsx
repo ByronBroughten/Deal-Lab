@@ -1,7 +1,7 @@
 import { ListChildName } from "../../sharedWithServer/SectionsMeta/allSectionChildren";
 import { useSetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useSetterSection";
-import { useGoToPage } from "../appWide/customHooks/useGoToPage";
-import { MainSection } from "../appWide/GeneralSection/MainSection";
+import { SubSectionOpen } from "../ActiveDealPage/ActiveDeal/SubSectionOpen";
+import { BackBtnWrapper } from "../appWide/BackBtnWrapper";
 import { ListGroupGeneric } from "../appWide/ListGroup/ListGroupShared/ListGroupGeneric";
 import { MakeListNode } from "../appWide/ListGroup/ListGroupShared/ListGroupGeneric/ListGroupLists";
 import { VarbListSingleTime } from "../appWide/ListGroup/ListGroupSingleTime/VarbListSingleTime";
@@ -13,14 +13,14 @@ const listTypeNames = ["capEx", "ongoing", "singleTime"] as const;
 type ListTypeName = typeof listTypeNames[number];
 
 export const listTitles = {
-  repairsListMain: "Repair Lists",
-  utilitiesListMain: "Utility Lists",
+  repairsListMain: "Repair List Templates",
+  utilitiesListMain: "Utility List Templates",
   holdingCostsListMain: "Holding Cost Lists",
-  capExListMain: "Capital Expense Lists",
-  closingCostsListMain: "Closing Cost Lists",
-  outputListMain: "Outputs Collections",
-  singleTimeListMain: "Custom One-time Cost Lists",
-  ongoingListMain: "Custom Ongoing Cost Lists",
+  capExListMain: "CapEx List Templates",
+  closingCostsListMain: "Closing Cost List Templates",
+  outputListMain: "Output Templates",
+  singleTimeListMain: "Custom Cost Templates",
+  ongoingListMain: "Custom Ongoing Cost Templates",
 } as const;
 
 type ListProps = Record<ListChildName, ListTypeName>;
@@ -58,25 +58,25 @@ export function UserListsEditor({ listName }: Props) {
   const title = listTitles[listName];
   const listTypeName = listTypes[listName];
   const userListEditor = useSetterSectionOnlyOne("userListEditor");
-  const goToComponents = useGoToPage("components");
   return (
-    <MainSection>
-      <UserEditorTitleRow
-        goBack={goToComponents}
-        titleText={title}
-        sectionName="userListEditor"
-        childNames={[listName]}
-      />
-      <div className="UserListEditor-listGroups">
-        <ListGroupGeneric
-          {...{
-            titleText: title,
-            listParentInfo: userListEditor.feInfo,
-            listAsChildName: listName,
-            makeListNode: listNodeMakers[listTypeName],
-          }}
+    <BackBtnWrapper>
+      <SubSectionOpen>
+        <UserEditorTitleRow
+          titleText={title}
+          sectionName="userListEditor"
+          childNames={[listName]}
         />
-      </div>
-    </MainSection>
+        <div className="UserListEditor-listGroups">
+          <ListGroupGeneric
+            {...{
+              titleText: title,
+              listParentInfo: userListEditor.feInfo,
+              listAsChildName: listName,
+              makeListNode: listNodeMakers[listTypeName],
+            }}
+          />
+        </div>
+      </SubSectionOpen>
+    </BackBtnWrapper>
   );
 }

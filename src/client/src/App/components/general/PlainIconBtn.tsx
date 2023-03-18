@@ -11,10 +11,28 @@ export function PlainIconBtn({
   left,
   middle,
   right,
+  sx,
   ...rest
 }: PlainIconBtnProps) {
   return (
-    <Styled {...rest}>
+    <Styled
+      {...{
+        sx: {
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          color: "inherit",
+          backgroundColor: "transparent",
+          "&:hover": {
+            backgroundColor: "transparent",
+          },
+          padding: 0,
+          borderRadius: 0,
+          ...sx,
+        },
+        ...rest,
+      }}
+    >
       {left && <span className="PlainIconBtnNext-left">{left}</span>}
       {middle && <span className="PlainIconBtnNext-middle">{middle}</span>}
       {right && <span className="PlainIconBtnNext-right">{right}</span>}
@@ -23,12 +41,6 @@ export function PlainIconBtn({
 }
 
 const Styled = styled(Button)`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: inherit;
-  font-size: inherit;
-
   .PlainIconBtnNext-left,
   .PlainIconBtnNext-middle,
   .PlainIconBtnNext-right {
@@ -40,12 +52,5 @@ const Styled = styled(Button)`
   }
   .PlainIconBtnNext-right {
     margin-left: ${theme.s2};
-  }
-
-  padding: 0;
-  border-radius: 0;
-  background: transparent;
-  :hover {
-    background: transparent;
   }
 `;

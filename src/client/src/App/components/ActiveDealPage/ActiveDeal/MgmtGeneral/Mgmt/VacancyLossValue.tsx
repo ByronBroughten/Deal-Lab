@@ -72,8 +72,8 @@ export function VacancyLossValue({ feId }: { feId: string }) {
         valueSourceName === "tenPercentRent" ? "" : " (common high estimate)"
       }`,
     ],
-    ["dollarsEditor", "Custom dollar amount"],
     ["percentOfRentEditor", "Custom percent of rent"],
+    ["dollarsEditor", "Custom dollar amount"],
   ];
 
   return (

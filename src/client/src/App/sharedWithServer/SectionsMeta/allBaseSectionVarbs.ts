@@ -138,6 +138,9 @@ export function makeAllBaseSectionVarbs() {
     outputItem: baseSectionVarbs({
       valueEntityInfo: baseVarb("inEntityValue"),
     }),
+    accountDeal: baseSectionVarbs({
+      varbInfo: baseVarb("varbInfo"),
+    }),
     virtualVarb: baseSectionVarbs({
       valueEntityInfo: baseVarb("inEntityValue"),
       value: baseVarb("numObj"),
@@ -320,6 +323,7 @@ export function makeAllBaseSectionVarbs() {
       ),
     }),
     financing: baseSectionVarbs({
+      displayName: baseVarb("stringObj"),
       financingMode: baseVarb("financingMode"),
       one: baseVarb("number"),
     }),
@@ -353,6 +357,8 @@ export function makeAllBaseSectionVarbs() {
           "fivePercentRentYearly",
           "tenPercentRentMonthly",
           "tenPercentRentYearly",
+          // "twentyPercentRentMonthly",
+          // "twentyPercentRentYearly",
           "onePercentPricePlusSqft",
           "onePercentPriceSqftAverage",
         ] as const,

@@ -43,6 +43,7 @@ const updateFnNames = checkUpdateFnNames({
     "loadStartAdornment",
     "loadEndAdornment",
     "emptyStringObj",
+    "financingDisplayName",
   ] as const,
   number: [...commonUpdateFnNames, "numberOne"] as const,
   boolean: [...commonUpdateFnNames, "varbExists"] as const,

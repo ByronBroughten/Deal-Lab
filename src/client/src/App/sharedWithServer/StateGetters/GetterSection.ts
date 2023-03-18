@@ -677,6 +677,9 @@ export class GetterSection<
   varbNext<VN extends VarbName<SN>>(varbName: VN): GetterVarb<SN> {
     return this.varb(varbName as string);
   }
+  stringValue<VN extends VarbName<SN>>(varbName: VN): string {
+    return this.varbNext(varbName).stringValue;
+  }
   displayVarb<VN extends VarbName<SN>>(varbName: VN): string {
     return this.varbNext(varbName).displayVarb();
   }

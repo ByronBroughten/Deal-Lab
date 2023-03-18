@@ -32,7 +32,7 @@ const valueSources = {
   editorValueSource: ["valueEditor"],
   loadedVarbSource: ["loadedVarb"],
   customValueSource: ["none", "valueEditor", "listTotal"],
-  utilityValueSource: ["none", "zero", "listTotal"],
+  utilityValueSource: ["none", "zero", "listTotal", "twentyPercentRent"],
   repairValueSource: ["none", "zero", "valueEditor", "listTotal"],
   maintainanceValueSource: [
     "none",
@@ -60,7 +60,7 @@ const unionValueArrs = {
   syncStatus: ["unsyncedChanges", "changesSynced"],
   autoSyncControl: ["autoSyncOff", "autoSyncOn"],
   completionStatus: ["allEmpty", "allValid", "someInvalid"],
-  dealMode: ["buyAndHold", "fixAndFlip", "brrrrr"],
+  dealMode: ["buyAndHold", "fixAndFlip", "brrrr"],
   financingMode: ["cashOnly", "useLoan", ""],
   userDataStatus: [
     "notLoaded",
@@ -89,3 +89,9 @@ export function isLabSubscription(
   const subscriptions = unionValueArr("labSubscription");
   return subscriptions.includes(value);
 }
+
+export const dealModeLabels: Record<UnionValue<"dealMode">, string> = {
+  buyAndHold: "Buy & Hold",
+  fixAndFlip: "Fix & Flip",
+  brrrr: "BRRRR",
+};

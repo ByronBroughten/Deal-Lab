@@ -1,34 +1,34 @@
-import styled from "styled-components";
+import { SxProps } from "@mui/material";
+import { View } from "react-native";
 import { nativeTheme } from "../../../theme/nativeTheme";
 import { MainSection } from "../../appWide/GeneralSection/MainSection";
 
 type Props = {
+  sx?: SxProps;
+  className?: string;
   titleRow: React.ReactNode;
   detailsSection?: React.ReactNode;
-  className?: string;
 };
 
 export function MainSubSectionClosed({
+  sx,
   titleRow,
   detailsSection,
   className,
 }: Props) {
   return (
-    <Styled className={`MainSubSectionClosed-root ${className ?? ""}`}>
+    <MainSection
+      className={`${className ?? ""}`}
+      sx={{
+        padding: nativeTheme.s25,
+        paddingLeft: nativeTheme.mainSection.padding,
+        ...sx,
+      }}
+    >
       <div className="MainSubSection-inactiveTitleRow">{titleRow}</div>
       {detailsSection && (
-        <div className="MainSubSection-detailsDiv">{detailsSection}</div>
+        <View style={{ marginTop: nativeTheme.s25 }}>{detailsSection}</View>
       )}
-    </Styled>
+    </MainSection>
   );
 }
-
-const Styled = styled(MainSection)`
-  padding-top: ${nativeTheme.s25};
-  padding-bottom: ${nativeTheme.s25};
-  padding-right: ${nativeTheme.s25};
-
-  .MainSubSection-detailsDiv {
-    margin-top: ${nativeTheme.s25};
-  }
-`;

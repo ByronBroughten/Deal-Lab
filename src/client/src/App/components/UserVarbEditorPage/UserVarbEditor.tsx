@@ -1,8 +1,7 @@
-import styled from "styled-components";
 import { useSetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useSetterSection";
+import { SubSectionOpen } from "../ActiveDealPage/ActiveDeal/SubSectionOpen";
 import { FormSection } from "../appWide/FormSection";
 import MainSectionBody from "../appWide/GeneralSection/MainSection/MainSectionBody";
-import { OuterMainSection } from "../appWide/GeneralSection/OuterMainSection";
 import { LabelWithInfo } from "../appWide/LabelWithInfo";
 import { ListGroupLists } from "../appWide/ListGroup/ListGroupShared/ListGroupGeneric/ListGroupLists";
 import { VarbListUserVarbs } from "../appWide/VarbLists/VarbListUserVarbs";
@@ -11,7 +10,7 @@ import { UserEditorTitleRow } from "../UserEditorPageShared/UserEditorTitleRow";
 export function UserVarbEditor() {
   const userVarbEditor = useSetterSectionOnlyOne("userVarbEditor");
   return (
-    <Styled className="UserListMainSection-root">
+    <SubSectionOpen>
       <UserEditorTitleRow
         {...{
           onSave: (setterSections) => {
@@ -41,8 +40,6 @@ export function UserVarbEditor() {
           />
         </MainSectionBody>
       </FormSection>
-    </Styled>
+    </SubSectionOpen>
   );
 }
-
-const Styled = styled(OuterMainSection)``;

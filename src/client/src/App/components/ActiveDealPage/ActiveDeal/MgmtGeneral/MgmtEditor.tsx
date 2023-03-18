@@ -1,10 +1,8 @@
 import styled from "styled-components";
 import { StateValue } from "../../../../sharedWithServer/SectionsMeta/values/StateValue";
-
 import theme from "../../../../theme/Theme";
 import MainSectionBody from "../../../appWide/GeneralSection/MainSection/MainSectionBody";
 import { MainSectionTopRows } from "../../../appWide/MainSectionTopRows";
-import { BackToSectionBtn } from "../BackToSectionBtn";
 import { CustomExpenses } from "../PropertyGeneral/Property/CustomExpenses";
 import { BasicMgmtInfo } from "./Mgmt/BasicMgmtInfo";
 
@@ -26,7 +24,6 @@ export function MgmtEditor({ feId, backBtnProps }: Props) {
           ...feInfo,
           sectionTitle: "Management",
           loadWhat: "Management",
-          topRight: <BackToSectionBtn {...backBtnProps} />,
         }}
       />
       <MainSectionBody themeName="mgmt">
@@ -42,11 +39,6 @@ const Styled = styled.div`
   .Mgmt-ongoingExpenseValue,
   .Mgmt-oneTimeExpenseValue {
     margin: ${theme.flexElementSpacing};
-  }
-  :hover {
-    .MainSectionTitleRow-xBtn {
-      visibility: visible;
-    }
   }
   .Mgmt-valueSectionZones {
     display: flex;

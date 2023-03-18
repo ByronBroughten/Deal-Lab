@@ -15,6 +15,7 @@ const envs = {
 const env = envs[envName];
 const componentsRoute = "/components";
 const activeDealRoute = "/active-deal";
+const accountPageRoute = "/home";
 export const feRoutes = {
   auth: "/login",
   paymentManagement: env.paymentManagementLink,
@@ -26,7 +27,8 @@ export const feRoutes = {
   authSuccess: "/login-success",
   subscribeSuccess: "/subscription-success",
 
-  mainPage: activeDealRoute,
+  account: accountPageRoute,
+  mainPage: accountPageRoute,
 
   activeDeal: activeDealRoute,
   activeProperty: `${activeDealRoute}/property`,

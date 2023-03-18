@@ -11,7 +11,7 @@ export interface SelectAndItemizeEditorProps extends SelectEditorProps {
   total: string;
   itemizeValue: string;
   itemsComponent: React.ReactNode;
-  itemizedModalTitle: string;
+  itemizedModalTitle: React.ReactNode;
 }
 
 export function SelectAndItemizeEditor({

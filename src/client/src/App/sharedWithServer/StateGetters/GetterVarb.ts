@@ -1,5 +1,4 @@
 import { cloneDeep, round } from "lodash";
-
 import { DisplayOverrideSwitches } from "../SectionsMeta/displaySectionVarbs/displayVarb";
 import { FeInfoS, FeVarbInfo } from "../SectionsMeta/SectionInfo/FeInfo";
 import {
@@ -24,6 +23,7 @@ import { ValueName } from "../SectionsMeta/values/ValueName";
 import { VarbMeta } from "../SectionsMeta/VarbMeta";
 import { StateVarb } from "../StateSections/StateSectionsTypes";
 import { mathS, NotANumberError } from "../utils/math";
+import { Obj } from "../utils/Obj";
 import { GetterVarbBase } from "./Bases/GetterVarbBase";
 import { GetterSection } from "./GetterSection";
 import { GetterSections } from "./GetterSections";
@@ -80,6 +80,17 @@ export class GetterVarb<
     } else {
       return mathS.parseFloatStrict(`${val}`);
     }
+  }
+  get stringValue(): string {
+    const val = this.value("any");
+    if (val) {
+      if (typeof val === "string") {
+        return val;
+      } else if (Obj.isObjToRecord(val) && "mainText" in val) {
+        return val.mainText;
+      }
+    }
+    return `${val}`;
   }
   get numberOrZero(): number {
     try {

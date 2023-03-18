@@ -102,9 +102,8 @@ const Styled = styled.div`
   }
 
   .MainSectionTopRows-sectionTitle {
+    font-size: 22px;
     margin-right: ${theme.s3};
-  }
-  .MainSectionTopRows-titleRow {
   }
 
   .MainSectionTopRows-topRight {
@@ -118,10 +117,6 @@ const Styled = styled.div`
   .MainSectionTopRows-topRow {
     display: flex;
     justify-content: space-between;
-  }
-
-  .MainSectionTopRows-sectionTitle {
-    font-size: 22px;
   }
 
   .MainSectionTopRows-xBtn {

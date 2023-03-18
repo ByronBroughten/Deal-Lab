@@ -1,18 +1,18 @@
-import { AiOutlineUnorderedList } from "react-icons/ai";
 import styled from "styled-components";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { MainSectionLargeEditBtn } from "../ActiveDealPage/ActiveDeal/MainSectionLargeEditBtn";
 import { SectionTitle } from "../appWide/SectionTitle";
 
-type Props = { title: string; editSection: () => void };
-export function ComponentClosedTitleRow({ title, editSection }: Props) {
+type Props = { icon: React.ReactNode; title: string; editSection: () => void };
+export function ComponentClosedTitleRow({ title, icon, editSection }: Props) {
   return (
     <Styled className="MainSubSection-inactiveTitleRow">
       <SectionTitle className="UserListEditorSection-title" text={title} />
       <MainSectionLargeEditBtn
         {...{
+          sx: { borderRadius: nativeTheme.br0 },
           className: "UserListEditorSection-editIcon",
-          middle: <AiOutlineUnorderedList size={20} />,
+          middle: icon,
           onClick: editSection,
         }}
       />

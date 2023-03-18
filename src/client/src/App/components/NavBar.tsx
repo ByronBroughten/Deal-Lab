@@ -42,6 +42,7 @@ const Styled = styled(AppBar)`
   color: ${theme.primaryNext};
   box-shadow: none;
   z-index: 5;
+  border-bottom: ${theme.borderStyle};
 
   .NavBar-leftSide {
     display: flex;

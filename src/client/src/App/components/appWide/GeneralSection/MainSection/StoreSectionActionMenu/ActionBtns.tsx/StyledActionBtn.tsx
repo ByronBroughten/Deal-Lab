@@ -15,7 +15,7 @@ export function StyledActionBtn({
   return (
     <StyledIconBtn
       {...{
-        style: {
+        sx: {
           whiteSpace: "nowrap",
           fontSize: 15,
           ...(isActive && {
@@ -26,6 +26,11 @@ export function StyledActionBtn({
             color: nativeTheme.notice.dark,
             backgroundColor: "transparent",
           }),
+        },
+
+        style: {
+          whiteSpace: "nowrap",
+          fontSize: 15,
           ...style,
         },
         ...rest,

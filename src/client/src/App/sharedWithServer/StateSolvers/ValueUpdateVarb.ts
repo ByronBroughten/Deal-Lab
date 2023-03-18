@@ -80,6 +80,31 @@ export class SolveValueVarb<
       if (varbs.length > 0) return true;
       else return false;
     },
+    financingDisplayName: (): StringObj => {
+      const value = this.getterVarb.value("stringObj");
+      const { updateFnProps } = this.inEntityVarb;
+      const loanNameProps = updateFnProps.loanNames as UpdateFnProp[];
+      let combined = "";
+      for (let i = 0; i++; i < loanNameProps.length) {
+        const nameProp = loanNameProps[i];
+        const varb = this.getterSection.varbByFocalMixed(nameProp);
+        if (i !== 0) {
+          combined += " + ";
+        }
+        combined += varb.stringValue;
+      }
+      if (combined) {
+        return {
+          ...value,
+          mainText: combined,
+        };
+      } else {
+        return {
+          ...value,
+          mainText: "Cash Only",
+        };
+      }
+    },
     numberOne: (): 1 => 1,
     completionStatus: (): UnionValue<"completionStatus"> => {
       const { updateFnProps } = this.inEntityVarb;

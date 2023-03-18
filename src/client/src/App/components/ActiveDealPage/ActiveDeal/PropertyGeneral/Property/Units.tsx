@@ -1,18 +1,20 @@
+import { unstable_batchedUpdates } from "react-dom";
 import styled from "styled-components";
 import { useToggleView } from "../../../../../modules/customHooks/useToggleView";
-import { useGetterSection } from "../../../../../sharedWithServer/stateClassHooks/useGetterSection";
+import { useSetterSection } from "../../../../../sharedWithServer/stateClassHooks/useSetterSection";
+import { nativeTheme } from "../../../../../theme/nativeTheme";
 import theme from "../../../../../theme/Theme";
 import { EditSectionBtn } from "../../../../appWide/EditSectionBtn";
 import { FormSection } from "../../../../appWide/FormSection";
 import { LabeledVarbRow } from "../../../../appWide/LabeledVarbRow";
 import { ModalSection } from "../../../../appWide/ModalSection";
-import { StartSectionBtn } from "../../../../appWide/StartSectionBtn";
 import StandardLabel from "../../../../general/StandardLabel";
 import { UnitList } from "./UnitList";
+import { AddUnitBtn } from "./UnitList/AddUnitBtn";
 
 type Props = { feId: string };
 export function Units({ feId }: Props) {
-  const property = useGetterSection({
+  const property = useSetterSection({
     sectionName: "property",
     feId,
   });
@@ -22,6 +24,13 @@ export function Units({ feId }: Props) {
     "units",
     false
   );
+
+  const addUnitAndOpen = () => {
+    unstable_batchedUpdates(() => {
+      property.addChild("unit");
+      openUnits();
+    });
+  };
 
   return (
     <Styled className="Units-root">
@@ -56,12 +65,15 @@ export function Units({ feId }: Props) {
               )}
             </div>
             {!hasUnits && (
-              <StartSectionBtn className="Units-addBtn" onClick={openUnits} />
+              <AddUnitBtn
+                sx={{ marginTop: nativeTheme.s3, width: 50, height: 50 }}
+                onClick={addUnitAndOpen}
+              />
             )}
             {hasUnits && (
               <LabeledVarbRow
                 {...{
-                  varbPropArr: property.varbInfoArr([
+                  varbPropArr: property.get.varbInfoArr([
                     "numUnits",
                     "targetRentYearly",
                   ] as const),
@@ -83,8 +95,5 @@ const Styled = styled.div`
   .Units-titleRow {
     display: flex;
     align-items: center;
-  }
-  .Units-addBtn {
-    margin-top: ${theme.s3};
   }
 `;

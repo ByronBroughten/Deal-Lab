@@ -7,7 +7,6 @@ import { SubSectionBtn } from "../../appWide/GeneralSection/GeneralSectionTitle/
 import { SectionTitle } from "../../appWide/SectionTitle";
 import Radio from "../../general/Radio";
 import theme from "./../../../theme/Theme";
-import { BackToSectionBtn } from "./BackToSectionBtn";
 import { Loan } from "./Financing/Loan";
 
 type Props = {
@@ -43,7 +42,6 @@ export function FinancingEditor({ feId, backBtnProps }: Props) {
           text={"Financing"}
           className="MainSectionTopRows-sectionTitle"
         />
-        <BackToSectionBtn {...backBtnProps} />
       </div>
       <FormSection>
         <div className="Financing-inputDiv">

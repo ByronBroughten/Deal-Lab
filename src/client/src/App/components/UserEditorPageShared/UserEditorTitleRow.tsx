@@ -1,17 +1,15 @@
 import React from "react";
 import { AiOutlineSave } from "react-icons/ai";
-import { IoMdCheckmark } from "react-icons/io";
 import { VscDiscard } from "react-icons/vsc";
 import styled from "styled-components";
 import { SnFeUserChildNames } from "../../sharedWithServer/SectionsMeta/relSectionsDerived/FeStoreName";
 import { SectionName } from "../../sharedWithServer/SectionsMeta/SectionName";
-import { useAuthStatus } from "../../sharedWithServer/stateClassHooks/useAuthStatus";
 import { SetterSections } from "../../sharedWithServer/StateSetters/SetterSections";
-import { BackToSectionBtn } from "../ActiveDealPage/ActiveDeal/BackToSectionBtn";
-import { ExclaimBlurb } from "../appWide/ExclaimBlurb";
-import { SectionTitleRow } from "../appWide/GeneralSection/MainSection/SectionTitleRow";
+import { nativeTheme } from "../../theme/nativeTheme";
+import { ChangesSyncedStatusBtn } from "../appWide/GeneralSection/MainSection/ChangesSyncedStatusBtn";
 import { StyledActionBtn } from "../appWide/GeneralSection/MainSection/StoreSectionActionMenu/ActionBtns.tsx/StyledActionBtn";
 import { SectionTitle } from "../appWide/SectionTitle";
+import { Row } from "../general/Row";
 import theme from "./../../theme/Theme";
 import { useSaveEditorToDb } from "./useSaveEditorToDb";
 
@@ -19,82 +17,45 @@ type Props<SN extends SectionName> = {
   titleText: React.ReactNode;
   sectionName: SN;
   childNames: SnFeUserChildNames<SN>[];
-  goBack?: () => void;
   onSave?: (setterSections: SetterSections) => void;
 };
 export function UserEditorTitleRow<SN extends SectionName>({
   titleText,
   sectionName,
   childNames,
-  goBack,
   onSave,
 }: Props<SN>) {
-  const authStatus = useAuthStatus();
   const { saveChanges, discardChanges, areSaved } = useSaveEditorToDb(
     sectionName,
     childNames,
     onSave
   );
+  const saveStatus = areSaved ? "changesSynced" : "unsyncedChanges";
   return (
-    <Styled className="UserEditorTitleRow-root">
-      <SectionTitleRow
-        {...{
-          className: "UserListMainSection-sectionTitle",
-          leftSide: (
-            <SectionTitle
-              className="UserEditorTitleRow-sectionTitle"
-              text={titleText}
-            />
-          ),
-          ...(goBack && {
-            rightSide: (
-              <BackToSectionBtn backToWhat="Lists Menu" onClick={goBack} />
-            ),
-          }),
-        }}
-      />
-      <SectionTitleRow
-        className="UserListMainSection-sectionBtns"
-        leftSide={
-          <div className="UserListMainSection-btnsRow">
-            {areSaved && (
-              <StyledActionBtn
-                {...{
-                  className: "UserListMainSection-areSaved",
-                  left: <IoMdCheckmark size={25} />,
-                  middle: "Changes Saved",
-                  onClick: saveChanges,
-                }}
-              />
-            )}
-            {!areSaved && (
-              <>
-                <StyledActionBtn
-                  {...{
-                    className: "UserListMainSection-saveBtn",
-                    left: <AiOutlineSave size={25} />,
-                    middle: "Save and Apply Changes",
-                    onClick: saveChanges,
-                  }}
-                />
-                <StyledActionBtn
-                  {...{
-                    className: "UserListMainSection-discardChanges",
-                    left: <VscDiscard size={22} />,
-                    middle: "Discard Changes",
-                    onClick: discardChanges,
-                  }}
-                />
-              </>
-            )}
-          </div>
-        }
-      />
-      {authStatus === "guest" && (
-        <ExclaimBlurb className="UserListMainSection-infoBlurb">
-          Log in to save and apply changes.
-        </ExclaimBlurb>
-      )}
+    <Styled className="UserEdiotorTitleRow-root">
+      <Row style={{ alignItems: "flex-start", flexWrap: "wrap" }}>
+        <SectionTitle sx={{ marginRight: nativeTheme.s4 }} text={titleText} />
+        <ChangesSyncedStatusBtn {...{ saveStatus }} />
+      </Row>
+      <Row style={{ marginTop: nativeTheme.s35 }}>
+        <StyledActionBtn
+          {...{
+            disabled: areSaved,
+            left: <AiOutlineSave size={25} />,
+            middle: "Save and Apply Changes",
+            onClick: saveChanges,
+          }}
+        />
+        <StyledActionBtn
+          {...{
+            sx: { marginLeft: nativeTheme.s2 },
+            disabled: areSaved,
+            left: <VscDiscard size={22} />,
+            middle: "Discard Changes",
+            onClick: discardChanges,
+          }}
+        />
+      </Row>
     </Styled>
   );
 }
@@ -115,15 +76,5 @@ const Styled = styled.div`
       height: 33px;
       margin: 0 ${theme.s2};
     }
-  }
-  .UserListMainSection-discardChanges {
-    margin-left: ${theme.s2};
-  }
-  .UserListMainSection-saveBtn {
-    /* width: 250px; */
-  }
-
-  .UserEditorTitleRow-sectionTitle {
-    margin-right: ${theme.s2};
   }
 `;

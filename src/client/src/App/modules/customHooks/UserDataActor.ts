@@ -19,7 +19,7 @@ import { authS } from "./authS";
 export function useUserDataActor(): UserDataActor {
   const sectionProps = useSetterSectionOnlyOneProps("feUser");
   const goToAuthPage = useGoToPage("auth");
-  const goToAccountPage = useGoToPage("activeDeal");
+  const goToAccountPage = useGoToPage("account");
   return new UserDataActor({
     ...sectionProps,
     goToAuthPage,
@@ -101,6 +101,7 @@ export class UserDataActor extends SectionActorBase<"feUser"> {
     const res = await this.apiQueries.getUserData(makeReq({}));
     unstable_batchedUpdates(async () => {
       this.setUserData(res);
+      this.resetUserDataTryCount();
       this.goToAccountPage();
     });
   }

@@ -1,11 +1,10 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
 import { constants } from "../../../Constants";
-import theme from "../../../theme/Theme";
+import { BackBtnWrapper } from "../../appWide/BackBtnWrapper";
 import { FormSection } from "../../appWide/FormSection";
-import { MainSection } from "../../appWide/GeneralSection/MainSection";
 import { FinishBtn } from "./FinishBtn";
+import { SubSectionOpen } from "./SubSectionOpen";
 
 type Props = {
   children: React.ReactNode;
@@ -15,23 +14,19 @@ type Props = {
 export function DealSubSectionOpen({ children, finishIsAllowed }: Props) {
   const navigate = useNavigate();
   return (
-    <Styled>
-      {children}
-      <FormSection>
-        <FinishBtn
-          onClick={() => navigate(constants.feRoutes.activeDeal)}
-          styleDisabled={!finishIsAllowed}
-          className="MainSubSection-finishBtn"
-          btnText="Finish"
-          warningText="Please fill in all the required fields"
-        />
-      </FormSection>
-    </Styled>
+    <BackBtnWrapper>
+      <SubSectionOpen>
+        {children}
+        <FormSection>
+          <FinishBtn
+            onClick={() => navigate(constants.feRoutes.activeDeal)}
+            styleDisabled={!finishIsAllowed}
+            className="MainSubSection-finishBtn"
+            btnText="Finish"
+            warningText="Please fill in all the required fields"
+          />
+        </FormSection>
+      </SubSectionOpen>
+    </BackBtnWrapper>
   );
 }
-
-const Styled = styled(MainSection)`
-  padding-top: ${theme.s5};
-  padding-left: ${theme.s6};
-  padding-right: ${theme.s6};
-`;

@@ -28,13 +28,7 @@ export function VarbListTableSectionStyled({
   const areRows = rowCount > 0;
   return (
     <Styled className={`VarbListTableSectionStyled-root ${className ?? ""}`}>
-      {!areRows && (
-        <AddItemBtn
-          onClick={addItem}
-          middle={addItemBtnMiddle}
-          className="TableSection-addItemNoTable"
-        />
-      )}
+      {!areRows && <AddItemBtn onClick={addItem} middle={addItemBtnMiddle} />}
       {areRows && (
         <div className="VarbListTable-tableContainer">
           {varbListTotal && (
@@ -56,9 +50,13 @@ export function VarbListTableSectionStyled({
           )}
           <VarbListTableStyled headers={headers} rows={rows} />
           <AddItemBtn
+            sx={{
+              borderTopWidth: 0,
+              borderTopRightRadius: 0,
+              borderTopLeftRadius: 0,
+            }}
             onClick={addItem}
             middle={addItemBtnMiddle}
-            className="VarbListTable-addItemBtn tableBottom"
           />
         </div>
       )}
@@ -83,11 +81,5 @@ const Styled = styled.div`
     display: inline-block;
     width: 100%;
     border-radius: ${theme.br0};
-  }
-
-  .VarbListTable-addItemBtn.tableBottom {
-    border-top: none;
-    border-top-right-radius: 0;
-    border-top-left-radius: 0;
   }
 `;

@@ -1,4 +1,7 @@
-import styled from "styled-components";
+import {
+  capExDescription,
+  capExItemizeDescription,
+} from "../../../../../Constants/descriptions";
 import { StateValue } from "../../../../../sharedWithServer/SectionsMeta/values/StateValue";
 import { useSetterSection } from "../../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import { LabelWithInfo } from "../../../../appWide/LabelWithInfo";
@@ -32,14 +35,14 @@ export function CapExValue({ feId }: { feId: string }) {
   ];
 
   return (
-    <Styled
+    <SelectAndItemizeEditorSection
       {...{
         label: (
           <LabelWithInfo
             {...{
               label: "Capital Expense Budget",
               infoTitle: "Capital Expense Budget - What's That?",
-              infoText: `Capital Expenses, or CapEx, are those big, expensive things every property has that will eventually need to be replaced—things like the roof, furnace, and water heater. No long-term analysis of a property is complete without accounting for these inevitable costs.\n\nA common (and easy) method to account for these is to assume that all the CapEx costs together will average to about 5% of the property's rental income.\n\nA more precise method is to go through each major capital expense and estimate both how much it would cost to replace it and how many years the replacements will last. From there, the app will calculate how much you should budget per month for each capital expense as well as their total.`,
+              infoText: capExDescription,
             }}
           />
         ),
@@ -50,7 +53,15 @@ export function CapExValue({ feId }: { feId: string }) {
         },
         menuItems,
         equalsValue,
-        itemizedModalTitle: "Itemized CapEx Budget",
+        itemizedModalTitle: (
+          <LabelWithInfo
+            {...{
+              label: "Itemized CapEx Budget",
+              infoTitle: "How to Itemize CapEx Expenses",
+              infoText: capExItemizeDescription,
+            }}
+          />
+        ),
         itemizeValue: "listTotal",
         total: valueVarb.displayVarb(),
         itemsComponent: (
@@ -65,5 +76,3 @@ export function CapExValue({ feId }: { feId: string }) {
     />
   );
 }
-
-const Styled = styled(SelectAndItemizeEditorSection)``;

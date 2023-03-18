@@ -1,3 +1,4 @@
+import { SxProps } from "@mui/material";
 import { CgDetailsLess, CgDetailsMore } from "react-icons/cg";
 import styled from "styled-components";
 import { useToggleView } from "../../../../modules/customHooks/useToggleView";
@@ -15,16 +16,17 @@ export function OutputSection({
   disableOpenOutputs,
   outputsIsOpen,
   openOutputs,
+  ...rest
 }: {
+  sx?: SxProps;
   feId: string;
   disableOpenOutputs: boolean;
   outputsIsOpen: boolean;
   openOutputs: () => void;
 }) {
   const { detailsIsOpen, toggleDetails } = useToggleView("details", false);
-
   return (
-    <Styled className="OutputSection-root">
+    <Styled {...rest}>
       {!outputsIsOpen && (
         <FinishBtn
           {...{

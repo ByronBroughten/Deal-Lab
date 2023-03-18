@@ -1,17 +1,21 @@
-import styled from "styled-components";
-import theme from "../../../theme/Theme";
+import { nativeTheme } from "../../../theme/nativeTheme";
 import { HollowBtn } from "../../appWide/HollowBtn";
-import { PlainIconBtnProps } from "../../general/PlainIconBtn";
+import { MuiBtnPropsNext } from "../../general/StandardProps";
 
-type Props = PlainIconBtnProps;
-export function MainSectionLargeEditBtn(props: Props) {
-  return <Styled {...props} />;
+export function MainSectionLargeEditBtn({ sx, ...rest }: MuiBtnPropsNext) {
+  return (
+    <HollowBtn
+      {...{
+        sx: {
+          marginLeft: nativeTheme.s3,
+          width: "100%",
+          height: 45,
+          fontSize: nativeTheme.fs16,
+          ...nativeTheme.subSection.borderLines,
+          ...sx,
+        },
+        ...rest,
+      }}
+    />
+  );
 }
-
-const Styled = styled(HollowBtn)`
-  margin-left: ${theme.s3};
-  width: 100%;
-  height: 45px;
-  font-size: ${theme.infoSize};
-  border: ${theme.borderStyle};
-`;

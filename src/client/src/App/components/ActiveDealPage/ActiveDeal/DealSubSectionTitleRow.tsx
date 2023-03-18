@@ -2,7 +2,6 @@ import React from "react";
 import { FaPlay } from "react-icons/fa";
 import styled from "styled-components";
 import { StateValue } from "../../../sharedWithServer/SectionsMeta/values/StateValue";
-
 import { nativeTheme } from "../../../theme/nativeTheme";
 import { CheckMarkCircle } from "../../appWide/checkMarkCircle";
 import { EditSectionBtn } from "../../appWide/EditSectionBtn";
@@ -38,6 +37,9 @@ export function DealSubSectionTitleRow({
         <MainSectionLargeEditBtn
           {...{
             className: "DealSubSectionTitleRow-startBtn",
+            sx: {
+              borderRadius: 5,
+            },
             middle: btnText,
             right: <FaPlay className="DealSubSectionTitleRow-startIcon" />,
             onClick: openEditor,

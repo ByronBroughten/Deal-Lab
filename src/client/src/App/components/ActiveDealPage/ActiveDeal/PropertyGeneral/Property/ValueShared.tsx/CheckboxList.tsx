@@ -10,6 +10,7 @@ export function CheckboxList({ className, checkboxProps }: Props) {
         <CheckboxLabeled
           {...{
             className: "CheckboxList-checkBox",
+            key: props.name,
             ...props,
           }}
         />

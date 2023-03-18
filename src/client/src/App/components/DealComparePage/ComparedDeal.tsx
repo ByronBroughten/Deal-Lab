@@ -19,7 +19,7 @@ export function ComparedDeal({ feId, style }: Props) {
   return (
     <View
       style={{
-        ...nativeTheme.mainSection.main,
+        ...nativeTheme.mainSection,
         ...style,
         padding: nativeTheme.comparedDealRoot.padding,
         paddingBottom: 0,

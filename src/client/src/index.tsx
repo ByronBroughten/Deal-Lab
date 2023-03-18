@@ -6,8 +6,7 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-
-// - Try upgrading to mui-5.
+// Make everything be contained and centered
 
 // - After the next git push heroku master
 //   - check whether the upgrade to pro button works (it works in dev)
@@ -63,10 +62,10 @@ AppRegistry.runApplication("App", {
 //  - When self-loading a sectionPack, don't replace
 //    the sections of self that the sectionPack has a null for
 
-// - Custom outputs groups
-//  - outputSection will have three "slots" for loading an output list
-//  - Different one display depending on whether mode is buy/hold, fixFlip, brrrr
-//  - Save and load output groups for deal compare and output
+// Output Section
+// - Manage Outputs button—Modal that shows the outputs displayed for each deal mode, and that allows for editing, saving, and loading them
+// - Display outputs depending on dealmode
+// - Add outputs Component section
 
 // Need Emily
 // - Logo

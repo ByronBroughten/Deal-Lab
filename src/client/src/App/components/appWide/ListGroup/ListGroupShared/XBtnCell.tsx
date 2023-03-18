@@ -7,7 +7,7 @@ interface Props extends FeSectionInfo {
 export function XBtnCell({ className, ...rest }: Props) {
   return (
     <td className={`XBtnCell-root ${className ?? ""}`}>
-      <RemoveSectionXBtn className="VarbListItem-xBtn" {...rest} />
+      <RemoveSectionXBtn {...rest} />
     </td>
   );
 }

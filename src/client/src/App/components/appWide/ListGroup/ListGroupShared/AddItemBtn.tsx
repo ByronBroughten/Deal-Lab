@@ -1,35 +1,29 @@
 import React from "react";
 import { AiOutlinePlus } from "react-icons/ai";
-import styled from "styled-components";
-import { StandardBtnProps } from "../../../general/StandardProps";
+import { nativeTheme } from "../../../../theme/nativeTheme";
+import { MuiBtnPropsNext } from "../../../general/StandardProps";
 import { SectionBtn } from "../../SectionBtn";
 
-interface Props extends StandardBtnProps {
+interface Props extends MuiBtnPropsNext {
   middle?: React.ReactNode;
 }
 export function AddItemBtn({
-  className,
+  sx,
   middle = <AiOutlinePlus size={17} />,
-  ...props
+  ...rest
 }: Props) {
   return (
-    <Styled
+    <SectionBtn
       {...{
-        className: `VarbListTable-addItemBtn ${className ?? ""}`,
+        ...rest,
         middle,
-        ...props,
+        sx: {
+          height: 30,
+          fontSize: nativeTheme.fs16,
+          width: "100%",
+          ...sx,
+        },
       }}
     />
   );
 }
-
-const Styled = styled(SectionBtn)`
-  height: 30px;
-  font-size: 16px;
-  box-shadow: none;
-  width: 100%;
-`;
-
-// width: 100%;
-// color: ${theme.light};
-// background: ${theme.primaryNext};

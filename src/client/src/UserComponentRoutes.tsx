@@ -1,5 +1,4 @@
 import { Route } from "react-router-dom";
-import { DealSectionOutlet } from "./App/components/DealSectionOutlet";
 import { UserComponents } from "./App/components/UserListEditorPage/UserComponents";
 import { UserListsEditor } from "./App/components/UserListEditorPage/UserListsEditor";
 import { feRoutes } from "./App/Constants/feRoutes";
@@ -14,11 +13,8 @@ const listRoutes = [
 ] as const;
 
 export const UserComponentRoutes = (
-  <Route
-    path={feRoutes.components}
-    element={<DealSectionOutlet activeBtn="lists" />}
-  >
-    <Route index element={<UserComponents />} />
+  <>
+    <Route path={feRoutes.components} element={<UserComponents />} />
     {listRoutes.map((routeName) => (
       <Route
         key={routeName}
@@ -26,5 +22,5 @@ export const UserComponentRoutes = (
         element={<UserListsEditor listName={routeName} />}
       />
     ))}
-  </Route>
+  </>
 );

@@ -101,7 +101,7 @@ const Styled = styled.div`
       padding: 9px 32px 9px 12px;
     }
     .MuiInputBase-root {
-      height: 35px;
+      height: 39px;
       border-top-right-radius: 0;
     }
   }

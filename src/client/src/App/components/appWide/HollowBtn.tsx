@@ -1,30 +1,31 @@
-import styled from "styled-components";
-import theme from "../../theme/Theme";
+import { nativeTheme } from "../../theme/nativeTheme";
 import { PlainIconBtn, PlainIconBtnProps } from "../general/PlainIconBtn";
 
-export function HollowBtn({ className, ...props }: PlainIconBtnProps) {
+export function HollowBtn({ className, sx, ...rest }: PlainIconBtnProps) {
   return (
-    <Styled
+    <PlainIconBtn
       {...{
-        className: `HollowBtn-root ${className ?? ""}`,
-        ...props,
+        className: `${className ?? ""}`,
+        ...rest,
+        sx: {
+          boxShadow: "none",
+          whiteSpace: "nowrap",
+          fontSize: nativeTheme.fs14,
+          borderRadius: nativeTheme.muiBr0,
+          borderWidth: 1,
+          borderStyle: "solid",
+          borderColor: nativeTheme.primary.main,
+          backgroundColor: nativeTheme.light,
+          color: nativeTheme.primary.main,
+          "&:hover": {
+            border: `solid 1px ${nativeTheme.primary.main}`,
+            backgroundColor: nativeTheme.secondary.main,
+            color: nativeTheme.light,
+            boxShadow: "none",
+          },
+          ...sx,
+        },
       }}
     />
   );
 }
-
-const Styled = styled(PlainIconBtn)`
-  white-space: nowrap;
-  border-radius: ${theme.br0};
-  box-shadow: none;
-  border: solid 1px ${theme.primaryNext};
-  background-color: ${theme.light};
-  color: ${theme.primaryNext};
-  font-size: ${theme.labelSize};
-
-  :hover {
-    background-color: ${theme.secondary};
-    color: ${theme.light};
-    box-shadow: none;
-  }
-`;

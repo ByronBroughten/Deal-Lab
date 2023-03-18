@@ -48,7 +48,7 @@ export function ActionSaveAsNewBtn(feInfo: Props) {
             />
             <SectionBtn
               {...{
-                style: {
+                sx: {
                   borderTopWidth: 0,
                   borderTopLeftRadius: 0,
                   borderTopRightRadius: 0,

@@ -1,10 +1,7 @@
-import styled from "styled-components";
 import { StateValue } from "../../../../sharedWithServer/SectionsMeta/values/StateValue";
 import { useGetterSection } from "../../../../sharedWithServer/stateClassHooks/useGetterSection";
-import { nativeTheme } from "../../../../theme/nativeTheme";
 import MainSectionBody from "../../../appWide/GeneralSection/MainSection/MainSectionBody";
 import { MainSectionTopRows } from "../../../appWide/MainSectionTopRows";
-import { BackToSectionBtn } from "../BackToSectionBtn";
 import BasicPropertyInfo from "./Property/BasicPropertyInfo";
 import { CapExValue } from "./Property/CapExValue";
 import { CustomExpenses } from "./Property/CustomExpenses";
@@ -27,14 +24,13 @@ export function PropertyEditor({ feId, backBtnProps }: Props) {
   const property = useGetterSection(feInfo);
   const sectionTitle = "Property";
   return (
-    <Styled>
+    <div>
       <MainSectionTopRows
         {...{
           ...feInfo,
           sectionTitle,
           loadWhat: sectionTitle,
           showControls: true,
-          topRight: <BackToSectionBtn {...backBtnProps} />,
         }}
       />
       <MainSectionBody themeName="property">
@@ -46,13 +42,6 @@ export function PropertyEditor({ feId, backBtnProps }: Props) {
         <MaintenanceValue feId={property.onlyChildFeId("maintenanceValue")} />
         <CustomExpenses {...feInfo} />
       </MainSectionBody>
-    </Styled>
+    </div>
   );
 }
-
-const Styled = styled.div`
-  .Property-upfrontCostsGroup,
-  .Property-ongoingCostGroup {
-    padding-top: ${nativeTheme.s3};
-  }
-`;

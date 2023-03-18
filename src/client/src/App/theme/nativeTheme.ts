@@ -40,6 +40,8 @@ const spacings = {
   s4: "1rem",
   s45: "1.5rem",
   s5: "2rem",
+  s6: "4rem",
+  s7: "8rem",
 } as const;
 
 const fontSizes = {
@@ -48,7 +50,13 @@ const fontSizes = {
   fs18: 18,
   fs20: 20,
   fs22: 22,
+  fs24: 24,
+  fs26: 26,
 };
+
+const mediaQuery = {
+  mediaPhone: 768,
+} as const;
 
 const themeColors = {
   primary: "#00684A",
@@ -98,6 +106,28 @@ const boxShadows = {
     shadowRadius: 2.22,
     elevation: 3,
   }),
+  boxShadow2: view({
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+
+    elevation: 5,
+  }),
+  boxShadow3: view({
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.27,
+    shadowRadius: 4.65,
+
+    elevation: 6,
+  }),
 };
 
 const themeColorVariants = {
@@ -111,14 +141,20 @@ const borderRadiuses = {
   br0: 5,
 } as const;
 
+const muiBr = {
+  muiBr0: "5px",
+} as const;
+
 export const nativeTheme = {
   ...basicColors,
   ...borderRadiuses,
+  ...muiBr,
   ...spacings,
   ...themeColors,
   ...themeColorVariants,
   ...boxShadows,
   ...fontSizes,
+  ...mediaQuery,
   standardBorder(borderColor: string) {
     return view({
       borderStyle: "solid",
@@ -138,14 +174,16 @@ export const nativeTheme = {
   comparedDealRoot: {
     padding: spacings.s3,
   },
-  mainSection: {
-    main: view({
-      padding: spacings.s4,
-      backgroundColor: themeColors.light,
-      borderRadius: borderRadiuses.br0,
-      ...boxShadows.boxShadow1,
-    }),
-  },
+  navBar: view({
+    height: 50,
+    activeBtn: basicColors["gray-200"],
+  }),
+  mainSection: view({
+    padding: spacings.s4,
+    backgroundColor: themeColors.light,
+    borderRadius: borderRadiuses.br0,
+    ...boxShadows.boxShadow3,
+  }),
   formSection: view({
     borderTopWidth: 1,
     borderColor: basicColors["gray-400"],
