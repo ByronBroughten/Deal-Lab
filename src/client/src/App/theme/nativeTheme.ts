@@ -1,58 +1,12 @@
 import { darken, lighten } from "polished";
 import { reactNativeS } from "../utils/reactNative";
+import { basicColors } from "./nativeTheme/basicColors";
+import { comparedDeal } from "./nativeTheme/comparedDeal";
+import { subSection } from "./nativeTheme/subSection";
+import { unitSizes } from "./nativeTheme/unitSizes";
 
 const view = reactNativeS.view;
 const text = reactNativeS.text;
-
-const basicColors = {
-  blue: "#0d6efd",
-  indigo: "#6610f2",
-  purple: "#6f42c1",
-  pink: "#d63384",
-  violet: "#d333d3",
-  red: "#dc3545",
-  orange: "#fd7e14",
-  yellow: "#ffc107",
-  green: "#198754",
-  teal: "#20c997",
-  cyan: "#0dcaf0",
-  white: "#fff",
-  "gray-100": "#f8f9fa",
-  "gray-200": "#e9ecef",
-  "gray-300": "#dee2e6",
-  "gray-400": "#ced4da",
-  "gray-500": "#adb5bd",
-  "gray-600": "#6c757d",
-  "gray-700": "#495057",
-  "gray-800": "#343a40",
-  "gray-900": "#212529",
-  black: "#000",
-} as const;
-
-const spacings = {
-  s0: "0.0625rem",
-  s1: "0.125rem",
-  s15: "0.1875rem",
-  s2: "0.25rem",
-  s25: "0.375rem",
-  s3: "0.5rem",
-  s35: "0.75rem",
-  s4: "1rem",
-  s45: "1.5rem",
-  s5: "2rem",
-  s6: "4rem",
-  s7: "8rem",
-} as const;
-
-const fontSizes = {
-  fs14: 14,
-  fs16: 16,
-  fs18: 18,
-  fs20: 20,
-  fs22: 22,
-  fs24: 24,
-  fs26: 26,
-};
 
 const mediaQuery = {
   mediaPhone: 768,
@@ -62,6 +16,7 @@ const themeColors = {
   primary: "#00684A",
   secondary: "#00A35C",
   notice: "#ff9868",
+  danger: "#ff3527",
   complementary: "#3f51b5",
   dark: "#001E2B",
   light: "#fff",
@@ -135,25 +90,15 @@ const themeColorVariants = {
   secondary: colorVariants(themeColors.secondary),
   notice: colorVariants(themeColors.notice),
   complementary: colorVariants(themeColors.complementary),
+  danger: colorVariants(themeColors.danger),
 };
-
-const borderRadiuses = {
-  br0: 5,
-} as const;
-
-const muiBr = {
-  muiBr0: "5px",
-} as const;
 
 export const nativeTheme = {
   ...basicColors,
-  ...borderRadiuses,
-  ...muiBr,
-  ...spacings,
+  ...unitSizes,
   ...themeColors,
   ...themeColorVariants,
   ...boxShadows,
-  ...fontSizes,
   ...mediaQuery,
   standardBorder(borderColor: string) {
     return view({
@@ -172,16 +117,16 @@ export const nativeTheme = {
     height: 73,
   },
   comparedDealRoot: {
-    padding: spacings.s3,
+    padding: unitSizes.s3,
   },
   navBar: view({
     height: 50,
     activeBtn: basicColors["gray-200"],
   }),
   mainSection: view({
-    padding: spacings.s4,
+    padding: unitSizes.s4,
     backgroundColor: themeColors.light,
-    borderRadius: borderRadiuses.br0,
+    borderRadius: unitSizes.br0,
     ...boxShadows.boxShadow3,
   }),
   formSection: view({
@@ -189,11 +134,6 @@ export const nativeTheme = {
     borderColor: basicColors["gray-400"],
     borderStyle: "solid",
   }),
-  subSection: {
-    borderLines: view({
-      borderStyle: "solid",
-      borderWidth: 1,
-      borderColor: basicColors["gray-400"],
-    }),
-  },
+  subSection,
+  comparedDeal,
 } as const;

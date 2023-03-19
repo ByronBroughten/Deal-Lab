@@ -1,6 +1,6 @@
-import { MdDelete } from "react-icons/md";
 import styled from "styled-components";
 import theme from "../../theme/Theme";
+import { icons } from "../Icons";
 import { PlainIconBtn } from "./PlainIconBtn";
 import { StandardBtnProps } from "./StandardProps";
 
@@ -10,7 +10,7 @@ export function TrashBtn({ className, ...rest }: Props) {
     <Styled
       {...{
         className: `TrashBtn-root ${className ?? ""}`,
-        middle: <MdDelete size={25} className="TrashBtn-icon" />,
+        middle: icons.delete({ size: 25 }),
         ...rest,
       }}
     />

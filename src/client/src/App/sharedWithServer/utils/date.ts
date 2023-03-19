@@ -6,6 +6,9 @@ export const timeS = {
   now() {
     return this.millisecondsToStandard(Date.now());
   },
+  standardToMilliSeconds(standard: number): number {
+    return standard * 1000;
+  },
   oneDay: 86400,
   get thirtyDays(): number {
     return this.oneDay * 30;

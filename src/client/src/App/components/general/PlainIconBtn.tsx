@@ -18,6 +18,7 @@ export function PlainIconBtn({
     <Styled
       {...{
         sx: {
+          boxShadow: "none",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",

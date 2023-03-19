@@ -3,7 +3,7 @@ import { useToggleView } from "../../modules/customHooks/useToggleView";
 import { inEntityValueInfo } from "../../sharedWithServer/SectionsMeta/values/StateValue/InEntityValue";
 import { useSetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useSetterSection";
 import { nativeTheme } from "../../theme/nativeTheme";
-import { MainSectionBtnNative } from "../appWide/GeneralSection/GeneralSectionTitle/MainSectionBtnNative";
+import { HollowBtn } from "../appWide/HollowBtn";
 import { AllVarbsModal } from "../inputs/NumObjEditor/AllVarbsModal";
 import { OnVarbSelect } from "../inputs/NumObjEditor/NumObjVarbSelector/VarbSelectorCollection";
 
@@ -23,11 +23,18 @@ export function DealCompareValueMenu() {
   };
   return (
     <>
-      <MainSectionBtnNative
+      <HollowBtn
         {...{
           onClick: openVarbsModal,
-          middle: "+ Value",
-          style: { height: 50, marginRight: nativeTheme.s3 },
+          middle: "+ Comparison Value",
+          sx: {
+            height: 50,
+            fontSize: nativeTheme.fs18,
+            borderRadius: 0,
+            borderRightWidth: 0,
+            borderBottomLeftRadius: nativeTheme.subSection.borderRadius,
+            ...nativeTheme.subSection.borderLines,
+          },
         }}
       />
       <AllVarbsModal

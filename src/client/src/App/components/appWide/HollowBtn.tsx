@@ -8,7 +8,6 @@ export function HollowBtn({ className, sx, ...rest }: PlainIconBtnProps) {
         className: `${className ?? ""}`,
         ...rest,
         sx: {
-          boxShadow: "none",
           whiteSpace: "nowrap",
           fontSize: nativeTheme.fs14,
           borderRadius: nativeTheme.muiBr0,

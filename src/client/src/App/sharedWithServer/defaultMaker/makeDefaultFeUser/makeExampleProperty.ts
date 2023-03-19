@@ -10,6 +10,7 @@ import {
 import { numObjNext } from "../../SectionsMeta/values/StateValue/numObjNext";
 import { stringObj } from "../../SectionsMeta/values/StateValue/StringObj";
 import { PackBuilderSection } from "../../StatePackers.ts/PackBuilderSection";
+import { timeS } from "../../utils/date";
 import { StrictPick } from "../../utils/types";
 import { makeDefaultProperty } from "../makeDefaultProperty";
 import {
@@ -26,7 +27,9 @@ type ExamplePropertyProps = {
     | "sqft"
     | "taxesOngoingEditor"
     | "homeInsOngoingEditor"
-  >;
+  > & {
+    dateTimeFirstSaved?: number;
+  };
   units: { numBedrooms: NumObj; monthlyRent: NumObj }[];
   repairs: readonly (readonly [string, number | NumObj])[];
   utilities: readonly (readonly [string, number | NumObj])[];
@@ -38,12 +41,17 @@ type ExamplePropertyProps = {
 };
 
 function makeExampleProperty(props: ExamplePropertyProps) {
+  const { dateTimeFirstSaved } = props.property;
   const property = PackBuilderSection.initAsOmniChild("property");
   property.loadSelf(makeDefaultProperty());
   property.updateValues({
     ...props.property,
     taxesOngoingSwitch: "yearly",
     homeInsOngoingSwitch: "yearly",
+    ...(dateTimeFirstSaved && {
+      dateTimeFirstSaved,
+      dateTimeLastSaved: dateTimeFirstSaved,
+    }),
   });
 
   for (const { monthlyRent, ...rest } of props.units) {
@@ -106,10 +114,10 @@ function makeExampleProperty(props: ExamplePropertyProps) {
   return property.makeSectionPack();
 }
 
-export const makeExampleDealProperty = () =>
+export const makeExampleDealProperty = (title: string) =>
   makeExampleProperty({
     property: {
-      displayName: stringObj("Deal Example Property"),
+      displayName: stringObj(title),
       purchasePrice: numObj(250000),
       sqft: numObj(2500),
       taxesOngoingEditor: numObj(2500),
@@ -153,6 +161,7 @@ export const makeExampleStoreProperty = () =>
       sqft: numObj(2500),
       taxesOngoingEditor: numObj(2800),
       homeInsOngoingEditor: numObj(1800),
+      dateTimeFirstSaved: timeS.now(),
     },
     units: [
       {

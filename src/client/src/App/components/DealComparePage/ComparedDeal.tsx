@@ -19,10 +19,13 @@ export function ComparedDeal({ feId, style }: Props) {
   return (
     <View
       style={{
-        ...nativeTheme.mainSection,
-        ...style,
+        ...nativeTheme.subSection.borderLines,
+        minWidth: nativeTheme.comparedDeal.width,
+        borderRightWidth: 0,
+        borderBottomWidth: 0,
         padding: nativeTheme.comparedDealRoot.padding,
         paddingBottom: 0,
+        ...style,
       }}
     >
       <View style={{ height: nativeTheme.comparedDealHead.height }}>

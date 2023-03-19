@@ -6,7 +6,10 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-// Make everything be contained and centered
+// Finish the display for the saved Deals. It doesn't have to be perfect.
+
+// Add a save button to the end of deal, maybe after
+// the outputs.
 
 // - After the next git push heroku master
 //   - check whether the upgrade to pro button works (it works in dev)

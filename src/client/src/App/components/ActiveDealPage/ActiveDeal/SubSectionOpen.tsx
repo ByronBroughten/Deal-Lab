@@ -8,9 +8,9 @@ export function SubSectionOpen({ children }: Props) {
   return (
     <MainSection
       sx={{
-        flex: 1,
         width: "100%",
         maxWidth: 700,
+        minHeight: 300,
         paddingTop: nativeTheme.s5,
         paddingLeft: nativeTheme.s6,
         paddingRight: nativeTheme.s6,

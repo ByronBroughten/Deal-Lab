@@ -34,7 +34,7 @@ export function Main() {
           element={<Navigate to={"/"} />}
         />
         <Route path={"/"} element={<AuthProtectedPage />}>
-          <Route index element={<Navigate to={feRoutes.activeDeal} />} />
+          <Route index element={<Navigate to={feRoutes.account} />} />
           {ActiveDealRoutes}
           {UserComponentRoutes}
           <Route

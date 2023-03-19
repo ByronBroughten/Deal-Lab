@@ -1,14 +1,12 @@
 import { AiOutlineClose } from "react-icons/ai";
-import styled from "styled-components";
 import { nativeTheme } from "../../theme/nativeTheme";
-import theme from "../../theme/Theme";
 import { PlainIconBtn } from "../general/PlainIconBtn";
 import { MuiBtnPropsNext } from "../general/StandardProps";
 
 interface Props extends MuiBtnPropsNext {}
 export function XBtn({ children, className, sx, ...rest }: Props) {
   return (
-    <Styled
+    <PlainIconBtn
       {...{
         ...rest,
         className: "XBtn " + className ?? "",
@@ -23,22 +21,19 @@ export function XBtn({ children, className, sx, ...rest }: Props) {
           borderRadius: "100%",
           whiteSpace: "nowrap",
           padding: "3px",
+          "&:hover": {
+            backgroundColor: nativeTheme.danger.main,
+            color: nativeTheme.light,
+            "& .XBtn-closeIcon": {
+              color: nativeTheme.light,
+            },
+          },
+          "& .MuiTouchRipple-root": {
+            visibility: "hidden",
+          },
           ...sx,
         },
       }}
     />
   );
 }
-
-const Styled = styled(PlainIconBtn)`
-  :hover {
-    background-color: ${theme.error.main};
-    color: ${theme.light};
-    .XBtn-closeIcon {
-      color: ${theme.light};
-    }
-  }
-  .MuiTouchRipple-root {
-    visibility: hidden;
-  }
-`;
