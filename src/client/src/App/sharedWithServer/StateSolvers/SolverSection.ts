@@ -50,6 +50,12 @@ export class SolverSection<
       ...props,
     });
   }
+  static initFromPackAsOmniChild<SN extends ChildName<"omniParent">>(
+    sectionPack: SectionPack<SN>
+  ): SolverSection<SN> {
+    const builder = PackBuilderSection.loadAsOmniChild(sectionPack);
+    return SolverSection.init(builder.getterSectionProps);
+  }
   static initDefaultMain(): SolverSection<"main"> {
     const sections = SolverSections.initSectionsFromDefaultMain();
     const mainRaw = sections.firstRawSection("main");
@@ -70,7 +76,7 @@ export class SolverSection<
   private get solverSections() {
     return new SolverSections(this.solverSectionsProps);
   }
-  private get updater() {
+  get updater() {
     return new UpdaterSection(this.getterSectionProps);
   }
   private get remover() {
@@ -136,7 +142,7 @@ export class SolverSection<
     });
   }
   removeChildByDbId<CN extends ChildName<SN>>(dbInfo: DbChildInfo<SN, CN>) {
-    this.removeChildByDbId(dbInfo);
+    this.doRemoveChildByDbId(dbInfo);
     this.solve();
   }
   private doRemoveChildByDbId<CN extends ChildName<SN>>(

@@ -58,7 +58,7 @@ export function useActionBtns<SN extends SectionNameByType<"hasIndexStore">>({
         <StyledActionBtn
           middle={"Save"}
           left={<AiOutlineSave size={23} />}
-          onClick={() => mainSection.saveNew()}
+          onClick={() => mainSection.saveSelfNew()}
           disabled={isGuest}
         />
       );
@@ -88,11 +88,11 @@ export function useActionBtns<SN extends SectionNameByType<"hasIndexStore">>({
         <StyledActionBtn
           middle="Make a copy"
           left={<BiCopy size={25} />}
-          onClick={() => mainSection.makeACopy()}
+          onClick={() => mainSection.makeSelfACopy()}
         />
       );
     },
-    // get copyAndSave() {
+    // get makeSelfACopyAndSave() {
     //   return (
     //     <StyledActionBtn
     //       middle="Copy and save"
@@ -102,7 +102,7 @@ export function useActionBtns<SN extends SectionNameByType<"hasIndexStore">>({
     //           <AiOutlineSave size={19} />
     //         </span>
     //       }
-    //       onClick={() => mainSection.copyAndSave()}
+    //       onClick={() => mainSection.makeSelfACopyAndSave()}
     //       disabled={isGuest}
     //     />
     //   );

@@ -83,7 +83,7 @@ export const config = {
       return `${env.clientUrlBase}${config.feRoutes.authSuccess}`;
     },
   },
-  basicStorageLimit: 2,
+  basicStorageLimit: 5,
   apiQueryNames: [
     "addSection",
     "updateSection",

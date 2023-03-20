@@ -76,10 +76,10 @@ export class PackMakerSection<
       ...sections.onlyOneRawSection(sectionName),
     });
   }
-  makeSectionPack(): SectionPack<SN> {
+  makeSectionPack(dbId?: string): SectionPack<SN> {
     this.addSpNum(this.get.feId);
     const sectionPack = {
-      dbId: this.get.dbId,
+      dbId: dbId ?? this.get.dbId,
       sectionName: this.sectionName,
       rawSections: this.rawDescendantSections(),
     };

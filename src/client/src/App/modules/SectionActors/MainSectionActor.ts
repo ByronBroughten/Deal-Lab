@@ -14,7 +14,6 @@ import {
   SectionQuerierProps,
 } from "../QueriersBasic/SectionQuerier";
 import { DisplayItemProps } from "../SectionSolvers/FeIndexSolver";
-
 import {
   MainSectionSolver,
   SaveStatus,
@@ -22,11 +21,22 @@ import {
 import { UserInfoTokenProp, userTokenS } from "../services/userTokenS";
 import { Str } from "./../../sharedWithServer/utils/Str";
 import { FeUserActor } from "./FeUserActor";
-import { SectionActorBase } from "./SectionActorBase";
+import { SectionActorBase, SectionActorBaseProps } from "./SectionActorBase";
+
+type DbIndexStoreName<SN extends SectionNameByType<"hasIndexStore">> = Extract<
+  DbStoreNameByType<"sectionQuery">,
+  DbNameBySectionName<SN>
+>;
 
 export class MainSectionActor<
   SN extends SectionNameByType<"hasIndexStore">
 > extends SectionActorBase<SN> {
+  dbIndexStoreName: DbIndexStoreName<SN>;
+  constructor(props: SectionActorBaseProps<SN>) {
+    super(props);
+    this.dbIndexStoreName = this.get.dbIndexStoreName as DbIndexStoreName<SN>;
+    // this is a property so the section can delete itself.
+  }
   get feUser() {
     const feUser = this.setterSections.oneAndOnly("feUser").get;
     return new FeUserActor({
@@ -54,10 +64,7 @@ export class MainSectionActor<
   > {
     return {
       apiQueries: this.apiQueries,
-      dbStoreName: this.get.dbIndexStoreName as Extract<
-        DbStoreNameByType<"sectionQuery">,
-        DbNameBySectionName<SN>
-      >,
+      dbStoreName: this.dbIndexStoreName,
     };
   }
   private get querier() {
@@ -96,36 +103,35 @@ export class MainSectionActor<
     this.setSections();
   }
   async makeACopy() {
-    this.mainSolver.makeACopy();
+    const clonePack = this.mainSolver.makeACopy();
+    this.setSections();
+    this.tryAddSectionQuery(clonePack);
+  }
+  async makeSelfACopy() {
+    this.mainSolver.makeSelfACopy();
     this.setSections();
   }
   async saveAsNew() {
     this.setter.resetDbId();
-    this.saveNew();
+    this.saveSelfNew();
   }
-  async copyAndSave() {
-    this.mainSolver.makeACopy();
-    this.saveNew();
+  async makeSelfACopyAndSave() {
+    this.mainSolver.makeSelfACopy();
+    this.saveSelfNew();
   }
-  async saveNew(): Promise<void> {
-    this.mainSolver.saveNew();
+  private async tryAddSectionQuery(sectionPack: SectionPack<SN>) {
+    let headers: UserInfoTokenProp | null = null;
+    this.setter.tryAndRevertIfFail(async () => {
+      const res = await this.querier.add(sectionPack as SectionPack<any>);
+      headers = res.headers;
+    });
+    if (headers) userTokenS.setTokenFromHeaders(headers);
+  }
+  async saveSelfNew(): Promise<void> {
+    this.mainSolver.saveSelfNew();
     this.setSections();
-    let headers: UserInfoTokenProp | null = null;
-    this.setter.tryAndRevertIfFail(async () => {
-      const sectionPack = this.packMaker.makeSectionPack();
-      const res = await this.querier.add(sectionPack as SectionPack<any>);
-      headers = res.headers;
-    });
-    if (headers) userTokenS.setTokenFromHeaders(headers);
-  }
-  private querySave() {
-    let headers: UserInfoTokenProp | null = null;
-    this.setter.tryAndRevertIfFail(async () => {
-      const sectionPack = this.packMaker.makeSectionPack();
-      const res = await this.querier.add(sectionPack as SectionPack<any>);
-      headers = res.headers;
-    });
-    if (headers) userTokenS.setTokenFromHeaders(headers);
+    const sectionPack = this.packMaker.makeSectionPack();
+    this.tryAddSectionQuery(sectionPack);
   }
   async saveUpdates(): Promise<void> {
     this.mainSolver.saveUpdates();
@@ -162,7 +168,9 @@ export class MainSectionActor<
   }
   async deleteFromIndex(dbId: string) {
     this.mainSolver.deleteFromIndex(dbId);
-    this.setter.setSections();
-    this.setter.tryAndRevertIfFail(async () => await this.querier.delete(dbId));
+    this.setterSections.setSections();
+    this.setterSections.tryAndRevertIfFail(
+      async () => await this.querier.delete(dbId)
+    );
   }
 }

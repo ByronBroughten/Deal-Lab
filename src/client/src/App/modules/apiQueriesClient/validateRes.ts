@@ -19,9 +19,9 @@ export function validateDbIdRes(res: AxiosResponse<unknown>): DbIdRes {
 
 type DbIdData = { dbId: string };
 export function validateDbIdData(value: any): DbIdData {
-  value = Obj.validateObjToAny(value);
+  value = Obj.validateObjToAny(value) as DbIdData;
   return {
-    dbId: Id.validate(value),
+    dbId: Id.validate(value.dbId),
   };
 }
 

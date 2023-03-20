@@ -2,6 +2,7 @@ import isEqual from "fast-deep-equal";
 import { SectionPack } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/SectionPack";
 import { SectionNameByType } from "../../sharedWithServer/SectionsMeta/SectionNameByType";
 import { SectionValues } from "../../sharedWithServer/SectionsMeta/values/StateValue";
+import { StringObj } from "../../sharedWithServer/SectionsMeta/values/StateValue/StringObj";
 import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection";
 import { GetterSections } from "../../sharedWithServer/StateGetters/GetterSections";
 import { PackMakerSection } from "../../sharedWithServer/StatePackers.ts/PackMakerSection";
@@ -93,14 +94,32 @@ export class MainSectionSolver<
   get displayItems(): DisplayItemProps[] {
     return this.feStoreSolver.displayItems;
   }
-  makeACopy() {
+  makeACopy(): SectionPack<SN> {
+    const sectionPack = this.packMaker.makeSectionPack();
+    const clone = SolverSection.initFromPackAsOmniChild(sectionPack);
+
+    clone.updater.newDbId();
+    const name = clone.get.valueNext("displayName");
+    const nextName: StringObj = {
+      ...name,
+      mainText: "Copy of " + name.mainText,
+    };
+    clone.updateValuesAndSolve({
+      displayName: nextName,
+    } as Partial<SectionValues<SN>>);
+    const clonePack = clone.packMaker.makeSectionPack();
+    this.feStoreSolver.addItem(clonePack);
+    return clonePack;
+  }
+  makeSelfACopy() {
     this.updater.newDbId();
-    const titleValue = this.get.valueNext("displayName");
+    const name = this.get.valueNext("displayName");
+    const nextName: StringObj = {
+      ...name,
+      mainText: "Copy of " + name.mainText,
+    };
     this.solver.updateValuesAndSolve({
-      displayName: {
-        ...titleValue,
-        mainText: "Copy of " + titleValue.mainText,
-      },
+      displayName: nextName,
     } as Partial<SectionValues<SN>>);
   }
   copyMinusNameChange() {
@@ -116,7 +135,7 @@ export class MainSectionSolver<
   deleteSelfFromIndex() {
     this.deleteFromIndex(this.dbId);
   }
-  saveNew() {
+  saveSelfNew() {
     const dateTime = timeS.now();
     this.solver.updateValuesAndSolve({
       dateTimeFirstSaved: dateTime,

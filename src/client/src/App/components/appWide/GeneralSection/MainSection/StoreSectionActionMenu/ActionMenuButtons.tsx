@@ -54,7 +54,7 @@ export function useActionMenuBtns<
           key="save"
           label={"Save"}
           icon={<AiOutlineSave size="25" />}
-          onClick={() => mainSection.saveNew()}
+          onClick={() => mainSection.saveSelfNew()}
         />
       );
     },
@@ -86,14 +86,14 @@ export function useActionMenuBtns<
           key="copy"
           label="Make a copy"
           icon={<BiCopy size="28" />}
-          onClick={() => mainSection.makeACopy()}
+          onClick={() => mainSection.makeSelfACopy()}
         />
       );
     },
-    // get copyAndSave() {
+    // get makeSelfACopyAndSave() {
     //   return (
     //     <LabeledIconBtn
-    //       key="copyAndSave"
+    //       key="makeSelfACopyAndSave"
     //       label="Copy and save"
     //       icon={
     //         <span style={{ display: "flex" }}>
@@ -101,7 +101,7 @@ export function useActionMenuBtns<
     //           <AiOutlineSave size="21" />
     //         </span>
     //       }
-    //       onClick={() => mainSection.copyAndSave()}
+    //       onClick={() => mainSection.makeSelfACopyAndSave()}
     //       disabled={isGuest}
     //     />
     //   );

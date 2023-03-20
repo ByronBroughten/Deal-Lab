@@ -12,6 +12,7 @@ const titleProps = {
   style: {
     color: nativeTheme.primary.main,
     fontSize: nativeTheme.fs18,
+    maxWidth: 800,
   },
 };
 
@@ -29,13 +30,11 @@ const iconProps = {
   size: 20,
 };
 
-const rowProps = {
-  style: reactNativeS.view({
-    margin: nativeTheme.s1,
-    marginRight: nativeTheme.s25,
-    alignItems: "center",
-  }),
-};
+const rowStyle = reactNativeS.view({
+  margin: nativeTheme.s1,
+  marginRight: nativeTheme.s25,
+  alignItems: "center",
+});
 
 export function AccountPageDeal({
   feId,
@@ -105,13 +104,18 @@ export function AccountPageDeal({
           <Text {...titleProps}>{names.mgmt}</Text>
         </Row>
          */}
-        <Row {...rowProps}>
+        <Row
+          style={{
+            ...rowStyle,
+            paddingLeft: nativeTheme.s4,
+          }}
+        >
           <Text>Created </Text>
           <Text>{dateCreated}</Text>
         </Row>
       </Row>
       <Row style={{ justifyContent: "space-between" }}>
-        <Row {...rowProps}>
+        <Row style={rowStyle}>
           {icons["buyAndHold"](iconProps)}
           <Text {...dealTypeProps}>{dealModeLabels[dealMode]}</Text>
         </Row>
@@ -129,7 +133,7 @@ export function AccountPageDeal({
           />
           <PillIconBtn
             {...{
-              onClick: () => mainDeal.copyAndSave(),
+              onClick: () => mainDeal.makeACopy(),
               sx: {
                 margin: nativeTheme.s1,
                 marginTop: nativeTheme.s25,
