@@ -1,5 +1,5 @@
 import { makeVarbNamesInfo } from "../SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
-import { Id } from "../SectionsMeta/Id";
+import { Id } from "../SectionsMeta/IdS";
 import { FeStoreNameByType } from "../SectionsMeta/relSectionsDerived/FeStoreName";
 import { DbSectionPack } from "../SectionsMeta/sectionChildrenDerived/DbSectionPack";
 import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";

@@ -6,7 +6,7 @@ import {
   SectionPackRes,
   UrlRes,
 } from "../../sharedWithServer/apiQueriesShared/makeReqAndRes";
-import { Id } from "../../sharedWithServer/SectionsMeta/Id";
+import { Id } from "../../sharedWithServer/SectionsMeta/IdS";
 import { validateSectionPack } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/SectionPack";
 import { Obj } from "../../sharedWithServer/utils/Obj";
 import { Str } from "../../sharedWithServer/utils/Str";

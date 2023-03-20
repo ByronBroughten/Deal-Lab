@@ -1,5 +1,5 @@
 import { VarbName } from "../SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
-import { Id } from "../SectionsMeta/Id";
+import { Id } from "../SectionsMeta/IdS";
 import {
   ChildArrInfo,
   ChildIdArrsNarrow,

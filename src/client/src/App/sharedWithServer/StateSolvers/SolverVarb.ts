@@ -1,4 +1,4 @@
-import { Id } from "../SectionsMeta/Id";
+import { Id } from "../SectionsMeta/IdS";
 import { VarbInfoMixedFocal } from "../SectionsMeta/SectionInfo/MixedSectionInfo";
 import { FeVarbInfoMixed } from "../SectionsMeta/SectionInfo/VarbInfoBase";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";

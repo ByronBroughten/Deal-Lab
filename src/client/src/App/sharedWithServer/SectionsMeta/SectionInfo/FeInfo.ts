@@ -1,4 +1,4 @@
-import { Id } from "../Id";
+import { Id } from "../IdS";
 import {
   ParentName,
   ParentNameSafe,
