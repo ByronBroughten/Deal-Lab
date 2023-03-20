@@ -28,6 +28,11 @@ export function useUserDataActor(): UserDataActor {
   });
 }
 
+export function useUserDataStatus(): StateValue<"userDataStatus"> {
+  const { userDataStatus } = useUserDataActor();
+  return userDataStatus;
+}
+
 interface Props extends SectionActorBaseProps<"feUser"> {
   goToAuthPage: () => void;
   goToAccountPage: () => void;

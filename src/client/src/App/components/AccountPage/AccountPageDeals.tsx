@@ -1,5 +1,7 @@
 import { Box } from "@mui/material";
 import { Text, View } from "react-native";
+import { ClipLoader } from "react-spinners";
+import { useUserDataStatus } from "../../modules/customHooks/UserDataActor";
 import { useGetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useGetterSection";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { Row } from "../general/Row";
@@ -23,6 +25,9 @@ export function AccountPageDeals() {
   const main = useGetterSectionOnlyOne("main");
   const dealMenu = main.onlyChild("mainDealMenu");
   const deals = useFilteredDeals();
+
+  const dataStatus = useUserDataStatus();
+  const loading = dataStatus === "loading";
   return (
     <Row
       style={{
@@ -45,39 +50,54 @@ export function AccountPageDeals() {
         >
           Saved Deals
         </Text>
-        <Box
-          sx={{
-            mt: nativeTheme.s3,
-            width: "100%",
-            justifyContent: "flex-start",
-          }}
-        >
-          <BigStringEditor
+        {loading && (
+          <ClipLoader
             {...{
-              placeholder: "Filter by deal title",
-              feVarbInfo: dealMenu.varbInfo("dealNameFilter"),
+              loading,
+              color: nativeTheme.primary.main,
+              size: 100,
+              speedMultiplier: 0.8,
             }}
           />
-        </Box>
-        <Box
-          sx={{
-            mt: nativeTheme.s3,
-            width: "100%",
-          }}
-        >
-          {deals.map(({ feId }, idx) => (
-            <AccountPageDeal
-              {...{
-                key: feId,
-                feId,
-                ...(idx === deals.length - 1 && {
-                  style: { borderBottomWidth: 1 },
-                }),
+        )}
+        {!loading && (
+          <>
+            <Box
+              sx={{
+                mt: nativeTheme.s3,
+                width: "100%",
+                justifyContent: "flex-start",
               }}
-            />
-          ))}
-        </Box>
+            >
+              <BigStringEditor
+                {...{
+                  placeholder: "Filter by deal title",
+                  feVarbInfo: dealMenu.varbInfo("dealNameFilter"),
+                }}
+              />
+            </Box>
+            <Box
+              sx={{
+                mt: nativeTheme.s3,
+                width: "100%",
+              }}
+            >
+              {deals.map(({ feId }, idx) => (
+                <AccountPageDeal
+                  {...{
+                    key: feId,
+                    feId,
+                    ...(idx === deals.length - 1 && {
+                      style: { borderBottomWidth: 1 },
+                    }),
+                  }}
+                />
+              ))}
+            </Box>
+          </>
+        )}
       </View>
+      )
     </Row>
   );
 }
