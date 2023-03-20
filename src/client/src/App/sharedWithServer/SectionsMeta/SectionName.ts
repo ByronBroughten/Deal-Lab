@@ -3,6 +3,8 @@ import { z } from "zod";
 export const sectionNames = [
   "root",
   "main",
+  "mainDealMenu",
+
   "variablesMenu",
   "feUser",
   "dbStore",

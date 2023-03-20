@@ -37,6 +37,7 @@ export function makeDefaultMain(): SectionPack<"main"> {
   });
 
   main.addChild("variablesMenu");
+  main.addChild("mainDealMenu");
 
   const outputSection = main.addAndGetChild("outputSection");
   outputSection.loadChild({

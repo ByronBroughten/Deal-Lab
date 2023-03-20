@@ -3,7 +3,7 @@ import { UserVarbEditor } from "./UserVarbEditorPage/UserVarbEditor";
 
 export function UserVarbEditorPage() {
   return (
-    <BackBtnWrapper>
+    <BackBtnWrapper {...{ to: -1, label: "Back" }}>
       <UserVarbEditor />
     </BackBtnWrapper>
   );

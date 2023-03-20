@@ -1,6 +1,10 @@
+import { stringObj } from "../../SectionsMeta/values/StateValue/StringObj";
 import { PackBuilderSection } from "../../StatePackers.ts/PackBuilderSection";
 import { timeS } from "../../utils/date";
-import { makeDefaultDealPack } from "../makeDefaultDeal";
+import {
+  makeDefaultDealDisplayName,
+  makeDefaultDealPack,
+} from "../makeDefaultDeal";
 import { dealExampleLoan } from "./makeExampleLoan";
 import { exampleDealMgmt } from "./makeExampleMgmt";
 import { makeExampleDealProperty } from "./makeExampleProperty";
@@ -18,14 +22,21 @@ export function makeExampleDeal(propertyTitle: string) {
   property.loadSelf(makeExampleDealProperty(propertyTitle));
 
   const financing = deal.onlyChild("financing");
-  financing.updateValues({
-    financingMode: "useLoan",
-  });
   const loan = financing.onlyChild("loan");
   loan.loadSelf(dealExampleLoan);
 
+  financing.updateValues({
+    financingMode: "useLoan",
+    displayName: loan.get.valueNext("displayName"),
+  });
+
   const mgmt = deal.onlyChild("mgmt");
   mgmt.loadSelf(exampleDealMgmt);
+
+  const displayName = makeDefaultDealDisplayName(deal.get);
+  deal.updateValues({
+    displayName: stringObj(displayName),
+  });
 
   return deal.makeSectionPack();
 }

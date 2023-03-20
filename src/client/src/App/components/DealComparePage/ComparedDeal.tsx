@@ -33,15 +33,15 @@ export function ComparedDeal({ feId, style }: Props) {
         <View
           style={{
             flex: 1,
-            paddingTop: nativeTheme.s25,
+            paddingTop: nativeTheme.s3,
             paddingBottom: nativeTheme.s25,
             alignItems: "center",
-            justifyContent: "center",
+            justifyContent: "flex-start",
             maxWidth: 200,
           }}
         >
           <Text
-            numberOfLines={2}
+            numberOfLines={4}
             style={{
               lineHeight: nativeTheme.fs20,
               fontSize: nativeTheme.fs18,

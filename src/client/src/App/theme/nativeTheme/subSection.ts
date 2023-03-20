@@ -1,5 +1,5 @@
 import { reactNativeS } from "../../utils/reactNative";
-import { basicColors } from "./basicColors";
+import { themeColors } from "./themeColors";
 import { unitSizes } from "./unitSizes";
 
 const { view } = reactNativeS;
@@ -7,7 +7,7 @@ const { view } = reactNativeS;
 const borderLines = view({
   borderStyle: "solid",
   borderWidth: 1,
-  borderColor: basicColors["gray-400"],
+  borderColor: themeColors["gray-400"],
 });
 
 const border = view({

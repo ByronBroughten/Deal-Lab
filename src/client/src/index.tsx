@@ -6,13 +6,29 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-// Finish the display for the saved Deals. It doesn't have to be perfect.
 
-// Add a save button to the end of deal, maybe after
+// - Make the variables save automatically as they are edited
+//   (instead of having their save status checked)
+
+// - Give deal its displayName back, but make it suggest
+//   a default at save (save as)
+// - Do this with the component lists, too
+// - Make editDeal edit the saved deal directly and autoSave
+// - Make saving a new deal put the deal in an editDeal state
+// - Make "New Deal" reset when it has been saved
+
+// - Finish the display for the saved Deals. It doesn't have to be perfect.
+
+// - Add a save button to the end of deal, maybe after
 // the outputs.
 
 // - After the next git push heroku master
 //   - check whether the upgrade to pro button works (it works in dev)
+
+// If there will be three example deals, you'll need to increase the
+// save limit.
+
+// - Figure out if there's a way to use mui sx with mobile
 
 // - Add FixNFlip
 //   - Add ARV

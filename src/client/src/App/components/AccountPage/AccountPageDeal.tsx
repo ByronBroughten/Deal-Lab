@@ -1,5 +1,3 @@
-import { FaUserTie } from "react-icons/fa";
-import { MdOutlineAttachMoney } from "react-icons/md";
 import { Text, View, ViewStyle } from "react-native";
 import { useMainSectionActor } from "../../modules/sectionActorHooks/useMainSectionActor";
 import { dealModeLabels } from "../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
@@ -10,8 +8,35 @@ import { PlainIconBtn, PlainIconBtnProps } from "../general/PlainIconBtn";
 import { Row } from "./../general/Row";
 import { icons } from "./../Icons";
 
-const dealSectionNames = ["property", "financing", "mgmt"] as const;
-type DealSectionName = typeof dealSectionNames[number];
+const titleProps = {
+  style: {
+    color: nativeTheme.primary.main,
+    fontSize: nativeTheme.fs18,
+  },
+};
+
+const dealTypeProps = {
+  style: {
+    fontSize: nativeTheme.fs16,
+    marginLeft: nativeTheme.s2,
+  },
+};
+
+const iconProps = {
+  style: {
+    color: nativeTheme.primary.main,
+  },
+  size: 20,
+};
+
+const rowProps = {
+  style: reactNativeS.view({
+    margin: nativeTheme.s1,
+    marginRight: nativeTheme.s25,
+    alignItems: "center",
+  }),
+};
+
 export function AccountPageDeal({
   feId,
   style,
@@ -35,36 +60,7 @@ export function AccountPageDeal({
     // second: "2-digit",
   }).format(timeS.standardToMilliSeconds(dateNumber));
 
-  const names = dealSectionNames.reduce((names, sectionName) => {
-    names[sectionName] = deal.onlyChild(sectionName).stringValue("displayName");
-    return names;
-  }, {} as Record<DealSectionName, string>);
-
   const dealMode = deal.valueNext("dealMode");
-
-  const textProps = {
-    style: {
-      color: nativeTheme.dark,
-      fontSize: nativeTheme.fs18,
-      marginLeft: nativeTheme.s1,
-    },
-  };
-
-  const iconProps = {
-    style: {
-      color: nativeTheme.primary.main,
-    },
-    size: 20,
-  };
-
-  const rowProps = {
-    style: reactNativeS.view({
-      margin: nativeTheme.s1,
-      marginRight: nativeTheme.s25,
-      alignItems: "center",
-    }),
-  };
-
   return (
     <View
       style={{
@@ -76,10 +72,11 @@ export function AccountPageDeal({
         ...nativeTheme.formSection,
       }}
     >
-      <Row style={{ flexWrap: "wrap" }}>
-        <Row {...rowProps}>
+      <Row style={{ justifyContent: "space-between" }}>
+        <Text {...titleProps}>{deal.stringValue("displayName")}</Text>
+        {/* <Row {...rowProps}>
           {icons.property(iconProps)}
-          <Text {...textProps}>{names.property}</Text>
+          <Text {...titleProps}>{names.property}</Text>
         </Row>
         <Row {...rowProps}>
           <MdOutlineAttachMoney
@@ -93,9 +90,9 @@ export function AccountPageDeal({
           />
           <Text
             {...{
-              ...textProps,
+              ...titleProps,
               style: {
-                ...textProps.style,
+                ...titleProps.style,
                 paddingLeft: -3,
               },
             }}
@@ -105,25 +102,26 @@ export function AccountPageDeal({
         </Row>
         <Row {...rowProps}>
           <FaUserTie {...iconProps} />
-          <Text {...textProps}>{names.mgmt}</Text>
+          <Text {...titleProps}>{names.mgmt}</Text>
         </Row>
+         */}
         <Row {...rowProps}>
-          {icons["buyAndHold"](iconProps)}
-          <Text {...textProps}>{dealModeLabels[dealMode]}</Text>
+          <Text>Created </Text>
+          <Text>{dateCreated}</Text>
         </Row>
       </Row>
       <Row style={{ justifyContent: "space-between" }}>
+        <Row {...rowProps}>
+          {icons["buyAndHold"](iconProps)}
+          <Text {...dealTypeProps}>{dealModeLabels[dealMode]}</Text>
+        </Row>
         <Row>
           <PillIconBtn
             {...{
               sx: {
                 margin: nativeTheme.s15,
-                marginRight: nativeTheme.s25,
-                "&:hover": {
-                  color: nativeTheme.light,
-                  backgroundColor: nativeTheme.secondary.main,
-                  borderColor: nativeTheme.primary.main,
-                },
+                marginTop: nativeTheme.s25,
+                marginRight: nativeTheme.s2,
               },
               left: icons.edit({ size: 20 }),
               middle: "Edit",
@@ -134,12 +132,8 @@ export function AccountPageDeal({
               onClick: () => mainDeal.copyAndSave(),
               sx: {
                 margin: nativeTheme.s1,
-                marginRight: nativeTheme.s25,
-                "&:hover": {
-                  color: nativeTheme.light,
-                  backgroundColor: nativeTheme.secondary.main,
-                  borderColor: nativeTheme.primary.main,
-                },
+                marginTop: nativeTheme.s25,
+                marginRight: nativeTheme.s15,
               },
               left: icons.copy({ size: 20 }),
               middle: "Copy",
@@ -150,7 +144,7 @@ export function AccountPageDeal({
               onClick: () => mainDeal.deleteSelf(),
               sx: {
                 margin: nativeTheme.s1,
-                marginRight: nativeTheme.s25,
+                marginTop: nativeTheme.s25,
                 "&:hover": {
                   color: nativeTheme.danger.dark,
                   backgroundColor: nativeTheme["gray-300"],
@@ -161,10 +155,6 @@ export function AccountPageDeal({
               middle: "Delete",
             }}
           />
-        </Row>
-        <Row {...rowProps}>
-          <Text>Created </Text>
-          <Text>{dateCreated}</Text>
         </Row>
       </Row>
     </View>
@@ -177,11 +167,19 @@ function PillIconBtn({ sx, ...rest }: PlainIconBtnProps) {
       {...{
         ...rest,
         sx: {
-          ...nativeTheme.subSection.borderLines,
+          borderWidth: 1,
+          borderStyle: "solid",
+          borderColor: "transparent",
+          color: nativeTheme.darkBlue.dark,
           borderRadius: 5,
           paddingLeft: nativeTheme.s25,
           paddingRight: nativeTheme.s25,
-          fontSize: nativeTheme.fs16,
+          fontSize: nativeTheme.fs14,
+          "&:hover": {
+            color: nativeTheme.light,
+            backgroundColor: nativeTheme.darkBlue.main,
+            borderColor: nativeTheme.darkBlue.main,
+          },
           ...sx,
         },
       }}

@@ -14,7 +14,7 @@ type Props = {
 export function DealSubSectionOpen({ children, finishIsAllowed }: Props) {
   const navigate = useNavigate();
   return (
-    <BackBtnWrapper>
+    <BackBtnWrapper {...{ to: -1, label: "Back" }}>
       <SubSectionOpen>
         {children}
         <FormSection>

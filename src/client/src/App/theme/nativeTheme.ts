@@ -1,8 +1,8 @@
-import { darken, lighten } from "polished";
 import { reactNativeS } from "../utils/reactNative";
-import { basicColors } from "./nativeTheme/basicColors";
 import { comparedDeal } from "./nativeTheme/comparedDeal";
+import { materialDraftEditor } from "./nativeTheme/materialDraftEditor";
 import { subSection } from "./nativeTheme/subSection";
+import { themeColors } from "./nativeTheme/themeColors";
 import { unitSizes } from "./nativeTheme/unitSizes";
 
 const view = reactNativeS.view;
@@ -11,44 +11,6 @@ const text = reactNativeS.text;
 const mediaQuery = {
   mediaPhone: 768,
 } as const;
-
-const themeColors = {
-  primary: "#00684A",
-  secondary: "#00A35C",
-  notice: "#ff9868",
-  danger: "#ff3527",
-  complementary: "#3f51b5",
-  dark: "#001E2B",
-  light: "#fff",
-} as const;
-
-type ColorVariantOptions = {
-  light?: string;
-  dark?: string;
-  contrast?: string;
-};
-type ColorVariants = {
-  main: string;
-  light: string;
-  dark: string;
-  contrast: string;
-};
-function colorVariants(
-  main: string,
-  { contrast, ...rest }: ColorVariantOptions = {}
-): ColorVariants {
-  return {
-    main,
-    get light(): string {
-      return lighten(0.25, this.main);
-    },
-    get dark(): string {
-      return darken(0.1, this.main);
-    },
-    contrast: contrast ?? themeColors.dark,
-    ...rest,
-  };
-}
 
 const boxShadows = {
   boxShadow1: view({
@@ -85,19 +47,9 @@ const boxShadows = {
   }),
 };
 
-const themeColorVariants = {
-  primary: colorVariants(themeColors.primary),
-  secondary: colorVariants(themeColors.secondary),
-  notice: colorVariants(themeColors.notice),
-  complementary: colorVariants(themeColors.complementary),
-  danger: colorVariants(themeColors.danger),
-};
-
 export const nativeTheme = {
-  ...basicColors,
-  ...unitSizes,
   ...themeColors,
-  ...themeColorVariants,
+  ...unitSizes,
   ...boxShadows,
   ...mediaQuery,
   standardBorder(borderColor: string) {
@@ -111,17 +63,17 @@ export const nativeTheme = {
     width: "150px",
   },
   comparedDealHead: {
-    height: 80,
+    height: 120,
   },
   comparedDealValue: {
     height: 73,
   },
   comparedDealRoot: {
-    padding: unitSizes.s3,
+    padding: unitSizes.s35,
   },
   navBar: view({
     height: 50,
-    activeBtn: basicColors["gray-200"],
+    activeBtn: themeColors["gray-200"],
   }),
   mainSection: view({
     padding: unitSizes.s4,
@@ -131,9 +83,13 @@ export const nativeTheme = {
   }),
   formSection: view({
     borderTopWidth: 1,
-    borderColor: basicColors["gray-400"],
+    borderColor: themeColors["gray-400"],
     borderStyle: "solid",
+  }),
+  dealMenuElement: view({
+    margin: unitSizes.s3,
   }),
   subSection,
   comparedDeal,
+  materialDraftEditor,
 } as const;

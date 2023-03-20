@@ -1,8 +1,22 @@
 import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
+import { GetterSection } from "../StateGetters/GetterSection";
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
 import { makeDefaultLoanPack } from "./makeDefaultLoanPack";
 import { makeDefaultMgmtPack } from "./makeDefaultMgmtPack";
 import { makeDefaultProperty } from "./makeDefaultProperty";
+
+const dealSectionNames = ["property", "financing", "mgmt"] as const;
+type DealSectionName = typeof dealSectionNames[number];
+
+export function makeDefaultDealDisplayName(
+  deal: GetterSection<"deal">
+): string {
+  const names = dealSectionNames.reduce((names, sectionName) => {
+    names[sectionName] = deal.onlyChild(sectionName).stringValue("displayName");
+    return names;
+  }, {} as Record<DealSectionName, string>);
+  return `${names.property} / ${names.financing} / ${names.mgmt}`;
+}
 
 export function makeDefaultDealPack(): SectionPack<"deal"> {
   const deal = PackBuilderSection.initAsOmniChild("deal");
@@ -22,5 +36,6 @@ export function makeDefaultDealPack(): SectionPack<"deal"> {
     childName: "mgmt",
     sectionPack: makeDefaultMgmtPack(),
   });
+
   return deal.makeSectionPack();
 }

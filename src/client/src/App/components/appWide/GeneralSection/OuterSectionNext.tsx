@@ -15,7 +15,7 @@ export function OuterSectionNext({ children, style }: OuterSectionNextProps) {
         alignItems: "center",
         overflow: "scroll",
         minHeight: dimensions.height - nativeTheme.navBar.height,
-        paddingTop: nativeTheme.s45,
+        paddingTop: nativeTheme.s4,
         paddingLeft: paddingLR,
         paddingRight: paddingLR,
         backgroundColor: nativeTheme["gray-100"],

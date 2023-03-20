@@ -46,3 +46,5 @@ export const feRoutes = {
 
 const feRouteNames = Obj.keys(feRoutes);
 export type FeRouteName = typeof feRouteNames[number];
+export const isFeRouteName = (value: any): value is FeRouteName =>
+  feRouteNames.includes(value);

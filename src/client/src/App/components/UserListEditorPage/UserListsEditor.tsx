@@ -59,7 +59,7 @@ export function UserListsEditor({ listName }: Props) {
   const listTypeName = listTypes[listName];
   const userListEditor = useSetterSectionOnlyOne("userListEditor");
   return (
-    <BackBtnWrapper>
+    <BackBtnWrapper {...{ to: -1, label: "Back" }}>
       <SubSectionOpen>
         <UserEditorTitleRow
           titleText={title}

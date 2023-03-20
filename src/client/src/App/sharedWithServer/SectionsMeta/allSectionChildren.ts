@@ -57,9 +57,7 @@ export const allSectionChildren = checkAllSectionChildren({
   main: sectionChildren({
     feUser: ["feUser"],
     latentSections: ["latentSections"],
-
-    // All of this could be periodically saved to load on login
-    // Especially outputSection
+    mainDealMenu: ["mainDealMenu"],
     activeDealPage: ["dealPage"],
     outputSection: ["outputSection"],
     userVarbEditor: ["userVarbEditor"],

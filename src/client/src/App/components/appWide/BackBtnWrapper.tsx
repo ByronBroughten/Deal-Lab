@@ -1,17 +1,18 @@
 import React from "react";
 import { IoChevronBack } from "react-icons/io5";
 import { Text, View } from "react-native";
-import { useNavigate } from "react-router-dom";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { PlainIconBtn } from "../general/PlainIconBtn";
 import { Row } from "../general/Row";
+import { GoToPageValue, useGoToPage } from "./customHooks/useGoToPage";
 
 interface Props {
   children: React.ReactNode;
+  to: GoToPageValue;
+  label: string;
 }
-export function BackBtnWrapper({ children }: Props) {
-  const navigate = useNavigate();
-  const goBack = () => navigate(-1);
+export function BackBtnWrapper({ children, to, label }: Props) {
+  const goToPage = useGoToPage(to);
   return (
     <View
       style={{
@@ -24,7 +25,7 @@ export function BackBtnWrapper({ children }: Props) {
       <PlainIconBtn
         {...{
           sx: { marginBottom: nativeTheme.s4 },
-          onClick: goBack,
+          onClick: goToPage,
           middle: (
             <Row>
               <IoChevronBack size={25} color={nativeTheme["gray-700"]} />
@@ -34,7 +35,7 @@ export function BackBtnWrapper({ children }: Props) {
                   color: nativeTheme["gray-700"],
                 }}
               >
-                Back
+                {label}
               </Text>
             </Row>
           ),

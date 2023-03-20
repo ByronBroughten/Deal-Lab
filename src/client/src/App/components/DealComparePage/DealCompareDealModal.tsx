@@ -12,17 +12,27 @@ export function DealCompareDealModal({ dealCount }: Props) {
     useToggleView("dealMenu");
 
   const width = dealCount === 0 ? "100%" : nativeTheme.comparedDeal.width;
+
+  const areNone = dealCount === 0;
+
+  const text = areNone ? "Click to Start Adding Deals To Compare" : "+ Deal";
+  const extraSx = areNone
+    ? {}
+    : {
+        borderRadius: 0,
+        borderTopRightRadius: nativeTheme.subSection.borderRadius,
+        borderBottomRightRadius: nativeTheme.subSection.borderRadius,
+      };
+
   return (
     // A fragment is used to reign in the zIndex of the button
     <>
       <HollowBtn
         {...{
-          middle: "+ Deal",
+          middle: text,
           onClick: openDealMenu,
           sx: {
-            borderRadius: 0,
-            borderTopRightRadius: nativeTheme.subSection.borderRadius,
-            borderBottomRightRadius: nativeTheme.subSection.borderRadius,
+            ...extraSx,
             ...nativeTheme.subSection.borderLines,
             fontSize: nativeTheme.fs24,
             width,
@@ -33,7 +43,7 @@ export function DealCompareDealModal({ dealCount }: Props) {
       />
       <ModalSection
         {...{
-          title: "Select a Deal to Compare",
+          title: "Select a deal to compare...",
           closeModal: closeDealMenu,
           show: dealMenuIsOpen,
         }}

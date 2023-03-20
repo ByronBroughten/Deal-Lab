@@ -3,24 +3,16 @@ import React from "react";
 import { BsFillHouseAddFill, BsFillHousesFill } from "react-icons/bs";
 import { HiOutlineVariable } from "react-icons/hi";
 import { SiWebcomponentsdotorg } from "react-icons/si";
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import { FeRouteName } from "../Constants/feRoutes";
-import { useGetterSectionOnlyOne } from "../sharedWithServer/stateClassHooks/useGetterSection";
 import { nativeTheme } from "../theme/nativeTheme";
-import { AccountPageDeal } from "./AccountPage/AccountPageDeal";
+import { AccountPageDeals } from "./AccountPage/AccountPageDeals";
 import { useGoToPage } from "./appWide/customHooks/useGoToPage";
 import { HollowBtn } from "./appWide/HollowBtn";
 import { Row } from "./general/Row";
 import { MuiBtnPropsNext } from "./general/StandardProps";
 
 // Below that, show the deals menu.
-// - Allow archiving—that's a great idea, good for cleaning up.
-// - Filter by name
-// - Filter by deal type
-// - Allow sorting by
-//   - Date created
-//   - Date updated
-//   - Maybe the default deal outputs
 
 // Each accountDeal has a varbInfo for the deal
 // it represents.
@@ -53,16 +45,12 @@ export function AccountPage() {
         <Row style={{ flexWrap: "wrap" }}>
           <AccountBtn
             feRouteName="activeDeal"
-            text="Add Deal"
-            icon={
-              <Row>
-                <BsFillHouseAddFill size={iconSize} />
-              </Row>
-            }
+            text={<Box>Add Deal</Box>}
+            icon={<BsFillHouseAddFill size={iconSize} />}
           />
           <AccountBtn
             feRouteName="compare"
-            text={"Compare Deals"}
+            text={<Box>Compare Deals</Box>}
             icon={<BsFillHousesFill size={iconSize} />}
           />
         </Row>
@@ -83,7 +71,7 @@ export function AccountPage() {
           />
           <AccountBtn
             feRouteName="userVariables"
-            text={"Input Variables"}
+            text={<div>Input Variables</div>}
             icon={<HiOutlineVariable size={iconSize} />}
           />
         </Row>
@@ -109,10 +97,10 @@ function AccountBtn({ icon, text, sx, feRouteName, ...rest }: AccountBtnProps) {
           <Box
             sx={{
               flexDirection: "column",
-              alignItems: "center",
-              flexWrap: "wrap",
-              height: 95,
               justifyContent: "flex-start",
+              alignItems: "center",
+              height: 95,
+              lineHeight: 1.1,
             }}
           >
             {icon}
@@ -120,7 +108,7 @@ function AccountBtn({ icon, text, sx, feRouteName, ...rest }: AccountBtnProps) {
           </Box>
         ),
         sx: {
-          margin: accountPageElementMargin,
+          margin: nativeTheme.dealMenuElement.margin,
           fontSize: nativeTheme.fs22,
           height: size,
           width: size,
@@ -130,68 +118,5 @@ function AccountBtn({ icon, text, sx, feRouteName, ...rest }: AccountBtnProps) {
         ...rest,
       }}
     />
-  );
-}
-
-const accountPageElementMargin = nativeTheme.s3;
-
-function AccountPageDeals() {
-  const feUser = useGetterSectionOnlyOne("feUser");
-  const deals = feUser.children("dealMain");
-  return deals.length === 0 ? null : (
-    <Row
-      style={{
-        ...nativeTheme.mainSection,
-        flex: 1,
-        height: "100%",
-
-        margin: accountPageElementMargin,
-        justifyContent: "center",
-        paddingBottom: nativeTheme.s45,
-      }}
-    >
-      <View style={{ alignItems: "center", flex: 1 }}>
-        <Text
-          style={{
-            fontSize: nativeTheme.fs22,
-            color: nativeTheme.primary.main,
-          }}
-        >
-          Saved Deals
-        </Text>
-
-        {/* 
-        - Search (property name, financing name, mgmt name, etc)
-        - property name filter, 
-        - loan name filter
-        - mgmt name filter
-        (or just have one search function that accesses all three)
-        - maybe a "deal specifier" filter
-        - deal type selector
-
-        Sort by
-        - date created
-        - last updated 
-       */}
-        <View
-          style={{
-            marginTop: nativeTheme.s4,
-            width: "100%",
-          }}
-        >
-          {deals.map(({ feId }, idx) => (
-            <AccountPageDeal
-              {...{
-                key: feId,
-                feId,
-                ...(idx === deals.length - 1 && {
-                  style: { borderBottomWidth: 1 },
-                }),
-              }}
-            />
-          ))}
-        </View>
-      </View>
-    </Row>
   );
 }

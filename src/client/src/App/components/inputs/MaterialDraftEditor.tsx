@@ -1,10 +1,10 @@
-import { FilledTextFieldProps, TextField } from "@mui/material";
+import { Box, FilledTextFieldProps, SxProps, TextField } from "@mui/material";
 import { Editor, EditorState } from "draft-js";
 import { pick } from "lodash";
 import React from "react";
-import styled from "styled-components";
-import ccs from "../../theme/cssChunks";
-import theme, { ThemeName } from "../../theme/Theme";
+import { materialDraftEditor } from "../../theme/nativeTheme/materialDraftEditor";
+import { ThemeName } from "../../theme/Theme";
+import { arrSx } from "../../utils/mui";
 import { MaterialDraftField } from "./MaterialDraftField";
 import { PropAdornments } from "./NumObjEditor/useGetAdornments";
 import { useOnChange } from "./useOnChange";
@@ -12,6 +12,7 @@ import { useOnChange } from "./useOnChange";
 type HandleBeforeInput = (char: string) => "handled" | "not-handled";
 export type HandleReturn = () => "handled" | "not-handled";
 interface Props extends Omit<FilledTextFieldProps, "InputProps" | "variant"> {
+  sx?: SxProps;
   sectionName?: ThemeName;
   editorState: EditorState;
   setEditorState: React.Dispatch<React.SetStateAction<EditorState>>;
@@ -33,13 +34,13 @@ function getEntityEditorAdornments(
 }
 
 export const MaterialDraftEditor = React.memo(function MaterialDraftEditor({
+  sx,
   id,
   editorState,
   setEditorState,
   onClick,
   className,
   label,
-  sectionName,
   placeholder,
   startAdornment,
   endAdornment,
@@ -60,8 +61,12 @@ export const MaterialDraftEditor = React.memo(function MaterialDraftEditor({
   }));
 
   return (
-    <Styled
-      {...{ label, className: "editor-wrapper " + className, sectionName }}
+    <Box
+      {...{
+        sx: [materialDraftEditor(label), ...arrSx(sx)],
+        label,
+        className: "editor-wrapper " + className,
+      }}
     >
       <div className="MaterialDraftEditor-wrapper">
         <TextField
@@ -97,15 +102,6 @@ export const MaterialDraftEditor = React.memo(function MaterialDraftEditor({
           }}
         />
       </div>
-    </Styled>
+    </Box>
   );
 });
-
-const Styled = styled.div<{ label?: any }>`
-  ${({ label }) => ccs.materialDraftEditor.main({ label })};
-  .public-DraftEditorPlaceholder-root {
-    position: absolute;
-    white-space: nowrap;
-    color: ${theme.placeholderGray};
-  }
-`;

@@ -1,6 +1,7 @@
 import { Obj } from "../../../utils/Obj";
 
 const valueSources = {
+  dealSort: ["dateCreated", "dateUpdated"],
   loanPurpose: ["purchasePrice", "upfrontRepairs", "purchasePriceAndRepairs"],
   loanAmountInputMode: ["downPayment", "loanAmount"],
   loanBaseValueSource: [

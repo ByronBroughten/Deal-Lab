@@ -39,6 +39,12 @@ const varbs = baseVarbsS;
 export function makeAllBaseSectionVarbs() {
   return checkAllBaseSectionVarbs({
     ...defaults,
+    mainDealMenu: baseSectionVarbs({
+      dealNameFilter: baseVarb("string"),
+      dealModeFiler: baseVarb("dealMode"),
+      dealSort: baseVarb("dealSort"),
+      showArchived: baseVarb("boolean"),
+    }),
     compareSection: baseSectionVarbs({
       dealNameFilter: baseVarb("string"),
       valueNameFilter: baseVarb("string"),

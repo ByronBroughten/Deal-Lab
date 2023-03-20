@@ -68,7 +68,7 @@ function makeExampleLoan(props: ExampleLoanProps) {
 
 export const dealExampleLoan = makeExampleLoan({
   loan: {
-    displayName: stringObj("Conventional 20% LTV"),
+    displayName: stringObj("Conventional 20% Down"),
     interestRatePercentOngoingEditor: numObj(6),
     loanTermSpanEditor: numObj(30),
     hasMortgageIns: false,
