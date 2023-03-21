@@ -1,15 +1,8 @@
-import { Obj } from "../utils/Obj";
-import { tableSourceParams } from "./relSectionsDerived/relNameArrs/tableStoreArrs";
 import {
   sectionParentNames,
   SectionToParentNameArrs,
 } from "./sectionChildrenDerived/ParentName";
-import { SectionName, sectionNames, sectionNamesToNull } from "./SectionName";
-
-export const allTableSourceParams = Obj.merge(
-  sectionNamesToNull,
-  tableSourceParams
-);
+import { SectionName, sectionNames } from "./SectionName";
 
 export type GeneralGeneratedSection = {
   parentNames: string[];

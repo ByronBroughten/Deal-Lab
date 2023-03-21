@@ -154,21 +154,6 @@ export const allChildrenTraits = checkAllChildrenTraits({
     }),
   }),
   feUser: childrenTraits("feUser", {
-    dealMainTable: childTraits({
-      dbIndexName: "dealMain",
-    }),
-    propertyMainTable: childTraits({
-      dbIndexName: "propertyMain",
-    }),
-    loanMainTable: childTraits({
-      dbIndexName: "loanMain",
-    }),
-    mgmtMainTable: childTraits({
-      dbIndexName: "mgmtMain",
-    }),
-    dealMain: childTraits({
-      sectionContextName: "latentSection",
-    }),
     propertyMain: childTraits({
       sectionContextName: "latentSection",
     }),

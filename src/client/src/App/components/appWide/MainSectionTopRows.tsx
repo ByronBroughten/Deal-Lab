@@ -11,7 +11,7 @@ import { SectionTitle } from "./SectionTitle";
 type Props = {
   className?: string;
   sectionTitle: string;
-  sectionName: SectionNameByType<"hasCompareTable">;
+  sectionName: SectionNameByType<"mainDealSection">;
   feId: string;
   loadWhat: string;
   belowTitle?: React.ReactNode;
@@ -23,7 +23,7 @@ type Props = {
 };
 
 type CheckmarkStatus = "hidden" | "checked" | "unchecked";
-// how do I add the button?
+
 export function MainSectionTopRows({
   className,
   sectionTitle,

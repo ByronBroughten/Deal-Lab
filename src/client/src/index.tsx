@@ -7,20 +7,24 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
+// What I think I want to do is, I want every savable item to save independently.
+
+// Each item will have a place in the store.
+
 // - Make the variables save automatically as they are edited
 //   (instead of having their save status checked)
 
-// - Give deal its displayName back, but make it suggest
-//   a default at save (save as)
-// - Do this with the component lists, too
-// - Make editDeal edit the saved deal directly and autoSave
-// - Make saving a new deal put the deal in an editDeal state
-// - Make "New Deal" reset when it has been saved
+// - Figure out how to implement a default deal title
+// - Maybe a "use custom title" button, or something
 
-// - Finish the display for the saved Deals. It doesn't have to be perfect.
+// - Get editDeal to work
+// - New deal just adds a deal and then goes on to edit deal
+// - Edit deal needs to periodically save the deal's updates
+// - Mark incomplete deals in Saved Deals as such
 
-// - Add a save button to the end of deal, maybe after
-// the outputs.
+// - Possibly give price, taxes, and insurance valueSections, and
+// any other pure inputs, to future proof your ability to incorporate
+// api modes
 
 // - After the next git push heroku master
 //   - check whether the upgrade to pro button works (it works in dev)

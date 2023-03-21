@@ -14,11 +14,6 @@ export const hasStoreNameArrs = {
       "string"
     );
   },
-  hasCompareTable: Obj.entryKeysWithPropOfType(
-    allSectionTraits,
-    "compareTableName",
-    "string"
-  ),
 } as const;
 
 const hasToStoreNames = {
@@ -63,12 +58,6 @@ const feStoreNameArrs = {
     ] as const);
   },
   displayNameDbSource: tableRowDbSources,
-  mainTableName: Arr.extractStrict(feUserChildNames, [
-    "propertyMainTable",
-    "loanMainTable",
-    "mgmtMainTable",
-    "dealMainTable",
-  ] as const),
   saveUserLists: Arr.excludeStrict(feUserChildNames, [
     "propertyMain",
     "mgmtMain",

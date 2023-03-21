@@ -2,13 +2,10 @@ import { Arr } from "../../utils/Arr";
 import { hasChildSectionNames } from "../sectionChildrenDerived/ChildName";
 import { SectionName, sectionNames } from "../SectionName";
 import { hasStoreNameArrs } from "./FeStoreName";
-import { tableStoreNameArrs } from "./relNameArrs/tableStoreArrs";
 
 export const relNameArrs = {
   ...hasStoreNameArrs,
-  ...tableStoreNameArrs,
   hasChild: hasChildSectionNames,
-  loadOnLogin: Arr.extractStrict(sectionNames, ["feUser"] as const),
   valueSection: Arr.extractStrict(sectionNames, [
     "singleTimeValue",
     "ongoingValue",

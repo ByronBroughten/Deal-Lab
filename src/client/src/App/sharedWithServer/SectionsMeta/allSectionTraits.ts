@@ -33,23 +33,18 @@ export const allSectionTraits = checkAllSectionTraits({
   ...defaultSectionTraits,
   deal: sectionTraits({
     displayName: "Deal",
-    compareTableName: "dealMainTable",
     feIndexStoreName: "dealMain",
-
     dbIndexStoreName: "dealMain",
   }),
   loan: sectionTraits({
-    compareTableName: "loanMainTable",
     feIndexStoreName: "loanMain",
     dbIndexStoreName: "loanMain",
   }),
   property: sectionTraits({
-    compareTableName: "propertyMainTable",
     feIndexStoreName: "propertyMain",
     dbIndexStoreName: "propertyMain",
   }),
   mgmt: sectionTraits({
-    compareTableName: "mgmtMainTable",
     feIndexStoreName: "mgmtMain",
     dbIndexStoreName: "mgmtMain",
   }),

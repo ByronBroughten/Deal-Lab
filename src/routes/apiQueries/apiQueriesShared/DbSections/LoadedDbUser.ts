@@ -150,12 +150,6 @@ export class LoadedDbUser extends GetterSectionBase<"dbStore"> {
         sectionPacks: this.dbSections.sectionPackArr(storeName),
       });
     }
-    for (const storeName of feStoreNameS.arrs.mainTableName) {
-      feUser.packBuilder.replaceChildren({
-        childName: storeName,
-        sectionPacks: this.dbSections.sectionPackArr(storeName),
-      });
-    }
     return {
       feUser: feUser.packBuilder.makeSectionPack(),
     };

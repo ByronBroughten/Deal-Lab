@@ -65,6 +65,31 @@ export const allSectionChildren = checkAllSectionChildren({
     variablesMenu: ["variablesMenu"],
     dealCompare: ["compareSection"],
   }),
+  feUser: sectionChildren({
+    // feUser includes everything that has a corresponding child in dbStore or that has any intermediary sections used to edit and add to them.
+    dealMain: ["deal"],
+    propertyMain: ["property"],
+    loanMain: ["loan"],
+    mgmtMain: ["mgmt"],
+    numVarbListMain: ["numVarbList"],
+    boolVarbListMain: ["boolVarbList"],
+    ...listChildren,
+  }),
+  dbStore: sectionChildren({
+    authInfoPrivate: ["authInfoPrivate"],
+    userInfoPrivate: ["userInfoPrivate"],
+    userInfo: ["userInfo"],
+    stripeInfoPrivate: ["stripeInfoPrivate"],
+    stripeSubscription: ["stripeSubscription"],
+
+    propertyMain: ["property"],
+    loanMain: ["loan"],
+    mgmtMain: ["mgmt"],
+    dealMain: ["deal"],
+    numVarbListMain: ["numVarbList"],
+    boolVarbListMain: ["boolVarbList"],
+    ...listChildren,
+  }),
   dealPage: sectionChildren({
     deal: ["deal"],
     calculatedVarbs: ["calculatedVarbs"],
@@ -80,42 +105,6 @@ export const allSectionChildren = checkAllSectionChildren({
     numVarbListMain: ["numVarbList"],
   }),
   userListEditor: sectionChildren(listChildren),
-  feUser: sectionChildren({
-    // feUser includes everything that has a corresponding child in dbStore or that has any intermediary sections used to edit and add to them.
-    propertyMainTable: ["compareTable"],
-    loanMainTable: ["compareTable"],
-    mgmtMainTable: ["compareTable"],
-    dealMainTable: ["compareTable"],
-
-    dealMain: ["deal"],
-    propertyMain: ["property"],
-    loanMain: ["loan"],
-    mgmtMain: ["mgmt"],
-    numVarbListMain: ["numVarbList"],
-    boolVarbListMain: ["boolVarbList"],
-    ...listChildren,
-  }),
-  dbStore: sectionChildren({
-    authInfoPrivate: ["authInfoPrivate"],
-    userInfo: ["userInfo"],
-
-    userInfoPrivate: ["userInfoPrivate"],
-
-    stripeInfoPrivate: ["stripeInfoPrivate"],
-    stripeSubscription: ["stripeSubscription"],
-
-    propertyMain: ["property"],
-    loanMain: ["loan"],
-    mgmtMain: ["mgmt"],
-    dealMain: ["deal"],
-    ...listChildren,
-
-    propertyMainTable: ["compareTable"],
-    loanMainTable: ["compareTable"],
-    mgmtMainTable: ["compareTable"],
-    dealMainTable: ["compareTable"],
-    numVarbListMain: ["numVarbList"],
-  }),
   compareSection: sectionChildren({
     compareDealPage: ["dealPage"],
     compareValue: ["compareValue"],

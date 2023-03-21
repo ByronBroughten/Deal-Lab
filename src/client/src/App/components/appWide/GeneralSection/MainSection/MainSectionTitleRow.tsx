@@ -10,7 +10,7 @@ import { useSaveStatus } from "./useSaveStatus";
 
 type Props = {
   sectionTitle: string;
-  sectionName: SectionNameByType<"hasCompareTable">;
+  sectionName: SectionNameByType<"mainDealSection">;
   feId: string;
   showXBtn?: boolean;
   dropTop?: boolean;

@@ -16,6 +16,12 @@ function makeBaseNameArrs() {
     ...makeSingleSectionNameArrs(),
     all: sectionNames as readonly SectionName[],
     hasVarb: sectionNames,
+    mainDealSection: Arr.extractStrict(sectionNames, [
+      "deal",
+      "property",
+      "loan",
+      "mgmt",
+    ] as const),
     notRootNorOmni: Arr.excludeStrict(sectionNames, [
       "root",
       "omniParent",

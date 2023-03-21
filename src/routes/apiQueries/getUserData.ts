@@ -1,18 +1,16 @@
 import { Request, Response } from "express";
 import { SessionRequest } from "supertokens-node/framework/express";
+import ThirdPartyEmailPassword from "supertokens-node/recipe/thirdpartyemailpassword";
 import { QueryReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import { makeReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/makeReqAndRes";
+import { Str } from "../../client/src/App/sharedWithServer/utils/Str";
 import { getAuthWare } from "../../middleware/authWare";
 import { DbUser } from "./apiQueriesShared/DbSections/DbUser";
-
-import { Authed, validateAuthObj } from "./apiQueriesShared/ReqAugmenters";
-
-import ThirdPartyEmailPassword from "supertokens-node/recipe/thirdpartyemailpassword";
-import { Str } from "../../client/src/App/sharedWithServer/utils/Str";
 import {
   getSignUpData,
   initUserInDb,
 } from "./apiQueriesShared/DbSections/LoadedDbUser/userPrepS";
+import { Authed, validateAuthObj } from "./apiQueriesShared/ReqAugmenters";
 
 const { getUserById } = ThirdPartyEmailPassword;
 
@@ -29,7 +27,6 @@ async function getUserData(req: SessionRequest, res: Response) {
     }
   }
   const dbUser = await DbUser.initBy("authId", auth.id);
-  await dbUser.initMainTablesIfNeeded();
   const loaded = await dbUser.loadedDbUser();
   loaded.sendUserData(res);
 }

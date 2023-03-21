@@ -1,14 +1,11 @@
 import mongoose, { QueryOptions } from "mongoose";
 import { CompareTableBuilder } from "../../../../client/src/App/modules/SectionSolvers/CompareTableBuilder";
-import { getDefaultMainTableMakers } from "../../../../client/src/App/sharedWithServer/defaultMaker/getDefaultMainTableMakers";
 import { VarbName } from "../../../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
-import { feStoreNameS } from "../../../../client/src/App/sharedWithServer/SectionsMeta/relSectionsDerived/FeStoreName";
 import { ChildSectionName } from "../../../../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/ChildSectionName";
 import {
   DbPack,
   DbSectionPack,
 } from "../../../../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/DbSectionPack";
-
 import {
   DbSectionName,
   DbStoreInfo,
@@ -48,16 +45,6 @@ import { LoadedDbUser } from "./LoadedDbUser";
 export class DbUser extends DbSectionsQuerierBase {
   async exists(): Promise<boolean> {
     return await DbUserModel.exists(this.userFilter);
-  }
-  async initMainTablesIfNeeded() {
-    const tableMakers = getDefaultMainTableMakers();
-    for (const tableStoreName of feStoreNameS.arrs.mainTableName) {
-      if ((await this.storeSectionCount(tableStoreName)) !== 1) {
-        await this.setSectionPackArrs({
-          [tableStoreName]: tableMakers[tableStoreName](),
-        });
-      }
-    }
   }
   async setSectionPackArrs(arrs: Partial<DbSectionPackArrs>): Promise<void> {
     for (const storeName of Obj.keys(arrs)) {

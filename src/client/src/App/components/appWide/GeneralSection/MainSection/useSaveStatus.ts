@@ -3,7 +3,7 @@ import { useMainSectionActor } from "../../../../modules/sectionActorHooks/useMa
 import { SaveStatus } from "../../../../modules/SectionSolvers/MainSectionSolver";
 import { FeSectionInfo } from "../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { SectionNameByType } from "../../../../sharedWithServer/SectionsMeta/SectionNameByType";
-
+type Test = SectionNameByType<"hasIndexStore">;
 export function useSaveStatus<SN extends SectionNameByType<"hasIndexStore">>(
   feInfo: FeSectionInfo<SN>,
   disable: boolean = false

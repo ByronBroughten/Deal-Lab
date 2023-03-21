@@ -3,7 +3,7 @@ import { FeInfoByType } from "../../../../../sharedWithServer/SectionsMeta/Secti
 import theme from "../../../../../theme/Theme";
 import { BigStringEditor } from "../../../../inputs/BigStringEditor";
 
-type Props = { feInfo: FeInfoByType<"hasCompareTable">; className?: string };
+type Props = { feInfo: FeInfoByType<"mainDealSection">; className?: string };
 export function MainSectionTitleEditor({ feInfo, className }: Props) {
   return (
     <Styled

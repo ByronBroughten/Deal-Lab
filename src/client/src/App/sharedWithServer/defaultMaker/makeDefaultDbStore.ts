@@ -1,7 +1,5 @@
-import { feStoreNameS } from "../SectionsMeta/relSectionsDerived/FeStoreName";
 import { dbStoreNames } from "../SectionsMeta/sectionChildrenDerived/DbStoreName";
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
-import { getDefaultMainTableMakers } from "./getDefaultMainTableMakers";
 import { makeExampleDeal } from "./makeDefaultFeUser/makeExampleDeal";
 import { makeExampleStoreProperty } from "./makeDefaultFeUser/makeExampleProperty";
 import {
@@ -51,13 +49,6 @@ export function makeDefaultDbStoreArrs({
     childName: "ongoingListMain",
     sectionPacks: makeExampleUserOngoingLists(),
   });
-  const defaultTableMakers = getDefaultMainTableMakers();
-  for (const tableName of feStoreNameS.arrs.mainTableName) {
-    dbStore.loadChild({
-      childName: tableName,
-      sectionPack: defaultTableMakers[tableName](),
-    });
-  }
   dbStore.loadChildren({
     childName: "dealMain",
     sectionPacks: [
