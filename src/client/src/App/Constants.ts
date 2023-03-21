@@ -1,19 +1,6 @@
 import { envName } from "./Constants/envName";
 import { feRoutes } from "./Constants/feRoutes";
-
-type StripePrice = {
-  priceId: string;
-  costInCents: number;
-  billed: "monthly" | "yearly";
-  product: "proPlan" | "trial";
-};
-
-const proPlanStripePrice: StripePrice = {
-  priceId: "price_1M8A2OBcSOBChcCBAqDD2TQn",
-  costInCents: 800,
-  billed: "monthly",
-  product: "proPlan",
-};
+import { stripePrices } from "./Constants/stripePrices";
 
 const clientProdUrl = "https://the.deallab.app";
 const clientDevUrl = "http://localhost:3000";
@@ -24,7 +11,6 @@ const envConstants = {
     appName: "Deal Lab — Development",
     apiUrlBase: "http://localhost:5000",
     clientUrlBase: clientDevUrl,
-    stripePrices: [proPlanStripePrice],
     paymentManagementLink:
       "https://billing.stripe.com/p/login/test_5kA16HgOu6k00nubII",
   },
@@ -33,7 +19,6 @@ const envConstants = {
     appName: "Deal Lab",
     apiUrlBase: clientProdUrl,
     clientUrlBase: clientProdUrl,
-    stripePrices: [proPlanStripePrice],
     paymentManagementLink:
       "https://billing.stripe.com/p/login/cN24j771Yd5qc3C9AA",
   },
@@ -48,6 +33,7 @@ const maxSectionSaveLimit = 1000;
 const basicSectionSaveLimit = 3;
 export const config = {
   ...env,
+  stripePrices,
   supportEmail: "support@deallab.com",
   feedbackEmail: "feedback@deallab.com",
   discordLink: "https://discord.gg/W6pxEXT8EV",

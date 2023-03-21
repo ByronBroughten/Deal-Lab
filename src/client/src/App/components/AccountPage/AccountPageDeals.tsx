@@ -97,7 +97,6 @@ export function AccountPageDeals() {
           </>
         )}
       </View>
-      )
     </Row>
   );
 }
