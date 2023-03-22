@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import { Text, View } from "react-native";
-import { ClipLoader } from "react-spinners";
+import { MoonLoader } from "react-spinners";
 import { useUserDataStatus } from "../../modules/customHooks/UserDataActor";
 import { useGetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useGetterSection";
 import { nativeTheme } from "../../theme/nativeTheme";
@@ -51,12 +51,13 @@ export function AccountPageDeals() {
           Saved Deals
         </Text>
         {loading && (
-          <ClipLoader
+          <MoonLoader
             {...{
               loading,
               color: nativeTheme.primary.main,
               size: 100,
               speedMultiplier: 0.8,
+              cssOverride: { marginTop: nativeTheme.s3 },
             }}
           />
         )}

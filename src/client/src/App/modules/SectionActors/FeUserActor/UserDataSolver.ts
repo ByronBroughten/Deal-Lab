@@ -1,5 +1,5 @@
 import { UserData } from "../../../sharedWithServer/apiQueriesShared/validateUserData";
-import { listChildrenNames } from "../../../sharedWithServer/SectionsMeta/allSectionChildren";
+import { listChildrenNames } from "../../../sharedWithServer/SectionsMeta/sectionStores";
 import { SolverSectionsBase } from "../../../sharedWithServer/StateSolvers/SolverBases/SolverSectionsBase";
 import { SolverSections } from "../../../sharedWithServer/StateSolvers/SolverSections";
 

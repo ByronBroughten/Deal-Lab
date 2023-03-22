@@ -7,9 +7,23 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
-// What I think I want to do is, I want every savable item to save independently.
+// 1. Allow deals to be edited directly from the store.
+//    - I want to implement the new stores. I'm going to get rid
 
-// Each item will have a place in the store.
+//    - Make main have activeDealOutputs (savable to server)
+//    - Make main also have activeDealCalculatedVarbs (not savable)
+//    - Remove and re-add the deal that you're going to edit, changing its context
+//    - First, undo that context adjustment for any other deal that has it
+// 2. Make them autosave
+// 3. Systematize feUser's childNames (all either "main" or "index")
+// 4. Give main all the index children that feUser has
+// 5. Replace "feUser" instances with "main" or what have you
+
+// Is there a way to make saving not dependent on the front-end components that
+// happen to be displayed? Like, after I leave the property editor, can my
+// changes still be saved? Should I allow that? Let's try auto-save with deal, first
+
+// How can undo be a thing?
 
 // - Make the variables save automatically as they are edited
 //   (instead of having their save status checked)

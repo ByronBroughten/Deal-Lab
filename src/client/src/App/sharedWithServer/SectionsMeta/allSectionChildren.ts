@@ -1,4 +1,3 @@
-import { Obj } from "../utils/Obj";
 import { relOmniParentChildren } from "./allSectionChildren/omniParentChildren";
 import {
   GeneralChildSection,
@@ -8,8 +7,8 @@ import {
   GeneralChildrenSections,
   sectionChildren,
 } from "./allSectionChildren/sectionChildren";
-import { FeDbStoreName } from "./relSectionsDerived/FeStoreName";
 import { SectionName, sectionNames } from "./SectionName";
+import { listChildren, sectionStores } from "./sectionStores";
 
 type Defaults = {
   [SN in SectionName]: {};
@@ -29,90 +28,82 @@ function checkAllSectionChildren<CS extends GenericChildSections>(
   return allSectionChildren;
 }
 
-const listChildren = {
-  repairsListMain: ["singleTimeList"],
-  utilitiesListMain: ["ongoingList"],
-  capExListMain: ["capExList"],
-  holdingCostsListMain: ["ongoingList"],
-  closingCostsListMain: ["singleTimeList"],
-  outputListMain: ["outputList"],
-  singleTimeListMain: ["singleTimeList"],
-  ongoingListMain: ["ongoingList"],
-} as const;
-
-export const listChildrenNames: ListChildName[] = Obj.keys(listChildren);
-
-type ListChildren = typeof listChildren;
-
-export type ListChildName = Extract<FeDbStoreName, keyof ListChildren>;
-
 export const allSectionChildren = checkAllSectionChildren({
   ...defaults,
   root: sectionChildren({
-    omniParent: ["omniParent"],
-    main: ["main"],
+    omniParent: "omniParent",
+    main: "main",
   }),
   omniParent: relOmniParentChildren,
-  // main has feUser and each of the main app pages
+
   main: sectionChildren({
-    feUser: ["feUser"],
-    latentSections: ["latentSections"],
-    mainDealMenu: ["mainDealMenu"],
-    activeDealPage: ["dealPage"],
-    outputSection: ["outputSection"],
-    userVarbEditor: ["userVarbEditor"],
-    userListEditor: ["userListEditor"],
-    variablesMenu: ["variablesMenu"],
-    dealCompare: ["compareSection"],
+    // these don't save
+    feUserInfo: "feUser",
+    latentSections: "latentSections",
+    variablesMenu: "variablesMenu",
+
+    // these save
+    ...sectionStores,
+
+    // these will be eliminated
+    feUser: "feUser",
+    activeDealPage: "dealPage",
+    userVarbEditor: "userVarbEditor",
+    userListEditor: "userListEditor",
   }),
   feUser: sectionChildren({
-    // feUser includes everything that has a corresponding child in dbStore or that has any intermediary sections used to edit and add to them.
-    dealMain: ["deal"],
-    propertyMain: ["property"],
-    loanMain: ["loan"],
-    mgmtMain: ["mgmt"],
-    numVarbListMain: ["numVarbList"],
-    boolVarbListMain: ["boolVarbList"],
+    // This will be eliminated
+    dealMain: "deal",
+    propertyMain: "property",
+    loanMain: "loan",
+    mgmtMain: "mgmt",
+    numVarbListMain: "numVarbList",
+    boolVarbListMain: "boolVarbList",
     ...listChildren,
   }),
   dbStore: sectionChildren({
-    authInfoPrivate: ["authInfoPrivate"],
-    userInfoPrivate: ["userInfoPrivate"],
-    userInfo: ["userInfo"],
-    stripeInfoPrivate: ["stripeInfoPrivate"],
-    stripeSubscription: ["stripeSubscription"],
+    // these are mimicked by the front-end
+    ...sectionStores,
 
-    propertyMain: ["property"],
-    loanMain: ["loan"],
-    mgmtMain: ["mgmt"],
-    dealMain: ["deal"],
-    numVarbListMain: ["numVarbList"],
-    boolVarbListMain: ["boolVarbList"],
+    // these are mostly unique to the db
+    userInfo: "userInfo",
+    userInfoPrivate: "userInfoPrivate",
+    authInfoPrivate: "authInfoPrivate",
+    stripeInfoPrivate: "stripeInfoPrivate",
+    stripeSubscription: "stripeSubscription",
+
+    // These will be deleted
+    propertyMain: "property",
+    loanMain: "loan",
+    mgmtMain: "mgmt",
+    dealMain: "deal",
+    numVarbListMain: "numVarbList",
+    boolVarbListMain: "boolVarbList",
     ...listChildren,
   }),
   dealPage: sectionChildren({
-    deal: ["deal"],
-    calculatedVarbs: ["calculatedVarbs"],
-    numVarbList: ["numVarbList"],
+    deal: "deal",
+    calculatedVarbs: "calculatedVarbs",
+    numVarbList: "numVarbList",
   }),
   latentSections: sectionChildren({
-    dealPage: ["dealPage"],
-    numVarbList: ["numVarbList"],
-    singleTimeList: ["singleTimeList"],
-    ongoingList: ["ongoingList"],
+    dealPage: "dealPage",
+    numVarbList: "numVarbList",
+    singleTimeList: "singleTimeList",
+    ongoingList: "ongoingList",
   }),
   userVarbEditor: sectionChildren({
-    numVarbListMain: ["numVarbList"],
+    numVarbListMain: "numVarbList",
   }),
   userListEditor: sectionChildren(listChildren),
   compareSection: sectionChildren({
-    compareDealPage: ["dealPage"],
-    compareValue: ["compareValue"],
+    compareDealPage: "dealPage",
+    compareValue: "compareValue",
   }),
   compareTable: sectionChildren({
-    column: ["column"],
-    tableRow: ["tableRow"],
-    compareRow: ["proxyStoreItem"],
+    column: "column",
+    tableRow: "tableRow",
+    compareRow: "proxyStoreItem",
   }),
   tableRow: { cell: sectionChild("cell") },
 
@@ -148,53 +139,53 @@ export const allSectionChildren = checkAllSectionChildren({
   },
   conditionalRowList: { conditionalRow: sectionChild("conditionalRow") },
   deal: sectionChildren({
-    property: ["property"],
-    financing: ["financing"],
-    mgmt: ["mgmt"],
+    property: "property",
+    financing: "financing",
+    mgmt: "mgmt",
   }),
   financing: { loan: sectionChild("loan") },
   loan: sectionChildren({
-    downPaymentValue: ["downPaymentValue"],
-    loanBaseValue: ["loanBaseValue"],
-    closingCostValue: ["closingCostValue"],
-    wrappedInLoanValue: ["singleTimeValue"],
-    customVarb: ["customVarb"],
+    downPaymentValue: "downPaymentValue",
+    loanBaseValue: "loanBaseValue",
+    closingCostValue: "closingCostValue",
+    wrappedInLoanValue: "singleTimeValue",
+    customVarb: "customVarb",
   }),
   closingCostValue: { singleTimeList: sectionChild("singleTimeList") },
   propertyGeneral: { property: sectionChild("property") },
   property: sectionChildren({
-    unit: ["unit"],
-    repairValue: ["repairValue"],
-    utilityValue: ["utilityValue"],
-    maintenanceValue: ["maintenanceValue"],
-    capExValue: ["capExValue"],
+    unit: "unit",
+    repairValue: "repairValue",
+    utilityValue: "utilityValue",
+    maintenanceValue: "maintenanceValue",
+    capExValue: "capExValue",
 
-    upfrontExpenseGroup: ["singleTimeValueGroup"],
-    upfrontRevenueGroup: ["singleTimeValueGroup"],
-    ongoingExpenseGroup: ["ongoingValueGroup"],
-    ongoingRevenueGroup: ["ongoingValueGroup"],
-    customVarb: ["customVarb"],
+    upfrontExpenseGroup: "singleTimeValueGroup",
+    upfrontRevenueGroup: "singleTimeValueGroup",
+    ongoingExpenseGroup: "ongoingValueGroup",
+    ongoingRevenueGroup: "ongoingValueGroup",
+    customVarb: "customVarb",
   }),
   repairValue: sectionChildren({
-    singleTimeList: ["singleTimeList"],
+    singleTimeList: "singleTimeList",
   }),
   utilityValue: sectionChildren({
-    ongoingList: ["ongoingList"],
+    ongoingList: "ongoingList",
   }),
   capExValue: sectionChildren({
-    capExList: ["capExList"],
+    capExList: "capExList",
   }),
   capExList: sectionChildren({
-    capExItem: ["capExItem"],
+    capExItem: "capExItem",
   }),
 
   mgmtGeneral: { mgmt: sectionChild("mgmt") },
   mgmt: sectionChildren({
-    mgmtBasePayValue: ["mgmtBasePayValue"],
-    vacancyLossValue: ["vacancyLossValue"],
-    upfrontExpenseGroup: ["singleTimeValueGroup"],
-    ongoingExpenseGroup: ["ongoingValueGroup"],
-    customVarb: ["customVarb"],
+    mgmtBasePayValue: "mgmtBasePayValue",
+    vacancyLossValue: "vacancyLossValue",
+    upfrontExpenseGroup: "singleTimeValueGroup",
+    ongoingExpenseGroup: "ongoingValueGroup",
+    customVarb: "customVarb",
   }),
 });
 

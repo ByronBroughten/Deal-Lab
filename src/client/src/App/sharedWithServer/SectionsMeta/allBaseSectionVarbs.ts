@@ -380,6 +380,14 @@ export function makeAllBaseSectionVarbs() {
       mgmtCompletionStatus: baseVarb("completionStatus"),
       dealCompletionStatus: baseVarb("completionStatus"),
     }),
+    feUserInfo: baseSectionVarbs({
+      authStatus: baseVarb("authStatus"),
+      userDataStatus: baseVarb("userDataStatus"),
+      userDataFetchTryCount: baseVarb("number"),
+      labSubscription: baseVarb("labSubscription"),
+      ...baseVarbs("string", ["email", "userName"] as const),
+      labSubscriptionExp: baseVarb("number"),
+    }),
     feUser: baseSectionVarbs({
       authStatus: baseVarb("authStatus"),
       userDataStatus: baseVarb("userDataStatus"),

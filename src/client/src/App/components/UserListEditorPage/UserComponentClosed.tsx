@@ -8,7 +8,7 @@ import {
 } from "react-icons/md";
 import { VscOutput } from "react-icons/vsc";
 import { FeRouteName } from "../../Constants/feRoutes";
-import { listChildrenNames } from "../../sharedWithServer/SectionsMeta/allSectionChildren";
+import { listChildrenNames } from "../../sharedWithServer/SectionsMeta/sectionStores";
 import { Arr } from "../../sharedWithServer/utils/Arr";
 import { MainSubSectionClosed } from "../ActiveDealPage/ActiveDeal/MainSubSectionClosed";
 import { useMakeGoToPage } from "../appWide/customHooks/useGoToPage";

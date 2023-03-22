@@ -1,6 +1,7 @@
 import { Arr } from "../../utils/Arr";
 import { Obj } from "../../utils/Obj";
-import { allSectionChildren, listChildrenNames } from "../allSectionChildren";
+import { allSectionChildren } from "../allSectionChildren";
+import { listChildrenNames } from "../sectionStores";
 import { ChildName } from "./ChildName";
 import {
   ChildSectionName,

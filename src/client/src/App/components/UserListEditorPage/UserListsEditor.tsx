@@ -1,4 +1,4 @@
-import { ListChildName } from "../../sharedWithServer/SectionsMeta/allSectionChildren";
+import { ListChildName } from "../../sharedWithServer/SectionsMeta/sectionStores";
 import { useSetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useSetterSection";
 import { SubSectionOpen } from "../ActiveDealPage/ActiveDeal/SubSectionOpen";
 import { BackBtnWrapper } from "../appWide/BackBtnWrapper";

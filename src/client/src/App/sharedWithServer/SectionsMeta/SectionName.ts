@@ -6,6 +6,7 @@ export const sectionNames = [
   "mainDealMenu",
 
   "variablesMenu",
+  "feUserInfo",
   "feUser",
   "dbStore",
   "proxyStoreItem",
