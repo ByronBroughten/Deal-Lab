@@ -95,5 +95,3 @@ export type SnFeUserChildNames<SN extends SectionName> = Extract<
   ChildName<"feUser">,
   ChildName<SN>
 >;
-
-export type FeDbStoreName = ChildName<"feUser"> & ChildName<"dbStore">;

@@ -1,7 +1,7 @@
 import { Arr } from "../../utils/Arr";
 import { Obj } from "../../utils/Obj";
 import { allSectionChildren } from "../allSectionChildren";
-import { listChildrenNames } from "../sectionStores";
+import { indexStoreNames, listChildrenNames } from "../sectionStores";
 import { ChildName } from "./ChildName";
 import {
   ChildSectionName,
@@ -40,14 +40,12 @@ const arrQueryStoreNames = Arr.extractStrict(dbStoreNames, [
   "numVarbListMain",
 ] as const);
 
-const sectionQueryStoreNames = mainIndexStoreNames;
-
 const dbStoreNameArrs = {
   all: dbStoreNames,
-  sectionQuery: sectionQueryStoreNames,
+  sectionQuery: indexStoreNames,
+  mainIndex: indexStoreNames,
   arrQuery: arrQueryStoreNames,
-  allQuery: [...sectionQueryStoreNames, ...arrQueryStoreNames],
-  mainIndex: mainIndexStoreNames,
+  allQuery: [...indexStoreNames, ...arrQueryStoreNames],
 } as const;
 
 export const dbStoreNameS = {

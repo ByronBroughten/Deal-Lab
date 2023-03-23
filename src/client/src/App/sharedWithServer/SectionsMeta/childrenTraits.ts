@@ -1,6 +1,6 @@
 import { Arr } from "../utils/Arr";
 import { Merge } from "../utils/Obj/merge";
-import { FeDbStoreName, FeStoreName } from "./relSectionsDerived/FeStoreName";
+import { FeStoreName } from "./relSectionsDerived/FeStoreName";
 import {
   ChildName,
   sectionToChildNames,
@@ -12,6 +12,7 @@ import {
   indexesForSpecifiers,
   SectionPathContextName,
 } from "./sectionPathContexts";
+import { StoreName } from "./sectionStores";
 
 export const tableRowDbSources = Arr.extractStrict(dbStoreNames, [
   "mgmtMain",
@@ -54,7 +55,7 @@ const defaultRelChild = makeDefaultChildTraits({
 });
 type DefaultRelChild = typeof defaultRelChild;
 
-function storeNames<CN extends FeDbStoreName>(
+function storeNames<CN extends StoreName>(
   storeName: CN
 ): {
   feIndexStoreName: CN;

@@ -80,6 +80,7 @@ export const sectionNames = [
   "userListEditor",
   "userVarbEditor",
   "latentSections",
+  "activeSections",
 ] as const;
 
 export type SectionName = typeof sectionNames[number];

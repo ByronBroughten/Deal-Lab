@@ -1,44 +1,52 @@
 import { Arr } from "../utils/Arr";
 import { Obj } from "../utils/Obj";
-import { FeDbStoreName } from "./relSectionsDerived/FeStoreName";
 
 export const sectionStores = {
   outputSection: "outputSection",
   dealCompare: "compareSection",
   mainDealMenu: "mainDealMenu",
 
-  dealIndex: "deal",
-  propertyIndex: "property",
-  loanIndex: "loan",
-  mgmtIndex: "mgmt",
-  repairsListIndex: "singleTimeList",
-  utilitiesListIndex: "ongoingList",
-  capExListIndex: "capExList",
-  holdingCostsListIndex: "ongoingList",
-  closingCostsListIndex: "singleTimeList",
-  singleTimeListIndex: "singleTimeList",
-  ongoingListIndex: "ongoingList",
-  numVarbListIndex: "numVarbList",
-  boolVarbListIndex: "boolVarbList",
-  outputListIndex: "outputList",
+  dealMain: "deal",
+  propertyMain: "property",
+  loanMain: "loan",
+  mgmtMain: "mgmt",
+  repairsListMain: "singleTimeList",
+  utilitiesListMain: "ongoingList",
+  capExListMain: "capExList",
+  holdingCostsListMain: "ongoingList",
+  closingCostsListMain: "singleTimeList",
+  singleTimeListMain: "singleTimeList",
+  ongoingListMain: "ongoingList",
+  numVarbListMain: "numVarbList",
+  boolVarbListMain: "boolVarbList",
+  outputListMain: "outputList",
 } as const;
-
 const storeNames = Obj.keys(sectionStores);
-const indexStoreNames = Arr.extractStrict(storeNames, [
-  "dealIndex",
-  "propertyIndex",
-  "loanIndex",
-  "mgmtIndex",
-  "repairsListIndex",
-  "utilitiesListIndex",
-  "capExListIndex",
-  "holdingCostsListIndex",
-  "closingCostsListIndex",
-  "singleTimeListIndex",
-  "ongoingListIndex",
-  "numVarbListIndex",
-  "boolVarbListIndex",
-  "outputListIndex",
+type SectionStores = typeof sectionStores;
+type BasicStoreName = typeof storeNames[number];
+type StoreSectionName<CN extends BasicStoreName = BasicStoreName> =
+  SectionStores[CN];
+type SectionToStoreName = {
+  [CN in BasicStoreName as SectionStores[CN]]: CN;
+};
+export type StoreName<SN extends StoreSectionName = StoreSectionName> =
+  SectionToStoreName[SN];
+
+export const indexStoreNames = Arr.extractStrict(storeNames, [
+  "dealMain",
+  "propertyMain",
+  "loanMain",
+  "mgmtMain",
+  "repairsListMain",
+  "utilitiesListMain",
+  "capExListMain",
+  "holdingCostsListMain",
+  "closingCostsListMain",
+  "singleTimeListMain",
+  "ongoingListMain",
+  "numVarbListMain",
+  "boolVarbListMain",
+  "outputListMain",
 ] as const);
 export type IndexStoreName = typeof indexStoreNames[number];
 const singleItemStoreNames = Arr.excludeStrict(storeNames, indexStoreNames);
@@ -57,4 +65,4 @@ export const listChildren = {
 } as const;
 export const listChildrenNames: ListChildName[] = Obj.keys(listChildren);
 type ListChildren = typeof listChildren;
-export type ListChildName = Extract<FeDbStoreName, keyof ListChildren>;
+export type ListChildName = keyof ListChildren;

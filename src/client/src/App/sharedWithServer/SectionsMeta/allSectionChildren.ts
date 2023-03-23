@@ -40,6 +40,7 @@ export const allSectionChildren = checkAllSectionChildren({
     // these don't save
     feUserInfo: "feUser",
     latentSections: "latentSections",
+    activeSections: "activeSections",
     variablesMenu: "variablesMenu",
 
     // these save
@@ -64,22 +65,12 @@ export const allSectionChildren = checkAllSectionChildren({
   dbStore: sectionChildren({
     // these are mimicked by the front-end
     ...sectionStores,
-
-    // these are mostly unique to the db
+    // these are unique to the db
     userInfo: "userInfo",
     userInfoPrivate: "userInfoPrivate",
     authInfoPrivate: "authInfoPrivate",
     stripeInfoPrivate: "stripeInfoPrivate",
     stripeSubscription: "stripeSubscription",
-
-    // These will be deleted
-    propertyMain: "property",
-    loanMain: "loan",
-    mgmtMain: "mgmt",
-    dealMain: "deal",
-    numVarbListMain: "numVarbList",
-    boolVarbListMain: "boolVarbList",
-    ...listChildren,
   }),
   dealPage: sectionChildren({
     deal: "deal",
@@ -89,8 +80,10 @@ export const allSectionChildren = checkAllSectionChildren({
   latentSections: sectionChildren({
     dealPage: "dealPage",
     numVarbList: "numVarbList",
-    singleTimeList: "singleTimeList",
-    ongoingList: "ongoingList",
+  }),
+  activeSections: sectionChildren({
+    calculatedVarbs: "calculatedVarbs",
+    numVarbList: "numVarbList",
   }),
   userVarbEditor: sectionChildren({
     numVarbListMain: "numVarbList",
