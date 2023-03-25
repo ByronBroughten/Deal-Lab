@@ -64,9 +64,9 @@ const lists = [
 ] as const;
 
 export function makeExampleUserVarbLists(): SectionPack<"numVarbList">[] {
-  const feUser = PackBuilderSection.initAsOmniChild("feUser");
+  const feStore = PackBuilderSection.initAsOmniChild("feStore");
   for (const listArr of lists) {
-    const varbList = feUser.addAndGetChild("numVarbListMain", {
+    const varbList = feStore.addAndGetChild("numVarbListMain", {
       sectionValues: { displayName: stringObj(listArr[0]) },
     });
     for (const item of listArr[1]) {
@@ -79,5 +79,5 @@ export function makeExampleUserVarbLists(): SectionPack<"numVarbList">[] {
     }
   }
 
-  return feUser.makeChildPackArr("numVarbListMain");
+  return feStore.makeChildPackArr("numVarbListMain");
 }

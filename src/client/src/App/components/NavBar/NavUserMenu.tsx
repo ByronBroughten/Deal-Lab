@@ -2,11 +2,10 @@ import { rem } from "polished";
 import { BiLogOut, BiUserCircle } from "react-icons/bi";
 import { MdAccountCircle } from "react-icons/md";
 import styled from "styled-components";
-import { useLogout } from "../../modules/customHooks/UserDataActor";
 import { useUserSubscription } from "../../modules/customHooks/useSubscriptions";
 import useToggle from "../../modules/customHooks/useToggle";
+import { useLogout } from "../../modules/SectionActors/UserDataActor";
 import { goToCustomerPortalPage } from "../../modules/services/stripeService";
-
 import theme from "../../theme/Theme";
 import { NavDropdownMenuBtn } from "../appWide/ListGroup/ListGroupShared/ListMenuSimple/NavDropdownMenuBtn";
 import { StandardProps } from "../general/StandardProps";

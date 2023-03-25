@@ -76,17 +76,6 @@ export class SectionMeta<SN extends SectionName> {
   get core() {
     return sectionMetasCore[this.sectionName];
   }
-  get dbIndexStoreName(): CorePropNoNull<SN, "dbIndexStoreName"> {
-    return this.propNoNull("dbIndexStoreName");
-  }
-  get compareTableName(): CorePropNoNull<SN, "compareTableName"> {
-    return this.propNoNull("compareTableName");
-  }
-  get hasFeFullIndex(): boolean {
-    if (this.sectionTraits.feIndexStoreName) {
-      return true;
-    } else return false;
-  }
   get defaultStoreName(): CorePropNoNull<SN, "defaultStoreName"> {
     return this.propNoNull("defaultStoreName");
   }

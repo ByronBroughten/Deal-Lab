@@ -5,8 +5,8 @@ import {
   makeReq,
   SectionPackReq,
 } from "../../../client/src/App/sharedWithServer/apiQueriesShared/makeReqAndRes";
-import { DbNameBySectionName } from "../../../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/DbStoreName";
 import { SectionNameByType } from "../../../client/src/App/sharedWithServer/SectionsMeta/SectionNameByType";
+import { StoreName } from "../../../client/src/App/sharedWithServer/SectionsMeta/sectionStores";
 import { GetterListProps } from "../../../client/src/App/sharedWithServer/StateGetters/Bases/GetterListBase";
 import { GetterSectionProps } from "../../../client/src/App/sharedWithServer/StateGetters/Bases/GetterSectionBase";
 import { GetterSectionsBase } from "../../../client/src/App/sharedWithServer/StateGetters/Bases/GetterSectionsBase";
@@ -47,8 +47,8 @@ export class SectionQueryTester<
   get solver() {
     return SolverSection.init(this.indexSectionQuerierProps);
   }
-  get dbStoreName(): DbNameBySectionName<SN> {
-    return this.get.dbIndexStoreName as DbNameBySectionName<SN>;
+  get mainStoreName(): StoreName<SN> {
+    return this.get.mainStoreName as StoreName<SN>;
   }
   static init<S extends SectionNameByType<"hasIndexStore">>({
     sectionName,
@@ -65,13 +65,13 @@ export class SectionQueryTester<
   }
   makeSectionPackReq(): SectionPackReq<any> {
     return makeReq({
-      dbStoreName: this.dbStoreName,
+      dbStoreName: this.mainStoreName,
       sectionPack: this.packMaker.makeSectionPack(),
     }) as SectionPackReq<any>;
   }
   makeDbInfoReq(): DbPackInfoSectionReq<any> {
     return makeReq({
-      dbStoreName: this.dbStoreName,
+      dbStoreName: this.mainStoreName,
       dbId: this.get.dbId,
     });
   }

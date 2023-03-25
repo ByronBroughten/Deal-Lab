@@ -8,8 +8,8 @@ import { AllVarbsModal } from "../inputs/NumObjEditor/AllVarbsModal";
 import { OnVarbSelect } from "../inputs/NumObjEditor/NumObjVarbSelector/VarbSelectorCollection";
 
 export function DealCompareValueMenu() {
-  const feUser = useSetterSectionOnlyOne("feUser");
-  const dealCompare = feUser.onlyChild("dealCompare");
+  const feStore = useSetterSectionOnlyOne("feStore");
+  const dealCompare = feStore.onlyChild("dealCompare");
   const { varbsModalIsOpen, closeVarbsModal, openVarbsModal } =
     useToggleView("varbsModal");
 

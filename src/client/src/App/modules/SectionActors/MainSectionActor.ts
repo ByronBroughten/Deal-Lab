@@ -4,6 +4,7 @@ import {
 } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/DbStoreName";
 import { SectionPack } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/SectionPack";
 import { SectionNameByType } from "../../sharedWithServer/SectionsMeta/SectionNameByType";
+import { StoreName } from "../../sharedWithServer/SectionsMeta/sectionStores";
 import { PackMakerSection } from "../../sharedWithServer/StatePackers.ts/PackMakerSection";
 import { SetterSection } from "../../sharedWithServer/StateSetters/SetterSection";
 import { SetterSections } from "../../sharedWithServer/StateSetters/SetterSections";
@@ -20,7 +21,7 @@ import {
 } from "../SectionSolvers/MainSectionSolver";
 import { UserInfoTokenProp, userTokenS } from "../services/userTokenS";
 import { Str } from "./../../sharedWithServer/utils/Str";
-import { FeUserActor } from "./FeUserActor";
+import { FeStoreActor } from "./FeStoreActor";
 import { SectionActorBase, SectionActorBaseProps } from "./SectionActorBase";
 
 type DbIndexStoreName<SN extends SectionNameByType<"hasIndexStore">> = Extract<
@@ -31,17 +32,17 @@ type DbIndexStoreName<SN extends SectionNameByType<"hasIndexStore">> = Extract<
 export class MainSectionActor<
   SN extends SectionNameByType<"hasIndexStore">
 > extends SectionActorBase<SN> {
-  dbIndexStoreName: DbIndexStoreName<SN>;
+  mainStoreName: StoreName<SN>;
   constructor(props: SectionActorBaseProps<SN>) {
     super(props);
-    this.dbIndexStoreName = this.get.dbIndexStoreName as DbIndexStoreName<SN>;
+    this.mainStoreName = this.get.mainStoreName as StoreName<SN>;
     // this is a property so the section can delete itself.
   }
-  get feUser() {
-    const feUser = this.setterSections.oneAndOnly("feUser").get;
-    return new FeUserActor({
+  get feStore() {
+    const feStore = this.setterSections.oneAndOnly("feStore").get;
+    return new FeStoreActor({
       ...this.sectionActorBaseProps,
-      ...feUser.getterSectionProps,
+      ...feStore.getterSectionProps,
     });
   }
   get mainSolver() {
@@ -59,12 +60,10 @@ export class MainSectionActor<
   get setter(): SetterSection<SN> {
     return new SetterSection(this.sectionActorBaseProps);
   }
-  private get sectionQuerierProps(): SectionQuerierProps<
-    Extract<DbStoreNameByType<"sectionQuery">, DbNameBySectionName<SN>>
-  > {
+  private get sectionQuerierProps(): SectionQuerierProps<StoreName<SN>> {
     return {
       apiQueries: this.apiQueries,
-      dbStoreName: this.dbIndexStoreName,
+      dbStoreName: this.mainStoreName,
     };
   }
   private get querier() {
@@ -157,10 +156,10 @@ export class MainSectionActor<
     this.mainSolver.loadSectionPack(sectionPack);
   }
   private async loadByLogin(dbId: string): Promise<SectionPack<SN>> {
-    if (this.feUser.isLoggedIn) {
+    if (this.feStore.isLoggedIn) {
       return (await this.querier.get(dbId)) as SectionPack<any>;
     } else {
-      return this.mainSolver.feStoreSolver.getItemPack(dbId);
+      return this.mainSolver.storeSolver.getItemPack(dbId);
     }
   }
   async deleteSelf() {

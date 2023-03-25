@@ -17,14 +17,14 @@ export function UserListSectionBody({
   storeName,
   makeListNode,
 }: Props) {
-  const feUser = useSetterSectionOnlyOne("feUser");
+  const feStore = useSetterSectionOnlyOne("feStore");
   return (
     <MainSectionBody themeName={themeName}>
       <ListGroupLists
         {...{
           themeName,
-          feIds: feUser.get.childFeIds(storeName),
-          addList: () => feUser.addChild(storeName),
+          feIds: feStore.get.childFeIds(storeName),
+          addList: () => feStore.addChild(storeName),
           makeListNode,
         }}
       />

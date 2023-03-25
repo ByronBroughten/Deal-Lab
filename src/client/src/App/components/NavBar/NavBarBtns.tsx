@@ -1,7 +1,7 @@
 import { BsArrowUpCircle } from "react-icons/bs";
 import { View } from "react-native";
-import { useUserDataActor } from "../../modules/customHooks/UserDataActor";
 import { useUserSubscription } from "../../modules/customHooks/useSubscriptions";
+import { useUserDataActor } from "../../modules/SectionActors/UserDataActor";
 import { NavBtn } from "./NavBtn";
 import { NavDropDown } from "./NavDropDown";
 import { NavUserMenu } from "./NavUserMenu";

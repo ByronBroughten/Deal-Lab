@@ -7,7 +7,7 @@ export const sectionNames = [
 
   "variablesMenu",
   "feUserInfo",
-  "feUser",
+  "feStore",
   "dbStore",
   "proxyStoreItem",
   "omniParent",

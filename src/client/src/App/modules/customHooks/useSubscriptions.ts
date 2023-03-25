@@ -5,7 +5,7 @@ import { StateValue } from "../../sharedWithServer/SectionsMeta/values/StateValu
 import { useGetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useGetterSection";
 import { timeS } from "../../sharedWithServer/utils/date";
 import { getErrorMessage } from "../../utils/error";
-import { useFeUser } from "../sectionActorHooks/useFeUser";
+import { useFeStore } from "../sectionActorHooks/useFeStore";
 
 export function useSubscriptions() {
   useUpdateOnSubscribe();
@@ -17,7 +17,7 @@ export function useUserSubscription(): {
   userPlanExpiration: number;
   userIsPro: boolean;
 } {
-  const user = useGetterSectionOnlyOne("feUser");
+  const user = useGetterSectionOnlyOne("feStore");
   const userPlan = user.valueNext("labSubscription");
   const userPlanExpiration = user.valueNext("labSubscriptionExp");
   return {
@@ -28,7 +28,7 @@ export function useUserSubscription(): {
 }
 
 function useUpdateOnSubscribe() {
-  const feUser = useFeUser();
+  const feStore = useFeStore();
   const { pathname } = useLocation();
 
   const navigate = useNavigate();
@@ -36,7 +36,7 @@ function useUpdateOnSubscribe() {
     async function updateOnSubscribe() {
       if (pathname.endsWith(constants.feRoutes.subscribeSuccess)) {
         try {
-          await feUser.updateSubscriptionData();
+          await feStore.updateSubscriptionData();
         } catch (ex) {
           throw new Error(getErrorMessage(ex));
         }
@@ -48,12 +48,12 @@ function useUpdateOnSubscribe() {
 }
 
 function useUpdateOnExpire() {
-  const feUser = useFeUser();
+  const feStore = useFeStore();
   const { userPlanExpiration } = useUserSubscription();
 
   React.useEffect(() => {
     if (userPlanExpiration < timeS.now()) {
-      feUser.updateSubscriptionData();
+      feStore.updateSubscriptionData();
     }
   });
 }

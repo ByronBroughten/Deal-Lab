@@ -9,10 +9,10 @@ import { PlainIconBtn } from "../general/PlainIconBtn";
 import { MaterialStringEditor } from "../inputs/MaterialStringEditor";
 
 function useGetFilteredDeals(): GetterSection<"deal">[] {
-  const feUser = useGetterSectionOnlyOne("feUser");
-  const deals = feUser.children("dealMain");
+  const feStore = useGetterSectionOnlyOne("feStore");
+  const deals = feStore.children("dealMain");
 
-  const compareSection = feUser.onlyChild("dealCompare");
+  const compareSection = feStore.onlyChild("dealCompare");
   const nameFilter = compareSection.valueNext("dealNameFilter");
   const nameFilteredDeals = deals.filter((deal) =>
     deal

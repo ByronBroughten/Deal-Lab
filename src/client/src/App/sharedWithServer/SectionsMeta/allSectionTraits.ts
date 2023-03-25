@@ -34,52 +34,34 @@ export const allSectionTraits = checkAllSectionTraits({
   deal: sectionTraits({
     displayName: "Deal",
     defaultStoreName: "dealMain",
-    feIndexStoreName: "dealMain",
-    dbIndexStoreName: "dealMain",
   }),
   loan: sectionTraits({
     defaultStoreName: "loanMain",
-    feIndexStoreName: "loanMain",
-    dbIndexStoreName: "loanMain",
   }),
   property: sectionTraits({
     defaultStoreName: "propertyMain",
-    feIndexStoreName: "propertyMain",
-    dbIndexStoreName: "propertyMain",
   }),
   mgmt: sectionTraits({
     defaultStoreName: "mgmtMain",
-    feIndexStoreName: "mgmtMain",
-    dbIndexStoreName: "mgmtMain",
   }),
   capExList: sectionTraits({
     defaultStoreName: "capExListMain",
     varbListItem: "capExItem",
-    feIndexStoreName: "capExListMain",
-    dbIndexStoreName: "capExListMain",
   }),
   outputList: sectionTraits({
     varbListItem: "outputItem",
     defaultStoreName: "outputListMain",
-    feIndexStoreName: "outputListMain",
-    dbIndexStoreName: "outputListMain",
   }),
   singleTimeList: sectionTraits({
     defaultStoreName: "singleTimeListMain",
     varbListItem: "singleTimeItem",
-    feIndexStoreName: "singleTimeListMain",
-    dbIndexStoreName: "singleTimeListMain",
   }),
   ongoingList: sectionTraits({
     defaultStoreName: "ongoingListMain",
     varbListItem: "ongoingItem",
-    feIndexStoreName: "ongoingListMain",
-    dbIndexStoreName: "ongoingListMain",
   }),
   numVarbList: sectionTraits({
     defaultStoreName: "numVarbListMain",
-    feIndexStoreName: "numVarbListMain",
-    dbIndexStoreName: "numVarbListMain",
     varbListItem: "numVarbItem",
   }),
 });

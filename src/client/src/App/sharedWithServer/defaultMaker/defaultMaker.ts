@@ -34,5 +34,5 @@ export const defaultMaker = new DefaultSectionPackMaker({
   deal: makeDefaultDealPack,
   main: makeDefaultMain,
   dealPage: makeDefaultDealPage,
-  feUser: makeDefaultFeUserPack,
+  feStore: makeDefaultFeUserPack,
 } as const);

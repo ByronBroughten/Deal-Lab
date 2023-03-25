@@ -10,26 +10,26 @@ import {
 } from "./makeExampleOngoingListsProps";
 
 export function makeExampleUserOngoingLists(): SectionPack<"ongoingList">[] {
-  const feUser = PackBuilderSection.initAsOmniChild("feUser");
-  feUser.loadChild({
+  const feStore = PackBuilderSection.initAsOmniChild("feStore");
+  feStore.loadChild({
     childName: "ongoingListMain",
     sectionPack: makeUtilityList(exampleUserUtilityProps, "exampleUtil1"),
   });
-  // feUser.loadChild({
+  // feStore.loadChild({
   //   childName: "ongoingListMain",
   //   sectionPack: makeCapExList(exampleUserCapExProps, "exampleCapX1"),
   // });
-  return feUser.makeChildPackArr("ongoingListMain");
+  return feStore.makeChildPackArr("ongoingListMain");
 }
 
 export function makeExampleUserSingleTimeLists() {
-  const feUser = PackBuilderSection.initAsOmniChild("feUser");
-  feUser.loadChild({
+  const feStore = PackBuilderSection.initAsOmniChild("feStore");
+  feStore.loadChild({
     childName: "singleTimeListMain",
     sectionPack: makeExampleSingleTimeList(
       "Misc upfront cost examples",
       userRepairVarbProps
     ),
   });
-  return feUser.makeChildPackArr("singleTimeListMain");
+  return feStore.makeChildPackArr("singleTimeListMain");
 }

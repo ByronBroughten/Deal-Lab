@@ -12,10 +12,10 @@ export function makeUtilityList(
   itemPropArr: readonly UtilityItemProp[],
   dbId?: string
 ) {
-  const feUser = PackBuilderSection.initAsOmniChild("feUser");
+  const feStore = PackBuilderSection.initAsOmniChild("feStore");
 
   const valueSource = "valueEditor";
-  const utilityList = feUser.addAndGetChild("ongoingListMain", {
+  const utilityList = feStore.addAndGetChild("ongoingListMain", {
     dbId,
     sectionValues: {
       itemValueSource: valueSource,
@@ -65,9 +65,9 @@ export function makeCapExList(
   itemPropArr: readonly CapExItemProp[],
   dbId?: string
 ): SectionPack<"capExList"> {
-  const feUser = PackBuilderSection.initAsOmniChild("feUser");
+  const feStore = PackBuilderSection.initAsOmniChild("feStore");
   const itemOngoingSwitch = "yearly";
-  const capExList = feUser.addAndGetChild("capExListMain", {
+  const capExList = feStore.addAndGetChild("capExListMain", {
     dbId,
     sectionValues: {
       itemOngoingSwitch,

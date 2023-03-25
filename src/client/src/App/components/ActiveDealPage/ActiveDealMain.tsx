@@ -16,8 +16,8 @@ const dealElementProps = {
 };
 export function ActiveDealMain() {
   const main = useSetterSectionOnlyOne("main");
-  const feUser = main.onlyChild("feUser");
-  const outputSection = feUser.get.onlyChild("outputSection");
+  const feStore = main.onlyChild("feStore");
+  const outputSection = feStore.get.onlyChild("outputSection");
   const dealPage = main.onlyChild("activeDealPage");
   const calculatedVarbs = dealPage.onlyChild("calculatedVarbs");
   const completionStatus = calculatedVarbs.value("dealCompletionStatus");

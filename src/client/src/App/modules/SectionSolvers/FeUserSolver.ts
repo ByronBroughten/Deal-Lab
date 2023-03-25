@@ -13,14 +13,14 @@ import { SolverSection } from "../../sharedWithServer/StateSolvers/SolverSection
 import { FeIndexSolver } from "./FeIndexSolver";
 import { MainSectionSolver } from "./MainSectionSolver";
 
-export class FeUserSolver extends SolverSectionBase<"feUser"> {
-  get get(): GetterSection<"feUser"> {
+export class FeUserSolver extends SolverSectionBase<"feStore"> {
+  get get(): GetterSection<"feStore"> {
     return new GetterSection(this.getterSectionProps);
   }
   get packBuilder() {
     return new PackBuilderSection(this.getterSectionProps);
   }
-  get solver(): SolverSection<"feUser"> {
+  get solver(): SolverSection<"feStore"> {
     return new SolverSection(this.solverSectionProps);
   }
   get isLoggedIn(): boolean {
@@ -34,11 +34,11 @@ export class FeUserSolver extends SolverSectionBase<"feUser"> {
   }
 
   static initDefault() {
-    const feUser = PackBuilderSection.initAsOmniChild("feUser");
-    feUser.loadSelf(defaultMaker.makeSectionPack("feUser"));
+    const feStore = PackBuilderSection.initAsOmniChild("feStore");
+    feStore.loadSelf(defaultMaker.makeSectionPack("feStore"));
     return new FeUserSolver({
-      ...FeUserSolver.initProps({ sections: feUser.sectionsShare.sections }),
-      ...feUser.getterSectionProps,
+      ...FeUserSolver.initProps({ sections: feStore.sectionsShare.sections }),
+      ...feStore.getterSectionProps,
     });
   }
   loadSubscriptionInfo({
@@ -58,14 +58,14 @@ export class FeUserSolver extends SolverSectionBase<"feUser"> {
       ...feInfo,
     });
   }
-  feStoreSolver<CN extends ChildName<"feUser">>(
+  storeSolver<CN extends ChildName<"feStore">>(
     itemName: CN
   ): FeIndexSolver<any> {
     return FeIndexSolver.init(itemName, this.solverSectionsProps);
   }
   sectionFeSolver(feInfo: FeSectionInfo): FeIndexSolver<any> {
-    const { feIndexStoreName } = this.get.getterSection(feInfo);
-    return this.feStoreSolver(feIndexStoreName);
+    const { mainStoreName } = this.get.getterSection(feInfo);
+    return this.storeSolver(mainStoreName);
   }
   prepForCompare<SN extends ChildSectionName<"omniParent">>(
     sectionPack: SectionPack<SN>

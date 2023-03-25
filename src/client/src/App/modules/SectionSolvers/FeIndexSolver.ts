@@ -12,20 +12,20 @@ import { SolverSection } from "../../sharedWithServer/StateSolvers/SolverSection
 
 export type DisplayItemProps = { dbId: string; displayName: string };
 
-interface FullIndexSolverProps<CN extends ChildName<"feUser">>
-  extends SolverSectionProps<"feUser"> {
+interface FullIndexSolverProps<CN extends ChildName<"feStore">>
+  extends SolverSectionProps<"feStore"> {
   itemName: CN;
 }
 
 export class FeIndexSolver<
-  CN extends ChildName<"feUser">
-> extends SolverSectionBase<"feUser"> {
+  CN extends ChildName<"feStore">
+> extends SolverSectionBase<"feStore"> {
   itemName: CN;
   constructor({ itemName, ...rest }: FullIndexSolverProps<CN>) {
     super(rest);
     this.itemName = itemName;
   }
-  static init<CN extends ChildName<"feUser">>(
+  static init<CN extends ChildName<"feStore">>(
     itemName: CN,
     props: SolverSectionsProps
   ) {
@@ -33,7 +33,7 @@ export class FeIndexSolver<
       sectionsShare: { sections },
     } = props;
     return new FeIndexSolver({
-      ...sections.onlyOneRawSection("feUser"),
+      ...sections.onlyOneRawSection("feStore"),
       ...props,
       itemName,
     });
@@ -56,13 +56,13 @@ export class FeIndexSolver<
       dbId: section.dbId,
     }));
   }
-  getItem(dbId: string): SolverSection<ChildSectionName<"feUser", CN>> {
+  getItem(dbId: string): SolverSection<ChildSectionName<"feStore", CN>> {
     return this.solver.childByDbId({
       childName: this.itemName,
       dbId,
     });
   }
-  getItemPack(dbId: string): SectionPack<ChildSectionName<"feUser", CN>> {
+  getItemPack(dbId: string): SectionPack<ChildSectionName<"feStore", CN>> {
     return this.getItem(dbId).packMaker.makeSectionPack();
   }
   hasByDbId(dbId: string) {
@@ -77,13 +77,13 @@ export class FeIndexSolver<
       dbId,
     });
   }
-  addItem(sectionPack: SectionPack<ChildSectionName<"feUser", CN>>): void {
+  addItem(sectionPack: SectionPack<ChildSectionName<"feStore", CN>>): void {
     this.indexSection.loadChild({
       childName: this.itemName,
       sectionPack: sectionPack,
     });
   }
-  updateItem(sectionPack: SectionPack<ChildSectionName<"feUser", CN>>) {
+  updateItem(sectionPack: SectionPack<ChildSectionName<"feStore", CN>>) {
     const child = this.indexSection.childByDbId({
       childName: this.itemName,
       dbId: sectionPack.dbId,

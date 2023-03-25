@@ -10,8 +10,9 @@ import NotFound from "./App/components/general/NotFound";
 import { NavBarOutletPage } from "./App/components/NavBarOutletPage";
 import { UserVarbEditorPage } from "./App/components/UserVarbEditorPage";
 import { feRoutes } from "./App/Constants/feRoutes";
-import { useControlUserData } from "./App/modules/customHooks/UserDataActor";
 import { useSubscriptions } from "./App/modules/customHooks/useSubscriptions";
+import { useControlUserData } from "./App/modules/SectionActors/UserDataActor";
+import { useAutoSaveSections } from "./App/sharedWithServer/stateClassHooks/useAutoSaveSections";
 import theme from "./App/theme/Theme";
 import { PrivacyPolicyPage } from "./PrivacyPolicyPage";
 import { UserComponentRoutes } from "./UserComponentRoutes";
@@ -19,6 +20,7 @@ import { UserComponentRoutes } from "./UserComponentRoutes";
 export function Main() {
   useControlUserData();
   useSubscriptions();
+  useAutoSaveSections();
   return (
     <Styled className="App-root">
       <Routes>

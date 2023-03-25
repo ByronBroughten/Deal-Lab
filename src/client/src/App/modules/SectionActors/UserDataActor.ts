@@ -8,16 +8,13 @@ import { useSetterSectionOnlyOneProps } from "../../sharedWithServer/stateClassH
 import { SetterSection } from "../../sharedWithServer/StateSetters/SetterSection";
 import { getErrorMessage } from "../../utils/error";
 import { apiQueries } from "../apiQueriesClient";
-import { UserDataSolver } from "../SectionActors/FeUserActor/UserDataSolver";
-import {
-  SectionActorBase,
-  SectionActorBaseProps,
-} from "../SectionActors/SectionActorBase";
+import { authS } from "../customHooks/authS";
 import { userTokenS } from "../services/userTokenS";
-import { authS } from "./authS";
+import { SectionActorBase, SectionActorBaseProps } from "./SectionActorBase";
+import { UserDataSolver } from "./UserDataSolver";
 
 export function useUserDataActor(): UserDataActor {
-  const sectionProps = useSetterSectionOnlyOneProps("feUser");
+  const sectionProps = useSetterSectionOnlyOneProps("feStore");
   const goToAuthPage = useGoToPage("auth");
   const goToAccountPage = useGoToPage("account");
   return new UserDataActor({
@@ -33,12 +30,12 @@ export function useUserDataStatus(): StateValue<"userDataStatus"> {
   return userDataStatus;
 }
 
-interface Props extends SectionActorBaseProps<"feUser"> {
+interface Props extends SectionActorBaseProps<"feStore"> {
   goToAuthPage: () => void;
   goToAccountPage: () => void;
 }
 
-export class UserDataActor extends SectionActorBase<"feUser"> {
+export class UserDataActor extends SectionActorBase<"feStore"> {
   private goToAuthPage: () => void;
   private goToAccountPage: () => void;
   constructor({ goToAuthPage, goToAccountPage, ...rest }: Props) {
@@ -56,7 +53,7 @@ export class UserDataActor extends SectionActorBase<"feUser"> {
       sectionName: "main",
     });
   }
-  private get setter(): SetterSection<"feUser"> {
+  private get setter(): SetterSection<"feStore"> {
     return new SetterSection(this.sectionActorBaseProps);
   }
   get userDataStatus(): StateValue<"userDataStatus"> {

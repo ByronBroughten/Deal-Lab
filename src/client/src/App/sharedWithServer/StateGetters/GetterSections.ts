@@ -41,8 +41,8 @@ export class GetterSections extends GetterSectionsBase {
   get mainFeInfo() {
     return this.main.feInfo;
   }
-  get feUser() {
-    return this.list("feUser").oneAndOnly;
+  get feStore() {
+    return this.list("feStore").oneAndOnly;
   }
   get mainFeInfoMixed() {
     return this.main.feInfoMixed;

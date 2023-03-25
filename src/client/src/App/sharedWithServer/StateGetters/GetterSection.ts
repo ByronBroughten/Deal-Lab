@@ -132,26 +132,10 @@ export class GetterSection<
   get selfChildTraits(): GenericChildTraits {
     return this.parent.meta.childTraits(this.selfChildName);
   }
-  get dbIndexStoreName() {
-    const { dbIndexStoreName } = this.selfChildTraits;
-    if (dbIndexStoreName) {
-      return dbIndexStoreName;
-    } else {
-      return this.meta.dbIndexStoreName;
-    }
-  }
   get mainStoreName() {
     const { mainStoreName } = this.selfChildTraits;
     if (mainStoreName) {
       return mainStoreName;
-    } else {
-      return this.meta.defaultStoreName;
-    }
-  }
-  get feIndexStoreName() {
-    const { feIndexStoreName } = this.selfChildTraits;
-    if (feIndexStoreName) {
-      return feIndexStoreName;
     } else {
       return this.meta.defaultStoreName;
     }

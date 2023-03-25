@@ -33,7 +33,7 @@ export function useActionMenuBtns<
   SN extends SectionNameByType<"hasIndexStore">
 >({ loadWhat, onLoad, ...feInfo }: Props<SN>) {
   const mainSection = useMainSectionActor(feInfo);
-  const { isGuest } = mainSection.feUser;
+  const { isGuest } = mainSection.feStore;
 
   const actionMenuBtns: Record<ActionBtnName, React.ReactElement> = {
     get signInToSave() {

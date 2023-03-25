@@ -2,7 +2,7 @@ import React from "react";
 import { AiOutlineSave } from "react-icons/ai";
 import { BiCopy, BiReset } from "react-icons/bi";
 import { MdOutlineSystemUpdateAlt } from "react-icons/md";
-import { useFeUser } from "../../../../../../modules/sectionActorHooks/useFeUser";
+import { useFeStore } from "../../../../../../modules/sectionActorHooks/useFeStore";
 import { useMainSectionActor } from "../../../../../../modules/sectionActorHooks/useMainSectionActor";
 import { SectionNameByType } from "../../../../../../sharedWithServer/SectionsMeta/SectionNameByType";
 import { toastNotice } from "../../../../toast";
@@ -26,7 +26,7 @@ type Props<SN extends SectionNameByType<"hasIndexStore">> = {
 };
 
 export function useDefaultActionLists(): ActionMenuLists {
-  const { isGuest } = useFeUser();
+  const { isGuest } = useFeStore();
   return {
     isNotSavedArr: isGuest ? guestIsNotSavedActions : isNotSavedActions,
     isSavedArr: isGuest ? guestIsSavedActions : isSavedActions,
@@ -40,7 +40,7 @@ export function useActionBtns<SN extends SectionNameByType<"hasIndexStore">>({
   ...feInfo
 }: Props<SN>) {
   const mainSection = useMainSectionActor(feInfo);
-  const { isGuest } = mainSection.feUser;
+  const { isGuest } = mainSection.feStore;
 
   const actionMenuBtns: Record<ActionBtnName, React.ReactElement> = {
     get signInToSave() {

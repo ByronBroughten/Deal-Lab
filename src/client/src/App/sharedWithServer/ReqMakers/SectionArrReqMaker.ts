@@ -12,8 +12,8 @@ export class SectionArrReqMaker<
   get get(): GetterSection<SN> {
     return new GetterSection(this.getterSectionProps);
   }
-  get dbStoreName() {
-    return this.get.dbIndexStoreName;
+  private get mainStoreName() {
+    return this.get.mainStoreName;
   }
   static init<SN extends DbSectionNameByType<"sectionQuery">>(sectionName: SN) {
     const sections = SolverSections.initSectionsFromDefaultMain();
@@ -31,7 +31,7 @@ export class SectionArrReqMaker<
   makeReq(): ReplacePackArrsReq {
     return makeReq({
       sectionPackArrs: {
-        [this.dbStoreName]: [this.packMaker.makeSectionPack()],
+        [this.mainStoreName]: [this.packMaker.makeSectionPack()],
       },
     });
   }

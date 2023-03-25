@@ -13,7 +13,7 @@ interface Props extends FeInfoByType<"hasIndexStore"> {}
 export function ActionSaveAsNewBtn(feInfo: Props) {
   const section = useMainSectionActor(feInfo);
   const { feVarbInfo } = section.get.varb("displayName");
-  const { isGuest } = section.feUser;
+  const { isGuest } = section.feStore;
   const toastWarn = () => toastLoginNotice("save");
   return (
     <DropdownBtnWrapper

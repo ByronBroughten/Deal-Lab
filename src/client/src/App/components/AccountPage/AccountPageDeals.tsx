@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import { Text, View } from "react-native";
 import { MoonLoader } from "react-spinners";
-import { useUserDataStatus } from "../../modules/customHooks/UserDataActor";
+import { useUserDataStatus } from "../../modules/SectionActors/UserDataActor";
 import { useGetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useGetterSection";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { Row } from "../general/Row";
@@ -10,10 +10,10 @@ import { AccountPageDeal } from "./AccountPageDeal";
 
 function useFilteredDeals() {
   const main = useGetterSectionOnlyOne("main");
-  const feUser = main.onlyChild("feUser");
+  const feStore = main.onlyChild("feStore");
   const dealMenu = main.onlyChild("mainDealMenu");
   const dealNameFilter = dealMenu.valueNext("dealNameFilter");
-  const deals = feUser.children("dealMain");
+  const deals = feStore.children("dealMain");
   return deals.filter((deal) =>
     deal.stringValue("displayName").includes(dealNameFilter)
   );

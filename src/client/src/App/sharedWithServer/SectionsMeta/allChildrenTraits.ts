@@ -12,8 +12,6 @@ import { StoreName } from "./sectionStores";
 
 export type GenericChildTraits = {
   mainStoreName: StoreName | null;
-  feIndexStoreName: ChildName<"feUser"> | null;
-  dbIndexStoreName: ChildName<"dbStore"> | null;
   sectionContextName: SectionPathContextName | null;
   sectionContextSpecifier: Partial<
     Record<SectionPathContextName, number>
@@ -32,24 +30,18 @@ function makeDefaultChildTraits<RC extends GenericChildTraits>(rc: RC): RC {
 }
 const defaultRelChild = makeDefaultChildTraits({
   mainStoreName: null,
-  feIndexStoreName: null,
-  dbIndexStoreName: null,
   sectionContextName: null,
   sectionContextSpecifier: null,
 });
 type DefaultRelChild = typeof defaultRelChild;
 
-function storeNames<CN extends StoreName>(
+function storeName<CN extends StoreName>(
   storeName: CN
 ): {
   mainStoreName: CN;
-  feIndexStoreName: CN;
-  dbIndexStoreName: CN;
 } {
   return {
     mainStoreName: storeName,
-    feIndexStoreName: storeName,
-    dbIndexStoreName: storeName,
   };
 }
 
@@ -103,15 +95,15 @@ function checkAllChildrenTraits<RCS extends GenericAllChildrenTraits>(
 export const allChildrenTraits = checkAllChildrenTraits({
   ...makeDefaultAllChildrenTraits(),
   userListEditor: childrenTraits("userListEditor", {
-    repairsListMain: childTraits(storeNames("repairsListMain")),
-    utilitiesListMain: childTraits(storeNames("utilitiesListMain")),
-    capExListMain: childTraits(storeNames("capExListMain")),
-    holdingCostsListMain: childTraits(storeNames("holdingCostsListMain")),
-    closingCostsListMain: childTraits(storeNames("closingCostsListMain")),
-    outputListMain: childTraits(storeNames("outputListMain")),
-    numVarbListMain: childTraits(storeNames("numVarbListMain")),
-    singleTimeListMain: childTraits(storeNames("singleTimeListMain")),
-    ongoingListMain: childTraits(storeNames("ongoingListMain")),
+    repairsListMain: childTraits(storeName("repairsListMain")),
+    utilitiesListMain: childTraits(storeName("utilitiesListMain")),
+    capExListMain: childTraits(storeName("capExListMain")),
+    holdingCostsListMain: childTraits(storeName("holdingCostsListMain")),
+    closingCostsListMain: childTraits(storeName("closingCostsListMain")),
+    outputListMain: childTraits(storeName("outputListMain")),
+    numVarbListMain: childTraits(storeName("numVarbListMain")),
+    singleTimeListMain: childTraits(storeName("singleTimeListMain")),
+    ongoingListMain: childTraits(storeName("ongoingListMain")),
   }),
   compareSection: childrenTraits("compareSection", {
     compareDealPage: childTraits({
@@ -140,7 +132,7 @@ export const allChildrenTraits = checkAllChildrenTraits({
       sectionContextName: "latentSection",
     }),
   }),
-  feUser: childrenTraits("feUser", {
+  feStore: childrenTraits("feStore", {
     propertyMain: childTraits({
       sectionContextName: "latentSection",
     }),
@@ -164,16 +156,16 @@ export const allChildrenTraits = checkAllChildrenTraits({
     }),
   }),
   repairValue: childrenTraits("repairValue", {
-    singleTimeList: childTraits(storeNames("repairsListMain")),
+    singleTimeList: childTraits(storeName("repairsListMain")),
   }),
   utilityValue: childrenTraits("utilityValue", {
-    ongoingList: childTraits(storeNames("utilitiesListMain")),
+    ongoingList: childTraits(storeName("utilitiesListMain")),
   }),
   capExValue: childrenTraits("capExValue", {
-    capExList: childTraits(storeNames("capExListMain")),
+    capExList: childTraits(storeName("capExListMain")),
   }),
   closingCostValue: childrenTraits("closingCostValue", {
-    singleTimeList: childTraits(storeNames("closingCostsListMain")),
+    singleTimeList: childTraits(storeName("closingCostsListMain")),
   }),
 });
 

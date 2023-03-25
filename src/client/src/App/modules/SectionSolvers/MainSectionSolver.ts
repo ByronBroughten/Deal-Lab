@@ -33,25 +33,25 @@ export class MainSectionSolver<
   get getterSections(): GetterSections {
     return new GetterSections(this.solverSectionsProps);
   }
-  get feStoreSolver(): FeIndexSolver<any> {
-    const { feIndexStoreName } = this.get;
-    if (!feIndexStoreName) {
+  get storeSolver(): FeIndexSolver<any> {
+    const { mainStoreName } = this.get;
+    if (!mainStoreName) {
       throw new Error("This can't be null.");
     }
-    return FeIndexSolver.init(feIndexStoreName, this.solverSectionsProps);
+    return FeIndexSolver.init(mainStoreName, this.solverSectionsProps);
   }
   get dbId(): string {
     return this.get.dbId;
   }
   get feUserSolver(): FeUserSolver {
-    const feUser = this.getterSections.oneAndOnly("feUser");
+    const feStore = this.getterSections.oneAndOnly("feStore");
     return new FeUserSolver({
       ...this.solverSectionsProps,
-      ...feUser.feInfo,
+      ...feStore.feInfo,
     });
   }
   loadFromLocalStore(dbId: string): void {
-    const sectionPack = this.feStoreSolver.getItemPack(dbId);
+    const sectionPack = this.storeSolver.getItemPack(dbId);
     this.loadSectionPack(sectionPack);
   }
   prepForCompare<SN extends ChildSectionName<"omniParent">>(
@@ -89,10 +89,10 @@ export class MainSectionSolver<
     this.solver.replaceWithDefaultAndSolve();
   }
   get isSaved(): boolean {
-    return this.feStoreSolver.hasByDbId(this.dbId);
+    return this.storeSolver.hasByDbId(this.dbId);
   }
   get displayItems(): DisplayItemProps[] {
-    return this.feStoreSolver.displayItems;
+    return this.storeSolver.displayItems;
   }
   makeACopy(): SectionPack<SN> {
     const sectionPack = this.packMaker.makeSectionPack();
@@ -108,7 +108,7 @@ export class MainSectionSolver<
       displayName: nextName,
     } as Partial<SectionValues<SN>>);
     const clonePack = clone.packMaker.makeSectionPack();
-    this.feStoreSolver.addItem(clonePack);
+    this.storeSolver.addItem(clonePack);
     return clonePack;
   }
   makeSelfACopy() {
@@ -130,7 +130,7 @@ export class MainSectionSolver<
   }
 
   deleteFromIndex(dbId: string) {
-    this.feStoreSolver.removeItem(dbId);
+    this.storeSolver.removeItem(dbId);
   }
   deleteSelfFromIndex() {
     this.deleteFromIndex(this.dbId);
@@ -144,16 +144,16 @@ export class MainSectionSolver<
       autoSyncControl: "autoSyncOff",
     } as Partial<SectionValues<SN>>);
     const sectionPack = this.packMaker.makeSectionPack();
-    this.feStoreSolver.addItem(sectionPack);
+    this.storeSolver.addItem(sectionPack);
   }
   saveUpdates() {
     this.solver.updateValuesAndSolve({
       dateTimeLastSaved: timeS.now(),
     } as Partial<SectionValues<SN>>);
     const sectionPack = this.packMaker.makeSectionPack();
-    this.feStoreSolver.updateItem(sectionPack);
+    this.storeSolver.updateItem(sectionPack);
   }
   get asSavedPack(): SectionPack<SN> {
-    return this.feStoreSolver.getItemPack(this.dbId);
+    return this.storeSolver.getItemPack(this.dbId);
   }
 }

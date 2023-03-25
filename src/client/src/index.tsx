@@ -7,10 +7,6 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
-// Ok. How do I transition to the new stores?
-// - Get rid of the dichotomy between the feIndexStore and dbIndexStore traits
-// - Change feUser to feStore
-
 // - Start by making it save the whole savable state whenever there are updates
 //   and sufficient time has passed
 
@@ -28,9 +24,9 @@ AppRegistry.runApplication("App", {
 //    - Remove and re-add the deal that you're going to edit, changing its context
 //    - First, undo that context adjustment for any other deal that has it
 // 2. Make them autosave
-// 3. Systematize feUser's childNames (all either "main" or "index")
-// 4. Give main all the index children that feUser has
-// 5. Replace "feUser" instances with "main" or what have you
+// 3. Systematize feStore's childNames (all either "main" or "index")
+// 4. Give main all the index children that feStore has
+// 5. Replace "feStore" instances with "main" or what have you
 
 // Is there a way to make saving not dependent on the front-end components that
 // happen to be displayed? Like, after I leave the property editor, can my

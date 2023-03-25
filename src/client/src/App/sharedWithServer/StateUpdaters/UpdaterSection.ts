@@ -277,7 +277,7 @@ export class UpdaterSection<
     const root = this.initRootUpdater();
     root.addChild("main");
     const main = root.onlyChild("main");
-    main.addChild("feUser");
+    main.addChild("feStore");
     return main.getterSectionProps;
   }
   static initRootProps(): GetterSectionProps<"root"> {

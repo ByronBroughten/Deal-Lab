@@ -100,8 +100,8 @@ export class SectionsStore {
     this.rmStoredStateIfBaseSectionVarbsChange();
     const storedState = this.getAndValidateStoredState();
     const main = this.initMainFromStoredState(storedState);
-    const feUser = main.onlyChild("feUser");
-    feUser.updateValuesAndSolve({
+    const feStore = main.onlyChild("feStore");
+    feStore.updateValuesAndSolve({
       userDataStatus: "loading",
     });
     return main.sectionsShare.sections;

@@ -38,7 +38,7 @@ export const allSectionChildren = checkAllSectionChildren({
 
   main: sectionChildren({
     // This has all the saved user data
-    feUser: "feUser",
+    feStore: "feStore",
 
     // These are saved in local storage
     variablesMenu: "variablesMenu",
@@ -53,7 +53,7 @@ export const allSectionChildren = checkAllSectionChildren({
     userVarbEditor: "userVarbEditor",
     userListEditor: "userListEditor",
   }),
-  feUser: sectionChildren(sectionStores),
+  feStore: sectionChildren(sectionStores),
   dbStore: sectionChildren({
     // these are mimicked by the front-end
     ...sectionStores,

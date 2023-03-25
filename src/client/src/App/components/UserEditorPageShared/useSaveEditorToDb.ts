@@ -23,15 +23,15 @@ export function useSaveEditorToDb<
 } {
   const setterSections = useSetterSections();
   const editor = setterSections.oneAndOnly(sectionName);
-  const feUser = setterSections.oneAndOnly("feUser");
-  const getEditorPacks = (): SectionPackArrs<"feUser", CN> => {
+  const feStore = setterSections.oneAndOnly("feStore");
+  const getEditorPacks = (): SectionPackArrs<"feStore", CN> => {
     return editor.packMaker.makeChildPackArrs(childNames) as SectionPackArrs<
-      "feUser",
+      "feStore",
       CN
     >;
   };
   const getStoredPacks = (): SectionPackArrs<SN, CN> => {
-    return feUser.packMaker.makeChildPackArrs(childNames) as SectionPackArrs<
+    return feStore.packMaker.makeChildPackArrs(childNames) as SectionPackArrs<
       SN,
       CN
     >;
@@ -40,8 +40,8 @@ export function useSaveEditorToDb<
     const arrQuerier = new SectionArrQuerier({ apiQueries });
     const listPacks = getEditorPacks();
     unstable_batchedUpdates(() => {
-      feUser.tryAndRevertIfFail(async () => {
-        feUser.replaceChildArrs(listPacks);
+      feStore.tryAndRevertIfFail(async () => {
+        feStore.replaceChildArrs(listPacks);
         await arrQuerier.replace(listPacks);
         onSave && onSave(setterSections);
       });

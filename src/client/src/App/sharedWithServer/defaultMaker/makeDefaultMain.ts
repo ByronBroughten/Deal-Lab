@@ -13,17 +13,17 @@ export function makeDefaultMain(): SectionPack<"main"> {
     sectionPack: makeDefaultDealPage(),
   });
 
-  const feUser = main.loadAndGetChild({
-    childName: "feUser",
+  const feStore = main.loadAndGetChild({
+    childName: "feStore",
     sectionPack: makeDefaultFeUserPack(),
   });
 
   const varbEditor = main.addAndGetChild("userVarbEditor");
-  varbEditor.replaceChildArrs(feUser.makeChildPackArrs("numVarbListMain"));
+  varbEditor.replaceChildArrs(feStore.makeChildPackArrs("numVarbListMain"));
 
   const listEditor = main.addAndGetChild("userListEditor");
   listEditor.replaceChildArrs(
-    feUser.makeChildPackArrs("singleTimeListMain", "ongoingListMain")
+    feStore.makeChildPackArrs("singleTimeListMain", "ongoingListMain")
   );
 
   const latentSections = main.addAndGetChild("latentSections");

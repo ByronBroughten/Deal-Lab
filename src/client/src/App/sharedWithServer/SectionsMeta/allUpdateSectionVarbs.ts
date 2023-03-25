@@ -14,7 +14,6 @@ import {
 import { propertyUpdateVarbs } from "./allUpdateSectionVarbs/propertyUpdateVarbs";
 import { vacancyLossUpdateVarbs } from "./allUpdateSectionVarbs/vacancyLossUpdateVarbs";
 import { VarbName } from "./baseSectionsDerived/baseSectionsVarbsTypes";
-
 import { SectionName, sectionNames } from "./SectionName";
 import {
   defaultSectionUpdateVarbs,
@@ -289,7 +288,7 @@ function makeAllUpdateSections() {
         ],
       }),
     }),
-    ...updateSectionProp("feUser", {
+    ...updateSectionProp("feStore", {
       authStatus: updateVarb("authStatus", { initValue: "guest" }),
       labSubscription: updateVarb("labSubscription", {
         initValue: "basicPlan",

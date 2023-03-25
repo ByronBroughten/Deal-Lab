@@ -11,8 +11,8 @@ import { DealCompareDealModal } from "./DealCompareDealModal";
 import { DealCompareValueMenu } from "./DealCompareValueMenu";
 
 export function DealCompareSection() {
-  const feUser = useGetterSectionOnlyOne("feUser");
-  const dealCompare = feUser.onlyChild("dealCompare");
+  const feStore = useGetterSectionOnlyOne("feStore");
+  const dealCompare = feStore.onlyChild("dealCompare");
   const compareValueFeIds = dealCompare.childFeIds("compareValue");
   const comparePageFeIds = dealCompare.childFeIds("compareDealPage");
 

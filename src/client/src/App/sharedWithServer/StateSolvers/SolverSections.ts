@@ -44,8 +44,8 @@ export class SolverSections extends SolverSectionsBase {
     this.applyVarbPacksToDealPage(feId, userVarbPacks);
   }
   private getSavedUserVarbPacks(): SectionPack<"numVarbList">[] {
-    const feUser = this.oneAndOnly("feUser");
-    const userVarbLists = feUser.get.children("numVarbListMain");
+    const feStore = this.oneAndOnly("feStore");
+    const userVarbLists = feStore.get.children("numVarbListMain");
     return userVarbLists.map((list) => list.packMaker.makeSectionPack());
   }
   private applyVarbPacksToDealPage(
@@ -173,15 +173,15 @@ export class SolverSections extends SolverSectionsBase {
     return mainSolver;
   }
   static initFromFeUserPack(
-    sectionPack: SectionPack<"feUser">
-  ): SolverSection<"feUser"> {
+    sectionPack: SectionPack<"feStore">
+  ): SolverSection<"feStore"> {
     const solver = this.initRoot();
     const mainSolver = solver.addAndGetChild("main");
     mainSolver.loadChild({
-      childName: "feUser",
+      childName: "feStore",
       sectionPack,
     });
-    return mainSolver.onlyChild("feUser");
+    return mainSolver.onlyChild("feStore");
   }
   static initSolverFromMainPack(
     sectionPack: SectionPack<"main">

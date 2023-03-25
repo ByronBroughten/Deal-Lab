@@ -2,7 +2,8 @@ import { Obj } from "../../utils/Obj";
 import { allSectionChildren } from "../allSectionChildren";
 import {
   indexStoreNames,
-  StoreNameByType,
+  StoreName,
+  storeNames,
   StoreSectionName,
 } from "../sectionStores";
 import { ChildName } from "./ChildName";
@@ -31,7 +32,7 @@ export interface DbStoreInfo<CN extends DbStoreName = DbStoreName>
 
 const dbStoreNameArrs = {
   all: dbStoreNames,
-  sectionQuery: indexStoreNames,
+  sectionQuery: storeNames,
 } as const;
 
 export const dbStoreNameS = {
@@ -74,7 +75,7 @@ export type DbSectionNameByType<T extends DbStoreType> = ChildSectionName<
 export type SectionQueryName = DbStoreNameByType<"sectionQuery">;
 
 type MainSectionToStoreName = {
-  [DN in StoreNameByType<"indexStore"> as StoreSectionName<DN>]: DN[];
+  [DN in StoreName as StoreSectionName<DN>]: DN[];
 };
 
 const sectionToMainDbStoreNames = indexStoreNames.reduce(

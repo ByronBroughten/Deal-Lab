@@ -137,21 +137,21 @@ export class LoadedDbUser extends GetterSectionBase<"dbStore"> {
     }
   }
   collectUserData(): UserData {
-    const feUser = FeUserSolver.initDefault();
-    feUser.packBuilder.updateValues({
+    const feStore = FeUserSolver.initDefault();
+    feStore.packBuilder.updateValues({
       ...pick(this.userInfo, ["email", "userName"]),
       ...this.subscriptionValues,
       authStatus: "user",
       userDataStatus: "loaded",
     });
     for (const storeName of storeNames) {
-      feUser.packBuilder.replaceChildren({
+      feStore.packBuilder.replaceChildren({
         childName: storeName,
         sectionPacks: this.dbSections.sectionPackArr(storeName),
       });
     }
     return {
-      feUser: feUser.packBuilder.makeSectionPack(),
+      feStore: feStore.packBuilder.makeSectionPack(),
     };
   }
   createUserInfoToken(subscriptionValues?: AnalyzerPlanValues): string {

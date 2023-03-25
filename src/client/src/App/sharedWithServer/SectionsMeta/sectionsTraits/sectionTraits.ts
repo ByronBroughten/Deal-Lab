@@ -1,6 +1,5 @@
 import { Merge } from "../../utils/Obj/merge";
 import { ChildName } from "../sectionChildrenDerived/ChildName";
-import { ChildSectionNameName } from "../sectionChildrenDerived/ChildSectionName";
 import { SectionName } from "../SectionName";
 import { StoreName, StoreSectionName } from "../sectionStores";
 
@@ -30,10 +29,7 @@ export interface GenericSectionTraits<SN extends SectionName>
 export interface GeneralSectionTraits {
   displayName: string;
   varbListItem: string | null;
-  compareTableName: ChildSectionNameName<"feUser", "compareTable"> | null;
   defaultStoreName: StoreName | null;
-  feIndexStoreName: ChildName<"feUser"> | null;
-  dbIndexStoreName: ChildName<"dbStore"> | null;
 }
 
 export type SectionTraitName = keyof GeneralSectionTraits;
@@ -46,8 +42,5 @@ type DefaultProps = typeof defaultProps;
 const defaultProps = makeDefault({
   displayName: "Unnamed Section",
   varbListItem: null,
-  compareTableName: null,
   defaultStoreName: null,
-  feIndexStoreName: null,
-  dbIndexStoreName: null,
 });
