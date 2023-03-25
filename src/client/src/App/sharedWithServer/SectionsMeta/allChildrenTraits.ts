@@ -1,12 +1,8 @@
-import { Arr } from "../utils/Arr";
 import { Merge } from "../utils/Obj/merge";
-import { FeStoreName } from "./relSectionsDerived/FeStoreName";
 import {
   ChildName,
   sectionToChildNames,
 } from "./sectionChildrenDerived/ChildName";
-import { ChildSectionNameName } from "./sectionChildrenDerived/ChildSectionName";
-import { dbStoreNames } from "./sectionChildrenDerived/DbStoreName";
 import { SectionName, sectionNames } from "./SectionName";
 import {
   indexesForSpecifiers,
@@ -14,19 +10,7 @@ import {
 } from "./sectionPathContexts";
 import { StoreName } from "./sectionStores";
 
-export const tableRowDbSources = Arr.extractStrict(dbStoreNames, [
-  "mgmtMain",
-  "loanMain",
-  "propertyMain",
-  "dealMain",
-] as const);
-export const displayNameDbSources = tableRowDbSources;
-
-type TableRowDbSource = typeof tableRowDbSources[number];
-
 export type GenericChildTraits = {
-  feTableRowStore: ChildSectionNameName<"feUser", "compareTable"> | null;
-  dbIndexName: TableRowDbSource | null;
   mainStoreName: StoreName | null;
   feIndexStoreName: ChildName<"feUser"> | null;
   dbIndexStoreName: ChildName<"dbStore"> | null;
@@ -48,8 +32,6 @@ function makeDefaultChildTraits<RC extends GenericChildTraits>(rc: RC): RC {
 }
 const defaultRelChild = makeDefaultChildTraits({
   mainStoreName: null,
-  feTableRowStore: null,
-  dbIndexName: null,
   feIndexStoreName: null,
   dbIndexStoreName: null,
   sectionContextName: null,
@@ -60,12 +42,12 @@ type DefaultRelChild = typeof defaultRelChild;
 function storeNames<CN extends StoreName>(
   storeName: CN
 ): {
-  storeName: CN;
+  mainStoreName: CN;
   feIndexStoreName: CN;
   dbIndexStoreName: CN;
 } {
   return {
-    storeName,
+    mainStoreName: storeName,
     feIndexStoreName: storeName,
     dbIndexStoreName: storeName,
   };
@@ -202,6 +184,3 @@ export type ChildTraits<
   SN extends SectionName,
   CN extends ChildName<SN>
 > = ChildrenTraits<SN>[CN & keyof ChildrenTraits<SN>];
-
-export type FeUserDbIndex<CN extends FeStoreName> =
-  ChildrenTraits<"feUser">[CN]["dbIndexName"];

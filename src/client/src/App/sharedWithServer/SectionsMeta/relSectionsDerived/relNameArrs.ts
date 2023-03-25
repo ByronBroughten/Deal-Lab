@@ -1,10 +1,11 @@
 import { Arr } from "../../utils/Arr";
 import { hasChildSectionNames } from "../sectionChildrenDerived/ChildName";
 import { SectionName, sectionNames } from "../SectionName";
-import { hasStoreNameArrs } from "./FeStoreName";
+import { indexStoreSectionNames, storeSectionNames } from "../sectionStores";
 
 export const relNameArrs = {
-  ...hasStoreNameArrs,
+  hasIndexStore: indexStoreSectionNames,
+  hasStore: storeSectionNames,
   hasChild: hasChildSectionNames,
   valueSection: Arr.extractStrict(sectionNames, [
     "singleTimeValue",

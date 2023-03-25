@@ -9,7 +9,6 @@ import { StrictPick } from "../../../../../client/src/App/sharedWithServer/utils
 import { ResStatusError } from "../../../../../utils/resError";
 import { DbUserModel } from "../../../../routesShared/DbUserModel";
 import { DbUser } from "../DbUser";
-import { PreppedEmails } from "./userPrepSTypes";
 
 export function getSignUpData(
   user: ThirdPartyEmailPassword.User
@@ -53,4 +52,9 @@ const _depreciatedUtils = {
       email,
     };
   },
+};
+
+type PreppedEmails = {
+  emailAsSubmitted: string;
+  email: string;
 };

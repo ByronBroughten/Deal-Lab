@@ -8,9 +8,8 @@ AppRegistry.runApplication("App", {
 });
 
 // Ok. How do I transition to the new stores?
-// - Make all the store name stuff controlled from sectionStores
 // - Get rid of the dichotomy between the feIndexStore and dbIndexStore traits
-// - Get rid of feuser
+// - Change feUser to feStore
 
 // - Start by making it save the whole savable state whenever there are updates
 //   and sufficient time has passed

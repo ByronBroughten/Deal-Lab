@@ -247,7 +247,7 @@ export class DbUser extends DbSectionsQuerierBase {
         for (const childName of section.get.childNames) {
           for (const child of section.children(childName)) {
             const getterChild = child.get;
-            if (getterChild.isSectionType("hasIndexStore")) {
+            if (getterChild.isSectionType("deal")) {
               if (getterChild.valueNext("autoSyncControl") === "autoSyncOn") {
                 const { sectionName, dbId } = getterChild;
                 const dbStoreNames = getSectionDbStoreNames(sectionName);

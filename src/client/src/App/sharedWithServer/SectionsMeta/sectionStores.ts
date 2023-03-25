@@ -25,6 +25,14 @@ type SectionStores = typeof sectionStores;
 type BasicStoreName = typeof storeNames[number];
 export type StoreSectionName<CN extends BasicStoreName = BasicStoreName> =
   SectionStores[CN];
+export const storeSectionNames = storeNames.reduce((names, storeName) => {
+  const sectionName = sectionStores[storeName];
+  if (!names.includes(sectionName)) {
+    names.push(sectionName);
+  }
+  return names;
+}, [] as StoreSectionName[]);
+
 type SectionToStoreName = {
   [CN in BasicStoreName as SectionStores[CN]]: CN;
 };
@@ -48,6 +56,19 @@ export const indexStoreNames = Arr.extractStrict(storeNames, [
   "outputListMain",
 ] as const);
 export type IndexStoreName = typeof indexStoreNames[number];
+export type IndexStoreSectionName<CN extends IndexStoreName = IndexStoreName> =
+  SectionStores[CN];
+export const indexStoreSectionNames = indexStoreNames.reduce(
+  (names, storeName) => {
+    const sectionName = sectionStores[storeName];
+    if (!names.includes(sectionName)) {
+      names.push(sectionName);
+    }
+    return names;
+  },
+  [] as IndexStoreSectionName[]
+);
+
 const singleItemStoreNames = Arr.excludeStrict(storeNames, indexStoreNames);
 export type SingleItemStoreName = typeof singleItemStoreNames[number];
 
@@ -56,6 +77,13 @@ const storeNamesByType = {
   singleItemStore: singleItemStoreNames,
   all: storeNames,
 };
+
+export function getStoreName<T extends StoreTypeName>(
+  typeName: T
+): StoreNameByType<T>[] {
+  return storeNamesByType[typeName];
+}
+
 type StoreNamesByType = typeof storeNamesByType;
 type StoreTypeName = keyof StoreNamesByType;
 export type StoreNameByType<ST extends StoreTypeName> =

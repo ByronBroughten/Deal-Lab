@@ -1,5 +1,4 @@
 import { pick } from "lodash";
-import { feStoreNameS } from "../SectionsMeta/relSectionsDerived/FeStoreName";
 import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
 import { FeSectionInfo } from "../SectionsMeta/SectionInfo/FeInfo";
 import { SectionName } from "../SectionsMeta/SectionName";
@@ -25,15 +24,6 @@ export class PackBuilderSections extends GetterSectionsBase {
       ...this.get.oneAndOnly(sectionName),
       ...this.getterSectionsProps,
     });
-  }
-  get mainIndexSections() {
-    const feUser = this.oneAndOnly("feUser");
-    const childPackArrs = feUser.maker.makeChildPackArrs(
-      feStoreNameS.arrs.fullIndex
-    );
-    const indexUser = PackBuilderSection.initAsOmniChild("feUser");
-    indexUser.replaceChildArrs(childPackArrs);
-    return indexUser.builderSections;
   }
   static initBuilderFromMainPack(
     sectionPack: SectionPack<"main">
