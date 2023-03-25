@@ -27,6 +27,7 @@ type TableRowDbSource = typeof tableRowDbSources[number];
 export type GenericChildTraits = {
   feTableRowStore: ChildSectionNameName<"feUser", "compareTable"> | null;
   dbIndexName: TableRowDbSource | null;
+  mainStoreName: StoreName | null;
   feIndexStoreName: ChildName<"feUser"> | null;
   dbIndexStoreName: ChildName<"dbStore"> | null;
   sectionContextName: SectionPathContextName | null;
@@ -46,6 +47,7 @@ function makeDefaultChildTraits<RC extends GenericChildTraits>(rc: RC): RC {
   return rc;
 }
 const defaultRelChild = makeDefaultChildTraits({
+  mainStoreName: null,
   feTableRowStore: null,
   dbIndexName: null,
   feIndexStoreName: null,
@@ -58,10 +60,12 @@ type DefaultRelChild = typeof defaultRelChild;
 function storeNames<CN extends StoreName>(
   storeName: CN
 ): {
+  storeName: CN;
   feIndexStoreName: CN;
   dbIndexStoreName: CN;
 } {
   return {
+    storeName,
     feIndexStoreName: storeName,
     dbIndexStoreName: storeName,
   };
@@ -181,22 +185,13 @@ export const allChildrenTraits = checkAllChildrenTraits({
     singleTimeList: childTraits(storeNames("repairsListMain")),
   }),
   utilityValue: childrenTraits("utilityValue", {
-    ongoingList: childTraits({
-      feIndexStoreName: "utilitiesListMain",
-      dbIndexStoreName: "utilitiesListMain",
-    }),
+    ongoingList: childTraits(storeNames("utilitiesListMain")),
   }),
   capExValue: childrenTraits("capExValue", {
-    capExList: childTraits({
-      feIndexStoreName: "capExListMain",
-      dbIndexStoreName: "capExListMain",
-    }),
+    capExList: childTraits(storeNames("capExListMain")),
   }),
   closingCostValue: childrenTraits("closingCostValue", {
-    singleTimeList: childTraits({
-      feIndexStoreName: "closingCostsListMain",
-      dbIndexStoreName: "closingCostsListMain",
-    }),
+    singleTimeList: childTraits(storeNames("closingCostsListMain")),
   }),
 });
 

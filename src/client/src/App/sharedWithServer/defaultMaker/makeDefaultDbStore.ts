@@ -1,4 +1,5 @@
 import { dbStoreNames } from "../SectionsMeta/sectionChildrenDerived/DbStoreName";
+import { inEntityValueInfo } from "../SectionsMeta/values/StateValue/InEntityValue";
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
 import { makeExampleDeal } from "./makeDefaultFeUser/makeExampleDeal";
 import { makeExampleStoreProperty } from "./makeDefaultFeUser/makeExampleProperty";
@@ -7,6 +8,10 @@ import {
   makeExampleUserSingleTimeLists,
 } from "./makeDefaultFeUser/makeExampleUserOngoingLists";
 import { makeExampleUserVarbLists } from "./makeDefaultFeUser/makeExampleUserVarbLists";
+import {
+  defaultDealOutputInfos,
+  makeDefaultOutputList,
+} from "./makeDefaultOutputList";
 
 export type DbStoreSeed = {
   authId: string;
@@ -36,6 +41,19 @@ export function makeDefaultDbStoreArrs({
 
   const stripeInfoPrivate = dbStore.addAndGetChild("stripeInfoPrivate");
   stripeInfoPrivate.updateValues({ customerId: "" });
+
+  const dealCompare = dbStore.addAndGetChild("dealCompare");
+  defaultDealOutputInfos.forEach((outputInfo) => {
+    const compareValue = dealCompare.addAndGetChild("compareValue");
+    compareValue.updateValues({
+      valueEntityInfo: inEntityValueInfo(outputInfo),
+    });
+  });
+  const outputSection = dbStore.addAndGetChild("outputSection");
+  outputSection.loadChild({
+    childName: "buyAndHoldOutputList",
+    sectionPack: makeDefaultOutputList(),
+  });
 
   dbStore.loadChildren({
     childName: "numVarbListMain",

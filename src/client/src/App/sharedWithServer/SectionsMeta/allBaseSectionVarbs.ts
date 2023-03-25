@@ -41,7 +41,7 @@ export function makeAllBaseSectionVarbs() {
     ...defaults,
     mainDealMenu: baseSectionVarbs({
       dealNameFilter: baseVarb("string"),
-      dealModeFiler: baseVarb("dealMode"),
+      dealModeFilter: baseVarb("dealMode"),
       dealSort: baseVarb("dealSort"),
       showArchived: baseVarb("boolean"),
     }),

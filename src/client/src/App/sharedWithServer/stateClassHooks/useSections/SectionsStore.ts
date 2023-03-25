@@ -16,11 +16,7 @@ import { StateSections } from "../../StateSections/StateSections";
 import { SolverSection } from "../../StateSolvers/SolverSection";
 import { SolverSections } from "../../StateSolvers/SolverSections";
 
-const storeChildNames = [
-  "userVarbEditor",
-  "userListEditor",
-  "dealCompare",
-] as const;
+const storeChildNames = ["variablesMenu", "mainDealMenu"] as const;
 type StoredChildName = typeof storeChildNames[number];
 
 type StoredSectionsState = {

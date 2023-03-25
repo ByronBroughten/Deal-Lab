@@ -37,31 +37,23 @@ export const allSectionChildren = checkAllSectionChildren({
   omniParent: relOmniParentChildren,
 
   main: sectionChildren({
-    // these don't save
-    feUserInfo: "feUser",
+    // This has all the saved user data
+    feUser: "feUser",
+
+    // These are saved in local storage
+    variablesMenu: "variablesMenu",
+    mainDealMenu: "mainDealMenu",
+
+    // These are not saved
     latentSections: "latentSections",
     activeSections: "activeSections",
-    variablesMenu: "variablesMenu",
-
-    // these save
-    ...sectionStores,
 
     // these will be eliminated
-    feUser: "feUser",
     activeDealPage: "dealPage",
     userVarbEditor: "userVarbEditor",
     userListEditor: "userListEditor",
   }),
-  feUser: sectionChildren({
-    // This will be eliminated
-    dealMain: "deal",
-    propertyMain: "property",
-    loanMain: "loan",
-    mgmtMain: "mgmt",
-    numVarbListMain: "numVarbList",
-    boolVarbListMain: "boolVarbList",
-    ...listChildren,
-  }),
+  feUser: sectionChildren(sectionStores),
   dbStore: sectionChildren({
     // these are mimicked by the front-end
     ...sectionStores,

@@ -7,9 +7,23 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
-// 1. Allow deals to be edited directly from the store.
-//    - I want to implement the new stores. I'm going to get rid
+// Ok. How do I transition to the new stores?
+// - Make all the store name stuff controlled from sectionStores
+// - Get rid of the dichotomy between the feIndexStore and dbIndexStore traits
+// - Get rid of feuser
 
+// - Start by making it save the whole savable state whenever there are updates
+//   and sufficient time has passed
+
+// It'd be like, propertyMain: { items: [property], lastSaved: ..., lastUpdated: ... }
+// Then I would create a useEffect that reacts to its lastUpdated
+// property, lastSaved property, and that triggers a callback
+// I could use one hook per store like that.
+// I could also track the types of updates that were done
+// - If any were "add" or "remove" actions, I'd update the whole store
+// - If all of them were "updateValue" actions, I'd just update those sections
+
+// 1. Allow deals to be edited directly from the store.
 //    - Make main have activeDealOutputs (savable to server)
 //    - Make main also have activeDealCalculatedVarbs (not savable)
 //    - Remove and re-add the deal that you're going to edit, changing its context

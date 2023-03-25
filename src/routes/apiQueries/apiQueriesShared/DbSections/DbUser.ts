@@ -1,5 +1,4 @@
 import mongoose, { QueryOptions } from "mongoose";
-import { CompareTableBuilder } from "../../../../client/src/App/modules/SectionSolvers/CompareTableBuilder";
 import { VarbName } from "../../../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
 import { ChildSectionName } from "../../../../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/ChildSectionName";
 import {
@@ -10,9 +9,8 @@ import {
   DbSectionName,
   DbStoreInfo,
   DbStoreName,
-  DbStoreNameByType,
   dbStoreNames,
-  sectionToMainDbStoreName,
+  getSectionDbStoreNames,
 } from "../../../../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/DbStoreName";
 import { SectionPack } from "../../../../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/SectionPack";
 import {
@@ -193,22 +191,6 @@ export class DbUser extends DbSectionsQuerierBase {
       });
     }
   }
-  async makeTableRows({
-    dbStoreName,
-    columns,
-  }: {
-    dbStoreName: DbStoreNameByType<"mainIndex">;
-    columns: SectionPack<"column">[];
-  }): Promise<SectionPack<"tableRow">[]> {
-    const tableBuilder = CompareTableBuilder.initAsOmniChild();
-    tableBuilder.updateColumns(columns);
-    const sources = await this.getSectionPackArr(dbStoreName);
-    for (const source of sources) {
-      tableBuilder.createRow(source);
-    }
-    tableBuilder.sortRowsByDisplayName();
-    return tableBuilder.rowPacks;
-  }
   async getSectionPackArr<DSN extends DbStoreName>(
     dbStoreName: DSN
   ): Promise<DbSectionPack<DSN>[]> {
@@ -268,7 +250,11 @@ export class DbUser extends DbSectionsQuerierBase {
             if (getterChild.isSectionType("hasIndexStore")) {
               if (getterChild.valueNext("autoSyncControl") === "autoSyncOn") {
                 const { sectionName, dbId } = getterChild;
-                const dbStoreName = sectionToMainDbStoreName(sectionName);
+                const dbStoreNames = getSectionDbStoreNames(sectionName);
+                if (dbStoreNames.length !== 1) {
+                  throw new Error("This wasn't implemented right, yet");
+                }
+                const dbStoreName = dbStoreNames[0];
                 const childDbInfo = { dbStoreName, dbId };
                 if (await this.hasSectionPack(childDbInfo)) {
                   const childPack = await this.getSectionPack(childDbInfo);

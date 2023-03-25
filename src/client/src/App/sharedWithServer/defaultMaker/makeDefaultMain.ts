@@ -1,23 +1,21 @@
 import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
-import { inEntityValueInfo } from "../SectionsMeta/values/StateValue/InEntityValue";
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
 import { makeDefaultDealPage } from "./makeDefaultDealPage";
 import { makeDefaultFeUserPack } from "./makeDefaultFeUser";
-import {
-  defaultDealOutputInfos,
-  makeDefaultOutputList,
-} from "./makeDefaultOutputList";
 
 export function makeDefaultMain(): SectionPack<"main"> {
   const main = PackBuilderSection.initAsOmniChild("main");
-  const feUser = main.loadAndGetChild({
-    childName: "feUser",
-    sectionPack: makeDefaultFeUserPack(),
-  });
 
+  main.addChild("mainDealMenu");
+  main.addChild("variablesMenu");
   main.loadChild({
     childName: "activeDealPage",
     sectionPack: makeDefaultDealPage(),
+  });
+
+  const feUser = main.loadAndGetChild({
+    childName: "feUser",
+    sectionPack: makeDefaultFeUserPack(),
   });
 
   const varbEditor = main.addAndGetChild("userVarbEditor");
@@ -27,23 +25,6 @@ export function makeDefaultMain(): SectionPack<"main"> {
   listEditor.replaceChildArrs(
     feUser.makeChildPackArrs("singleTimeListMain", "ongoingListMain")
   );
-
-  const dealCompare = main.addAndGetChild("dealCompare");
-  defaultDealOutputInfos.forEach((outputInfo) => {
-    const compareValue = dealCompare.addAndGetChild("compareValue");
-    compareValue.updateValues({
-      valueEntityInfo: inEntityValueInfo(outputInfo),
-    });
-  });
-
-  main.addChild("variablesMenu");
-  main.addChild("mainDealMenu");
-
-  const outputSection = main.addAndGetChild("outputSection");
-  outputSection.loadChild({
-    childName: "buyAndHoldOutputList",
-    sectionPack: makeDefaultOutputList(),
-  });
 
   const latentSections = main.addAndGetChild("latentSections");
   latentSections.loadChild({

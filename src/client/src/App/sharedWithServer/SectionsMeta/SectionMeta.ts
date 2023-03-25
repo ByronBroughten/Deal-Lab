@@ -1,5 +1,10 @@
 import { Obj } from "../utils/Obj";
 import {
+  allChildrenTraits,
+  ChildrenTraits,
+  GenericChildTraits,
+} from "./allChildrenTraits";
+import {
   getSectionTraits,
   GetSectionTraits,
   SectionTrait,
@@ -9,11 +14,6 @@ import {
   sectionVarbNames,
   VarbName,
 } from "./baseSectionsDerived/baseSectionsVarbsTypes";
-import {
-  allChildrenTraits,
-  ChildrenTraits,
-  GenericChildTraits,
-} from "./childrenTraits";
 import {
   ChildIdArrsNarrow,
   ChildIdArrsWide,
@@ -87,8 +87,8 @@ export class SectionMeta<SN extends SectionName> {
       return true;
     } else return false;
   }
-  get feIndexStoreName(): CorePropNoNull<SN, "feIndexStoreName"> {
-    return this.propNoNull("feIndexStoreName");
+  get defaultStoreName(): CorePropNoNull<SN, "defaultStoreName"> {
+    return this.propNoNull("defaultStoreName");
   }
   get displayName(): SectionTrait<SN, "displayName"> {
     return sectionTrait(this.sectionName, "displayName");

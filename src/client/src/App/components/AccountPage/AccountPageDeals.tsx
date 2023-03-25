@@ -13,7 +13,6 @@ function useFilteredDeals() {
   const feUser = main.onlyChild("feUser");
   const dealMenu = main.onlyChild("mainDealMenu");
   const dealNameFilter = dealMenu.valueNext("dealNameFilter");
-
   const deals = feUser.children("dealMain");
   return deals.filter((deal) =>
     deal.stringValue("displayName").includes(dealNameFilter)

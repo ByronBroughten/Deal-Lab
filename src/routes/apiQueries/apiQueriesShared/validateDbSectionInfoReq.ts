@@ -14,7 +14,7 @@ export function validateDbSectionInfoReq(req: Authed<any>): InfoReq {
     body: {
       auth: validateAuthObj(auth),
       dbId: validateDbId(dbId),
-      dbStoreName: validateDbStoreName(dbStoreName, "allQuery"),
+      dbStoreName: validateDbStoreName(dbStoreName, "sectionQuery"),
     },
   };
 }

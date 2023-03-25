@@ -1,11 +1,9 @@
 import { Arr } from "../../utils/Arr";
 import { Obj } from "../../utils/Obj";
+import { tableRowDbSources } from "../allChildrenTraits";
 import { allSectionTraits, getSomeSectionTraits } from "../allSectionTraits";
-import { tableRowDbSources } from "../childrenTraits";
 import { ChildName, getChildNames } from "../sectionChildrenDerived/ChildName";
-import { dbStoreNameS } from "../sectionChildrenDerived/DbStoreName";
-import { SectionName } from "../SectionName";
-
+// What if...
 export const hasStoreNameArrs = {
   get hasIndexStore() {
     return Obj.entryKeysWithPropOfType(
@@ -21,9 +19,6 @@ const hasToStoreNames = {
     hasStoreNameArrs.hasIndexStore,
     "feIndexStoreName"
   ),
-  get indexStore() {
-    return this.fullIndex;
-  },
 } as const;
 
 const indexStoreNames = makeNestedValueArrs(hasToStoreNames);
@@ -38,9 +33,6 @@ const feStoreNameArrs = {
   ...indexStoreNames,
   all: feUserChildNames,
   dbIndexName: tableRowDbSources,
-  get fullIndexWithArrStore() {
-    return Arr.extractStrict(feUserChildNames, dbStoreNameS.arrs.arrQuery);
-  },
   get mainStoreName() {
     return Arr.extractStrict(indexStoreNames.fullIndex, [
       "dealMain",
@@ -90,8 +82,3 @@ function makeNestedValueArrs<T extends HasNestedValues>(
     return nestedValueArr;
   }, {} as NestedValueArr<T>);
 }
-
-export type SnFeUserChildNames<SN extends SectionName> = Extract<
-  ChildName<"feUser">,
-  ChildName<SN>
->;

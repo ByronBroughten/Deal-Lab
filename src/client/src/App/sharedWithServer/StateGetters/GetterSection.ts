@@ -6,8 +6,8 @@ import {
   SwitchTargetName,
 } from "../SectionsMeta/allBaseSectionVarbs/baseSwitchNames";
 import { DbSectionInfo } from "../SectionsMeta/allBaseSectionVarbs/DbSectionInfo";
+import { GenericChildTraits } from "../SectionsMeta/allChildrenTraits";
 import { VarbName } from "../SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
-import { GenericChildTraits } from "../SectionsMeta/childrenTraits";
 import {
   ChildIdArrsWide,
   ChildName,
@@ -140,12 +140,20 @@ export class GetterSection<
       return this.meta.dbIndexStoreName;
     }
   }
+  get mainStoreName() {
+    const { mainStoreName } = this.selfChildTraits;
+    if (mainStoreName) {
+      return mainStoreName;
+    } else {
+      return this.meta.defaultStoreName;
+    }
+  }
   get feIndexStoreName() {
     const { feIndexStoreName } = this.selfChildTraits;
     if (feIndexStoreName) {
       return feIndexStoreName;
     } else {
-      return this.meta.feIndexStoreName;
+      return this.meta.defaultStoreName;
     }
   }
   hasVarbName(varbName: string): boolean {

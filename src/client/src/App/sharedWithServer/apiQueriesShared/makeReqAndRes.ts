@@ -1,6 +1,5 @@
 import { DbPack } from "../SectionsMeta/sectionChildrenDerived/DbSectionPack";
 import {
-  AllQueryName,
   DbSectionName,
   DbStoreInfo,
   DbStoreNameByType,
@@ -34,7 +33,7 @@ export type ReplacePackArrsReq = MakeReq<{
 }>;
 
 export type DbPackArrQueryArrs = Partial<
-  SectionPackArrs<"dbStore", DbStoreNameByType<"arrQuery">>
+  SectionPackArrs<"dbStore", DbStoreNameByType<"sectionQuery">>
 >;
 
 export type UpgradeUserToProReq = MakeReq<{ priceId: string }>;
@@ -48,6 +47,5 @@ export type SectionPackRes<CN extends SectionQueryName = SectionQueryName> =
     sectionPack: SectionPack<DbSectionName<CN>>;
   }>;
 export type DbIdRes = MakeRes<{ dbId: string }>;
-export type DbStoreNameRes<CN extends AllQueryName = AllQueryName> = MakeRes<
-  DbStoreNameProp<CN>
->;
+export type DbStoreNameRes<CN extends SectionQueryName = SectionQueryName> =
+  MakeRes<DbStoreNameProp<CN>>;

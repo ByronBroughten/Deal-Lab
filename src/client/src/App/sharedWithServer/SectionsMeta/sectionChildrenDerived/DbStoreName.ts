@@ -1,7 +1,10 @@
-import { Arr } from "../../utils/Arr";
 import { Obj } from "../../utils/Obj";
 import { allSectionChildren } from "../allSectionChildren";
-import { indexStoreNames, listChildrenNames } from "../sectionStores";
+import {
+  indexStoreNames,
+  StoreNameByType,
+  StoreSectionName,
+} from "../sectionStores";
 import { ChildName } from "./ChildName";
 import {
   ChildSectionName,
@@ -26,26 +29,9 @@ export interface DbStoreInfo<CN extends DbStoreName = DbStoreName>
   dbId: string;
 }
 
-const mainIndexStoreNames = Arr.extractStrict(dbStoreNames, [
-  "dealMain",
-  "loanMain",
-  "mgmtMain",
-  "propertyMain",
-  "numVarbListMain",
-  ...listChildrenNames,
-] as const);
-
-const arrQueryStoreNames = Arr.extractStrict(dbStoreNames, [
-  ...listChildrenNames,
-  "numVarbListMain",
-] as const);
-
 const dbStoreNameArrs = {
   all: dbStoreNames,
   sectionQuery: indexStoreNames,
-  mainIndex: indexStoreNames,
-  arrQuery: arrQueryStoreNames,
-  allQuery: [...indexStoreNames, ...arrQueryStoreNames],
 } as const;
 
 export const dbStoreNameS = {
@@ -86,34 +72,23 @@ export type DbSectionNameByType<T extends DbStoreType> = ChildSectionName<
 >;
 
 export type SectionQueryName = DbStoreNameByType<"sectionQuery">;
-export type SectionArrQueryName = DbStoreNameByType<"arrQuery">;
-export type AllQueryName = DbStoreNameByType<"allQuery">;
 
 type MainSectionToStoreName = {
-  [DN in DbStoreNameByType<"mainIndex"> as DbSectionName<DN>]: DN;
+  [DN in StoreNameByType<"indexStore"> as StoreSectionName<DN>]: DN[];
 };
 
-const sectionToMainDbStoreNames = mainIndexStoreNames.reduce(
+const sectionToMainDbStoreNames = indexStoreNames.reduce(
   (result, storeName) => {
     const sectionName = childToSectionName("dbStore", storeName);
-    (result[sectionName] as any) = storeName;
+    if (!result[sectionName]) result[sectionName] = [];
+    (result[sectionName] as any).push(storeName);
     return result;
   },
   {} as MainSectionToStoreName
 );
 
-const mainStoreSectionNames: DbSectionNameByType<"mainIndex">[] = Obj.keys(
-  sectionToMainDbStoreNames
-);
-
-export function isMainDbStoreSectionName(
-  value: any
-): value is DbSectionNameByType<"mainIndex"> {
-  return mainStoreSectionNames.includes(value);
-}
-
-export function sectionToMainDbStoreName<
-  SN extends DbSectionNameByType<"mainIndex">
+export function getSectionDbStoreNames<
+  SN extends DbSectionNameByType<"sectionQuery">
 >(sectionName: SN): MainSectionToStoreName[SN] {
   return sectionToMainDbStoreNames[sectionName];
 }

@@ -6,7 +6,7 @@ import { constants } from "../../../../client/src/App/Constants";
 import { FeUserSolver } from "../../../../client/src/App/modules/SectionSolvers/FeUserSolver";
 import { AnalyzerPlanValues } from "../../../../client/src/App/sharedWithServer/apiQueriesShared/AnalyzerPlanValues";
 import { UserData } from "../../../../client/src/App/sharedWithServer/apiQueriesShared/validateUserData";
-import { feStoreNameS } from "../../../../client/src/App/sharedWithServer/SectionsMeta/relSectionsDerived/FeStoreName";
+import { storeNames } from "../../../../client/src/App/sharedWithServer/SectionsMeta/sectionStores";
 import {
   GetterSectionBase,
   GetterSectionProps,
@@ -144,7 +144,7 @@ export class LoadedDbUser extends GetterSectionBase<"dbStore"> {
       authStatus: "user",
       userDataStatus: "loaded",
     });
-    for (const storeName of feStoreNameS.arrs.fullIndex) {
+    for (const storeName of storeNames) {
       feUser.packBuilder.replaceChildren({
         childName: storeName,
         sectionPacks: this.dbSections.sectionPackArr(storeName),

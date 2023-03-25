@@ -3,6 +3,7 @@ import { RemoveNotStrings, StrictOmit } from "../../utils/types";
 import { MergeUnionObj } from "../../utils/types/mergeUnionObj";
 import { allSectionChildren, AllSectionChildren } from "../allSectionChildren";
 import { SectionName, sectionNames } from "../SectionName";
+import { StoreName } from "../sectionStores";
 import { ChildSectionName } from "./ChildSectionName";
 
 type SectionToCN = {
@@ -94,3 +95,8 @@ export type ChildSectionNameOrNull<
   SN extends SectionName,
   CN extends SectionName
 > = Extract<ChildSectionName<SN>, CN> extends never ? null : CN;
+
+export type SectionStoreChildName<SN extends SectionName> = Extract<
+  StoreName,
+  ChildName<SN>
+>;

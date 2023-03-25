@@ -4,7 +4,6 @@ import { Obj } from "../utils/Obj";
 export const sectionStores = {
   outputSection: "outputSection",
   dealCompare: "compareSection",
-  mainDealMenu: "mainDealMenu",
 
   dealMain: "deal",
   propertyMain: "property",
@@ -21,10 +20,10 @@ export const sectionStores = {
   boolVarbListMain: "boolVarbList",
   outputListMain: "outputList",
 } as const;
-const storeNames = Obj.keys(sectionStores);
+export const storeNames = Obj.keys(sectionStores);
 type SectionStores = typeof sectionStores;
 type BasicStoreName = typeof storeNames[number];
-type StoreSectionName<CN extends BasicStoreName = BasicStoreName> =
+export type StoreSectionName<CN extends BasicStoreName = BasicStoreName> =
   SectionStores[CN];
 type SectionToStoreName = {
   [CN in BasicStoreName as SectionStores[CN]]: CN;
@@ -51,6 +50,16 @@ export const indexStoreNames = Arr.extractStrict(storeNames, [
 export type IndexStoreName = typeof indexStoreNames[number];
 const singleItemStoreNames = Arr.excludeStrict(storeNames, indexStoreNames);
 export type SingleItemStoreName = typeof singleItemStoreNames[number];
+
+const storeNamesByType = {
+  indexStore: indexStoreNames,
+  singleItemStore: singleItemStoreNames,
+  all: storeNames,
+};
+type StoreNamesByType = typeof storeNamesByType;
+type StoreTypeName = keyof StoreNamesByType;
+export type StoreNameByType<ST extends StoreTypeName> =
+  StoreNamesByType[ST][number];
 
 // Depreciating
 export const listChildren = {

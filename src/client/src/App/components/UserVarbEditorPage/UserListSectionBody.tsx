@@ -1,4 +1,4 @@
-import { FeStoreNameByType } from "../../sharedWithServer/SectionsMeta/relSectionsDerived/FeStoreName";
+import { StoreNameByType } from "../../sharedWithServer/SectionsMeta/sectionStores";
 import { useSetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useSetterSection";
 import { ThemeName } from "../../theme/Theme";
 import MainSectionBody from "../appWide/GeneralSection/MainSection/MainSectionBody";
@@ -9,7 +9,7 @@ import {
 
 type Props = {
   themeName: ThemeName;
-  storeName: FeStoreNameByType<"fullIndexWithArrStore">;
+  storeName: StoreNameByType<"indexStore">;
   makeListNode: MakeListNode;
 };
 export function UserListSectionBody({

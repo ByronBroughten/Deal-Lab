@@ -2,7 +2,7 @@ import React from "react";
 import { AiOutlineSave } from "react-icons/ai";
 import { VscDiscard } from "react-icons/vsc";
 import styled from "styled-components";
-import { SnFeUserChildNames } from "../../sharedWithServer/SectionsMeta/relSectionsDerived/FeStoreName";
+import { SectionStoreChildName } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/ChildName";
 import { SectionName } from "../../sharedWithServer/SectionsMeta/SectionName";
 import { SetterSections } from "../../sharedWithServer/StateSetters/SetterSections";
 import { nativeTheme } from "../../theme/nativeTheme";
@@ -16,7 +16,7 @@ import { useSaveEditorToDb } from "./useSaveEditorToDb";
 type Props<SN extends SectionName> = {
   titleText: React.ReactNode;
   sectionName: SN;
-  childNames: SnFeUserChildNames<SN>[];
+  childNames: SectionStoreChildName<SN>[];
   onSave?: (setterSections: SetterSections) => void;
 };
 export function UserEditorTitleRow<SN extends SectionName>({

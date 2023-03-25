@@ -20,7 +20,10 @@ export function validateSectionPackArrReq(req: Authed<any>): PackArrReq {
   return {
     body: {
       auth: validateAuthObj(auth),
-      sectionPackArrs: validateDbSectionPackArrs(sectionPackArrs, "arrQuery"),
+      sectionPackArrs: validateDbSectionPackArrs(
+        sectionPackArrs,
+        "sectionQuery"
+      ),
     },
   };
 }

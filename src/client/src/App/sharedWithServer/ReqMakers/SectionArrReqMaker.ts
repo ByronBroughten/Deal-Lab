@@ -7,7 +7,7 @@ import { PackMakerSection } from "../StatePackers.ts/PackMakerSection";
 import { SolverSections } from "../StateSolvers/SolverSections";
 
 export class SectionArrReqMaker<
-  SN extends DbSectionNameByType<"arrQuery">
+  SN extends DbSectionNameByType<"sectionQuery">
 > extends GetterSectionBase<SN> {
   get get(): GetterSection<SN> {
     return new GetterSection(this.getterSectionProps);
@@ -15,7 +15,7 @@ export class SectionArrReqMaker<
   get dbStoreName() {
     return this.get.dbIndexStoreName;
   }
-  static init<SN extends DbSectionNameByType<"arrQuery">>(sectionName: SN) {
+  static init<SN extends DbSectionNameByType<"sectionQuery">>(sectionName: SN) {
     const sections = SolverSections.initSectionsFromDefaultMain();
     const section = sections.firstRawSection(sectionName);
     return new SectionArrReqMaker({

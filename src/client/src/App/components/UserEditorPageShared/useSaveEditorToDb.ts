@@ -3,7 +3,7 @@ import React from "react";
 import { unstable_batchedUpdates } from "react-dom";
 import { apiQueries } from "../../modules/apiQueriesClient";
 import { SectionArrQuerier } from "../../modules/QueriersBasic/SectionArrQuerier";
-import { SnFeUserChildNames } from "../../sharedWithServer/SectionsMeta/relSectionsDerived/FeStoreName";
+import { SectionStoreChildName } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/ChildName";
 import { SectionName } from "../../sharedWithServer/SectionsMeta/SectionName";
 import { useSetterSections } from "../../sharedWithServer/stateClassHooks/useSetterSections";
 import { SectionPackArrs } from "../../sharedWithServer/StatePackers.ts/PackMakerSection";
@@ -11,7 +11,7 @@ import { SetterSections } from "../../sharedWithServer/StateSetters/SetterSectio
 
 export function useSaveEditorToDb<
   SN extends SectionName,
-  CN extends SnFeUserChildNames<SN>
+  CN extends SectionStoreChildName<SN>
 >(
   sectionName: SN,
   childNames: CN[],
