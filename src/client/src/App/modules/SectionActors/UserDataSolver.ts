@@ -11,7 +11,7 @@ export class UserDataSolver extends SolverSectionsBase {
     const { solverSections } = this;
     const main = solverSections.oneAndOnly("main");
     const feStore = main.onlyChild("feStore");
-    feStore.loadSelf(userData.feStore);
+    feStore.loadSelfAndSolve(userData.feStore);
 
     const varbEditor = main.onlyChild("userVarbEditor");
     varbEditor.replaceChildPackArrsAndSolve(

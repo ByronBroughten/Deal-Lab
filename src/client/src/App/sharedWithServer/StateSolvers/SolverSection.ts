@@ -18,20 +18,18 @@ import {
   ChildPackInfo,
   ChildSectionPackArrs,
 } from "../StatePackers.ts/PackLoaderSection";
+import { LoadChildSectionPackOptions } from "../StatePackers.ts/PackLoaderSection/ChildPackLoader";
 import { PackMakerSection } from "../StatePackers.ts/PackMakerSection";
 import {
   AddChildOptions,
   UpdaterSection,
 } from "../StateUpdaters/UpdaterSection";
-import { Obj } from "../utils/Obj";
-import { AddSolverSection } from "./AddSolverSection";
-import { ComboSolverSection } from "./ComboSolverSection";
-import { RemoveSolverSection } from "./RemoveSolverSection";
 import { SolverSectionBase } from "./SolverBases/SolverSectionBase";
 import {
   HasSolveShare,
   SolverSectionsBase,
 } from "./SolverBases/SolverSectionsBase";
+import { SolverPrepSection } from "./SolverPrepSection";
 import { SolverSections } from "./SolverSections";
 import { SolverVarb } from "./SolverVarb";
 
@@ -42,6 +40,9 @@ interface SolverSectionInitProps<SN extends SectionName>
 export class SolverSection<
   SN extends SectionName
 > extends SolverSectionBase<SN> {
+  get prepper() {
+    return new SolverPrepSection(this.solverSectionProps);
+  }
   static init<S extends SectionName>(
     props: SolverSectionInitProps<S>
   ): SolverSection<S> {
@@ -73,20 +74,11 @@ export class SolverSection<
   get builder(): PackBuilderSection<SN> {
     return new PackBuilderSection(this.getterSectionProps);
   }
-  private get solverSections() {
+  get solverSections() {
     return new SolverSections(this.solverSectionsProps);
   }
   get updater() {
     return new UpdaterSection(this.getterSectionProps);
-  }
-  private get remover() {
-    return RemoveSolverSection.init(this.solverSectionProps);
-  }
-  get adder() {
-    return AddSolverSection.init(this.solverSectionProps);
-  }
-  private get combo() {
-    return new ComboSolverSection(this.solverSectionProps);
   }
   get varbIdsToSolveFor(): Set<string> {
     return this.solveShare.varbIdsToSolveFor;
@@ -109,29 +101,20 @@ export class SolverSection<
     this.solverSections.solve();
   }
   updateValuesAndSolve(values: Partial<SectionValues<SN>>): void {
-    this.updater.updateValues(values);
-    const varbNames = Obj.keys(values) as VarbName<SN>[];
-    const varbInfos = varbNames.map((varbName) => this.get.varbInfo(varbName));
-
-    this.addVarbInfosToSolveFor(...varbInfos);
+    this.prepper.updateValues(values);
     this.solve();
   }
-  private removeSelf(): void {
-    this.remover.removeSelfAndExtractVarbIds();
-  }
   removeSelfAndSolve(): void {
-    this.removeSelf();
+    this.prepper.removeSelf();
     this.solve();
   }
   removeChildrenAndSolve(childName: ChildName<SN>): void {
-    this.remover.removeChildrenAndExtractVarbIds(childName);
+    this.prepper.removeChildren(childName);
     this.solve();
   }
   removeChildArrsAndSolve<CN extends ChildName<SN>>(childArrs: CN[]): void {
-    for (const childName of childArrs) {
-      this.remover.removeChildrenAndExtractVarbIds(childName);
-      this.solve();
-    }
+    this.prepper.removeChildArrs(childArrs);
+    this.solve();
   }
   childByDbId<CN extends ChildName<SN>>(dbInfo: DbChildInfo<SN, CN>) {
     const { childName } = dbInfo;
@@ -141,16 +124,11 @@ export class SolverSection<
       feId,
     });
   }
-  removeChildByDbId<CN extends ChildName<SN>>(dbInfo: DbChildInfo<SN, CN>) {
-    this.doRemoveChildByDbId(dbInfo);
-    this.solve();
-  }
-  private doRemoveChildByDbId<CN extends ChildName<SN>>(
+  removeChildByDbIdAndSolve<CN extends ChildName<SN>>(
     dbInfo: DbChildInfo<SN, CN>
-  ): void {
-    const { childName } = dbInfo;
-    const { feId } = this.get.childByDbId(dbInfo);
-    this.removeChild({ childName, feId });
+  ) {
+    this.prepper.removeChildByDbId(dbInfo);
+    this.solve();
   }
   varb<VN extends VarbName<SN>>(varbName: VN): SolverVarb<SN> {
     return new SolverVarb({
@@ -165,7 +143,6 @@ export class SolverSection<
       ...feVarbInfo,
     });
   }
-
   onlyChild<CN extends ChildName<SN>>(
     childName: CN
   ): SolverSection<ChildSectionName<SN, CN>> {
@@ -184,24 +161,16 @@ export class SolverSection<
     const feInfo = this.get.childInfoToFe(childInfo);
     return this.solverSection(feInfo);
   }
-  loadSelf(sectionPack: SectionPack<SN>): void {
-    this.combo.loadSelfSectionPackAndExtractIds(sectionPack);
+  loadSelfAndSolve(sectionPack: SectionPack<SN>): void {
+    this.prepper.loadSelfSectionPack(sectionPack);
     this.solve();
   }
   addChildAndSolve<CN extends ChildName<SN>>(
     childName: CN,
     options?: AddChildOptions<SN, CN>
   ): void {
-    this.adder.addChildAndFinalizeAllAdds(childName, options);
-    this.finalizeAddChild(childName);
+    this.prepper.addChild(childName, options);
     this.solve();
-  }
-  private finalizeAddChild<CN extends ChildName<SN>>(childName: CN) {
-    const sectionName = this.get.meta.childType(childName) as SectionName;
-    if (sectionName === "dealPage") {
-      const { feId } = this.get.youngestChild(childName);
-      this.solverSections.applyVariablesToDealPage(feId);
-    }
   }
   addAndGetChild<CN extends ChildName<SN>>(
     childName: CN,
@@ -210,58 +179,43 @@ export class SolverSection<
     this.addChildAndSolve(childName, options);
     return this.solverSection(this.get.youngestChild(childName).feInfo);
   }
-  loadChild<CN extends ChildName<SN>>(
-    childPackInfo: ChildPackInfo<SN, CN>
+  loadChildAndSolve<CN extends ChildName<SN>>(
+    childPackInfo: ChildPackInfo<SN, CN> & LoadChildSectionPackOptions
   ): void {
-    const { childName, sectionPack } = childPackInfo;
-    this.addChildAndSolve(childName);
-    const child = this.youngestChild(childName);
-    child.loadSelf(sectionPack);
+    this.prepper.loadChild(childPackInfo);
+    this.solve();
   }
   loadAndGetChild<CN extends ChildName<SN>>(
     childPackInfo: ChildPackInfo<SN, CN>
   ): SolverSection<ChildSectionName<SN, CN>> {
-    const { childName } = childPackInfo;
-    this.loadChild(childPackInfo);
-    return this.youngestChild(childName);
+    this.loadChildAndSolve(childPackInfo);
+    return this.youngestChild(childPackInfo.childName);
   }
   addChildArrsAndSolve<CN extends ChildName<SN>>(
     childPackArrs: ChildSectionPackArrs<SN, CN>
   ): void {
-    this.adder.loadChildArrsAndFinalize(childPackArrs);
+    this.prepper.loadChildArrs(childPackArrs);
     this.solve();
-  }
-  removeChild<CN extends ChildName<SN>>(childInfo: FeChildInfo<SN, CN>) {
-    if (this.get.hasChild(childInfo)) {
-      const child = this.child(childInfo);
-      child.removeSelf();
-    } else {
-      const { childName, feId } = childInfo;
-      throw new Error(
-        `Section ${this.get.sectionName}.${this.get.feId} does not have child ${childName}.${feId}.`
-      );
-    }
   }
   removeChildAndSolve<CN extends ChildName<SN>>(
     childInfo: FeChildInfo<SN, CN>
   ): void {
-    this.removeChild(childInfo);
+    this.prepper.removeChild(childInfo);
     this.solve();
   }
   resetToDefaultAndSolve(): void {
-    this.combo.resetToDefaultAndExtractIds();
+    this.prepper.resetToDefault();
     this.solve();
   }
   replaceWithDefaultAndSolve(): void {
-    this.combo.resetToDefaultAndExtractIds();
+    this.prepper.resetToDefault();
     this.updater.newDbId();
     this.solve();
   }
   replaceChildPackArrsAndSolve<CN extends ChildName<SN>>(
     childPackArrs: ChildSectionPackArrs<SN, CN>
   ): void {
-    const childNames = Obj.keys(childPackArrs);
-    this.removeChildArrsAndSolve(childNames);
-    this.addChildArrsAndSolve(childPackArrs);
+    this.prepper.replaceChildPackArrs(childPackArrs);
+    this.solve();
   }
 }

@@ -1,4 +1,7 @@
-import { ChildName } from "../../SectionsMeta/sectionChildrenDerived/ChildName";
+import {
+  ChildName,
+  DbChildInfo,
+} from "../../SectionsMeta/sectionChildrenDerived/ChildName";
 import { ChildSectionName } from "../../SectionsMeta/sectionChildrenDerived/ChildSectionName";
 import { ParentNameSafe } from "../../SectionsMeta/sectionChildrenDerived/ParentName";
 import {
@@ -27,6 +30,12 @@ export class SetterTesterSection<
     const child = this.get.onlyChild(childName);
     return this.setterTester(child.feInfo);
   }
+  childByDbId<CN extends ChildName<SN>>(
+    info: DbChildInfo<SN, CN>
+  ): SetterTesterSection<ChildSectionName<SN, CN>> {
+    const child = this.get.childByDbId(info);
+    return this.setterTester(child.feInfo);
+  }
   get testerProps() {
     return {
       state: this.state,
@@ -50,10 +59,27 @@ export class SetterTesterSection<
     });
   }
   static initActiveDeal(): SetterTesterSection<"deal"> {
-    return this.initMain().onlyChild("activeDealPage").onlyChild("deal");
+    return this.initActiveDealSystem().deal;
   }
-  static initActiveDealPage(): SetterTesterSection<"dealPage"> {
-    return this.initMain().onlyChild("activeDealPage");
+  static initActiveDealSystem(): {
+    deal: SetterTesterSection<"deal">;
+    supplements: SetterTesterSection<"dealSystem">;
+  } {
+    const main = this.initMain();
+    const feStore = main.onlyChild("feStore");
+    const dbId = main
+      .onlyChild("editorControls")
+      .get.valueNext("editedDealDbId");
+
+    const deal = feStore.childByDbId({
+      childName: "dealMain",
+      dbId,
+    });
+    const supplements = main.onlyChild("activeDealSystem");
+    return {
+      deal,
+      supplements,
+    };
   }
   static initByPathName<PN extends SectionPathName>(
     pathName: PN

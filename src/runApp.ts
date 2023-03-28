@@ -12,6 +12,7 @@ import checkConfig from "./startup/config";
 import setupLogger, { logger } from "./startup/setupLogger";
 import { startDb } from "./startup/startDb";
 import { useRoutes } from "./startup/useRoutes";
+import { reqSizeLimit } from "./utils/express";
 
 export function runApp() {
   checkConfig();
@@ -22,7 +23,8 @@ export function runApp() {
   app.use(constants.apiPathBit, webhookQueries);
   app.use(helmet());
   app.use(compression());
-  app.use(express.urlencoded({ extended: true }));
+  app.use(express.urlencoded({ extended: true, limit: reqSizeLimit }));
+  app.use(express.json);
 
   logger.info(`Running in a ${process.env.NODE_ENV} environment...`);
   if (process.env.NODE_ENV === "production") {

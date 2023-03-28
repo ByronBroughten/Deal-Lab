@@ -106,8 +106,8 @@ export const allChildrenTraits = checkAllChildrenTraits({
     ongoingListMain: childTraits(storeName("ongoingListMain")),
   }),
   compareSection: childrenTraits("compareSection", {
-    compareDealPage: childTraits({
-      sectionContextSpecifier: indexesForSpecifiers.compareDealPage,
+    comparedDealSystem: childTraits({
+      sectionContextSpecifier: indexesForSpecifiers.dealSystem,
     }),
   }),
   financing: childrenTraits("financing", {
@@ -116,43 +116,28 @@ export const allChildrenTraits = checkAllChildrenTraits({
     }),
   }),
   main: childrenTraits("main", {
-    dealCompare: childTraits({
-      sectionContextName: "compareDealPage",
+    feStore: childTraits({
+      sectionContextName: "latentDealSystem",
     }),
-    activeDealPage: childTraits({
-      sectionContextName: "activeDealPage",
+    activeDealSystem: childTraits({
+      sectionContextName: "activeDealSystem",
+    }),
+    latentDealSystem: childTraits({
+      sectionContextName: "latentDealSystem",
+    }),
+    dealCompare: childTraits({
+      sectionContextName: "comparedDealSystem",
     }),
     userVarbEditor: childTraits({
-      sectionContextName: "userVarbEditorPage",
+      sectionContextName: "latentDealSystem",
     }),
     userListEditor: childTraits({
-      sectionContextName: "userListEditorPage",
-    }),
-    latentSections: childTraits({
-      sectionContextName: "latentSection",
+      sectionContextName: "latentDealSystem",
     }),
   }),
   feStore: childrenTraits("feStore", {
-    propertyMain: childTraits({
-      sectionContextName: "latentSection",
-    }),
-    mgmtMain: childTraits({
-      sectionContextName: "latentSection",
-    }),
-    loanMain: childTraits({
-      sectionContextName: "latentSection",
-    }),
-    outputListMain: childTraits({
-      sectionContextName: "activeDealPage",
-    }),
-    numVarbListMain: childTraits({
-      sectionContextName: "activeDealPage",
-    }),
-    singleTimeListMain: childTraits({
-      sectionContextName: "activeDealPage",
-    }),
-    ongoingListMain: childTraits({
-      sectionContextName: "activeDealPage",
+    dealMain: childTraits({
+      sectionContextSpecifier: indexesForSpecifiers.deal,
     }),
   }),
   repairValue: childrenTraits("repairValue", {

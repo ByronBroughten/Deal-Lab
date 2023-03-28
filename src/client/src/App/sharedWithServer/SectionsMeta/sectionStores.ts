@@ -3,7 +3,6 @@ import { Obj } from "../utils/Obj";
 
 export const sectionStores = {
   outputSection: "outputSection",
-  dealCompare: "compareSection",
 
   dealMain: "deal",
   propertyMain: "property",

@@ -5,10 +5,6 @@ import { getStoredObj } from "../../../utils/localStorage";
 import { makeDefaultMain } from "../../defaultMaker/makeDefaultMain";
 import { allBaseSectionVarbs } from "../../SectionsMeta/allBaseSectionVarbs";
 import { ChildSectionPack } from "../../SectionsMeta/sectionChildrenDerived/ChildSectionPack";
-import {
-  SectionPack,
-  validateSectionPack,
-} from "../../SectionsMeta/sectionChildrenDerived/SectionPack";
 import { validateSectionPackArrs } from "../../SectionsMeta/SectionNameByType";
 import { GetterSections } from "../../StateGetters/GetterSections";
 import { PackBuilderSection } from "../../StatePackers.ts/PackBuilderSection";
@@ -16,12 +12,14 @@ import { StateSections } from "../../StateSections/StateSections";
 import { SolverSection } from "../../StateSolvers/SolverSection";
 import { SolverSections } from "../../StateSolvers/SolverSections";
 
-const storeChildNames = ["variablesMenu", "mainDealMenu"] as const;
+const storeChildNames = [
+  "variablesMenu",
+  "mainDealMenu",
+  "editorControls",
+] as const;
 type StoredChildName = typeof storeChildNames[number];
 
 type StoredSectionsState = {
-  activeDeal: SectionPack<"deal">;
-} & {
   [CN in StoredChildName]: ChildSectionPack<"main", CN>[];
 };
 
@@ -56,24 +54,14 @@ export class SectionsStore {
       ...getterSections.getterSectionsProps,
       ...main.feInfo,
     });
-    const activeDeal = packBuilder
-      .onlyChild("activeDealPage")
-      .onlyChild("deal");
 
-    this.setSectionsInStore({
-      activeDeal: activeDeal.makeSectionPack(),
-      ...packBuilder.makeChildPackArrs(...storeChildNames),
-    });
+    this.setSectionsInStore(packBuilder.makeChildPackArrs(...storeChildNames));
   }
 
   private static getAndValidateStoredState(): StoredSectionsState {
     const storedState = this.getSectionsFromStore();
-    const { activeDeal, ...rest } = storedState;
     try {
-      return {
-        activeDeal: validateSectionPack(activeDeal),
-        ...validateSectionPackArrs(rest, "main", storeChildNames),
-      };
+      return validateSectionPackArrs(storedState, "main", storeChildNames);
     } catch (e) {
       this.rmStoredState();
       throw new Error("Failed to validate stored deal state.");
@@ -82,14 +70,9 @@ export class SectionsStore {
   private static initMainFromStoredState(
     storedState: StoredSectionsState
   ): SolverSection<"main"> {
-    const { activeDeal, ...rest } = storedState;
     const main = PackBuilderSection.initAsOmniChild("main");
     main.loadSelf(makeDefaultMain());
-    main.replaceChildArrs(rest);
-
-    const deal = main.onlyChild("activeDealPage").onlyChild("deal");
-    deal.loadSelf(activeDeal);
-
+    main.replaceChildArrs(storedState);
     const solver = SolverSections.initRoot();
     return solver.loadAndGetChild({
       childName: "main",

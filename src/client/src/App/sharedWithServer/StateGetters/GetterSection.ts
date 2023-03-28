@@ -459,20 +459,14 @@ export class GetterSection<
     return path.map((childName, idx): AbsolutePathNode => {
       if (idxs.includes(idx)) {
         const specifier = idxSpecifiers[idx];
-        if (specifier.selfChildName !== childName) {
-          throw new Error(
-            `Expected childName of ${childName} but got ${specifier.selfChildName}`
-          );
+        if (specifier.selfChildName === childName) {
+          return {
+            childName,
+            feId: specifier.feId,
+          };
         }
-        return {
-          childName,
-          feId: specifier.feId,
-        };
-      } else {
-        return {
-          childName,
-        };
       }
+      return { childName };
     });
   }
   private getPathFromContext(pathName: SectionPathName): ChildName[] {

@@ -1,6 +1,7 @@
 import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
 import { timeS } from "../utils/date";
+import { makeDefaultDealPack } from "./makeDefaultDeal";
 import { makeDefaultOutputList } from "./makeDefaultOutputList";
 
 export function makeDefaultFeUserPack(): SectionPack<"feStore"> {
@@ -17,6 +18,10 @@ export function makeDefaultFeUserPack(): SectionPack<"feStore"> {
   outputSection.loadChild({
     childName: "buyAndHoldOutputList",
     sectionPack: makeDefaultOutputList(),
+  });
+  feStore.loadChild({
+    childName: "dealMain",
+    sectionPack: makeDefaultDealPack(),
   });
   return feStore.makeSectionPack();
 }

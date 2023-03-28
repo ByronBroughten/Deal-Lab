@@ -4,9 +4,8 @@ export const sectionNames = [
   "root",
   "main",
   "mainDealMenu",
-
+  "editorControls",
   "variablesMenu",
-  "feUserInfo",
   "feStore",
   "dbStore",
   "proxyStoreItem",
@@ -46,6 +45,8 @@ export const sectionNames = [
   "calculatedVarbs",
 
   "deal",
+  "dealSupplements",
+  "dealSystem",
 
   "propertyGeneral",
   "property",
@@ -75,12 +76,8 @@ export const sectionNames = [
   "userInfoPrivate",
   "authInfoPrivate",
 
-  "dealPage",
-
   "userListEditor",
   "userVarbEditor",
-  "latentSections",
-  "activeSections",
 ] as const;
 
 export type SectionName = typeof sectionNames[number];

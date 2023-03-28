@@ -126,7 +126,7 @@ export class MainSectionSolver<
     this.updater.newDbId();
   }
   loadSectionPack(sectionPack: SectionPack<SN>) {
-    this.solver.loadSelf(sectionPack);
+    this.solver.loadSelfAndSolve(sectionPack);
   }
 
   deleteFromIndex(dbId: string) {

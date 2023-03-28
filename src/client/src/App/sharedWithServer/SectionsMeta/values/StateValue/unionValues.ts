@@ -57,6 +57,7 @@ export type ValueSource = ValueSources[keyof ValueSources][number];
 const unionValueArrs = {
   ...valueSources,
   authStatus: ["guest", "user"],
+  saveStatus: ["unsaved", "saving", "saved"],
   labSubscription: ["basicPlan", "fullPlan"],
   syncStatus: ["unsyncedChanges", "changesSynced"],
   autoSyncControl: ["autoSyncOff", "autoSyncOn"],

@@ -4,6 +4,7 @@ import supertokens from "supertokens-node";
 import { errorHandler, middleware } from "supertokens-node/framework/express";
 import { constants } from "../client/src/App/Constants";
 import { apiQueriesServer } from "../routes/apiQueries";
+import { reqSizeLimit } from "../utils/express";
 import { initSupertokens } from "./initSupertokens";
 
 export function useRoutes(app: express.Application) {
@@ -11,7 +12,7 @@ export function useRoutes(app: express.Application) {
     if (req.originalUrl.includes("/webhook")) {
       next();
     } else {
-      express.json()(req, res, next);
+      express.json({ limit: reqSizeLimit })(req, res, next);
     }
   });
   initSupertokens();

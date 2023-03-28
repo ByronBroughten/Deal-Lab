@@ -2,6 +2,7 @@ import { SxProps } from "@mui/material";
 import { CgDetailsLess, CgDetailsMore } from "react-icons/cg";
 import styled from "styled-components";
 import { useToggleView } from "../../../../modules/customHooks/useToggleView";
+import { useSetterSection } from "../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import theme from "../../../../theme/Theme";
 import { MainSection } from "../../../appWide/GeneralSection/MainSection";
 import MainSectionBody from "../../../appWide/GeneralSection/MainSection/MainSectionBody";
@@ -14,17 +15,23 @@ import { DealOutputList } from "./OutputSection/DealOutputList";
 export function OutputSection({
   feId,
   disableOpenOutputs,
-  outputsIsOpen,
-  openOutputs,
   ...rest
 }: {
   sx?: SxProps;
   feId: string;
   disableOpenOutputs: boolean;
-  outputsIsOpen: boolean;
-  openOutputs: () => void;
 }) {
+  const outputSection = useSetterSection({
+    sectionName: "outputSection",
+    feId,
+  });
   const { detailsIsOpen, toggleDetails } = useToggleView("details", false);
+  const outputsIsOpen = outputSection.value("showOutputs");
+  const openOutputs = () => {
+    outputSection.updateValues({
+      showOutputs: true,
+    });
+  };
   return (
     <Styled {...rest}>
       {!outputsIsOpen && (

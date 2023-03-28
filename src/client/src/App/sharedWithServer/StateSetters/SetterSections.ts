@@ -1,6 +1,7 @@
 import { DbSectionInfo } from "../SectionsMeta/allBaseSectionVarbs/DbSectionInfo";
 import { FeSectionInfo, FeVarbInfo } from "../SectionsMeta/SectionInfo/FeInfo";
 import { SectionName } from "../SectionsMeta/SectionName";
+import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { StateValue } from "../SectionsMeta/values/StateValue";
 import { isStateValue } from "../SectionsMeta/values/valueMetas";
 import {
@@ -41,12 +42,25 @@ export class SetterSections extends SetterSectionsBase {
       ...feInfo,
     });
   }
+  hasActiveDeal(): boolean {
+    return this.solverSections.hasActiveDeal();
+  }
+  getActiveDeal(): SetterSection<"deal"> {
+    const solverDeal = this.solverSections.getActiveDeal();
+    return this.section(solverDeal.get.feInfo);
+  }
+  activateDeal(feId: string): void {
+    this.solverSections.activateDealAndSolve(feId);
+    this.setSections();
+  }
   applyVariablesToDealPages(): void {
     this.solverSections.applyVariablesToDealPages();
     this.setSections();
   }
-  applyVariablesToDealPage(feId: string): void {
-    this.solverSections.applyVariablesToDealPage(feId);
+  applyVariablesToDealPage(
+    feInfo: FeSectionInfo<SectionNameByType<"dealSupports">>
+  ): void {
+    this.solverSections.applyVariablesToDealPage(feInfo);
     this.setSections();
   }
   sectionByDbInfo<SN extends SectionName>(

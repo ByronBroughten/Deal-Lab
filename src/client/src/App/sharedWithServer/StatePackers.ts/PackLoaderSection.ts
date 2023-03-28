@@ -15,7 +15,10 @@ import {
 import { GetterSection } from "../StateGetters/GetterSection";
 import { UpdaterSection } from "../StateUpdaters/UpdaterSection";
 import { Obj } from "../utils/Obj";
-import { ChildPackLoader } from "./PackLoaderSection/ChildPackLoader";
+import {
+  ChildPackLoader,
+  LoadChildSectionPackOptions,
+} from "./PackLoaderSection/ChildPackLoader";
 import { SelfPackLoader } from "./PackLoaderSection/SelfPackLoader";
 
 export class PackLoaderSection<
@@ -76,17 +79,14 @@ export class PackLoaderSection<
   loadChildSectionPack<
     CN extends ChildName<SN>,
     CT extends ChildSectionName<SN, CN>
-  >(
-    { childName, sectionPack }: ChildPackInfo<SN, CN, CT>,
-    options: { idx?: number } = {}
-  ): void {
+  >({ childName, sectionPack, ...rest }: LoadChildProps<SN, CN, CT>): void {
     const childPackLoader = new ChildPackLoader({
       ...this.getterSectionProps,
       sectionPack: sectionPack as SectionPack<any>,
       spChildInfo: {
         childName,
         spNum: 0,
-        ...options,
+        ...rest,
       },
     });
     childPackLoader.loadChild();
@@ -108,3 +108,9 @@ export type ChildPackInfo<
   childName: CN;
   sectionPack: SectionPack<CT>;
 };
+
+export type LoadChildProps<
+  SN extends SectionNameByType,
+  CN extends ChildName<SN> = ChildName<SN>,
+  CT extends ChildSectionName<SN, CN> = ChildSectionName<SN, CN>
+> = ChildPackInfo<SN, CN, CT> & LoadChildSectionPackOptions;

@@ -1,5 +1,5 @@
 import { View } from "react-native";
-import { useGetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useGetterSection";
+import { useGetterMain } from "../../sharedWithServer/stateClassHooks/useMain";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { SubSectionOpen } from "../ActiveDealPage/ActiveDeal/SubSectionOpen";
 import { BackBtnWrapper } from "../appWide/BackBtnWrapper";
@@ -11,12 +11,12 @@ import { DealCompareDealModal } from "./DealCompareDealModal";
 import { DealCompareValueMenu } from "./DealCompareValueMenu";
 
 export function DealCompareSection() {
-  const feStore = useGetterSectionOnlyOne("feStore");
-  const dealCompare = feStore.onlyChild("dealCompare");
+  const main = useGetterMain();
+  const dealCompare = main.onlyChild("dealCompare");
   const compareValueFeIds = dealCompare.childFeIds("compareValue");
-  const comparePageFeIds = dealCompare.childFeIds("compareDealPage");
+  const comparedFeIds = dealCompare.childFeIds("comparedDealSystem");
 
-  const areCompareDeals = comparePageFeIds.length > 0;
+  const areCompareDeals = comparedFeIds.length > 0;
   return (
     <BackBtnWrapper {...{ label: "Deal Menu", to: "account" }}>
       <SubSectionOpen>
@@ -43,7 +43,7 @@ export function DealCompareSection() {
               {areCompareDeals && (
                 <ComparedDealXBtns {...{ compareValueFeIds }} />
               )}
-              {comparePageFeIds.map((feId, idx) => (
+              {comparedFeIds.map((feId, idx) => (
                 <ComparedDeal
                   {...{
                     style: {
@@ -59,7 +59,7 @@ export function DealCompareSection() {
             </View>
             {areCompareDeals && <DealCompareValueMenu />}
           </View>
-          <DealCompareDealModal {...{ dealCount: comparePageFeIds.length }} />
+          <DealCompareDealModal {...{ dealCount: comparedFeIds.length }} />
         </View>
       </SubSectionOpen>
     </BackBtnWrapper>

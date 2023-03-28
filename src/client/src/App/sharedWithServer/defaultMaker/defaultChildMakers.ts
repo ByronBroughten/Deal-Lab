@@ -3,11 +3,13 @@ import { ChildSectionName } from "../SectionsMeta/sectionChildrenDerived/ChildSe
 import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { Obj } from "../utils/Obj";
-import { propertyDefaultChildMakers } from "./propertyDefaultChildMakers";
+import { makeDefaultActiveDealSystem } from "./makeDefaultMain";
 
-export const childDefaultMakers = {
-  property: propertyDefaultChildMakers,
-} as const;
+export const childDefaultMakers = checkMakers({
+  main: {
+    activeDealSystem: makeDefaultActiveDealSystem,
+  },
+});
 
 export function hasDefaultChild<S extends SectionName, CN extends ChildName<S>>(
   sectionName: S,
@@ -37,4 +39,14 @@ export function makeDefaultChildPack<
   throw new Error(
     `There is no default child sectionPack for ${sectionName}.${childName}`
   );
+}
+
+type DefaultMakers = Partial<{
+  [SN in SectionName]: Partial<{
+    [CN in ChildName<SN>]: () => SectionPack<ChildSectionName<SN, CN>>;
+  }>;
+}>;
+
+function checkMakers<T extends DefaultMakers>(t: T) {
+  return t;
 }

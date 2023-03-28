@@ -3,12 +3,12 @@ import { SetterTesterSection } from "./TestUtils/SetterTesterSection";
 
 describe("SetterCalculations", () => {
   it("should calculate loan payments accurately", () => {
-    const dealPage = SetterTesterSection.initActiveDealPage();
-    const dealTester = dealPage.onlyChild("deal");
-    addTestLoan(dealTester);
-    addInterestOnlyLoan(dealTester);
+    const { deal, supplements } = SetterTesterSection.initActiveDealSystem();
 
-    const calculated = dealPage.get.onlyChild("calculatedVarbs");
+    addTestLoan(deal);
+    addInterestOnlyLoan(deal);
+
+    const calculated = supplements.get.onlyChild("calculatedVarbs");
 
     const expectedLoanPayment = 912.6 + 50;
     const loanPaymentMonthly =

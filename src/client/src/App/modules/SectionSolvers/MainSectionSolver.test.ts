@@ -13,9 +13,13 @@ describe("MainSectionSolver", () => {
       displayName: stringObj("Store Property"),
     });
 
-    const { feInfo } = main
-      .onlyChild("activeDealPage")
-      .onlyChild("deal")
+    const controls = main.onlyChild("editorControls");
+    const dealDbId = controls.get.valueNext("editedDealDbId");
+    const { feInfo } = feStore
+      .childByDbId({
+        childName: "dealMain",
+        dbId: dealDbId,
+      })
       .onlyChild("property").get;
 
     const property = new MainSectionSolver({

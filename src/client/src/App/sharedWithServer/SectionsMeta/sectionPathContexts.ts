@@ -13,23 +13,12 @@ import {
 } from "./sectionPathContexts/sectionPathNames";
 
 const abs = absolutePathInfo;
-function makeDealPageFocals(dealPagePath: ChildName[]) {
-  const dealPath: ChildName[] = [...dealPagePath, "deal"];
+function makeDealFocals(dealPath: ChildName[]) {
   const propertyPath: ChildName[] = [...dealPath, "property"];
   const financingPath: ChildName[] = [...dealPath, "financing"];
   const loanPath: ChildName[] = [...financingPath, "loan"];
   const mgmtPath: ChildName[] = [...dealPath, "mgmt"];
-  const userVarbListPath: ChildName[] = [...dealPagePath, "numVarbList"];
   return {
-    get numVarbListMain() {
-      return abs("numVarbList", userVarbListPath);
-    },
-    get userVarbItemMain() {
-      return abs("numVarbItem", [...userVarbListPath, "numVarbItem"]);
-    },
-    get calculatedVarbsFocal() {
-      return abs("calculatedVarbs", [...dealPagePath, "calculatedVarbs"]);
-    },
     get dealFocal() {
       return abs("deal", dealPath);
     },
@@ -80,18 +69,48 @@ function makeDealPageFocals(dealPagePath: ChildName[]) {
     },
   };
 }
+function makeDealSupplementFocals(basePath: ChildName[]) {
+  const numVarbListPath: ChildName[] = [...basePath, "numVarbList"];
+  return {
+    get dealSystemFocal() {
+      return abs("dealSystem", basePath);
+    },
+    get calculatedVarbsFocal() {
+      return abs("calculatedVarbs", [...basePath, "calculatedVarbs"]);
+    },
+    get numVarbListMain() {
+      return abs("numVarbList", numVarbListPath);
+    },
+    get numVarbItemMain() {
+      return abs("numVarbItem", [...numVarbListPath, "numVarbItem"]);
+    },
+  };
+}
 
-const activeDealPage = makeDealPageFocals(["main", "activeDealPage"]);
-const latentDealPage = makeDealPageFocals([
-  "main",
-  "latentSections",
-  "dealPage",
-]);
-const compareDealPage = makeDealPageFocals([
+function makeDealSystemFocals(systemPath: ChildName[]) {
+  return {
+    ...makeDealFocals([...systemPath, "deal"]),
+    ...makeDealSupplementFocals([...systemPath]),
+  };
+}
+
+const latentDealSystem = makeDealSystemFocals(["main", "latentDealSystem"]);
+
+const activeDealPath: ChildName[] = ["main", "feStore", "dealMain"];
+export const activeDealPathIdx = activeDealPath.length - 1;
+const activeDealSystem = {
+  ...makeDealFocals(activeDealPath),
+  ...makeDealSupplementFocals(["main", "activeDealSystem"]),
+};
+
+const comparedDealSystemPath: ChildName[] = [
   "main",
   "dealCompare",
-  "compareDealPage",
-]);
+  "comparedDealSystem",
+];
+const comparedDealSystem = makeDealSystemFocals(comparedDealSystemPath);
+const comparedDealSystemIdx = comparedDealSystemPath.length - 1;
+const comparedDealPathIdx = comparedDealSystemIdx + 1;
 const editorVarbListPath: ChildName[] = [
   "main",
   "userVarbEditor",
@@ -104,35 +123,68 @@ type ValueToCheck = Record<
 >;
 const typeCheckContexts = <V extends ValueToCheck>(v: V) => v;
 export const sectionPathContexts = typeCheckContexts({
-  default: sectionPathContext(activeDealPage),
-  activeDealPage: sectionPathContext(activeDealPage),
-  userListEditorPage: sectionPathContext(activeDealPage),
+  default: sectionPathContext(activeDealSystem),
+  activeDealSystem: sectionPathContext(activeDealSystem),
+  userListEditorPage: sectionPathContext(activeDealSystem),
   userVarbEditorPage: sectionPathContext({
-    ...activeDealPage,
+    ...activeDealSystem,
     numVarbListMain: abs("numVarbList", editorVarbListPath),
-    userVarbItemMain: abs("numVarbItem", [
-      ...editorVarbListPath,
-      "numVarbItem",
-    ]),
+    numVarbItemMain: abs("numVarbItem", [...editorVarbListPath, "numVarbItem"]),
   }),
-  compareDealPage: sectionPathContext(compareDealPage),
-  latentSection: sectionPathContext(latentDealPage),
+  latentDealSystem: sectionPathContext(latentDealSystem),
+  comparedDealSystem: sectionPathContext(comparedDealSystem),
 });
 
-export const indexesForSpecifiers = {
-  // root is included for counting the index in the path
+// type IdxSpecifiers = Partial< Record<SectionName, Partial<Record<
+// SectionPathContextName, number>>>>
+
+type IdxSpecifiers = Partial<{
+  [SN in SectionName]: Partial<{
+    [CN in SectionPathContextName]: number;
+  }>;
+}>;
+function checkIdxSpecifiers<T extends IdxSpecifiers>(idxSpecifiers: T): T {
+  for (const contextName of Obj.keys(sectionPathContexts)) {
+    const contexts = sectionPathContexts[contextName];
+    for (const pathName of Obj.keys(contexts)) {
+      const { path, sectionName } = contexts[pathName];
+      if (Obj.isKey(idxSpecifiers, sectionName)) {
+        const indexes: any = idxSpecifiers[sectionName];
+        if (Obj.isKey(indexes, contextName)) {
+          const idx = indexes[contextName];
+          if (path.length - 1 !== idx) {
+            throw new Error(
+              `Problem with ${contextName} ${pathName} ${sectionName}`
+            );
+          }
+        }
+      }
+    }
+  }
+  return idxSpecifiers;
+}
+
+export const indexesForSpecifiers = checkIdxSpecifiers({
   loan: {
-    default: 6,
-    activeDealPage: 6,
-    userListEditorPage: 6,
-    userVarbEditorPage: 6,
-    compareDealPage: 7,
-    latentSection: 7,
+    default: activeDealPathIdx + 2,
+    activeDealSystem: activeDealPathIdx + 2,
+    latentDealSystem: activeDealPathIdx + 2,
+    userListEditorPage: activeDealPathIdx + 2,
+    userVarbEditorPage: activeDealPathIdx + 2,
+    comparedDealSystem: comparedDealPathIdx + 2,
   },
-  compareDealPage: {
-    compareDealPage: 2,
+  deal: {
+    default: activeDealPathIdx,
+    activeDealSystem: activeDealPathIdx,
+    // latentDealSystem: activeDealPathIdx, // this is probably not needed
+    userListEditorPage: activeDealPathIdx,
+    userVarbEditorPage: activeDealPathIdx,
+    comparedDealSystem: comparedDealPathIdx,
   },
-} as const;
+  dealSystem: {
+    comparedDealSystem: comparedDealPathIdx - 1,
+  },
+});
 
 type SectionPathContexts = typeof sectionPathContexts;
 export type SectionPathContextName = keyof SectionPathContexts;

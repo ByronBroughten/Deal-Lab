@@ -6,9 +6,22 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
+// Make it display when things are being saved.
+// - Add variable to feStore: saveStatus
+//   - "unsaved" | "saving" | "saved"
+// - Add a saving indicator near "Deal Lab"
 
-// - Start by making it save the whole savable state whenever there are updates
-//   and sufficient time has passed
+// How do I make there be an activeDeal for the tests?
+
+// I need to let the deal editor know which
+// deal is being edited.
+
+// I'll need to do that with each of the other types of
+// components, too. At least the ones that are
+// edited singularly, not in a list.
+
+// I could add a value, editedDealID
+// I would maybe have to add that for the others, but maybe not
 
 // It'd be like, propertyMain: { items: [property], lastSaved: ..., lastUpdated: ... }
 // Then I would create a useEffect that reacts to its lastUpdated

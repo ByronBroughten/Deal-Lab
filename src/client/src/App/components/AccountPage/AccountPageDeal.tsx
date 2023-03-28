@@ -1,9 +1,11 @@
+import { unstable_batchedUpdates } from "react-dom";
 import { Text, View, ViewStyle } from "react-native";
 import { useMainSectionActor } from "../../modules/sectionActorHooks/useMainSectionActor";
 import { dealModeLabels } from "../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
 import { timeS } from "../../sharedWithServer/utils/date";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { reactNativeS } from "../../utils/reactNative";
+import { useGoToPage } from "../appWide/customHooks/useGoToPage";
 import { PlainIconBtn, PlainIconBtnProps } from "../general/PlainIconBtn";
 import { Row } from "./../general/Row";
 import { icons } from "./../Icons";
@@ -43,6 +45,7 @@ export function AccountPageDeal({
   feId: string;
   style?: ViewStyle;
 }) {
+  const goToActiveDeal = useGoToPage("activeDeal");
   const mainDeal = useMainSectionActor({
     sectionName: "deal",
     feId,
@@ -60,6 +63,12 @@ export function AccountPageDeal({
   }).format(timeS.standardToMilliSeconds(dateNumber));
 
   const dealMode = deal.valueNext("dealMode");
+  const editDeal = () => {
+    unstable_batchedUpdates(() => {
+      mainDeal.setterSections.activateDeal(deal.feId);
+      goToActiveDeal();
+    });
+  };
   return (
     <View
       style={{
@@ -129,6 +138,7 @@ export function AccountPageDeal({
               },
               left: icons.edit({ size: 20 }),
               middle: "Edit",
+              onClick: editDeal,
             }}
           />
           <PillIconBtn

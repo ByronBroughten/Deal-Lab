@@ -16,10 +16,18 @@ type ExampleMgmtProps = {
     valueSourceName: StateValue<"vacancyLossValueSource">;
   };
 };
+
 function exampleMgmt(props: ExampleMgmtProps) {
   const mgmt = PackBuilderSection.initAsOmniChild("mgmt");
   mgmt.loadSelf(makeDefaultMgmtPack());
   mgmt.updateValues(props.mgmt);
+
+  const vacancyLoss = mgmt.onlyChild("vacancyLossValue");
+  vacancyLoss.updateValues(props.vacancyLoss);
+
+  const basePay = mgmt.onlyChild("mgmtBasePayValue");
+  basePay.updateValues(props.basePay);
+
   return mgmt.makeSectionPack();
 }
 

@@ -8,7 +8,6 @@ import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { GetterSection } from "../StateGetters/GetterSection";
 import { OutVarbGetterSection } from "../StateInOutVarbs/OutVarbGetterSection";
 import { UpdaterSection } from "../StateUpdaters/UpdaterSection";
-import { Arr } from "../utils/Arr";
 import {
   SolverSectionBase,
   SolverSectionProps,
@@ -74,11 +73,6 @@ export class RemoveSolverSection<
       removeSolveShare: this.removeSolveShare,
     });
   }
-  prepForRemove() {
-    this.collectRemovedVarbIds();
-    this.collectOutVarbIdsOfRemoved();
-    this.removeOutEntitiesOfAllInEntities();
-  }
   private removeOutEntitiesOfAllInEntities() {
     const { selfAndDescendantVarbInfos } = this.get;
     for (const varbInfo of selfAndDescendantVarbInfos) {
@@ -93,12 +87,24 @@ export class RemoveSolverSection<
       ...selfAndDescendantVarbIds,
     ]);
   }
+
+  private prepForRemove() {
+    this.collectRemovedVarbIds();
+    this.collectOutVarbIdsOfRemoved();
+    this.removeOutEntitiesOfAllInEntities();
+  }
   private collectOutVarbIdsOfRemoved() {
     const { selfAndDescendantActiveOutVarbIds } = this.inOut;
     this.removeSolveShare.outVarbIdsOfRemoved = new Set([
       ...this.outVarbIdsOfRemoved,
       ...selfAndDescendantActiveOutVarbIds,
     ]);
+  }
+  private extractVarbIdsToSolveFor() {
+    this.addVarbIdsToSolveFor(...this.outVarbIdsOfRemoved);
+    this.removeVarbIdsToSolveFor(...this.removedVarbIds);
+    this.removeSolveShare.outVarbIdsOfRemoved = new Set();
+    this.removeSolveShare.removedVarbIds = new Set();
   }
   prepForRemoveAndExtractVarbIds() {
     this.prepForRemove();
@@ -111,24 +117,6 @@ export class RemoveSolverSection<
   private prepAndRemoveSelf() {
     this.prepForRemove();
     this.updater.removeSelf();
-  }
-  removeChildrenGroupsAndExtractVarbIds(childNames: ChildName<SN>[]): void {
-    this.removeChildrenGroupsAndHandleVarbIdsAndEntities(childNames);
-    this.extractVarbIdsToSolveFor();
-  }
-  removeChildrenGroupsAndHandleVarbIdsAndEntities(
-    childNames: ChildName<SN>[]
-  ): void {
-    for (const childName of childNames) {
-      this.prepAndRemoveChildren(childName);
-    }
-  }
-  removeAllChildrenAndExtractVarbIds(): void {
-    const { childNames } = this.get.meta;
-    for (const childName of childNames) {
-      this.prepAndRemoveChildren(childName);
-    }
-    this.extractVarbIdsToSolveFor();
   }
   removeChildrenAndExtractVarbIds(childName: ChildName<SN>): void {
     this.prepAndRemoveChildren(childName);
@@ -147,14 +135,5 @@ export class RemoveSolverSection<
       });
       child.prepAndRemoveSelf();
     }
-  }
-  extractVarbIdsToSolveFor() {
-    const varbIdsToSolveFor = Arr.exclude(
-      [...this.outVarbIdsOfRemoved],
-      [...this.removedVarbIds]
-    );
-    this.addVarbIdsToSolveFor(...varbIdsToSolveFor);
-    this.removeSolveShare.outVarbIdsOfRemoved = new Set();
-    this.removeSolveShare.removedVarbIds = new Set();
   }
 }

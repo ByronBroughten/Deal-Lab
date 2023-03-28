@@ -7,7 +7,9 @@ import {
   ChildName,
   FeChildInfo,
 } from "../SectionsMeta/sectionChildrenDerived/ChildName";
+import { ChildSectionName } from "../SectionsMeta/sectionChildrenDerived/ChildSectionName";
 import { ParentNameSafe } from "../SectionsMeta/sectionChildrenDerived/ParentName";
+import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
 import { FeSectionInfo } from "../SectionsMeta/SectionInfo/FeInfo";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { PackLoaderSection } from "../StatePackers.ts/PackLoaderSection";
@@ -26,7 +28,7 @@ export class DefaultFamilyAdder<
   private loadChildDefaultState<CN extends ChildName<SN>>(
     childInfo: FeChildInfo<SN, CN>
   ) {
-    let sectionPack: any;
+    let sectionPack: SectionPack<ChildSectionName<SN, CN>> | undefined;
     const { childName } = childInfo;
     const { sectionName, feInfo } = this.get.child(childInfo);
 

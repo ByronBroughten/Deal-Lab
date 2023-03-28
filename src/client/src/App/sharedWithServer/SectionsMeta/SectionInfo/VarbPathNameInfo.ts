@@ -112,7 +112,7 @@ const allVarbPathParams = {
     ...targetNames("cashFlow", "ongoing"),
     ...targetNames("cocRoi", "ongoing"),
   ]),
-  userVarbValue: varbPathParams("userVarbItemMain", "value"),
+  userVarbValue: varbPathParams("numVarbItemMain", "value"),
   upfrontRepairCost: fixedVarbPathParams(
     "Property",
     "repairCostFocal",

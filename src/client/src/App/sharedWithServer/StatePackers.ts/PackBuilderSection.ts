@@ -31,6 +31,7 @@ import {
   ChildSectionPackArrs,
   PackLoaderSection,
 } from "./PackLoaderSection";
+import { LoadChildSectionPackOptions } from "./PackLoaderSection/ChildPackLoader";
 import { PackMakerSection, SectionPackArrs } from "./PackMakerSection";
 
 export class PackBuilderSection<
@@ -164,7 +165,7 @@ export class PackBuilderSection<
     return this.youngestChild(childPackInfo.childName);
   }
   loadChild<CN extends ChildName<SN>>(
-    childPackInfo: ChildPackInfo<SN, CN>
+    childPackInfo: ChildPackInfo<SN, CN> & LoadChildSectionPackOptions
   ): void {
     this.loader.loadChildSectionPack(childPackInfo);
   }

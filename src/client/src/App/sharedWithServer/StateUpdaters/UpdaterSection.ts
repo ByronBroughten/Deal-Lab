@@ -129,12 +129,14 @@ export class UpdaterSection<
   }
   private getChildProps<CN extends ChildName<SN>>({
     childName,
-    contextIdxSpecifier = {},
+    sectionContextName = this.pickSectionContextName(childName),
+    contextPathIdxSpecifier = {},
     feId = Id.make(),
   }: {
     childName: CN;
     feId?: string;
-    contextIdxSpecifier?: ContextPathIdxSpecifier;
+    sectionContextName?: SectionPathContextName;
+    contextPathIdxSpecifier?: ContextPathIdxSpecifier;
   }): {
     feId: string;
     sectionName: ChildSectionName<SN, CN>;
@@ -143,7 +145,6 @@ export class UpdaterSection<
   } {
     const { sectionMeta } = this;
     const sectionName = sectionMeta.childType(childName);
-    const sectionContextName = this.pickSectionContextName(childName);
     const traitSpecifier = this.traitContextPathIdxSpecifier({
       childName,
       feId,
@@ -152,11 +153,11 @@ export class UpdaterSection<
     return {
       feId,
       sectionName,
-      sectionContextName: sectionContextName,
+      sectionContextName,
       contextPathIdxSpecifier: {
         ...this.get.contextPathIdxSpecifier,
         ...traitSpecifier,
-        ...contextIdxSpecifier,
+        ...contextPathIdxSpecifier,
       },
     };
   }

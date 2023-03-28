@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { mixedInfoS } from "../../../sharedWithServer/SectionsMeta/SectionInfo/MixedSectionInfo";
 import { collectionNamesFixed } from "../../../sharedWithServer/SectionsMeta/SectionInfo/VarbPathNameInfo";
 import { ValueInEntityInfo } from "../../../sharedWithServer/SectionsMeta/values/StateValue/valuesShared/entities";
-import { useGetterSectionOnlyOne } from "../../../sharedWithServer/stateClassHooks/useGetterSection";
+import { useGetterMainOnlyChild } from "../../../sharedWithServer/stateClassHooks/useMain";
 import {
   ValueCustomVarbPathInfo,
   varbPathOptionArr,
@@ -25,7 +25,7 @@ export function VarbSelectorAllCollections({
   onVarbSelect,
   nameFilter,
 }: Props) {
-  const latent = useGetterSectionOnlyOne("latentSections");
+  const latent = useGetterMainOnlyChild("latentDealSystem");
   const collectionProps: CollectionProps = [];
 
   const fixedCollections = useFixedCollections();

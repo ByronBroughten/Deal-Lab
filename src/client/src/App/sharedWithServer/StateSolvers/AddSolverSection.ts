@@ -3,7 +3,10 @@ import { ChildSectionName } from "../SectionsMeta/sectionChildrenDerived/ChildSe
 import { ChildArrPack } from "../SectionsMeta/sectionChildrenDerived/ChildSectionPack";
 import { ParentNameSafe } from "../SectionsMeta/sectionChildrenDerived/ParentName";
 import { FeSectionInfo } from "../SectionsMeta/SectionInfo/FeInfo";
-import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
+import {
+  SectionNameByType,
+  sectionNameS,
+} from "../SectionsMeta/SectionNameByType";
 import { GetterSection } from "../StateGetters/GetterSection";
 import { GetterSections } from "../StateGetters/GetterSections";
 import { InEntityGetterSection } from "../StateGetters/InEntityGetterSection";
@@ -15,11 +18,11 @@ import {
 import { DefaultFamilyAdder } from "../StateUpdaters/DefaultFamilyAdder";
 import { AddChildOptions } from "../StateUpdaters/UpdaterSection";
 import { Obj } from "../utils/Obj";
+import { SolverAdderPrepSections } from "./SolverAdderPrepSections";
 import {
   SolverSectionBase,
   SolverSectionProps,
 } from "./SolverBases/SolverSectionBase";
-import { SolverVarb } from "./SolverVarb";
 
 type AddSolverShare = { addedVarbIds: Set<string> };
 interface AddSolverSectionProps<SN extends SectionNameByType>
@@ -37,6 +40,9 @@ export class AddSolverSection<
   }
   get get() {
     return new GetterSection(this.getterSectionProps);
+  }
+  get prepperSections() {
+    return new SolverAdderPrepSections(this.solverSectionsProps);
   }
   get inEntitySection() {
     return new InEntityGetterSection(this.getterSectionProps);
@@ -112,7 +118,6 @@ export class AddSolverSection<
     const child = this.youngestChild(packInfo.childName);
     child.finalizeAddedThis();
   }
-
   loadChildrenAndFinalize<CN extends ChildName<SN>>(
     props: ChildArrPack<SN, CN>
   ): void {
@@ -142,9 +147,16 @@ export class AddSolverSection<
     this.finalizeAllAdds();
   }
   private finalizeAddedThis() {
-    const { selfAndDescendantVarbIds } = this.get;
+    const { selfAndDescendantVarbIds, sectionName, feId } = this.get;
     this.addToAddedVarbIds(...selfAndDescendantVarbIds);
+    if (sectionNameS.is(sectionName, "dealSupports")) {
+      this.prepperSections.applyVariablesToDealPage({
+        sectionName,
+        feId,
+      });
+    }
   }
+
   private addToAddedVarbIds(...varbIds: string[]): void {
     this.addSolveShare.addedVarbIds = new Set([
       ...this.addedVarbIds,
@@ -161,13 +173,6 @@ export class AddSolverSection<
     this.addSolveShare.addedVarbIds = new Set();
   }
   private addAppWideMissingOutEntities() {
-    const { appWideVarbInfosWithInEntities } = this.inEntitySection;
-    for (const feVarbInfo of appWideVarbInfosWithInEntities) {
-      const solverVarb = new SolverVarb({
-        ...this.solverSectionsProps,
-        ...feVarbInfo,
-      });
-      solverVarb.addOutEntitiesFromAllInEntities();
-    }
+    // removed
   }
 }

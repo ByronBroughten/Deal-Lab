@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { ValueInEntityInfo } from "../../../../sharedWithServer/SectionsMeta/values/StateValue/valuesShared/entities";
-import { useGetterSectionOnlyOne } from "../../../../sharedWithServer/stateClassHooks/useGetterSection";
+import { useGetterMain } from "../../../../sharedWithServer/stateClassHooks/useMain";
 import theme from "../../../../theme/Theme";
 import { VarbSelectorRow } from "./VarbSelectorRow";
 
@@ -16,7 +16,8 @@ export function VarbSelectorCollection({
   rowInfos,
   onVarbSelect,
 }: Props) {
-  const latent = useGetterSectionOnlyOne("latentSections");
+  const main = useGetterMain();
+  const latent = main.onlyChild("latentDealSystem");
   return (
     <Styled className="VarbSelectorRows-root">
       {collectionName && (

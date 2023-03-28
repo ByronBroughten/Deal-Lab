@@ -28,6 +28,12 @@ function checkAllSectionChildren<CS extends GenericChildSections>(
   return allSectionChildren;
 }
 
+const dealSupplements = {
+  calculatedVarbs: "calculatedVarbs",
+  numVarbList: "numVarbList",
+  boolVarbList: "boolVarbList",
+} as const;
+
 export const allSectionChildren = checkAllSectionChildren({
   ...defaults,
   root: sectionChildren({
@@ -35,7 +41,6 @@ export const allSectionChildren = checkAllSectionChildren({
     main: "main",
   }),
   omniParent: relOmniParentChildren,
-
   main: sectionChildren({
     // This has all the saved user data
     feStore: "feStore",
@@ -43,13 +48,17 @@ export const allSectionChildren = checkAllSectionChildren({
     // These are saved in local storage
     variablesMenu: "variablesMenu",
     mainDealMenu: "mainDealMenu",
+    editorControls: "editorControls",
 
     // These are not saved
-    latentSections: "latentSections",
-    activeSections: "activeSections",
+    latentDealSystem: "dealSystem",
+    // activeDealSupplements: "dealSupplements",
+    activeDealSystem: "dealSystem",
+
+    // I would like to save this at some point
+    dealCompare: "compareSection",
 
     // these will be eliminated
-    activeDealPage: "dealPage",
     userVarbEditor: "userVarbEditor",
     userListEditor: "userListEditor",
   }),
@@ -64,25 +73,19 @@ export const allSectionChildren = checkAllSectionChildren({
     stripeInfoPrivate: "stripeInfoPrivate",
     stripeSubscription: "stripeSubscription",
   }),
-  dealPage: sectionChildren({
+  dealSystem: sectionChildren({
     deal: "deal",
     calculatedVarbs: "calculatedVarbs",
     numVarbList: "numVarbList",
+    boolVarbList: "boolVarbList",
   }),
-  latentSections: sectionChildren({
-    dealPage: "dealPage",
-    numVarbList: "numVarbList",
-  }),
-  activeSections: sectionChildren({
-    calculatedVarbs: "calculatedVarbs",
-    numVarbList: "numVarbList",
-  }),
+  dealSupplements: sectionChildren(dealSupplements),
   userVarbEditor: sectionChildren({
     numVarbListMain: "numVarbList",
   }),
   userListEditor: sectionChildren(listChildren),
   compareSection: sectionChildren({
-    compareDealPage: "dealPage",
+    comparedDealSystem: "dealSystem",
     compareValue: "compareValue",
   }),
   compareTable: sectionChildren({

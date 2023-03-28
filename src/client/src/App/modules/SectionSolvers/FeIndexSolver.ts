@@ -72,13 +72,13 @@ export class FeIndexSolver<
     });
   }
   removeItem(dbId: string) {
-    this.indexSection.removeChildByDbId({
+    this.indexSection.removeChildByDbIdAndSolve({
       childName: this.itemName,
       dbId,
     });
   }
   addItem(sectionPack: SectionPack<ChildSectionName<"feStore", CN>>): void {
-    this.indexSection.loadChild({
+    this.indexSection.loadChildAndSolve({
       childName: this.itemName,
       sectionPack: sectionPack,
     });
@@ -88,6 +88,6 @@ export class FeIndexSolver<
       childName: this.itemName,
       dbId: sectionPack.dbId,
     });
-    child.loadSelf(sectionPack);
+    child.loadSelfAndSolve(sectionPack);
   }
 }

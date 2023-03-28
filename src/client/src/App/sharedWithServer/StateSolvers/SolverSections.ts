@@ -5,7 +5,6 @@ import { FeSectionInfo, FeVarbInfo } from "../SectionsMeta/SectionInfo/FeInfo";
 import { VarbInfoMixed } from "../SectionsMeta/SectionInfo/MixedSectionInfo";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
-import { GetterList } from "../StateGetters/GetterList";
 import { GetterSections } from "../StateGetters/GetterSections";
 import { GetterVarb } from "../StateGetters/GetterVarb";
 import { PackBuilderSections } from "../StatePackers.ts/PackBuilderSections";
@@ -13,6 +12,8 @@ import { StateSections } from "../StateSections/StateSections";
 import { Arr } from "../utils/Arr";
 import { OutEntityGetterVarb } from "./../StateInOutVarbs/OutEntityGetterVarb";
 import { SolverSectionsBase } from "./SolverBases/SolverSectionsBase";
+import { SolverPrepSection } from "./SolverPrepSection";
+import { SolverPrepSections } from "./SolverPrepSections";
 import { SolverSection } from "./SolverSection";
 import tsort from "./SolverSections/tsort/tsort";
 import { SolverVarb } from "./SolverVarb";
@@ -23,45 +24,13 @@ export class SolverSections extends SolverSectionsBase {
   get getterSections() {
     return new GetterSections(this.getterSectionsBase.getterSectionsProps);
   }
-  private getterList<SN extends SectionName>(sectionName: SN): GetterList<SN> {
-    return new GetterList({
-      ...this.getterSectionsBase,
-      sectionName,
-    });
-  }
   get builderSections() {
     return new PackBuilderSections(this.getterSectionsBase.getterSectionsProps);
   }
-  applyVariablesToDealPages() {
-    const { feIds } = this.getterList("dealPage");
-    const userVarbPacks = this.getSavedUserVarbPacks();
-    for (const feId of feIds) {
-      this.applyVarbPacksToDealPage(feId, userVarbPacks);
-    }
+  get prepperSections() {
+    return new SolverPrepSections(this.solverSectionsProps);
   }
-  applyVariablesToDealPage(feId: string) {
-    const userVarbPacks = this.getSavedUserVarbPacks();
-    this.applyVarbPacksToDealPage(feId, userVarbPacks);
-  }
-  private getSavedUserVarbPacks(): SectionPack<"numVarbList">[] {
-    const feStore = this.oneAndOnly("feStore");
-    const userVarbLists = feStore.get.children("numVarbListMain");
-    return userVarbLists.map((list) => list.packMaker.makeSectionPack());
-  }
-  private applyVarbPacksToDealPage(
-    feId: string,
-    userVarbPacks: SectionPack<"numVarbList">[]
-  ): void {
-    const dealPage = this.solverSection({
-      sectionName: "dealPage",
-      feId,
-    });
-    dealPage.replaceChildPackArrsAndSolve({
-      numVarbList: userVarbPacks,
-    });
-  }
-
-  oneAndOnly<SN extends SectionName>(sectionName: SN) {
+  oneAndOnly<SN extends SectionName>(sectionName: SN): SolverSection<SN> {
     const { feInfo } = this.getterSections.oneAndOnly(sectionName);
     return this.solverSection(feInfo);
   }
@@ -134,6 +103,12 @@ export class SolverSections extends SolverSectionsBase {
     const feVarbInfo = GetterVarb.varbIdToVarbInfo(varbId);
     return this.solverVarb(feVarbInfo);
   }
+  prepperSection<S extends SectionName>(feInfo: FeSectionInfo<S>) {
+    return new SolverPrepSection({
+      ...this.solverSectionsProps,
+      ...feInfo,
+    });
+  }
   solverSection<S extends SectionName>(
     feInfo: FeSectionInfo<S>
   ): SolverSection<S> {
@@ -148,9 +123,22 @@ export class SolverSections extends SolverSectionsBase {
       ...feVarbInfo,
     });
   }
+  applyVariablesToDealPage(
+    feInfo: FeSectionInfo<SectionNameByType<"dealSupports">>
+  ): void {
+    this.prepperSections.applyVariablesToDealPage(feInfo);
+    this.solve();
+  }
+  applyVariablesToDealPages(): void {
+    this.prepperSections.applyVariablesToDealPages();
+    this.solve();
+  }
   static initSectionsFromDefaultMain(): StateSections {
     const defaultMainPack = defaultMaker.makeSectionPack("main");
-    return this.initSolvedSectionsFromMainPack(defaultMainPack);
+    const solver = this.initSolverFromMainPack(defaultMainPack);
+    const { feId } = solver.onlyChild("feStore").youngestChild("dealMain").get;
+    solver.solverSections.activateDealAndSolve(feId);
+    return solver.sectionsShare.sections;
   }
   static initRoot(): SolverSection<"root"> {
     const sections = StateSections.initWithRoot();
@@ -162,32 +150,11 @@ export class SolverSections extends SolverSectionsBase {
       }),
     });
   }
-  static initMainFromActiveDealPack(
-    sectionPack: SectionPack<"deal">
-  ): SolverSection<"main"> {
-    const solver = this.initRoot();
-    const mainSolver = solver.addAndGetChild("main");
-    const activeDealPage = mainSolver.onlyChild("activeDealPage");
-    const activeDeal = activeDealPage.onlyChild("deal");
-    activeDeal.loadSelf(sectionPack);
-    return mainSolver;
-  }
-  static initFromFeUserPack(
-    sectionPack: SectionPack<"feStore">
-  ): SolverSection<"feStore"> {
-    const solver = this.initRoot();
-    const mainSolver = solver.addAndGetChild("main");
-    mainSolver.loadChild({
-      childName: "feStore",
-      sectionPack,
-    });
-    return mainSolver.onlyChild("feStore");
-  }
   static initSolverFromMainPack(
     sectionPack: SectionPack<"main">
   ): SolverSection<"main"> {
     const solver = this.initRoot();
-    solver.loadChild({
+    solver.loadChildAndSolve({
       childName: "main",
       sectionPack,
     });
@@ -198,5 +165,16 @@ export class SolverSections extends SolverSectionsBase {
   ): StateSections {
     const main = this.initSolverFromMainPack(sectionPack);
     return main.sectionsShare.sections;
+  }
+  getActiveDeal(): SolverSection<"deal"> {
+    const deal = this.prepperSections.getActiveDeal();
+    return this.solverSection(deal.get.feInfo);
+  }
+  hasActiveDeal(): boolean {
+    return this.prepperSections.hasActiveDeal();
+  }
+  activateDealAndSolve(feId: string): void {
+    this.prepperSections.activateDeal(feId);
+    this.solve();
   }
 }

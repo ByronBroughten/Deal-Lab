@@ -1,15 +1,15 @@
 import { unstable_batchedUpdates } from "react-dom";
 import { useToggleView } from "../../modules/customHooks/useToggleView";
 import { inEntityValueInfo } from "../../sharedWithServer/SectionsMeta/values/StateValue/InEntityValue";
-import { useSetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useSetterSection";
+import { useSetterMain } from "../../sharedWithServer/stateClassHooks/useMain";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { HollowBtn } from "../appWide/HollowBtn";
 import { AllVarbsModal } from "../inputs/NumObjEditor/AllVarbsModal";
 import { OnVarbSelect } from "../inputs/NumObjEditor/NumObjVarbSelector/VarbSelectorCollection";
 
 export function DealCompareValueMenu() {
-  const feStore = useSetterSectionOnlyOne("feStore");
-  const dealCompare = feStore.onlyChild("dealCompare");
+  const main = useSetterMain();
+  const dealCompare = main.onlyChild("dealCompare");
   const { varbsModalIsOpen, closeVarbsModal, openVarbsModal } =
     useToggleView("varbsModal");
 

@@ -1,17 +1,20 @@
 import { FeRouteName } from "../../../Constants/feRoutes";
 import { StateValue } from "../../../sharedWithServer/SectionsMeta/values/StateValue";
-import { useGetterSectionOnlyOne } from "../../../sharedWithServer/stateClassHooks/useGetterSection";
+import { useSetterMain } from "../../../sharedWithServer/stateClassHooks/useMain";
 import { useGoToPage } from "../../appWide/customHooks/useGoToPage";
 
 export type ActiveDealSectionName = "property" | "financing" | "mgmt";
 export function useActiveDealPage() {
-  const main = useGetterSectionOnlyOne("main");
-  const dealPage = main.onlyChild("activeDealPage");
-  const deal = dealPage.onlyChild("deal");
-  const calcVarbs = dealPage.onlyChild("calculatedVarbs");
+  const main = useSetterMain();
+  const feStore = main.get.onlyChild("feStore");
+
+  const deal = main.sections.getActiveDeal().get;
+  const system = main.get.onlyChild("activeDealSystem");
+  const calcVarbs = system.onlyChild("calculatedVarbs");
   return {
     deal,
     calcVarbs,
+    feStore,
   };
 }
 

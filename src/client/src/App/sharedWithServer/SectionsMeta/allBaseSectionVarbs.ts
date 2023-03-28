@@ -39,6 +39,9 @@ const varbs = baseVarbsS;
 export function makeAllBaseSectionVarbs() {
   return checkAllBaseSectionVarbs({
     ...defaults,
+    editorControls: baseSectionVarbs({
+      editedDealDbId: baseVarb("string"),
+    }),
     mainDealMenu: baseSectionVarbs({
       dealNameFilter: baseVarb("string"),
       dealModeFilter: baseVarb("dealMode"),
@@ -305,8 +308,7 @@ export function makeAllBaseSectionVarbs() {
       valuePercent: baseVarb("numObj", percent),
       valueDecimal: baseVarb("numObj", decimal),
     }),
-
-    dealPage: baseSectionVarbs({
+    outputSection: baseSectionVarbs({
       showOutputs: baseVarb("boolean"),
     }),
     deal: baseSectionVarbs({
@@ -380,16 +382,9 @@ export function makeAllBaseSectionVarbs() {
       mgmtCompletionStatus: baseVarb("completionStatus"),
       dealCompletionStatus: baseVarb("completionStatus"),
     }),
-    feUserInfo: baseSectionVarbs({
-      authStatus: baseVarb("authStatus"),
-      userDataStatus: baseVarb("userDataStatus"),
-      userDataFetchTryCount: baseVarb("number"),
-      labSubscription: baseVarb("labSubscription"),
-      ...baseVarbs("string", ["email", "userName"] as const),
-      labSubscriptionExp: baseVarb("number"),
-    }),
     feStore: baseSectionVarbs({
       authStatus: baseVarb("authStatus"),
+      saveStatus: baseVarb("saveStatus"),
       userDataStatus: baseVarb("userDataStatus"),
       userDataFetchTryCount: baseVarb("number"),
       labSubscription: baseVarb("labSubscription"),

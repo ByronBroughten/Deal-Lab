@@ -5,6 +5,7 @@ import {
   GetterSectionsRequiredProps,
 } from "../../StateGetters/Bases/GetterSectionsBase";
 import { GetterVarb } from "../../StateGetters/GetterVarb";
+import { Arr } from "../../utils/Arr";
 
 export type SolveShare = { varbIdsToSolveFor: Set<string> };
 export type HasSolveShare = {
@@ -56,5 +57,10 @@ export class SolverSectionsBase {
       ...this.varbIdsToSolveFor,
       ...varbIds,
     ]);
+  }
+  removeVarbIdsToSolveFor(...varbIds: string[]): void {
+    this.solveShare.varbIdsToSolveFor = new Set(
+      Arr.exclude([...this.varbIdsToSolveFor], varbIds)
+    );
   }
 }

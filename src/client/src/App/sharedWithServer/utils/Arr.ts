@@ -12,6 +12,16 @@ function lastOrThrow<V extends any>(arr: readonly V[]): V {
 }
 
 export const Arr = {
+  getOnlyOne<T extends any>(arr: T[], arrayOf?: string): T {
+    const strArrayOf = arrayOf ?? "items";
+    if (arr.length < 1) {
+      throw new Error(`The array does not have any ${strArrayOf}`);
+    } else if (arr.length > 1) {
+      throw new Error(`The array has too many ${strArrayOf}`);
+    } else {
+      return arr[0];
+    }
+  },
   insert<V>(arr: readonly V[], value: V, idx: number): V[] {
     const nextArr = [...arr];
     nextArr.splice(idx, 0, value);

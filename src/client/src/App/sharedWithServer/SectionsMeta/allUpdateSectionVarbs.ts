@@ -450,7 +450,7 @@ function makeAllUpdateSections() {
       }),
     }),
     ...updateSectionProp("calculatedVarbs", calculatedUpdateVarbs()),
-    ...updateSectionProp("dealPage", {
+    ...updateSectionProp("outputSection", {
       showOutputs: updateVarb("boolean", {
         initValue: false,
       }),

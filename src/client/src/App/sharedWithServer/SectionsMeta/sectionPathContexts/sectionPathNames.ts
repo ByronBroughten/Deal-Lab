@@ -8,6 +8,7 @@ const sectionPathNameToSn = checkPathTypeToSectionName({
   // if any of these sectionPathNames are to be removed or invalidated
   // after deploy, then the sectionInfos stored in the db that point
   // to those sectionPathNames need to be addressed.
+  dealSystemFocal: "dealSystem",
   dealFocal: "deal",
 
   propertyFocal: "property",
@@ -29,7 +30,7 @@ const sectionPathNameToSn = checkPathTypeToSectionName({
 
   calculatedVarbsFocal: "calculatedVarbs",
   numVarbListMain: "numVarbList",
-  userVarbItemMain: "numVarbItem",
+  numVarbItemMain: "numVarbItem",
 });
 
 export type AbsolutePathNode = {

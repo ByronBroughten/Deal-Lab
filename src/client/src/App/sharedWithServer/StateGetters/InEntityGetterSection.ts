@@ -3,6 +3,7 @@ import { SectionName } from "../SectionsMeta/SectionName";
 import { GetterSectionBase } from "./Bases/GetterSectionBase";
 import { GetterSection } from "./GetterSection";
 import { GetterSections } from "./GetterSections";
+import { InEntityGetterSections } from "./InEntityGetterSections";
 import { InEntityGetterVarb } from "./InEntityGetterVarb";
 
 export class InEntityGetterSection<
@@ -13,6 +14,9 @@ export class InEntityGetterSection<
   }
   get getterSections() {
     return new GetterSections(this.getterSectionsProps);
+  }
+  get inEntitySections() {
+    return new InEntityGetterSections(this.getterSectionsProps);
   }
   inEntityVarb(feVarbInfo: FeVarbInfo): InEntityGetterVarb {
     return new InEntityGetterVarb({
@@ -45,9 +49,5 @@ export class InEntityGetterSection<
     return this.get.varbArr.map(({ feVarbInfo }) =>
       this.inEntityVarb(feVarbInfo)
     );
-  }
-  get appWideVarbInfosWithInEntities() {
-    const root = this.inEntitySection(this.getterSections.root);
-    return root.selfAndDescendantVarbInfosWithEntities;
   }
 }

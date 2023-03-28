@@ -1,7 +1,7 @@
 import { unstable_batchedUpdates } from "react-dom";
 import { View } from "react-native";
 import styled from "styled-components";
-import { useGetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useGetterSection";
+import { useGetterMain } from "../../sharedWithServer/stateClassHooks/useMain";
 import { useSetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useSetterSection";
 import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection";
 import { nativeTheme } from "../../theme/nativeTheme";
@@ -9,10 +9,11 @@ import { PlainIconBtn } from "../general/PlainIconBtn";
 import { MaterialStringEditor } from "../inputs/MaterialStringEditor";
 
 function useGetFilteredDeals(): GetterSection<"deal">[] {
-  const feStore = useGetterSectionOnlyOne("feStore");
+  const main = useGetterMain();
+  const feStore = main.onlyChild("feStore");
   const deals = feStore.children("dealMain");
 
-  const compareSection = feStore.onlyChild("dealCompare");
+  const compareSection = main.onlyChild("dealCompare");
   const nameFilter = compareSection.valueNext("dealNameFilter");
   const nameFilteredDeals = deals.filter((deal) =>
     deal
@@ -21,9 +22,9 @@ function useGetFilteredDeals(): GetterSection<"deal">[] {
       .includes(nameFilter.toLowerCase())
   );
 
-  const dealPages = compareSection.children("compareDealPage");
-  const comparedDeals = dealPages.map((page) => page.onlyChild("deal"));
-  const comparedDbIds = comparedDeals.map(({ dbId }) => dbId);
+  const dealSystems = compareSection.children("comparedDealSystem");
+  const comparedSystems = dealSystems.map((page) => page.onlyChild("deal"));
+  const comparedDbIds = comparedSystems.map(({ dbId }) => dbId);
   return nameFilteredDeals.filter((deal) => !comparedDbIds.includes(deal.dbId));
 }
 
@@ -76,9 +77,9 @@ export function DealCompareDealMenu({ closeMenu }: Props) {
                 }}
                 onClick={() => {
                   unstable_batchedUpdates(() => {
-                    const dealPage =
-                      compareSection.addAndGetChild("compareDealPage");
-                    const dealToCompare = dealPage.onlyChild("deal");
+                    const dealSystem =
+                      compareSection.addAndGetChild("comparedDealSystem");
+                    const dealToCompare = dealSystem.onlyChild("deal");
                     dealToCompare.loadSelfSectionPack(
                       deal.packMaker.makeSectionPack()
                     );

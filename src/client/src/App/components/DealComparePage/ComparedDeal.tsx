@@ -9,13 +9,13 @@ type Props = {
 };
 export function ComparedDeal({ feId, style }: Props) {
   const compareSection = useGetterSectionOnlyOne("compareSection");
-  const dealPage = compareSection.child({
-    childName: "compareDealPage",
+  const dealSystem = compareSection.child({
+    childName: "comparedDealSystem",
     feId,
   });
 
   const compareValues = compareSection.children("compareValue");
-  const deal = dealPage.onlyChild("deal");
+  const deal = dealSystem.onlyChild("deal");
   return (
     <View
       style={{
@@ -29,7 +29,7 @@ export function ComparedDeal({ feId, style }: Props) {
       }}
     >
       <View style={{ height: nativeTheme.comparedDealHead.height }}>
-        <CompareDealRmBtn {...dealPage.feInfo} />
+        <CompareDealRmBtn {...dealSystem.feInfo} />
         <View
           style={{
             flex: 1,
@@ -54,7 +54,7 @@ export function ComparedDeal({ feId, style }: Props) {
       </View>
       {compareValues.map((compareValue) => {
         const info = compareValue.valueEntityInfo();
-        const varb = dealPage.varbByFocalMixed(info);
+        const varb = dealSystem.varbByFocalMixed(info);
         return (
           <View
             key={compareValue.feId}

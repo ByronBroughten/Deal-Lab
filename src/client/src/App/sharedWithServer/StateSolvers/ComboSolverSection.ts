@@ -1,11 +1,6 @@
-import { ChildName } from "../SectionsMeta/sectionChildrenDerived/ChildName";
 import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
-import {
-  ChildSectionPackArrs,
-  PackLoaderSection,
-} from "../StatePackers.ts/PackLoaderSection";
-import { Obj } from "../utils/Obj";
+import { PackLoaderSection } from "../StatePackers.ts/PackLoaderSection";
 import { GetterSection } from "./../StateGetters/GetterSection";
 import { AddSolverSection } from "./AddSolverSection";
 import { RemoveSolverSection } from "./RemoveSolverSection";
@@ -30,13 +25,6 @@ export class ComboSolverSection<
     this.remover.prepForRemoveAndExtractVarbIds();
     this.loader.loadSelfSectionPack(sectionPack);
     this.adder.finalizeAddedThisAndAll();
-  }
-  replaceChildPackArrsAndFinalize<CN extends ChildName<SN>>(
-    childPackArrs: ChildSectionPackArrs<SN, CN>
-  ): void {
-    const childNames = Obj.keys(childPackArrs);
-    this.remover.removeChildrenGroupsAndExtractVarbIds(childNames);
-    this.adder.loadChildArrsAndFinalize(childPackArrs);
   }
   resetToDefaultAndExtractIds(): void {
     const { feInfo, feId, idx, dbId } = this.get;

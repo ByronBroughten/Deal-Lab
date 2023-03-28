@@ -1,4 +1,3 @@
-import { pick } from "lodash";
 import { ChildName } from "../../SectionsMeta/sectionChildrenDerived/ChildName";
 import { ChildSectionName } from "../../SectionsMeta/sectionChildrenDerived/ChildSectionName";
 import { SectionPack } from "../../SectionsMeta/sectionChildrenDerived/SectionPack";
@@ -7,6 +6,7 @@ import {
   SpChildInfo,
 } from "../../SectionsMeta/sectionChildrenDerived/SectionPack/RawSection";
 import { SectionNameByType } from "../../SectionsMeta/SectionNameByType";
+import { SectionPathContextName } from "../../SectionsMeta/sectionPathContexts";
 import {
   GetterSectionBase,
   GetterSectionProps,
@@ -32,7 +32,7 @@ export class ChildPackLoader<
   CT extends ChildSectionName<SN, CN> = ChildSectionName<SN, CN>
 > extends GetterSectionBase<SN> {
   sectionPack: SectionPack;
-  spChildInfo: SpChildInfo<SN, CN> & { idx?: number };
+  spChildInfo: SpChildInfo<SN, CN> & LoadChildSectionPackOptions;
   updaterSection: UpdaterSection<SN>;
   get: GetterSection<SN>;
   constructor({
@@ -53,14 +53,15 @@ export class ChildPackLoader<
     return this.get.meta.childType(this.childName) as CT;
   }
   loadChild() {
-    const addProps = {
-      ...pick(this.childRawSection, ["dbId", "sectionValues"]),
-      idx: this.spChildInfo.idx,
+    const addProps: AddChildOptions<any> = {
+      ...Obj.strictPick(this.childRawSection, ["dbId", "sectionValues"]),
+      ...Obj.strictPick(this.spChildInfo, [
+        "idx",
+        "sectionContextName",
+        "feId",
+      ]),
     };
-    this.updaterSection.addChild(
-      this.childName,
-      addProps as AddChildOptions<any>
-    );
+    this.updaterSection.addChild(this.childName, addProps);
     const { feId } = this.get.youngestChild(this.childName);
     this.loadChildChildren(feId);
   }
@@ -130,3 +131,9 @@ export class ChildPackLoader<
     });
   }
 }
+
+export type LoadChildSectionPackOptions = {
+  idx?: number;
+  sectionContextName?: SectionPathContextName;
+  feId?: string;
+};
