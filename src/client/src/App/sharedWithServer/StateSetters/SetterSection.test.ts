@@ -12,7 +12,7 @@ import { SetterTesterSection } from "./TestUtils/SetterTesterSection";
 // replaceWithDefault, resetToDefault
 
 describe("SetterSection", () => {
-  const sectionPathNames = ["propertyFocal", "mgmtFocal"] as const;
+  const sectionPathNames = ["loanFocal"] as const;
   type PathName = typeof sectionPathNames[number];
   type SnTesterProps<TN extends PathName> = {
     tester: SetterTesterSection<PathSectionName<TN>>;

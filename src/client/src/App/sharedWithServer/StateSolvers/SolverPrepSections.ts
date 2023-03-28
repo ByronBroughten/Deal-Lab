@@ -11,7 +11,6 @@ import {
 import { StoreName } from "../SectionsMeta/sectionStores";
 import { GetterSections } from "../StateGetters/GetterSections";
 import { InEntityGetterSections } from "../StateGetters/InEntityGetterSections";
-import { Arr } from "../utils/Arr";
 import { SolverAdderPrepSections } from "./SolverAdderPrepSections";
 import { SolverSectionsBase } from "./SolverBases/SolverSectionsBase";
 import { SolverPrepSection } from "./SolverPrepSection";
@@ -61,30 +60,16 @@ export class SolverPrepSections extends SolverSectionsBase {
   }
 
   getActiveDeal(): SolverPrepSection<"deal"> {
-    const deals = this.getActiveDeals();
-    return Arr.getOnlyOne(deals, "activeDeals");
+    const { feInfo } = this.getterSections.getActiveDeal();
+    return this.prepperSection(feInfo);
   }
   hasActiveDeal(): boolean {
-    const deals = this.getActiveDeals();
-    if (deals.length === 1) {
-      return true;
-    } else if (deals.length === 0) {
-      return false;
-    } else {
-      throw new Error(
-        "There should only be one active deal at a time, but there are more"
-      );
-    }
+    return this.getterSections.hasActiveDeal();
   }
   private getActiveDeals(): SolverPrepSection<"deal">[] {
-    const feStore = this.oneAndOnly("feStore");
-    const deals = feStore.children("dealMain");
-    return deals.filter((deal) => {
-      const { sectionContextName } = deal.get;
-      if (sectionContextName === "activeDealSystem") {
-        return true;
-      } else return false;
-    });
+    return this.getterSections
+      .getActiveDeals()
+      .map(({ feInfo }) => this.prepperSection(feInfo));
   }
 
   activateDeal(feId: string): void {

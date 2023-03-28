@@ -16,6 +16,7 @@ import {
 } from "../../SectionsMeta/sectionPathContexts/sectionPathNames";
 import { GetterList } from "../../StateGetters/GetterList";
 import { GetterSection } from "../../StateGetters/GetterSection";
+import { GetterSections } from "../../StateGetters/GetterSections";
 import { GetterVarb } from "../../StateGetters/GetterVarb";
 import { SolverSections } from "../../StateSolvers/SolverSections";
 import { SetterSection } from "../SetterSection";
@@ -24,6 +25,11 @@ import { SectionTesterBase } from "./Bases/SectionTesterBase";
 export class SetterTesterSection<
   SN extends SectionName
 > extends SectionTesterBase<SN> {
+  get getterSections() {
+    return new GetterSections({
+      sectionsShare: { sections: this.sectionTesterProps.state.sections },
+    });
+  }
   onlyChild<CN extends ChildName<SN>>(
     childName: CN
   ): SetterTesterSection<ChildSectionName<SN, CN>> {
@@ -66,15 +72,8 @@ export class SetterTesterSection<
     supplements: SetterTesterSection<"dealSystem">;
   } {
     const main = this.initMain();
-    const feStore = main.onlyChild("feStore");
-    const dbId = main
-      .onlyChild("editorControls")
-      .get.valueNext("editedDealDbId");
-
-    const deal = feStore.childByDbId({
-      childName: "dealMain",
-      dbId,
-    });
+    const { feInfo } = main.getterSections.getActiveDeal();
+    const deal = main.setterTester(feInfo);
     const supplements = main.onlyChild("activeDealSystem");
     return {
       deal,

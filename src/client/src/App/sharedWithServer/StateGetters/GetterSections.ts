@@ -8,6 +8,7 @@ import {
 } from "../SectionsMeta/SectionInfo/MixedSectionInfo";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
+import { Arr } from "../utils/Arr";
 import {
   GetterSectionsBase,
   GetterSectionsRequiredProps,
@@ -178,5 +179,31 @@ export class GetterSections extends GetterSectionsBase {
       return section.meta.isVarbName(varbName);
     }
     return false;
+  }
+  getActiveDeal(): GetterSection<"deal"> {
+    const deals = this.getActiveDeals();
+    return Arr.getOnlyOne(deals, "activeDeals");
+  }
+  hasActiveDeal(): boolean {
+    const deals = this.getActiveDeals();
+    if (deals.length === 1) {
+      return true;
+    } else if (deals.length === 0) {
+      return false;
+    } else {
+      throw new Error(
+        "There should only be one active deal at a time, but there are more"
+      );
+    }
+  }
+  getActiveDeals(): GetterSection<"deal">[] {
+    const feStore = this.oneAndOnly("feStore");
+    const deals = feStore.children("dealMain");
+    return deals.filter((deal) => {
+      const { sectionContextName } = deal;
+      if (sectionContextName === "activeDealSystem") {
+        return true;
+      } else return false;
+    });
   }
 }

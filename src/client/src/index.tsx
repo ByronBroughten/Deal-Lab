@@ -6,56 +6,27 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
+// - Make tests pass
+
+// - mgmt completion status isn't quite working right.
+//   it's requiring the editor, when the valueSourceName should be enough
+
 // Make it display when things are being saved.
 // - Add variable to feStore: saveStatus
 //   - "unsaved" | "saving" | "saved"
 // - Add a saving indicator near "Deal Lab"
 
-// How do I make there be an activeDeal for the tests?
+// - When editing all the other components, just use latent sections.
+//   - You need only populate the editor with the sections, and it will work
+//   - You can just remove everything that has to do with saving.
 
-// I need to let the deal editor know which
-// deal is being edited.
+// - Implement "lastUpdated"
+//   - Should all sections have this?
 
-// I'll need to do that with each of the other types of
-// components, too. At least the ones that are
-// edited singularly, not in a list.
-
-// I could add a value, editedDealID
-// I would maybe have to add that for the others, but maybe not
-
-// It'd be like, propertyMain: { items: [property], lastSaved: ..., lastUpdated: ... }
-// Then I would create a useEffect that reacts to its lastUpdated
-// property, lastSaved property, and that triggers a callback
-// I could use one hook per store like that.
-// I could also track the types of updates that were done
-// - If any were "add" or "remove" actions, I'd update the whole store
-// - If all of them were "updateValue" actions, I'd just update those sections
-
-// 1. Allow deals to be edited directly from the store.
-//    - Make main have activeDealOutputs (savable to server)
-//    - Make main also have activeDealCalculatedVarbs (not savable)
-//    - Remove and re-add the deal that you're going to edit, changing its context
-//    - First, undo that context adjustment for any other deal that has it
-// 2. Make them autosave
-// 3. Systematize feStore's childNames (all either "main" or "index")
-// 4. Give main all the index children that feStore has
-// 5. Replace "feStore" instances with "main" or what have you
-
-// Is there a way to make saving not dependent on the front-end components that
-// happen to be displayed? Like, after I leave the property editor, can my
-// changes still be saved? Should I allow that? Let's try auto-save with deal, first
-
-// How can undo be a thing?
-
-// - Make the variables save automatically as they are edited
-//   (instead of having their save status checked)
+// - Add dbChildIds to DbStore, to control the orders of components
 
 // - Figure out how to implement a default deal title
 // - Maybe a "use custom title" button, or something
-
-// - Get editDeal to work
-// - New deal just adds a deal and then goes on to edit deal
-// - Edit deal needs to periodically save the deal's updates
 // - Mark incomplete deals in Saved Deals as such
 
 // - Possibly give price, taxes, and insurance valueSections, and
@@ -64,9 +35,6 @@ AppRegistry.runApplication("App", {
 
 // - After the next git push heroku master
 //   - check whether the upgrade to pro button works (it works in dev)
-
-// If there will be three example deals, you'll need to increase the
-// save limit.
 
 // - Figure out if there's a way to use mui sx with mobile
 

@@ -60,7 +60,7 @@ export function validateDbSectionPackArrs(
 ): SectionPackArrs<"dbStore"> {
   const packArrs = Obj.validateObjToAny(value);
   for (const key of Obj.keys(packArrs)) {
-    const dbStoreName = dbStoreNameS.validate(key, dbStoreType ?? "all");
+    const dbStoreName = dbStoreNameS.validate(key, dbStoreType);
     validateDbSectionPackArr({
       dbStoreName,
       value: packArrs[dbStoreName],

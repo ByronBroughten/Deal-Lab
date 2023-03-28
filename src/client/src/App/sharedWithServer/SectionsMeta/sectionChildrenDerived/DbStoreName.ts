@@ -41,13 +41,14 @@ export const dbStoreNameS = {
     value: any,
     type?: T
   ): value is DbStoreNameByType<T> {
-    return (this.arrs[(type ?? "all") as T] as any).includes(value);
+    const arr = this.arrs[type ?? "all"];
+    return arr.includes(value);
   },
   validate<T extends DbStoreType = "all">(
     value: any,
     type?: T
   ): DbStoreNameByType<T> {
-    if (this.is(value, type ?? "all")) {
+    if (this.is(value, type)) {
       return value;
     } else
       throw new Error(

@@ -1,6 +1,7 @@
 import { numObj } from "../../sharedWithServer/SectionsMeta/values/StateValue/NumObj";
 import { stringObj } from "../../sharedWithServer/SectionsMeta/values/StateValue/StringObj";
 import { SolverSection } from "../../sharedWithServer/StateSolvers/SolverSection";
+import { SolverSections } from "../../sharedWithServer/StateSolvers/SolverSections";
 import { MainSectionSolver } from "./MainSectionSolver";
 
 describe("MainSectionSolver", () => {
@@ -12,26 +13,17 @@ describe("MainSectionSolver", () => {
       purchasePrice: numObj(200000),
       displayName: stringObj("Store Property"),
     });
+    const { dbId } = storeProperty.get;
 
-    const controls = main.onlyChild("editorControls");
-    const dealDbId = controls.get.valueNext("editedDealDbId");
-    const { feInfo } = feStore
-      .childByDbId({
-        childName: "dealMain",
-        dbId: dealDbId,
-      })
-      .onlyChild("property").get;
-
-    const property = new MainSectionSolver({
-      ...SolverSection.initProps({
-        sections: main.sectionsShare.sections,
-      }),
-      ...feInfo,
+    const activeDeal = main.solverSections.getActiveDeal();
+    const activeProperty = activeDeal.onlyChild("property").get;
+    const mainProperty = new MainSectionSolver({
+      ...SolverSections.initProps({ sections: main.sectionsShare.sections }),
+      ...activeProperty.feInfo,
     });
 
-    const { dbId } = feStore.get.youngestChild("propertyMain");
-    property.loadFromLocalStore(dbId);
-    const { loaded, saved } = property.getPreppedSaveStatusPacks();
+    mainProperty.loadFromLocalStore(dbId);
+    const { loaded, saved } = mainProperty.getPreppedSaveStatusPacks();
     expect(loaded).toEqual(saved);
   });
 });

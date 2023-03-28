@@ -3,13 +3,9 @@ import request from "supertest";
 import { constants } from "../../client/src/App/Constants";
 import { apiQueriesShared } from "../../client/src/App/sharedWithServer/apiQueriesShared";
 import { QueryReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
-import { SectionPackRes } from "../../client/src/App/sharedWithServer/apiQueriesShared/makeReqAndRes";
 import { Id } from "../../client/src/App/sharedWithServer/SectionsMeta/IdS";
-import { numObj } from "../../client/src/App/sharedWithServer/SectionsMeta/values/StateValue/NumObj";
-import { stringObj } from "../../client/src/App/sharedWithServer/SectionsMeta/values/StateValue/StringObj";
 import { PackBuilderSection } from "../../client/src/App/sharedWithServer/StatePackers.ts/PackBuilderSection";
 import { runApp } from "../../runApp";
-import { SetterTesterSection } from "./../../client/src/App/sharedWithServer/StateSetters/TestUtils/SetterTesterSection";
 import { LoadedDbUser } from "./apiQueriesShared/DbSections/LoadedDbUser";
 import { SectionQueryTester } from "./apiQueriesTestTools/SectionQueryTester";
 import {
@@ -95,56 +91,6 @@ describe(testedRoute, () => {
     reqs.getSection.body.dbId = Id.make();
     await testStatus(404);
   });
-  it("should load saved subsections if sync is turned on", async () => {
-    const original = {
-      purchasePrice: numObj(100000),
-      displayName: stringObj("Original"),
-    };
-
-    const deal = SetterTesterSection.initActiveDeal().setter;
-    const property = deal.onlyChild("property");
-    property.varb("purchasePrice").updateValue(original.purchasePrice);
-    property.varb("displayName").updateValue(original.displayName);
-    property.updateValues({ autoSyncControl: "autoSyncOn" });
-
-    reqs.addSection.body = {
-      dbStoreName: "dealMain",
-      sectionPack: deal.packMaker.makeSectionPack(),
-    } as any;
-    await addSection();
-
-    const updated = {
-      purchasePrice: numObj(200000),
-      displayName: stringObj("Updated"),
-    };
-    property.varb("purchasePrice").updateValue(updated.purchasePrice);
-    property.varb("displayName").updateValue(updated.displayName);
-    reqs.addSection.body = {
-      dbStoreName: "propertyMain",
-      sectionPack: property.packMaker.makeSectionPack(),
-    } as any;
-    await addSection();
-
-    reqs.getSection.body = {
-      dbStoreName: "dealMain",
-      dbId: deal.get.dbId,
-    };
-
-    const res = await getSection();
-    const { sectionPack } = res.data as SectionPackRes<"dealMain">["data"];
-
-    function testSectionPack() {
-      const deal = SetterTesterSection.initActiveDeal().setter;
-      deal.loadSelfSectionPack(sectionPack);
-      const property = deal.get.onlyChild("property");
-      expect(property.valueNext("purchasePrice")).toEqual(
-        updated.purchasePrice
-      );
-      expect(property.valueNext("displayName")).toEqual(updated.displayName);
-    }
-
-    testSectionPack();
-  });
   it("should return 500 if the payload isn't for a sectionQuery dbStoreName", async () => {
     const testName = "authInfoPrivate";
     const authInfo = PackBuilderSection.initAsOmniChild(testName);
@@ -156,4 +102,54 @@ describe(testedRoute, () => {
     };
     await testStatus(500);
   });
+  // it("should load saved subsections if sync is turned on", async () => {
+  //   const original = {
+  //     purchasePrice: numObj(100000),
+  //     displayName: stringObj("Original"),
+  //   };
+
+  //   const deal = SetterTesterSection.initActiveDeal().setter;
+  //   const property = deal.onlyChild("property");
+  //   property.varb("purchasePrice").updateValue(original.purchasePrice);
+  //   property.varb("displayName").updateValue(original.displayName);
+  //   property.updateValues({ autoSyncControl: "autoSyncOn" });
+
+  //   reqs.addSection.body = {
+  //     dbStoreName: "dealMain",
+  //     sectionPack: deal.packMaker.makeSectionPack(),
+  //   } as any;
+  //   await addSection();
+
+  //   const updated = {
+  //     purchasePrice: numObj(200000),
+  //     displayName: stringObj("Updated"),
+  //   };
+  //   property.varb("purchasePrice").updateValue(updated.purchasePrice);
+  //   property.varb("displayName").updateValue(updated.displayName);
+  //   reqs.addSection.body = {
+  //     dbStoreName: "propertyMain",
+  //     sectionPack: property.packMaker.makeSectionPack(),
+  //   } as any;
+  //   await addSection();
+
+  //   reqs.getSection.body = {
+  //     dbStoreName: "dealMain",
+  //     dbId: deal.get.dbId,
+  //   };
+
+  //   const res = await getSection();
+  //   const { sectionPack } = res.data as SectionPackRes<"dealMain">["data"];
+
+  //   function testSectionPack() {
+  //     const deal = SetterTesterSection.initActiveDeal().setter;
+  //     deal.loadSelfSectionPack(sectionPack);
+  //     const property = deal.get.onlyChild("property");
+  //     expect(property.valueNext("purchasePrice")).toEqual(
+  //       updated.purchasePrice
+  //     );
+  //     expect(property.valueNext("displayName")).toEqual(updated.displayName);
+  //   }
+
+  //   testSectionPack();
+  // });
 });

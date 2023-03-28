@@ -30,7 +30,7 @@ const apiPathFull = `${env.apiUrlBase}${apiPathBit}`;
 
 const isBeta = false;
 const maxSectionSaveLimit = 1000;
-const basicSectionSaveLimit = 3;
+const basicSectionSaveLimit = 5;
 export const config = {
   ...env,
   stripePrices,

@@ -68,7 +68,7 @@ describe(testedRoute, () => {
     };
     await testStatus(500);
 
-    const sectionQueryName = "propertyMain";
+    const sectionQueryName = "property";
     const property = PackBuilderSection.initAsOmniChild("property");
     req = {
       body: {
