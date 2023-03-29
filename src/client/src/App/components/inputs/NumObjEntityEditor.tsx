@@ -184,8 +184,11 @@ function onClickAndFocus(
 
 function editorRegEx(editorType: NumEditorType): RegExp {
   const regEx: Record<NumEditorType, RegExp> = {
-    numeric: /^[0-9.-]*$/,
+    // numeric: /^[0-9.-]*$/,
     equation: /[\d.*/+()-]/,
+    get numeric() {
+      return this.equation;
+    },
   };
   return regEx[editorType];
 }

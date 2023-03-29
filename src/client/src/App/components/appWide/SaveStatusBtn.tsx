@@ -56,7 +56,7 @@ const Styled = styled(ListMenuBtn)<{ $color: string }>`
 
     :hover {
       color: ${$color};
-      background-color: ${nativeTheme.fs14};
+      background: transparent;
       cursor: auto;
     }
   `};

@@ -45,6 +45,8 @@ export const sectionsReducer: React.Reducer<StateSections, SectionsAction> = (
       ...action,
     });
     switch (action.type) {
+      // addSelfAndSave
+      // removeSelfAndSave
       case "removeSelf": {
         const section = SolverSection.init({
           ...action,
@@ -56,9 +58,8 @@ export const sectionsReducer: React.Reducer<StateSections, SectionsAction> = (
         section.removeSelfAndSolve();
         return section.sectionsShare.sections;
       }
+      // updateValueAndSave
       case "updateValue": {
-        // here's the thing. the sectionsContext
-        // is important for updateValue
         const varb = SolverVarb.init({
           ...action,
           ...props,
@@ -66,6 +67,7 @@ export const sectionsReducer: React.Reducer<StateSections, SectionsAction> = (
         varb.directUpdateAndSolve(action.value);
         return varb.sectionsShare.sections;
       }
+      // updateValueFromContentAndSave
       case "updateValueFromContent": {
         const { contentState } = action;
         const solverVarb = SolverVarb.init({
@@ -77,7 +79,7 @@ export const sectionsReducer: React.Reducer<StateSections, SectionsAction> = (
           solverVarb.getterVarbBase.getterVarbProps
         );
         const value = editorVarb.valueFromContentState(contentState);
-        solverVarb.editorUpdateAndSolve(value);
+        solverVarb.directUpdateAndSolve(value);
         return solverVarb.sectionsShare.sections;
       }
     }
