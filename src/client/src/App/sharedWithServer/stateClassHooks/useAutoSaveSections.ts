@@ -64,6 +64,7 @@ export function useAutoSaveSections() {
       const save = async () => {
         saveIsInterruptedRef.current = false;
         try {
+          feStore.setterSections.applyVariablesToDealPages();
           await feStore.saveAllSections();
           if (!saveIsInterruptedRef.current) {
             isNewlySavedRef.current = true;

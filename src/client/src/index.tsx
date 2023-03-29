@@ -6,20 +6,37 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-// Make it display when things are being saved.
-// - Add variable to feStore: saveStatus
-//   - "unsaved" | "saving" | "saved"
-//   - I could add that to feStore
-// - Add a saving indicator near "Deal Lab"
+// Do I really need to get rid of setterSection for all this?
+// I might not, but it's a pretty good opportunity to.
+// I ought to get this working right before I go on a rampage
+// and rip the rest of the sections apart.
 
-// - When editing all the other components, just use latent sections.
-//   - You need only populate the editor with the sections, and it will work
-//   - You can just remove everything that has to do with saving.
+// I got the auto-save to work, but it's far too slow.
+// I need a way to update individual sections.
+// Add and delete section work great.
+// feStore could have a set of sectionIds.
+// when a section is updated, its id is added to the set
+// I would need all section updates reducers designed for that
+// No more setterSections
 
-// - Implement "lastUpdated"
-//   - Should all sections have this?
+// You will need a version of addSection that adds the section
+// in-state and also adds the saved section's feId
+// You will need an analagous version of removeSection
+// One version of updateValue will do that
+// There will be a hook called, "useSavedSectionId",
+// Each of the hooks that deliver the aforementioned functions
+// will call it and modify themselves
+
+// Sections such as those can pass down useAddSection and useRemoveSection
+// in contexts
+
+// While you're implementing the above, you can also implement
+// "last updated", as that can be applied to the saved section
+// whenever a triggering update is made.
 
 // - Add dbChildIds to DbStore, to control the orders of components
+//   - You can just add an empty objects of these for now.
+//   - They'll be pretty easy to update, later.
 
 // - Figure out how to implement a default deal title
 // - Maybe a "use custom title" button, or something

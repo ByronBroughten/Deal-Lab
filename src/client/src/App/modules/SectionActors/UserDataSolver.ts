@@ -1,5 +1,4 @@
 import { UserData } from "../../sharedWithServer/apiQueriesShared/validateUserData";
-import { listChildrenNames } from "../../sharedWithServer/SectionsMeta/sectionStores";
 import { SolverSectionsBase } from "../../sharedWithServer/StateSolvers/SolverBases/SolverSectionsBase";
 import { SolverSections } from "../../sharedWithServer/StateSolvers/SolverSections";
 
@@ -12,14 +11,5 @@ export class UserDataSolver extends SolverSectionsBase {
     const main = solverSections.oneAndOnly("main");
     const feStore = main.onlyChild("feStore");
     feStore.loadSelfAndSolve(userData.feStore);
-
-    const varbEditor = main.onlyChild("userVarbEditor");
-    varbEditor.replaceChildPackArrsAndSolve(
-      feStore.builder.makeChildPackArrs("numVarbListMain")
-    );
-    const listEditor = main.onlyChild("userListEditor");
-    listEditor.replaceChildPackArrsAndSolve(
-      feStore.builder.makeChildPackArrs(...listChildrenNames)
-    );
   }
 }

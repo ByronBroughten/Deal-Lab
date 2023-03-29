@@ -16,6 +16,10 @@ export function makeDefaultMain(): SectionPack<"main"> {
 
   main.addChild("mainDealMenu");
   main.addChild("variablesMenu");
+  main.loadChild({
+    childName: "feStore",
+    sectionPack: makeDefaultFeUserPack(),
+  });
 
   const latent = main.addAndGetChild("latentDealSystem");
   latent.addChild("calculatedVarbs");
@@ -23,20 +27,6 @@ export function makeDefaultMain(): SectionPack<"main"> {
     childName: "deal",
     sectionPack: makeDefaultDealPack(),
   });
-
-  const feStore = main.loadAndGetChild({
-    childName: "feStore",
-    sectionPack: makeDefaultFeUserPack(),
-  });
-
-  main.addChild("editorControls");
-  const varbEditor = main.addAndGetChild("userVarbEditor");
-  varbEditor.replaceChildArrs(feStore.makeChildPackArrs("numVarbListMain"));
-
-  const listEditor = main.addAndGetChild("userListEditor");
-  listEditor.replaceChildArrs(
-    feStore.makeChildPackArrs("singleTimeListMain", "ongoingListMain")
-  );
 
   const dealCompare = main.addAndGetChild("dealCompare");
   defaultDealOutputInfos.forEach((outputInfo) => {

@@ -4,6 +4,7 @@ import { StateValue } from "../../sharedWithServer/SectionsMeta/values/StateValu
 import { PackBuilderSection } from "../../sharedWithServer/StatePackers.ts/PackBuilderSection";
 import { PackMakerSection } from "../../sharedWithServer/StatePackers.ts/PackMakerSection";
 import { SetterSection } from "../../sharedWithServer/StateSetters/SetterSection";
+import { SetterSections } from "../../sharedWithServer/StateSetters/SetterSections";
 import { StrictOmit } from "../../sharedWithServer/utils/types";
 import { FeUserSolver } from "../SectionSolvers/FeUserSolver";
 import { userTokenS } from "../services/userTokenS";
@@ -24,6 +25,9 @@ export class FeStoreActor extends SectionActorBase<"feStore"> {
   async saveAllSections(): Promise<any> {
     const sectionPackArrs = this.packMaker.makeChildPackArrs(storeNames);
     return this.apiQueries.replaceSectionArrs(makeReq({ sectionPackArrs }));
+  }
+  get setterSections(): SetterSections {
+    return new SetterSections(this.sectionActorBaseProps);
   }
   get solver(): FeUserSolver {
     return new FeUserSolver(this.sectionActorBaseProps);

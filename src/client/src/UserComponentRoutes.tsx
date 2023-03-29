@@ -1,6 +1,6 @@
 import { Route } from "react-router-dom";
+import { ListGroupEditor } from "./App/components/UserListEditorPage/ListGroupEditor";
 import { UserComponents } from "./App/components/UserListEditorPage/UserComponents";
-import { UserListsEditor } from "./App/components/UserListEditorPage/UserListsEditor";
 import { feRoutes } from "./App/Constants/feRoutes";
 
 const listRoutes = [
@@ -19,7 +19,7 @@ export const UserComponentRoutes = (
       <Route
         key={routeName}
         path={feRoutes[routeName]}
-        element={<UserListsEditor listName={routeName} />}
+        element={<ListGroupEditor listName={routeName} />}
       />
     ))}
   </>
