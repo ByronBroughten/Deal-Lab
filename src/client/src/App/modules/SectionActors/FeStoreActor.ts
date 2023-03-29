@@ -21,13 +21,9 @@ export class FeStoreActor extends SectionActorBase<"feStore"> {
       sectionName: "feStore",
     });
   }
-  saveAllSections() {
+  async saveAllSections(): Promise<any> {
     const sectionPackArrs = this.packMaker.makeChildPackArrs(storeNames);
-    this.apiQueries.replaceSectionArrs(
-      makeReq({
-        sectionPackArrs,
-      })
-    );
+    return this.apiQueries.replaceSectionArrs(makeReq({ sectionPackArrs }));
   }
   get solver(): FeUserSolver {
     return new FeUserSolver(this.sectionActorBaseProps);
@@ -50,6 +46,12 @@ export class FeStoreActor extends SectionActorBase<"feStore"> {
       labSubscription: data.labSubscription,
       labSubscriptionExp: data.labSubscriptionExp,
     });
+  }
+  setSaveStatus(value: StateValue<"appSaveStatus">): void {
+    this.setter.updateValues({ saveStatus: value });
+  }
+  get saveStatus(): StateValue<"appSaveStatus"> {
+    return this.get.valueNext("saveStatus");
   }
   get labSubscription(): StateValue<"labSubscription"> {
     return this.get.valueNext("labSubscription");

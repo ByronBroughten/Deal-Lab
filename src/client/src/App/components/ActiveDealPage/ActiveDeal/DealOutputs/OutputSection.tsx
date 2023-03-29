@@ -32,12 +32,15 @@ export function OutputSection({
       showOutputs: true,
     });
   };
+
+  const listId = outputSection.oneChildFeId("buyAndHoldOutputList");
+
   return (
     <Styled {...rest}>
       {!outputsIsOpen && (
         <FinishBtn
           {...{
-            btnText: "Calculate Outputs",
+            btnText: "View Outputs",
             styleDisabled: disableOpenOutputs,
             tooltipText: "",
             onClick: openOutputs,
@@ -66,11 +69,11 @@ export function OutputSection({
             {!detailsIsOpen && (
               <div className="ListGroup-root">
                 <div className="OutputSection-viewable viewable">
-                  <DealOutputList feId={feId} />
+                  <DealOutputList feId={listId} />
                 </div>
               </div>
             )}
-            {detailsIsOpen && <DealOutputDetails {...{ feId }} />}
+            {detailsIsOpen && <DealOutputDetails {...{ feId: listId }} />}
           </MainSectionBody>
         </>
       )}

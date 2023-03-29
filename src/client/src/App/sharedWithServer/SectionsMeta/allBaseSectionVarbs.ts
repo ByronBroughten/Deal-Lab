@@ -384,7 +384,7 @@ export function makeAllBaseSectionVarbs() {
     }),
     feStore: baseSectionVarbs({
       authStatus: baseVarb("authStatus"),
-      saveStatus: baseVarb("saveStatus"),
+      saveStatus: baseVarb("appSaveStatus"),
       userDataStatus: baseVarb("userDataStatus"),
       userDataFetchTryCount: baseVarb("number"),
       labSubscription: baseVarb("labSubscription"),

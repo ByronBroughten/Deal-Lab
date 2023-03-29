@@ -144,6 +144,8 @@ export class SolveValueVarb<
         for (const varb of varbs) {
           if (varb.value("boolean") === false) {
             updateBools({ isEmpty: false, isValid: false });
+          } else {
+            updateBools({ isEmpty: false, isValid: true });
           }
         }
       }
@@ -159,7 +161,9 @@ export class SolveValueVarb<
         const varbs = this.activePropVarbs(updateProp);
         for (const varb of varbs) {
           if (varb.numberOrQuestionMark === 0) {
-            updateBools({ isEmpty: true, isValid: false });
+            updateBools({ isEmpty: false, isValid: false });
+          } else {
+            updateBools({ isEmpty: true, isValid: true });
           }
         }
       }
@@ -169,6 +173,8 @@ export class SolveValueVarb<
         for (const varb of varbs) {
           if (varb.valueNext() === "none") {
             updateBools({ isEmpty: true, isValid: false });
+          } else {
+            updateBools({ isEmpty: false, isValid: true });
           }
         }
       }

@@ -1,7 +1,6 @@
 import { Obj } from "../../../utils/Obj";
 
 const valueSources = {
-  dealSort: ["dateCreated", "dateUpdated"],
   loanPurpose: ["purchasePrice", "upfrontRepairs", "purchasePriceAndRepairs"],
   loanAmountInputMode: ["downPayment", "loanAmount"],
   loanBaseValueSource: [
@@ -56,8 +55,9 @@ export type ValueSource = ValueSources[keyof ValueSources][number];
 
 const unionValueArrs = {
   ...valueSources,
+  appSaveStatus: ["unsaved", "saving", "saved"],
+  dealSort: ["dateCreated", "dateUpdated"],
   authStatus: ["guest", "user"],
-  saveStatus: ["unsaved", "saving", "saved"],
   labSubscription: ["basicPlan", "fullPlan"],
   syncStatus: ["unsyncedChanges", "changesSynced"],
   autoSyncControl: ["autoSyncOff", "autoSyncOn"],

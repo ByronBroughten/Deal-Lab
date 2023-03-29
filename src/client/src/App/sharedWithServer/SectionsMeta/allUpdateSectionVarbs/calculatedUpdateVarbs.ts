@@ -258,6 +258,10 @@ export function calculatedUpdateVarbs(): UpdateSectionVarbs<"calculatedVarbs"> {
       ],
       updateFnName: "completionStatus",
       updateFnProps: completionStatusProps({
+        nonNone: [
+          updateFnPropS.pathName("mgmtBasePayFocal", "valueSourceName"),
+          updateFnPropS.pathName("vacancyLossFocal", "valueSourceName"),
+        ],
         validInputs: [
           updateFnPropS.pathName(
             "mgmtBasePayFocal",
@@ -321,6 +325,10 @@ export function calculatedUpdateVarbs(): UpdateSectionVarbs<"calculatedVarbs"> {
           updateBasics(
             "completionStatus",
             completionStatusProps({
+              nonNone: [
+                updateFnPropS.pathName("loanBaseFocal", "valueSourceName"),
+                updateFnPropS.pathName("closingCostFocal", "valueSourceName"),
+              ],
               validInputs: [
                 updateFnPropS.pathName("loanBaseFocal", "valueDollarsEditor", [
                   overrideSwitchS.local("valueSourceName", "dollarsEditor"),

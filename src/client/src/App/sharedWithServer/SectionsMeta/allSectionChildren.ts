@@ -52,10 +52,10 @@ export const allSectionChildren = checkAllSectionChildren({
 
     // These are not saved
     latentDealSystem: "dealSystem",
-    // activeDealSupplements: "dealSupplements",
     activeDealSystem: "dealSystem",
 
     // I would like to save this at some point
+    // in some fashion
     dealCompare: "compareSection",
 
     // these will be eliminated

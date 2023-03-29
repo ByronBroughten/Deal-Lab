@@ -289,6 +289,7 @@ function makeAllUpdateSections() {
       }),
     }),
     ...updateSectionProp("feStore", {
+      saveStatus: updateVarb("appSaveStatus", { initValue: "saved" }),
       authStatus: updateVarb("authStatus", { initValue: "guest" }),
       labSubscription: updateVarb("labSubscription", {
         initValue: "basicPlan",

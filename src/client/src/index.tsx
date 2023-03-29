@@ -6,14 +6,10 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-// - Make tests pass
-
-// - mgmt completion status isn't quite working right.
-//   it's requiring the editor, when the valueSourceName should be enough
-
 // Make it display when things are being saved.
 // - Add variable to feStore: saveStatus
 //   - "unsaved" | "saving" | "saved"
+//   - I could add that to feStore
 // - Add a saving indicator near "Deal Lab"
 
 // - When editing all the other components, just use latent sections.

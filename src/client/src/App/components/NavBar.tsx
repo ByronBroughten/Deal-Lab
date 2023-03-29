@@ -4,6 +4,7 @@ import { BsHouse } from "react-icons/bs";
 import styled from "styled-components";
 import theme from "../theme/Theme";
 import { useGoToPage } from "./appWide/customHooks/useGoToPage";
+import { SaveStatusBtn } from "./appWide/SaveStatusBtn";
 import { AppMenuProps } from "./NavBar/AppMenuDropdown";
 import { NavAppMenu } from "./NavBar/NavAppMenu";
 import { NavBarBtns } from "./NavBar/NavBarBtns";
@@ -29,6 +30,7 @@ export function NavBar({ showMenu = true, ...props }: Props) {
             text={<span className="NavBar-brandName">Deal Lab</span>}
             onClick={goToMain}
           />
+          <SaveStatusBtn />
         </div>
         <NavBarBtns />
       </Toolbar>
