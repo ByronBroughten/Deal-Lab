@@ -75,7 +75,7 @@ import {
 } from "../SectionsMeta/values/StateValue";
 import { InEntityValue } from "../SectionsMeta/values/StateValue/InEntityValue";
 import { ValueName } from "../SectionsMeta/values/ValueName";
-import { PackMakerSection } from "../StatePackers.ts/PackMakerSection";
+import { PackMakerSection } from "../StatePackers/PackMakerSection";
 import {
   ContextPathIdxSpecifier,
   RawFeSection,
@@ -93,6 +93,7 @@ import { GetterList } from "./GetterList";
 import { GetterSections } from "./GetterSections";
 import { GetterVarb } from "./GetterVarb";
 import { GetterVirtualVarb } from "./GetterVirtualVarb";
+import { SectionId } from "./SectionId";
 
 export interface GetterSectionRequiredProps<SN extends SectionName>
   extends FeSectionInfo<SN>,
@@ -430,6 +431,9 @@ export class GetterSection<
   }
   get idx() {
     return this.sections.list(this.sectionName).idx(this.feId);
+  }
+  get sectionId() {
+    return SectionId.makeSectionId(this.sectionName, this.feId);
   }
   get feInfo(): FeSectionInfo<SN> {
     return {

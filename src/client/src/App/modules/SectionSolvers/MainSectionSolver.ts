@@ -1,18 +1,19 @@
 import isEqual from "fast-deep-equal";
 import { SectionPack } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/SectionPack";
+import { FeSectionInfo } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { SectionNameByType } from "../../sharedWithServer/SectionsMeta/SectionNameByType";
 import { SectionValues } from "../../sharedWithServer/SectionsMeta/values/StateValue";
 import { StringObj } from "../../sharedWithServer/SectionsMeta/values/StateValue/StringObj";
 import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection";
 import { GetterSections } from "../../sharedWithServer/StateGetters/GetterSections";
-import { PackMakerSection } from "../../sharedWithServer/StatePackers.ts/PackMakerSection";
+import { PackBuilderSection } from "../../sharedWithServer/StatePackers/PackBuilderSection";
+import { PackMakerSection } from "../../sharedWithServer/StatePackers/PackMakerSection";
 import { SolverSectionBase } from "../../sharedWithServer/StateSolvers/SolverBases/SolverSectionBase";
 import { SolverSection } from "../../sharedWithServer/StateSolvers/SolverSection";
 import { UpdaterSection } from "../../sharedWithServer/StateUpdaters/UpdaterSection";
 import { timeS } from "../../sharedWithServer/utils/date";
 import { ChildSectionName } from "./../../sharedWithServer/SectionsMeta/sectionChildrenDerived/ChildSectionName";
 import { DisplayItemProps, FeIndexSolver } from "./FeIndexSolver";
-import { FeUserSolver } from "./FeUserSolver";
 
 export type SaveStatus = "unsaved" | "changesSynced" | "unsyncedChanges";
 export class MainSectionSolver<
@@ -38,26 +39,14 @@ export class MainSectionSolver<
     if (!mainStoreName) {
       throw new Error("This can't be null.");
     }
-    return FeIndexSolver.init(mainStoreName, this.solverSectionsProps);
+    return FeIndexSolver.init(mainStoreName, this.solver.solverSectionsProps);
   }
   get dbId(): string {
     return this.get.dbId;
   }
-  get feUserSolver(): FeUserSolver {
-    const feStore = this.getterSections.oneAndOnly("feStore");
-    return new FeUserSolver({
-      ...this.solverSectionsProps,
-      ...feStore.feInfo,
-    });
-  }
   loadFromLocalStore(dbId: string): void {
     const sectionPack = this.storeSolver.getItemPack(dbId);
     this.loadSectionPack(sectionPack);
-  }
-  prepForCompare<SN extends ChildSectionName<"omniParent">>(
-    sectionPack: SectionPack<SN>
-  ): SectionPack<SN> {
-    return this.feUserSolver.prepForCompare(sectionPack);
   }
   getPreppedSaveStatusPacks() {
     return {
@@ -155,5 +144,39 @@ export class MainSectionSolver<
   }
   get asSavedPack(): SectionPack<SN> {
     return this.storeSolver.getItemPack(this.dbId);
+  }
+  prepForCompare<SN extends ChildSectionName<"omniParent">>(
+    sectionPack: SectionPack<SN>
+  ): SectionPack<SN> {
+    const headSection = PackBuilderSection.loadAsOmniChild(sectionPack);
+    const { sections } = headSection;
+    let sectionInfos: FeSectionInfo[] = [headSection.feInfo];
+    while (sectionInfos.length > 0) {
+      const nextInfos: FeSectionInfo[] = [];
+      for (const info of sectionInfos) {
+        const section = sections.section(info);
+        section.updater.resetSolvableTexts();
+        for (const childName of section.get.childNames) {
+          for (const child of section.children(childName)) {
+            const getterChild = child.get;
+            if (getterChild.isSectionType("hasIndexStore")) {
+              if (getterChild.valueNext("autoSyncControl") === "autoSyncOn") {
+                const store = this.sectionFeSolver(getterChild.feInfo);
+                if (store.hasByDbId(getterChild.dbId)) {
+                  child.removeSelf();
+                }
+              }
+            }
+            nextInfos.push(child.feInfo);
+          }
+        }
+      }
+      sectionInfos = nextInfos;
+    }
+    return headSection.makeSectionPack();
+  }
+  private sectionFeSolver(feInfo: FeSectionInfo): FeIndexSolver<any> {
+    const { mainStoreName } = this.get.getterSection(feInfo);
+    return FeIndexSolver.init(mainStoreName, this.solver.solverSectionsProps);
   }
 }

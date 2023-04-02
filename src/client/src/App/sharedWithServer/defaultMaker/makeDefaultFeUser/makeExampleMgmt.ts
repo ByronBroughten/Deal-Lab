@@ -3,7 +3,7 @@ import {
   StateValue,
 } from "../../SectionsMeta/values/StateValue";
 import { stringObj } from "../../SectionsMeta/values/StateValue/StringObj";
-import { PackBuilderSection } from "../../StatePackers.ts/PackBuilderSection";
+import { PackBuilderSection } from "../../StatePackers/PackBuilderSection";
 import { StrictPick } from "../../utils/types";
 import { makeDefaultMgmtPack } from "../makeDefaultMgmtPack";
 

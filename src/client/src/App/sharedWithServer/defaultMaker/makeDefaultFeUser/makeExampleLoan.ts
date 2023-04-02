@@ -4,7 +4,7 @@ import {
 } from "../../SectionsMeta/values/StateValue";
 import { NumObj, numObj } from "../../SectionsMeta/values/StateValue/NumObj";
 import { stringObj } from "../../SectionsMeta/values/StateValue/StringObj";
-import { PackBuilderSection } from "../../StatePackers.ts/PackBuilderSection";
+import { PackBuilderSection } from "../../StatePackers/PackBuilderSection";
 import { StrictPick } from "../../utils/types";
 import { makeDefaultLoanPack } from "../makeDefaultLoanPack";
 

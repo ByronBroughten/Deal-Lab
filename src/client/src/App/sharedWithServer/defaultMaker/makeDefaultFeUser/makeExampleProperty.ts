@@ -9,7 +9,7 @@ import {
 } from "../../SectionsMeta/values/StateValue/NumObj";
 import { numObjNext } from "../../SectionsMeta/values/StateValue/numObjNext";
 import { stringObj } from "../../SectionsMeta/values/StateValue/StringObj";
-import { PackBuilderSection } from "../../StatePackers.ts/PackBuilderSection";
+import { PackBuilderSection } from "../../StatePackers/PackBuilderSection";
 import { timeS } from "../../utils/date";
 import { StrictPick } from "../../utils/types";
 import { makeDefaultProperty } from "../makeDefaultProperty";

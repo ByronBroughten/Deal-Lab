@@ -1,9 +1,9 @@
-import { makeReq, ReplacePackArrsReq } from "../apiQueriesShared/makeReqAndRes";
+import { makeReq, SectionPackArrsReq } from "../apiQueriesShared/makeReqAndRes";
 import { DbSectionNameByType } from "../SectionsMeta/sectionChildrenDerived/DbStoreName";
 import { GetterSectionBase } from "../StateGetters/Bases/GetterSectionBase";
 import { GetterSectionsBase } from "../StateGetters/Bases/GetterSectionsBase";
 import { GetterSection } from "../StateGetters/GetterSection";
-import { PackMakerSection } from "../StatePackers.ts/PackMakerSection";
+import { PackMakerSection } from "../StatePackers/PackMakerSection";
 import { SolverSections } from "../StateSolvers/SolverSections";
 
 export class SectionArrReqMaker<
@@ -28,7 +28,7 @@ export class SectionArrReqMaker<
   get packMaker(): PackMakerSection<SN> {
     return new PackMakerSection(this.getterSectionProps);
   }
-  makeReq(): ReplacePackArrsReq {
+  makeReq(): SectionPackArrsReq {
     return makeReq({
       sectionPackArrs: {
         [this.mainStoreName]: [this.packMaker.makeSectionPack()],

@@ -17,7 +17,7 @@ export function hasEntitiesProp(value: any): value is EntitiesProp {
 
 function isStringObj(value: any): value is StringObj {
   return (
-    typeof value === "object" &&
+    Obj.isObjToAny(value) &&
     "mainText" in value &&
     typeof value.mainText === "string" &&
     Array.isArray(value.entities)

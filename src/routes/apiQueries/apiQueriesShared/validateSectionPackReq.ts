@@ -1,5 +1,5 @@
 import {
-  ReplacePackArrsReq,
+  SectionPackArrsReq,
   SectionPackReq,
 } from "../../../client/src/App/sharedWithServer/apiQueriesShared/makeReqAndRes";
 import {
@@ -14,8 +14,8 @@ import {
 } from "./ReqAugmenters";
 import { validateDbStoreName } from "./validateDbSectionInfoReq";
 
-type PackArrReq = Authed<ReplacePackArrsReq>;
-export function validateSectionPackArrReq(req: Authed<any>): PackArrReq {
+type PackArrReq = Authed<SectionPackArrsReq>;
+export function validateSectionQueryArrReq(req: Authed<any>): PackArrReq {
   const { sectionPackArrs, auth } = (req as PackArrReq).body;
   return {
     body: {

@@ -8,9 +8,10 @@ import {
   DbPackInfoSectionReq,
   MakeReq,
   MakeRes,
-  ReplacePackArrsReq,
+  SectionPackArrsReq,
   SectionPackReq,
   SectionPackRes,
+  SuccessRes,
   UpgradeUserToProReq,
   UrlRes,
 } from "./apiQueriesShared/makeReqAndRes";
@@ -20,6 +21,7 @@ import { SectionQueryName } from "./SectionsMeta/sectionChildrenDerived/DbStoreN
 export type ApiQueries = {
   addSection: QueryAddSection;
   updateSection: QueryUpdateSection;
+  updateSections: QueryUpdateSections;
   getSection: GetSectionQuery;
   deleteSection: DeleteSectionQuery;
 
@@ -49,6 +51,8 @@ type QueryUpdateSection = <CN extends SectionQueryName>(
   req: SectionPackReq<CN>
 ) => Promise<DbIdRes>;
 
+type QueryUpdateSections = (req: SectionPackArrsReq) => Promise<SuccessRes>;
+
 export interface AddSectionRes extends DbIdRes {
   headers: UserInfoTokenProp;
 }
@@ -61,7 +65,7 @@ type DeleteSectionQuery = <CN extends SectionQueryName>(
   req: DbPackInfoSectionReq<CN>
 ) => Promise<DbIdRes>;
 
-type ReplaceSectionArrQuery = (req: ReplacePackArrsReq) => Promise<MakeRes<{}>>;
+type ReplaceSectionArrQuery = (req: SectionPackArrsReq) => Promise<MakeRes<{}>>;
 
 export type ApiQuery<QN extends ApiQueryName> = ApiQueries[QN];
 

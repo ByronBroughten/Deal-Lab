@@ -1,16 +1,16 @@
 import { AiOutlineSync } from "react-icons/ai";
 import { BsCloudCheck, BsCloudSlash } from "react-icons/bs";
 import styled, { css } from "styled-components";
-import { useFeStore } from "../../modules/sectionActorHooks/useFeStore";
 import { StateValue } from "../../sharedWithServer/SectionsMeta/values/StateValue";
+import { useGetterFeStore } from "../../sharedWithServer/stateClassHooks/useFeStore";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { ListMenuBtn } from "./ListGroup/ListGroupShared/ListMenuSimple/ListMenuBtn";
 
 type Props = {
   className?: string;
 };
-export function SaveStatusBtn({ className }: Props) {
-  const { saveStatus, isLoggedIn } = useFeStore();
+export function SaveStatusIndicator({ className }: Props) {
+  const { saveStatus, isLoggedIn } = useGetterFeStore();
   const btnProps: Record<StateValue<"appSaveStatus">, any> = {
     unsaved: {
       $color: nativeTheme["gray-500"],
@@ -32,6 +32,13 @@ export function SaveStatusBtn({ className }: Props) {
         return <BsCloudCheck />;
       },
       text: "Saved",
+    },
+    saveFailed: {
+      $color: nativeTheme.danger.main,
+      get icon() {
+        return <BsCloudSlash />;
+      },
+      text: "Save failed",
     },
   } as const;
   return isLoggedIn ? (

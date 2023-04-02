@@ -4,7 +4,7 @@ import { constants } from "../../client/src/App/Constants";
 import { apiQueriesShared } from "../../client/src/App/sharedWithServer/apiQueriesShared";
 import { QueryReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import { Id } from "../../client/src/App/sharedWithServer/SectionsMeta/IdS";
-import { PackBuilderSection } from "../../client/src/App/sharedWithServer/StatePackers.ts/PackBuilderSection";
+import { PackBuilderSection } from "../../client/src/App/sharedWithServer/StatePackers/PackBuilderSection";
 import { runApp } from "../../runApp";
 import { LoadedDbUser } from "./apiQueriesShared/DbSections/LoadedDbUser";
 import { SectionQueryTester } from "./apiQueriesTestTools/SectionQueryTester";

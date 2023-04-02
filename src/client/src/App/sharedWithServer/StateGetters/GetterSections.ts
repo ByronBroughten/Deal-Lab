@@ -16,6 +16,7 @@ import {
 import { GetterList } from "./GetterList";
 import { GetterSection } from "./GetterSection";
 import { GetterVarb } from "./GetterVarb";
+import { SectionId } from "./SectionId";
 
 export class GetterSections extends GetterSectionsBase {
   static init(requiredProps: GetterSectionsRequiredProps) {
@@ -64,6 +65,11 @@ export class GetterSections extends GetterSectionsBase {
       ...this.getterSectionsProps,
     });
   }
+  sectionBySectionId(sectionId: string) {
+    const feInfo = SectionId.splitSectionId(sectionId);
+    return this.section(feInfo);
+  }
+
   varb<SN extends SectionNameByType>({
     varbName,
     ...info

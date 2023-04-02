@@ -1,10 +1,12 @@
 import { Box } from "@mui/material";
 import React from "react";
+import { unstable_batchedUpdates } from "react-dom";
 import { BsFillHouseAddFill, BsFillHousesFill } from "react-icons/bs";
 import { HiOutlineVariable } from "react-icons/hi";
 import { SiWebcomponentsdotorg } from "react-icons/si";
 import { View } from "react-native";
 import { FeRouteName } from "../Constants/feRoutes";
+import { useFeStoreDepreciated } from "../modules/sectionActorHooks/useFeStoreDepreciated";
 import { nativeTheme } from "../theme/nativeTheme";
 import { AccountPageDeals } from "./AccountPage/AccountPageDeals";
 import { useGoToPage } from "./appWide/customHooks/useGoToPage";
@@ -12,28 +14,14 @@ import { HollowBtn } from "./appWide/HollowBtn";
 import { Row } from "./general/Row";
 import { MuiBtnPropsNext } from "./general/StandardProps";
 
-// Below that, show the deals menu.
-
-// Each accountDeal has a varbInfo for the deal
-// it represents.
-// You can sort them.
-// Map through them and get the info you need.
-
-// Display them in a table like gmail emails
-
-// For each deal show
-// - Property name/financing name/mgmt name
-// - Deal Type: Buy and Hold
-// - Possibly the default outputs for the deal type
-// - Copy button
-// - Edit button
-// - Archive button
-
+// - Make them sortable
+// - Maybe show default metrics depending on deal type
 // - It wouldn't be too hard to add custom tags, like Keep has
 //   - Maybe start with a couple, "In process", "Closed"
 
 const iconSize = 40;
 export function AccountPage() {
+  const feStore = useFeStoreDepreciated();
   return (
     <View>
       <Row
@@ -44,6 +32,7 @@ export function AccountPage() {
       >
         <Row style={{ flexWrap: "wrap" }}>
           <AccountBtn
+            onClick={() => feStore.addActiveDeal()}
             feRouteName="activeDeal"
             text={<Box>Add Deal</Box>}
             icon={<BsFillHouseAddFill size={iconSize} />}
@@ -84,15 +73,28 @@ export function AccountPage() {
 const size = 180;
 interface AccountBtnProps extends MuiBtnPropsNext {
   feRouteName: FeRouteName;
+  onClick?: () => void;
   icon?: React.ReactNode;
   text?: React.ReactNode;
 }
-function AccountBtn({ icon, text, sx, feRouteName, ...rest }: AccountBtnProps) {
+function AccountBtn({
+  icon,
+  text,
+  sx,
+  feRouteName,
+  onClick,
+  ...rest
+}: AccountBtnProps) {
   const goToPage = useGoToPage(feRouteName);
   return (
     <HollowBtn
       {...{
-        onClick: goToPage,
+        onClick: () => {
+          unstable_batchedUpdates(() => {
+            onClick && onClick();
+            goToPage();
+          });
+        },
         middle: (
           <Box
             sx={{

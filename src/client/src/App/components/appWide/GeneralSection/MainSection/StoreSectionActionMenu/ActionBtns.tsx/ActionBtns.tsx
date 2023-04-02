@@ -2,9 +2,9 @@ import React from "react";
 import { AiOutlineSave } from "react-icons/ai";
 import { BiCopy, BiReset } from "react-icons/bi";
 import { MdOutlineSystemUpdateAlt } from "react-icons/md";
-import { useFeStore } from "../../../../../../modules/sectionActorHooks/useFeStore";
 import { useMainSectionActor } from "../../../../../../modules/sectionActorHooks/useMainSectionActor";
 import { SectionNameByType } from "../../../../../../sharedWithServer/SectionsMeta/SectionNameByType";
+import { useGetterFeStore } from "../../../../../../sharedWithServer/stateClassHooks/useFeStore";
 import { toastNotice } from "../../../../toast";
 import { ActionLoadBtn } from "../ActionLoadBtn";
 import {
@@ -26,7 +26,7 @@ type Props<SN extends SectionNameByType<"hasIndexStore">> = {
 };
 
 export function useDefaultActionLists(): ActionMenuLists {
-  const { isGuest } = useFeStore();
+  const { isGuest } = useGetterFeStore();
   return {
     isNotSavedArr: isGuest ? guestIsNotSavedActions : isNotSavedActions,
     isSavedArr: isGuest ? guestIsSavedActions : isSavedActions,

@@ -62,7 +62,10 @@ export const allSectionChildren = checkAllSectionChildren({
     userVarbEditor: "userVarbEditor",
     userListEditor: "userListEditor",
   }),
-  feStore: sectionChildren(sectionStores),
+  feStore: sectionChildren({
+    saveAttempt: "saveAttempt",
+    ...sectionStores,
+  }),
   dbStore: sectionChildren({
     // these are mimicked by the front-end
     ...sectionStores,

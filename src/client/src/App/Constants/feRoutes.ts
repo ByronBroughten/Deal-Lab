@@ -30,7 +30,7 @@ export const feRoutes = {
   account: accountPageRoute,
   mainPage: accountPageRoute,
 
-  activeDeal: activeDealRoute,
+  activeDeal: `${activeDealRoute}`,
   activeProperty: `${activeDealRoute}/property`,
   activeFinancing: `${activeDealRoute}/financing`,
   activeMgmt: `${activeDealRoute}/mgmt`,

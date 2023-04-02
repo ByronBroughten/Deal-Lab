@@ -3,7 +3,7 @@ import request from "supertest";
 import { constants } from "../../client/src/App/Constants";
 import { apiQueriesShared } from "../../client/src/App/sharedWithServer/apiQueriesShared";
 import { QueryReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
-import { PackBuilderSection } from "../../client/src/App/sharedWithServer/StatePackers.ts/PackBuilderSection";
+import { PackBuilderSection } from "../../client/src/App/sharedWithServer/StatePackers/PackBuilderSection";
 import { Arr } from "../../client/src/App/sharedWithServer/utils/Arr";
 import { timeS } from "../../client/src/App/sharedWithServer/utils/date";
 import { runApp } from "../../runApp";

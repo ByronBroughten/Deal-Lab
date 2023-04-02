@@ -1,6 +1,6 @@
 import React from "react";
 import { FeVarbValueInfo } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
-import { useUpdateValue } from "../../sharedWithServer/stateClassHooks/useReduceActions";
+import { useAction } from "../../sharedWithServer/stateClassHooks/useAction";
 import { StandardProps } from "../general/StandardProps";
 import { NextBtn } from "./NextBtn";
 
@@ -10,7 +10,7 @@ export const UpdateValueNextBtn = React.memo(function UpdateValueNextBtn({
   children,
   ...rest
 }: Props) {
-  const updateValue = useUpdateValue();
+  const updateValue = useAction("updateValue");
   return (
     <NextBtn
       {...{

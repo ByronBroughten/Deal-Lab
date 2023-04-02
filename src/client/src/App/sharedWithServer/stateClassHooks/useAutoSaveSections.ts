@@ -1,81 +1,38 @@
 import React from "react";
-import { useFeStore } from "../../modules/sectionActorHooks/useFeStore";
+import { useActionNoSave } from "./useAction";
+import { useGetterFeStore } from "./useFeStore";
+import { useQueryAction } from "./useQueryAction";
 
-export function useAutoSaveSections() {
-  const feStore = useFeStore();
-  const isfirstPassAfterLoginRef = React.useRef(null as null | true | false);
-  const { isLoggedIn, saveStatus } = feStore;
+export function useAutoSaveNext() {
+  const feStore = useGetterFeStore();
 
+  const initializeSaveAttempt = useActionNoSave("initializeSaveAttempt");
+  const { sectionsToSaveHex, failedSavesString } = feStore;
   React.useEffect(() => {
-    if (isLoggedIn) {
-      if (isfirstPassAfterLoginRef.current === null) {
-        isfirstPassAfterLoginRef.current = true;
-      } else if (isfirstPassAfterLoginRef.current === true) {
-        isfirstPassAfterLoginRef.current = false;
-      }
+    if (sectionsToSaveHex || failedSavesString) {
+      let timerFunc = setTimeout(() => initializeSaveAttempt({}), 3000);
+      return () => clearTimeout(timerFunc);
     }
-    if (!isLoggedIn && isfirstPassAfterLoginRef.current !== null) {
-      isfirstPassAfterLoginRef.current = null;
-    }
-  }, [isLoggedIn, isfirstPassAfterLoginRef.current]);
+  }, [sectionsToSaveHex, failedSavesString, initializeSaveAttempt]);
 
-  const isNewlySavedRef = React.useRef(false);
-  const isNewlySavingRef = React.useRef(false);
+  const preSave = useActionNoSave("preSave");
+  const { initializedSaveId } = feStore;
   React.useEffect(() => {
-    if (
-      (saveStatus === "saved" || saveStatus === "saving") &&
-      isLoggedIn &&
-      !isfirstPassAfterLoginRef.current &&
-      !isNewlySavingRef.current &&
-      !isNewlySavedRef.current
-    ) {
-      feStore.setSaveStatus("unsaved");
+    if (initializedSaveId) {
+      preSave({ saveAttemptFeId: initializedSaveId });
     }
-  }, [isLoggedIn, saveStatus, feStore]);
-  React.useEffect(() => {
-    if (isNewlySavedRef.current) {
-      isNewlySavedRef.current = false;
-    }
-    if (isNewlySavingRef.current) {
-      isNewlySavingRef.current = false;
-    }
-  });
+  }, [initializedSaveId, preSave]);
 
+  const queryAction = useQueryAction();
+  const { pendingSaveId } = feStore;
+  const lastIdRef = React.useRef("");
   React.useEffect(() => {
-    if (saveStatus === "unsaved") {
-      let timerFunc = setTimeout(() => {
-        isNewlySavingRef.current = true;
-        feStore.setSaveStatus("saving");
-      }, 3000);
-      return () => {
-        clearTimeout(timerFunc);
-      };
+    if (pendingSaveId && lastIdRef.current !== pendingSaveId) {
+      queryAction({
+        type: "trySaveAttempt",
+        feId: pendingSaveId,
+      });
+      lastIdRef.current = pendingSaveId;
     }
-  }, [saveStatus, feStore]);
-
-  const saveIsInterruptedRef = React.useRef(false);
-  React.useEffect(() => {
-    if (saveIsInterruptedRef.current === false) {
-      saveIsInterruptedRef.current = true;
-    }
-  });
-  React.useEffect(() => {
-    if (saveStatus === "saving") {
-      const save = async () => {
-        saveIsInterruptedRef.current = false;
-        try {
-          feStore.setterSections.applyVariablesToDealPages();
-          await feStore.saveAllSections();
-          if (!saveIsInterruptedRef.current) {
-            isNewlySavedRef.current = true;
-            feStore.setSaveStatus("saved");
-          }
-        } catch (ex) {
-          feStore.setSaveStatus("unsaved");
-          throw ex;
-        }
-      };
-      save();
-    }
-  }, [saveStatus, feStore]);
+  }, [pendingSaveId, queryAction]);
 }

@@ -12,10 +12,12 @@ import { subscriptionDataWare } from "./apiQueries/getSubscriptionData";
 import { getUserDataWare } from "./apiQueries/getUserData";
 import { replaceSectionArrWare } from "./apiQueries/replaceSectionArrs";
 import { updateSectionWare } from "./apiQueries/updateSection";
+import { updateSectionsWare } from "./apiQueries/updateSections";
 
 const endpointWare: Record<ApiQueryName, any> = {
   addSection: addSectionWare,
   updateSection: updateSectionWare,
+  updateSections: updateSectionsWare,
   getSection: getSectionWare,
   deleteSection: deleteSectionWare,
   replaceSectionArrs: replaceSectionArrWare,

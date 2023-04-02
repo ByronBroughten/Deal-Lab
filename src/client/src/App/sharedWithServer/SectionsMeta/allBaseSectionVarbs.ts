@@ -383,13 +383,17 @@ export function makeAllBaseSectionVarbs() {
       dealCompletionStatus: baseVarb("completionStatus"),
     }),
     feStore: baseSectionVarbs({
+      toSaveUpdates: baseVarb("sectionUpdates"),
       authStatus: baseVarb("authStatus"),
-      saveStatus: baseVarb("appSaveStatus"),
       userDataStatus: baseVarb("userDataStatus"),
       userDataFetchTryCount: baseVarb("number"),
       labSubscription: baseVarb("labSubscription"),
       ...baseVarbs("string", ["email", "userName"] as const),
       labSubscriptionExp: baseVarb("number"),
+    }),
+    saveAttempt: baseSectionVarbs({
+      sectionUpdates: baseVarb("sectionUpdates"),
+      attemptStatus: baseVarb("saveAttemptStatus"),
     }),
     userInfo: baseSectionVarbs({
       ...baseVarbs("string", ["email", "userName"] as const),

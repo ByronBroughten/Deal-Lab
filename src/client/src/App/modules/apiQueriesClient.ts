@@ -67,6 +67,12 @@ function makeApiQueries(): ApiQueries {
         return validateDbIdRes;
       },
     },
+    updateSections: {
+      doingWhat: "updating saved sections",
+      get validateRes() {
+        return validateAxiosRes;
+      },
+    },
     getSection: {
       doingWhat: "getting a section",
       get validateRes() {

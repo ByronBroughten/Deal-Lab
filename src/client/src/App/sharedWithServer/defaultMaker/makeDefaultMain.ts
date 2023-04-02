@@ -1,6 +1,6 @@
 import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
 import { inEntityValueInfo } from "../SectionsMeta/values/StateValue/InEntityValue";
-import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
+import { PackBuilderSection } from "../StatePackers/PackBuilderSection";
 import { makeDefaultDealPack } from "./makeDefaultDeal";
 import { makeDefaultFeUserPack } from "./makeDefaultFeUser";
 import { defaultDealOutputInfos } from "./makeDefaultOutputList";

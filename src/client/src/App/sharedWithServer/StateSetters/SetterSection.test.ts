@@ -4,7 +4,7 @@ import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { PathSectionName } from "../SectionsMeta/sectionPathContexts/sectionPathNames";
 import { numObj } from "../SectionsMeta/values/StateValue/NumObj";
 import { stringObj } from "../SectionsMeta/values/StateValue/StringObj";
-import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
+import { PackBuilderSection } from "../StatePackers/PackBuilderSection";
 import { SetterTesterSection } from "./TestUtils/SetterTesterSection";
 
 // loadSelfSectionPack

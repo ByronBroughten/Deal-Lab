@@ -1,13 +1,20 @@
 import { makeReq } from "../../sharedWithServer/apiQueriesShared/makeReqAndRes";
-import { storeNames } from "../../sharedWithServer/SectionsMeta/sectionStores";
+import { FeChildInfo } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/ChildName";
+import { DbSectionName } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/DbStoreName";
+import { SectionPack } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/SectionPack";
+import {
+  StoreName,
+  storeNames,
+} from "../../sharedWithServer/SectionsMeta/sectionStores";
 import { StateValue } from "../../sharedWithServer/SectionsMeta/values/StateValue";
-import { PackBuilderSection } from "../../sharedWithServer/StatePackers.ts/PackBuilderSection";
-import { PackMakerSection } from "../../sharedWithServer/StatePackers.ts/PackMakerSection";
+import { GetterSections } from "../../sharedWithServer/StateGetters/GetterSections";
+import { PackMakerSection } from "../../sharedWithServer/StatePackers/PackMakerSection";
 import { SetterSection } from "../../sharedWithServer/StateSetters/SetterSection";
 import { SetterSections } from "../../sharedWithServer/StateSetters/SetterSections";
 import { StrictOmit } from "../../sharedWithServer/utils/types";
-import { FeUserSolver } from "../SectionSolvers/FeUserSolver";
-import { userTokenS } from "../services/userTokenS";
+import { GetterFeStore } from "../FeStore/GetterFeStore";
+import { SectionQuerier } from "../QueriersBasic/SectionQuerier";
+import { UserInfoTokenProp, userTokenS } from "../services/userTokenS";
 import { SectionActorBase, SectionActorBaseProps } from "./SectionActorBase";
 
 export type FeUserActorProps = StrictOmit<
@@ -26,11 +33,14 @@ export class FeStoreActor extends SectionActorBase<"feStore"> {
     const sectionPackArrs = this.packMaker.makeChildPackArrs(storeNames);
     return this.apiQueries.replaceSectionArrs(makeReq({ sectionPackArrs }));
   }
+  get getterSections(): GetterSections {
+    return new GetterSections(this.sectionActorBaseProps);
+  }
   get setterSections(): SetterSections {
     return new SetterSections(this.sectionActorBaseProps);
   }
-  get solver(): FeUserSolver {
-    return new FeUserSolver(this.sectionActorBaseProps);
+  get getter(): GetterFeStore {
+    return new GetterFeStore(this.getterSections.getterSectionsProps);
   }
   get setter(): SetterSection<"feStore"> {
     return new SetterSection(this.sectionActorBaseProps);
@@ -38,8 +48,35 @@ export class FeStoreActor extends SectionActorBase<"feStore"> {
   get packMaker(): PackMakerSection<"feStore"> {
     return new PackMakerSection(this.sectionActorBaseProps);
   }
-  get builder(): PackBuilderSection<"feStore"> {
-    return new PackBuilderSection(this.sectionActorBaseProps);
+  private querier<CN extends StoreName>(storeName: CN): SectionQuerier<CN> {
+    return new SectionQuerier({
+      apiQueries: this.apiQueries,
+      dbStoreName: storeName,
+    });
+  }
+  initialSaveSection<CN extends StoreName>(
+    childInfo: FeChildInfo<"feStore", CN>
+  ) {
+    const child = this.get.child(childInfo);
+    const childPack = child.packMaker.makeSectionPack();
+
+    const querier = this.querier(childInfo.childName);
+    let headers: UserInfoTokenProp | null = null;
+    this.setter.tryAndRevertIfFail(async () => {
+      const res = await querier.add(
+        childPack as SectionPack<DbSectionName<CN>>
+      );
+      headers = res.headers;
+    });
+    if (headers) userTokenS.setTokenFromHeaders(headers);
+  }
+  async addActiveDeal(): Promise<void> {
+    this.setterSections.addActiveDeal();
+    const { feId } = this.get.youngestChild("dealMain");
+    this.initialSaveSection({
+      childName: "dealMain",
+      feId,
+    });
   }
   async updateSubscriptionData() {
     const { headers, data } = await this.apiQueries.getSubscriptionData(
@@ -51,20 +88,13 @@ export class FeStoreActor extends SectionActorBase<"feStore"> {
       labSubscriptionExp: data.labSubscriptionExp,
     });
   }
-  setSaveStatus(value: StateValue<"appSaveStatus">): void {
-    this.setter.updateValues({ saveStatus: value });
-  }
-  get saveStatus(): StateValue<"appSaveStatus"> {
-    return this.get.valueNext("saveStatus");
-  }
   get labSubscription(): StateValue<"labSubscription"> {
     return this.get.valueNext("labSubscription");
   }
   get isLoggedIn(): boolean {
-    return this.solver.isLoggedIn;
+    return this.getter.isLoggedIn;
   }
-
   get isGuest(): boolean {
-    return this.solver.isGuest;
+    return this.getter.isGuest;
   }
 }

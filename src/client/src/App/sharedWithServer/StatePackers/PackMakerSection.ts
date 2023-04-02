@@ -2,6 +2,7 @@ import {
   ChildIdArrsWide,
   ChildName,
   FeChildInfo,
+  getChildNames,
 } from "../SectionsMeta/sectionChildrenDerived/ChildName";
 import { ChildSectionName } from "../SectionsMeta/sectionChildrenDerived/ChildSectionName";
 import { ChildSectionPack } from "../SectionsMeta/sectionChildrenDerived/ChildSectionPack";
@@ -31,6 +32,19 @@ export type SectionPackArrs<
 > = {
   [C in CN]: ChildSectionPack<SN, C>[];
 };
+
+export function initSectionPackArrs<
+  SN extends SectionName,
+  CN extends ChildName<SN> = ChildName<SN>
+>(
+  sectionName: SN,
+  childNames: CN[] = getChildNames(sectionName) as CN[]
+): SectionPackArrs<SN, CN> {
+  return childNames.reduce((packArrs, childName) => {
+    packArrs[childName] = [];
+    return packArrs;
+  }, {} as SectionPackArrs<SN, CN>);
+}
 
 type MakeFromSectionsProps<SN extends SectionName> = {
   sections: StateSections;

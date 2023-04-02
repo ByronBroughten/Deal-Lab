@@ -4,11 +4,9 @@ import {
   SectionPackReq,
 } from "../../sharedWithServer/apiQueriesShared/makeReqAndRes";
 import { ChildName } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/ChildName";
-import {
-  DbSectionName,
-  DbStoreNameByType,
-} from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/DbStoreName";
+import { DbSectionName } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/DbStoreName";
 import { SectionPack } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/SectionPack";
+import { StoreName } from "../../sharedWithServer/SectionsMeta/sectionStores";
 import { ApiQuerierBase, ApiQuerierBaseProps } from "./Bases/ApiQuerierBase";
 
 export interface SectionQuerierProps<CN extends ChildName<"dbStore">>
@@ -16,9 +14,7 @@ export interface SectionQuerierProps<CN extends ChildName<"dbStore">>
   dbStoreName: CN;
 }
 
-export class SectionQuerier<
-  CN extends DbStoreNameByType<"sectionQuery">
-> extends ApiQuerierBase {
+export class SectionQuerier<CN extends StoreName> extends ApiQuerierBase {
   readonly dbStoreName: CN;
   constructor({ dbStoreName, ...rest }: SectionQuerierProps<CN>) {
     super(rest);

@@ -26,6 +26,8 @@ import { InEntityGetterVarb } from "../StateGetters/InEntityGetterVarb";
 import { UpdaterVarb } from "../StateUpdaters/UpdaterVarb";
 import { Arr } from "../utils/Arr";
 
+const editorEntitySource = "editor";
+
 type ContentCreators = {
   [EN in EditorValueName]: () => ContentState;
 };
@@ -91,10 +93,13 @@ export class EditorUpdaterVarb<
   }
   valueFromEditorFns = {
     numObj: (contentState: ContentState): NumObj => {
-      const textAndEntities = textAndEntitiesFromContentState(contentState);
+      const textAndEntities = this.applyContentTextAndEntities(contentState);
       const solvableText =
         this.numObjSolver.solvableTextFromTextAndEntities(textAndEntities);
-      return { ...textAndEntities, solvableText };
+      return {
+        ...textAndEntities,
+        solvableText,
+      };
     },
     stringObj: (contentState: ContentState): StringObj => {
       return {
@@ -112,6 +117,17 @@ export class EditorUpdaterVarb<
       return arr;
     },
   };
+  private applyContentTextAndEntities(contentState: ContentState) {
+    let { mainText, entities } = textAndEntitiesFromContentState(contentState);
+    const prevValue = this.getterVarb.multiValue("numObj", "stringObj");
+    const nonEditorEntities = prevValue.entities.filter(
+      (entity) => entity.entitySource !== editorEntitySource
+    );
+    return {
+      mainText,
+      entities: [...entities, ...nonEditorEntities],
+    };
+  }
 }
 
 function textAndEntitiesFromContentState(
@@ -140,7 +156,7 @@ function entitiesFromMapAndRanges(
       {
         ...data,
         ...pick(entityRange, ["offset", "length"]),
-        entitySource: "editor",
+        entitySource: editorEntitySource,
       } as ValueInEntity,
     ]);
   }, [] as ValueInEntity[]);

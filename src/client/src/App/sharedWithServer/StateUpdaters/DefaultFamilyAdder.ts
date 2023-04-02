@@ -12,7 +12,7 @@ import { ParentNameSafe } from "../SectionsMeta/sectionChildrenDerived/ParentNam
 import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
 import { FeSectionInfo } from "../SectionsMeta/SectionInfo/FeInfo";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
-import { PackLoaderSection } from "../StatePackers.ts/PackLoaderSection";
+import { PackLoaderSection } from "../StatePackers/PackLoaderSection";
 import { UpdaterSectionBase } from "./bases/updaterSectionBase";
 import { AddChildOptions, UpdaterSection } from "./UpdaterSection";
 

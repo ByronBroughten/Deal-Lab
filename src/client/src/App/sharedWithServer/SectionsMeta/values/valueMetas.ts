@@ -3,6 +3,7 @@ import { reqMonNumber, reqMonString } from "../../utils/mongoose";
 import { StateValue } from "./StateValue";
 import { inEntityInfoValueSchema } from "./StateValue/InEntityValue";
 import { numObjMeta } from "./StateValue/NumObj";
+import { sectionUpdatesMeta } from "./StateValue/SectionUpdates";
 import { stringObjMeta } from "./StateValue/StringObj";
 import { varbInfoValueMeta } from "./StateValue/VarbInfoValue";
 import { checkValueMetas } from "./valueMetaGeneric";
@@ -45,6 +46,7 @@ export const valueMetas = checkValueMetas({
   numObj: numObjMeta,
   inEntityValue: inEntityInfoValueSchema,
   varbInfo: varbInfoValueMeta,
+  sectionUpdates: sectionUpdatesMeta,
   ...unionMetas,
 });
 
@@ -59,3 +61,9 @@ const zValueArr = Object.values(valueMetas).map((schema) => schema.zod) as [
   z.ZodTypeAny
 ];
 export const zValue = z.union(zValueArr);
+
+export function isObjValue(
+  value: any
+): value is StateValue<"numObj"> | StateValue<"stringObj"> {
+  return valueMetas.numObj.is(value) || valueMetas.stringObj.is(value);
+}

@@ -1,4 +1,5 @@
 import { pick } from "lodash";
+import { defaultMaker } from "../defaultMaker/defaultMaker";
 import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
 import { FeSectionInfo } from "../SectionsMeta/SectionInfo/FeInfo";
 import { SectionName } from "../SectionsMeta/SectionName";
@@ -46,5 +47,10 @@ export class PackBuilderSections extends GetterSectionsBase {
   ): StateSections {
     const main = this.initBuilderFromMainPack(sectionPack);
     return main.sectionsShare.sections;
+  }
+  static initFeStore(): PackBuilderSection<"feStore"> {
+    const feStore = PackBuilderSection.initAsOmniChild("feStore");
+    feStore.loadSelf(defaultMaker.makeSectionPack("feStore"));
+    return feStore;
   }
 }

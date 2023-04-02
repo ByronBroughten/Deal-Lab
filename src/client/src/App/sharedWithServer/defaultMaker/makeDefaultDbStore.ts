@@ -1,5 +1,5 @@
 import { dbStoreNames } from "../SectionsMeta/sectionChildrenDerived/DbStoreName";
-import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
+import { PackBuilderSection } from "../StatePackers/PackBuilderSection";
 import { makeExampleDeal } from "./makeDefaultFeUser/makeExampleDeal";
 import { makeExampleStoreProperty } from "./makeDefaultFeUser/makeExampleProperty";
 import {

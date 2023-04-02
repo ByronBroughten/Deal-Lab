@@ -73,6 +73,7 @@ export const config = {
   apiQueryNames: [
     "addSection",
     "updateSection",
+    "updateSections",
     "getSection",
     "deleteSection",
     "replaceSectionArrs",

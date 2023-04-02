@@ -2,7 +2,7 @@ import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack"
 import { mixedInfoS } from "../SectionsMeta/SectionInfo/MixedSectionInfo";
 import { inEntityValueInfo } from "../SectionsMeta/values/StateValue/InEntityValue";
 import { ValueInEntityInfo } from "../SectionsMeta/values/StateValue/valuesShared/entities";
-import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
+import { PackBuilderSection } from "../StatePackers/PackBuilderSection";
 
 export const outputNames = [
   "totalInvestment",

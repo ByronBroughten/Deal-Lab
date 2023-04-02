@@ -7,7 +7,7 @@ import { allBaseSectionVarbs } from "../../SectionsMeta/allBaseSectionVarbs";
 import { ChildSectionPack } from "../../SectionsMeta/sectionChildrenDerived/ChildSectionPack";
 import { validateSectionPackArrs } from "../../SectionsMeta/SectionNameByType";
 import { GetterSections } from "../../StateGetters/GetterSections";
-import { PackBuilderSection } from "../../StatePackers.ts/PackBuilderSection";
+import { PackBuilderSection } from "../../StatePackers/PackBuilderSection";
 import { StateSections } from "../../StateSections/StateSections";
 import { SolverSection } from "../../StateSolvers/SolverSection";
 import { SolverSections } from "../../StateSolvers/SolverSections";

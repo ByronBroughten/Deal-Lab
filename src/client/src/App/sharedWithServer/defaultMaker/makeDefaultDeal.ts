@@ -1,6 +1,6 @@
 import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
 import { GetterSection } from "../StateGetters/GetterSection";
-import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
+import { PackBuilderSection } from "../StatePackers/PackBuilderSection";
 import { makeDefaultLoanPack } from "./makeDefaultLoanPack";
 import { makeDefaultMgmtPack } from "./makeDefaultMgmtPack";
 import { makeDefaultProperty } from "./makeDefaultProperty";

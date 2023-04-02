@@ -7,7 +7,7 @@ import {
   SectionQueryName,
 } from "../SectionsMeta/sectionChildrenDerived/DbStoreName";
 import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
-import { SectionPackArrs } from "../StatePackers.ts/PackMakerSection";
+import { SectionPackArrs } from "../StatePackers/PackMakerSection";
 
 export const makeReq = <B extends QueryObj = {}>(body?: B): MakeReq<B> => ({
   body: body ?? ({} as B),
@@ -28,7 +28,7 @@ export type DbPackInfoSectionReq<
 > = MakeReq<DbStoreInfo<CN>>;
 export type SectionPackReq<CN extends SectionQueryName = SectionQueryName> =
   MakeReq<DbPack<CN>>;
-export type ReplacePackArrsReq = MakeReq<{
+export type SectionPackArrsReq = MakeReq<{
   sectionPackArrs: DbPackArrQueryArrs;
 }>;
 
@@ -46,6 +46,7 @@ export type SectionPackRes<CN extends SectionQueryName = SectionQueryName> =
   MakeRes<{
     sectionPack: SectionPack<DbSectionName<CN>>;
   }>;
+
 export type DbIdRes = MakeRes<{ dbId: string }>;
 export type DbStoreNameRes<CN extends SectionQueryName = SectionQueryName> =
   MakeRes<DbStoreNameProp<CN>>;

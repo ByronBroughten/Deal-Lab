@@ -10,6 +10,7 @@ export const valueNames = [
   "numObj",
   "inEntityValue",
   "varbInfo",
+  "sectionUpdates",
   ...unionValueNames,
 ] as const;
 export type ValueName = typeof valueNames[number];

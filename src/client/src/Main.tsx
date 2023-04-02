@@ -12,14 +12,15 @@ import { UserVarbEditorPage } from "./App/components/UserVarbEditorPage";
 import { feRoutes } from "./App/Constants/feRoutes";
 import { useSubscriptions } from "./App/modules/customHooks/useSubscriptions";
 import { useControlUserData } from "./App/modules/SectionActors/UserDataActor";
-import theme from "./App/theme/Theme";
+import { useAutoSaveNext } from "./App/sharedWithServer/stateClassHooks/useAutoSaveSections";
+import { nativeTheme } from "./App/theme/nativeTheme";
 import { PrivacyPolicyPage } from "./PrivacyPolicyPage";
 import { UserComponentRoutes } from "./UserComponentRoutes";
 
 export function Main() {
   useControlUserData();
   useSubscriptions();
-  // useAutoSaveSections();
+  useAutoSaveNext();
   return (
     <Styled className="App-root">
       <Routes>
@@ -55,7 +56,7 @@ const Styled = styled.div`
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background-color: ${theme.light};
+  background-color: ${nativeTheme.light};
   * {
     font-family: "Source Sans Pro", "Roboto", Arial, sans-serif;
   }

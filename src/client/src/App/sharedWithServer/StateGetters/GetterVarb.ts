@@ -19,11 +19,11 @@ import {
   ValueNameOrAny,
 } from "../SectionsMeta/values/StateValue";
 import { NumberOrQ } from "../SectionsMeta/values/StateValue/NumObj";
+import { isObjValue } from "../SectionsMeta/values/valueMetas";
 import { ValueName } from "../SectionsMeta/values/ValueName";
 import { VarbMeta } from "../SectionsMeta/VarbMeta";
 import { StateVarb } from "../StateSections/StateSectionsTypes";
 import { mathS, NotANumberError } from "../utils/math";
-import { Obj } from "../utils/Obj";
 import { GetterVarbBase } from "./Bases/GetterVarbBase";
 import { GetterSection } from "./GetterSection";
 import { GetterSections } from "./GetterSections";
@@ -86,7 +86,7 @@ export class GetterVarb<
     if (val) {
       if (typeof val === "string") {
         return val;
-      } else if (Obj.isObjToRecord(val) && "mainText" in val) {
+      } else if (isObjValue(val)) {
         return val.mainText;
       }
     }

@@ -1,4 +1,4 @@
-import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
+import { PackBuilderSection } from "../StatePackers/PackBuilderSection";
 import { ConditionalRowTypeName } from "../StateSolvers/ValueUpdaterVarb/ConditionalValueSolver";
 
 export function makeDefaultConditionalList() {

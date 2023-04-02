@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { reqMonString } from "../../../utils/mongoose";
+import { Obj } from "../../../utils/Obj";
 import { StrictPick } from "../../../utils/types";
 import {
   mInEntities,
@@ -41,9 +42,9 @@ const mNumObj: Record<keyof NumObj, any> = {
   solvableText: reqMonString,
 };
 function isNumObj(value: any): value is NumObj {
-  // speed is important here, which is why we don't use zod
+  // top speed is important here, which is why we don't use zod
   return (
-    typeof value === "object" &&
+    Obj.isObjToAny(value) &&
     "mainText" in value &&
     typeof value.mainText === "string" &&
     Array.isArray(value.entities)

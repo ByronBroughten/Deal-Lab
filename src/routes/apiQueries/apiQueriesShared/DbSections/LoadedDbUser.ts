@@ -3,7 +3,6 @@ import { Response } from "express";
 import { pick } from "lodash";
 import mongoose from "mongoose";
 import { constants } from "../../../../client/src/App/Constants";
-import { FeUserSolver } from "../../../../client/src/App/modules/SectionSolvers/FeUserSolver";
 import { AnalyzerPlanValues } from "../../../../client/src/App/sharedWithServer/apiQueriesShared/AnalyzerPlanValues";
 import { UserData } from "../../../../client/src/App/sharedWithServer/apiQueriesShared/validateUserData";
 import { storeNames } from "../../../../client/src/App/sharedWithServer/SectionsMeta/sectionStores";
@@ -12,7 +11,8 @@ import {
   GetterSectionProps,
 } from "../../../../client/src/App/sharedWithServer/StateGetters/Bases/GetterSectionBase";
 import { GetterSection } from "../../../../client/src/App/sharedWithServer/StateGetters/GetterSection";
-import { PackBuilderSection } from "../../../../client/src/App/sharedWithServer/StatePackers.ts/PackBuilderSection";
+import { PackBuilderSection } from "../../../../client/src/App/sharedWithServer/StatePackers/PackBuilderSection";
+import { PackBuilderSections } from "../../../../client/src/App/sharedWithServer/StatePackers/PackBuilderSections";
 import { Arr } from "../../../../client/src/App/sharedWithServer/utils/Arr";
 import { timeS } from "../../../../client/src/App/sharedWithServer/utils/date";
 import { stripeS } from "../../../../client/src/App/sharedWithServer/utils/stripe";
@@ -137,21 +137,21 @@ export class LoadedDbUser extends GetterSectionBase<"dbStore"> {
     }
   }
   collectUserData(): UserData {
-    const feStore = FeUserSolver.initDefault();
-    feStore.packBuilder.updateValues({
+    const feStore = PackBuilderSections.initFeStore();
+    feStore.updateValues({
       ...pick(this.userInfo, ["email", "userName"]),
       ...this.subscriptionValues,
       authStatus: "user",
       userDataStatus: "loaded",
     });
     for (const storeName of storeNames) {
-      feStore.packBuilder.replaceChildren({
+      feStore.replaceChildren({
         childName: storeName,
         sectionPacks: this.dbSections.sectionPackArr(storeName),
       });
     }
     return {
-      feStore: feStore.packBuilder.makeSectionPack(),
+      feStore: feStore.makeSectionPack(),
     };
   }
   createUserInfoToken(subscriptionValues?: AnalyzerPlanValues): string {

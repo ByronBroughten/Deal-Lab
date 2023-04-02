@@ -24,8 +24,8 @@ import { GetterVarb } from "../StateGetters/GetterVarb";
 import {
   ChildPackInfo,
   ChildSectionPackArrs,
-} from "../StatePackers.ts/PackLoaderSection";
-import { PackMakerSection } from "../StatePackers.ts/PackMakerSection";
+} from "../StatePackers/PackLoaderSection";
+import { PackMakerSection } from "../StatePackers/PackMakerSection";
 import { SolverSection } from "../StateSolvers/SolverSection";
 import {
   AddChildOptions,

@@ -1,15 +1,15 @@
 import { FeSectionInfo } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
-import { useRemoveSelf } from "../../sharedWithServer/stateClassHooks/useReduceActions";
+import { useAction } from "../../sharedWithServer/stateClassHooks/useAction";
 import { MuiStandardPropsNext } from "../general/StandardProps";
 import { XBtn } from "./Xbtn";
 
 interface Props extends MuiStandardPropsNext, FeSectionInfo {}
 export function RemoveSectionXBtn({ sectionName, feId, ...rest }: Props) {
-  const removeSelf = useRemoveSelf();
+  const removeSection = useAction("removeSelf");
   return (
     <XBtn
       {...{
-        onClick: () => removeSelf({ sectionName, feId }),
+        onClick: () => removeSection({ sectionName, feId }),
         ...rest,
       }}
     />

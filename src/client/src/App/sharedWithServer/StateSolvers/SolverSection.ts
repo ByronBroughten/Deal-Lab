@@ -10,16 +10,17 @@ import { FeSectionInfo } from "../SectionsMeta/SectionInfo/FeInfo";
 import { VarbInfoMixedFocal } from "../SectionsMeta/SectionInfo/MixedSectionInfo";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
-import { SectionValues } from "../SectionsMeta/values/StateValue";
+import { SectionValues, VarbValue } from "../SectionsMeta/values/StateValue";
 import { GetterSectionProps } from "../StateGetters/Bases/GetterSectionBase";
 import { GetterSection } from "../StateGetters/GetterSection";
-import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
+import { PackBuilderSection } from "../StatePackers/PackBuilderSection";
 import {
   ChildPackInfo,
   ChildSectionPackArrs,
-} from "../StatePackers.ts/PackLoaderSection";
-import { LoadChildSectionPackOptions } from "../StatePackers.ts/PackLoaderSection/ChildPackLoader";
-import { PackMakerSection } from "../StatePackers.ts/PackMakerSection";
+} from "../StatePackers/PackLoaderSection";
+import { LoadChildSectionPackOptions } from "../StatePackers/PackLoaderSection/ChildPackLoader";
+import { PackMakerSection } from "../StatePackers/PackMakerSection";
+import { StateSections } from "../StateSections/StateSections";
 import {
   AddChildOptions,
   UpdaterSection,
@@ -97,6 +98,9 @@ export class SolverSection<
     const { feInfo } = this.get.youngestChild(childName);
     return this.solverSection(feInfo);
   }
+  get stateSections(): StateSections {
+    return this.sectionsShare.sections;
+  }
   solve() {
     this.solverSections.solve();
   }
@@ -129,6 +133,9 @@ export class SolverSection<
   ) {
     this.prepper.removeChildByDbId(dbInfo);
     this.solve();
+  }
+  value<VN extends VarbName<SN>>(varbName: VN): VarbValue<SN, VN> {
+    return this.get.valueNext(varbName);
   }
   varb<VN extends VarbName<SN>>(varbName: VN): SolverVarb<SN> {
     return new SolverVarb({

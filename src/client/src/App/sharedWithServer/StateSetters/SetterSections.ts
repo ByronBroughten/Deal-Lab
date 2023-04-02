@@ -53,6 +53,10 @@ export class SetterSections extends SetterSectionsBase {
     this.solverSections.activateDealAndSolve(feId);
     this.setSections();
   }
+  addActiveDeal(): void {
+    this.solverSections.addActiveDeal();
+    this.setSections();
+  }
   applyVariablesToDealPages(): void {
     this.solverSections.applyVariablesToDealPages();
     this.setSections();

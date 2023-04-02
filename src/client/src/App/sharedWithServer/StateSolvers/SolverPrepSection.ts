@@ -12,7 +12,7 @@ import { GetterSection } from "../StateGetters/GetterSection";
 import {
   ChildSectionPackArrs,
   LoadChildProps,
-} from "../StatePackers.ts/PackLoaderSection";
+} from "../StatePackers/PackLoaderSection";
 import { AddChildOptions } from "../StateUpdaters/UpdaterSection";
 import { Obj } from "../utils/Obj";
 import {
@@ -57,7 +57,9 @@ export class SolverPrepSection<
       ...info,
     });
   }
-  child(childInfo: FeChildInfo<SN>): SolverPrepSection<ChildSectionName<SN>> {
+  child<CN extends ChildName<SN>>(
+    childInfo: FeChildInfo<SN, CN>
+  ): SolverPrepSection<ChildSectionName<SN, CN>> {
     const feInfo = this.get.childInfoToFe(childInfo);
     return this.solverPrepSection(feInfo);
   }
@@ -97,6 +99,13 @@ export class SolverPrepSection<
   ) {
     this.adderPrepper.addChild(childName, options);
     this.addAppWideMissingOutEntities();
+  }
+  addAndGetChild<CN extends ChildName<SN>>(
+    childName: CN,
+    options?: AddChildOptions<SN, CN>
+  ) {
+    this.addChild(childName, options);
+    return this.youngestChild(childName);
   }
   loadChild<CN extends ChildName<SN>>(packInfo: LoadChildProps<SN, CN>): void {
     this.adderPrepper.loadChild(packInfo);

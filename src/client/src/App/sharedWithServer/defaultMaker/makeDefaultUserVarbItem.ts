@@ -1,4 +1,4 @@
-import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
+import { PackBuilderSection } from "../StatePackers/PackBuilderSection";
 import { makeDefaultConditionalList } from "./makeDefaultConditionalList";
 
 export function makeDefaultUserVarbItem() {

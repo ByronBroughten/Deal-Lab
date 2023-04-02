@@ -6,7 +6,7 @@ import { SectionArrQuerier } from "../../modules/QueriersBasic/SectionArrQuerier
 import { SectionStoreChildName } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/ChildName";
 import { SectionName } from "../../sharedWithServer/SectionsMeta/SectionName";
 import { useSetterSections } from "../../sharedWithServer/stateClassHooks/useSetterSections";
-import { SectionPackArrs } from "../../sharedWithServer/StatePackers.ts/PackMakerSection";
+import { SectionPackArrs } from "../../sharedWithServer/StatePackers/PackMakerSection";
 import { SetterSections } from "../../sharedWithServer/StateSetters/SetterSections";
 
 export function useSaveEditorToDb<

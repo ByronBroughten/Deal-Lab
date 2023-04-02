@@ -6,7 +6,10 @@ export const sectionNames = [
   "mainDealMenu",
   "editorControls",
   "variablesMenu",
+
   "feStore",
+  "saveAttempt",
+
   "dbStore",
   "proxyStoreItem",
   "omniParent",

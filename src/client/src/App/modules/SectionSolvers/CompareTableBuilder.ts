@@ -2,7 +2,7 @@ import { SectionPack } from "../../sharedWithServer/SectionsMeta/sectionChildren
 import { SectionPackByType } from "../../sharedWithServer/SectionsMeta/SectionNameByType";
 import { GetterSectionProps } from "../../sharedWithServer/StateGetters/Bases/GetterSectionBase";
 import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection";
-import { PackBuilderSection } from "../../sharedWithServer/StatePackers.ts/PackBuilderSection";
+import { PackBuilderSection } from "../../sharedWithServer/StatePackers/PackBuilderSection";
 import { UpdaterSectionBase } from "../../sharedWithServer/StateUpdaters/bases/updaterSectionBase";
 import { UpdaterSection } from "../../sharedWithServer/StateUpdaters/UpdaterSection";
 import { Str } from "../../sharedWithServer/utils/Str";

@@ -7,6 +7,7 @@ import {
   InEntity,
   ValueInEntity,
 } from "../SectionsMeta/values/StateValue/valuesShared/entities";
+import { isObjValue } from "../SectionsMeta/values/valueMetas";
 import { InUpdatePack } from "../SectionsMeta/VarbMeta";
 import { InVarbInfo } from "../StateSolvers/SolverVarb";
 import { GetterVarbBase } from "./Bases/GetterVarbBase";
@@ -78,7 +79,7 @@ export class InEntityGetterVarb<
   }
   get valueInEntities(): ValueInEntity[] {
     const val = this.get.value("any");
-    if (val && typeof val === "object" && "entities" in val) {
+    if (isObjValue(val)) {
       return cloneDeep(val.entities);
     } else return [];
   }

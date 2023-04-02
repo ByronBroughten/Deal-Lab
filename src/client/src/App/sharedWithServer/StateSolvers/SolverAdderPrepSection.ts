@@ -13,7 +13,7 @@ import {
   ChildSectionPackArrs,
   LoadChildProps,
   PackLoaderSection,
-} from "../StatePackers.ts/PackLoaderSection";
+} from "../StatePackers/PackLoaderSection";
 import { DefaultFamilyAdder } from "../StateUpdaters/DefaultFamilyAdder";
 import {
   AddChildOptions,

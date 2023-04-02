@@ -1,4 +1,5 @@
 import { pick } from "lodash";
+import { SolverFeStore } from "../../modules/FeStore/SolverFeStore";
 import { defaultMaker } from "../defaultMaker/defaultMaker";
 import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
 import { FeSectionInfo, FeVarbInfo } from "../SectionsMeta/SectionInfo/FeInfo";
@@ -7,9 +8,10 @@ import { SectionName } from "../SectionsMeta/SectionName";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { GetterSections } from "../StateGetters/GetterSections";
 import { GetterVarb } from "../StateGetters/GetterVarb";
-import { PackBuilderSections } from "../StatePackers.ts/PackBuilderSections";
+import { PackBuilderSections } from "../StatePackers/PackBuilderSections";
 import { StateSections } from "../StateSections/StateSections";
 import { Arr } from "../utils/Arr";
+import { GetterSectionsProps } from "./../StateGetters/Bases/GetterSectionsBase";
 import { OutEntityGetterVarb } from "./../StateInOutVarbs/OutEntityGetterVarb";
 import { SolverSectionsBase } from "./SolverBases/SolverSectionsBase";
 import { SolverPrepSection } from "./SolverPrepSection";
@@ -19,6 +21,8 @@ import tsort from "./SolverSections/tsort/tsort";
 import { SolverVarb } from "./SolverVarb";
 
 type OutVarbMap = Record<string, Set<string>>;
+
+export const sectionIdSeparator = "|";
 
 export class SolverSections extends SolverSectionsBase {
   get getterSections() {
@@ -39,6 +43,12 @@ export class SolverSections extends SolverSectionsBase {
   ): SolverVarb<SN> {
     const varb = this.getterSections.varbByMixed(mixedInfo);
     return this.solverVarb(varb.feVarbInfo);
+  }
+  get feStore(): SolverFeStore {
+    return new SolverFeStore(this.solverSectionsProps);
+  }
+  get stateSections(): StateSections {
+    return this.sectionsShare.sections;
   }
   solve() {
     const orderedInfos = this.gatherAndSortInfosToSolve();
@@ -133,6 +143,12 @@ export class SolverSections extends SolverSectionsBase {
     this.prepperSections.applyVariablesToDealPages();
     this.solve();
   }
+  static init(props: GetterSectionsProps) {
+    return new SolverSections({
+      solveShare: { varbIdsToSolveFor: new Set() },
+      ...props,
+    });
+  }
   static initSectionsFromDefaultMain(): StateSections {
     const defaultMainPack = defaultMaker.makeSectionPack("main");
     const solver = this.initSolverFromMainPack(defaultMainPack);
@@ -176,5 +192,10 @@ export class SolverSections extends SolverSectionsBase {
   activateDealAndSolve(feId: string): void {
     this.prepperSections.activateDeal(feId);
     this.solve();
+  }
+  addActiveDeal() {
+    const feStore = this.prepperSections.oneAndOnly("feStore");
+    const { feId } = feStore.addAndGetChild("dealMain").get;
+    this.activateDealAndSolve(feId);
   }
 }

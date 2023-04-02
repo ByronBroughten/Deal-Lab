@@ -1,4 +1,4 @@
-import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
+import { PackBuilderSection } from "../StatePackers/PackBuilderSection";
 
 export function makeDefaultOneTimeValue() {
   const singleTimeValue = PackBuilderSection.initAsOmniChild("singleTimeValue");

@@ -5,7 +5,7 @@ import { StateValue } from "../../sharedWithServer/SectionsMeta/values/StateValu
 import { useGetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useGetterSection";
 import { timeS } from "../../sharedWithServer/utils/date";
 import { getErrorMessage } from "../../utils/error";
-import { useFeStore } from "../sectionActorHooks/useFeStore";
+import { useFeStoreDepreciated } from "../sectionActorHooks/useFeStoreDepreciated";
 
 export function useSubscriptions() {
   useUpdateOnSubscribe();
@@ -28,7 +28,7 @@ export function useUserSubscription(): {
 }
 
 function useUpdateOnSubscribe() {
-  const feStore = useFeStore();
+  const feStore = useFeStoreDepreciated();
   const { pathname } = useLocation();
 
   const navigate = useNavigate();
@@ -48,7 +48,7 @@ function useUpdateOnSubscribe() {
 }
 
 function useUpdateOnExpire() {
-  const feStore = useFeStore();
+  const feStore = useFeStoreDepreciated();
   const { userPlanExpiration } = useUserSubscription();
 
   React.useEffect(() => {

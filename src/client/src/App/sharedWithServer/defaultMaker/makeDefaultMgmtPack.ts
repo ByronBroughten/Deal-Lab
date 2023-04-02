@@ -1,5 +1,5 @@
 import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
-import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
+import { PackBuilderSection } from "../StatePackers/PackBuilderSection";
 
 export function makeDefaultMgmtPack(): SectionPack<"mgmt"> {
   const mgmt = PackBuilderSection.initAsOmniChild("mgmt", {

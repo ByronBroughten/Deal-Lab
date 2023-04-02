@@ -2,7 +2,7 @@ import { SectionPack } from "../../SectionsMeta/sectionChildrenDerived/SectionPa
 import { numObj } from "../../SectionsMeta/values/StateValue/NumObj";
 import { numObjNext } from "../../SectionsMeta/values/StateValue/numObjNext";
 import { stringObj } from "../../SectionsMeta/values/StateValue/StringObj";
-import { PackBuilderSection } from "../../StatePackers.ts/PackBuilderSection";
+import { PackBuilderSection } from "../../StatePackers/PackBuilderSection";
 import { Obj } from "../../utils/Obj";
 import {
   priceSqftMiscRepairHybrid,

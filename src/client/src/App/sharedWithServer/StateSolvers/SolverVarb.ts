@@ -15,9 +15,10 @@ import { GetterSections } from "../StateGetters/GetterSections";
 import { GetterVarb } from "../StateGetters/GetterVarb";
 import { InEntityGetterVarb } from "../StateGetters/InEntityGetterVarb";
 import { OutEntityGetterVarb } from "../StateInOutVarbs/OutEntityGetterVarb";
+import { PackBuilderSections } from "../StatePackers/PackBuilderSections";
+import { StateSections } from "../StateSections/StateSections";
 import { UpdaterVarb } from "../StateUpdaters/UpdaterVarb";
 import { StrictOmit } from "../utils/types";
-import { PackBuilderSections } from "./../StatePackers.ts/PackBuilderSections";
 import { SolverVarbBase, SolverVarbProps } from "./SolverBases/SolverVarbBase";
 import { SolverSection } from "./SolverSection";
 import { SolverSections } from "./SolverSections";
@@ -62,6 +63,9 @@ export class SolverVarb<
   }
   get builderSections() {
     return new PackBuilderSections(this.getterSectionProps);
+  }
+  get stateSections(): StateSections {
+    return this.sectionsShare.sections;
   }
   localSolverVarb(varbName: string): SolverVarb<SN> {
     return new SolverVarb({

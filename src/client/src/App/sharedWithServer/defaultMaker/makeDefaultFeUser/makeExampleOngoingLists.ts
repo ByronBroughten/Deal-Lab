@@ -5,7 +5,7 @@ import {
   numToObj,
 } from "../../SectionsMeta/values/StateValue/NumObj";
 import { stringObj } from "../../SectionsMeta/values/StateValue/StringObj";
-import { PackBuilderSection } from "../../StatePackers.ts/PackBuilderSection";
+import { PackBuilderSection } from "../../StatePackers/PackBuilderSection";
 
 type UtilityItemProp = readonly [string, NumObj];
 export function makeUtilityList(

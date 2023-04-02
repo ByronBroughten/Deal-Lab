@@ -1,6 +1,6 @@
 import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
-import { PackLoaderSection } from "../StatePackers.ts/PackLoaderSection";
+import { PackLoaderSection } from "../StatePackers/PackLoaderSection";
 import { GetterSection } from "./../StateGetters/GetterSection";
 import { AddSolverSection } from "./AddSolverSection";
 import { RemoveSolverSection } from "./RemoveSolverSection";

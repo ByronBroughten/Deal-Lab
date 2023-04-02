@@ -1,4 +1,4 @@
-import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
+import { PackBuilderSection } from "../StatePackers/PackBuilderSection";
 import { makeDefaultDealPack } from "./makeDefaultDeal";
 
 export function makeDefaultDealSystem() {

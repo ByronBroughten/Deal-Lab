@@ -6,10 +6,16 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-// Do I really need to get rid of setterSection for all this?
-// I might not, but it's a pretty good opportunity to.
-// I ought to get this working right before I go on a rampage
-// and rip the rest of the sections apart.
+// - Update zod to latest
+
+// - Update sections' "last updated",
+//    *I'll try the top one. If that doesn't work, I'll try the bottom one.
+//    - upon their being updated, so in useAction (would this add much latency?)
+//        this would provide the quickest turnaround for user experience
+//    - upon the updates being saved, so in FeStore.saveSections
+//      this would
+//    - this would be the least resource-intensive and would reflect
+//      saving
 
 // I got the auto-save to work, but it's far too slow.
 // I need a way to update individual sections.

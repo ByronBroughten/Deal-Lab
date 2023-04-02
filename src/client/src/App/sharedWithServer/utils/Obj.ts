@@ -1,5 +1,6 @@
 // import { isEqual, pick } from "lodash";
 import { isArray, isEqual, isObject, pick, transform } from "lodash";
+import { shallowEqualObjects } from "shallow-equal";
 import { entryKeysWithPropOfType } from "./Obj/entryKeysWithProp";
 import { merge, spread } from "./Obj/merge";
 import { PropKeysOfValue } from "./Obj/SubType";
@@ -72,6 +73,9 @@ function validateTruthyRes(res: any): any {
   }
 }
 export const Obj = {
+  shallowEqual(a: any, b: any): boolean {
+    return shallowEqualObjects(a, b);
+  },
   validateTruthy(value: any) {
     if (value) {
       return value;

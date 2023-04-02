@@ -68,19 +68,41 @@ export const indexStoreSectionNames = indexStoreNames.reduce(
   [] as IndexStoreSectionName[]
 );
 
+export const variableStoreNames = Arr.extractStrict(storeNames, [
+  "numVarbListMain",
+  "boolVarbListMain",
+]);
+
 const singleItemStoreNames = Arr.excludeStrict(storeNames, indexStoreNames);
 export type SingleItemStoreName = typeof singleItemStoreNames[number];
 
 const storeNamesByType = {
   indexStore: indexStoreNames,
   singleItemStore: singleItemStoreNames,
+  variableStore: variableStoreNames,
   all: storeNames,
 };
 
-export function getStoreName<T extends StoreTypeName>(
+export function getStoreNames<T extends StoreTypeName>(
   typeName: T
 ): StoreNameByType<T>[] {
   return storeNamesByType[typeName];
+}
+export function isStoreNameByType<T extends StoreTypeName = "all">(
+  value: any,
+  typeName?: T
+): value is StoreNameByType<T> {
+  return (storeNamesByType as any)[typeName ?? "all"].includes(value);
+}
+export function validateStoreName<T extends StoreTypeName = "all">(
+  value: any,
+  storeType?: T
+): StoreNameByType<T> {
+  if (isStoreNameByType(value)) {
+    return value;
+  } else {
+    throw new Error(`"${value}" is not a storeName of type "${storeType}"`);
+  }
 }
 
 type StoreNamesByType = typeof storeNamesByType;

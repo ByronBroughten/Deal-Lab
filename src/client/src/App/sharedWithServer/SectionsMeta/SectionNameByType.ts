@@ -1,5 +1,5 @@
 import { StringTypeChecker } from "../../utils/StringTypeChecker";
-import { SectionPackArrs } from "../StatePackers.ts/PackMakerSection";
+import { SectionPackArrs } from "../StatePackers/PackMakerSection";
 import { Arr } from "../utils/Arr";
 import { Obj } from "../utils/Obj";
 import { PropKeyOfValue } from "../utils/Obj/SubType";

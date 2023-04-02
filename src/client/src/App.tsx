@@ -1,6 +1,5 @@
 import { ThemeProvider } from "@mui/material";
 import StyledEngineProvider from "@mui/material/StyledEngineProvider";
-
 import { createTheme } from "@mui/material/styles";
 import React from "react";
 import { BrowserRouter } from "react-router-dom";
@@ -9,6 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { Normalize } from "styled-normalize";
 import { SuperTokensWrapper } from "supertokens-auth-react";
 import { initSupertokens } from "./App/modules/initSupertokens";
+import { IdOfSectionToSaveProvider } from "./App/sharedWithServer/stateClassHooks/useIdOfSectionToSave";
 import {
   SectionsContext,
   SectionsDispatchContext,
@@ -43,10 +43,12 @@ const App: React.FC = () => {
               <BrowserRouter>
                 <SectionsContext.Provider value={sectionsContext}>
                   <SectionsDispatchContext.Provider value={sectionsDispatch}>
-                    <GlobalFonts />
-                    <GlobalStyle />
-                    <Main />
-                    <ToastContainer />
+                    <IdOfSectionToSaveProvider sectionId="">
+                      <GlobalFonts />
+                      <GlobalStyle />
+                      <Main />
+                      <ToastContainer />
+                    </IdOfSectionToSaveProvider>
                   </SectionsDispatchContext.Provider>
                 </SectionsContext.Provider>
               </BrowserRouter>

@@ -12,7 +12,7 @@ import { GetterSectionProps } from "../../../client/src/App/sharedWithServer/Sta
 import { GetterSectionsBase } from "../../../client/src/App/sharedWithServer/StateGetters/Bases/GetterSectionsBase";
 import { GetterList } from "../../../client/src/App/sharedWithServer/StateGetters/GetterList";
 import { GetterSection } from "../../../client/src/App/sharedWithServer/StateGetters/GetterSection";
-import { PackMakerSection } from "../../../client/src/App/sharedWithServer/StatePackers.ts/PackMakerSection";
+import { PackMakerSection } from "../../../client/src/App/sharedWithServer/StatePackers/PackMakerSection";
 import { SolverSection } from "../../../client/src/App/sharedWithServer/StateSolvers/SolverSection";
 import { SolverSections } from "../../../client/src/App/sharedWithServer/StateSolvers/SolverSections";
 import { UpdaterSection } from "../../../client/src/App/sharedWithServer/StateUpdaters/UpdaterSection";

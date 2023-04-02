@@ -1,9 +1,9 @@
-import { EditorState } from "draft-js";
+import { ContentState, EditorState } from "draft-js";
 import { isEqual } from "lodash";
 import React, { useEffect, useState } from "react";
 import { FeVarbInfo } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { isEditorValueName } from "../../sharedWithServer/SectionsMeta/values/EditorValue";
-import { useUpdateValueFromContent } from "../../sharedWithServer/stateClassHooks/useReduceActions";
+import { useAction } from "../../sharedWithServer/stateClassHooks/useAction";
 import { useSetterVarb } from "../../sharedWithServer/stateClassHooks/useSetterVarb";
 import { CreateEditorProps } from "../../sharedWithServer/StateSetters/EditorUpdaterVarb";
 import { SetterVarb } from "../../sharedWithServer/StateSetters/SetterVarb";
@@ -78,7 +78,7 @@ interface Props extends FeVarbInfo {
   editorState: EditorState;
 }
 function useUpdateValueFromEditor({ editorState, ...rest }: Props) {
-  const updateFromContent = useUpdateValueFromContent();
+  const updateFromContent = useAction("updateValueFromContent");
   const contentState = editorState.getCurrentContent();
   const isFirstUpdateRef = React.useRef(true);
   useEffect(() => {
@@ -87,5 +87,9 @@ function useUpdateValueFromEditor({ editorState, ...rest }: Props) {
       return;
     }
     updateFromContent({ contentState, ...rest });
-  }, [contentState]);
+  }, [contentState, updateFromContent]);
+}
+
+export interface VarbContentInfo extends FeVarbInfo {
+  contentState: ContentState;
 }

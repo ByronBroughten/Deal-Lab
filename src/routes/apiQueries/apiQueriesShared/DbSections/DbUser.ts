@@ -24,8 +24,8 @@ import {
   VarbValue,
 } from "../../../../client/src/App/sharedWithServer/SectionsMeta/values/StateValue";
 import { GetterSection } from "../../../../client/src/App/sharedWithServer/StateGetters/GetterSection";
-import { PackBuilderSection } from "../../../../client/src/App/sharedWithServer/StatePackers.ts/PackBuilderSection";
-import { SectionPackArrs } from "../../../../client/src/App/sharedWithServer/StatePackers.ts/PackMakerSection";
+import { PackBuilderSection } from "../../../../client/src/App/sharedWithServer/StatePackers/PackBuilderSection";
+import { SectionPackArrs } from "../../../../client/src/App/sharedWithServer/StatePackers/PackMakerSection";
 import { Obj } from "../../../../client/src/App/sharedWithServer/utils/Obj";
 import { ResStatusError } from "../../../../utils/resError";
 import { DbUserModel, modelPath } from "../../../routesShared/DbUserModel";

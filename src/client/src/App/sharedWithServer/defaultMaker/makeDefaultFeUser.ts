@@ -1,5 +1,5 @@
 import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
-import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
+import { PackBuilderSection } from "../StatePackers/PackBuilderSection";
 import { timeS } from "../utils/date";
 import { makeDefaultDealPack } from "./makeDefaultDeal";
 import { makeDefaultOutputList } from "./makeDefaultOutputList";

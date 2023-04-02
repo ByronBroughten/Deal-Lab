@@ -1,5 +1,5 @@
 import { stringObj } from "../../SectionsMeta/values/StateValue/StringObj";
-import { PackBuilderSection } from "../../StatePackers.ts/PackBuilderSection";
+import { PackBuilderSection } from "../../StatePackers/PackBuilderSection";
 import { timeS } from "../../utils/date";
 import {
   makeDefaultDealDisplayName,

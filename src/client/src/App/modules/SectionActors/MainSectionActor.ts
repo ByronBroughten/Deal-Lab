@@ -5,7 +5,7 @@ import {
 import { SectionPack } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/SectionPack";
 import { SectionNameByType } from "../../sharedWithServer/SectionsMeta/SectionNameByType";
 import { StoreName } from "../../sharedWithServer/SectionsMeta/sectionStores";
-import { PackMakerSection } from "../../sharedWithServer/StatePackers.ts/PackMakerSection";
+import { PackMakerSection } from "../../sharedWithServer/StatePackers/PackMakerSection";
 import { SetterSection } from "../../sharedWithServer/StateSetters/SetterSection";
 import { SetterSections } from "../../sharedWithServer/StateSetters/SetterSections";
 import { SolverSection } from "../../sharedWithServer/StateSolvers/SolverSection";
@@ -75,6 +75,7 @@ export class MainSectionActor<
   get isSaved(): boolean {
     return this.mainSolver.isSaved;
   }
+
   get asSavedPack(): SectionPack<SN> {
     return this.mainSolver.asSavedPack;
   }

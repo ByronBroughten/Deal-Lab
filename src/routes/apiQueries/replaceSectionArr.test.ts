@@ -1,9 +1,9 @@
 import request from "supertest";
 import { apiQueriesShared } from "../../client/src/App/sharedWithServer/apiQueriesShared";
-import { ReplacePackArrsReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/makeReqAndRes";
+import { SectionPackArrsReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/makeReqAndRes";
 import { SectionArrReqMaker } from "../../client/src/App/sharedWithServer/ReqMakers/SectionArrReqMaker";
 import { childToSectionName } from "../../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/ChildSectionName";
-import { PackBuilderSection } from "../../client/src/App/sharedWithServer/StatePackers.ts/PackBuilderSection";
+import { PackBuilderSection } from "../../client/src/App/sharedWithServer/StatePackers/PackBuilderSection";
 import { runApp } from "../../runApp";
 import { LoadedDbUser } from "./apiQueriesShared/DbSections/LoadedDbUser";
 import {
@@ -14,14 +14,14 @@ import {
 
 const storeName = "singleTimeListMain";
 const sectionName = childToSectionName("dbStore", storeName);
-function makeReq(): ReplacePackArrsReq {
+function makeReq(): SectionPackArrsReq {
   const reqMaker = SectionArrReqMaker.init(sectionName);
   return reqMaker.makeReq();
 }
 
 const testedRoute = apiQueriesShared.replaceSectionArrs.pathRoute;
 describe(testedRoute, () => {
-  let req: ReplacePackArrsReq;
+  let req: SectionPackArrsReq;
   let server: any;
   let dbUser: LoadedDbUser;
   let cookies: string[];
