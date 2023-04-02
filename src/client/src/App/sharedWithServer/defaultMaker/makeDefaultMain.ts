@@ -5,12 +5,6 @@ import { makeDefaultDealPack } from "./makeDefaultDeal";
 import { makeDefaultFeUserPack } from "./makeDefaultFeUser";
 import { defaultDealOutputInfos } from "./makeDefaultOutputList";
 
-export function makeDefaultActiveDealSystem() {
-  const dealSystem = PackBuilderSection.initAsOmniChild("dealSystem");
-  dealSystem.addChild("calculatedVarbs");
-  return dealSystem.makeSectionPack();
-}
-
 export function makeDefaultMain(): SectionPack<"main"> {
   const main = PackBuilderSection.initAsOmniChild("main");
 

@@ -3,7 +3,7 @@ import { ChildSectionName } from "../SectionsMeta/sectionChildrenDerived/ChildSe
 import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { Obj } from "../utils/Obj";
-import { makeDefaultActiveDealSystem } from "./makeDefaultMain";
+import { makeDefaultActiveDealSystem } from "./makeDefaultMainActiveDeal";
 
 export const childDefaultMakers = checkMakers({
   main: {

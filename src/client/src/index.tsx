@@ -17,6 +17,8 @@ AppRegistry.runApplication("App", {
 //    - this would be the least resource-intensive and would reflect
 //      saving
 
+// Add something in property that warns if a unit is missing a rent amount
+
 // I got the auto-save to work, but it's far too slow.
 // I need a way to update individual sections.
 // Add and delete section work great.
