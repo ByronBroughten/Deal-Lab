@@ -4,7 +4,6 @@ import {
   validateStoreName,
 } from "../../sharedWithServer/SectionsMeta/sectionStores";
 import { StateValue } from "../../sharedWithServer/SectionsMeta/values/StateValue";
-import { inProcessStatus } from "../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
 import { GetterSectionBase } from "../../sharedWithServer/StateGetters/Bases/GetterSectionBase";
 import { GetterSectionsProps } from "../../sharedWithServer/StateGetters/Bases/GetterSectionsBase";
 import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection";
@@ -37,30 +36,81 @@ export class GetterFeStore extends GetterSectionBase<"feStore"> {
   get isGuest(): boolean {
     return this.authStatus === "guest";
   }
+  saveAttempt(feId: string): GetterSection<"saveAttempt"> {
+    return this.get.child({
+      childName: "saveAttempt",
+      feId,
+    });
+  }
   get saveAttempts() {
     return this.get.children("saveAttempt");
   }
+  get timeOfLastChange(): number {
+    return this.get.valueNext("timeOfLastChange");
+  }
+  get timeOfSave(): number {
+    return this.get.valueNext("timeOfSave");
+  }
   get saveStatus(): StateValue<"appSaveStatus"> {
-    const { get } = this;
-    const toSave = get.valueNext("toSaveUpdates");
-    if (Obj.keys(toSave).length === 0) {
+    if (this.noneToSaveNorSaving) {
       return "saved";
-    }
-    const saving = this.initializedOrPendingUpdates;
-    if (Obj.shallowEqual(toSave, saving)) {
+    } else if (this.allSaving) {
       return "saving";
+    } else if (this.get.valueNext("saveFailed")) {
+      return "saveFailed";
     } else {
-      const { saveAttempts } = this;
-      if (
-        saveAttempts.some(
-          (attempt) => attempt.value("attemptStatus") === "failed"
-        )
-      ) {
-        return "saveFailed";
-      } else {
-        return "unsaved";
-      }
+      return "unsaved";
     }
+  }
+  get nextSaveIsDue() {
+    return (
+      this.areSomeToSave &&
+      this.get.valueNext("timeOfChangeIdle") >
+        this.get.valueNext("timeOfLastChange")
+    );
+  }
+  get areSomeToSave(): boolean {
+    return !Obj.isEmpty(this.get.valueNext("changesToSave"));
+  }
+  get noneSaving(): boolean {
+    return Obj.isEmpty(this.get.valueNext("changesSaving"));
+  }
+  get allSaving(): boolean {
+    const { get } = this;
+    return (
+      Obj.isEmpty(get.valueNext("changesToSave")) &&
+      !Obj.isEmpty(get.valueNext("changesSaving"))
+    );
+  }
+  get noneToSaveNorSaving(): boolean {
+    const { get } = this;
+    return (
+      Obj.isEmpty(get.valueNext("changesToSave")) &&
+      Obj.isEmpty(get.valueNext("changesSaving"))
+    );
+  }
+  toSaveToSaving(): StateValue<"changesSaving"> {
+    const changesToSave = this.get.valueNext("changesToSave");
+    return Obj.keys(changesToSave).reduce((changesSaving, sectionId) => {
+      const change = changesToSave[sectionId];
+      switch (change.changeName) {
+        case "remove": {
+          changesSaving[sectionId] = change;
+          break;
+        }
+        case "update":
+        case "add": {
+          const sectionPack = this.getterSections
+            .sectionBySectionId(sectionId)
+            .packMaker.makeSectionPack();
+          changesSaving[sectionId] = {
+            sectionPack,
+            changeName: change.changeName,
+          };
+        }
+      }
+      return changesSaving;
+    }, {} as StateValue<"changesSaving">);
   }
   get initializedSaveId(): string {
     const save = this.saveAttempts.find(
@@ -76,20 +126,17 @@ export class GetterFeStore extends GetterSectionBase<"feStore"> {
     if (save) return save.feId;
     else return "";
   }
-  get sectionsToSaveHex(): string {
-    const toSaveUpdates = this.get.valueNext("toSaveUpdates");
-    if (Obj.keys(toSaveUpdates).length > 0) {
-      return JSON.stringify(toSaveUpdates);
-    } else return "";
-  }
-  get failedSavesString(): string {
-    let failedSaves = "";
-    this.saveAttempts.forEach((attempt) => {
-      if (attempt.value("attemptStatus") === "failed") {
-        failedSaves += attempt.feId;
+  filterNonSavingToSaves(
+    toSave: StateValue<"sectionUpdates">,
+    saving: StateValue<"sectionUpdates">
+  ): StateValue<"sectionUpdates"> {
+    const sectionIds = Obj.keys(toSave);
+    return sectionIds.reduce((nonSaving, sectionId) => {
+      if (!(sectionId in saving) || toSave[sectionId] > saving[sectionId]) {
+        nonSaving[sectionId] = toSave[sectionId];
       }
-    });
-    return failedSaves;
+      return nonSaving;
+    }, {} as StateValue<"sectionUpdates">);
   }
   getSaveAttemptPacks(
     saveAttemptId: string
@@ -98,7 +145,7 @@ export class GetterFeStore extends GetterSectionBase<"feStore"> {
       childName: "saveAttempt",
       feId: saveAttemptId,
     });
-    const updatesAttempting = saveAttempt.valueNext("sectionUpdates");
+    const updatesAttempting = saveAttempt.valueNext("updatesToSave");
     const sectionIds = Obj.keys(updatesAttempting);
 
     const sectionPackArrs = initSectionPackArrs("feStore", storeNames);
@@ -115,16 +162,5 @@ export class GetterFeStore extends GetterSectionBase<"feStore"> {
       );
     }
     return sectionPackArrs;
-  }
-  get initializedOrPendingUpdates() {
-    return this.saveAttempts.reduce(
-      (updates, activeSave) => ({
-        ...updates,
-        ...(inProcessStatus.includes(activeSave.value("attemptStatus") as any)
-          ? activeSave.valueNext("sectionUpdates")
-          : {}),
-      }),
-      {} as StateValue<"sectionUpdates">
-    );
   }
 }

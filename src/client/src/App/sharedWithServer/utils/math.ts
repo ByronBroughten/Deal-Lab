@@ -1,4 +1,5 @@
 import { round } from "lodash";
+import { ValidationError } from "./Error";
 import { isStringRationalNumber } from "./Str";
 
 export class NotANumberError extends Error {}
@@ -8,6 +9,7 @@ export const mathS = {
   yearsToMonths,
   decimalToPercent,
   percentToDecimal,
+  validateNumber,
   isNumber,
   parseFloatStrict(str: string): number {
     const parsed = parseFloat(str);
@@ -37,6 +39,10 @@ export function yearsToMonths(years: number): number {
 
 export function isNumber(v: any): v is number {
   return typeof v === "number";
+}
+export function validateNumber(v: any): number {
+  if (typeof v === "number") return v;
+  else throw new ValidationError(`value "${v}" is not a number`);
 }
 
 export const arithmeticOperatorsArr = ["*", "/", "+", "-"];

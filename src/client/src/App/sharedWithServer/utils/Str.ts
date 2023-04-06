@@ -1,3 +1,4 @@
+import { ValidationError } from "./Error";
 import { IsType } from "./types";
 
 export function replaceRange(
@@ -24,7 +25,7 @@ export const Str = {
     if (typeof value === "string") {
       return value;
     } else {
-      throw new Error(`value "${value}" is not a string.`);
+      throw new ValidationError(`value "${value}" is not a string.`);
     }
   },
   isJsonString(str: string): boolean {

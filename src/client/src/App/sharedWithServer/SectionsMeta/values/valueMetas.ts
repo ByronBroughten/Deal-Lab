@@ -3,7 +3,7 @@ import { reqMonNumber, reqMonString } from "../../utils/mongoose";
 import { StateValue } from "./StateValue";
 import { inEntityInfoValueSchema } from "./StateValue/InEntityValue";
 import { numObjMeta } from "./StateValue/NumObj";
-import { sectionUpdatesMeta } from "./StateValue/SectionUpdates";
+import { sectionUpdateSchemas } from "./StateValue/SectionUpdates";
 import { stringObjMeta } from "./StateValue/StringObj";
 import { varbInfoValueMeta } from "./StateValue/VarbInfoValue";
 import { checkValueMetas } from "./valueMetaGeneric";
@@ -46,7 +46,7 @@ export const valueMetas = checkValueMetas({
   numObj: numObjMeta,
   inEntityValue: inEntityInfoValueSchema,
   varbInfo: varbInfoValueMeta,
-  sectionUpdates: sectionUpdatesMeta,
+  ...sectionUpdateSchemas,
   ...unionMetas,
 });
 

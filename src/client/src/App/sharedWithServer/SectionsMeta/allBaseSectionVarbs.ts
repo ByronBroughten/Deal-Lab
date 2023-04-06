@@ -383,16 +383,24 @@ export function makeAllBaseSectionVarbs() {
       dealCompletionStatus: baseVarb("completionStatus"),
     }),
     feStore: baseSectionVarbs({
-      toSaveUpdates: baseVarb("sectionUpdates"),
+      changesToSave: baseVarb("changesToSave"),
+      changesSaving: baseVarb("changesSaving"),
+      saveFailed: baseVarb("boolean"),
+      timeOfChangeIdle: baseVarb("number"),
+      timeOfLastChange: baseVarb("number"),
+      timeOfSave: baseVarb("number"),
+
+      ...baseVarbs("string", ["email", "userName"] as const),
       authStatus: baseVarb("authStatus"),
       userDataStatus: baseVarb("userDataStatus"),
       userDataFetchTryCount: baseVarb("number"),
       labSubscription: baseVarb("labSubscription"),
-      ...baseVarbs("string", ["email", "userName"] as const),
       labSubscriptionExp: baseVarb("number"),
     }),
     saveAttempt: baseSectionVarbs({
-      sectionUpdates: baseVarb("sectionUpdates"),
+      addsToSave: baseVarb("sectionUpdates"),
+      updatesToSave: baseVarb("sectionUpdates"),
+      removesToSave: baseVarb("sectionUpdates"),
       attemptStatus: baseVarb("saveAttemptStatus"),
     }),
     userInfo: baseSectionVarbs({

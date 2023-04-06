@@ -5,7 +5,11 @@ import {
 import { SectionName } from "../SectionName";
 import { InEntityValue } from "./StateValue/InEntityValue";
 import { NumObj } from "./StateValue/NumObj";
-import { SectionUpdates } from "./StateValue/SectionUpdates";
+import {
+  ChangesSaving,
+  ChangesToSave,
+  SectionUpdates,
+} from "./StateValue/SectionUpdates";
 import { StringObj } from "./StateValue/StringObj";
 import { UnionValueNamesToTypes } from "./StateValue/unionValues";
 import { VarbInfoValue } from "./StateValue/VarbInfoValue";
@@ -25,6 +29,8 @@ interface ValueNamesToTypes extends UnionValueNamesToTypes {
   inEntityValue: InEntityValue;
   varbInfo: VarbInfoValue;
   sectionUpdates: SectionUpdates;
+  changesToSave: ChangesToSave;
+  changesSaving: ChangesSaving;
 }
 type Check<T extends Record<ValueName, any>> = T;
 type _Test = Check<ValueNamesToTypes>;

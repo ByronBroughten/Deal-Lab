@@ -8,6 +8,7 @@ import {
 } from "../SectionsMeta/sectionChildrenDerived/DbStoreName";
 import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
 import { SectionPackArrs } from "../StatePackers/PackMakerSection";
+import { DbAction } from "./DbAction";
 
 export const makeReq = <B extends QueryObj = {}>(body?: B): MakeReq<B> => ({
   body: body ?? ({} as B),
@@ -30,6 +31,9 @@ export type SectionPackReq<CN extends SectionQueryName = SectionQueryName> =
   MakeReq<DbPack<CN>>;
 export type SectionPackArrsReq = MakeReq<{
   sectionPackArrs: DbPackArrQueryArrs;
+}>;
+export type SyncChangesReq = MakeReq<{
+  changes: DbAction[];
 }>;
 
 export type DbPackArrQueryArrs = Partial<

@@ -6,7 +6,21 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-// - Update zod to latest
+
+// When a save attempt fails, the failed attempts are reconciled with the
+// uninitialized attempts
+
+// Create the function for reconciling the operations to save
+// - This will assume that once as section is deleted, it's gone for good
+//   and once a section is created, it's there until deleted
+// - You will no longer need saveAttempt. You just have "savingUpdates"
+// Create the function for saving
+// Create functionality for when saving fails (the failed updates are
+// just added to toSaveUpdates, and the "save failed" flag is set)
+
+// - Replace zod with plain old validation
+
+// - Implement a front-end check for storage limit when adding sections
 
 // - Update sections' "last updated",
 //    *I'll try the top one. If that doesn't work, I'll try the bottom one.

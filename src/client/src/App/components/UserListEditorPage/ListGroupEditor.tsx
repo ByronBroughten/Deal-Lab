@@ -1,5 +1,8 @@
 import { ListChildName } from "../../sharedWithServer/SectionsMeta/sectionStores";
+import { useAction } from "../../sharedWithServer/stateClassHooks/useAction";
 import { useGetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useGetterSection";
+import { IdOfSectionToSaveProvider } from "../../sharedWithServer/stateClassHooks/useIdOfSectionToSave";
+import { SectionId } from "../../sharedWithServer/StateGetters/SectionId";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { SubSectionOpen } from "../ActiveDealPage/ActiveDeal/SubSectionOpen";
 import { BackBtnWrapper } from "../appWide/BackBtnWrapper";
@@ -41,25 +44,38 @@ type Props = { listName: ListChildName };
 
 const listNodeMakers: Record<ListTypeName, MakeListNode> = {
   singleTime: (nodeProps) => (
-    <VarbListSingleTime {...{ ...nodeProps, menuType: "editorPage" }} />
+    <IdOfSectionToSaveProvider
+      sectionId={SectionId.makeSectionId("singleTimeList", nodeProps.feId)}
+    >
+      <VarbListSingleTime {...{ ...nodeProps, menuType: "editorPage" }} />
+    </IdOfSectionToSaveProvider>
   ),
   ongoing: (nodeProps) => (
-    <VarbListOngoing {...{ ...nodeProps, menuType: "editorPage" }} />
+    <IdOfSectionToSaveProvider
+      sectionId={SectionId.makeSectionId("ongoingList", nodeProps.feId)}
+    >
+      <VarbListOngoing {...{ ...nodeProps, menuType: "editorPage" }} />
+    </IdOfSectionToSaveProvider>
   ),
   capEx: (nodeProps) => (
-    <VarbListCapEx
-      {...{
-        ...nodeProps,
-        menuType: "editorPage",
-      }}
-    />
+    <IdOfSectionToSaveProvider
+      sectionId={SectionId.makeSectionId("capExList", nodeProps.feId)}
+    >
+      <VarbListCapEx
+        {...{
+          ...nodeProps,
+          menuType: "editorPage",
+        }}
+      />
+    </IdOfSectionToSaveProvider>
   ),
 };
 
 export function ListGroupEditor({ listName }: Props) {
   const title = listTitles[listName];
   const listTypeName = listTypes[listName];
-  const { feInfo } = useGetterSectionOnlyOne("feStore");
+  const feStore = useGetterSectionOnlyOne("feStore");
+  const addChild = useAction("addChild");
   return (
     <BackBtnWrapper {...{ to: -1, label: "Back" }}>
       <SubSectionOpen>
@@ -75,10 +91,14 @@ export function ListGroupEditor({ listName }: Props) {
         <div className="UserListEditor-listGroups">
           <ListGroupGeneric
             {...{
-              titleText: title,
-              listParentInfo: feInfo,
-              listAsChildName: listName,
+              listFeIds: feStore.childFeIds(listName),
               makeListNode: listNodeMakers[listTypeName],
+              addList: () =>
+                addChild({
+                  feInfo: feStore.feInfo,
+                  childName: listName,
+                  saveOperation: true,
+                }),
             }}
           />
         </div>

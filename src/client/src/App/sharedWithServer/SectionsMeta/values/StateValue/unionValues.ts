@@ -1,4 +1,5 @@
 import { Arr } from "../../../utils/Arr";
+import { ValidationError } from "../../../utils/Error";
 import { Obj } from "../../../utils/Obj";
 
 const valueSources = {
@@ -103,6 +104,12 @@ export type UnionValueNamesToTypes = {
   [UN in UnionValueName]: UnionValue<UN>;
 };
 
+export function validateLabSubscription(
+  value: any
+): UnionValue<"labSubscription"> {
+  if (isLabSubscription(value)) return value;
+  else throw new ValidationError(`value "${value}" is not a labSubscription`);
+}
 export function isLabSubscription(
   value: any
 ): value is UnionValue<"labSubscription"> {

@@ -15,10 +15,7 @@ import theme from "../../../../theme/Theme";
 import useHowMany from "../../customHooks/useHowMany";
 import { FormSection } from "../../FormSection";
 import { SectionTitleAndCost } from "../../SectionTitleAndCost";
-import {
-  MakeValueNode,
-  ValueGroupValues,
-} from "./ListGroupGeneric/ValueGroupValues";
+import { MakeValueNode, ValueGroupValues } from "./ValueGroupValues";
 
 type ListParentName = ParentOfTypeName<"varbValue">;
 

@@ -70,6 +70,13 @@ export class SolverAdderPrepSection<
     this.defaultAdder.addChild(childName, options);
     this.finalizeNewChild(childName);
   }
+  addAndGetChild<CN extends ChildName<SN>>(
+    childName: CN,
+    options?: AddChildOptions<SN, CN>
+  ) {
+    this.addChild(childName, options);
+    return this.youngestChild(childName);
+  }
   loadChild<CN extends ChildName<SN>>(packInfo: LoadChildProps<SN, CN>): void {
     this.loader.loadChildSectionPack(packInfo);
     this.finalizeNewChild(packInfo.childName);

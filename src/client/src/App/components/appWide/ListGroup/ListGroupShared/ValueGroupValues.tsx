@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import theme, { ThemeName } from "../../../../../theme/Theme";
-import { ValueSectionBtn } from "../ValueSectionBtn";
+import theme, { ThemeName } from "../../../../theme/Theme";
+import { ValueSectionBtn } from "./ValueSectionBtn";
 
 export type MakeValueNode = (props: MakeListNodeProps) => React.ReactNode;
 type MakeListNodeProps = {

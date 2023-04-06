@@ -73,6 +73,9 @@ function validateTruthyRes(res: any): any {
   }
 }
 export const Obj = {
+  isEmpty(obj: any) {
+    return Object.keys(obj).length === 0;
+  },
   shallowEqual(a: any, b: any): boolean {
     return shallowEqualObjects(a, b);
   },

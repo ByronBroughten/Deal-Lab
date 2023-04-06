@@ -6,33 +6,22 @@ import { useQueryAction } from "./useQueryAction";
 export function useAutoSaveNext() {
   const feStore = useGetterFeStore();
 
-  const initializeSaveAttempt = useActionNoSave("initializeSaveAttempt");
-  const { sectionsToSaveHex, failedSavesString } = feStore;
+  const onChangeIdle = useActionNoSave("onChangeIdle");
+  const { noneSaving, timeOfLastChange } = feStore;
   React.useEffect(() => {
-    if (sectionsToSaveHex || failedSavesString) {
-      let timerFunc = setTimeout(() => initializeSaveAttempt({}), 3000);
+    if (noneSaving) {
+      let timerFunc = setTimeout(() => onChangeIdle({}), 3000);
       return () => clearTimeout(timerFunc);
     }
-  }, [sectionsToSaveHex, failedSavesString, initializeSaveAttempt]);
-
-  const preSave = useActionNoSave("preSave");
-  const { initializedSaveId } = feStore;
-  React.useEffect(() => {
-    if (initializedSaveId) {
-      preSave({ saveAttemptFeId: initializedSaveId });
-    }
-  }, [initializedSaveId, preSave]);
+  }, [noneSaving, timeOfLastChange, onChangeIdle]);
 
   const queryAction = useQueryAction();
-  const { pendingSaveId } = feStore;
-  const lastIdRef = React.useRef("");
+  const { timeOfSave } = feStore;
+  const lastIdRef = React.useRef(timeOfSave);
   React.useEffect(() => {
-    if (pendingSaveId && lastIdRef.current !== pendingSaveId) {
-      queryAction({
-        type: "trySaveAttempt",
-        feId: pendingSaveId,
-      });
-      lastIdRef.current = pendingSaveId;
+    if (timeOfSave && lastIdRef.current !== timeOfSave) {
+      lastIdRef.current = timeOfSave;
+      queryAction({ type: "trySave" });
     }
-  }, [pendingSaveId, queryAction]);
+  }, [timeOfSave, queryAction]);
 }

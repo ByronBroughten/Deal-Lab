@@ -1,7 +1,8 @@
-import { shallowEqualObjects } from "shallow-equal";
 import { isStoreNameByType } from "../../sharedWithServer/SectionsMeta/sectionStores";
-import { StateValue } from "../../sharedWithServer/SectionsMeta/values/StateValue";
-import { completedStatus } from "../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
+import {
+  changeSavingToToSave,
+  ChangeToSave,
+} from "../../sharedWithServer/SectionsMeta/values/StateValue/SectionUpdates";
 import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection";
 import { GetterSections } from "../../sharedWithServer/StateGetters/GetterSections";
 import { SolverAdderPrepSection } from "../../sharedWithServer/StateSolvers/SolverAdderPrepSection";
@@ -45,53 +46,46 @@ export class SolverFeStore extends SolverSectionBase<"feStore"> {
   get basicSolvePrepper(): SolverAdderPrepSection<"feStore"> {
     return new SolverAdderPrepSection(this.solverSectionProps);
   }
-  private get updatesToSave() {
-    return this.get.valueNext("toSaveUpdates");
-  }
-  private saveAttempt(feId: string) {
-    return this.solver.child({
-      childName: "saveAttempt",
-      feId,
-    });
-  }
-  addIdOfSectionToSave(sectionId: string) {
-    this.basicSolvePrepper.updateValues({
-      toSaveUpdates: {
-        ...this.get.valueNext("toSaveUpdates"),
-        [sectionId]: timeS.now(),
-      },
-    });
-  }
-  initializeSaveAttemptAndSolve() {
-    const { saveAttempts } = this;
-    saveAttempts.forEach((attempt) => {
-      if (completedStatus.includes(attempt.value("attemptStatus") as any)) {
-        attempt.prepper.removeSelf();
+  addChangeToSave(sectionId: string, change: ChangeToSave) {
+    const toSave = { ...this.get.valueNext("changesToSave") };
+    switch (change.changeName) {
+      case "add":
+      case "remove": {
+        toSave[sectionId] = change;
+        break;
       }
-    });
-    const toSave = this.get.valueNext("toSaveUpdates");
-    const saving = this.getterFeStore.initializedOrPendingUpdates;
-    const nextSaving: StateValue<"sectionUpdates"> = {};
-    if (!shallowEqualObjects(saving, toSave)) {
-      const sectionIds = Obj.keys(toSave);
-      for (const sectionId of sectionIds) {
-        if (!(sectionId in saving) || toSave[sectionId] > saving[sectionId]) {
-          nextSaving[sectionId] = toSave[sectionId];
+      case "update": {
+        if (!toSave[sectionId]) {
+          toSave[sectionId] = change;
         }
       }
     }
-    this.basicSolvePrepper.addChild("saveAttempt", {
-      sectionValues: {
-        attemptStatus: "initialized",
-        sectionUpdates: nextSaving,
-      },
+    this.basicSolvePrepper.updateValues({
+      changesToSave: toSave,
+      timeOfLastChange: timeS.now(),
     });
-    this.solver.solve();
   }
-  preSaveAndSolve(saveAttemptId: string) {
-    const saveAttempt = this.saveAttempt(saveAttemptId);
-    const sectionIds = Obj.keys(saveAttempt.value("sectionUpdates"));
+  onChangeIdle(): void {
+    this.basicSolvePrepper.updateValues({
+      timeOfChangeIdle: timeS.now(),
+    });
 
+    const { areSomeToSave, noneSaving } = this.getterFeStore;
+    if (areSomeToSave && noneSaving) {
+      this.initiateSave();
+    }
+  }
+  private initiateSave() {
+    this.preSaveAndSolve();
+    this.basicSolvePrepper.updateValues({
+      timeOfSave: timeS.now(),
+      changesSaving: this.getterFeStore.toSaveToSaving(),
+      changesToSave: {},
+      saveFailed: false,
+    });
+  }
+  private preSaveAndSolve() {
+    const sectionIds = Obj.keys(this.get.valueNext("changesToSave"));
     let doVariableUpdate = false;
     for (const sectionId of sectionIds) {
       const section = this.getterSections.sectionBySectionId(sectionId);
@@ -104,34 +98,60 @@ export class SolverFeStore extends SolverSectionBase<"feStore"> {
     if (doVariableUpdate) {
       this.appWideSolvePrepSections.applyVariablesToDealPages();
     }
-    saveAttempt.updateValuesAndSolve({
-      attemptStatus: "pending",
+  }
+  finishSave({ success }: { success: boolean }) {
+    if (success) {
+      this.basicSolvePrepper.updateValues({ changesSaving: {} });
+      if (this.getterFeStore.nextSaveIsDue) {
+        this.initiateSave();
+      }
+    } else {
+      this.handleFailedSave();
+    }
+  }
+  private handleFailedSave() {
+    const failedChanges = this.get.valueNext("changesSaving");
+    for (const sectionId of Obj.keys(failedChanges)) {
+      const failedChange = changeSavingToToSave(failedChanges[sectionId]);
+      this.reIntegrateFailedChanges(sectionId, failedChange);
+    }
+    this.basicSolvePrepper.updateValues({
+      changesSaving: {},
+      saveFailed: true,
     });
   }
-  finishSaveAttempt({ success, feId }: { success: boolean; feId: string }) {
-    const saveAttempt = this.saveAttempt(feId);
-    if (success) {
-      this.removeSavedUpdates(feId);
-      saveAttempt.removeSelfAndSolve();
+  private reIntegrateFailedChanges(
+    sectionId: string,
+    failedChange: ChangeToSave
+  ) {
+    const toSave = { ...this.get.valueNext("changesToSave") };
+    const currentChange = toSave[sectionId];
+    if (!currentChange) {
+      toSave[sectionId] = failedChange;
     } else {
-      saveAttempt.updateValuesAndSolve({ attemptStatus: "failed" });
-    }
-  }
-
-  private removeSavedUpdates(feId: string) {
-    const savedUpdates = this.saveAttempt(feId).value("sectionUpdates");
-    const { updatesToSave } = this;
-    const nextToSave: StateValue<"sectionUpdates"> = {};
-
-    const sectionIds = Obj.keys(updatesToSave);
-    for (const sectionId of sectionIds) {
-      if (
-        !(sectionId in savedUpdates) ||
-        updatesToSave[sectionId] > savedUpdates[sectionId]
-      ) {
-        nextToSave[sectionId] = updatesToSave[sectionId];
+      switch (currentChange.changeName) {
+        case "add": {
+          throw new Error(
+            "An add was attempted after other changes, presumably after another add."
+          );
+        }
+        case "update": {
+          toSave[sectionId] = failedChange;
+          break;
+        }
+        case "remove": {
+          switch (failedChange.changeName) {
+            case "add": {
+              delete toSave[sectionId];
+              break;
+            }
+            case "remove": {
+              throw new Error("A remove was attempted after another remove.");
+            }
+          }
+        }
       }
     }
-    this.basicSolvePrepper.updateValues({ toSaveUpdates: nextToSave });
+    this.basicSolvePrepper.updateValues({ changesToSave: toSave });
   }
 }

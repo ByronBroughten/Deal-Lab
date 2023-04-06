@@ -1,11 +1,13 @@
 import config from "config";
 import jwt from "jsonwebtoken";
-import { isObject } from "lodash";
 import { AnalyzerPlanValues } from "../../../../../client/src/App/sharedWithServer/apiQueriesShared/AnalyzerPlanValues";
-import { isLabSubscription } from "../../../../../client/src/App/sharedWithServer/SectionsMeta/values/StateValue/unionValues";
-
+import { validateLabSubscription } from "../../../../../client/src/App/sharedWithServer/SectionsMeta/values/StateValue/unionValues";
+import { mathS } from "../../../../../client/src/App/sharedWithServer/utils/math";
+import { Obj } from "../../../../../client/src/App/sharedWithServer/utils/Obj";
+import { Str } from "../../../../../client/src/App/sharedWithServer/utils/Str";
 import { StrictOmit } from "../../../../../client/src/App/sharedWithServer/utils/types";
 import { ResStatusError } from "../../../../../utils/resError";
+import { ValidationError } from "./../../../../../client/src/App/sharedWithServer/utils/Error";
 
 export interface UserInfoJwt extends AnalyzerPlanValues {
   userId: string;
@@ -26,24 +28,28 @@ export function createUserInfoToken(userJwt: UserJwtProps): string {
   }
 }
 
+export function validateUserInfoJwt(value: any): UserInfoJwt {
+  const obj = Obj.validateObjToAny(value) as UserInfoJwt;
+  return {
+    userId: Str.validate(obj.userId),
+    labSubscriptionExp: mathS.validateNumber(obj.labSubscriptionExp),
+    labSubscription: validateLabSubscription(obj.labSubscription),
+    iat: mathS.validateNumber(obj.iat),
+  };
+}
 export function isUserJwt(value: any): value is UserInfoJwt {
-  return (
-    isObject(value) && Object.keys(value).length === 4 && hasTokenProps(value)
-  );
+  try {
+    validateUserInfoJwt(value);
+    return true;
+  } catch (err) {
+    if (err instanceof ValidationError) {
+      return false;
+    } else {
+      throw err;
+    }
+  }
 }
 
-function hasTokenProps(value: any) {
-  return (
-    "userId" in value &&
-    "labSubscription" in value &&
-    "labSubscriptionExp" in value &&
-    "iat" in value &&
-    typeof value.userId === "string" &&
-    typeof value.iat === "number" &&
-    typeof value.labSubscriptionExp === "number" &&
-    isLabSubscription(value.labSubscription)
-  );
-}
 export function checkUserAuthToken(token: any): UserInfoJwt {
   const decoded = jwt.verify(token, config.get("jwtPrivateKey"));
   if (isUserJwt(decoded)) return decoded;

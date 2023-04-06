@@ -1,44 +1,23 @@
 import styled from "styled-components";
-import { ChildName } from "../../../../sharedWithServer/SectionsMeta/sectionChildrenDerived/ChildName";
-import { ChildSectionName } from "../../../../sharedWithServer/SectionsMeta/sectionChildrenDerived/ChildSectionName";
-import { FeSectionInfo } from "../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
-import {
-  ChildNameOfType,
-  ParentOfTypeName,
-  SectionNameByType,
-} from "../../../../sharedWithServer/SectionsMeta/SectionNameByType";
-import { useSetterSection } from "../../../../sharedWithServer/stateClassHooks/useSetterSection";
-import { GetterSection } from "../../../../sharedWithServer/StateGetters/GetterSection";
 import theme from "../../../../theme/Theme";
 import {
   ListGroupLists,
   MakeListNode,
 } from "./ListGroupGeneric/ListGroupLists";
 
-type ListParentName = ParentOfTypeName<"varbListAllowed">;
-
-export type ListGroupGenericProps<SN extends ListParentName> = {
-  listParentInfo: FeSectionInfo<SN>;
-  listAsChildName: ChildName<SN>;
-  makeListNode: MakeListNode;
+export type ListGroupGenericProps = {
   className?: string;
+  listFeIds: string[];
+  addList: () => void;
+  makeListNode: MakeListNode;
 };
 
-export function ListGroupGeneric<
-  SN extends ListParentName,
-  CN extends ChildNameOfType<SN, "varbListAllowed">
->({
-  listParentInfo,
-  listAsChildName,
+export function ListGroupGeneric({
+  listFeIds,
+  addList,
   makeListNode,
   className,
-}: ListGroupGenericProps<SN>) {
-  const parent = useSetterSection(listParentInfo);
-  const lists = parent.get.children(
-    listAsChildName
-  ) as GetterSection<any>[] as GetterSection<
-    ChildSectionName<SN, CN> & SectionNameByType<"varbListAllowed">
-  >[];
+}: ListGroupGenericProps) {
   return (
     <Styled className={`ListGroup-root ` + className ?? ""}>
       <div className="ListGroup-viewable">
@@ -47,9 +26,9 @@ export function ListGroupGeneric<
         </div>
         <ListGroupLists
           {...{
-            feIds: lists.map(({ feId }) => feId),
+            feIds: listFeIds,
             makeListNode,
-            addList: () => parent.addChild(listAsChildName),
+            addList,
           }}
         />
       </div>

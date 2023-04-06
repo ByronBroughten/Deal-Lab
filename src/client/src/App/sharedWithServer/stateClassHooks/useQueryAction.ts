@@ -1,11 +1,10 @@
-import { QuerierSolverSections } from "../../modules/SectionActors/QuerierSolverSections";
+import { QuerierSections } from "../../modules/SectionActors/QuerierSections";
 import { useDispatchAndSave } from "./useAction";
 import { useSectionsContext } from "./useSections";
 import { SectionsAction } from "./useSections/sectionsReducer";
 
 interface TrySaveAttempt {
-  type: "trySaveAttempt";
-  feId: string;
+  type: "trySave";
 }
 type QueryAction = TrySaveAttempt;
 type QueryActionName = QueryAction["type"];
@@ -23,18 +22,15 @@ export function useQueryAction() {
   const dispatch = useDispatchAndSave();
 
   return async (action: QueryAction) => {
-    const solverSections = QuerierSolverSections.init({
+    const querierSections = QuerierSections.init({
       sectionsShare: { sections },
     });
     switch (action.type) {
-      case "trySaveAttempt": {
-        const success = await solverSections.feStore.trySaveAttempt(
-          action.feId
-        );
+      case "trySave": {
+        const success = await querierSections.feStore.trySave();
         dispatch({
           type: "finishSave",
           success,
-          feId: action.feId,
         });
         break;
       }

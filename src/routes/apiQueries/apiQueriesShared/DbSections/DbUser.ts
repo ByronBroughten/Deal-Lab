@@ -1,4 +1,5 @@
 import mongoose, { QueryOptions } from "mongoose";
+import { constants } from "../../../../client/src/App/Constants";
 import { VarbName } from "../../../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
 import { ChildSectionName } from "../../../../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/ChildSectionName";
 import {
@@ -20,6 +21,10 @@ import {
 import { FeSectionInfo } from "../../../../client/src/App/sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { SectionName } from "../../../../client/src/App/sharedWithServer/SectionsMeta/SectionName";
 import {
+  StoreName,
+  StoreSectionName,
+} from "../../../../client/src/App/sharedWithServer/SectionsMeta/sectionStores";
+import {
   StateValue,
   VarbValue,
 } from "../../../../client/src/App/sharedWithServer/SectionsMeta/values/StateValue";
@@ -29,6 +34,7 @@ import { SectionPackArrs } from "../../../../client/src/App/sharedWithServer/Sta
 import { Obj } from "../../../../client/src/App/sharedWithServer/utils/Obj";
 import { ResStatusError } from "../../../../utils/resError";
 import { DbUserModel, modelPath } from "../../../routesShared/DbUserModel";
+import { findUserByIdAndUpdate } from "../findAndUpdate";
 import { DbSectionsQuerierBase } from "./Bases/DbSectionsQuerierBase";
 import { DbSections } from "./DbSections";
 import {
@@ -36,6 +42,7 @@ import {
   dbUserFilters,
   DbUserSpecifierType,
   queryOptions,
+  SectionPackNotFoundError,
   UserNotFoundError,
 } from "./DbUserTypes";
 import { LoadedDbUser } from "./LoadedDbUser";
@@ -232,6 +239,81 @@ export class DbUser extends DbSectionsQuerierBase {
       ...dbStore.getterSectionProps,
       dbSections,
     });
+  }
+  async addSection<CN extends StoreName>(props: {
+    storeName: CN;
+    labSubscription: StateValue<"labSubscription">;
+    sectionPack: SectionPack<StoreSectionName<CN>>;
+  }): Promise<any> {
+    const { sectionPack, storeName } = props;
+
+    await this.validateIsRoomForStorage(props);
+    await this.checkThatSectionPackIsNotThere({
+      storeName,
+      dbId: sectionPack.dbId,
+    });
+    return findUserByIdAndUpdate({
+      userId: await this.getUserId(),
+      queryParameters: {
+        operation: { $push: { [storeName]: sectionPack } },
+        options: {
+          new: true,
+          lean: true,
+          useFindAndModify: false,
+          runValidators: true,
+          strict: false,
+          upsert: true,
+        },
+      },
+    });
+  }
+  private async validateIsRoomForStorage({
+    labSubscription,
+    storeName,
+  }: {
+    labSubscription: StateValue<"labSubscription">;
+    storeName: StoreName;
+  }) {
+    switch (labSubscription) {
+      case "fullPlan": {
+        return true;
+      }
+      case "basicPlan": {
+        const { basicStorageLimit } = constants;
+        const count = await this.storeSectionCount(storeName);
+        if (count < basicStorageLimit) return true;
+        else
+          throw new ResStatusError({
+            errorMessage: `To save more than ${basicStorageLimit} of anything, you must have a Pro account.`,
+            resMessage: `To save more than ${basicStorageLimit} of anything, you must have a Pro account.`,
+            status: 400,
+          });
+      }
+    }
+  }
+  private async checkThatSectionPackIsNotThere(props: {
+    storeName: StoreName;
+    dbId: string;
+  }): Promise<true> {
+    const { storeName, dbId } = props;
+    try {
+      await this.getSectionPack({
+        dbStoreName: storeName,
+        dbId,
+      });
+      throw new ResStatusError({
+        errorMessage: `An entry at ${storeName}.${dbId} already exists.`,
+        resMessage:
+          "That section has already been saved. Try logging out and logging back in. Our apologies.",
+        status: 400,
+      });
+    } catch (err) {
+      if (err instanceof SectionPackNotFoundError) {
+        return true;
+      } else {
+        throw err;
+      }
+    }
   }
 
   async syncSectionPack<SN extends ChildSectionName<"omniParent">>(

@@ -21,4 +21,7 @@ export const timeS = {
       setTimeout(resolve, milliseconds);
     });
   },
+  isTimestamp(value: any): value is number {
+    return typeof value === "number";
+  }
 } as const;

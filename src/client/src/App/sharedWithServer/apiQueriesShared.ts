@@ -12,6 +12,7 @@ import {
   SectionPackReq,
   SectionPackRes,
   SuccessRes,
+  SyncChangesReq,
   UpgradeUserToProReq,
   UrlRes,
 } from "./apiQueriesShared/makeReqAndRes";
@@ -51,7 +52,7 @@ type QueryUpdateSection = <CN extends SectionQueryName>(
   req: SectionPackReq<CN>
 ) => Promise<DbIdRes>;
 
-type QueryUpdateSections = (req: SectionPackArrsReq) => Promise<SuccessRes>;
+export type QueryUpdateSections = (req: SyncChangesReq) => Promise<SuccessRes>;
 
 export interface AddSectionRes extends DbIdRes {
   headers: UserInfoTokenProp;

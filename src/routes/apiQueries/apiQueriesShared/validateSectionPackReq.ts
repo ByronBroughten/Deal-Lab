@@ -33,7 +33,7 @@ export function validateSectionPackReq(req: LoggedInReq<any>): PackReq {
   const { userJwt, sectionPack, dbStoreName, auth } = (req as PackReq).body;
   return {
     body: {
-      userJwt,
+      userJwt, // this should already be validated by userJwtWare
       auth: validateAuthObj(auth),
       dbStoreName: validateDbStoreName(dbStoreName, "sectionQuery"),
       sectionPack: validateDbSectionPack(sectionPack, dbStoreName),

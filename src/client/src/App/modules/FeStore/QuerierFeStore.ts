@@ -1,4 +1,8 @@
+import { DbAction } from "../../sharedWithServer/apiQueriesShared/DbAction";
 import { makeReq } from "../../sharedWithServer/apiQueriesShared/makeReqAndRes";
+import { StoreName } from "../../sharedWithServer/SectionsMeta/sectionStores";
+import { GetterSections } from "../../sharedWithServer/StateGetters/GetterSections";
+import { Obj } from "../../sharedWithServer/utils/Obj";
 import { StrictOmit } from "../../sharedWithServer/utils/types";
 import {
   QuerierSectionBase,
@@ -19,16 +23,27 @@ export class QuerierFeStore extends QuerierSectionBase<"feStore"> {
       ...props,
     });
   }
+  get getterSections(): GetterSections {
+    return new GetterSections(this.getterSectionBase.getterSectionsProps);
+  }
   get getterFeStore(): GetterFeStore {
     return new GetterFeStore(this.getterSectionBase.getterSectionsProps);
   }
-
-  async trySaveAttempt(saveAttemptId: string) {
-    const sectionPackArrs =
-      this.getterFeStore.getSaveAttemptPacks(saveAttemptId);
+  getDbChangeNodes(): DbAction[] {
+    const changesSaving = this.get.valueNext("changesSaving");
+    return Obj.keys(changesSaving).map((sectionId) => {
+      const section = this.getterSections.sectionBySectionId(sectionId);
+      const change = changesSaving[sectionId];
+      return {
+        ...change,
+        storeName: section.selfChildName as StoreName,
+      } as DbAction;
+    });
+  }
+  async trySave() {
     try {
       const { data } = await this.apiQueries.updateSections(
-        makeReq({ sectionPackArrs })
+        makeReq({ changes: this.getDbChangeNodes() })
       );
       if (data.success) {
         return true;

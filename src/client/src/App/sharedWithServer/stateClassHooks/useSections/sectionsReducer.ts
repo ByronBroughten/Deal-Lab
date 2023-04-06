@@ -26,14 +26,16 @@ interface LoginUser {
 }
 interface RemoveSelfAction extends SaveSectionIdProp, FeSectionInfo {
   type: "removeSelf";
+  saveOperation?: boolean;
 }
 interface AddChildAction<
   SN extends SectionName = SectionName,
   CN extends ChildName<SN> = ChildName<SN>
 > extends SaveSectionIdProp {
+  saveOperation?: boolean;
   feInfo: FeSectionInfo<SN>;
   childName: CN;
-  options: AddChildOptions<SN, CN>;
+  options?: AddChildOptions<SN, CN>;
   type: "addChild";
 }
 interface UpdateValueAction extends SaveSectionIdProp, FeVarbValueInfo {
@@ -46,17 +48,11 @@ interface UpdateValueFromEditorAction
 }
 
 interface InitializeSaveAttempts {
-  type: "initializeSaveAttempt";
-}
-
-interface PreSaveAttempt {
-  type: "preSave";
-  saveAttemptFeId: string;
+  type: "onChangeIdle";
 }
 
 interface FinishSaveAttempt {
   type: "finishSave";
-  feId: string;
   success: boolean;
 }
 
@@ -67,7 +63,6 @@ export type SectionsAction =
   | UpdateValueAction
   | UpdateValueFromEditorAction
   | InitializeSaveAttempts
-  | PreSaveAttempt
   | FinishSaveAttempt;
 
 type SectionActionName = SectionsAction["type"];
@@ -76,9 +71,8 @@ const reducerActionNameMap: Record<SectionActionName, 0> = {
   removeSelf: 0,
   updateValue: 0,
   updateValueFromContent: 0,
-  initializeSaveAttempt: 0,
+  onChangeIdle: 0,
   setState: 0,
-  preSave: 0,
   finishSave: 0,
 };
 export const sectionActionNames = Obj.keys(reducerActionNameMap);
@@ -123,32 +117,46 @@ export const sectionsReducer: React.Reducer<StateSections, SectionsAction> = (
   });
 
   switch (action.type) {
-    case "initializeSaveAttempt": {
-      solverSections.feStore.initializeSaveAttemptAndSolve();
-      return solverSections.stateSections;
-    }
-    case "preSave": {
-      solverSections.feStore.preSaveAndSolve(action.saveAttemptFeId);
+    case "onChangeIdle": {
+      solverSections.feStore.onChangeIdle();
       return solverSections.stateSections;
     }
     case "finishSave": {
-      solverSections.feStore.finishSaveAttempt(action);
+      solverSections.feStore.finishSave(action);
       return solverSections.stateSections;
     }
   }
 
   if (action.idOfSectionToSave) {
-    solverSections.feStore.addIdOfSectionToSave(action.idOfSectionToSave);
+    solverSections.feStore.addChangeToSave(action.idOfSectionToSave, {
+      changeName: "update",
+    });
   }
   switch (action.type) {
     case "addChild": {
       const section = solverSections.solverSection(action.feInfo);
-      section.addChildAndSolve(action.childName, action.options);
+      const child = section.prepper.addAndGetChild(
+        action.childName,
+        action.options
+      );
+      if (action.saveOperation) {
+        solverSections.feStore.addChangeToSave(child.get.sectionId, {
+          changeName: "add",
+        });
+      }
+      section.solve();
       return section.stateSections;
     }
     case "removeSelf": {
       const section = solverSections.solverSection(action);
+      const { sectionId, dbId } = section.get;
       section.removeSelfAndSolve();
+      if (action.saveOperation) {
+        solverSections.feStore.addChangeToSave(sectionId, {
+          changeName: "remove",
+          dbId,
+        });
+      }
       return section.stateSections;
     }
     case "updateValue": {
