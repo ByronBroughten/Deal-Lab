@@ -31,9 +31,11 @@ const apiPathFull = `${env.apiUrlBase}${apiPathBit}`;
 const isBeta = false;
 const maxSectionSaveLimit = 1000;
 const basicSectionSaveLimit = 5;
+const saveDelayInMs = 2000;
 export const config = {
   ...env,
   stripePrices,
+  saveDelayInMs,
   supportEmail: "support@deallab.com",
   feedbackEmail: "feedback@deallab.com",
   discordLink: "https://discord.gg/W6pxEXT8EV",

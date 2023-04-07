@@ -1,4 +1,5 @@
 import React from "react";
+import { constants } from "../../Constants";
 import { useActionNoSave } from "./useAction";
 import { useGetterFeStore } from "./useFeStore";
 import { useQueryAction } from "./useQueryAction";
@@ -10,7 +11,10 @@ export function useAutoSaveNext() {
   const { noneSaving, timeOfLastChange } = feStore;
   React.useEffect(() => {
     if (noneSaving) {
-      let timerFunc = setTimeout(() => onChangeIdle({}), 3000);
+      let timerFunc = setTimeout(
+        () => onChangeIdle({}),
+        constants.saveDelayInMs
+      );
       return () => clearTimeout(timerFunc);
     }
   }, [noneSaving, timeOfLastChange, onChangeIdle]);
