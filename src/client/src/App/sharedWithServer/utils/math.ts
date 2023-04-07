@@ -42,7 +42,9 @@ export function isNumber(v: any): v is number {
 }
 export function validateNumber(v: any): number {
   if (typeof v === "number") return v;
-  else throw new ValidationError(`value "${v}" is not a number`);
+  else {
+    throw new ValidationError(`value "${v}" is not a number`);
+  }
 }
 
 export const arithmeticOperatorsArr = ["*", "/", "+", "-"];

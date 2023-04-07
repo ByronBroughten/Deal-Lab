@@ -1,18 +1,12 @@
-import { ValueInEntityInfo } from "../SectionsMeta/values/StateValue/valuesShared/entities";
 import {
   GetterSectionsBase,
   GetterSectionsRequiredProps,
 } from "../StateGetters/Bases/GetterSectionsBase";
 import { GetterSections } from "../StateGetters/GetterSections";
-import { varbPathOptions } from "./pathNameOptions";
+import { varbPathOptions, VariableOption } from "./varbPathOptions";
 
 export type SectionOption = {
   dbId: string;
-  displayName: string;
-};
-export type VariableOption = {
-  varbInfo: ValueInEntityInfo;
-  collectionName: string;
   displayName: string;
 };
 

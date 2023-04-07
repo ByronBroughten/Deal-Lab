@@ -1,7 +1,5 @@
-import {
-  VarbName,
-  VarbValueName,
-} from "../baseSectionsDerived/baseSectionsVarbsTypes";
+import { VarbName } from "../baseSectionsDerived/baseSectionsVarbsTypes";
+import { VarbValueName } from "../baseSectionsDerived/baseSectionValues";
 import { SectionName } from "../SectionName";
 import { InEntityValue } from "./StateValue/InEntityValue";
 import { NumObj } from "./StateValue/NumObj";

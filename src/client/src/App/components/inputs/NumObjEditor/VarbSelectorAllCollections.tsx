@@ -1,12 +1,12 @@
 import styled from "styled-components";
 import { mixedInfoS } from "../../../sharedWithServer/SectionsMeta/SectionInfo/MixedSectionInfo";
 import { collectionNamesFixed } from "../../../sharedWithServer/SectionsMeta/SectionInfo/VarbPathNameInfo";
-import { ValueInEntityInfo } from "../../../sharedWithServer/SectionsMeta/values/StateValue/valuesShared/entities";
 import { useGetterMainOnlyChild } from "../../../sharedWithServer/stateClassHooks/useMain";
 import {
   ValueCustomVarbPathInfo,
-  varbPathOptionArr,
-} from "../../../sharedWithServer/StateEntityGetters/pathNameOptions";
+  ValueInEntityInfo,
+} from "../../../sharedWithServer/StateEntityGetters/ValueInEntityInfo";
+import { varbPathOptionArr } from "../../../sharedWithServer/StateEntityGetters/varbPathOptions";
 import { GetterSection } from "../../../sharedWithServer/StateGetters/GetterSection";
 import { Arr } from "../../../sharedWithServer/utils/Arr";
 import ccs from "../../../theme/cssChunks";

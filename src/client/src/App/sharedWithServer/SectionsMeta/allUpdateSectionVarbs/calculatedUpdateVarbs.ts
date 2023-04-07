@@ -1,4 +1,4 @@
-import { VarbNameByValueName } from "../baseSectionsDerived/baseSectionsVarbsTypes";
+import { VarbNameByValueName } from "../baseSectionsDerived/baseSectionValues";
 import { mixedInfoS } from "../SectionInfo/MixedSectionInfo";
 import { relVarbInfoS } from "../SectionInfo/RelVarbInfo";
 import { UpdateGroup } from "../updateSectionVarbs/switchUpdateVarbs";

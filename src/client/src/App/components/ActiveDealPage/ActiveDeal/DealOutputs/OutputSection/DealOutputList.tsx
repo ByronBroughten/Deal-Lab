@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { inEntityValueInfo } from "../../../../../sharedWithServer/SectionsMeta/values/StateValue/InEntityValue";
 import { useGetterSection } from "../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { useSetterSection } from "../../../../../sharedWithServer/stateClassHooks/useSetterSection";
-import { VariableOption } from "../../../../../sharedWithServer/StateEntityGetters/VariableGetterSections";
+import { VariableOption } from "../../../../../sharedWithServer/StateEntityGetters/varbPathOptions";
 import theme from "../../../../../theme/Theme";
 import { LabeledVarbProps } from "../../../../appWide/LabeledVarb";
 import { LabeledVarbRow } from "../../../../appWide/LabeledVarbRow";

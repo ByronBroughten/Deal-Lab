@@ -6,7 +6,7 @@ import { useToggleView } from "../../modules/customHooks/useToggleView";
 import { SetEditorState } from "../../modules/draftjs/draftUtils";
 import { FeVarbInfo } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { SectionInfoContextProvider } from "../../sharedWithServer/stateClassHooks/useSectionContext";
-import { ValueFixedVarbPathName } from "../../sharedWithServer/StateEntityGetters/pathNameOptions";
+import { ValueFixedVarbPathName } from "../../sharedWithServer/StateEntityGetters/ValueInEntityInfo";
 import { GetterVarb } from "../../sharedWithServer/StateGetters/GetterVarb";
 import { EditorTextStatus } from "../../sharedWithServer/StateGetters/GetterVarbNumObj";
 import theme from "../../theme/Theme";

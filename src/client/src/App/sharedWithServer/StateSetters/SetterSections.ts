@@ -4,10 +4,8 @@ import { SectionName } from "../SectionsMeta/SectionName";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { StateValue } from "../SectionsMeta/values/StateValue";
 import { isStateValue } from "../SectionsMeta/values/valueMetas";
-import {
-  VariableGetterSections,
-  VariableOption,
-} from "../StateEntityGetters/VariableGetterSections";
+import { VariableOption } from "../StateEntityGetters/varbPathOptions";
+import { VariableGetterSections } from "../StateEntityGetters/VariableGetterSections";
 import { GetterList } from "../StateGetters/GetterList";
 import { GetterSections } from "../StateGetters/GetterSections";
 import { GetterVarb } from "../StateGetters/GetterVarb";

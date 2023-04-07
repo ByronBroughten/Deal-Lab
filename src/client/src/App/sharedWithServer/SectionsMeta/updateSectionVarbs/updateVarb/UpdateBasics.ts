@@ -1,6 +1,6 @@
 import { switchKeyToVarbNames } from "../../allBaseSectionVarbs/baseSwitchNames";
 import {
-  valVarbName,
+  validateAnyVarbName,
   VarbNameWide,
 } from "../../baseSectionsDerived/baseSectionsVarbsTypes";
 import { ChildName } from "../../sectionChildrenDerived/ChildName";
@@ -131,13 +131,13 @@ export const updateBasicsS = {
   monthsToYears<Base extends string>(base: Base) {
     const varbNames = switchKeyToVarbNames(base, "monthsYears");
     return updateBasicsNext("monthsToYears", {
-      num: updateFnPropS.local(valVarbName(varbNames.months)),
+      num: updateFnPropS.local(validateAnyVarbName(varbNames.months)),
     });
   },
   yearsToMonths<Base extends string>(base: Base) {
     const varbNames = switchKeyToVarbNames(base, "monthsYears");
     return updateBasicsNext("yearsToMonths", {
-      num: updateFnPropS.local(valVarbName(varbNames.years)),
+      num: updateFnPropS.local(validateAnyVarbName(varbNames.years)),
     });
   },
   yearlyToMonthly<Base extends string>(
@@ -145,8 +145,8 @@ export const updateBasicsS = {
   ): UpdateBasics<"numObj"> {
     const varbNames = switchKeyToVarbNames(baseVarbName, "ongoing");
     return updateBasicsNext("yearlyToMonthly", {
-      num: updateFnPropS.local(valVarbName(varbNames.yearly)),
-      switch: updateFnPropS.local(valVarbName(varbNames.switch)),
+      num: updateFnPropS.local(validateAnyVarbName(varbNames.yearly)),
+      switch: updateFnPropS.local(validateAnyVarbName(varbNames.switch)),
     });
   },
   monthlyToYearly<Base extends string>(
@@ -154,7 +154,7 @@ export const updateBasicsS = {
   ): UpdateBasics<"numObj"> {
     const varbNames = switchKeyToVarbNames(baseVarbName, "ongoing");
     return updateBasicsNext("monthlyToYearly", {
-      num: updateFnPropS.local(valVarbName(varbNames.monthly)),
+      num: updateFnPropS.local(validateAnyVarbName(varbNames.monthly)),
     });
   },
 };

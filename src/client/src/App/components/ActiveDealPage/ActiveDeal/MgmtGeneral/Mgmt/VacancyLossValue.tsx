@@ -1,7 +1,7 @@
 import { FeVarbInfo } from "../../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { StateValue } from "../../../../../sharedWithServer/SectionsMeta/values/StateValue";
 import { useSetterSection } from "../../../../../sharedWithServer/stateClassHooks/useSetterSection";
-import { ValueFixedVarbPathName } from "../../../../../sharedWithServer/StateEntityGetters/pathNameOptions";
+import { ValueFixedVarbPathName } from "../../../../../sharedWithServer/StateEntityGetters/ValueInEntityInfo";
 import { GetterSection } from "../../../../../sharedWithServer/StateGetters/GetterSection";
 import { LabelWithInfo } from "../../../../appWide/LabelWithInfo";
 import { SelectEditorSection } from "../../../../appWide/SelectEditorSection";

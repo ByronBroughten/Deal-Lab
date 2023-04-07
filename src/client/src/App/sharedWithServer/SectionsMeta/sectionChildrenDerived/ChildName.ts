@@ -1,3 +1,4 @@
+import { ValidationError } from "../../utils/Error";
 import { Obj } from "../../utils/Obj";
 import { RemoveNotStrings, StrictOmit } from "../../utils/types";
 import { MergeUnionObj } from "../../utils/types/mergeUnionObj";
@@ -11,6 +12,14 @@ type SectionToCN = {
 };
 export type ChildName<SN extends SectionName = SectionName> = string &
   SectionToCN[SN];
+
+const allChildNames = Obj.keys(allSectionChildren).reduce(
+  (allChildNames, sectionName) => {
+    const childNames = Obj.keys(allSectionChildren[sectionName]);
+    return [...new Set([...allChildNames, ...childNames])];
+  },
+  [] as ChildName[]
+);
 
 type SectionToChildren = RemoveNotStrings<SectionToCN>;
 
@@ -47,6 +56,14 @@ export function validateChildName<
   if (names.includes(childName)) {
     return childName;
   } else throw new Error(`"${childName}" is not a childName of ${sectionName}`);
+}
+
+export function validateAnyChildName(value: any): ChildName {
+  if (allChildNames.includes(value)) {
+    return value;
+  } else {
+    throw new ValidationError(`value "${value}" is not a childName`);
+  }
 }
 
 export type GeneralChildIdArrs = {

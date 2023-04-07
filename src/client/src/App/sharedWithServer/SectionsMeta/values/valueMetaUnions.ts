@@ -32,8 +32,10 @@ function makeUnionMeta<UN extends UnionValueName>(
       }
     },
     initDefault: () => first as StateValue<UN>,
+    get mon() {
+      return monSchemas.fromValidator(this.validate);
+    },
     zod: zodSchema,
-    mon: monSchemas.fromZod(zodSchema),
   };
 }
 

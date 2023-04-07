@@ -3,7 +3,7 @@ import { ValidationError } from "./utils/Error";
 import { mathS } from "./utils/math";
 import { Str } from "./utils/Str";
 
-export const validateValueS = {
+export const validateS = {
   boolean: (value: any): boolean => {
     if (typeof value === "boolean") {
       return value;
@@ -26,7 +26,7 @@ export const validateValueS = {
     return num;
   },
   stringOneLine: (value: any): string => {
-    const str = Str.isString(value);
+    const str = Str.validate(value);
     if (str.length > dbLimits.stringOneLine.maxLength) {
       throw new ValidationError(
         `The given value is longer than the max length of ${dbLimits.stringOneLine.maxLength}`
@@ -49,5 +49,20 @@ export const validateValueS = {
     } else {
       throw new ValidationError(`value "${value}" is not in the passed array`);
     }
+  },
+  isValidated(value: any, validator: (value: any) => any): boolean {
+    try {
+      validator(value);
+      return true;
+    } catch (error) {
+      if (error instanceof ValidationError) {
+        return false;
+      } else {
+        throw error;
+      }
+    }
+  },
+  makeIsChecker(validator: (value: any) => any): (value: any) => boolean {
+    return (v: any) => this.isValidated(v, validator);
   },
 } as const;

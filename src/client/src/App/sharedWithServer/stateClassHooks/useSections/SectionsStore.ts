@@ -64,7 +64,7 @@ export class SectionsStore {
       return validateSectionPackArrs(storedState, "main", storeChildNames);
     } catch (e) {
       this.rmStoredState();
-      throw new Error("Failed to validate stored deal state.");
+      throw e;
     }
   }
   private static initMainFromStoredState(

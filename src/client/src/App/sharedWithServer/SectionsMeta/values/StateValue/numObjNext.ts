@@ -1,4 +1,4 @@
-import { ValueFixedVarbPathName } from "../../../StateEntityGetters/pathNameOptions";
+import { ValueFixedVarbPathName } from "../../../StateEntityGetters/ValueInEntityInfo";
 import { fullDisplayNameString } from "../../allDisplaySectionVarbs";
 import { Id } from "../../IdS";
 import {

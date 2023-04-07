@@ -4,10 +4,8 @@ import React from "react";
 import styled from "styled-components";
 import useToggle from "../../modules/customHooks/useToggle";
 import { useVariableSections } from "../../sharedWithServer/stateClassHooks/useVariableOptions";
-import {
-  SectionOption,
-  VariableOption,
-} from "../../sharedWithServer/StateEntityGetters/VariableGetterSections";
+import { VariableOption } from "../../sharedWithServer/StateEntityGetters/varbPathOptions";
+import { SectionOption } from "../../sharedWithServer/StateEntityGetters/VariableGetterSections";
 import ccs from "../../theme/cssChunks";
 import theme from "../../theme/Theme";
 

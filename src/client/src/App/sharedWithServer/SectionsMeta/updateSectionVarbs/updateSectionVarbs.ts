@@ -1,9 +1,11 @@
 import {
   sectionVarbNames,
-  sectionVarbValueName,
   VarbName,
-  VarbValueName,
 } from "../baseSectionsDerived/baseSectionsVarbsTypes";
+import {
+  sectionVarbValueName,
+  VarbValueName,
+} from "../baseSectionsDerived/baseSectionValues";
 import { SectionName } from "../SectionName";
 import { GeneralUpdateVarb, UpdateVarb, updateVarb } from "./updateVarb";
 

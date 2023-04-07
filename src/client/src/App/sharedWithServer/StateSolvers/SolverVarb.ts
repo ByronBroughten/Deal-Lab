@@ -9,8 +9,8 @@ import {
   OutEntity,
   OutEntityInfo,
   ValueInEntity,
-  ValueInEntityInfo,
 } from "../SectionsMeta/values/StateValue/valuesShared/entities";
+import { ValueInEntityInfo } from "../StateEntityGetters/ValueInEntityInfo";
 import { GetterSections } from "../StateGetters/GetterSections";
 import { GetterVarb } from "../StateGetters/GetterVarb";
 import { InEntityGetterVarb } from "../StateGetters/InEntityGetterVarb";
@@ -100,7 +100,6 @@ export class SolverVarb<
     this.updaterVarb.updateValue(newValue);
     this.updateConnectedEntities();
   }
-
   loadValueFromVarb(varbInfo: ValueInEntityInfo): void {
     const entityInfo = { ...varbInfo, entityId: Id.make() };
     const infoVarb = this.localSolverVarb("valueEntityInfo");

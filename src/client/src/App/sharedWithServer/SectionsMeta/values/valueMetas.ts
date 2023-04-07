@@ -2,7 +2,7 @@ import { z } from "zod";
 import { Arr } from "../../utils/Arr";
 import { ValidationError } from "../../utils/Error";
 import { reqMonNumber, reqMonString } from "../../utils/mongoose";
-import { validateValueS } from "../../validators";
+import { validateS } from "../../validateS";
 import { StateValue } from "./StateValue";
 import { inEntityInfoValueSchema } from "./StateValue/InEntityValue";
 import { numObjMeta } from "./StateValue/NumObj";
@@ -15,28 +15,28 @@ import { valueNames } from "./ValueName";
 export const valueMetas = checkValueMetas({
   number: {
     is: (v: any): v is number => typeof v === "number",
-    validate: validateValueS.number,
+    validate: validateS.number,
     initDefault: () => 0,
     zod: z.number(),
     mon: reqMonNumber,
   },
   dateTime: {
     is: (v: any): v is number => typeof v === "number",
-    validate: validateValueS.number,
+    validate: validateS.number,
     initDefault: () => 0,
     zod: z.number(),
     mon: reqMonNumber,
   },
   boolean: {
     is: (v: any): v is boolean => typeof v === "boolean",
-    validate: validateValueS.boolean,
+    validate: validateS.boolean,
     initDefault: () => true,
     zod: z.boolean(),
     mon: { type: Boolean, required: true },
   },
   string: {
     is: (v: any): v is string => typeof v === "string",
-    validate: validateValueS.stringOneLine,
+    validate: validateS.stringOneLine,
     initDefault: () => "",
     zod: z.string(),
     mon: reqMonString,
@@ -56,7 +56,7 @@ export const valueMetas = checkValueMetas({
     },
     validate: (value: any) => {
       const arr = Arr.validateIsArray(value);
-      if (arr.every((i: any) => validateValueS.stringOneLine(i))) {
+      if (arr.every((i: any) => validateS.stringOneLine(i))) {
         return arr;
       } else {
         throw new ValidationError(
@@ -75,6 +75,19 @@ export const valueMetas = checkValueMetas({
   ...unionMetas,
 });
 
+export function validateStateValue(value: any) {
+  for (const valueName of valueNames) {
+    try {
+      valueMetas[valueName].validate(value);
+      return value;
+    } catch (err) {
+      if (!(err instanceof ValidationError)) {
+        throw err;
+      }
+    }
+  }
+  throw new ValidationError(`value "${value}" is not a stateValue`);
+}
 export function isStateValue(value: any): value is StateValue {
   for (const valueName of valueNames) {
     if (valueMetas[valueName].is(value)) return true;

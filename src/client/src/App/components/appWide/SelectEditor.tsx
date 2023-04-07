@@ -2,7 +2,7 @@ import { FormControl, MenuItem, Select } from "@mui/material";
 import React from "react";
 import styled from "styled-components";
 import { FeVarbInfo } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
-import { ValueFixedVarbPathName } from "../../sharedWithServer/StateEntityGetters/pathNameOptions";
+import { ValueFixedVarbPathName } from "../../sharedWithServer/StateEntityGetters/ValueInEntityInfo";
 import theme from "../../theme/Theme";
 import { MuiSelectOnChange } from "../../utils/mui";
 import {

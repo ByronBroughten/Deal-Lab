@@ -2,7 +2,7 @@ import { z } from "zod";
 import { monSchemas } from "../../../utils/mongoose";
 import { Obj } from "../../../utils/Obj";
 import { zS } from "../../../utils/zod";
-import { validateValueS } from "../../../validators";
+import { validateS } from "../../../validateS";
 import {
   mInEntities,
   validateValueInEntities,
@@ -32,7 +32,7 @@ function isStringObj(value: any): value is StringObj {
 function validateStringObj(value: any): StringObj {
   const obj = Obj.validateObjToAny(value) as StringObj;
   return {
-    mainText: validateValueS.stringOneLine(obj.mainText),
+    mainText: validateS.stringOneLine(obj.mainText),
     entities: validateValueInEntities(obj.entities),
   };
 }

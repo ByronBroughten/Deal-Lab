@@ -1,5 +1,9 @@
 import { Schema } from "mongoose";
 import { z } from "zod";
+import {
+  validateInEntityInfo,
+  ValueInEntityInfo,
+} from "../../../StateEntityGetters/ValueInEntityInfo";
 import { Obj } from "../../../utils/Obj";
 import { zS } from "../../../utils/zod";
 import { Id } from "../../IdS";
@@ -7,8 +11,6 @@ import { isVarbPathName } from "../../SectionInfo/VarbPathNameInfo";
 import {
   EntityIdProp,
   validateEntityId,
-  validateInEntityInfo,
-  ValueInEntityInfo,
   zValueEntityInfo,
 } from "./valuesShared/entities";
 

@@ -4,7 +4,7 @@ import {
   SwitchTargetKey,
 } from "../../allBaseSectionVarbs/baseSwitchNames";
 import {
-  valVarbName,
+  validateAnyVarbName,
   VarbNameWide,
 } from "../../baseSectionsDerived/baseSectionsVarbsTypes";
 import { ChildName } from "../../sectionChildrenDerived/ChildName";
@@ -96,7 +96,10 @@ export const overrideSwitchS = {
     ...switchValues: SK[]
   ): UpdateOverrideSwitch {
     const varbName = getSwitchVarbName(baseName, switchName, "switch");
-    return this.local(valVarbName(varbName), ...(switchValues as string[]));
+    return this.local(
+      validateAnyVarbName(varbName),
+      ...(switchValues as string[])
+    );
   },
   local(
     varbName: VarbNameWide,
@@ -122,7 +125,7 @@ export const overrideSwitchS = {
     switchKey: K
   ): UpdateOverrideSwitch {
     const varbName = getSwitchVarbName(baseName, "ongoing", "switch");
-    return this.local(valVarbName(varbName), switchKey);
+    return this.local(validateAnyVarbName(varbName), switchKey);
   },
   monthsIsActive(baseName: string) {
     return this.switchIsActive(baseName, "monthsYears", "months");

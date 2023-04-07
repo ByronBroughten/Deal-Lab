@@ -6,7 +6,7 @@ import { useToggleView } from "../../../modules/customHooks/useToggleView";
 import { FeSectionInfo } from "../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { mixedInfoS } from "../../../sharedWithServer/SectionsMeta/SectionInfo/MixedSectionInfo";
 import { useGetterSection } from "../../../sharedWithServer/stateClassHooks/useGetterSection";
-import { ValueFixedVarbPathName } from "../../../sharedWithServer/StateEntityGetters/pathNameOptions";
+import { ValueFixedVarbPathName } from "../../../sharedWithServer/StateEntityGetters/ValueInEntityInfo";
 import theme from "../../../theme/Theme";
 import { HollowBtn } from "../../appWide/HollowBtn";
 import { ModalText } from "../../appWide/ModalText";

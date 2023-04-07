@@ -1,4 +1,5 @@
 import { isEqual } from "lodash";
+import { ValidationError } from "./Error";
 
 function lastIdx(arr: readonly any[]): number {
   return arr.length - 1;
@@ -221,7 +222,7 @@ export const Arr = {
   },
   validateIsArray(value: any): any[] {
     if (!Array.isArray(value)) {
-      throw new Error("The received value is not an array.");
+      throw new ValidationError("The received value is not an array.");
     } else return value;
   },
 } as const;

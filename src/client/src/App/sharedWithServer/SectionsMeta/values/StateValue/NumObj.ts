@@ -2,7 +2,7 @@ import { z } from "zod";
 import { reqMonString } from "../../../utils/mongoose";
 import { Obj } from "../../../utils/Obj";
 import { StrictPick } from "../../../utils/types";
-import { validateValueS } from "../../../validators";
+import { validateS } from "../../../validateS";
 import {
   mInEntities,
   validateValueInEntities,
@@ -56,9 +56,9 @@ function isNumObj(value: any): value is NumObj {
 export function validateNumObj(value: any): NumObj {
   const obj = Obj.validateObjToAny(value) as NumObj;
   return {
-    mainText: validateValueS.stringOneLine(obj.mainText),
+    mainText: validateS.stringOneLine(obj.mainText),
     entities: validateValueInEntities(obj.entities),
-    solvableText: validateValueS.stringOneLine(obj.mainText),
+    solvableText: validateS.stringOneLine(obj.mainText),
   };
 }
 

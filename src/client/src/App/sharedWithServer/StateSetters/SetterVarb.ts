@@ -7,9 +7,9 @@ import {
   StateValueOrAny,
   ValueNameOrAny,
 } from "../SectionsMeta/values/StateValue";
-import { ValueInEntityInfo } from "../SectionsMeta/values/StateValue/valuesShared/entities";
 import { ValueName } from "../SectionsMeta/values/ValueName";
 import { VarbMeta } from "../SectionsMeta/VarbMeta";
+import { ValueInEntityInfo } from "../StateEntityGetters/ValueInEntityInfo";
 import { GetterSections } from "../StateGetters/GetterSections";
 import { GetterVarb } from "../StateGetters/GetterVarb";
 import { InEntityGetterVarb } from "../StateGetters/InEntityGetterVarb";
