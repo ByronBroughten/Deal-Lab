@@ -2,7 +2,7 @@ import { Server } from "http";
 import Stripe from "stripe";
 import request from "supertest";
 import { constants } from "../../client/src/App/Constants";
-import { timeS } from "../../client/src/App/sharedWithServer/utils/date";
+import { timeS } from "../../client/src/App/sharedWithServer/utils/timeS";
 import { runApp } from "../../runApp";
 import { getStripe } from "../routeUtils/stripe";
 import { DbUser } from "./apiQueriesShared/DbSections/DbUser";

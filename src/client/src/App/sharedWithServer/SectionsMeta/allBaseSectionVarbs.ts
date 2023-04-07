@@ -72,7 +72,7 @@ export function makeAllBaseSectionVarbs() {
       compareToggle: baseVarb("boolean"),
     }),
     column: baseSectionVarbs({
-      varbInfo: baseVarb("varbInfo"),
+      varbInfo: baseVarb("inEntityValue"),
     }),
     cell: baseSectionVarbs({
       columnFeId: baseVarb("string"),
@@ -146,9 +146,6 @@ export function makeAllBaseSectionVarbs() {
     }),
     outputItem: baseSectionVarbs({
       valueEntityInfo: baseVarb("inEntityValue"),
-    }),
-    accountDeal: baseSectionVarbs({
-      varbInfo: baseVarb("varbInfo"),
     }),
     virtualVarb: baseSectionVarbs({
       valueEntityInfo: baseVarb("inEntityValue"),
@@ -396,12 +393,6 @@ export function makeAllBaseSectionVarbs() {
       userDataFetchTryCount: baseVarb("number"),
       labSubscription: baseVarb("labSubscription"),
       labSubscriptionExp: baseVarb("number"),
-    }),
-    saveAttempt: baseSectionVarbs({
-      addsToSave: baseVarb("sectionUpdates"),
-      updatesToSave: baseVarb("sectionUpdates"),
-      removesToSave: baseVarb("sectionUpdates"),
-      attemptStatus: baseVarb("saveAttemptStatus"),
     }),
     userInfo: baseSectionVarbs({
       ...baseVarbs("string", ["email", "userName"] as const),

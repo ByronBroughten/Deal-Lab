@@ -6,6 +6,8 @@ import { Id } from "../../IdS";
 import { isVarbPathName } from "../../SectionInfo/VarbPathNameInfo";
 import {
   EntityIdProp,
+  validateEntityId,
+  validateInEntityInfo,
   ValueInEntityInfo,
   zValueEntityInfo,
 } from "./valuesShared/entities";
@@ -19,6 +21,14 @@ export function inEntityValueInfo(
   return {
     ...varbInfo,
     entityId: Id.make(),
+  };
+}
+
+function validateInEntityValue(value: any): InEntityValue {
+  if (value === null) return value;
+  return {
+    entityId: validateEntityId((value as InEntityValue)?.entityId),
+    ...validateInEntityInfo(value),
   };
 }
 
@@ -54,6 +64,7 @@ const zInEntityVarbInfoValue = z.union([z.null(), zInEntityValueInfo]);
 export const inEntityInfoValueSchema = {
   is: isInEntityValue,
   initDefault: () => null as InEntityValue,
+  validate: validateInEntityValue,
   zod: zInEntityVarbInfoValue,
   mon: {
     type: Schema.Types.Mixed,

@@ -1,17 +1,8 @@
-import {
-  StoreName,
-  storeNames,
-  validateStoreName,
-} from "../../sharedWithServer/SectionsMeta/sectionStores";
 import { StateValue } from "../../sharedWithServer/SectionsMeta/values/StateValue";
 import { GetterSectionBase } from "../../sharedWithServer/StateGetters/Bases/GetterSectionBase";
 import { GetterSectionsProps } from "../../sharedWithServer/StateGetters/Bases/GetterSectionsBase";
 import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection";
 import { GetterSections } from "../../sharedWithServer/StateGetters/GetterSections";
-import {
-  initSectionPackArrs,
-  SectionPackArrs,
-} from "../../sharedWithServer/StatePackers/PackMakerSection";
 import { Obj } from "../../sharedWithServer/utils/Obj";
 
 export class GetterFeStore extends GetterSectionBase<"feStore"> {
@@ -35,15 +26,6 @@ export class GetterFeStore extends GetterSectionBase<"feStore"> {
   }
   get isGuest(): boolean {
     return this.authStatus === "guest";
-  }
-  saveAttempt(feId: string): GetterSection<"saveAttempt"> {
-    return this.get.child({
-      childName: "saveAttempt",
-      feId,
-    });
-  }
-  get saveAttempts() {
-    return this.get.children("saveAttempt");
   }
   get timeOfLastChange(): number {
     return this.get.valueNext("timeOfLastChange");
@@ -111,56 +93,5 @@ export class GetterFeStore extends GetterSectionBase<"feStore"> {
       }
       return changesSaving;
     }, {} as StateValue<"changesSaving">);
-  }
-  get initializedSaveId(): string {
-    const save = this.saveAttempts.find(
-      (attempt) => attempt.value("attemptStatus") === "initialized"
-    );
-    if (save) return save.feId;
-    else return "";
-  }
-  get pendingSaveId(): string {
-    const save = this.saveAttempts.find(
-      (attempt) => attempt.value("attemptStatus") === "pending"
-    );
-    if (save) return save.feId;
-    else return "";
-  }
-  filterNonSavingToSaves(
-    toSave: StateValue<"sectionUpdates">,
-    saving: StateValue<"sectionUpdates">
-  ): StateValue<"sectionUpdates"> {
-    const sectionIds = Obj.keys(toSave);
-    return sectionIds.reduce((nonSaving, sectionId) => {
-      if (!(sectionId in saving) || toSave[sectionId] > saving[sectionId]) {
-        nonSaving[sectionId] = toSave[sectionId];
-      }
-      return nonSaving;
-    }, {} as StateValue<"sectionUpdates">);
-  }
-  getSaveAttemptPacks(
-    saveAttemptId: string
-  ): SectionPackArrs<"feStore", StoreName> {
-    const saveAttempt = this.get.child({
-      childName: "saveAttempt",
-      feId: saveAttemptId,
-    });
-    const updatesAttempting = saveAttempt.valueNext("updatesToSave");
-    const sectionIds = Obj.keys(updatesAttempting);
-
-    const sectionPackArrs = initSectionPackArrs("feStore", storeNames);
-    for (const sectionId of sectionIds) {
-      const section = this.getterSections.sectionBySectionId(sectionId);
-      const { selfChildName } = section;
-
-      const storeName = validateStoreName(selfChildName);
-      if (!sectionPackArrs[storeName]) {
-        sectionPackArrs[storeName] = [];
-      }
-      sectionPackArrs[storeName].push(
-        section.packMaker.makeSectionPack() as any
-      );
-    }
-    return sectionPackArrs;
   }
 }

@@ -1,31 +1,28 @@
 import { pick } from "lodash";
 import { z } from "zod";
 import {
+  validateInEntityInfoCustom,
+  validateInEntityInfoFixed,
   ValueCustomVarbPathInfo,
   ValueFixedVarbPathInfo,
 } from "../../../../StateEntityGetters/pathNameOptions";
 import { Arr } from "../../../../utils/Arr";
+import { ValidationError } from "../../../../utils/Error";
 import { monSchemas } from "../../../../utils/mongoose";
+import { Obj } from "../../../../utils/Obj";
 import { zS } from "../../../../utils/zod";
+import { validateValueS } from "../../../../validators";
 import { Id } from "../../../IdS";
 import { PathInVarbInfo } from "../../../sectionChildrenDerived/RelInOutVarbInfo";
 import { FeVarbInfo } from "../../../SectionInfo/FeInfo";
 import { PathDbVarbInfoMixed } from "../../../SectionInfo/PathNameInfo";
 import { VarbPathNameInfoMixed } from "../../../SectionInfo/VarbPathNameInfo";
 
+export function validateEntityId(value: any): string {
+  return Id.validate(value);
+}
 export type EntityIdProp = { entityId: string };
 export type OutEntity = FeVarbInfo & EntityIdProp;
-
-const zValueInEntityBase = z.object({
-  entityId: zS.nanoId,
-  entitySource: zS.string,
-  length: zS.number,
-  offset: zS.number,
-});
-
-interface InEntityBase extends z.infer<typeof zValueInEntityBase> {
-  entitySource: EntitySource;
-}
 
 const varbPathZSchema: Record<keyof VarbPathNameInfoMixed, any> = {
   infoType: z.literal("varbPathName"),
@@ -44,6 +41,20 @@ export const zValueEntityInfo = z.union([
   z.object(pathDbIdZSchema),
 ]);
 
+const zValueInEntityBase = z.object({
+  entityId: zS.nanoId,
+  entitySource: zS.string,
+  length: zS.number,
+  offset: zS.number,
+});
+
+interface InEntityBase {
+  entityId: string;
+  entitySource: EntitySource;
+  length: number;
+  offset: number;
+}
+
 export const zValueInEntity = z.union([
   zValueInEntityBase.extend(varbPathZSchema),
   zValueInEntityBase.extend(pathDbIdZSchema),
@@ -51,21 +62,82 @@ export const zValueInEntity = z.union([
 
 export const zValueInEntities = z.array(zValueInEntity);
 
-export type ValueInEntityInfoNext =
+export function validateInEntityBase(value: any): InEntityBase {
+  const obj = Obj.validateObjToAny(value) as InEntityBase;
+  return {
+    entityId: Id.validate(obj.entityId),
+    entitySource: validateValueInEntitySource(obj.entitySource),
+    length: validateValueS.number(obj.length),
+    offset: validateValueS.number(obj.offset),
+  };
+}
+
+function validateFixedValueInEntity(value: any): ValueInEntityFixed {
+  const obj = Obj.validateObjToAny(value) as ValueInEntityFixed;
+  return {
+    ...validateInEntityInfoFixed(obj),
+    ...validateInEntityBase(obj),
+  };
+}
+function validateCustomValueInEntity(value: any): ValueInEntityCustom {
+  const obj = Obj.validateObjToAny(value) as ValueInEntityCustom;
+  return {
+    ...validateInEntityInfoCustom(obj),
+    ...validateInEntityBase(obj),
+  };
+}
+function validateValueInEntity(value: any): ValueInEntity {
+  try {
+    return validateFixedValueInEntity(value);
+  } catch (err) {
+    if (!(err instanceof ValidationError)) {
+      throw err;
+    }
+  }
+  return validateCustomValueInEntity(value);
+}
+
+export function validateValueInEntities(value: any): ValueInEntity[] {
+  const arr = Arr.validateIsArray(value);
+  arr.forEach((item) => validateValueInEntity(item));
+  return arr;
+}
+
+interface ValueInEntityFixed extends ValueFixedVarbPathInfo, InEntityBase {}
+interface ValueInEntityCustom extends ValueCustomVarbPathInfo, InEntityBase {}
+
+export type ValueInEntityInfo =
   | ValueFixedVarbPathInfo
   | ValueCustomVarbPathInfo;
 
-export type ValueInEntityInfo = ValueInEntityInfoNext;
+export function validateInEntityInfo(value: any): ValueInEntityInfo {
+  try {
+    return validateInEntityInfoFixed(value);
+  } catch (err) {
+    if (!(err instanceof ValidationError)) {
+      throw err;
+    }
+  }
+  return validateInEntityInfoCustom(value);
+}
+
+export type ValueInEntity = ValueInEntityFixed | ValueInEntityCustom;
 
 type FixedInEntityInfo = PathInVarbInfo;
 export type FixedInEntity = FixedInEntityInfo & EntityIdProp;
-
-export type ValueInEntity = ValueInEntityInfo & InEntityBase;
 export type InEntity = FixedInEntity | ValueInEntity;
 
 export const mInEntities = monSchemas.fromZod(zValueInEntities);
 
-export type EntitySource = "localValueEntityInfo" | "editor";
+const entitySourceNames = ["localValueEntityInfo", "editor"] as const;
+export type EntitySource = typeof entitySourceNames[number];
+export function validateValueInEntitySource(value: any): EntitySource {
+  if (entitySourceNames.includes(value)) {
+    return value;
+  } else {
+    throw new Error(`value "${value}" is not an entitySourceName`);
+  }
+}
 
 export const entityS = {
   valueInEntity(

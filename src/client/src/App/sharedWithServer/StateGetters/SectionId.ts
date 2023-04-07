@@ -1,4 +1,6 @@
-import { SectionName } from "../SectionsMeta/SectionName";
+import { Id } from "../SectionsMeta/IdS";
+import { SectionName, validateSectionName } from "../SectionsMeta/SectionName";
+import { Str } from "../utils/Str";
 
 export const SectionId = {
   get sectionIdSplitter() {
@@ -13,5 +15,12 @@ export const SectionId = {
   } {
     const [sectionName, feId] = sectionId.split(this.sectionIdSplitter);
     return { sectionName: sectionName as SectionName, feId };
+  },
+  validate(value: any): string {
+    const str = Str.validate(value);
+    const { sectionName, feId } = this.splitSectionId(str);
+    validateSectionName(sectionName);
+    Id.validate(feId);
+    return str;
   },
 };

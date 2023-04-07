@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { ValidationError } from "../utils/Error";
 
 export const sectionNames = [
   "root",
@@ -8,7 +9,6 @@ export const sectionNames = [
   "variablesMenu",
 
   "feStore",
-  "saveAttempt",
 
   "dbStore",
   "proxyStoreItem",
@@ -82,6 +82,14 @@ export const sectionNames = [
   "userListEditor",
   "userVarbEditor",
 ] as const;
+
+export function validateSectionName(value: any): SectionName {
+  if (sectionNames.includes(value)) {
+    return value;
+  } else {
+    throw new ValidationError(`value "${value}" is not a sectionName`);
+  }
+}
 
 export type SectionName = typeof sectionNames[number];
 export function isSectionName(value: any): value is SectionName {

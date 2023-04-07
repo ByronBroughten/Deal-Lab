@@ -15,6 +15,13 @@ type JoinStrings<F extends string, B extends string> = keyof {
 };
 
 export const Str = {
+  isString(value: any): string {
+    if (typeof value === "string") {
+      return value;
+    } else {
+      throw new Error(`value "${value}" is not of type string`);
+    }
+  },
   join<F extends string, B extends string>(
     front: F,
     back: B

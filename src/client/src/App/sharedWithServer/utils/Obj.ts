@@ -1,6 +1,7 @@
 // import { isEqual, pick } from "lodash";
 import { isArray, isEqual, isObject, pick, transform } from "lodash";
 import { shallowEqualObjects } from "shallow-equal";
+import { ValidationError } from "./Error";
 import { entryKeysWithPropOfType } from "./Obj/entryKeysWithProp";
 import { merge, spread } from "./Obj/merge";
 import { PropKeysOfValue } from "./Obj/SubType";
@@ -65,26 +66,13 @@ function difference(origObj: any, newObj: any) {
   }
   return changes(newObj, origObj);
 }
-function validateTruthyRes(res: any): any {
-  if (res) {
-    return res;
-  } else {
-    throw new Error(`res "${res}" is not truthy.`);
-  }
-}
+
 export const Obj = {
   isEmpty(obj: any) {
     return Object.keys(obj).length === 0;
   },
   shallowEqual(a: any, b: any): boolean {
     return shallowEqualObjects(a, b);
-  },
-  validateTruthy(value: any) {
-    if (value) {
-      return value;
-    } else {
-      throw new Error(`value "${value}" is not truthy.`);
-    }
   },
   isKey<O extends Record<string, any>>(obj: O, value: any): value is keyof O {
     return this.keys(obj).includes(value);
@@ -120,7 +108,7 @@ export const Obj = {
   },
   validateObjToAny(value: any): any {
     if (this.isObjToAny(value)) return value;
-    else throw new Error(`"${value}" is not an Object`);
+    else throw new ValidationError(`"${value}" is not an Object`);
   },
   strictPick<O extends object, KS extends keyof O>(
     obj: O,

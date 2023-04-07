@@ -7,6 +7,9 @@ export const dbLimits = {
       return -this.max;
     },
   },
+  stringOneLine: {
+    maxLength: 255,
+  },
   string: {
     maxLength: 255,
   },

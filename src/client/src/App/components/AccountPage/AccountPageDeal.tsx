@@ -2,7 +2,7 @@ import { unstable_batchedUpdates } from "react-dom";
 import { Text, View, ViewStyle } from "react-native";
 import { useMainSectionActor } from "../../modules/sectionActorHooks/useMainSectionActor";
 import { dealModeLabels } from "../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
-import { timeS } from "../../sharedWithServer/utils/date";
+import { timeS } from "../../sharedWithServer/utils/timeS";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { reactNativeS } from "../../utils/reactNative";
 import { useGoToPage } from "../appWide/customHooks/useGoToPage";

@@ -2,7 +2,12 @@ import { z } from "zod";
 import { monSchemas } from "../../../utils/mongoose";
 import { Obj } from "../../../utils/Obj";
 import { zS } from "../../../utils/zod";
-import { mInEntities, zValueInEntities } from "./valuesShared/entities";
+import { validateValueS } from "../../../validators";
+import {
+  mInEntities,
+  validateValueInEntities,
+  zValueInEntities,
+} from "./valuesShared/entities";
 import { EntitiesProp, MainTextProp } from "./valuesShared/valueObj";
 
 export interface StringObj extends EntitiesProp, MainTextProp {}
@@ -22,6 +27,14 @@ function isStringObj(value: any): value is StringObj {
     typeof value.mainText === "string" &&
     Array.isArray(value.entities)
   );
+}
+
+function validateStringObj(value: any): StringObj {
+  const obj = Obj.validateObjToAny(value) as StringObj;
+  return {
+    mainText: validateValueS.stringOneLine(obj.mainText),
+    entities: validateValueInEntities(obj.entities),
+  };
 }
 
 export function stringObj(mainText: string): StringObj {
@@ -48,6 +61,7 @@ const mStringObj: Record<keyof StringObj, any> = {
 
 export const stringObjMeta = {
   is: isStringObj,
+  validate: validateStringObj,
   initDefault: initDefaultStringObj,
   zod: zStringObj,
   mon: mStringObj,

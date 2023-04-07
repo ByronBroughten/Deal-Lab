@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { constants } from "../../Constants";
 import { StateValue } from "../../sharedWithServer/SectionsMeta/values/StateValue";
 import { useGetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useGetterSection";
-import { timeS } from "../../sharedWithServer/utils/date";
+import { timeS } from "../../sharedWithServer/utils/timeS";
 import { getErrorMessage } from "../../utils/error";
 import { useFeStoreDepreciated } from "../sectionActorHooks/useFeStoreDepreciated";
 

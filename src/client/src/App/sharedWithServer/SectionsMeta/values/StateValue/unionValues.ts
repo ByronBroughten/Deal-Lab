@@ -1,4 +1,3 @@
-import { Arr } from "../../../utils/Arr";
 import { ValidationError } from "../../../utils/Error";
 import { Obj } from "../../../utils/Obj";
 
@@ -55,25 +54,8 @@ const valueSources = {
 type ValueSources = typeof valueSources;
 export type ValueSource = ValueSources[keyof ValueSources][number];
 
-const saveAttemptStatus = [
-  "initialized",
-  "pending",
-  "succeeded",
-  "failed",
-] as const;
-export const inProcessStatus = Arr.extractStrict(saveAttemptStatus, [
-  "initialized",
-  "pending",
-] as const);
-
-export const completedStatus = Arr.extractStrict(saveAttemptStatus, [
-  "succeeded",
-  "failed",
-] as const);
-
 const unionValueArrs = {
   ...valueSources,
-  saveAttemptStatus: saveAttemptStatus,
   appSaveStatus: ["unsaved", "saving", "saved", "saveFailed"],
   dealSort: ["dateCreated", "dateUpdated"],
   authStatus: ["guest", "user"],

@@ -1,5 +1,5 @@
 import hash from "object-hash";
-import { timeS } from "../utils/date";
+import { timeS } from "../utils/timeS";
 import {
   AllBaseSectionVarbs,
   makeAllBaseSectionVarbs,

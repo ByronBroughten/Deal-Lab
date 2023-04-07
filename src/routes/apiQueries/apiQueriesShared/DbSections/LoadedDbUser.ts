@@ -14,8 +14,8 @@ import { GetterSection } from "../../../../client/src/App/sharedWithServer/State
 import { PackBuilderSection } from "../../../../client/src/App/sharedWithServer/StatePackers/PackBuilderSection";
 import { PackBuilderSections } from "../../../../client/src/App/sharedWithServer/StatePackers/PackBuilderSections";
 import { Arr } from "../../../../client/src/App/sharedWithServer/utils/Arr";
-import { timeS } from "../../../../client/src/App/sharedWithServer/utils/date";
 import { stripeS } from "../../../../client/src/App/sharedWithServer/utils/stripe";
+import { timeS } from "../../../../client/src/App/sharedWithServer/utils/timeS";
 import { HandledResStatusError } from "../../../../utils/resError";
 import { isProEmail } from "../../../routeUtils/proList";
 import { DbSections } from "./DbSections";

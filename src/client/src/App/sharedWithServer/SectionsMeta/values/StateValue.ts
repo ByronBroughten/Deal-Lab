@@ -5,14 +5,9 @@ import {
 import { SectionName } from "../SectionName";
 import { InEntityValue } from "./StateValue/InEntityValue";
 import { NumObj } from "./StateValue/NumObj";
-import {
-  ChangesSaving,
-  ChangesToSave,
-  SectionUpdates,
-} from "./StateValue/SectionUpdates";
+import { ChangesSaving, ChangesToSave } from "./StateValue/sectionChanges";
 import { StringObj } from "./StateValue/StringObj";
 import { UnionValueNamesToTypes } from "./StateValue/unionValues";
-import { VarbInfoValue } from "./StateValue/VarbInfoValue";
 import { ValueName } from "./ValueName";
 
 export type StateValue<VN extends ValueName = ValueName> =
@@ -27,8 +22,6 @@ interface ValueNamesToTypes extends UnionValueNamesToTypes {
   stringObj: StringObj;
   numObj: NumObj;
   inEntityValue: InEntityValue;
-  varbInfo: VarbInfoValue;
-  sectionUpdates: SectionUpdates;
   changesToSave: ChangesToSave;
   changesSaving: ChangesSaving;
 }

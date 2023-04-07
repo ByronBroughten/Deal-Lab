@@ -1,6 +1,6 @@
 import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
 import { PackBuilderSection } from "../StatePackers/PackBuilderSection";
-import { timeS } from "../utils/date";
+import { timeS } from "../utils/timeS";
 import { makeDefaultDealPack } from "./makeDefaultDeal";
 import { makeDefaultOutputList } from "./makeDefaultOutputList";
 

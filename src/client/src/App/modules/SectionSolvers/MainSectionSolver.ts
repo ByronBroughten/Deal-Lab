@@ -11,7 +11,7 @@ import { PackMakerSection } from "../../sharedWithServer/StatePackers/PackMakerS
 import { SolverSectionBase } from "../../sharedWithServer/StateSolvers/SolverBases/SolverSectionBase";
 import { SolverSection } from "../../sharedWithServer/StateSolvers/SolverSection";
 import { UpdaterSection } from "../../sharedWithServer/StateUpdaters/UpdaterSection";
-import { timeS } from "../../sharedWithServer/utils/date";
+import { timeS } from "../../sharedWithServer/utils/timeS";
 import { ChildSectionName } from "./../../sharedWithServer/SectionsMeta/sectionChildrenDerived/ChildSectionName";
 import { DisplayItemProps, FeIndexSolver } from "./FeIndexSolver";
 

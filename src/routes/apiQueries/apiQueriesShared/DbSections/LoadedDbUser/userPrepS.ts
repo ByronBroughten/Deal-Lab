@@ -4,7 +4,7 @@ import {
   DbStoreSeed,
   makeDefaultDbStoreArrs,
 } from "../../../../../client/src/App/sharedWithServer/defaultMaker/makeDefaultDbStore";
-import { timeS } from "../../../../../client/src/App/sharedWithServer/utils/date";
+import { timeS } from "../../../../../client/src/App/sharedWithServer/utils/timeS";
 import { StrictPick } from "../../../../../client/src/App/sharedWithServer/utils/types";
 import { ResStatusError } from "../../../../../utils/resError";
 import { DbUserModel } from "../../../../routesShared/DbUserModel";

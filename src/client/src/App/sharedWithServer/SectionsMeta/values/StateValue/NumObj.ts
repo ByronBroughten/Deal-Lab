@@ -2,8 +2,10 @@ import { z } from "zod";
 import { reqMonString } from "../../../utils/mongoose";
 import { Obj } from "../../../utils/Obj";
 import { StrictPick } from "../../../utils/types";
+import { validateValueS } from "../../../validators";
 import {
   mInEntities,
+  validateValueInEntities,
   ValueInEntity,
   zValueInEntities,
 } from "./valuesShared/entities";
@@ -51,8 +53,18 @@ function isNumObj(value: any): value is NumObj {
   );
 }
 
+export function validateNumObj(value: any): NumObj {
+  const obj = Obj.validateObjToAny(value) as NumObj;
+  return {
+    mainText: validateValueS.stringOneLine(obj.mainText),
+    entities: validateValueInEntities(obj.entities),
+    solvableText: validateValueS.stringOneLine(obj.mainText),
+  };
+}
+
 export const numObjMeta = {
   is: isNumObj,
+  validate: validateNumObj,
   initDefault: ({
     mainText = "",
     entities = [],

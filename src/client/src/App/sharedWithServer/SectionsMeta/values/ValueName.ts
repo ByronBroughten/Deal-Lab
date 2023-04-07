@@ -9,8 +9,6 @@ export const valueNames = [
   "stringObj",
   "numObj",
   "inEntityValue",
-  "varbInfo",
-  "sectionUpdates",
   "changesToSave",
   "changesSaving",
   ...unionValueNames,

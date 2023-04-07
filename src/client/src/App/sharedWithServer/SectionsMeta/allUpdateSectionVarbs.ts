@@ -1,4 +1,4 @@
-import { timeS } from "../utils/date";
+import { timeS } from "../utils/timeS";
 import { calculatedUpdateVarbs } from "./allUpdateSectionVarbs/calculatedUpdateVarbs";
 import { dealRelVarbs } from "./allUpdateSectionVarbs/dealUpdateVarbs";
 import { downPaymentUpdateVarbs } from "./allUpdateSectionVarbs/downPaymentUpdateVarbs";

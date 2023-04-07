@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { ValidationError } from "../../utils/Error";
 import { monSchemas } from "../../utils/mongoose";
 import { StateValue } from "./StateValue";
 import {
@@ -21,6 +22,15 @@ function makeUnionMeta<UN extends UnionValueName>(
   return {
     is: (value): value is StateValue<UN> =>
       (valueArr as readonly any[]).includes(value),
+    validate: (value: any): StateValue<UN> => {
+      if ((valueArr as readonly any[]).includes(value)) {
+        return value;
+      } else {
+        throw new ValidationError(
+          `value "${value}" is not of type ${valueName}`
+        );
+      }
+    },
     initDefault: () => first as StateValue<UN>,
     zod: zodSchema,
     mon: monSchemas.fromZod(zodSchema),

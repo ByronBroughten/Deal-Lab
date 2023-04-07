@@ -185,11 +185,8 @@ export class GetterVarb<
   }
   valueNext() {
     const value = this.value();
-    if (this.meta.isVarbValueType(value)) {
-      return value;
-    } else {
-      throw new Error(`value ${value} is not of type ${this.meta.valueName}`);
-    }
+    this.meta.validateValue(value);
+    return value;
   }
   valueSafe<AV extends any>(acceptedValues: readonly AV[]): AV {
     const value = this.valueNext() as any;
