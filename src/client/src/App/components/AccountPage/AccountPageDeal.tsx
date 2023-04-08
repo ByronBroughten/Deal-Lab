@@ -1,12 +1,13 @@
 import { unstable_batchedUpdates } from "react-dom";
 import { Text, View, ViewStyle } from "react-native";
-import { useMainSectionActor } from "../../modules/sectionActorHooks/useMainSectionActor";
 import { dealModeLabels } from "../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
+import { useActionWithProps } from "../../sharedWithServer/stateClassHooks/useAction";
 import { timeS } from "../../sharedWithServer/utils/timeS";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { reactNativeS } from "../../utils/reactNative";
 import { useGoToPage } from "../appWide/customHooks/useGoToPage";
 import { PlainIconBtn, PlainIconBtnProps } from "../general/PlainIconBtn";
+import { useGetterSection } from "./../../sharedWithServer/stateClassHooks/useGetterSection";
 import { Row } from "./../general/Row";
 import { icons } from "./../Icons";
 
@@ -45,13 +46,13 @@ export function AccountPageDeal({
   feId: string;
   style?: ViewStyle;
 }) {
+  const storeName = "dealMain";
+  const deal = useGetterSection({ sectionName: "deal", feId });
   const goToActiveDeal = useGoToPage("activeDeal");
-  const mainDeal = useMainSectionActor({
-    sectionName: "deal",
-    feId,
-  });
+  const copyDeal = useActionWithProps("copyInStore", { storeName, feId });
+  const deleteDeal = useActionWithProps("removeFromStore", { storeName, feId });
+  const activateDeal = useActionWithProps("activateDeal", { feId });
 
-  const deal = mainDeal.get;
   const dateNumber = deal.valueNext("dateTimeFirstSaved");
   const dateCreated = new Intl.DateTimeFormat("en-US", {
     year: "numeric",
@@ -65,7 +66,7 @@ export function AccountPageDeal({
   const dealMode = deal.valueNext("dealMode");
   const editDeal = () => {
     unstable_batchedUpdates(() => {
-      mainDeal.setterSections.activateDeal(deal.feId);
+      activateDeal();
       goToActiveDeal();
     });
   };
@@ -143,7 +144,7 @@ export function AccountPageDeal({
           />
           <PillIconBtn
             {...{
-              onClick: () => mainDeal.makeACopy(),
+              onClick: copyDeal,
               sx: {
                 margin: nativeTheme.s1,
                 marginTop: nativeTheme.s25,
@@ -155,7 +156,7 @@ export function AccountPageDeal({
           />
           <PillIconBtn
             {...{
-              onClick: () => mainDeal.deleteSelf(),
+              onClick: deleteDeal,
               sx: {
                 margin: nativeTheme.s1,
                 marginTop: nativeTheme.s25,

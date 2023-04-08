@@ -94,6 +94,7 @@ import { GetterSections } from "./GetterSections";
 import { GetterVarb } from "./GetterVarb";
 import { GetterVirtualVarb } from "./GetterVirtualVarb";
 import { SectionId } from "./SectionId";
+import { StoreId } from "./StoreId";
 
 export interface GetterSectionRequiredProps<SN extends SectionName>
   extends FeSectionInfo<SN>,
@@ -432,8 +433,11 @@ export class GetterSection<
   get idx() {
     return this.sections.list(this.sectionName).idx(this.feId);
   }
+  get mainStoreId() {
+    return StoreId.make(this.mainStoreName, this.feId);
+  }
   get sectionId() {
-    return SectionId.makeSectionId(this.sectionName, this.feId);
+    return SectionId.make(this.sectionName, this.feId);
   }
   get feInfo(): FeSectionInfo<SN> {
     return {
@@ -506,6 +510,9 @@ export class GetterSection<
   }
   onlyCousin<S extends SectionNameByType>(sectionName: S): GetterSection<S> {
     return this.parent.onlyChild(sectionName as any) as any as GetterSection<S>;
+  }
+  childCount(childName: ChildName<SN>): number {
+    return this.children(childName).length;
   }
   children<CN extends ChildName<SN>>(
     childName: CN

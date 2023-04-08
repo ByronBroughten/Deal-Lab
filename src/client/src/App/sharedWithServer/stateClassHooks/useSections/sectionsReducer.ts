@@ -1,11 +1,14 @@
 import { ContentState } from "draft-js";
+import { AddToStoreProps } from "../../../modules/FeStore/SolverFeStore";
 import { ChildName } from "../../SectionsMeta/sectionChildrenDerived/ChildName";
 import {
   FeSectionInfo,
   FeVarbInfo,
   FeVarbValueInfo,
 } from "../../SectionsMeta/SectionInfo/FeInfo";
+import { FeIdProp } from "../../SectionsMeta/SectionInfo/NanoIdInfo";
 import { SectionName } from "../../SectionsMeta/SectionName";
+import { FeStoreInfo, StoreName } from "../../SectionsMeta/sectionStores";
 import { StateSections } from "../../StateSections/StateSections";
 import { EditorUpdaterVarb } from "../../StateSetters/EditorUpdaterVarb";
 import { SolverSections } from "../../StateSolvers/SolverSections";
@@ -13,37 +16,52 @@ import { AddChildOptions } from "../../StateUpdaters/UpdaterSection";
 import { Arr } from "../../utils/Arr";
 import { Obj } from "../../utils/Obj";
 
-export interface VarbContentInfo extends FeVarbInfo {
-  contentState: ContentState;
+interface IdOfSectionToSaveProp {
+  idOfSectionToSave?: string;
 }
 
-interface SaveSectionIdProp {
-  idOfSectionToSave?: string;
+export interface VarbContentInfo extends FeVarbInfo {
+  contentState: ContentState;
 }
 
 interface LoginUser {
   type: "loginUser";
 }
-interface RemoveSelfAction extends SaveSectionIdProp, FeSectionInfo {
-  type: "removeSelf";
-  saveOperation?: boolean;
+
+interface ActivateDeal extends FeIdProp {
+  type: "activateDeal";
+}
+interface AddToStore<CN extends StoreName = StoreName>
+  extends AddToStoreProps<CN> {
+  type: "addToStore";
+}
+interface CopyInStore extends FeStoreInfo {
+  type: "copyInStore";
+}
+interface RemoveFromStore<CN extends StoreName = StoreName> {
+  storeName: CN;
+  feId: string;
+  type: "removeFromStore";
 }
 interface AddChildAction<
   SN extends SectionName = SectionName,
   CN extends ChildName<SN> = ChildName<SN>
-> extends SaveSectionIdProp {
-  saveOperation?: boolean;
+> extends IdOfSectionToSaveProp {
   feInfo: FeSectionInfo<SN>;
   childName: CN;
   options?: AddChildOptions<SN, CN>;
   type: "addChild";
 }
-interface UpdateValueAction extends SaveSectionIdProp, FeVarbValueInfo {
+interface RemoveSelfAction extends IdOfSectionToSaveProp, FeSectionInfo {
+  type: "removeSelf";
+}
+
+interface UpdateValueAction extends FeVarbValueInfo {
+  idOfSectionToSave?: string;
   type: "updateValue";
 }
-interface UpdateValueFromEditorAction
-  extends SaveSectionIdProp,
-    VarbContentInfo {
+interface UpdateValueFromEditorAction extends VarbContentInfo {
+  idOfSectionToSave?: string;
   type: "updateValueFromContent";
 }
 
@@ -56,24 +74,38 @@ interface FinishSaveAttempt {
   success: boolean;
 }
 
+interface AddActiveDeal {
+  type: "addActiveDeal";
+}
+
 export type SectionsAction =
   | { type: "setState"; sections: StateSections }
   | AddChildAction
   | RemoveSelfAction
+  | AddToStore
+  | CopyInStore
+  | RemoveFromStore
   | UpdateValueAction
   | UpdateValueFromEditorAction
   | InitializeSaveAttempts
-  | FinishSaveAttempt;
+  | FinishSaveAttempt
+  | AddActiveDeal
+  | ActivateDeal;
 
 type SectionActionName = SectionsAction["type"];
 const reducerActionNameMap: Record<SectionActionName, 0> = {
   addChild: 0,
+  addToStore: 0,
+  copyInStore: 0,
   removeSelf: 0,
+  removeFromStore: 0,
   updateValue: 0,
   updateValueFromContent: 0,
   onChangeIdle: 0,
   setState: 0,
   finishSave: 0,
+  addActiveDeal: 0,
+  activateDeal: 0,
 };
 export const sectionActionNames = Obj.keys(reducerActionNameMap);
 export function isSectionActionName(value: any): value is SectionActionName {
@@ -119,63 +151,72 @@ export const sectionsReducer: React.Reducer<StateSections, SectionsAction> = (
   switch (action.type) {
     case "onChangeIdle": {
       solverSections.feStore.onChangeIdle();
-      return solverSections.stateSections;
+      break;
     }
     case "finishSave": {
       solverSections.feStore.finishSave(action);
-      return solverSections.stateSections;
+      break;
     }
-  }
-
-  if (action.idOfSectionToSave) {
-    solverSections.feStore.addChangeToSave(action.idOfSectionToSave, {
-      changeName: "update",
-    });
-  }
-  switch (action.type) {
-    case "addChild": {
-      const section = solverSections.solverSection(action.feInfo);
-      const child = section.prepper.addAndGetChild(
-        action.childName,
-        action.options
-      );
-      if (action.saveOperation) {
-        solverSections.feStore.addChangeToSave(child.get.sectionId, {
-          changeName: "add",
-        });
-      }
-      section.solve();
-      return section.stateSections;
+    case "activateDeal": {
+      solverSections.activateDealAndSolve(action.feId);
+      break;
     }
-    case "removeSelf": {
-      const section = solverSections.solverSection(action);
-      const { sectionId, dbId } = section.get;
-      section.removeSelfAndSolve();
-      if (action.saveOperation) {
-        solverSections.feStore.addChangeToSave(sectionId, {
-          changeName: "remove",
-          dbId,
-        });
-      }
-      return section.stateSections;
+    case "addActiveDeal": {
+      solverSections.addActiveDeal();
+      break;
     }
-    case "updateValue": {
-      const varb = solverSections.solverVarb(action);
-      varb.directUpdateAndSolve(action.value);
-      return varb.stateSections;
+    case "addToStore": {
+      solverSections.feStore.addToStore(action);
+      break;
     }
+    case "copyInStore": {
+      solverSections.feStore.copyInStore(action);
+      break;
+    }
+    case "removeFromStore": {
+      solverSections.feStore.removeFromStore(action);
+      break;
+    }
+    case "addChild":
+    case "removeSelf":
+    case "updateValue":
     case "updateValueFromContent": {
-      // This case is needed because the previous value is required to
-      // make the new value
-      const { contentState } = action;
-      const solverVarb = solverSections.solverVarb(action);
-
-      const editorVarb = new EditorUpdaterVarb(
-        solverVarb.getterVarbBase.getterVarbProps
-      );
-      const value = editorVarb.valueFromContentState(contentState);
-      solverVarb.editorUpdateAndSolve(value);
-      return solverVarb.stateSections;
+      if (action.idOfSectionToSave) {
+        solverSections.feStore.addChangeToSave(action.idOfSectionToSave, {
+          changeName: "update",
+        });
+      }
+      switch (action.type) {
+        case "addChild": {
+          const section = solverSections.solverSection(action.feInfo);
+          section.addChildAndSolve(action.childName, action.options);
+          break;
+        }
+        case "removeSelf": {
+          const section = solverSections.solverSection(action);
+          section.removeSelfAndSolve();
+          break;
+        }
+        case "updateValue":
+        case "updateValueFromContent": {
+          const varb = solverSections.solverVarb(action);
+          if (action.type === "updateValue") {
+            varb.directUpdateAndSolve(action.value);
+          } else {
+            // This case is needed because the previous value is required to
+            // make the new value
+            const { contentState } = action;
+            const editorVarb = new EditorUpdaterVarb(
+              varb.getterVarbBase.getterVarbProps
+            );
+            const value = editorVarb.valueFromContentState(contentState);
+            varb.editorUpdateAndSolve(value);
+          }
+          break;
+        }
+      }
+      break;
     }
   }
+  return solverSections.stateSections;
 };

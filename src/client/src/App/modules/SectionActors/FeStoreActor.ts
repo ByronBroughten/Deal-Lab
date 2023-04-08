@@ -70,14 +70,6 @@ export class FeStoreActor extends SectionActorBase<"feStore"> {
     });
     if (headers) userTokenS.setTokenFromHeaders(headers);
   }
-  async addActiveDeal(): Promise<void> {
-    this.setterSections.addActiveDeal();
-    const { feId } = this.get.youngestChild("dealMain");
-    this.initialSaveSection({
-      childName: "dealMain",
-      feId,
-    });
-  }
   async updateSubscriptionData() {
     const { headers, data } = await this.apiQueries.getSubscriptionData(
       makeReq({})

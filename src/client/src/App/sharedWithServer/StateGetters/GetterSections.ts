@@ -66,7 +66,7 @@ export class GetterSections extends GetterSectionsBase {
     });
   }
   sectionBySectionId(sectionId: string) {
-    const feInfo = SectionId.splitSectionId(sectionId);
+    const feInfo = SectionId.split(sectionId);
     return this.section(feInfo);
   }
 

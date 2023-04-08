@@ -30,7 +30,7 @@ function ActiveDealWrapper() {
   const getters = useGetterSections();
   const deal = getters.getActiveDeal();
   return (
-    <IdOfSectionToSaveProvider sectionId={deal.sectionId}>
+    <IdOfSectionToSaveProvider storeId={deal.mainStoreId}>
       <Outlet />
     </IdOfSectionToSaveProvider>
   );

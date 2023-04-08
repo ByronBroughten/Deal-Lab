@@ -1,19 +1,33 @@
-import { isStoreNameByType } from "../../sharedWithServer/SectionsMeta/sectionStores";
+import {
+  FeStoreInfo,
+  isStoreNameByType,
+  StoreName,
+} from "../../sharedWithServer/SectionsMeta/sectionStores";
 import {
   changeSavingToToSave,
   ChangeToSave,
 } from "../../sharedWithServer/SectionsMeta/values/StateValue/sectionChanges";
 import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection";
 import { GetterSections } from "../../sharedWithServer/StateGetters/GetterSections";
+import { StoreId } from "../../sharedWithServer/StateGetters/StoreId";
 import { SolverAdderPrepSection } from "../../sharedWithServer/StateSolvers/SolverAdderPrepSection";
 import { SolverSectionBase } from "../../sharedWithServer/StateSolvers/SolverBases/SolverSectionBase";
 import { SolverSectionsProps } from "../../sharedWithServer/StateSolvers/SolverBases/SolverSectionsBase";
 import { SolverPrepSection } from "../../sharedWithServer/StateSolvers/SolverPrepSection";
 import { SolverPrepSections } from "../../sharedWithServer/StateSolvers/SolverPrepSections";
 import { SolverSection } from "../../sharedWithServer/StateSolvers/SolverSection";
+import { AddChildOptions } from "../../sharedWithServer/StateUpdaters/UpdaterSection";
 import { Obj } from "../../sharedWithServer/utils/Obj";
 import { timeS } from "../../sharedWithServer/utils/timeS";
+import { toastNotice } from "./../../components/appWide/toast";
 import { GetterFeStore } from "./GetterFeStore";
+
+export interface AddToStoreProps<CN extends StoreName = StoreName> {
+  storeName: CN;
+  options?: AddChildOptions<"feStore", CN>;
+}
+
+export interface RemoveFromStoreProps extends FeStoreInfo {}
 
 export class SolverFeStore extends SolverSectionBase<"feStore"> {
   constructor(props: SolverSectionsProps) {
@@ -43,17 +57,74 @@ export class SolverFeStore extends SolverSectionBase<"feStore"> {
   get basicSolvePrepper(): SolverAdderPrepSection<"feStore"> {
     return new SolverAdderPrepSection(this.solverSectionProps);
   }
-  addChangeToSave(sectionId: string, change: ChangeToSave) {
+  solve() {
+    this.solver.solve();
+  }
+  copyInStore(props: FeStoreInfo) {
+    const { storeName, feId } = props;
+
+    this.addToStore({ storeName: storeName });
+    const addedSection = this.solver.youngestChild(storeName);
+
+    const toCopy = this.getterFeStore.get.child({
+      childName: storeName,
+      feId,
+    });
+
+    const sectionPack = toCopy.packMaker.makeSectionPack();
+    const clone = SolverSection.initFromPackAsOmniChild(sectionPack);
+    clone.updater.newDbId();
+
+    const name = clone.get.valueNext("displayName");
+    clone.updateValuesAndSolve({
+      displayName: {
+        ...name,
+        mainText: "Copy of " + name.mainText,
+      },
+    });
+
+    const clonePack = clone.packMaker.makeSectionPack();
+    addedSection.loadSelfAndSolve(clonePack);
+  }
+  addToStore({ storeName, options }: AddToStoreProps, doSolve: boolean = true) {
+    const storedCount = this.get.childCount(storeName);
+    if (storedCount >= this.getterFeStore.storageLimit) {
+      if (this.getterFeStore.labSubscription === "basicPlan") {
+        toastNotice("To add more of those, upgrade to pro.");
+      } else {
+        toastNotice("You have reached the maximum save limit.");
+      }
+      throw new Error("Storage limit reached");
+    } else {
+      const child = this.appWideSolvePrepper.addAndGetChild(storeName, options);
+      const storeId = StoreId.make(storeName, child.get.feId);
+      this.addChangeToSave(storeId, { changeName: "add" });
+      if (doSolve) this.solve();
+    }
+  }
+  removeFromStore({ storeName, feId }: RemoveFromStoreProps) {
+    const child = this.solver.child({
+      childName: storeName,
+      feId,
+    });
+    const storeId = StoreId.make(storeName, feId);
+    this.addChangeToSave(storeId, {
+      changeName: "remove",
+      dbId: child.get.dbId,
+    });
+    child.removeSelfAndSolve();
+  }
+  addChangeToSave(storeName: string, change: ChangeToSave) {
     const toSave = { ...this.get.valueNext("changesToSave") };
     switch (change.changeName) {
       case "add":
       case "remove": {
-        toSave[sectionId] = change;
+        toSave[storeName] = change;
         break;
       }
       case "update": {
-        if (!toSave[sectionId]) {
-          toSave[sectionId] = change;
+        if (!toSave[storeName]) {
+          toSave[storeName] = change;
         }
       }
     }
@@ -82,12 +153,11 @@ export class SolverFeStore extends SolverSectionBase<"feStore"> {
     });
   }
   private preSaveAndSolve() {
-    const sectionIds = Obj.keys(this.get.valueNext("changesToSave"));
+    const storeIds = Obj.keys(this.get.valueNext("changesToSave"));
     let doVariableUpdate = false;
-    for (const sectionId of sectionIds) {
-      const section = this.getterSections.sectionBySectionId(sectionId);
-      const { selfChildName } = section;
-      if (isStoreNameByType(selfChildName, "variableStore")) {
+    for (const storeId of storeIds) {
+      const { storeName } = StoreId.split(storeId);
+      if (isStoreNameByType(storeName, "variableStore")) {
         doVariableUpdate = true;
         break;
       }
@@ -108,9 +178,9 @@ export class SolverFeStore extends SolverSectionBase<"feStore"> {
   }
   private handleFailedSave() {
     const failedChanges = this.get.valueNext("changesSaving");
-    for (const sectionId of Obj.keys(failedChanges)) {
-      const failedChange = changeSavingToToSave(failedChanges[sectionId]);
-      this.reIntegrateFailedChanges(sectionId, failedChange);
+    for (const storeId of Obj.keys(failedChanges)) {
+      const failedChange = changeSavingToToSave(failedChanges[storeId]);
+      this.reIntegrateFailedChanges(storeId, failedChange);
     }
     this.basicSolvePrepper.updateValues({
       changesSaving: {},
@@ -118,13 +188,13 @@ export class SolverFeStore extends SolverSectionBase<"feStore"> {
     });
   }
   private reIntegrateFailedChanges(
-    sectionId: string,
+    storeId: string,
     failedChange: ChangeToSave
   ) {
     const toSave = { ...this.get.valueNext("changesToSave") };
-    const currentChange = toSave[sectionId];
+    const currentChange = toSave[storeId];
     if (!currentChange) {
-      toSave[sectionId] = failedChange;
+      toSave[storeId] = failedChange;
     } else {
       switch (currentChange.changeName) {
         case "add": {
@@ -133,13 +203,13 @@ export class SolverFeStore extends SolverSectionBase<"feStore"> {
           );
         }
         case "update": {
-          toSave[sectionId] = failedChange;
+          toSave[storeId] = failedChange;
           break;
         }
         case "remove": {
           switch (failedChange.changeName) {
             case "add": {
-              delete toSave[sectionId];
+              delete toSave[storeId];
               break;
             }
             case "remove": {

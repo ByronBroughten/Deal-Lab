@@ -2,7 +2,7 @@ import { ListChildName } from "../../sharedWithServer/SectionsMeta/sectionStores
 import { useAction } from "../../sharedWithServer/stateClassHooks/useAction";
 import { useGetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useGetterSection";
 import { IdOfSectionToSaveProvider } from "../../sharedWithServer/stateClassHooks/useIdOfSectionToSave";
-import { SectionId } from "../../sharedWithServer/StateGetters/SectionId";
+import { StoreId } from "../../sharedWithServer/StateGetters/StoreId";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { SubSectionOpen } from "../ActiveDealPage/ActiveDeal/SubSectionOpen";
 import { BackBtnWrapper } from "../appWide/BackBtnWrapper";
@@ -42,40 +42,47 @@ const listTypes: ListProps = {
 
 type Props = { listName: ListChildName };
 
-const listNodeMakers: Record<ListTypeName, MakeListNode> = {
-  singleTime: (nodeProps) => (
-    <IdOfSectionToSaveProvider
-      sectionId={SectionId.makeSectionId("singleTimeList", nodeProps.feId)}
-    >
-      <VarbListSingleTime {...{ ...nodeProps, menuType: "editorPage" }} />
-    </IdOfSectionToSaveProvider>
-  ),
-  ongoing: (nodeProps) => (
-    <IdOfSectionToSaveProvider
-      sectionId={SectionId.makeSectionId("ongoingList", nodeProps.feId)}
-    >
-      <VarbListOngoing {...{ ...nodeProps, menuType: "editorPage" }} />
-    </IdOfSectionToSaveProvider>
-  ),
-  capEx: (nodeProps) => (
-    <IdOfSectionToSaveProvider
-      sectionId={SectionId.makeSectionId("capExList", nodeProps.feId)}
-    >
-      <VarbListCapEx
-        {...{
-          ...nodeProps,
-          menuType: "editorPage",
-        }}
-      />
-    </IdOfSectionToSaveProvider>
-  ),
-};
+function useListNodeMakers(
+  listName: ListChildName
+): Record<ListTypeName, MakeListNode> {
+  return {
+    singleTime: (nodeProps) => (
+      <IdOfSectionToSaveProvider
+        storeId={StoreId.make(listName, nodeProps.feId)}
+      >
+        <VarbListSingleTime {...{ ...nodeProps, menuType: "editorPage" }} />
+      </IdOfSectionToSaveProvider>
+    ),
+    ongoing: (nodeProps) => (
+      <IdOfSectionToSaveProvider
+        storeId={StoreId.make(listName, nodeProps.feId)}
+      >
+        <VarbListOngoing {...{ ...nodeProps, menuType: "editorPage" }} />
+      </IdOfSectionToSaveProvider>
+    ),
+    capEx: (nodeProps) => (
+      <IdOfSectionToSaveProvider
+        storeId={StoreId.make(listName, nodeProps.feId)}
+      >
+        <VarbListCapEx
+          {...{
+            ...nodeProps,
+            menuType: "editorPage",
+          }}
+        />
+      </IdOfSectionToSaveProvider>
+    ),
+  };
+}
 
 export function ListGroupEditor({ listName }: Props) {
   const title = listTitles[listName];
   const listTypeName = listTypes[listName];
   const feStore = useGetterSectionOnlyOne("feStore");
-  const addChild = useAction("addChild");
+  const addToStore = useAction("addToStore");
+
+  const nodeMakers = useListNodeMakers(listName);
+
   return (
     <BackBtnWrapper {...{ to: -1, label: "Back" }}>
       <SubSectionOpen>
@@ -92,13 +99,8 @@ export function ListGroupEditor({ listName }: Props) {
           <ListGroupGeneric
             {...{
               listFeIds: feStore.childFeIds(listName),
-              makeListNode: listNodeMakers[listTypeName],
-              addList: () =>
-                addChild({
-                  feInfo: feStore.feInfo,
-                  childName: listName,
-                  saveOperation: true,
-                }),
+              makeListNode: nodeMakers[listTypeName],
+              addList: () => addToStore({ storeName: listName }),
             }}
           />
         </div>

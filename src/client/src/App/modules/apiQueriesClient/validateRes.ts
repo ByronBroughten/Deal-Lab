@@ -33,7 +33,7 @@ export function validateAxiosRes(res: AxiosResponse<unknown>): MakeRes<any> {
 
 export function validateSessionUrlRes(res: AxiosResponse<unknown>): UrlRes {
   const urlRes = Obj.validateObjToAny(res) as UrlRes;
-  const data = Obj.validateObjToAny(urlRes) as UrlRes["data"];
+  const data = Obj.validateObjToAny(urlRes.data) as UrlRes["data"];
   return makeRes({
     sessionUrl: Str.validate(data.sessionUrl),
   });

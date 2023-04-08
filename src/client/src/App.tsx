@@ -43,7 +43,7 @@ const App: React.FC = () => {
               <BrowserRouter>
                 <SectionsContext.Provider value={sectionsContext}>
                   <SectionsDispatchContext.Provider value={sectionsDispatch}>
-                    <IdOfSectionToSaveProvider sectionId="">
+                    <IdOfSectionToSaveProvider storeId="">
                       <GlobalFonts />
                       <GlobalStyle />
                       <Main />

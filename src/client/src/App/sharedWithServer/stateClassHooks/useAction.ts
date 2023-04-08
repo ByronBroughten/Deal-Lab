@@ -49,15 +49,15 @@ export function useActionNoSave<T extends ReducerActionName>(type: T) {
 
 export function useDispatchAndSave(): (props: SectionsAction) => void {
   const dispatch = useSectionsDispatch();
-  const sectionId = useIdOfSectionToSave();
+  const storeId = useIdOfSectionToSave();
   return useCallback(
     (props: SectionsAction) =>
       dispatch({
         ...(isSavableActionName(props.type)
-          ? { idOfSectionToSave: sectionId }
+          ? { idOfSectionToSave: storeId }
           : {}),
         ...props,
       }),
-    [dispatch, sectionId]
+    [dispatch, storeId]
   );
 }

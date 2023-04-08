@@ -8,12 +8,12 @@ const [IdOfSectionToSaveContext, useThis] = react.makeContextUseContext(
 export const useIdOfSectionToSave = useThis;
 
 interface Props {
-  sectionId: string;
+  storeId: string;
   children: React.ReactNode;
 }
-export function IdOfSectionToSaveProvider({ children, sectionId }: Props) {
+export function IdOfSectionToSaveProvider({ children, storeId }: Props) {
   return (
-    <IdOfSectionToSaveContext.Provider value={sectionId}>
+    <IdOfSectionToSaveContext.Provider value={storeId}>
       {children}
     </IdOfSectionToSaveContext.Provider>
   );

@@ -1,8 +1,15 @@
+import { constants } from "../../Constants";
+import {
+  FeStoreInfo,
+  StoreName,
+  StoreSectionName,
+} from "../../sharedWithServer/SectionsMeta/sectionStores";
 import { StateValue } from "../../sharedWithServer/SectionsMeta/values/StateValue";
 import { GetterSectionBase } from "../../sharedWithServer/StateGetters/Bases/GetterSectionBase";
 import { GetterSectionsProps } from "../../sharedWithServer/StateGetters/Bases/GetterSectionsBase";
 import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection";
 import { GetterSections } from "../../sharedWithServer/StateGetters/GetterSections";
+import { StoreId } from "../../sharedWithServer/StateGetters/StoreId";
 import { Obj } from "../../sharedWithServer/utils/Obj";
 
 export class GetterFeStore extends GetterSectionBase<"feStore"> {
@@ -21,11 +28,18 @@ export class GetterFeStore extends GetterSectionBase<"feStore"> {
   get authStatus(): StateValue<"authStatus"> {
     return this.get.valueNext("authStatus");
   }
+  get isGuest(): boolean {
+    return this.authStatus === "guest";
+  }
   get isLoggedIn(): boolean {
     return !this.isGuest;
   }
-  get isGuest(): boolean {
-    return this.authStatus === "guest";
+  get labSubscription() {
+    return this.get.valueNext("labSubscription");
+  }
+  get storageLimit() {
+    const { labSubscription } = this;
+    return constants.plans[labSubscription].sectionSaveLimit;
   }
   get timeOfLastChange(): number {
     return this.get.valueNext("timeOfLastChange");
@@ -71,21 +85,32 @@ export class GetterFeStore extends GetterSectionBase<"feStore"> {
       Obj.isEmpty(get.valueNext("changesSaving"))
     );
   }
+  storedSection<CN extends StoreName>({
+    storeName,
+    feId,
+  }: FeStoreInfo<CN>): GetterSection<StoreSectionName<CN>> {
+    return this.get.child({ childName: storeName, feId }) as GetterSection<
+      StoreSectionName<CN>
+    >;
+  }
+  sectionByStoreId(storeId: string): GetterSection<StoreSectionName> {
+    const storeInfo = StoreId.split(storeId);
+    return this.storedSection(storeInfo);
+  }
   toSaveToSaving(): StateValue<"changesSaving"> {
     const changesToSave = this.get.valueNext("changesToSave");
-    return Obj.keys(changesToSave).reduce((changesSaving, sectionId) => {
-      const change = changesToSave[sectionId];
+    return Obj.keys(changesToSave).reduce((changesSaving, storeId) => {
+      const change = changesToSave[storeId];
       switch (change.changeName) {
         case "remove": {
-          changesSaving[sectionId] = change;
+          changesSaving[storeId] = change;
           break;
         }
         case "update":
         case "add": {
-          const sectionPack = this.getterSections
-            .sectionBySectionId(sectionId)
-            .packMaker.makeSectionPack();
-          changesSaving[sectionId] = {
+          const section = this.sectionByStoreId(storeId);
+          const sectionPack = section.packMaker.makeSectionPack();
+          changesSaving[storeId] = {
             sectionPack,
             changeName: change.changeName,
           };

@@ -7,69 +7,23 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
-// When a save attempt fails, the failed attempts are reconciled with the
-// uninitialized attempts
+// - After the next git push heroku master
+// - check whether the upgrade to pro button works (it works in dev)
 
-// Create the function for reconciling the operations to save
-// - This will assume that once as section is deleted, it's gone for good
-//   and once a section is created, it's there until deleted
-// - You will no longer need saveAttempt. You just have "savingUpdates"
-// Create the function for saving
-// Create functionality for when saving fails (the failed updates are
-// just added to toSaveUpdates, and the "save failed" flag is set)
+// - Update savable sections' "last updated" parameter.
+//   It will update on save
 
-// - Replace zod with plain old validation
+// - Add empty dbChildIds to DbStore, to control the orders of components
+//   - They'll likely be pretty easy to update, later.
 
-// - Implement a front-end check for storage limit when adding sections
-
-// - Update sections' "last updated",
-//    *I'll try the top one. If that doesn't work, I'll try the bottom one.
-//    - upon their being updated, so in useAction (would this add much latency?)
-//        this would provide the quickest turnaround for user experience
-//    - upon the updates being saved, so in FeStore.saveSections
-//      this would
-//    - this would be the least resource-intensive and would reflect
-//      saving
-
-// Add something in property that warns if a unit is missing a rent amount
-
-// I got the auto-save to work, but it's far too slow.
-// I need a way to update individual sections.
-// Add and delete section work great.
-// feStore could have a set of sectionIds.
-// when a section is updated, its id is added to the set
-// I would need all section updates reducers designed for that
-// No more setterSections
-
-// You will need a version of addSection that adds the section
-// in-state and also adds the saved section's feId
-// You will need an analagous version of removeSection
-// One version of updateValue will do that
-// There will be a hook called, "useSavedSectionId",
-// Each of the hooks that deliver the aforementioned functions
-// will call it and modify themselves
-
-// Sections such as those can pass down useAddSection and useRemoveSection
-// in contexts
-
-// While you're implementing the above, you can also implement
-// "last updated", as that can be applied to the saved section
-// whenever a triggering update is made.
-
-// - Add dbChildIds to DbStore, to control the orders of components
-//   - You can just add an empty objects of these for now.
-//   - They'll be pretty easy to update, later.
-
-// - Figure out how to implement a default deal title
-// - Maybe a "use custom title" button, or something
 // - Mark incomplete deals in Saved Deals as such
+
+// - Implement a default deal title
+//   "custom title" & "default title" toggle or something
 
 // - Possibly give price, taxes, and insurance valueSections, and
 // any other pure inputs, to future proof your ability to incorporate
 // api modes
-
-// - After the next git push heroku master
-//   - check whether the upgrade to pro button works (it works in dev)
 
 // - Figure out if there's a way to use mui sx with mobile
 
@@ -123,6 +77,9 @@ AppRegistry.runApplication("App", {
 //    missing sections are added but converted to null
 //  - When self-loading a sectionPack, don't replace
 //    the sections of self that the sectionPack has a null for
+
+// Eventually: Restrict editing to the *save limit* most recent sections when the
+// user has a basicPlan
 
 // Output Section
 // - Manage Outputs button—Modal that shows the outputs displayed for each deal mode, and that allows for editing, saving, and loading them

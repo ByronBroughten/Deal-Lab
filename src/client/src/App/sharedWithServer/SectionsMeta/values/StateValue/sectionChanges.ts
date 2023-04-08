@@ -1,6 +1,6 @@
 import { Schema } from "mongoose";
 import { z } from "zod";
-import { SectionId } from "../../../StateGetters/SectionId";
+import { StoreId } from "../../../StateGetters/StoreId";
 import { ValidationError } from "../../../utils/Error";
 import { Obj } from "../../../utils/Obj";
 import { Id } from "../../IdS";
@@ -24,9 +24,9 @@ function validateChangeToSave(value: any): ChangeToSave {
 
 function validateChangesToSave(value: any): ChangesToSave {
   const obj = Obj.validateObjToAny(value) as ChangesToSave;
-  for (const sectionId of Obj.keys(obj)) {
-    SectionId.validate(sectionId);
-    validateChangeToSave(obj[sectionId]);
+  for (const storeId of Obj.keys(obj)) {
+    StoreId.validate(storeId);
+    validateChangeToSave(obj[storeId]);
   }
   return obj;
 }
@@ -91,15 +91,15 @@ function validateChangeSaving(value: any): ChangeSaving {
 
 function validateChangesSaving(value: any): ChangesSaving {
   const obj = Obj.validateObjToAny(value) as ChangesSaving;
-  for (const sectionId of Obj.keys(obj)) {
-    SectionId.validate(sectionId);
-    validateChangeSaving(obj[sectionId]);
+  for (const storeId of Obj.keys(obj)) {
+    StoreId.validate(storeId);
+    validateChangeSaving(obj[storeId]);
   }
   return obj;
 }
 
 export type ChangesToSave = {
-  [sectionId: string]: ChangeToSave;
+  [storeId: string]: ChangeToSave;
 };
 
 export type ChangeToSave =
@@ -121,7 +121,7 @@ function isChangesSaving(value: any): value is ChangesSaving {
 }
 
 export type ChangesSaving = {
-  [sectionId: string]: ChangeSaving;
+  [storeId: string]: ChangeSaving;
 };
 
 export type ChangeSaving =

@@ -1,8 +1,9 @@
 import { Arr } from "../utils/Arr";
 import { Obj } from "../utils/Obj";
+import { FeIdProp } from "./SectionInfo/NanoIdInfo";
 
 export const sectionStores = {
-  outputSection: "outputSection",
+  outputSection: "outputSection", // hmmm...
 
   dealMain: "deal",
   propertyMain: "property",
@@ -33,10 +34,36 @@ export const storeSectionNames = storeNames.reduce((names, storeName) => {
 }, [] as StoreSectionName[]);
 
 type SectionToStoreName = {
-  [CN in BasicStoreName as SectionStores[CN]]: CN;
+  [CN in BasicStoreName as StoreSectionName<CN>]: CN;
 };
 export type StoreName<SN extends StoreSectionName = StoreSectionName> =
   SectionToStoreName[SN];
+
+type SectionToStoreNames = {
+  [SN in StoreSectionName]: StoreName<SN>[];
+};
+
+const sectionToStoreNames = storeNames.reduce((sectionToSns, storeName) => {
+  const sectionName = sectionStores[storeName];
+  if (!(sectionName in sectionToSns)) {
+    sectionToSns[sectionName] = [];
+  }
+  (sectionToSns[sectionName] as any[]).push(storeName);
+  return sectionToSns;
+}, {} as SectionToStoreNames);
+
+export function sectionStoreNames<SN extends StoreSectionName>(
+  sectionName: SN
+): StoreName<SN>[] {
+  return sectionToStoreNames[sectionName] as StoreName<SN>[];
+}
+
+interface StoreNameProp<CN extends StoreName = StoreName> {
+  storeName: CN;
+}
+export interface FeStoreInfo<CN extends StoreName = StoreName>
+  extends StoreNameProp<CN>,
+    FeIdProp {}
 
 export const indexStoreNames = Arr.extractStrict(storeNames, [
   "dealMain",

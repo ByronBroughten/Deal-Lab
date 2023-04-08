@@ -25,13 +25,22 @@ export function useQueryAction() {
     const querierSections = QuerierSections.init({
       sectionsShare: { sections },
     });
+    let success: boolean = true;
     switch (action.type) {
       case "trySave": {
-        const success = await querierSections.feStore.trySave();
-        dispatch({
-          type: "finishSave",
-          success,
-        });
+        try {
+          success = await querierSections.feStore.trySave();
+          dispatch({
+            type: "finishSave",
+            success,
+          });
+        } catch (error) {
+          dispatch({
+            type: "finishSave",
+            success: false,
+          });
+          throw error;
+        }
         break;
       }
     }

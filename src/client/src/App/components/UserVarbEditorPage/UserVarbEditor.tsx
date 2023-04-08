@@ -1,4 +1,7 @@
-import { useSetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useSetterSection";
+import { useActionWithProps } from "../../sharedWithServer/stateClassHooks/useAction";
+import { useGetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useGetterSection";
+import { IdOfSectionToSaveProvider } from "../../sharedWithServer/stateClassHooks/useIdOfSectionToSave";
+import { StoreId } from "../../sharedWithServer/StateGetters/StoreId";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { SubSectionOpen } from "../ActiveDealPage/ActiveDeal/SubSectionOpen";
 import { FormSection } from "../appWide/FormSection";
@@ -10,7 +13,10 @@ import { VarbListUserVarbs } from "../appWide/VarbLists/VarbListUserVarbs";
 import { Row } from "../general/Row";
 
 export function UserVarbEditor() {
-  const feStore = useSetterSectionOnlyOne("feStore");
+  const feStore = useGetterSectionOnlyOne("feStore");
+  const addListNumVarbList = useActionWithProps("addToStore", {
+    storeName: "numVarbListMain",
+  });
   return (
     <SubSectionOpen>
       <Row
@@ -38,8 +44,14 @@ export function UserVarbEditor() {
           <ListGroupLists
             {...{
               feIds: feStore.childFeIds("numVarbListMain"),
-              addList: () => feStore.addChild("numVarbListMain"),
-              makeListNode: (nodeProps) => <VarbListUserVarbs {...nodeProps} />,
+              addList: addListNumVarbList,
+              makeListNode: (nodeProps) => (
+                <IdOfSectionToSaveProvider
+                  storeId={StoreId.make("numVarbListMain", nodeProps.feId)}
+                >
+                  <VarbListUserVarbs {...nodeProps} />,
+                </IdOfSectionToSaveProvider>
+              ),
             }}
           />
         </MainSectionBody>

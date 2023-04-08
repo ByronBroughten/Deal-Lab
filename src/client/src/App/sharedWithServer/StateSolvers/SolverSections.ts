@@ -22,8 +22,6 @@ import { SolverVarb } from "./SolverVarb";
 
 type OutVarbMap = Record<string, Set<string>>;
 
-export const sectionIdSeparator = "|";
-
 export class SolverSections extends SolverSectionsBase {
   get getterSections() {
     return new GetterSections(this.getterSectionsBase.getterSectionsProps);
@@ -189,13 +187,14 @@ export class SolverSections extends SolverSectionsBase {
   hasActiveDeal(): boolean {
     return this.prepperSections.hasActiveDeal();
   }
+  addActiveDeal() {
+    const { feStore } = this;
+    feStore.addToStore({ storeName: "dealMain" }, false);
+    const { feId } = feStore.get.youngestChild("dealMain");
+    this.activateDealAndSolve(feId);
+  }
   activateDealAndSolve(feId: string): void {
     this.prepperSections.activateDeal(feId);
     this.solve();
-  }
-  addActiveDeal() {
-    const feStore = this.prepperSections.oneAndOnly("feStore");
-    const { feId } = feStore.addAndGetChild("dealMain").get;
-    this.activateDealAndSolve(feId);
   }
 }

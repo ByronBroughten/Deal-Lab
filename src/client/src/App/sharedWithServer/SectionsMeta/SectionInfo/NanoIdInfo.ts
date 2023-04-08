@@ -12,3 +12,7 @@ export interface NanoIdProp {
 export interface DbIdProp {
   dbId: string;
 }
+
+export interface FeIdProp {
+  feId: string;
+}

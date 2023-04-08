@@ -30,10 +30,12 @@ const apiPathFull = `${env.apiUrlBase}${apiPathBit}`;
 
 const isBeta = false;
 const maxSectionSaveLimit = 1000;
-const basicSectionSaveLimit = 5;
+const basicSectionSaveLimit = 4;
 const saveDelayInMs = 2000;
 export const config = {
   ...env,
+  compoundIdSpliter: ".",
+  maxSectionSaveLimit,
   stripePrices,
   saveDelayInMs,
   supportEmail: "support@deallab.com",
@@ -45,11 +47,11 @@ export const config = {
   apiPathBit,
   apiPathFull,
   plans: {
-    basic: {
-      sectionSaveLimit: isBeta ? maxSectionSaveLimit : basicSectionSaveLimit,
+    basicPlan: {
+      sectionSaveLimit: basicSectionSaveLimit,
       canUseCompareTable: false,
     },
-    pro: {
+    fullPlan: {
       sectionSaveLimit: maxSectionSaveLimit,
       canUseCompareTable: true,
     },

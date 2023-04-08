@@ -6,7 +6,7 @@ import { HiOutlineVariable } from "react-icons/hi";
 import { SiWebcomponentsdotorg } from "react-icons/si";
 import { View } from "react-native";
 import { FeRouteName } from "../Constants/feRoutes";
-import { useFeStoreDepreciated } from "../modules/sectionActorHooks/useFeStoreDepreciated";
+import { useActionWithProps } from "../sharedWithServer/stateClassHooks/useAction";
 import { nativeTheme } from "../theme/nativeTheme";
 import { AccountPageDeals } from "./AccountPage/AccountPageDeals";
 import { useGoToPage } from "./appWide/customHooks/useGoToPage";
@@ -21,7 +21,7 @@ import { MuiBtnPropsNext } from "./general/StandardProps";
 
 const iconSize = 40;
 export function AccountPage() {
-  const feStore = useFeStoreDepreciated();
+  const addActiveDeal = useActionWithProps("addActiveDeal", {});
   return (
     <View>
       <Row
@@ -32,7 +32,7 @@ export function AccountPage() {
       >
         <Row style={{ flexWrap: "wrap" }}>
           <AccountBtn
-            onClick={() => feStore.addActiveDeal()}
+            onClick={addActiveDeal}
             feRouteName="activeDeal"
             text={<Box>Add Deal</Box>}
             icon={<BsFillHouseAddFill size={iconSize} />}

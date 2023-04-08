@@ -1,15 +1,16 @@
+import { constants } from "../../Constants";
 import { Id } from "../SectionsMeta/IdS";
 import { SectionName, validateSectionName } from "../SectionsMeta/SectionName";
 import { Str } from "../utils/Str";
 
 export const SectionId = {
   get sectionIdSplitter() {
-    return "-";
+    return constants.compoundIdSpliter;
   },
-  makeSectionId(sectionName: SectionName, feId: string) {
+  make(sectionName: SectionName, feId: string) {
     return `${sectionName}${this.sectionIdSplitter}${feId}`;
   },
-  splitSectionId(sectionId: string): {
+  split(sectionId: string): {
     sectionName: SectionName;
     feId: string;
   } {
@@ -18,7 +19,7 @@ export const SectionId = {
   },
   validate(value: any): string {
     const str = Str.validate(value);
-    const { sectionName, feId } = this.splitSectionId(str);
+    const { sectionName, feId } = this.split(str);
     validateSectionName(sectionName);
     Id.validate(feId);
     return str;

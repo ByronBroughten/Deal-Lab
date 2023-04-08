@@ -2,7 +2,7 @@ import { FeSectionInfo } from "../../../../sharedWithServer/SectionsMeta/Section
 import { SectionNameByType } from "../../../../sharedWithServer/SectionsMeta/SectionNameByType";
 import { useGetterSection } from "../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { BigStringEditor } from "../../../inputs/BigStringEditor";
-import { RemoveSectionXBtn } from "../../RemoveSectionXBtn";
+import { RemoveFromStoreXBtn } from "../../RemoveSectionXBtn";
 import { VarbListTotal } from "./VarbListGeneric/VarbListTotal";
 import { VarbListMenuStyled } from "./VarbListMenuStyled";
 
@@ -36,10 +36,11 @@ export function VarbListEditorPageMenu<
             />
           )}
         </div>
-        <RemoveSectionXBtn
+        <RemoveFromStoreXBtn
           {...{
             sx: { width: 22, height: 22, padding: 0 },
-            ...list.feInfo,
+            feId: list.feId,
+            storeName: list.mainStoreName,
           }}
         />
       </div>
