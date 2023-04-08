@@ -2,6 +2,7 @@ import {
   FeStoreInfo,
   isStoreNameByType,
   StoreName,
+  StoreSectionName,
 } from "../../sharedWithServer/SectionsMeta/sectionStores";
 import {
   changeSavingToToSave,
@@ -96,7 +97,15 @@ export class SolverFeStore extends SolverSectionBase<"feStore"> {
       }
       throw new Error("Storage limit reached");
     } else {
-      const child = this.appWideSolvePrepper.addAndGetChild(storeName, options);
+      const now = timeS.now();
+      const child = this.appWideSolvePrepper.addAndGetChild(storeName, {
+        ...options,
+        sectionValues: {
+          ...options?.sectionValues,
+          dateTimeFirstSaved: now,
+          dateTimeLastSaved: now,
+        },
+      });
       const storeId = StoreId.make(storeName, child.get.feId);
       this.addChangeToSave(storeId, { changeName: "add" });
       if (doSolve) this.solve();
@@ -114,23 +123,31 @@ export class SolverFeStore extends SolverSectionBase<"feStore"> {
     });
     child.removeSelfAndSolve();
   }
-  addChangeToSave(storeName: string, change: ChangeToSave) {
+  sectionByStoreId(storeId: string): SolverSection<StoreSectionName> {
+    const { feInfo } = this.getterFeStore.sectionByStoreId(storeId);
+    return this.solver.solverSection(feInfo);
+  }
+  addChangeToSave(storeId: string, change: ChangeToSave) {
     const toSave = { ...this.get.valueNext("changesToSave") };
     switch (change.changeName) {
       case "add":
       case "remove": {
-        toSave[storeName] = change;
+        toSave[storeId] = change;
         break;
       }
       case "update": {
-        if (!toSave[storeName]) {
-          toSave[storeName] = change;
+        if (!toSave[storeId]) {
+          toSave[storeId] = change;
         }
       }
     }
+
+    const now = timeS.now();
+    const section = this.sectionByStoreId(storeId);
+    section.basicSolvePrepper.updateValues({ dateTimeLastSaved: now });
     this.basicSolvePrepper.updateValues({
       changesToSave: toSave,
-      timeOfLastChange: timeS.now(),
+      timeOfLastChange: now,
     });
   }
   onChangeIdle(): void {

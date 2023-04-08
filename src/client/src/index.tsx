@@ -7,11 +7,8 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
-// - After the next git push heroku master
-// - check whether the upgrade to pro button works (it works in dev)
-
 // - Update savable sections' "last updated" parameter.
-//   It will update on save
+//   Do this on every
 
 // - Add empty dbChildIds to DbStore, to control the orders of components
 //   - They'll likely be pretty easy to update, later.

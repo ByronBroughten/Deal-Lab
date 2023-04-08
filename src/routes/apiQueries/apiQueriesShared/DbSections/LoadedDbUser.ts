@@ -96,7 +96,7 @@ export class LoadedDbUser extends GetterSectionBase<"dbStore"> {
         subId: "string",
         status: "string",
         priceIds: "stringArray",
-        currentPeriodEnd: "number",
+        currentPeriodEnd: "dateTime",
       });
       const { priceIds, currentPeriodEnd } = values;
       if (

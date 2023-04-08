@@ -397,13 +397,13 @@ export function makeAllBaseSectionVarbs() {
     }),
     userInfo: baseSectionVarbs({
       ...baseVarbs("string", ["email", "userName"] as const),
-      timeJoined: baseVarb("number"),
+      timeJoined: baseVarb("dateTime"),
     }),
     stripeSubscription: baseSectionVarbs({
       subId: baseVarb("string"),
       status: baseVarb("string"),
       priceIds: baseVarb("stringArray"),
-      currentPeriodEnd: baseVarb("number"),
+      currentPeriodEnd: baseVarb("dateTime"),
     }),
     authInfoPrivate: baseSectionVarbs({
       authId: baseVarb("string"),

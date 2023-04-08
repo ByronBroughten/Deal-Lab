@@ -1,9 +1,19 @@
-import { Outlet, useNavigate } from "react-router-dom";
+import { Navigate, Outlet, useNavigate } from "react-router-dom";
 import { SessionAuth } from "supertokens-auth-react/recipe/session";
 import { feRoutes } from "../Constants/feRoutes";
+import { useUserDataStatus } from "../modules/SectionActors/UserDataActor";
 import { OuterSectionNext } from "./appWide/GeneralSection/OuterSectionNext";
 import { PageMain } from "./general/PageMain";
 import { NavBar } from "./NavBar";
+
+export function UserDataNeededPage() {
+  const userDataStatus = useUserDataStatus();
+  return userDataStatus === "loaded" ? (
+    <Outlet />
+  ) : (
+    <Navigate to={feRoutes.account} />
+  );
+}
 
 export function AuthProtectedPage() {
   return (

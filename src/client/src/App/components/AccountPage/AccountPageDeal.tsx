@@ -2,7 +2,6 @@ import { unstable_batchedUpdates } from "react-dom";
 import { Text, View, ViewStyle } from "react-native";
 import { dealModeLabels } from "../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
 import { useActionWithProps } from "../../sharedWithServer/stateClassHooks/useAction";
-import { timeS } from "../../sharedWithServer/utils/timeS";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { reactNativeS } from "../../utils/reactNative";
 import { useGoToPage } from "../appWide/customHooks/useGoToPage";
@@ -61,7 +60,7 @@ export function AccountPageDeal({
     hour: "2-digit",
     minute: "2-digit",
     // second: "2-digit",
-  }).format(timeS.standardToMilliSeconds(dateNumber));
+  }).format(dateNumber);
 
   const dealMode = deal.valueNext("dealMode");
   const editDeal = () => {

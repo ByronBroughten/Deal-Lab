@@ -25,6 +25,7 @@ import {
   AddChildOptions,
   UpdaterSection,
 } from "../StateUpdaters/UpdaterSection";
+import { SolverAdderPrepSection } from "./SolverAdderPrepSection";
 import { SolverSectionBase } from "./SolverBases/SolverSectionBase";
 import {
   HasSolveShare,
@@ -41,8 +42,11 @@ interface SolverSectionInitProps<SN extends SectionName>
 export class SolverSection<
   SN extends SectionName
 > extends SolverSectionBase<SN> {
-  get prepper() {
+  get appWideSolvePrepper() {
     return new SolverPrepSection(this.solverSectionProps);
+  }
+  get basicSolvePrepper(): SolverAdderPrepSection<SN> {
+    return new SolverAdderPrepSection(this.solverSectionProps);
   }
   static init<S extends SectionName>(
     props: SolverSectionInitProps<S>
@@ -105,19 +109,19 @@ export class SolverSection<
     this.solverSections.solve();
   }
   updateValuesAndSolve(values: Partial<SectionValues<SN>>): void {
-    this.prepper.updateValues(values);
+    this.appWideSolvePrepper.updateValues(values);
     this.solve();
   }
   removeSelfAndSolve(): void {
-    this.prepper.removeSelf();
+    this.appWideSolvePrepper.removeSelf();
     this.solve();
   }
   removeChildrenAndSolve(childName: ChildName<SN>): void {
-    this.prepper.removeChildren(childName);
+    this.appWideSolvePrepper.removeChildren(childName);
     this.solve();
   }
   removeChildArrsAndSolve<CN extends ChildName<SN>>(childArrs: CN[]): void {
-    this.prepper.removeChildArrs(childArrs);
+    this.appWideSolvePrepper.removeChildArrs(childArrs);
     this.solve();
   }
   childByDbId<CN extends ChildName<SN>>(dbInfo: DbChildInfo<SN, CN>) {
@@ -131,7 +135,7 @@ export class SolverSection<
   removeChildByDbIdAndSolve<CN extends ChildName<SN>>(
     dbInfo: DbChildInfo<SN, CN>
   ) {
-    this.prepper.removeChildByDbId(dbInfo);
+    this.appWideSolvePrepper.removeChildByDbId(dbInfo);
     this.solve();
   }
   value<VN extends VarbName<SN>>(varbName: VN): VarbValue<SN, VN> {
@@ -169,14 +173,14 @@ export class SolverSection<
     return this.solverSection(feInfo);
   }
   loadSelfAndSolve(sectionPack: SectionPack<SN>): void {
-    this.prepper.loadSelfSectionPack(sectionPack);
+    this.appWideSolvePrepper.loadSelfSectionPack(sectionPack);
     this.solve();
   }
   addChildAndSolve<CN extends ChildName<SN>>(
     childName: CN,
     options?: AddChildOptions<SN, CN>
   ): void {
-    this.prepper.addChild(childName, options);
+    this.appWideSolvePrepper.addChild(childName, options);
     this.solve();
   }
   addAndGetChild<CN extends ChildName<SN>>(
@@ -189,7 +193,7 @@ export class SolverSection<
   loadChildAndSolve<CN extends ChildName<SN>>(
     childPackInfo: ChildPackInfo<SN, CN> & LoadChildSectionPackOptions
   ): void {
-    this.prepper.loadChild(childPackInfo);
+    this.appWideSolvePrepper.loadChild(childPackInfo);
     this.solve();
   }
   loadAndGetChild<CN extends ChildName<SN>>(
@@ -201,28 +205,28 @@ export class SolverSection<
   addChildArrsAndSolve<CN extends ChildName<SN>>(
     childPackArrs: ChildSectionPackArrs<SN, CN>
   ): void {
-    this.prepper.loadChildArrs(childPackArrs);
+    this.appWideSolvePrepper.loadChildArrs(childPackArrs);
     this.solve();
   }
   removeChildAndSolve<CN extends ChildName<SN>>(
     childInfo: FeChildInfo<SN, CN>
   ): void {
-    this.prepper.removeChild(childInfo);
+    this.appWideSolvePrepper.removeChild(childInfo);
     this.solve();
   }
   resetToDefaultAndSolve(): void {
-    this.prepper.resetToDefault();
+    this.appWideSolvePrepper.resetToDefault();
     this.solve();
   }
   replaceWithDefaultAndSolve(): void {
-    this.prepper.resetToDefault();
+    this.appWideSolvePrepper.resetToDefault();
     this.updater.newDbId();
     this.solve();
   }
   replaceChildPackArrsAndSolve<CN extends ChildName<SN>>(
     childPackArrs: ChildSectionPackArrs<SN, CN>
   ): void {
-    this.prepper.replaceChildPackArrs(childPackArrs);
+    this.appWideSolvePrepper.replaceChildPackArrs(childPackArrs);
     this.solve();
   }
 }

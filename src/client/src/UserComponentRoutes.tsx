@@ -1,4 +1,5 @@
 import { Route } from "react-router-dom";
+import { UserDataNeededPage } from "./App/components/AuthProtectedPage";
 import { ListGroupEditor } from "./App/components/UserListEditorPage/ListGroupEditor";
 import { UserComponents } from "./App/components/UserListEditorPage/UserComponents";
 import { feRoutes } from "./App/Constants/feRoutes";
@@ -13,8 +14,8 @@ const listRoutes = [
 ] as const;
 
 export const UserComponentRoutes = (
-  <>
-    <Route path={feRoutes.components} element={<UserComponents />} />
+  <Route path={feRoutes.components} element={<UserDataNeededPage />}>
+    <Route index element={<UserComponents />} />
     {listRoutes.map((routeName) => (
       <Route
         key={routeName}
@@ -22,5 +23,5 @@ export const UserComponentRoutes = (
         element={<ListGroupEditor listName={routeName} />}
       />
     ))}
-  </>
+  </Route>
 );

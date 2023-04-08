@@ -4,7 +4,6 @@ import {
   DbStoreSeed,
   makeDefaultDbStoreArrs,
 } from "../../../../../client/src/App/sharedWithServer/defaultMaker/makeDefaultDbStore";
-import { timeS } from "../../../../../client/src/App/sharedWithServer/utils/timeS";
 import { StrictPick } from "../../../../../client/src/App/sharedWithServer/utils/types";
 import { ResStatusError } from "../../../../../utils/resError";
 import { DbUserModel } from "../../../../routesShared/DbUserModel";
@@ -17,7 +16,7 @@ export function getSignUpData(
   return {
     authId: id,
     email,
-    timeJoined: timeS.millisecondsToStandard(timeJoined),
+    timeJoined,
   };
 }
 

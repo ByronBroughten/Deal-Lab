@@ -1,10 +1,11 @@
-import { Navigate, Outlet, Route } from "react-router-dom";
+import { Navigate, Route } from "react-router-dom";
 import {
   ActiveDealFinancing,
   ActiveDealMgmt,
   ActiveDealProperty,
 } from "./App/components/ActiveDealPage/ActiveDeal/PropertyGeneral/ActiveDealSections";
 import { ActiveDealMain } from "./App/components/ActiveDealPage/ActiveDealMain";
+import { UserDataNeededPage } from "./App/components/AuthProtectedPage";
 import { feRoutes } from "./App/Constants/feRoutes";
 import { useGetterSections } from "./App/sharedWithServer/stateClassHooks/useGetterSections";
 import { IdOfSectionToSaveProvider } from "./App/sharedWithServer/stateClassHooks/useIdOfSectionToSave";
@@ -31,7 +32,7 @@ function ActiveDealWrapper() {
   const deal = getters.getActiveDeal();
   return (
     <IdOfSectionToSaveProvider storeId={deal.mainStoreId}>
-      <Outlet />
+      <UserDataNeededPage />
     </IdOfSectionToSaveProvider>
   );
 }

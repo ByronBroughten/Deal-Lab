@@ -2,6 +2,7 @@ import express, { Request, Response } from "express";
 import Stripe from "stripe";
 import { SectionValues } from "../../client/src/App/sharedWithServer/SectionsMeta/values/StateValue";
 import { PackBuilderSection } from "../../client/src/App/sharedWithServer/StatePackers/PackBuilderSection";
+import { timeS } from "../../client/src/App/sharedWithServer/utils/timeS";
 import { getStripeEvent } from "../routeUtils/stripe";
 import { DbUser } from "./apiQueriesShared/DbSections/DbUser";
 
@@ -33,7 +34,7 @@ export function stripeSubToValues(
     _typeUniformity: "",
     subId: sub.id,
     status: sub.status,
-    currentPeriodEnd: sub.current_period_end,
+    currentPeriodEnd: timeS.secondsToMilliSeconds(sub.current_period_end),
     priceIds: sub.items.data.map((item) => item.price.id),
   };
 }

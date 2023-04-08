@@ -40,7 +40,7 @@ export class SolverPrepSection<
   get prepperSections(): SolverPrepSections {
     return new SolverPrepSections(this.solverSectionsProps);
   }
-  get adderPrepper(): SolverAdderPrepSection<SN> {
+  get basicSolvePrepper(): SolverAdderPrepSection<SN> {
     return new SolverAdderPrepSection(this.solverSectionProps);
   }
   get removerPrepper(): SolverRemoverPrepSection<SN> {
@@ -82,22 +82,22 @@ export class SolverPrepSection<
       const solverVarb = this.solverVarb(varbInfo);
       solverVarb.removeAllOutEntitiesOfInEntities();
     }
-    this.adderPrepper.updateValues(values);
+    this.basicSolvePrepper.updateValues(values);
     this.addAppWideMissingOutEntities();
   }
   loadSelfSectionPack(sectionPack: SectionPack<SN>): void {
-    this.adderPrepper.loadSelfSectionPack(sectionPack);
+    this.basicSolvePrepper.loadSelfSectionPack(sectionPack);
     this.addAppWideMissingOutEntities();
   }
   resetToDefault(): void {
-    this.adderPrepper.resetToDefault();
+    this.basicSolvePrepper.resetToDefault();
     this.addAppWideMissingOutEntities();
   }
   addChild<CN extends ChildName<SN>>(
     childName: CN,
     options?: AddChildOptions<SN, CN>
   ) {
-    this.adderPrepper.addChild(childName, options);
+    this.basicSolvePrepper.addChild(childName, options);
     this.addAppWideMissingOutEntities();
   }
   addAndGetChild<CN extends ChildName<SN>>(
@@ -108,19 +108,19 @@ export class SolverPrepSection<
     return this.youngestChild(childName);
   }
   loadChild<CN extends ChildName<SN>>(packInfo: LoadChildProps<SN, CN>): void {
-    this.adderPrepper.loadChild(packInfo);
+    this.basicSolvePrepper.loadChild(packInfo);
     this.addAppWideMissingOutEntities();
   }
   loadChildArrs<CN extends ChildName<SN>>(
     packArrs: ChildSectionPackArrs<SN, CN>
   ): void {
-    this.adderPrepper.loadChildArrs(packArrs);
+    this.basicSolvePrepper.loadChildArrs(packArrs);
     this.addAppWideMissingOutEntities();
   }
   replaceChildPackArrs<CN extends ChildName<SN>>(
     childPackArrs: ChildSectionPackArrs<SN, CN>
   ): void {
-    this.adderPrepper.replaceChildPackArrs(childPackArrs);
+    this.basicSolvePrepper.replaceChildPackArrs(childPackArrs);
     this.addAppWideMissingOutEntities();
   }
   removeChildArrs<CN extends ChildName<SN>>(childArrs: CN[]): void {

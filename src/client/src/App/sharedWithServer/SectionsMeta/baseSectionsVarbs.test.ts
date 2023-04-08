@@ -14,7 +14,7 @@ describe(`sectionsVarbs`, () => {
   beforeEach(async () => {
     sectionsVarbs = makeAllBaseSectionVarbs();
     sectionsVarbsHash = hash(sectionsVarbs);
-    await timeS.delay(1001);
+    await timeS.delay(50);
     sectionsVarbs2 = makeAllBaseSectionVarbs();
     sectionsVarbs2Hash = hash(sectionsVarbs2);
   });

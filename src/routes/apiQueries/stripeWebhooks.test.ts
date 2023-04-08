@@ -100,7 +100,7 @@ describe(productionRoute, () => {
         customer: customerId,
         id: subId,
         status: "active",
-        current_period_end: timeS.now(),
+        current_period_end: timeS.nowInSeconds(),
         items: {
           data: [{ price: { id: priceId } }],
         },

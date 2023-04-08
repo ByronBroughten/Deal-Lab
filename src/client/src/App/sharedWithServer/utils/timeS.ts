@@ -1,20 +1,25 @@
 export const timeS = {
-  millisecondsToStandard(mils: number): number {
+  millisecondsToSeconds(mils: number): number {
     // seconds is standard
     return Math.floor(mils / 1000);
   },
   now() {
-    return this.millisecondsToStandard(Date.now());
+    return Date.now();
   },
-  standardToMilliSeconds(standard: number): number {
+  nowInSeconds() {
+    return this.millisecondsToSeconds(this.now());
+  },
+  secondsToMilliSeconds(standard: number): number {
     return standard * 1000;
   },
-  oneDay: 86400,
+  get oneDay(): number {
+    return this.secondsToMilliSeconds(86400);
+  },
   get thirtyDays(): number {
     return this.oneDay * 30;
   },
   get hundredsOfYearsFromNow() {
-    return 11661201881;
+    return 11661201881000;
   },
   async delay(milliseconds: number) {
     return new Promise((resolve) => {
@@ -23,5 +28,5 @@ export const timeS = {
   },
   isTimestamp(value: any): value is number {
     return typeof value === "number";
-  }
+  },
 } as const;

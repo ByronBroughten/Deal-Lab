@@ -2,7 +2,7 @@ import { Id } from "../SectionsMeta/IdS";
 
 export const dbLimits = {
   number: {
-    max: 999999999999,
+    max: 99999999999999999999,
     get min() {
       return -this.max;
     },

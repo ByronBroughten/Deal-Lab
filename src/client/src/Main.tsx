@@ -4,7 +4,10 @@ import styled from "styled-components";
 import { getSuperTokensRoutesForReactRouterDom } from "supertokens-auth-react";
 import { ActiveDealRoutes } from "./ActiveDealRoutes";
 import { AccountPage } from "./App/components/AccountPage";
-import { AuthProtectedPage } from "./App/components/AuthProtectedPage";
+import {
+  AuthProtectedPage,
+  UserDataNeededPage,
+} from "./App/components/AuthProtectedPage";
 import { DealCompareSection } from "./App/components/DealComparePage/DealCompareSection";
 import NotFound from "./App/components/general/NotFound";
 import { NavBarOutletPage } from "./App/components/NavBarOutletPage";
@@ -37,14 +40,15 @@ export function Main() {
         />
         <Route path={"/"} element={<AuthProtectedPage />}>
           <Route index element={<Navigate to={feRoutes.account} />} />
+          <Route path={feRoutes.account} element={<AccountPage />} />
           {ActiveDealRoutes}
           {UserComponentRoutes}
-          <Route
-            path={feRoutes.userVariables}
-            element={<UserVarbEditorPage />}
-          />
-          <Route path={feRoutes.compare} element={<DealCompareSection />} />
-          <Route path={feRoutes.account} element={<AccountPage />} />
+          <Route path={feRoutes.userVariables} element={<UserDataNeededPage />}>
+            <Route index element={<UserVarbEditorPage />} />
+          </Route>
+          <Route path={feRoutes.compare} element={<UserDataNeededPage />}>
+            <Route index element={<DealCompareSection />} />
+          </Route>
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>
