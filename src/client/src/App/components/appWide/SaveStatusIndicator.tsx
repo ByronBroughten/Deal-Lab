@@ -9,34 +9,37 @@ import { ListMenuBtn } from "./ListGroup/ListGroupShared/ListMenuSimple/ListMenu
 type Props = {
   className?: string;
 };
+
+const iconSize = 24;
+
 export function SaveStatusIndicator({ className }: Props) {
   const { saveStatus, isLoggedIn } = useGetterFeStore();
   const btnProps: Record<StateValue<"appSaveStatus">, any> = {
     unsaved: {
       $color: nativeTheme["gray-500"],
       get icon() {
-        return <BsCloudSlash />;
+        return <BsCloudSlash size={iconSize} />;
       },
       text: "Unsaved",
     },
     saving: {
       $color: nativeTheme.complementary.main,
       get icon() {
-        return <AiOutlineSync />;
+        return <AiOutlineSync size={iconSize} />;
       },
       text: "Saving",
     },
     saved: {
       $color: nativeTheme.secondary.main,
       get icon() {
-        return <BsCloudCheck />;
+        return <BsCloudCheck size={iconSize} />;
       },
       text: "Saved",
     },
     saveFailed: {
       $color: nativeTheme.danger.main,
       get icon() {
-        return <BsCloudSlash />;
+        return <BsCloudSlash size={iconSize} />;
       },
       text: "Save failed",
     },
@@ -54,13 +57,13 @@ export function SaveStatusIndicator({ className }: Props) {
 const Styled = styled(ListMenuBtn)<{ $color: string }>`
   background: transparent;
   white-space: nowrap;
-  font-size: ${nativeTheme.fs14};
+  font-size: 16px;
+  margin-left: ${nativeTheme.s4};
+
+  border: none;
 
   ${({ $color }) => css`
-    border: none;
     color: ${$color};
-    font-size: ${nativeTheme.fs14};
-
     :hover {
       color: ${$color};
       background: transparent;

@@ -8,7 +8,7 @@ import { View } from "react-native";
 import { FeRouteName } from "../Constants/feRoutes";
 import { useActionWithProps } from "../sharedWithServer/stateClassHooks/useAction";
 import { nativeTheme } from "../theme/nativeTheme";
-import { AccountPageDeals } from "./AccountPage/AccountPageDeals";
+import { AccountPageDeals } from "./AccountPage/SavedDeals";
 import { useGoToPage } from "./appWide/customHooks/useGoToPage";
 import { HollowBtn } from "./appWide/HollowBtn";
 import { Row } from "./general/Row";

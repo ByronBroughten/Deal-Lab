@@ -1,5 +1,5 @@
 import React from "react";
-import { AiOutlineInfoCircle } from "react-icons/ai";
+import { BiHelpCircle } from "react-icons/bi";
 import styled from "styled-components";
 import { useToggleView } from "../../modules/customHooks/useToggleView";
 import { nativeTheme } from "../../theme/nativeTheme";
@@ -25,7 +25,7 @@ export function LabelWithInfo({
       <PlainIconBtn
         onClick={openInfo}
         middle={
-          <AiOutlineInfoCircle
+          <BiHelpCircle
             size={20}
             style={{
               marginLeft: nativeTheme.s2,

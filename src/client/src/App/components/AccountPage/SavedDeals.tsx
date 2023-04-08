@@ -78,7 +78,7 @@ export function AccountPageDeals() {
             </Box>
             <Box
               sx={{
-                mt: nativeTheme.s3,
+                mt: nativeTheme.s35,
                 width: "100%",
               }}
             >

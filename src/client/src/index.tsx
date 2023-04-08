@@ -7,22 +7,8 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
-// - Update savable sections' "last updated" parameter.
-//   Do this on every
-
-// - Add empty dbChildIds to DbStore, to control the orders of components
-//   - They'll likely be pretty easy to update, later.
-
-// - Mark incomplete deals in Saved Deals as such
-
 // - Implement a default deal title
 //   "custom title" & "default title" toggle or something
-
-// - Possibly give price, taxes, and insurance valueSections, and
-// any other pure inputs, to future proof your ability to incorporate
-// api modes
-
-// - Figure out if there's a way to use mui sx with mobile
 
 // - Add FixNFlip
 //   - Add ARV
@@ -31,8 +17,18 @@ AppRegistry.runApplication("App", {
 //     - Holding utilities
 //     - Holding misc
 //   - Add cost overrun
+//   - Contractor management costs for mgmt?
 
-// - There could be contractor management costs
+// - Mark incomplete deals in Saved Deals as such
+
+// - Add empty dbChildIds to DbStore, to control the orders of components
+//   - They'll likely be pretty easy to update, later.
+
+// - Possibly give price, taxes, and insurance valueSections, and
+// any other pure inputs, to future proof your ability to incorporate
+// api modes
+
+// - Figure out if there's a way to use mui sx with mobile
 
 // How should I handle the loan being able to cover repair costs?
 // DealCheck uses two boxes for that.
