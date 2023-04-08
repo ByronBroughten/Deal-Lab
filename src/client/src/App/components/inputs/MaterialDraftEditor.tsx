@@ -2,6 +2,7 @@ import { Box, FilledTextFieldProps, SxProps, TextField } from "@mui/material";
 import { Editor, EditorState } from "draft-js";
 import { pick } from "lodash";
 import React from "react";
+import { insertChars } from "../../modules/draftjs/insert";
 import { materialDraftEditor } from "../../theme/nativeTheme/materialDraftEditor";
 import { ThemeName } from "../../theme/Theme";
 import { arrSx } from "../../utils/mui";
@@ -9,8 +10,9 @@ import { MaterialDraftField } from "./MaterialDraftField";
 import { PropAdornments } from "./NumObjEditor/useGetAdornments";
 import { useOnChange } from "./useOnChange";
 
-type HandleBeforeInput = (char: string) => "handled" | "not-handled";
-export type HandleReturn = () => "handled" | "not-handled";
+type DraftHandlerOutput = "handled" | "not-handled";
+type HandleBeforeInput = (char: string) => DraftHandlerOutput;
+export type HandleReturn = () => DraftHandlerOutput;
 interface Props extends Omit<FilledTextFieldProps, "InputProps" | "variant"> {
   sx?: SxProps;
   sectionName?: ThemeName;
@@ -20,6 +22,7 @@ interface Props extends Omit<FilledTextFieldProps, "InputProps" | "variant"> {
   onClick?: () => void;
   handleBeforeInput?: HandleBeforeInput;
   handleReturn?: HandleReturn;
+  handlePastedText?: (text: string) => DraftHandlerOutput;
 
   endAdornment?: any;
   startAdornment?: any;
@@ -46,6 +49,10 @@ export const MaterialDraftEditor = React.memo(function MaterialDraftEditor({
   endAdornment,
   handleBeforeInput,
   handleReturn = () => "handled",
+  handlePastedText = (text: string) => {
+    setEditorState((editorState) => insertChars(editorState, text));
+    return "handled";
+  },
   ...rest
 }: Props) {
   const editorRef = React.useRef<Editor | null>(null);
@@ -92,7 +99,11 @@ export const MaterialDraftEditor = React.memo(function MaterialDraftEditor({
               placeholder,
               handleOnChange,
               handleBeforeInput,
+              handlePastedText,
               handleReturn,
+              handlePastedFiles: () => "handled",
+              handleDrop: () => "handled",
+              handleDroppedFiles: () => "handled",
             } as any,
             startAdornment,
             endAdornment,

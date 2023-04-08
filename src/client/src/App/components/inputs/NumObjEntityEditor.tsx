@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { useOnOutsideClickEffect } from "../../modules/customHooks/useOnOutsideClickRef";
 import { useToggleView } from "../../modules/customHooks/useToggleView";
 import { SetEditorState } from "../../modules/draftjs/draftUtils";
+import { insertChars } from "../../modules/draftjs/insert";
 import { FeVarbInfo } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { SectionInfoContextProvider } from "../../sharedWithServer/stateClassHooks/useSectionContext";
 import { ValueFixedVarbPathName } from "../../sharedWithServer/StateEntityGetters/ValueInEntityInfo";
@@ -119,14 +120,23 @@ const MemoNumObjEntityEditor = React.memo(function MemoNumObjEntityEditor({
   const popperRef = React.useRef<HTMLDivElement | null>(null);
   useOnOutsideClickEffect(closeVarbSelector, [numObjEditorRef, popperRef]);
   const clickAndFocus = onClickAndFocus(editorType, openVarbSelector);
+
+  const regEx = /[\d.*/+()-]/;
+  const reverseRegEx = /[^\d.*/+()-]/;
   const handleBeforeInput = React.useCallback(
     (char: string): "handled" | "not-handled" => {
-      const regEx = editorRegEx(editorType);
       if (regEx.test(char)) return "not-handled";
       return "handled";
     },
     []
   );
+
+  const handlePastedText = (text: string): "handled" => {
+    text = text.replaceAll(new RegExp(reverseRegEx, "g"), "");
+    setEditorState((editorState) => insertChars(editorState, text));
+    return "handled";
+  };
+
   return (
     <SectionInfoContextProvider {...rest}>
       <Styled
@@ -146,7 +156,7 @@ const MemoNumObjEntityEditor = React.memo(function MemoNumObjEntityEditor({
               editorState,
               startAdornment,
               endAdornment,
-              ...(!bypassNumeric && { handleBeforeInput }),
+              ...(!bypassNumeric && { handlePastedText, handleBeforeInput }),
             }}
           />
           {varbSelectorIsOpen && (
