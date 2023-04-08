@@ -17,9 +17,6 @@ export const updateVarbsS = {
       displayName: updateVarb("stringObj"),
       dateTimeFirstSaved: updateVarb("dateTime"),
       dateTimeLastSaved: updateVarb("dateTime"),
-      syncStatus: updateVarb("syncStatus", {
-        initValue: "unsyncedChanges",
-      }),
       autoSyncControl: updateVarb("autoSyncControl", {
         initValue: "autoSyncOff",
       }),

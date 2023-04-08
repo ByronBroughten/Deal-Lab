@@ -15,7 +15,7 @@ export function DealCompareDealModal({ dealCount }: Props) {
 
   const areNone = dealCount === 0;
 
-  const text = areNone ? "Click to Start Adding Deals To Compare" : "+ Deal";
+  const text = areNone ? "Add Deals To Compare" : "+ Deal";
   const extraSx = areNone
     ? {}
     : {

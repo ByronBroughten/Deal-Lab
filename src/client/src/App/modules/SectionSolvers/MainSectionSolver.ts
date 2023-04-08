@@ -129,7 +129,6 @@ export class MainSectionSolver<
     this.solver.updateValuesAndSolve({
       dateTimeFirstSaved: dateTime,
       dateTimeLastSaved: dateTime,
-      syncStatus: "changesSynced",
       autoSyncControl: "autoSyncOff",
     } as Partial<SectionValues<SN>>);
     const sectionPack = this.packMaker.makeSectionPack();

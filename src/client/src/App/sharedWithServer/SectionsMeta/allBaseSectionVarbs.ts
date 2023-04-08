@@ -306,7 +306,7 @@ export function makeAllBaseSectionVarbs() {
       valueDecimal: baseVarb("numObj", decimal),
     }),
     outputSection: baseSectionVarbs({
-      displayName: baseVarb("stringObj"), // for type uniformity for StoreName
+      ...baseVarbsS.savableSection,
       showOutputs: baseVarb("boolean"),
     }),
     deal: baseSectionVarbs({

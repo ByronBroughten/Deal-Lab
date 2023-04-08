@@ -35,6 +35,7 @@ export function DealCompareSection() {
           style={{
             flexWrap: "nowrap",
             marginTop: nativeTheme.s4,
+            marginBottom: nativeTheme.s4,
             flexDirection: "row",
           }}
         >

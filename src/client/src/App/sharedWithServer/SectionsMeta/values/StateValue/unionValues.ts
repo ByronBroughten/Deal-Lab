@@ -60,7 +60,6 @@ const unionValueArrs = {
   dealSort: ["dateCreated", "dateUpdated"],
   authStatus: ["guest", "user"],
   labSubscription: ["basicPlan", "fullPlan"],
-  syncStatus: ["unsyncedChanges", "changesSynced"],
   autoSyncControl: ["autoSyncOff", "autoSyncOn"],
   completionStatus: ["allEmpty", "allValid", "someInvalid"],
   dealMode: ["buyAndHold", "fixAndFlip", "brrrr"],

@@ -264,7 +264,6 @@ export const baseVarbsS = {
       dateTimeFirstSaved: baseVarb("dateTime"),
       dateTimeLastSaved: baseVarb("dateTime"),
       autoSyncControl: baseVarb("autoSyncControl"),
-      syncStatus: baseVarb("syncStatus"),
     } as const;
   },
   get virtualVarb() {
