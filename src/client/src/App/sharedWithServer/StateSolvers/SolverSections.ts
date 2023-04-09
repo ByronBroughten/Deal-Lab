@@ -191,6 +191,12 @@ export class SolverSections extends SolverSectionsBase {
     const { feId } = feStore.get.youngestChild("dealMain");
     this.activateDealAndSolve(feId);
   }
+  removeStoredDeal(feId: string) {
+    if (this.getterSections.isActiveDeal(feId)) {
+      this.prepperSections.deactivateDealAndDealSystem();
+    }
+    this.feStore.removeFromStore({ storeName: "dealMain", feId });
+  }
   activateDealAndSolve(feId: string): void {
     this.prepperSections.activateDeal(feId);
     this.solve();

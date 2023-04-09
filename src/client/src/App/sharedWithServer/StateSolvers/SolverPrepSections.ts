@@ -11,6 +11,7 @@ import {
 import { StoreName } from "../SectionsMeta/sectionStores";
 import { GetterSections } from "../StateGetters/GetterSections";
 import { InEntityGetterSections } from "../StateGetters/InEntityGetterSections";
+import { AddChildOptions } from "../StateUpdaters/UpdaterSection";
 import { SolverAdderPrepSections } from "./SolverAdderPrepSections";
 import { SolverSectionsBase } from "./SolverBases/SolverSectionsBase";
 import { SolverPrepSection } from "./SolverPrepSection";
@@ -71,7 +72,6 @@ export class SolverPrepSections extends SolverSectionsBase {
       .getActiveDeals()
       .map(({ feInfo }) => this.prepperSection(feInfo));
   }
-
   activateDeal(feId: string): void {
     if (this.hasActiveDeal() && this.getActiveDeal().get.feId === feId) {
       return;
@@ -87,7 +87,20 @@ export class SolverPrepSections extends SolverSectionsBase {
     );
     this.updateActiveSystems(feId);
   }
+  deactivateDealAndDealSystem(): void {
+    this.deactivateDeals();
+    this.removeActiveDealSystems();
+    this.reAddOutputSection({ sectionContextName: "latentDealSystem" });
+  }
+  private removeActiveDealSystems() {
+    const main = this.oneAndOnly("main");
+    const systems = main.children("activeDealSystem");
+    for (const system of systems) {
+      system.removeSelf();
+    }
+  }
   private updateActiveSystems(dealId: string) {
+    this.removeActiveDealSystems();
     const main = this.oneAndOnly("main");
     const contextOptions = {
       contextPathIdxSpecifier: {
@@ -97,23 +110,18 @@ export class SolverPrepSections extends SolverSectionsBase {
         },
       },
     } as const;
-
-    const systems = main.children("activeDealSystem");
-    for (const system of systems) {
-      system.removeSelf();
-    }
     main.addChild("activeDealSystem", contextOptions);
-
+    this.reAddOutputSection(contextOptions);
+  }
+  private reAddOutputSection(props: AddChildOptions<"outputSection">) {
     const feStore = this.oneAndOnly("feStore");
     const outputSection = feStore.onlyChild("outputSection");
     const outputPack = outputSection.get.makeSectionPack();
     outputSection.removeSelf();
-    const nextOutputSection = feStore.addAndGetChild(
-      "outputSection",
-      contextOptions
-    );
+    const nextOutputSection = feStore.addAndGetChild("outputSection", props);
     nextOutputSection.loadSelfSectionPack(outputPack);
   }
+
   private deactivateDeals(): void {
     const activeDeals = this.getActiveDeals();
     for (const deal of activeDeals) {

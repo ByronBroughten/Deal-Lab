@@ -190,6 +190,13 @@ export class GetterSections extends GetterSectionsBase {
     const deals = this.getActiveDeals();
     return Arr.getOnlyOne(deals, "activeDeals");
   }
+  isActiveDeal(feId: string): boolean {
+    if (this.hasActiveDeal()) {
+      const activeDeal = this.getActiveDeal();
+      return activeDeal.feId === feId;
+    }
+    return false;
+  }
   hasActiveDeal(): boolean {
     const deals = this.getActiveDeals();
     if (deals.length === 1) {

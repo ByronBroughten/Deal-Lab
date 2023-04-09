@@ -43,6 +43,7 @@ interface RemoveFromStore<CN extends StoreName = StoreName> {
   feId: string;
   type: "removeFromStore";
 }
+
 interface AddChildAction<
   SN extends SectionName = SectionName,
   CN extends ChildName<SN> = ChildName<SN>
@@ -78,6 +79,11 @@ interface AddActiveDeal {
   type: "addActiveDeal";
 }
 
+interface RemoveStoredDeal {
+  feId: string;
+  type: "removeStoredDeal";
+}
+
 export type SectionsAction =
   | { type: "setState"; sections: StateSections }
   | AddChildAction
@@ -90,6 +96,7 @@ export type SectionsAction =
   | InitializeSaveAttempts
   | FinishSaveAttempt
   | AddActiveDeal
+  | RemoveStoredDeal
   | ActivateDeal;
 
 type SectionActionName = SectionsAction["type"];
@@ -106,6 +113,7 @@ const reducerActionNameMap: Record<SectionActionName, 0> = {
   finishSave: 0,
   addActiveDeal: 0,
   activateDeal: 0,
+  removeStoredDeal: 0,
 };
 export const sectionActionNames = Obj.keys(reducerActionNameMap);
 export function isSectionActionName(value: any): value is SectionActionName {
@@ -165,6 +173,12 @@ export const sectionsReducer: React.Reducer<StateSections, SectionsAction> = (
       solverSections.addActiveDeal();
       break;
     }
+
+    case "removeStoredDeal": {
+      solverSections.removeStoredDeal(action.feId);
+      break;
+    }
+
     case "addToStore": {
       solverSections.feStore.addToStore(action);
       break;

@@ -49,7 +49,7 @@ export function AccountPageDeal({
   const deal = useGetterSection({ sectionName: "deal", feId });
   const goToActiveDeal = useGoToPage("activeDeal");
   const copyDeal = useActionWithProps("copyInStore", { storeName, feId });
-  const deleteDeal = useActionWithProps("removeFromStore", { storeName, feId });
+  const deleteDeal = useActionWithProps("removeStoredDeal", { feId });
   const activateDeal = useActionWithProps("activateDeal", { feId });
 
   const dateNumber = deal.valueNext("dateTimeFirstSaved");
