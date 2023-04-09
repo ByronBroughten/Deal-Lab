@@ -30,13 +30,14 @@ export const materialDraftEditor = (label?: React.ReactNode) =>
       display: "inline-block",
       whiteSpace: "nowrap",
       backgroundColor: themeColors.light,
-      pt: unitSizes.s1,
+      pt: 0,
       pb: 0,
       px: unitSizes.s2,
       borderRadius: unitSizes.muiBr0,
     },
     "& .DraftEditor-root": {
       display: "inline-block",
+      fontSize: "18px",
     },
     "& .public-DraftEditor-content": {
       display: "inline-block",
@@ -51,7 +52,7 @@ export const materialDraftEditor = (label?: React.ReactNode) =>
     ...(label && {
       "& .MuiFilledInput-root": {
         px: unitSizes.s2,
-        pt: "1.2rem",
+        pt: "20px",
         pb: "2px",
       },
       "& .MuiFormLabel-root": {
@@ -61,12 +62,13 @@ export const materialDraftEditor = (label?: React.ReactNode) =>
       "& .MuiFormLabel-root.Mui-focused": {
         color: themeColors.primary.main,
       },
-      // label location without text
+      // label location when editor is empty
       "& .MuiInputLabel-filled": {
-        transform: `translate(${unitSizes.s2}, 17px) scale(1)`,
+        transform: `translate(${unitSizes.s2}, 20px) scale(1)`,
       },
+      // when editor is not empty
       "& .MuiInputLabel-filled.MuiInputLabel-shrink": {
-        transform: `translate(${unitSizes.s2}, ${unitSizes.s2}) scale(0.85)`,
+        transform: `translate(${unitSizes.s2}, 0) scale(1)`,
       },
     }),
   });
