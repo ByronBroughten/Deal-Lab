@@ -6,9 +6,7 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-// - What happens when you delete the active deal?
 
-// - CapEx "Custom Amount" editor doesn't show up
 // - Increase font and input label sizes
 // - Upfront Mortgage insurance shouldn't be required to be entered—placeholder
 //  "0" perhaps.

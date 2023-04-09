@@ -51,6 +51,13 @@ export function CapExValue({ feId }: { feId: string }) {
           const value = e.target.value as string;
           capExValue.varb("valueSourceName").updateValue(value);
         },
+        editorProps:
+          valueSourceName === "valueEditor"
+            ? {
+                feVarbInfo: capExValue.varbInfo("valueDollarsEditor"),
+                editorType: "equation",
+              }
+            : undefined,
         menuItems,
         equalsValue,
         itemizedModalTitle: (
