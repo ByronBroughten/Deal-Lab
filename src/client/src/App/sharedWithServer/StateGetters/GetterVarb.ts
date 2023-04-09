@@ -1,4 +1,4 @@
-import { cloneDeep, round } from "lodash";
+import { cloneDeep } from "lodash";
 import { DisplayOverrideSwitches } from "../SectionsMeta/displaySectionVarbs/displayVarb";
 import { FeInfoS, FeVarbInfo } from "../SectionsMeta/SectionInfo/FeInfo";
 import {
@@ -103,10 +103,10 @@ export class GetterVarb<
       }
     }
   }
-  get displayNumber(): NumberOrQ {
+  get displayNumber(): string {
     const num = this.numberOrQuestionMark;
     if (typeof num === "number") {
-      return round(num, this.meta.displayRound);
+      return this.meta.roundForDisplay(num);
     } else return num;
   }
   get numberOrQuestionMark(): NumberOrQ {
@@ -278,7 +278,7 @@ export class GetterVarb<
   }
   get displayValue(): string {
     if (this.hasValueType("numObj")) {
-      return `${this.displayNumber}`;
+      return this.displayNumber;
     } else return `${this.value()}`;
   }
   displayVarb({ startAdornment, endAdornment }: Partial<StrAdornments> = {}) {

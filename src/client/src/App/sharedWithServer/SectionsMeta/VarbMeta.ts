@@ -1,4 +1,4 @@
-import { cloneDeep } from "lodash";
+import { cloneDeep, round } from "lodash";
 import { sectionsMeta } from "../SectionsMeta";
 import { GeneralBaseVarb } from "./allBaseSectionVarbs/baseVarbs";
 import { getDisplayVarb } from "./allDisplaySectionVarbs";
@@ -114,6 +114,16 @@ export class VarbMeta<SN extends SectionName> {
   }
   get calcRound(): number {
     return this.displayVarb.calculateRound;
+  }
+  roundForDisplay(value: number): string {
+    let num = `${round(value, this.displayRound)}`;
+    if (this.baseVarb.valueUnit === "dollars" && num.includes(".")) {
+      const [_beforeDecimal, afterDecimal] = num.split(".");
+      if (afterDecimal.length === 1) {
+        num += "0";
+      }
+    }
+    return num;
   }
   get displayRound(): number {
     return this.displayVarb.displayRound;
