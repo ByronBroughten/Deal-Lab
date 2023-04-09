@@ -123,6 +123,7 @@ const Styled = styled.div<{ $themeName: ThemeName }>`
     color: ${theme.primaryNext};
   }
   .LabeledVarb-output {
+    margin-top: ${theme.s2};
     color: ${theme.dark};
   }
 `;

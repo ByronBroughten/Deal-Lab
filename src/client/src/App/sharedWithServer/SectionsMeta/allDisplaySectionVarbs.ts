@@ -63,11 +63,11 @@ export const allDisplaySectionVarbs = {
       monthly: { displayNameWithVariant: "Home insurance monthly" },
       yearly: { displayNameWithVariant: "Home insurance yearly" },
     }),
-    ...editorDisplayGroup("ongoingInput", "targetRent", "Rent", {
-      monthly: { displayNameWithVariant: "Rent monthly" },
-      yearly: { displayNameWithVariant: "Rent yearly" },
+    ...editorDisplayGroup("ongoingInput", "targetRent", "Rental income", {
+      monthly: { displayNameWithVariant: "Rental income monthly" },
+      yearly: { displayNameWithVariant: "Rental income yearly" },
     }),
-    ...ongoingDollars("expenses", "Expenses"),
+    ...ongoingDollars("expenses", "Ongoing expenses"),
     ...ongoingDollars("miscRevenue", "Misc revenue"),
     ...ongoingDollars("revenue", "Revenue"),
   }),
@@ -76,13 +76,21 @@ export const allDisplaySectionVarbs = {
     ...ongoingInputDollars("targetRent", "Rent"),
   }),
   ...displaySectionVarbsProp("calculatedVarbs", {
-    ...group("ongoing", "loanPayment", "Loan Payments", {
+    ...group("ongoing", "loanPayment", "Loan payments", {
       monthly: { displayNameWithVariant: "Monthly loan payments" },
       yearly: { displayNameWithVariant: "Yearly loan payments" },
     }),
+    downPaymentDollars: varb("Down payment"),
+    ...group("ongoing", "loanExpenses", "Ongoing expenses", {
+      monthly: { displayNameWithSection: "Ongoing loan expenses" },
+      yearly: { displayNameWithSection: "Ongoing loan expenses" },
+    }),
+    loanUpfrontExpenses: varb("Upfront expenses", {
+      displayNameWithSection: "Upfront loaneExpenses",
+    }),
     loanTotalDollars: varb("Loan total"),
-    onePercentPrice: varb("1% Purchase Price"),
-    twoPercentPrice: varb("2% Purchase Price"),
+    onePercentPrice: varb("1% Purchase price"),
+    twoPercentPrice: varb("2% Purchase price"),
     ...group("ongoing", "fivePercentRent", "5% Rent", {
       monthly: { displayNameWithVariant: "5% Rent monthly" },
       yearly: { displayNameWithVariant: "5% Rent yearly" },
@@ -137,7 +145,7 @@ export const allDisplaySectionVarbs = {
     }),
     vacancyLossPercent: varb("Vacancy loss percent of rent"),
     upfrontExpenses: varb("Upfront expenses"),
-    ...group("ongoing", "expenses", "Expenses", {
+    ...group("ongoing", "expenses", "Ongoing expenses", {
       targets: { displayNameWithSection: "Management expenses" },
       monthly: {
         displayNameWithVariant: "Expenses monthly",

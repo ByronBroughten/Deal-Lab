@@ -29,6 +29,6 @@ export const StyledLabeledVarbRow = styled.div`
 
   .LabeledVarb-label,
   .LabeledVarb-output {
-    font-size: 1.3rem;
+    font-size: 18px;
   }
 `;

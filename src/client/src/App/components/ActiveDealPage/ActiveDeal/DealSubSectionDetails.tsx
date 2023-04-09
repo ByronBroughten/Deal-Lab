@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { nativeTheme } from "../../../theme/nativeTheme";
 import theme from "../../../theme/Theme";
 import { LabeledVarbProps } from "../../appWide/LabeledVarb";
 import { LabeledVarbRow } from "../../appWide/LabeledVarbRow";
@@ -19,7 +18,6 @@ export function DealSubSectionDetails({
       <LabeledVarbRow
         {...{
           varbPropArr: detailVarbPropArr,
-          className: "MainSubSection-labeledVarbRow",
         }}
       />
     </Styled>
@@ -29,13 +27,6 @@ export function DealSubSectionDetails({
 const Styled = styled.div`
   .MainSubSection-displayNameDiv {
     font-size: ${theme.smallTitleSize};
-  }
-  .MainSubSection-labeledVarbRow {
-    margin-top: ${nativeTheme.s25};
-    margin-left: -${nativeTheme.s25};
-    .LabeledVarb-label,
-    .LabeledVarb-output {
-      font-size: ${theme.infoSize};
-    }
+    margin-bottom: ${theme.s25};
   }
 `;

@@ -98,10 +98,10 @@ const Styled = styled.div`
     border-right: none;
     border-top-left-radius: ${theme.br0};
     .MuiSelect-root {
-      padding: 9px 32px 9px 12px;
+      padding: 10px 32px 10px 12px;
     }
     .MuiInputBase-root {
-      height: 39px;
+      height: 40px;
       border-top-right-radius: 0;
     }
   }
@@ -116,7 +116,7 @@ const Styled = styled.div`
         border-top-left-radius: 0;
       }
       .MuiInputBase-root {
-        min-width: 40px;
+        min-width: 50px;
         border-top-left-radius: 0;
         padding-top: 0.5rem;
         padding-bottom: 0.5rem;

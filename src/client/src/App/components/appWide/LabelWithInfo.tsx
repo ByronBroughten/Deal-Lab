@@ -26,7 +26,7 @@ export function LabelWithInfo({
         onClick={openInfo}
         middle={
           <BiHelpCircle
-            size={20}
+            size={22}
             style={{
               marginLeft: nativeTheme.s2,
               color: nativeTheme.complementary.main,
@@ -49,9 +49,9 @@ export function LabelWithInfo({
   );
 }
 
-const Styled = styled.span`
+const Styled = styled.div`
   display: flex;
-  align-items: flex-end;
+  align-items: center;
 
   .LabelWithInfo-infoModal {
     .ModalSection-mainSection {

@@ -7,10 +7,11 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
-// - Increase font and input label sizes
+// Property completion status was showing incomplete until I added and removed a unit
+
+// - "Ongoing Expenses" should be a label in the property label output
 // - Upfront Mortgage insurance shouldn't be required to be entered—placeholder
 //  "0" perhaps.
-// - "Ongoing Expenses" should be a label in the property label output
 
 // - Implement a default deal title
 //   "custom title" & "default title" toggle or something

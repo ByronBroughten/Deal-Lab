@@ -41,8 +41,8 @@ function getPropertyProps(property: GetterSection<"property">): SectionProps {
     displayName: property.valueNext("displayName").mainText,
     detailVarbPropArr: property.varbInfoArr([
       "targetRentYearly",
-      "expensesYearly",
       "upfrontExpenses",
+      "expensesYearly",
     ] as const),
   };
 }
@@ -67,9 +67,11 @@ function getFinancingProps(
     sectionTitle: "Financing",
     displayName,
     detailVarbPropArr: calculatedFocal.varbInfoArr([
-      "loanPaymentMonthly",
+      "downPaymentDollars",
       "loanTotalDollars",
-      // "downPayment"
+      "loanPaymentMonthly",
+      "loanUpfrontExpenses",
+      "loanExpensesYearly",
     ] as const),
   };
 }
@@ -78,7 +80,10 @@ function getMgmtProps(mgmt: GetterSection<"mgmt">): SectionProps {
   return {
     sectionTitle: "Management",
     displayName: mgmt.valueNext("displayName").mainText,
-    detailVarbPropArr: mgmt.varbInfoArr(["expensesYearly"] as const),
+    detailVarbPropArr: mgmt.varbInfoArr([
+      "upfrontExpenses",
+      "expensesYearly",
+    ] as const),
   };
 }
 
