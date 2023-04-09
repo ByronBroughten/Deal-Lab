@@ -22,7 +22,7 @@ export function NavUserMenu() {
   return (
     <Styled
       {...{ $isFullPlan: userIsPro }}
-      btnIcon={<BiUserCircle size={28} />}
+      btnIcon={<BiUserCircle size={32} />}
       dropDirection={"left"}
       doCloseViewToggle={doCloseMenuToggle}
     >

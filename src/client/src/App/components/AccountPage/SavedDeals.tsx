@@ -79,7 +79,7 @@ export function AccountPageDeals() {
             >
               <BigStringEditor
                 {...{
-                  placeholder: "Filter by deal title",
+                  placeholder: "Filter by title",
                   feVarbInfo: dealMenu.varbInfo("dealNameFilter"),
                 }}
               />

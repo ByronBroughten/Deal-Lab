@@ -6,15 +6,12 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-
-// Property completion status was showing incomplete until I added and removed a unit
-
-// - "Ongoing Expenses" should be a label in the property label output
-// - Upfront Mortgage insurance shouldn't be required to be entered—placeholder
-//  "0" perhaps.
-
 // - Implement a default deal title
 //   "custom title" & "default title" toggle or something
+
+// - Property completion status was showing incomplete until I added and removed a unit
+// - Upfront Mortgage insurance shouldn't be required to be entered—placeholder
+//  "0" perhaps.
 
 // - Add FixNFlip
 //   - Add ARV
@@ -26,6 +23,8 @@ AppRegistry.runApplication("App", {
 //   - Contractor management costs for mgmt?
 
 // - Mark incomplete deals in Saved Deals as such
+
+// - Convert NavDropdown to
 
 // - Add empty dbChildIds to DbStore, to control the orders of components
 //   - They'll likely be pretty easy to update, later.

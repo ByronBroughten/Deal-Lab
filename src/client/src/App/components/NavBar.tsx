@@ -2,6 +2,7 @@ import { AppBar, Toolbar } from "@mui/material";
 import { rem } from "polished";
 import { BsHouse } from "react-icons/bs";
 import styled from "styled-components";
+import { nativeTheme } from "../theme/nativeTheme";
 import theme from "../theme/Theme";
 import { useGoToPage } from "./appWide/customHooks/useGoToPage";
 import { SaveStatusIndicator } from "./appWide/SaveStatusIndicator";
@@ -98,12 +99,22 @@ const Styled = styled(AppBar)`
 
   .NavBar-signInUpBtn {
   }
+  .NavBar-upgradeToProDropdown {
+    .NavDropDown-navBtn {
+      :hover {
+        .NavBar-GetProDropdownIcon {
+          color: ${nativeTheme.light};
+        }
+        .NavBar-ProText {
+          color: ${nativeTheme.light};
+        }
+      }
+    }
+  }
+
   .NavBar-GetProDropdownIcon {
     margin-left: ${rem("4px")};
     font-size: ${rem("23px")};
-  }
-
-  .NavBar-GetProDropdownText {
-    margin-left: ${theme.s2};
+    color: ${nativeTheme.notice.dark};
   }
 `;

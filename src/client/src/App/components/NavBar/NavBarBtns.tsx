@@ -1,7 +1,9 @@
+import { Box } from "@mui/material";
 import { BsArrowUpCircle } from "react-icons/bs";
 import { View } from "react-native";
 import { useUserSubscription } from "../../modules/customHooks/useSubscriptions";
 import { useUserDataActor } from "../../modules/SectionActors/UserDataActor";
+import { nativeTheme } from "../../theme/nativeTheme";
 import { NavBtn } from "./NavBtn";
 import { NavDropDown } from "./NavDropDown";
 import { NavUserMenu } from "./NavUserMenu";
@@ -28,12 +30,21 @@ export function NavBarBtns() {
     basicUser: () => (
       <>
         <NavDropDown
-          className="NavBar-GetProDropdown"
+          className="NavBar-upgradeToProDropdown"
+          btnIcon={
+            <BsArrowUpCircle size={25} className="NavBar-GetProDropdownIcon" />
+          }
           btnText={
-            <>
-              <BsArrowUpCircle className="NavBar-GetProDropdownIcon" />
-              <span className="NavBar-GetProDropdownText">Pro</span>
-            </>
+            <Box
+              className="NavBar-ProText"
+              sx={{
+                color: nativeTheme.notice.dark,
+                fontSize: 20,
+                ml: nativeTheme.s2,
+              }}
+            >
+              Pro
+            </Box>
           }
         >
           <UpgradeUserToProPanel />

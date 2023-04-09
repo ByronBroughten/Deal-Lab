@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import useOnOutsideClickRef from "../../modules/customHooks/useOnOutsideClickRef";
 import { useToggleView } from "../../modules/customHooks/useToggleView";
+import { nativeTheme } from "../../theme/nativeTheme";
 import theme from "../../theme/Theme";
 import { StandardProps } from "../general/StandardProps";
 import { NavBtn } from "./NavBtn";
@@ -41,8 +42,9 @@ export function NavDropDown({
       $dropDirection={dropDirection}
     >
       <NavBtn
-        onClick={toggleView}
         className="NavDropDown-navBtn"
+        sx={{ ml: nativeTheme.s35 }}
+        onClick={toggleView}
         $isactive={viewIsOpen}
         text={btnText}
         icon={btnIcon}
