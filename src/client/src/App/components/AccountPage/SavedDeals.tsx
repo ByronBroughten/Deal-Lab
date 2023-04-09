@@ -19,11 +19,19 @@ function useFilteredDeals() {
   );
 }
 
+function useFilteredSortedDeals() {
+  const deals = useFilteredDeals();
+  return deals.sort(
+    (a, b) =>
+      b.valueNext("dateTimeFirstSaved") - a.valueNext("dateTimeFirstSaved")
+  );
+}
+
 export const accountPageElementMargin = nativeTheme.s3;
 export function AccountPageDeals() {
   const main = useGetterSectionOnlyOne("main");
   const dealMenu = main.onlyChild("mainDealMenu");
-  const deals = useFilteredDeals();
+  const deals = useFilteredSortedDeals();
 
   const dataStatus = useUserDataStatus();
   const loading = dataStatus === "loading";

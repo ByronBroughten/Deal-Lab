@@ -29,4 +29,16 @@ export const timeS = {
   isTimestamp(value: any): value is number {
     return typeof value === "number";
   },
+  makeDateTimeFirstLastSaved(): DateTimeSavedProps {
+    const now = this.now();
+    return {
+      dateTimeFirstSaved: now,
+      dateTimeLastSaved: now,
+    };
+  },
 } as const;
+
+type DateTimeSavedProps = {
+  dateTimeFirstSaved: number;
+  dateTimeLastSaved: number;
+};

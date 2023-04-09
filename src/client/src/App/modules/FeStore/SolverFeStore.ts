@@ -65,6 +65,7 @@ export class SolverFeStore extends SolverSectionBase<"feStore"> {
     const { storeName, feId } = props;
 
     this.addToStore({ storeName: storeName });
+
     const addedSection = this.solver.youngestChild(storeName);
 
     const toCopy = this.getterFeStore.get.child({
@@ -85,7 +86,8 @@ export class SolverFeStore extends SolverSectionBase<"feStore"> {
     });
 
     const clonePack = clone.packMaker.makeSectionPack();
-    addedSection.loadSelfAndSolve(clonePack);
+    addedSection.basicSolvePrepper.loadSelfSectionPack(clonePack);
+    addedSection.updateValuesAndSolve(timeS.makeDateTimeFirstLastSaved());
   }
   addToStore({ storeName, options }: AddToStoreProps, doSolve: boolean = true) {
     const storedCount = this.get.childCount(storeName);
