@@ -68,7 +68,6 @@ export class SolverSections extends SolverSectionsBase {
       GetterVarb.varbIdToVarbInfo(stringInfo)
     );
   }
-
   private getDagEdgesAndLoneVarbs(outVarbMap: OutVarbMap) {
     const edges: [string, string][] = [];
     const loneVarbs = Object.keys(outVarbMap).filter(
@@ -83,7 +82,6 @@ export class SolverSections extends SolverSectionsBase {
     }
     return { edges, loneVarbs };
   }
-
   private getOutVarbMap(): OutVarbMap {
     const outVarbMap: OutVarbMap = {};
     let varbIdsToSolveFor = [...this.varbIdsToSolveFor];

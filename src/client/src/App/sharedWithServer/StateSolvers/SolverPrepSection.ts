@@ -63,6 +63,12 @@ export class SolverPrepSection<
     const feInfo = this.get.childInfoToFe(childInfo);
     return this.solverPrepSection(feInfo);
   }
+  onlyChild<CN extends ChildName<SN>>(
+    childName: CN
+  ): SolverPrepSection<ChildSectionName<SN, CN>> {
+    const { feInfo } = this.get.onlyChild(childName);
+    return this.solverPrepSection(feInfo);
+  }
   children<CN extends ChildName<SN>>(
     childName: CN
   ): SolverPrepSection<ChildSectionName<SN, CN>>[] {

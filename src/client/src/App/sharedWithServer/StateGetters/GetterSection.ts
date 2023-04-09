@@ -30,6 +30,7 @@ import {
   SelfChildName,
   StepSiblingName,
 } from "../SectionsMeta/sectionChildrenDerived/ParentName";
+import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
 import { SectionValuesGeneric } from "../SectionsMeta/sectionChildrenDerived/SectionPack/RawSection";
 import {
   AbsolutePathNodeDbIdInfo,
@@ -423,7 +424,9 @@ export class GetterSection<
       return infos.concat(feIds.map((feId) => ({ sectionName, feId })));
     }, [] as FeSectionInfo<any>[]);
   }
-
+  makeSectionPack(): SectionPack<SN> {
+    return this.packMaker.makeSectionPack();
+  }
   get meta(): SectionMeta<SN> {
     return this.sections.meta.section(this.sectionName);
   }

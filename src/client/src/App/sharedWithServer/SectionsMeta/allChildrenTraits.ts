@@ -136,6 +136,9 @@ export const allChildrenTraits = checkAllChildrenTraits({
     }),
   }),
   feStore: childrenTraits("feStore", {
+    outputSection: childTraits({
+      sectionContextName: "activeDealSystem",
+    }),
     dealMain: childTraits({
       sectionContextSpecifier: indexesForSpecifiers.deal,
     }),

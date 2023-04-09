@@ -89,18 +89,30 @@ export class SolverPrepSections extends SolverSectionsBase {
   }
   private updateActiveSystems(dealId: string) {
     const main = this.oneAndOnly("main");
-    const systems = main.children("activeDealSystem");
-    for (const system of systems) {
-      system.removeSelf();
-    }
-    main.addChild("activeDealSystem", {
+    const contextOptions = {
       contextPathIdxSpecifier: {
         [activeDealPathIdx]: {
           feId: dealId,
           selfChildName: "dealMain",
         },
       },
-    });
+    } as const;
+
+    const systems = main.children("activeDealSystem");
+    for (const system of systems) {
+      system.removeSelf();
+    }
+    main.addChild("activeDealSystem", contextOptions);
+
+    const feStore = this.oneAndOnly("feStore");
+    const outputSection = feStore.onlyChild("outputSection");
+    const outputPack = outputSection.get.makeSectionPack();
+    outputSection.removeSelf();
+    const nextOutputSection = feStore.addAndGetChild(
+      "outputSection",
+      contextOptions
+    );
+    nextOutputSection.loadSelfSectionPack(outputPack);
   }
   private deactivateDeals(): void {
     const activeDeals = this.getActiveDeals();

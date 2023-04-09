@@ -6,6 +6,13 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
+// - What happens when you delete the active deal?
+
+// - CapEx "Custom Amount" editor doesn't show up
+// - Increase font and input label sizes
+// - Upfront Mortgage insurance shouldn't be required to be entered—placeholder
+//  "0" perhaps.
+// - "Ongoing Expenses" should be a label in the property label output
 
 // - Implement a default deal title
 //   "custom title" & "default title" toggle or something
