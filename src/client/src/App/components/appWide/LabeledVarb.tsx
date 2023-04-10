@@ -5,6 +5,7 @@ import {
 } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { useGetterSection } from "../../sharedWithServer/stateClassHooks/useGetterSection";
 import { useGetterVarb } from "../../sharedWithServer/stateClassHooks/useGetterVarb";
+import { nativeTheme } from "../../theme/nativeTheme";
 import theme, { ThemeName } from "../../theme/Theme";
 
 interface LabeledVarbNotFoundProps {
@@ -103,7 +104,7 @@ export function StyledLabeledVarb({
   );
 }
 
-const Styled = styled.div<{ $themeName: ThemeName }>`
+const Styled = styled.div`
   position: relative;
   z-index: 0;
 
@@ -113,14 +114,15 @@ const Styled = styled.div<{ $themeName: ThemeName }>`
 
   box-shadow: ${theme.boxShadow1};
   background: transparent;
-  border: solid 1px ${theme.primaryNext};
+
+  border: solid 1px ${nativeTheme["gray-300"]};
   box-shadow: none;
 
   border-radius: ${theme.br0};
   padding: ${theme.s3};
 
   .LabeledVarb-label {
-    color: ${theme.primaryNext};
+    color: ${nativeTheme.darkBlue.main};
   }
   .LabeledVarb-output {
     margin-top: ${theme.s2};

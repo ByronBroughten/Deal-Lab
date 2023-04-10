@@ -252,10 +252,15 @@ export const baseVarbsS = {
       displayName: baseVarb("stringObj"),
     } as const;
   },
+  get displayNameEditor() {
+    return {
+      displayNameEditor: baseVarb("string"),
+    } as const;
+  },
   get displayNameAndEditor() {
     return {
       ...this.displayName,
-      displayNameEditor: baseVarb("string"),
+      ...this.displayNameEditor,
     } as const;
   },
   get savableSection() {

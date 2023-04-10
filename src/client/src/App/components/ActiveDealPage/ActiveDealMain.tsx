@@ -36,7 +36,7 @@ export function ActiveDealMain() {
           >
             <InputLabel
               sx={{
-                fontSize: nativeTheme.fs20,
+                fontSize: nativeTheme.fs22,
                 color: nativeTheme.primary.main,
               }}
             >
@@ -54,6 +54,8 @@ export function ActiveDealMain() {
             </Select>
           </FormControl>
         </Row>
+        {/* Here is where the title goes
+        Is it going to be  */}
         <View>
           <DealSubSectionClosed {...dealElementProps} sectionName="property" />
           <DealSubSectionClosed {...dealElementProps} sectionName="financing" />

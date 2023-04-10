@@ -6,12 +6,18 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
+
+// Update the buttons to copy the better AccountPage ones?
+// - Save message:
+//   - You already have a property called "Example Property 3". Would you like
+//     to overwrite it? "Yes", "Cancel"
+// - Saved properties >
+
 // - Implement a default deal title
 //   "custom title" & "default title" toggle or something
 
-// - Property completion status was showing incomplete until I added and removed a unit
-// - Upfront Mortgage insurance shouldn't be required to be entered—placeholder
-//  "0" perhaps.
+// - Make the variables page not show an equal sign with impure variables
+// - Do the same with all the component editor pages
 
 // - Add FixNFlip
 //   - Add ARV
@@ -24,7 +30,7 @@ AppRegistry.runApplication("App", {
 
 // - Mark incomplete deals in Saved Deals as such
 
-// - Convert NavDropdown to
+// - Convert messy NavDropdown component to sx
 
 // - Add empty dbChildIds to DbStore, to control the orders of components
 //   - They'll likely be pretty easy to update, later.
@@ -75,6 +81,9 @@ AppRegistry.runApplication("App", {
 //    missing sections are added but converted to null
 //  - When self-loading a sectionPack, don't replace
 //    the sections of self that the sectionPack has a null for
+
+// - It would be nice to allow for fields to have placeholders, in which
+//   case the styling for their labels would be different
 
 // Eventually: Restrict editing to the *save limit* most recent sections when the
 // user has a basicPlan

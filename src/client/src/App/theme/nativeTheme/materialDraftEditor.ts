@@ -4,9 +4,13 @@ import { themeColors } from "./themeColors";
 import { themeStandards } from "./themeStandards";
 import { unitSizes } from "./unitSizes";
 
+const fontSize = 18;
 export const materialDraftEditor = (label?: React.ReactNode) =>
   sxProps({
     display: "inline-block",
+    "& .NumObjEntityEditor-equalsAdornment": {
+      fontSize,
+    },
     "& .MaterialDraftEditor-wrapper": {
       display: "inline-block",
       borderTopLeftRadius: unitSizes.muiBr0,
@@ -37,7 +41,7 @@ export const materialDraftEditor = (label?: React.ReactNode) =>
     },
     "& .DraftEditor-root": {
       display: "inline-block",
-      fontSize: "18px",
+      fontSize,
     },
     "& .public-DraftEditor-content": {
       display: "inline-block",

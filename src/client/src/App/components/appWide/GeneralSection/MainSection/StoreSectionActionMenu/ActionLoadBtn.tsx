@@ -25,7 +25,7 @@ export function ActionLoadBtn<SN extends SectionNameByType<"hasIndexStore">>({
         renderDropdownBtn: (toggleDropdown, dropdownIsOpen) => (
           <StyledActionBtn
             key="load"
-            middle="Load"
+            middle="Load component"
             left={<BsCloudArrowDown size={26} />}
             onClick={toggleDropdown}
             className={`ActionLoadBtn-root ${className ?? ""}`}

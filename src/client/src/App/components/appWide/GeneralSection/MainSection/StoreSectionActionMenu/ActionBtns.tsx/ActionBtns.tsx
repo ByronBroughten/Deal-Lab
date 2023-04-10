@@ -46,7 +46,7 @@ export function useActionBtns<SN extends SectionNameByType<"hasIndexStore">>({
     get signInToSave() {
       return (
         <StyledActionBtn
-          middle={"Save"}
+          middle={"Save to components"}
           left={<AiOutlineSave size={23} />}
           onClick={() => toastNotice("To save, please login.")}
           className="ActionMenuButtons-signInToSave ActionMenuButtons-warn"
@@ -56,7 +56,7 @@ export function useActionBtns<SN extends SectionNameByType<"hasIndexStore">>({
     get save() {
       return (
         <StyledActionBtn
-          middle={"Save"}
+          middle={"Save as component"}
           left={<AiOutlineSave size={23} />}
           onClick={() => mainSection.saveSelfNew()}
           disabled={isGuest}

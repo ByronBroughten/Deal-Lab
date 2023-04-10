@@ -1,6 +1,5 @@
 import { VarbNameByValueName } from "../baseSectionsDerived/baseSectionValues";
 import { mixedInfoS } from "../SectionInfo/MixedSectionInfo";
-import { relVarbInfoS } from "../SectionInfo/RelVarbInfo";
 import { UpdateGroup } from "../updateSectionVarbs/switchUpdateVarbs";
 import { UpdateSectionVarbs } from "../updateSectionVarbs/updateSectionVarbs";
 import {
@@ -217,8 +216,9 @@ export function calculatedUpdateVarbs(): UpdateSectionVarbs<"calculatedVarbs"> {
           ...updateFnPropsS.varbPathArr("purchasePrice", "sqft"),
           updateFnPropS.pathName("propertyFocal", "taxesOngoingEditor"),
           updateFnPropS.pathName("propertyFocal", "homeInsOngoingEditor"),
-          updateFnPropS.pathName("unitFocal", "targetRentOngoingEditor"),
-          updateFnPropS.pathName("unitFocal", "numBedrooms"),
+          // Separate the unit stuff into its own completion status eventually?
+          // updateFnPropS.pathName("unitFocal", "targetRentOngoingEditor"),
+          // updateFnPropS.pathName("unitFocal", "numBedrooms"),
           updateFnPropS.pathName("capExCostFocal", "valueDollarsEditor", [
             overrideSwitch(
               mixedInfoS.pathNameVarb("capExCostFocal", "valueSourceName"),
@@ -344,16 +344,17 @@ export function calculatedUpdateVarbs(): UpdateSectionVarbs<"calculatedVarbs"> {
                   "interestRatePercentOngoingEditor"
                 ),
                 updateFnPropS.pathName("loanFocal", "loanTermSpanEditor"),
-                updateFnPropS.pathName(
-                  "loanFocal",
-                  "mortgageInsUpfrontEditor",
-                  [overrideSwitch(relVarbInfoS.local("hasMortgageIns"), true)]
-                ),
-                updateFnPropS.pathName(
-                  "loanFocal",
-                  "mortgageInsOngoingEditor",
-                  [overrideSwitch(relVarbInfoS.local("hasMortgageIns"), true)]
-                ),
+                // Ultimately optional
+                // updateFnPropS.pathName(
+                //   "loanFocal",
+                //   "mortgageInsUpfrontEditor",
+                //   [overrideSwitch(relVarbInfoS.local("hasMortgageIns"), true)]
+                // ),
+                // updateFnPropS.pathName(
+                //   "loanFocal",
+                //   "mortgageInsOngoingEditor",
+                //   [overrideSwitch(relVarbInfoS.local("hasMortgageIns"), true)]
+                // ),
                 updateFnPropS.pathName(
                   "closingCostFocal",
                   "valueDollarsEditor",
