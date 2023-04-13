@@ -1,3 +1,4 @@
+import { makeDefaultDealDisplayName } from "../defaultMaker/makeDefaultDeal";
 import { VirtualVarbName } from "../SectionsMeta/baseSectionsDerived/baseVarbNames";
 import { PathInVarbInfo } from "../SectionsMeta/sectionChildrenDerived/RelInOutVarbInfo";
 import { RelVarbInfo } from "../SectionsMeta/SectionInfo/RelVarbInfo";
@@ -183,7 +184,18 @@ export class SolveValueVarb<
       if (allValid) return "allValid";
       else return "someInvalid";
     },
-
+    defaultDealDisplayName: (): StateValue<"stringObj"> => {
+      const { getterSection } = this;
+      if (getterSection.isOfSectionName("deal")) {
+        const mainText = makeDefaultDealDisplayName(getterSection);
+        return {
+          ...getterSection.valueNext("displayName"),
+          mainText,
+        };
+      } else {
+        throw new Error("This only works with deals.");
+      }
+    },
     manualUpdateOnly: (): StateValue => {
       return this.getterVarb.value();
     },
@@ -251,7 +263,7 @@ export class SolveValueVarb<
       );
       return stringObj(varb.value("stringObj").mainText);
     },
-    loadLocalString: (): StringObj => {
+    localStringToStringObj: (): StringObj => {
       const { updateFnProps } = this.inEntityVarb;
       const varb = this.getterSection.varbByFocalMixed(
         updateFnProps.localString as PathInVarbInfo

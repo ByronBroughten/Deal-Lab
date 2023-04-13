@@ -35,7 +35,7 @@ const updateFnNames = checkUpdateFnNames({
   ] as const,
   stringObj: [
     ...commonUpdateFnNames,
-    "loadLocalString",
+    "localStringToStringObj",
     "loadMainTextByVarbInfo",
     "manualUpdateOnly",
     "loadDisplayName",
@@ -44,6 +44,7 @@ const updateFnNames = checkUpdateFnNames({
     "loadEndAdornment",
     "emptyStringObj",
     "financingDisplayName",
+    "defaultDealDisplayName",
   ] as const,
   number: [...commonUpdateFnNames, "numberOne"] as const,
   boolean: [...commonUpdateFnNames, "varbExists"] as const,

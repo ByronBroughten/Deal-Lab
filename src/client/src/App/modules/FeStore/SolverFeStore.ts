@@ -78,12 +78,20 @@ export class SolverFeStore extends SolverSectionBase<"feStore"> {
     clone.updater.newDbId();
 
     const name = clone.get.valueNext("displayName");
-    clone.updateValuesAndSolve({
+    const mainText = "Copy of " + name.mainText;
+    clone.basicSolvePrepper.updateValues({
       displayName: {
         ...name,
-        mainText: "Copy of " + name.mainText,
+        mainText,
       },
     });
+
+    if (clone.isOfSectionName("deal")) {
+      (clone as SolverSection<"deal">).basicSolvePrepper.updateValues({
+        displayNameEditor: mainText,
+        displayNameSource: "displayNameEditor",
+      });
+    }
 
     const clonePack = clone.packMaker.makeSectionPack();
     addedSection.basicSolvePrepper.loadSelfSectionPack(clonePack);

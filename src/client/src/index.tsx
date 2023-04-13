@@ -6,15 +6,21 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
+// - Adding a second loan isn't working
+
+// - Implement a default deal title
+//   "custom title" & "default title" toggle or something
+
+// - For every e.target.value, get rid of the setterVarb involved
+
+// - How should I handle ViewOutputs?
+// - Make "ViewOutputs" button be the whole width and height
 
 // Update the buttons to copy the better AccountPage ones?
 // - Save message:
 //   - You already have a property called "Example Property 3". Would you like
 //     to overwrite it? "Yes", "Cancel"
 // - Saved properties >
-
-// - Implement a default deal title
-//   "custom title" & "default title" toggle or something
 
 // - Make the variables page not show an equal sign with impure variables
 // - Do the same with all the component editor pages

@@ -103,6 +103,11 @@ export const updateBasicsS = {
   manualUpdateOnly() {
     return updateBasicsNext("manualUpdateOnly");
   },
+  localStringToStringObj(varbName: VarbNameWide): UpdateBasics<"stringObj"> {
+    return updateBasics("localStringToStringObj", {
+      localString: updateFnPropS.local(varbName),
+    });
+  },
   loadFromLocal(varbName: VarbNameWide) {
     return updateBasicsNext("loadSolvableTextByVarbInfo", {
       varbInfo: updateFnPropS.local(varbName),

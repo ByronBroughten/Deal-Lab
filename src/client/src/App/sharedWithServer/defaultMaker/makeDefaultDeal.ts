@@ -5,7 +5,7 @@ import { makeDefaultLoanPack } from "./makeDefaultLoanPack";
 import { makeDefaultMgmtPack } from "./makeDefaultMgmtPack";
 import { makeDefaultProperty } from "./makeDefaultProperty";
 
-const dealSectionNames = ["property", "financing", "mgmt"] as const;
+export const dealSectionNames = ["property", "financing", "mgmt"] as const;
 type DealSectionName = typeof dealSectionNames[number];
 
 export function makeDefaultDealDisplayName(
@@ -22,6 +22,7 @@ export function makeDefaultDealPack(): SectionPack<"deal"> {
   const deal = PackBuilderSection.initAsOmniChild("deal");
   deal.updateValues({
     dealMode: "buyAndHold",
+    displayNameSource: "defaultDisplayName",
   });
   const financing = deal.addAndGetChild("financing");
   financing.loadChild({

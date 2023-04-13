@@ -4,13 +4,38 @@ import {
   updateVarb,
   updateVarbS,
 } from "../updateSectionVarbs/updateVarb";
+import {
+  updateBasics,
+  updateBasicsS,
+} from "../updateSectionVarbs/updateVarb/UpdateBasics";
 import { updateFnPropS } from "../updateSectionVarbs/updateVarb/UpdateFnProps";
+import {
+  overrideSwitchS,
+  updateOverride,
+} from "../updateSectionVarbs/updateVarb/UpdateOverrides";
 import { updateVarbsS } from "../updateSectionVarbs/updateVarbs";
 
-export function dealRelVarbs(): UpdateSectionVarbs<"deal"> {
+export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
   return {
     ...updateVarbsS._typeUniformity,
     ...updateVarbsS.savableSection,
+    ...updateVarbsS.displayNameAndEditor,
+    displayName: updateVarb("stringObj", {
+      updateFnName: "throwIfReached",
+      updateOverrides: [
+        updateOverride(
+          [overrideSwitchS.local("displayNameSource", "displayNameEditor")],
+          updateBasicsS.localStringToStringObj("displayNameEditor")
+        ),
+        updateOverride(
+          [overrideSwitchS.local("displayNameSource", "defaultDisplayName")],
+          updateBasics("defaultDealDisplayName")
+        ),
+      ],
+    }),
+    displayNameSource: updateVarb("dealDisplayNameSource", {
+      initValue: "defaultDisplayName",
+    }),
     dealMode: updateVarb("dealMode", { initValue: "buyAndHold" }),
     totalInvestment: updateVarbS.leftRightPropFn(
       "simpleSubtract",

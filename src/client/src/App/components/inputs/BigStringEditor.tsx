@@ -1,6 +1,8 @@
+import { SxProps } from "@mui/material";
 import { FeVarbInfo } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { GetterVarb } from "../../sharedWithServer/StateGetters/GetterVarb";
 import { nativeTheme } from "../../theme/nativeTheme";
+import { arrSx } from "../../utils/mui";
 import { MaterialDraftEditor } from "./MaterialDraftEditor";
 import { useDraftInput } from "./useDraftInput";
 
@@ -9,6 +11,7 @@ interface Props {
   className?: string;
   label?: any;
   placeholder?: string;
+  sx?: SxProps;
 }
 
 export function BigStringEditor({
@@ -16,6 +19,7 @@ export function BigStringEditor({
   className,
   label,
   placeholder,
+  sx,
 }: Props) {
   const { editorState, setEditorState } = useDraftInput(feVarbInfo);
   return (
@@ -27,12 +31,15 @@ export function BigStringEditor({
         className: `BigStringEditor-root ${className ?? ""}`,
         id: GetterVarb.feVarbInfoToVarbId(feVarbInfo),
         placeholder,
-        sx: {
-          "& .DraftEditor-root": {
-            minWidth: 300,
-            py: nativeTheme.s2,
+        sx: [
+          {
+            "& .DraftEditor-root": {
+              minWidth: 300,
+              py: nativeTheme.s2,
+            },
           },
-        },
+          ...arrSx(sx),
+        ],
       }}
     />
   );

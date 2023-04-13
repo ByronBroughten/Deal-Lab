@@ -1,6 +1,6 @@
 import { timeS } from "../utils/timeS";
 import { calculatedUpdateVarbs } from "./allUpdateSectionVarbs/calculatedUpdateVarbs";
-import { dealRelVarbs } from "./allUpdateSectionVarbs/dealUpdateVarbs";
+import { dealUpdateVarbs } from "./allUpdateSectionVarbs/dealUpdateVarbs";
 import { downPaymentUpdateVarbs } from "./allUpdateSectionVarbs/downPaymentUpdateVarbs";
 import { financingUpdateVarbs } from "./allUpdateSectionVarbs/financingUpdateVarbs";
 import { loanBaseUpdateVarbs } from "./allUpdateSectionVarbs/loanBaseUpdateVarbs";
@@ -70,7 +70,7 @@ function makeAllUpdateSections() {
     ...updateSectionProp("mgmt", mgmtRelVarbs()),
     ...updateSectionProp("vacancyLossValue", vacancyLossUpdateVarbs()),
     ...updateSectionProp("mgmtBasePayValue", mgmtBasePayValueVarbs()),
-    ...updateSectionProp("deal", dealRelVarbs()),
+    ...updateSectionProp("deal", dealUpdateVarbs()),
     ...updateSectionProp("financing", financingUpdateVarbs()),
     ...updateSectionProp("property", propertyUpdateVarbs()),
     ...updateSectionProp("unit", {

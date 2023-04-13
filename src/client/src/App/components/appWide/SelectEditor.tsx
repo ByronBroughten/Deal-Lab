@@ -64,6 +64,8 @@ export function SelectEditor({
         </Select>
       </FormControl>
       {editorProps && (
+        // I want this to work with a string editor
+        // maybe a provide your own editor kinda deal
         <NumObjEntityEditor
           {...{
             className: "SelectEditor-editor",

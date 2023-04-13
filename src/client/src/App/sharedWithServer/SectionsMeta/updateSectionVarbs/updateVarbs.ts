@@ -59,7 +59,7 @@ export const updateVarbsS = {
     return {
       displayNameEditor: updateVarbS.displayNameEditor,
       displayName: updateVarb("stringObj", {
-        updateFnName: "loadLocalString",
+        updateFnName: "localStringToStringObj",
         updateFnProps: {
           localString: updateFnPropS.local("displayNameEditor"),
         },

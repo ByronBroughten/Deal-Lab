@@ -1,7 +1,9 @@
 import { FormControl, FormControlLabel, RadioGroup } from "@mui/material";
 import styled from "styled-components";
 import { StateValue } from "../../../sharedWithServer/SectionsMeta/values/StateValue";
-import { useSetterSection } from "../../../sharedWithServer/stateClassHooks/useSetterSection";
+import { useAction } from "../../../sharedWithServer/stateClassHooks/useAction";
+import { useGetterSection } from "../../../sharedWithServer/stateClassHooks/useGetterSection";
+import { nativeTheme } from "../../../theme/nativeTheme";
 import { FormSection } from "../../appWide/FormSection";
 import { SubSectionBtn } from "../../appWide/GeneralSection/GeneralSectionTitle/SubSectionBtn";
 import { SectionTitle } from "../../appWide/SectionTitle";
@@ -12,28 +14,30 @@ import { Loan } from "./Financing/Loan";
 type Props = {
   feId: string;
   dealMode: StateValue<"dealMode">;
-  backBtnProps: {
-    backToWhat: string;
-    onClick: () => void;
-  };
 };
 
-export function FinancingEditor({ feId, backBtnProps }: Props) {
-  const financing = useSetterSection({
+export function FinancingEditor({ feId }: Props) {
+  const addChild = useAction("addChild");
+  const updateValue = useAction("updateValue");
+
+  const financing = useGetterSection({
     sectionName: "financing",
     feId,
   });
 
+  const addLoan = () =>
+    addChild({
+      feInfo: financing.feInfo,
+      childName: "loan",
+    });
+
+  const loanIds = financing.childFeIds("loan");
   const financingModeVarb = financing.varb("financingMode");
   const financingMode = financing.value("financingMode");
-
   const values: Record<string, StateValue<"financingMode">> = {
     cashOnly: "cashOnly",
     useLoan: "useLoan",
   };
-
-  const loanIds = financing.childFeIds("loan");
-  const addLoan = () => financing.addChild("loan");
 
   return (
     <Styled>
@@ -51,7 +55,10 @@ export function FinancingEditor({ feId, backBtnProps }: Props) {
               name="financing-type-radio-buttons-group"
               value={financingMode}
               onChange={(e) =>
-                financingModeVarb.updateValue(e.currentTarget.value)
+                updateValue({
+                  ...financingModeVarb.feVarbInfo,
+                  value: e.currentTarget.value,
+                })
               }
             >
               <FormControlLabel
@@ -79,7 +86,7 @@ export function FinancingEditor({ feId, backBtnProps }: Props) {
                 ))}
               </div>
               <SubSectionBtn
-                className="Financing-addLoanBtn"
+                sx={{ mt: nativeTheme.s3 }}
                 onClick={addLoan}
                 text="+ Loan"
               />
@@ -123,8 +130,7 @@ const Styled = styled.div`
     align-items: center;
     padding-bottom: ${theme.s3};
   }
-  .Financing-marginLoan,
-  .Financing-addLoanBtn {
+  .Financing-marginLoan {
     margin-top: ${theme.s3};
   }
 

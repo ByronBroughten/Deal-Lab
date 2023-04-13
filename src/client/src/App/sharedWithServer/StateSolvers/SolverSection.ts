@@ -70,6 +70,11 @@ export class SolverSection<
       ...mainRaw,
     });
   }
+  isOfSectionName<S extends SectionName>(
+    ...sectionNames: S[]
+  ): this is SolverSection<S> {
+    return this.get.isOfSectionName(...sectionNames);
+  }
   get get(): GetterSection<SN> {
     return new GetterSection(this.getterSectionProps);
   }

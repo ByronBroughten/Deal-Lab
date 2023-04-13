@@ -9,13 +9,12 @@ interface Props extends StandardBtnProps {
   text: React.ReactNode;
   icon?: React.ReactElement;
 }
-export function MainSectionBtnWide({ sx, text, icon }: Props) {
+export function MainSectionBtnWide({ sx, text, icon, ...rest }: Props) {
   return (
     <Styled
       {...{
-        sx: {
-          ...sx,
-        },
+        ...rest,
+        sx,
         middle: text,
         right: icon,
       }}

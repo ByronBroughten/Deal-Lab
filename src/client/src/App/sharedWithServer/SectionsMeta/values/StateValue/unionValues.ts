@@ -2,6 +2,7 @@ import { ValidationError } from "../../../utils/Error";
 import { Obj } from "../../../utils/Obj";
 
 const valueSources = {
+  dealDisplayNameSource: ["displayNameEditor", "defaultDisplayName"],
   loanPurpose: ["purchasePrice", "upfrontRepairs", "purchasePriceAndRepairs"],
   loanAmountInputMode: ["downPayment", "loanAmount"],
   loanBaseValueSource: [

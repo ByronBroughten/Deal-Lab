@@ -1,7 +1,10 @@
-import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import { Box, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { View } from "react-native";
+import { StateValue } from "../../sharedWithServer/SectionsMeta/values/StateValue";
+import { useAction } from "../../sharedWithServer/stateClassHooks/useAction";
 import { BackBtnWrapper } from "../appWide/BackBtnWrapper";
 import { BackgroundContainer } from "../appWide/BackgroundContainter";
+import { BigStringEditor } from "../inputs/BigStringEditor";
 import { nativeTheme } from "./../../theme/nativeTheme";
 import { SectionTitle } from "./../appWide/SectionTitle";
 import { Row } from "./../general/Row";
@@ -18,7 +21,10 @@ const dealElementProps = {
 export function ActiveDealMain() {
   const { deal, calcVarbs, feStore } = useActiveDealPage();
   const completionStatus = calcVarbs.value("dealCompletionStatus");
-  const dealMode = deal.value("dealMode");
+  const dealMode = deal.valueNext("dealMode");
+  const titleSource = deal.valueNext("displayNameSource");
+  const updateValue = useAction("updateValue");
+
   return (
     <BackBtnWrapper {...{ to: "account", label: "Deal Menu" }}>
       <BackgroundContainer>
@@ -30,7 +36,6 @@ export function ActiveDealMain() {
           <SectionTitle sx={{ fontSize: nativeTheme.fs24 }} text="Deal" />
           <FormControl
             sx={{ marginLeft: nativeTheme.s4 }}
-            className="ActiveDeal-modeSelectorControl"
             size={"small"}
             variant="filled"
           >
@@ -40,22 +45,60 @@ export function ActiveDealMain() {
                 color: nativeTheme.primary.main,
               }}
             >
-              Mode
+              Deal type
             </InputLabel>
             <Select
-              className="ActiveDeal-modeSelector"
               labelId="ActiveDeal-modeSelector"
               id="demo-simple-select"
               value={dealMode}
-              label={"Mode"}
+              label={"Deal type"}
             >
               <MenuItem value={"buyAndHold"}>Buy & Hold</MenuItem>
               <MenuItem value={"moreToCome"}>More to Come...</MenuItem>
             </Select>
           </FormControl>
         </Row>
-        {/* Here is where the title goes
-        Is it going to be  */}
+
+        <Box sx={{ flexDirection: "row", mt: nativeTheme.s3 }}>
+          <FormControl size={"small"} variant="filled">
+            <InputLabel
+              sx={{
+                fontSize: nativeTheme.fs22,
+                color: nativeTheme.primary.main,
+              }}
+            >
+              Title
+            </InputLabel>
+            <Select
+              onChange={(e) => {
+                updateValue({
+                  ...deal.varbNext("displayNameSource").feVarbInfo,
+                  value: e.target.value as StateValue<"dealDisplayNameSource">,
+                });
+              }}
+              labelId="ActiveDeal-modeSelector"
+              id="demo-simple-select"
+              value={titleSource}
+              label={"Title"}
+            >
+              <MenuItem value={"defaultDisplayName"}>Default</MenuItem>
+              <MenuItem value={"displayNameEditor"}>Custom</MenuItem>
+            </Select>
+          </FormControl>
+          {titleSource === "displayNameEditor" && (
+            <BigStringEditor
+              {...{
+                feVarbInfo: deal.varbNext("displayNameEditor").feVarbInfo,
+                sx: {
+                  mt: nativeTheme.s4,
+                  "& .MuiInputBase-root": {
+                    borderTopLeftRadius: 0,
+                  },
+                },
+              }}
+            />
+          )}
+        </Box>
         <View>
           <DealSubSectionClosed {...dealElementProps} sectionName="property" />
           <DealSubSectionClosed {...dealElementProps} sectionName="financing" />

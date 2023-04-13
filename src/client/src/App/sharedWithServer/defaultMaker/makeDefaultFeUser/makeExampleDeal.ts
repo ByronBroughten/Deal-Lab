@@ -1,4 +1,3 @@
-import { stringObj } from "../../SectionsMeta/values/StateValue/StringObj";
 import { PackBuilderSection } from "../../StatePackers/PackBuilderSection";
 import { timeS } from "../../utils/timeS";
 import {
@@ -35,7 +34,8 @@ export function makeExampleDeal(propertyTitle: string) {
 
   const displayName = makeDefaultDealDisplayName(deal.get);
   deal.updateValues({
-    displayName: stringObj(displayName),
+    displayNameEditor: displayName,
+    displayNameSource: "displayNameEditor",
   });
 
   return deal.makeSectionPack();
