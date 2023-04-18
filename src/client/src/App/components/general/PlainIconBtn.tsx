@@ -1,8 +1,10 @@
-import { Button, ButtonProps } from "@mui/material";
+import { Button, ButtonProps, SxProps } from "@mui/material";
 import styled from "styled-components";
 import theme from "../../theme/Theme";
+import { arrSx } from "../../utils/mui";
 
 export interface PlainIconBtnProps extends ButtonProps {
+  sx?: SxProps;
   left?: React.ReactNode;
   middle?: React.ReactNode;
   right?: React.ReactNode;
@@ -17,20 +19,22 @@ export function PlainIconBtn({
   return (
     <Styled
       {...{
-        sx: {
-          boxShadow: "none",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          color: "inherit",
-          backgroundColor: "transparent",
-          "&:hover": {
+        sx: [
+          {
+            boxShadow: "none",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            color: "inherit",
             backgroundColor: "transparent",
+            "&:hover": {
+              backgroundColor: "transparent",
+            },
+            padding: 0,
+            borderRadius: 0,
           },
-          padding: 0,
-          borderRadius: 0,
-          ...sx,
-        },
+          ...arrSx(sx),
+        ],
         ...rest,
       }}
     >

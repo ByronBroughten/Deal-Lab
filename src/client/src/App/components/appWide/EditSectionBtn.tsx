@@ -1,15 +1,10 @@
-import { StandardBtnProps } from "../general/StandardProps";
+import { MuiBtnPropsNext } from "../general/StandardProps";
 import { icons } from "../Icons";
-import { StyledIconBtn } from "./StyledIconBtn";
+import { StyledActionBtn } from "./GeneralSection/MainSection/StoreSectionActionMenu/ActionBtns.tsx/StyledActionBtn";
 
-type Props = StandardBtnProps;
+type Props = MuiBtnPropsNext;
 export function EditSectionBtn(props: Props) {
   return (
-    <StyledIconBtn
-      className="MainSubSection-editBtn"
-      left={icons.edit({ size: 20 })}
-      middle="Edit"
-      {...props}
-    />
+    <StyledActionBtn left={icons.edit({ size: 20 })} middle="Edit" {...props} />
   );
 }

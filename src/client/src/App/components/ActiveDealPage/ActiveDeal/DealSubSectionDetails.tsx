@@ -14,7 +14,7 @@ export function DealSubSectionDetails({
 }: Props) {
   return (
     <Styled className="MainSubSection-detailsDiv">
-      <div className="MainSubSection-displayNameDiv">{displayName}</div>
+      {/* <div className="MainSubSection-displayNameDiv">{displayName}</div> */}
       <LabeledVarbRow
         {...{
           varbPropArr: detailVarbPropArr,

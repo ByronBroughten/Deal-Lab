@@ -1,3 +1,4 @@
+import { SxProps } from "@mui/material";
 import { AiOutlineSave } from "react-icons/ai";
 import { View } from "react-native";
 import { useMainSectionActor } from "../../../../../modules/sectionActorHooks/useMainSectionActor";
@@ -9,8 +10,10 @@ import { SectionBtn } from "../../../SectionBtn";
 import { toastLoginNotice } from "../../../toast";
 import { StyledActionBtn } from "./ActionBtns.tsx/StyledActionBtn";
 
-interface Props extends FeInfoByType<"hasIndexStore"> {}
-export function ActionSaveAsNewBtn(feInfo: Props) {
+interface Props extends FeInfoByType<"hasIndexStore"> {
+  btnProps?: { sx?: SxProps };
+}
+export function ActionSaveAsNewBtn({ btnProps, ...feInfo }: Props) {
   const section = useMainSectionActor(feInfo);
   const { feVarbInfo } = section.get.varb("displayName");
   const { isGuest } = section.feStore;
@@ -24,7 +27,8 @@ export function ActionSaveAsNewBtn(feInfo: Props) {
             left={<AiOutlineSave size={23} />}
             onClick={isGuest ? toastWarn : toggleDropdown}
             isActive={dropdownIsOpen}
-            isDisabled={isGuest}
+            showAsDisabled={isGuest}
+            {...btnProps}
           />
         ),
         renderDropdownContent: () => (

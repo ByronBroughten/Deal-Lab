@@ -1,7 +1,9 @@
+import { Box } from "@mui/material";
 import React from "react";
 import { unstable_batchedUpdates } from "react-dom";
 import styled from "styled-components";
 import { useToggleView } from "../../modules/customHooks/useToggleView";
+import { nativeTheme } from "../../theme/nativeTheme";
 import theme from "../../theme/Theme";
 import { EditSectionBtn } from "./EditSectionBtn";
 import { ModalSection } from "./ModalSection";
@@ -44,12 +46,16 @@ export function SelectAndItemizeEditor({
       {rightOfControls
         ? null
         : isItemized && (
-            <>
-              <div className="SelectAndItemizeEditor-itemizedTotalDiv">{`Total = ${total}`}</div>
-              <EditSectionBtn
-                className="SelectAndItemizeEditor-editBtn"
-                onClick={openItems}
-              />
+            <Box
+              sx={{
+                ml: nativeTheme.s3,
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+              }}
+            >
+              <Box sx={{ fontSize: "18px" }}>{`Total = ${total}`}</Box>
+              <EditSectionBtn sx={{ ml: nativeTheme.s2 }} onClick={openItems} />
               <ModalSection
                 title={itemizedModalTitle}
                 closeModal={closeItems}
@@ -57,7 +63,7 @@ export function SelectAndItemizeEditor({
               >
                 {itemsComponent}
               </ModalSection>
-            </>
+            </Box>
           )}
     </Styled>
   );
@@ -69,8 +75,5 @@ const Styled = styled.div`
     margin-left: ${theme.s3};
     display: flex;
     align-items: center;
-  }
-  .SelectAndItemizeEditor-editBtn {
-    margin-left: ${theme.s2};
   }
 `;

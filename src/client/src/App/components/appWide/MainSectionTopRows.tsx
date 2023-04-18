@@ -1,6 +1,8 @@
+import { Box } from "@mui/material";
 import React from "react";
 import styled from "styled-components";
 import { SectionNameByType } from "../../sharedWithServer/SectionsMeta/SectionNameByType";
+import { nativeTheme } from "../../theme/nativeTheme";
 import theme from "../../theme/Theme";
 import { StoreSectionActions } from "./GeneralSection/MainSection/StoreSectionActions";
 import { useSaveStatus } from "./GeneralSection/MainSection/useSaveStatus";
@@ -42,14 +44,6 @@ export function MainSectionTopRows({
             text={sectionTitle}
             className="MainSectionTopRows-sectionTitle"
           />
-          {showControls && (
-            <StoreSectionActions
-              {...{
-                ...feInfo,
-                saveStatus,
-              }}
-            />
-          )}
           {topLeft}
         </div>
         <div className="MainSectionTopRows-topRight">
@@ -62,7 +56,16 @@ export function MainSectionTopRows({
           )}
         </div>
       </div>
-      <div className="MainSectionTopRows-secondRow"></div>
+      <Box sx={{ flexDirection: "row", mt: nativeTheme.s3 }}>
+        {showControls && (
+          <StoreSectionActions
+            {...{
+              ...feInfo,
+              saveStatus,
+            }}
+          />
+        )}
+      </Box>
     </Styled>
   );
 }
@@ -71,7 +74,6 @@ const Styled = styled.div`
   padding-bottom: ${theme.s35};
 
   .MainSectionTopRows-topRow,
-  .MainSectionTopRows-secondRow,
   .MainSectionTopRows-topLeft,
   .MainSectionTopRows-topRight {
     display: flex;
@@ -80,12 +82,8 @@ const Styled = styled.div`
     align-items: center;
   }
 
-  .MainSectionTopRows-secondRow {
-    margin-top: ${theme.s25};
-  }
-
   .MainSectionTopRows-sectionTitle {
-    font-size: 22px;
+    font-size: 24px;
     margin-right: ${theme.s3};
   }
 

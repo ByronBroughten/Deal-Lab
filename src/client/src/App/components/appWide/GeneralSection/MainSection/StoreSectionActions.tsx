@@ -41,8 +41,9 @@ export function StoreSectionActions<
           loadMode: "loadAndCopy",
         }}
       />
-      <ActionSaveAsNewBtn {...{ ...feInfo }} />
+      <ActionSaveAsNewBtn {...{ btnProps: { sx: { ml: "2px" } }, ...feInfo }} />
       <StyledActionBtn
+        sx={{ ml: "2px" }}
         middle="Reset default"
         left={<BiReset size={23} />}
         onClick={() => mainSection.replaceWithDefault()}

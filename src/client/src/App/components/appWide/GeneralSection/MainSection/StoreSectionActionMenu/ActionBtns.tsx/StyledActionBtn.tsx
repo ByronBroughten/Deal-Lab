@@ -1,38 +1,49 @@
 import { nativeTheme } from "../../../../../../theme/nativeTheme";
-import { PlainIconBtnProps } from "../../../../../general/PlainIconBtn";
-import { StyledIconBtn } from "../../../../StyledIconBtn";
+import { arrSx } from "../../../../../../utils/mui";
+import {
+  PlainIconBtn,
+  PlainIconBtnProps,
+} from "../../../../../general/PlainIconBtn";
 
-interface Props extends PlainIconBtnProps {
+interface Props extends Omit<PlainIconBtnProps, "style"> {
   isActive?: boolean;
-  isDisabled?: boolean;
+  showAsDisabled?: boolean;
 }
 export function StyledActionBtn({
-  style,
-  isDisabled = false,
+  showAsDisabled = false,
   isActive = false,
+  sx,
   ...rest
 }: Props) {
   return (
-    <StyledIconBtn
+    <PlainIconBtn
       {...{
-        sx: {
-          whiteSpace: "nowrap",
-          fontSize: 15,
-          ...(isActive && {
-            color: nativeTheme.light,
-            backgroundColor: nativeTheme.secondary.main,
-          }),
-          ...(isDisabled && {
-            color: nativeTheme.notice.dark,
-            backgroundColor: "transparent",
-          }),
-        },
-
-        style: {
-          whiteSpace: "nowrap",
-          fontSize: 15,
-          ...style,
-        },
+        sx: [
+          {
+            borderWidth: 1,
+            borderStyle: "solid",
+            borderColor: "transparent",
+            color: nativeTheme.darkBlue.dark,
+            borderRadius: 5,
+            paddingLeft: nativeTheme.s25,
+            paddingRight: nativeTheme.s25,
+            fontSize: 15,
+            "&:hover": {
+              color: nativeTheme.light,
+              backgroundColor: nativeTheme.darkBlue.main,
+              borderColor: nativeTheme.darkBlue.main,
+            },
+            ...(isActive && {
+              color: nativeTheme.light,
+              backgroundColor: nativeTheme.secondary.main,
+            }),
+            ...(showAsDisabled && {
+              color: nativeTheme.notice.dark,
+              backgroundColor: "transparent",
+            }),
+          },
+          ...arrSx(sx),
+        ],
         ...rest,
       }}
     />
