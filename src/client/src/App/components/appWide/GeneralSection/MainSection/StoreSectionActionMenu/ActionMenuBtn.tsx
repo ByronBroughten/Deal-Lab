@@ -3,7 +3,6 @@ import { useActionMenuBtns } from "./ActionMenuButtons";
 import { ActionBtnName } from "./ActionMenuTypes";
 
 interface Props extends FeInfoByType<"hasIndexStore"> {
-  loadWhat: string;
   onLoad?: () => void;
   actionName: ActionBtnName;
 }

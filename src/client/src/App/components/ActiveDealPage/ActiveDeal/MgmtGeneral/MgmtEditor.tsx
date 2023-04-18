@@ -23,7 +23,6 @@ export function MgmtEditor({ feId, backBtnProps }: Props) {
         {...{
           ...feInfo,
           sectionTitle: "Management",
-          loadWhat: "Management",
         }}
       />
       <MainSectionBody themeName="mgmt">

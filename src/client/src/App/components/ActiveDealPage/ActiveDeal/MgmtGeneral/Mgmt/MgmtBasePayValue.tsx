@@ -4,6 +4,7 @@ import { useSetterSection } from "../../../../../sharedWithServer/stateClassHook
 import { ValueFixedVarbPathName } from "../../../../../sharedWithServer/StateEntityGetters/ValueInEntityInfo";
 import { GetterSection } from "../../../../../sharedWithServer/StateGetters/GetterSection";
 import { SelectEditorSection } from "../../../../appWide/SelectEditorSection";
+import { NumObjEntityEditor } from "../../../../inputs/NumObjEntityEditor";
 
 function getProps(getter: GetterSection<"mgmtBasePayValue">): {
   equalsValue?: string;
@@ -57,7 +58,7 @@ export function BasePayValue({ feId }: { feId: string }) {
     sectionName: "mgmtBasePayValue",
     feId,
   });
-  const props = getProps(basePayValue.get);
+  const { editorProps, equalsValue } = getProps(basePayValue.get);
   const valueSourceName = basePayValue.value("valueSourceName");
   const menuItems: [StateValue<"mgmtBasePayValueSource">, string][] = [
     ["zero", "Owner managed (no pay)"],
@@ -75,17 +76,28 @@ export function BasePayValue({ feId }: { feId: string }) {
     <SelectEditorSection
       {...{
         label: "Base Pay",
-        editorProps: props.editorProps && {
-          ...props.editorProps,
-          editorType: "numeric",
-        },
+        makeEditor: editorProps
+          ? (props) => (
+              <NumObjEntityEditor
+                {...{
+                  ...props,
+                  ...editorProps,
+                  quickViewVarbNames: [
+                    "numUnits",
+                    "targetRentMonthly",
+                    "targetRentYearly",
+                  ],
+                }}
+              />
+            )
+          : undefined,
         selectValue: valueSourceName,
         onChange: (e) => {
           const value = e.target.value as string;
           basePayValue.varb("valueSourceName").updateValue(value);
         },
         menuItems,
-        equalsValue: props.equalsValue,
+        equalsValue,
       }}
     />
   );

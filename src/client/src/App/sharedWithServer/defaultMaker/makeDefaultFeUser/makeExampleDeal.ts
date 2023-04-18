@@ -1,14 +1,11 @@
 import { PackBuilderSection } from "../../StatePackers/PackBuilderSection";
 import { timeS } from "../../utils/timeS";
-import {
-  makeDefaultDealDisplayName,
-  makeDefaultDealPack,
-} from "../makeDefaultDeal";
+import { makeDefaultDealPack } from "../makeDefaultDeal";
 import { dealExampleLoan } from "./makeExampleLoan";
 import { exampleDealMgmt } from "./makeExampleMgmt";
 import { makeExampleDealProperty } from "./makeExampleProperty";
 
-export function makeExampleDeal(propertyTitle: string) {
+export function makeExampleDeal(displayName: string) {
   const deal = PackBuilderSection.initAsOmniChild("deal");
   deal.loadSelf(makeDefaultDealPack());
   const now = timeS.now();
@@ -18,7 +15,7 @@ export function makeExampleDeal(propertyTitle: string) {
   });
 
   const property = deal.onlyChild("property");
-  property.loadSelf(makeExampleDealProperty(propertyTitle));
+  property.loadSelf(makeExampleDealProperty(""));
 
   const financing = deal.onlyChild("financing");
   const loan = financing.onlyChild("loan");
@@ -32,7 +29,6 @@ export function makeExampleDeal(propertyTitle: string) {
   const mgmt = deal.onlyChild("mgmt");
   mgmt.loadSelf(exampleDealMgmt);
 
-  const displayName = makeDefaultDealDisplayName(deal.get);
   deal.updateValues({
     displayNameEditor: displayName,
     displayNameSource: "displayNameEditor",

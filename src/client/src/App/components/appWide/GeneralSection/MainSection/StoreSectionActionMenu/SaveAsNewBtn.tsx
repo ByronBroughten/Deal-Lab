@@ -20,10 +20,9 @@ export function ActionSaveAsNewBtn(feInfo: Props) {
       {...{
         renderDropdownBtn: (toggleDropdown, dropdownIsOpen) => (
           <StyledActionBtn
-            middle={"Save as"}
+            middle={"Save as component"}
             left={<AiOutlineSave size={23} />}
             onClick={isGuest ? toastWarn : toggleDropdown}
-            className="ActionMenuButtons-signInToSave ActionMenuButtons-warn"
             isActive={dropdownIsOpen}
             isDisabled={isGuest}
           />
@@ -53,7 +52,7 @@ export function ActionSaveAsNewBtn(feInfo: Props) {
                   borderTopLeftRadius: 0,
                   borderTopRightRadius: 0,
                 },
-                middle: "Save New",
+                middle: "Save",
                 onClick: () => section.saveAsNew(),
               }}
             />

@@ -1,13 +1,15 @@
+import { AiOutlineArrowRight } from "react-icons/ai";
+import { BiReset } from "react-icons/bi";
 import styled from "styled-components";
 import { useMainSectionActor } from "../../../../modules/sectionActorHooks/useMainSectionActor";
 import { SectionNameByType } from "../../../../sharedWithServer/SectionsMeta/SectionNameByType";
 import theme from "../../../../theme/Theme";
-import { ActionBtn } from "./StoreSectionActionMenu/ActionBtns.tsx/ActionBtn";
-import { useDefaultActionLists } from "./StoreSectionActionMenu/ActionMenuButtons";
-import {
-  ActionBtnName,
-  ActionMenuProps,
-} from "./StoreSectionActionMenu/ActionMenuTypes";
+import { ListRouteName } from "../../../UserListEditorPage/UserComponentClosed";
+import { useMakeGoToPage } from "../../customHooks/useGoToPage";
+import { StyledActionBtn } from "./StoreSectionActionMenu/ActionBtns.tsx/StyledActionBtn";
+import { ActionLoadBtn } from "./StoreSectionActionMenu/ActionLoadBtn";
+import { ActionMenuProps } from "./StoreSectionActionMenu/ActionMenuTypes";
+import { ActionSaveAsNewBtn } from "./StoreSectionActionMenu/SaveAsNewBtn";
 
 interface Props<SN extends SectionNameByType<"hasIndexStore">>
   extends ActionMenuProps {
@@ -15,50 +17,43 @@ interface Props<SN extends SectionNameByType<"hasIndexStore">>
   sectionName: SN;
   feId: string;
   className?: string;
-  loadWhat: string;
+  routeBtnProps?: {
+    title: string;
+    routeName: ListRouteName;
+  };
 }
 
 export function StoreSectionActions<
   SN extends SectionNameByType<"hasIndexStore">
->({
-  dropTop,
-  className,
-  sectionName,
-  feId,
-  loadWhat,
-  ...menuListProps
-}: Props<SN>) {
+>({ className, sectionName, feId, routeBtnProps }: Props<SN>) {
   const feInfo = { sectionName, feId };
   const mainSection = useMainSectionActor(feInfo);
-  function btnProps(actionName: ActionBtnName) {
-    return {
-      ...feInfo,
-      loadWhat,
-      actionName,
-      key: actionName,
-      className: "StoreSectionActions-actionBtn",
-    };
-  }
-  const defaultActionLists = useDefaultActionLists();
-  const { alwaysArr, isNotSavedArr, isSavedArr } = {
-    ...defaultActionLists,
-    ...menuListProps,
-  };
+  const makeGoToPage = useMakeGoToPage();
   return (
     <Styled
       {...{
         className: `StoreSectionActionMenu-root ${className ?? ""}`,
       }}
     >
-      {!mainSection.isSaved &&
-        isNotSavedArr.map((actionName) => (
-          <ActionBtn {...btnProps(actionName)} />
-        ))}
-      {mainSection.isSaved &&
-        isSavedArr.map((actionName) => <ActionBtn {...btnProps(actionName)} />)}
-      {alwaysArr.map((actionName) => (
-        <ActionBtn {...btnProps(actionName)} />
-      ))}
+      <ActionLoadBtn
+        {...{
+          feInfo,
+          loadMode: "loadAndCopy",
+        }}
+      />
+      <ActionSaveAsNewBtn {...{ ...feInfo }} />
+      <StyledActionBtn
+        middle="Reset default"
+        left={<BiReset size={23} />}
+        onClick={() => mainSection.replaceWithDefault()}
+      />
+      {routeBtnProps && (
+        <StyledActionBtn
+          middle={routeBtnProps.title}
+          left={<AiOutlineArrowRight size={23} />}
+          onClick={makeGoToPage(routeBtnProps.routeName)}
+        />
+      )}
     </Styled>
   );
 }

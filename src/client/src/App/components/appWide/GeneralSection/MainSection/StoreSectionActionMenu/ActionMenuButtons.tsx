@@ -15,7 +15,6 @@ import {
 } from "./ActionMenuTypes";
 
 type Props<SN extends SectionNameByType<"hasIndexStore">> = {
-  loadWhat: string;
   onLoad?: () => void;
   sectionName: SN;
   feId: string;
@@ -31,7 +30,7 @@ export function useDefaultActionLists(): ActionMenuLists {
 
 export function useActionMenuBtns<
   SN extends SectionNameByType<"hasIndexStore">
->({ loadWhat, onLoad, ...feInfo }: Props<SN>) {
+>({ onLoad, ...feInfo }: Props<SN>) {
   const mainSection = useMainSectionActor(feInfo);
   const { isGuest } = mainSection.feStore;
 
@@ -73,7 +72,7 @@ export function useActionMenuBtns<
       return (
         <LabeledIconBtn
           key="saveAsNew"
-          label="Save as new"
+          label="Save as component"
           icon={<AiOutlineSave size="25" />}
           onClick={() => mainSection.saveAsNew()}
           disabled={isGuest}
@@ -111,7 +110,6 @@ export function useActionMenuBtns<
         <ActionLoadBtn
           {...{
             feInfo,
-            loadWhat,
             loadMode: "load",
             onLoad,
           }}
@@ -123,7 +121,6 @@ export function useActionMenuBtns<
         <ActionLoadBtn
           {...{
             feInfo,
-            loadWhat,
             loadMode: "loadAndCopy",
             onLoad,
           }}

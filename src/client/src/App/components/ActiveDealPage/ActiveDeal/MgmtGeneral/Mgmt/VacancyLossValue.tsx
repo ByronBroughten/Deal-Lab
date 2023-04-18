@@ -5,6 +5,7 @@ import { ValueFixedVarbPathName } from "../../../../../sharedWithServer/StateEnt
 import { GetterSection } from "../../../../../sharedWithServer/StateGetters/GetterSection";
 import { LabelWithInfo } from "../../../../appWide/LabelWithInfo";
 import { SelectEditorSection } from "../../../../appWide/SelectEditorSection";
+import { NumObjEntityEditor } from "../../../../inputs/NumObjEntityEditor";
 
 function getProps(getter: GetterSection<"vacancyLossValue">): {
   equalsValue?: string;
@@ -57,7 +58,7 @@ export function VacancyLossValue({ feId }: { feId: string }) {
     sectionName: "vacancyLossValue",
     feId,
   });
-  const props = getProps(vacancyLoss.get);
+  const { editorProps, equalsValue } = getProps(vacancyLoss.get);
   const valueSourceName = vacancyLoss.value("valueSourceName");
   const menuItems: [StateValue<"vacancyLossValueSource">, string][] = [
     [
@@ -88,17 +89,23 @@ export function VacancyLossValue({ feId }: { feId: string }) {
             }}
           />
         ),
-        editorProps: props.editorProps && {
-          ...props.editorProps,
-          editorType: "numeric",
-        },
+        equalsValue,
+        makeEditor: editorProps
+          ? (props) => (
+              <NumObjEntityEditor
+                {...{
+                  ...props,
+                  ...editorProps,
+                }}
+              />
+            )
+          : undefined,
         selectValue: valueSourceName,
         onChange: (e) => {
           const value = e.target.value as string;
           vacancyLoss.varb("valueSourceName").updateValue(value);
         },
         menuItems,
-        equalsValue: props.equalsValue,
       }}
     />
   );

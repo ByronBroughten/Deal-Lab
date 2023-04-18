@@ -2,8 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { SectionNameByType } from "../../sharedWithServer/SectionsMeta/SectionNameByType";
 import theme from "../../theme/Theme";
-import { MainSectionTitleRow } from "./GeneralSection/MainSection/MainSectionTitleRow";
-import { MainSectionActionRow } from "./GeneralSection/MainSection/MainSectionTitleRow/MainSectionActionRow";
+import { StoreSectionActions } from "./GeneralSection/MainSection/StoreSectionActions";
 import { useSaveStatus } from "./GeneralSection/MainSection/useSaveStatus";
 import { RemoveSectionXBtn } from "./RemoveSectionXBtn";
 import { SectionTitle } from "./SectionTitle";
@@ -13,7 +12,6 @@ type Props = {
   sectionTitle: string;
   sectionName: SectionNameByType<"mainDealSection">;
   feId: string;
-  loadWhat: string;
   belowTitle?: React.ReactNode;
   checkmarkStatus?: CheckmarkStatus;
   showXBtn?: boolean;
@@ -27,7 +25,6 @@ type CheckmarkStatus = "hidden" | "checked" | "unchecked";
 export function MainSectionTopRows({
   className,
   sectionTitle,
-  loadWhat,
   belowTitle,
   checkmarkStatus = "hidden",
   showXBtn,
@@ -46,11 +43,10 @@ export function MainSectionTopRows({
             className="MainSectionTopRows-sectionTitle"
           />
           {showControls && (
-            <MainSectionTitleRow
+            <StoreSectionActions
               {...{
                 ...feInfo,
-                sectionTitle,
-                className: "MainSectionTopRows-titleRow",
+                saveStatus,
               }}
             />
           )}
@@ -66,20 +62,7 @@ export function MainSectionTopRows({
           )}
         </div>
       </div>
-      <div className="MainSectionTopRows-secondRow">
-        {showControls && (
-          <MainSectionActionRow
-            {...{
-              ...feInfo,
-              loadWhat,
-              xBtn: false,
-              dropTop: false,
-              saveStatus,
-              className: "MainSectionTopRows-sectionMenus",
-            }}
-          />
-        )}
-      </div>
+      <div className="MainSectionTopRows-secondRow"></div>
     </Styled>
   );
 }
@@ -122,8 +105,5 @@ const Styled = styled.div`
   .MainSectionTopRows-xBtn {
     height: ${theme.bigButtonHeight};
     width: ${theme.bigButtonHeight};
-  }
-
-  .MainSectionTopRows-sectionMenus {
   }
 `;

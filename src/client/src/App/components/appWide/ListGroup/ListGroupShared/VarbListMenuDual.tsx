@@ -1,11 +1,11 @@
 import { FeSectionInfo } from "../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { SectionNameByType } from "../../../../sharedWithServer/SectionsMeta/SectionNameByType";
 import { ListRouteName } from "../../../UserListEditorPage/UserComponentClosed";
+import { StoreSectionActions } from "../../GeneralSection/MainSection/StoreSectionActions";
 import { VarbListEditorPageMenu } from "./VarbListEditorPageMenu";
 import { VarbListGenericMenuType } from "./VarbListGeneric";
-import { VarbListValueMenu } from "./VarbListValueMenu";
 
-interface Props<SN extends SectionNameByType<"varbListAllowed">>
+interface Props<SN extends SectionNameByType<"hasIndexStore">>
   extends FeSectionInfo<SN> {
   totalVarbName?: string;
   className?: string;
@@ -16,10 +16,10 @@ interface Props<SN extends SectionNameByType<"varbListAllowed">>
   };
 }
 export function VarbListMenuDual<
-  SN extends SectionNameByType<"varbListAllowed">
+  SN extends SectionNameByType<"hasIndexStore">
 >({ menuType, ...props }: Props<SN>) {
   const listMenu = {
-    value: () => <VarbListValueMenu {...props} />,
+    value: () => <StoreSectionActions {...props} />,
     editorPage: () => <VarbListEditorPageMenu {...props} />,
   };
   return listMenu[menuType]();

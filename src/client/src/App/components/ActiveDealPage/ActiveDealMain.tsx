@@ -1,6 +1,5 @@
-import { Box, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { View } from "react-native";
-import { StateValue } from "../../sharedWithServer/SectionsMeta/values/StateValue";
 import { useAction } from "../../sharedWithServer/stateClassHooks/useAction";
 import { BackBtnWrapper } from "../appWide/BackBtnWrapper";
 import { BackgroundContainer } from "../appWide/BackgroundContainter";
@@ -22,44 +21,21 @@ export function ActiveDealMain() {
   const { deal, calcVarbs, feStore } = useActiveDealPage();
   const completionStatus = calcVarbs.value("dealCompletionStatus");
   const dealMode = deal.valueNext("dealMode");
-  const titleSource = deal.valueNext("displayNameSource");
   const updateValue = useAction("updateValue");
 
   return (
     <BackBtnWrapper {...{ to: "account", label: "Deal Menu" }}>
       <BackgroundContainer>
+        <SectionTitle
+          sx={{ fontSize: nativeTheme.fs24, marginTop: nativeTheme.s35 }}
+          text="Deal"
+        />
         <Row
           style={{
             alignItems: "flex-end",
+            marginTop: nativeTheme.s35,
           }}
         >
-          <SectionTitle sx={{ fontSize: nativeTheme.fs24 }} text="Deal" />
-          <FormControl
-            sx={{ marginLeft: nativeTheme.s4 }}
-            size={"small"}
-            variant="filled"
-          >
-            <InputLabel
-              sx={{
-                fontSize: nativeTheme.fs22,
-                color: nativeTheme.primary.main,
-              }}
-            >
-              Deal type
-            </InputLabel>
-            <Select
-              labelId="ActiveDeal-modeSelector"
-              id="demo-simple-select"
-              value={dealMode}
-              label={"Deal type"}
-            >
-              <MenuItem value={"buyAndHold"}>Buy & Hold</MenuItem>
-              <MenuItem value={"moreToCome"}>More to Come...</MenuItem>
-            </Select>
-          </FormControl>
-        </Row>
-
-        <Box sx={{ flexDirection: "row", mt: nativeTheme.s3 }}>
           <FormControl size={"small"} variant="filled">
             <InputLabel
               sx={{
@@ -67,38 +43,32 @@ export function ActiveDealMain() {
                 color: nativeTheme.primary.main,
               }}
             >
-              Title
+              Type
             </InputLabel>
             <Select
-              onChange={(e) => {
-                updateValue({
-                  ...deal.varbNext("displayNameSource").feVarbInfo,
-                  value: e.target.value as StateValue<"dealDisplayNameSource">,
-                });
+              sx={{
+                backgroundColor: nativeTheme.light,
+                ...nativeTheme.subSection.borderLines,
+                borderBottomWidth: 0,
               }}
               labelId="ActiveDeal-modeSelector"
               id="demo-simple-select"
-              value={titleSource}
-              label={"Title"}
+              value={dealMode}
+              label={"Type"}
             >
-              <MenuItem value={"defaultDisplayName"}>Default</MenuItem>
-              <MenuItem value={"displayNameEditor"}>Custom</MenuItem>
+              <MenuItem value={"buyAndHold"}>Buy & Hold</MenuItem>
+              <MenuItem value={"moreToCome"}>More to Come...</MenuItem>
             </Select>
           </FormControl>
-          {titleSource === "displayNameEditor" && (
-            <BigStringEditor
-              {...{
-                feVarbInfo: deal.varbNext("displayNameEditor").feVarbInfo,
-                sx: {
-                  mt: nativeTheme.s4,
-                  "& .MuiInputBase-root": {
-                    borderTopLeftRadius: 0,
-                  },
-                },
-              }}
-            />
-          )}
-        </Box>
+          <BigStringEditor
+            {...{
+              label: "Title",
+              // placeholder: "Title",
+              feVarbInfo: deal.varbNext("displayNameEditor").feVarbInfo,
+              sx: { ml: nativeTheme.s35 },
+            }}
+          />
+        </Row>
         <View>
           <DealSubSectionClosed {...dealElementProps} sectionName="property" />
           <DealSubSectionClosed {...dealElementProps} sectionName="financing" />

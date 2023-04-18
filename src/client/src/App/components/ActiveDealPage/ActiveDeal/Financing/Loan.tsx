@@ -28,7 +28,6 @@ export function Loan({
         {...{
           ...feInfo,
           sectionTitle: "Loan",
-          loadWhat: "Loan",
           showXBtn,
         }}
       />

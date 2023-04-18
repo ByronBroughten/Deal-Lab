@@ -1,6 +1,7 @@
 import { StateValue } from "../../../../../sharedWithServer/SectionsMeta/values/StateValue";
 import { useSetterSection } from "../../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import { SelectAndItemizeEditorSection } from "../../../../appWide/SelectAndItemizeEditorSection";
+import { NumObjEntityEditor } from "../../../../inputs/NumObjEntityEditor";
 import { ListEditorSingleTime } from "./ValueShared.tsx/ListEditorSingleTime";
 
 type Props = { feId: string };
@@ -28,12 +29,16 @@ export function RepairValue({ feId }: Props) {
           const value = e.target.value as string;
           repairValue.varb("valueSourceName").updateValue(value);
         },
-        editorProps:
+        makeEditor:
           valueSourceName === "valueEditor"
-            ? {
-                feVarbInfo: repairValue.varbInfo("valueDollarsEditor"),
-                editorType: "equation",
-              }
+            ? (props) => (
+                <NumObjEntityEditor
+                  {...{
+                    ...props,
+                    feVarbInfo: repairValue.varbInfo("valueDollarsEditor"),
+                  }}
+                />
+              )
             : undefined,
         equalsValue,
         total: repairValue.get.varbNext("value").displayVarb(),

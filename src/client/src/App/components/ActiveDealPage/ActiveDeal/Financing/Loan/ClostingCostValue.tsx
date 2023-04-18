@@ -1,5 +1,6 @@
 import { useSetterSection } from "../../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import { SelectAndItemizeEditorSection } from "../../../../appWide/SelectAndItemizeEditorSection";
+import { NumObjEntityEditor } from "../../../../inputs/NumObjEntityEditor";
 import { ListEditorSingleTime } from "../../PropertyGeneral/Property/ValueShared.tsx/ListEditorSingleTime";
 
 type Props = { feId: string; fivePercentLoanDisplay: string };
@@ -22,13 +23,17 @@ export function ClosingCostValue({ feId, fivePercentLoanDisplay }: Props) {
           const value = e.target.value as string;
           closingCostValue.varb("valueSourceName").updateValue(value);
         },
-        editorProps:
+        makeEditor:
           valueSourceName === "valueEditor"
-            ? {
-                feVarbInfo: closingCostValue.varbInfo("valueDollarsEditor"),
-                editorType: "equation",
-                quickViewVarbNames: ["loanTotalDollars", "numUnits"],
-              }
+            ? (props) => (
+                <NumObjEntityEditor
+                  {...{
+                    ...props,
+                    feVarbInfo: closingCostValue.varbInfo("valueDollarsEditor"),
+                    quickViewVarbNames: ["loanTotalDollars", "numUnits"],
+                  }}
+                />
+              )
             : undefined,
         menuItems: [
           ["fivePercentLoan", "5% of Base Loan"],

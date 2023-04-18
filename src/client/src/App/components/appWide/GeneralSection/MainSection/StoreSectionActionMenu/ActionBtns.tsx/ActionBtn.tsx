@@ -3,7 +3,6 @@ import { useActionBtns } from "../ActionBtns.tsx/ActionBtns";
 import { ActionBtnName } from "../ActionMenuTypes";
 
 interface Props extends FeInfoByType<"hasIndexStore"> {
-  loadWhat: string;
   onLoad?: () => void;
   actionName: ActionBtnName;
   className: string;

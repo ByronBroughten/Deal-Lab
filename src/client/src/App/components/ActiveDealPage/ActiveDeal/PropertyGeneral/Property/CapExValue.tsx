@@ -6,6 +6,7 @@ import { StateValue } from "../../../../../sharedWithServer/SectionsMeta/values/
 import { useSetterSection } from "../../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import { LabelWithInfo } from "../../../../appWide/LabelWithInfo";
 import { SelectAndItemizeEditorSection } from "../../../../appWide/SelectAndItemizeEditorSection";
+import { NumObjEntityEditor } from "../../../../inputs/NumObjEntityEditor";
 import { CapExValueList } from "./ValueShared.tsx/CapExListEditor";
 
 export function CapExValue({ feId }: { feId: string }) {
@@ -51,12 +52,16 @@ export function CapExValue({ feId }: { feId: string }) {
           const value = e.target.value as string;
           capExValue.varb("valueSourceName").updateValue(value);
         },
-        editorProps:
+        makeEditor:
           valueSourceName === "valueEditor"
-            ? {
-                feVarbInfo: capExValue.varbInfo("valueDollarsEditor"),
-                editorType: "equation",
-              }
+            ? (props) => (
+                <NumObjEntityEditor
+                  {...{
+                    ...props,
+                    feVarbInfo: capExValue.varbInfo("valueDollarsEditor"),
+                  }}
+                />
+              )
             : undefined,
         menuItems,
         equalsValue,

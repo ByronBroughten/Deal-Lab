@@ -6,10 +6,7 @@ import { SectionNameByType } from "../../../../sharedWithServer/SectionsMeta/Sec
 import theme from "../../../../theme/Theme";
 import { DropdownList } from "../../DropdownList";
 import { ActionMenuBtn } from "./StoreSectionActionMenu/ActionMenuBtn";
-import {
-  useActionMenuBtns,
-  useDefaultActionLists,
-} from "./StoreSectionActionMenu/ActionMenuButtons";
+import { useDefaultActionLists } from "./StoreSectionActionMenu/ActionMenuButtons";
 import {
   ActionBtnName,
   ActionMenuProps,
@@ -21,7 +18,6 @@ interface Props<SN extends SectionNameByType<"hasIndexStore">>
   sectionName: SN;
   feId: string;
   className?: string;
-  loadWhat: string;
 }
 
 export function StoreSectionActionMenu<
@@ -31,23 +27,16 @@ export function StoreSectionActionMenu<
   className,
   sectionName,
   feId,
-  loadWhat,
+
   ...menuListProps
 }: Props<SN>) {
   const feInfo = { sectionName, feId };
   const mainSection = useMainSectionActor(feInfo);
 
   const controller = useToggleView("list", false);
-  const buttons = useActionMenuBtns({
-    ...feInfo,
-    loadWhat,
-    onLoad: controller.closeList,
-  });
-
   function btnProps(actionName: ActionBtnName) {
     return {
       ...feInfo,
-      loadWhat,
       onLoad: controller.closeList,
       actionName,
       key: actionName,

@@ -28,14 +28,19 @@ export function BigStringEditor({
         editorState,
         setEditorState,
         label,
-        className: `BigStringEditor-root ${className ?? ""}`,
+        className: `${className ?? ""}`,
         id: GetterVarb.feVarbInfoToVarbId(feVarbInfo),
         placeholder,
         sx: [
           {
             "& .DraftEditor-root": {
               minWidth: 300,
-              py: nativeTheme.s2,
+
+              ...(label
+                ? {
+                    pb: nativeTheme.s1,
+                  }
+                : { py: nativeTheme.s2 }),
             },
           },
           ...arrSx(sx),

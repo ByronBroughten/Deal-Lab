@@ -7,6 +7,7 @@ import { StateValue } from "../../sharedWithServer/SectionsMeta/values/StateValu
 import { useSetterSection } from "../../sharedWithServer/stateClassHooks/useSetterSection";
 import theme from "../../theme/Theme";
 import { BigStringEditor } from "../inputs/BigStringEditor";
+import { NumObjEntityEditor } from "../inputs/NumObjEntityEditor";
 import { RemoveSectionXBtn } from "./RemoveSectionXBtn";
 import { SectionTitle } from "./SectionTitle";
 import { SelectAndItemizeEditor } from "./SelectAndItemizeEditor";
@@ -79,13 +80,21 @@ export function ValueSectionGeneric<
         <SelectAndItemizeEditor
           {...{
             selectValue: valueSource,
-            editorProps:
+            makeEditor:
               valueSource === "valueEditor"
-                ? {
-                    feVarbInfo: section.varbInfo(valueEditorName),
-                    editorType: "equation",
-                    quickViewVarbNames: ["purchasePrice", "sqft", "numUnits"],
-                  }
+                ? (props) => (
+                    <NumObjEntityEditor
+                      {...{
+                        ...props,
+                        feVarbInfo: section.varbInfo(valueEditorName),
+                        quickViewVarbNames: [
+                          "purchasePrice",
+                          "sqft",
+                          "numUnits",
+                        ],
+                      }}
+                    />
+                  )
                 : undefined,
             menuItems,
             onChange: (e) => {

@@ -6,14 +6,14 @@ import { RemoveFromStoreXBtn } from "../../RemoveSectionXBtn";
 import { VarbListTotal } from "./VarbListGeneric/VarbListTotal";
 import { VarbListMenuStyled } from "./VarbListMenuStyled";
 
-interface Props<SN extends SectionNameByType<"varbListAllowed">>
+interface Props<SN extends SectionNameByType<"hasIndexStore">>
   extends FeSectionInfo<SN> {
   totalVarbName?: string;
   className?: string;
 }
 
 export function VarbListEditorPageMenu<
-  SN extends SectionNameByType<"varbListAllowed">
+  SN extends SectionNameByType<"hasIndexStore">
 >({ totalVarbName, className, ...feInfo }: Props<SN>) {
   const list = useGetterSection(feInfo);
   return (

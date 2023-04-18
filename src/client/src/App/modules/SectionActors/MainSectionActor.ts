@@ -29,6 +29,8 @@ type DbIndexStoreName<SN extends SectionNameByType<"hasIndexStore">> = Extract<
   DbNameBySectionName<SN>
 >;
 
+export class MainSectionGetter {}
+
 export class MainSectionActor<
   SN extends SectionNameByType<"hasIndexStore">
 > extends SectionActorBase<SN> {

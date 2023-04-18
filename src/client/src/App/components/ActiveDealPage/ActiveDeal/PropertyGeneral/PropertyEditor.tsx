@@ -29,7 +29,6 @@ export function PropertyEditor({ feId, backBtnProps }: Props) {
         {...{
           ...feInfo,
           sectionTitle,
-          loadWhat: sectionTitle,
           showControls: true,
         }}
       />

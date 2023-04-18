@@ -6,10 +6,11 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-// - Adding a second loan isn't working
 
-// - Implement a default deal title
-//   "custom title" & "default title" toggle or something
+// 1. Make the list and main components use the same menu
+//    - Don't rely on name arrs of buttons for their order
+// 2. Make a styled version of the edit button from Saved Deals
+// 3. Use the new styled button for all ActionBtns
 
 // - For every e.target.value, get rid of the setterVarb involved
 
@@ -21,6 +22,8 @@ AppRegistry.runApplication("App", {
 //   - You already have a property called "Example Property 3". Would you like
 //     to overwrite it? "Yes", "Cancel"
 // - Saved properties >
+// - Implement viewing saved properties, loans, and mgmts
+// - Implement editing saved properties, loans, and mgmts
 
 // - Make the variables page not show an equal sign with impure variables
 // - Do the same with all the component editor pages

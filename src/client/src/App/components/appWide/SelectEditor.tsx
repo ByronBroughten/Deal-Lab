@@ -1,24 +1,16 @@
-import { FormControl, MenuItem, Select } from "@mui/material";
+import { FormControl, MenuItem, Select, SxProps } from "@mui/material";
 import React from "react";
 import styled from "styled-components";
-import { FeVarbInfo } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
-import { ValueFixedVarbPathName } from "../../sharedWithServer/StateEntityGetters/ValueInEntityInfo";
 import theme from "../../theme/Theme";
 import { MuiSelectOnChange } from "../../utils/mui";
-import {
-  NumEditorType,
-  NumObjEntityEditor,
-} from "../inputs/NumObjEntityEditor";
+
+type MakeEditor = (props: { sx: SxProps; labeled: boolean }) => React.ReactNode;
 
 export type SelectEditorProps = {
   className?: string;
   selectValue: string;
   onChange?: MuiSelectOnChange;
-  editorProps?: {
-    feVarbInfo: FeVarbInfo;
-    editorType: NumEditorType;
-    quickViewVarbNames?: ValueFixedVarbPathName[];
-  };
+  makeEditor?: MakeEditor;
   menuItems: [string, string][];
   equalsValue?: string;
   rightOfControls?: React.ReactNode;
@@ -27,7 +19,7 @@ export function SelectEditor({
   className,
   selectValue,
   onChange,
-  editorProps,
+  makeEditor,
   menuItems,
   equalsValue,
   rightOfControls,
@@ -63,17 +55,24 @@ export function SelectEditor({
           ))}
         </Select>
       </FormControl>
-      {editorProps && (
-        // I want this to work with a string editor
-        // maybe a provide your own editor kinda deal
-        <NumObjEntityEditor
-          {...{
-            className: "SelectEditor-editor",
-            labeled: false,
-            ...editorProps,
-          }}
-        />
-      )}
+      {makeEditor &&
+        makeEditor({
+          labeled: false,
+          sx: {
+            "& .NumObjEditor-materialDraftEditor": {
+              "& .MaterialDraftEditor-wrapper": {
+                borderTopLeftRadius: 0,
+                borderLeftWidth: 0,
+              },
+              "& .MuiInputBase-root": {
+                minWidth: 50,
+                borderTopLeftRadius: 0,
+                pt: "8px",
+                pb: "7px",
+              },
+            },
+          },
+        })}
       {rightOfControls ?? null}
       {equalsValue && (
         <div className="SelectEditor-equalsValue">{`= ${equalsValue}`}</div>
@@ -98,6 +97,7 @@ const Styled = styled.div`
   .SelectEditor-formControl {
     border: solid 1px ${theme["gray-300"]};
     border-right: none;
+    border-bottom: none;
     border-top-left-radius: ${theme.br0};
     .MuiSelect-root {
       padding: 10px 32px 10px 12px;
@@ -110,19 +110,5 @@ const Styled = styled.div`
 
   .SelectEditor-noneSelected {
     color: ${theme["gray-600"]};
-  }
-
-  .SelectEditor-editor {
-    .NumObjEditor-materialDraftEditor {
-      .MaterialDraftEditor-wrapper {
-        border-top-left-radius: 0;
-      }
-      .MuiInputBase-root {
-        min-width: 50px;
-        border-top-left-radius: 0;
-        padding-top: 0.5rem;
-        padding-bottom: 0.5rem;
-      }
-    }
   }
 `;

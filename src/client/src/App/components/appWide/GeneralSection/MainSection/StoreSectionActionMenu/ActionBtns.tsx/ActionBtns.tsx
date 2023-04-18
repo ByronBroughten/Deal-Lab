@@ -19,7 +19,6 @@ import {
 import { StyledActionBtn } from "./StyledActionBtn";
 
 type Props<SN extends SectionNameByType<"hasIndexStore">> = {
-  loadWhat: string;
   onLoad?: () => void;
   sectionName: SN;
   feId: string;
@@ -35,7 +34,6 @@ export function useDefaultActionLists(): ActionMenuLists {
 }
 
 export function useActionBtns<SN extends SectionNameByType<"hasIndexStore">>({
-  loadWhat,
   onLoad,
   ...feInfo
 }: Props<SN>) {
@@ -76,7 +74,7 @@ export function useActionBtns<SN extends SectionNameByType<"hasIndexStore">>({
     get saveAsNew() {
       return (
         <StyledActionBtn
-          middle="Save as new"
+          middle="Save as component"
           left={<AiOutlineSave size={23} />}
           onClick={() => mainSection.saveAsNew()}
           disabled={isGuest}
@@ -112,7 +110,6 @@ export function useActionBtns<SN extends SectionNameByType<"hasIndexStore">>({
         <ActionLoadBtn
           {...{
             feInfo,
-            loadWhat,
             loadMode: "load",
             onLoad,
           }}
@@ -124,7 +121,6 @@ export function useActionBtns<SN extends SectionNameByType<"hasIndexStore">>({
         <ActionLoadBtn
           {...{
             feInfo,
-            loadWhat,
             loadMode: "loadAndCopy",
             onLoad,
           }}

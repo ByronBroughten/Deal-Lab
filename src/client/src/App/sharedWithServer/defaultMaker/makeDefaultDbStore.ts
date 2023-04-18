@@ -59,9 +59,9 @@ export function makeDefaultDbStoreArrs({
   dbStore.loadChildren({
     childName: "dealMain",
     sectionPacks: [
-      makeExampleDeal("Example Property 1"),
-      makeExampleDeal("Example Property 2"),
-      makeExampleDeal("Example Property 3"),
+      makeExampleDeal("Example 1"),
+      makeExampleDeal("Example 2"),
+      makeExampleDeal("Example 3"),
     ],
   });
   dbStore.loadChildren({

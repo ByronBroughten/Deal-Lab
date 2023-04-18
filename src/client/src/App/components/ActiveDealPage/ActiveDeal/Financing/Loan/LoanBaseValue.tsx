@@ -4,6 +4,7 @@ import { useSetterSection } from "../../../../../sharedWithServer/stateClassHook
 import { ValueFixedVarbPathName } from "../../../../../sharedWithServer/StateEntityGetters/ValueInEntityInfo";
 import { GetterSection } from "../../../../../sharedWithServer/StateGetters/GetterSection";
 import { SelectEditorSection } from "../../../../appWide/SelectEditorSection";
+import { NumObjEntityEditor } from "../../../../inputs/NumObjEntityEditor";
 
 function getProps(getter: GetterSection<"loanBaseValue">): {
   equalsValue?: string;
@@ -44,7 +45,7 @@ export function LoanBaseValue({ feId }: { feId: string }) {
     sectionName: "loanBaseValue",
     feId,
   });
-  const props = getProps(vacancyLoss.get);
+  const { editorProps, equalsValue } = getProps(vacancyLoss.get);
   const valueSourceName = vacancyLoss.value("valueSourceName");
   const menuItems: [StateValue<"loanBaseValueSource">, string][] = [
     [
@@ -63,17 +64,23 @@ export function LoanBaseValue({ feId }: { feId: string }) {
     <SelectEditorSection
       {...{
         label: "Loan Amount",
-        editorProps: props.editorProps && {
-          ...props.editorProps,
-          editorType: "numeric",
-        },
+        makeEditor: editorProps
+          ? (props) => (
+              <NumObjEntityEditor
+                {...{
+                  ...props,
+                  ...editorProps,
+                }}
+              />
+            )
+          : undefined,
         selectValue: valueSourceName,
         onChange: (e) => {
           const value = e.target.value as string;
           vacancyLoss.varb("valueSourceName").updateValue(value);
         },
         menuItems,
-        equalsValue: props.equalsValue,
+        equalsValue,
       }}
     />
   );

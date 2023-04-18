@@ -2,6 +2,7 @@ import { StateValue } from "../../../../../sharedWithServer/SectionsMeta/values/
 import { useSetterSection } from "../../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import { LabelWithInfo } from "../../../../appWide/LabelWithInfo";
 import { SelectEditorSection } from "../../../../appWide/SelectEditorSection";
+import { NumObjEntityEditor } from "../../../../inputs/NumObjEntityEditor";
 
 export function MaintenanceValue({ feId }: { feId: string }) {
   const maintenanceValue = useSetterSection({
@@ -46,13 +47,17 @@ export function MaintenanceValue({ feId }: { feId: string }) {
         },
         menuItems,
         equalsValue,
-        editorProps:
+        makeEditor:
           valueSourceName === "valueEditor"
-            ? {
-                feVarbInfo: maintenanceValue.varbInfo("valueDollarsEditor"),
-                editorType: "equation",
-                quickViewVarbNames: ["sqft", "numUnits", "numBedrooms"],
-              }
+            ? (props) => (
+                <NumObjEntityEditor
+                  {...{
+                    ...props,
+                    feVarbInfo: maintenanceValue.varbInfo("valueDollarsEditor"),
+                    quickViewVarbNames: ["sqft", "numUnits", "numBedrooms"],
+                  }}
+                />
+              )
             : undefined,
       }}
     />

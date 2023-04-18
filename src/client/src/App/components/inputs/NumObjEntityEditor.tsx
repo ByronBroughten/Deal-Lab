@@ -1,6 +1,6 @@
+import { Box, SxProps } from "@mui/material";
 import { EditorState } from "draft-js";
 import React from "react";
-import styled from "styled-components";
 import { useOnOutsideClickEffect } from "../../modules/customHooks/useOnOutsideClickRef";
 import { useToggleView } from "../../modules/customHooks/useToggleView";
 import { SetEditorState } from "../../modules/draftjs/draftUtils";
@@ -10,7 +10,8 @@ import { SectionInfoContextProvider } from "../../sharedWithServer/stateClassHoo
 import { ValueFixedVarbPathName } from "../../sharedWithServer/StateEntityGetters/ValueInEntityInfo";
 import { GetterVarb } from "../../sharedWithServer/StateGetters/GetterVarb";
 import { EditorTextStatus } from "../../sharedWithServer/StateGetters/GetterVarbNumObj";
-import theme from "../../theme/Theme";
+import { nativeTheme } from "../../theme/nativeTheme";
+import { arrSx, useMemoSx } from "../../utils/mui";
 import { MaterialDraftEditor } from "./MaterialDraftEditor";
 import { NumObjVarbSelector } from "./NumObjEditor/NumObjVarbSelector";
 import {
@@ -24,6 +25,7 @@ import { useDraftInput } from "./useDraftInput";
 export type NumEditorType = "numeric" | "equation";
 
 type Props = PropAdornments & {
+  sx?: SxProps;
   feVarbInfo: FeVarbInfo;
   className?: string;
   label?: any;
@@ -45,15 +47,19 @@ export function NumObjEntityEditor({
   doEquals = true,
   quickViewVarbNames,
   label,
+  sx,
   ...props
 }: Props) {
   let { editorState, setEditorState, varb } = useDraftInput({
     ...feVarbInfo,
     compositeDecorator: varSpanDecorator,
   });
+
+  const msx = useMemoSx(sx);
   return (
     <MemoNumObjEntityEditor
       {...{
+        sx: msx,
         editorType,
         displayValue: varb.displayValue,
         editorTextStatus: varb.numObj.editorTextStatus,
@@ -79,6 +85,7 @@ export function NumObjEntityEditor({
 }
 
 interface MemoProps extends Adornments, FeVarbInfo {
+  sx: SxProps;
   displayValue: string;
   editorTextStatus: EditorTextStatus;
   displayName: string;
@@ -95,6 +102,7 @@ interface MemoProps extends Adornments, FeVarbInfo {
   setEditorState: SetEditorState;
 }
 const MemoNumObjEntityEditor = React.memo(function MemoNumObjEntityEditor({
+  sx,
   editorType,
   displayValue,
   className,
@@ -139,8 +147,26 @@ const MemoNumObjEntityEditor = React.memo(function MemoNumObjEntityEditor({
 
   return (
     <SectionInfoContextProvider {...rest}>
-      <Styled
-        editorType={editorType}
+      <Box
+        sx={[
+          {
+            flexDirection: "row",
+            alignItems: "center",
+            "& .NumObjVarbSelector-root": {
+              top: -1,
+            },
+            "& .MaterialDraftEditor-wrapper": {
+              borderColor:
+                editorType === "equation"
+                  ? nativeTheme.complementary.light
+                  : nativeTheme["gray-300"],
+            },
+            "& .DraftTextField-root": {
+              minWidth: 20,
+            },
+          },
+          ...arrSx(sx),
+        ]}
         ref={numObjEditorRef}
         className={`NumObjEditor-root ${className ?? ""}`}
       >
@@ -174,7 +200,7 @@ const MemoNumObjEntityEditor = React.memo(function MemoNumObjEntityEditor({
             />
           )}
         </div>
-      </Styled>
+      </Box>
     </SectionInfoContextProvider>
   );
 });
@@ -202,45 +228,3 @@ function editorRegEx(editorType: NumEditorType): RegExp {
   };
   return regEx[editorType];
 }
-
-const Styled = styled.div<{ editorType: NumEditorType }>`
-  display: flex;
-  align-items: center;
-
-  .NumObjVarbSelector-root {
-    top: -1px;
-  }
-
-  .MaterialDraftEditor-wrapper {
-    border-color: ${({ editorType }) =>
-      editorType === "equation" && theme.primary.light};
-  }
-
-  .DraftTextField-root {
-    min-width: 20px;
-  }
-
-  .NumObjEditor-calcPositioner {
-    position: relative;
-    z-index: 3;
-    display: flex;
-    align-items: flex-end;
-    width: 0;
-    height: 100%;
-    top: 11px;
-  }
-
-  .NumObjEditor-calcIconPositioner {
-    position: relative;
-    display: flex;
-    align-items: center;
-    z-index: 3;
-    width: 0;
-    height: 100%;
-  }
-
-  .Calculator-root {
-    position: absolute;
-    background: ${theme["gray-300"]};
-  }
-`;
