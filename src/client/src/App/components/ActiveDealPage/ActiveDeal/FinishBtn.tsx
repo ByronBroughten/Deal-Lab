@@ -1,10 +1,10 @@
 import { toast } from "react-toastify";
-import styled, { css } from "styled-components";
-import theme from "../../../theme/Theme";
+import { nativeTheme } from "../../../theme/nativeTheme";
+import { arrSx } from "../../../utils/mui";
 import { HollowBtn } from "../../appWide/HollowBtn";
-import { StandardBtnProps } from "../../general/StandardProps";
+import { MuiBtnPropsNext } from "../../general/StandardProps";
 
-interface Props extends StandardBtnProps {
+interface Props extends MuiBtnPropsNext {
   styleDisabled: boolean;
   warningText: string;
   btnText: string;
@@ -20,34 +20,25 @@ export function FinishBtn({
   className,
   btnText,
   warningText,
+  sx,
 }: Props) {
   return (
-    <Styled
+    <HollowBtn
       {...{
-        className: `FinishBtn-btn ${className ?? ""}`,
-        $styleDisabled: styleDisabled,
+        className,
         middle: btnText,
         onClick: styleDisabled ? () => disabledWarning(warningText) : onClick,
+        sx: [
+          {
+            height: "50px",
+            width: "100%",
+            mt: nativeTheme.s3,
+            fontSize: nativeTheme.fs20,
+            ...(styleDisabled && nativeTheme.disabledBtn),
+          },
+          ...arrSx(sx),
+        ],
       }}
     />
   );
 }
-
-const Styled = styled(HollowBtn)<{ $styleDisabled?: boolean }>`
-  height: 50px;
-  width: 100%;
-  margin-top: ${theme.s3};
-  font-size: ${theme.titleSize};
-
-  ${({ $styleDisabled }) =>
-    $styleDisabled &&
-    css`
-      border-color: ${theme["gray-400"]};
-      color: ${theme["gray-500"]};
-      :hover {
-        background: ${theme.light};
-        border-color: ${theme["gray-400"]};
-        color: ${theme["gray-500"]};
-      }
-    `}
-`;

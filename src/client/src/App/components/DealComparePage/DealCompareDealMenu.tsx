@@ -1,6 +1,5 @@
 import { unstable_batchedUpdates } from "react-dom";
 import { View } from "react-native";
-import styled from "styled-components";
 import { useGetterMain } from "../../sharedWithServer/stateClassHooks/useMain";
 import { useSetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useSetterSection";
 import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection";
@@ -63,9 +62,9 @@ export function DealCompareDealMenu({ closeMenu }: Props) {
                 flexWrap: "nowrap",
               }}
             >
-              <SectionBtn
+              <PlainIconBtn
                 middle={displayName}
-                style={{
+                sx={{
                   display: "flex",
                   flex: 1,
                   justifyContent: "flex-start",
@@ -74,6 +73,9 @@ export function DealCompareDealMenu({ closeMenu }: Props) {
                   padding: nativeTheme.s1,
                   paddingLeft: nativeTheme.s3,
                   paddingRight: nativeTheme.s3,
+                  "&:hover": {
+                    backgroundColor: nativeTheme["gray-400"],
+                  },
                 }}
                 onClick={() => {
                   unstable_batchedUpdates(() => {
@@ -94,8 +96,3 @@ export function DealCompareDealMenu({ closeMenu }: Props) {
     </View>
   );
 }
-const SectionBtn = styled(PlainIconBtn)`
-  :hover {
-    background-color: ${nativeTheme["gray-400"]};
-  }
-`;
