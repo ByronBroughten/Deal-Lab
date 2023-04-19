@@ -16,6 +16,9 @@ import { StyledIconBtn } from "../../../appWide/StyledIconBtn";
 import { DealOutputDetails } from "./OutputSection/DealOutputDetails";
 import { DealOutputList } from "./OutputSection/DealOutputList";
 
+const warnNeedComplete = () =>
+  toast.info("To calculate outputs, first complete each section.");
+
 export function OutputSection({
   feId,
   disableOpenOutputs,
@@ -38,7 +41,6 @@ export function OutputSection({
   };
 
   const listId = outputSection.oneChildFeId("buyAndHoldOutputList");
-
   return !outputsIsOpen ? (
     <MainSectionBtn
       {...{
@@ -46,10 +48,7 @@ export function OutputSection({
         middle: "View Outputs",
         styleDisabled: disableOpenOutputs,
         tooltipText: "",
-        onClick: disableOpenOutputs
-          ? openOutputs
-          : () =>
-              toast.info("To calculate outputs, first complete each section."),
+        onClick: disableOpenOutputs ? warnNeedComplete : openOutputs,
       }}
     />
   ) : (

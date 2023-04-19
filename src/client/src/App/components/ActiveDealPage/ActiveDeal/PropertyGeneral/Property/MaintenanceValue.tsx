@@ -1,16 +1,17 @@
 import { StateValue } from "../../../../../sharedWithServer/SectionsMeta/values/StateValue";
-import { useSetterSection } from "../../../../../sharedWithServer/stateClassHooks/useSetterSection";
+import { validateStateValue } from "../../../../../sharedWithServer/SectionsMeta/values/valueMetas";
+import { useAction } from "../../../../../sharedWithServer/stateClassHooks/useAction";
+import { useGetterSection } from "../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { LabelWithInfo } from "../../../../appWide/LabelWithInfo";
 import { SelectEditorSection } from "../../../../appWide/SelectEditorSection";
 import { NumObjEntityEditor } from "../../../../inputs/NumObjEntityEditor";
 
 export function MaintenanceValue({ feId }: { feId: string }) {
-  const maintenanceValue = useSetterSection({
-    sectionName: "maintenanceValue",
-    feId,
-  });
-  const valueSourceName = maintenanceValue.value("valueSourceName");
-  const valueVarb = maintenanceValue.get.switchVarb("value", "ongoing");
+  const feInfo = { sectionName: "maintenanceValue", feId } as const;
+  const updateValue = useAction("updateValue");
+  const maintenanceValue = useGetterSection(feInfo);
+  const valueSourceName = maintenanceValue.valueNext("valueSourceName");
+  const valueVarb = maintenanceValue.switchVarb("value", "ongoing");
   const showEquals: StateValue<"maintainanceValueSource">[] = [
     "onePercentAndSqft",
     "onePercentPrice",
@@ -42,8 +43,14 @@ export function MaintenanceValue({ feId }: { feId: string }) {
         ),
         selectValue: valueSourceName,
         onChange: (e) => {
-          const value = e.target.value as string;
-          maintenanceValue.varb("valueSourceName").updateValue(value);
+          updateValue({
+            ...feInfo,
+            varbName: "valueSourceName",
+            value: validateStateValue(
+              e.target.value,
+              "maintainanceValueSource"
+            ),
+          });
         },
         menuItems,
         equalsValue,

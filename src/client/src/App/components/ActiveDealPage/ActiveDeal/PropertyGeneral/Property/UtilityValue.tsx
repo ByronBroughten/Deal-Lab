@@ -1,15 +1,16 @@
 import { StateValue } from "../../../../../sharedWithServer/SectionsMeta/values/StateValue";
-import { useSetterSection } from "../../../../../sharedWithServer/stateClassHooks/useSetterSection";
+import { validateStateValue } from "../../../../../sharedWithServer/SectionsMeta/values/valueMetas";
+import { useAction } from "../../../../../sharedWithServer/stateClassHooks/useAction";
+import { useGetterSection } from "../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { SelectAndItemizeEditorSection } from "../../../../appWide/SelectAndItemizeEditorSection";
 import { ListEditorOngoing } from "./ValueShared.tsx/ListEditorOngoing";
 
 export function UtilityValue({ feId }: { feId: string }) {
-  const utilityValue = useSetterSection({
-    sectionName: "utilityValue",
-    feId,
-  });
-  const valueSourceName = utilityValue.value("valueSourceName");
-  const valueVarb = utilityValue.get.switchVarb("value", "ongoing");
+  const feInfo = { sectionName: "utilityValue", feId } as const;
+  const updateValue = useAction("updateValue");
+  const utilityValue = useGetterSection(feInfo);
+  const valueSourceName = utilityValue.valueNext("valueSourceName");
+  const valueVarb = utilityValue.switchVarb("value", "ongoing");
   const equalsValue = valueSourceName === "zero" ? "$0" : undefined;
 
   const menuItems: [StateValue<"utilityValueSource">, string][] = [
@@ -23,8 +24,11 @@ export function UtilityValue({ feId }: { feId: string }) {
         label: "Utility Costs",
         selectValue: valueSourceName,
         onChange: (e) => {
-          const value = e.target.value as string;
-          utilityValue.varb("valueSourceName").updateValue(value);
+          updateValue({
+            ...feInfo,
+            varbName: "valueSourceName",
+            value: validateStateValue(e.target.value, "utilityValueSource"),
+          });
         },
         menuItems,
         equalsValue,

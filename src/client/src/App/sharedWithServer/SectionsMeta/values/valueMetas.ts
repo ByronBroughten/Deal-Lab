@@ -10,7 +10,7 @@ import { sectionChangeMetas } from "./StateValue/sectionChanges";
 import { stringObjMeta } from "./StateValue/StringObj";
 import { checkValueMetas } from "./valueMetaGeneric";
 import { unionMetas } from "./valueMetaUnions";
-import { valueNames } from "./ValueName";
+import { ValueName, valueNames } from "./ValueName";
 
 export const valueMetas = checkValueMetas({
   number: {
@@ -75,8 +75,12 @@ export const valueMetas = checkValueMetas({
   ...unionMetas,
 });
 
-export function validateStateValue(value: any) {
-  for (const valueName of valueNames) {
+export function validateStateValue<VN extends ValueName = ValueName>(
+  value: any,
+  ...passedNames: VN[]
+): StateValue<VN> {
+  const names = passedNames.length > 0 ? passedNames : valueNames;
+  for (const valueName of names) {
     try {
       valueMetas[valueName].validate(value);
       return value;
@@ -86,7 +90,9 @@ export function validateStateValue(value: any) {
       }
     }
   }
-  throw new ValidationError(`value "${value}" is not a stateValue`);
+  throw new ValidationError(
+    `value "${value}" is not a stateValue of valueName "${names.join(", ")}"`
+  );
 }
 export function isStateValue(value: any): value is StateValue {
   for (const valueName of valueNames) {
@@ -94,6 +100,7 @@ export function isStateValue(value: any): value is StateValue {
   }
   return false;
 }
+
 const zValueArr = Object.values(valueMetas).map((schema) => schema.zod) as [
   z.ZodTypeAny,
   z.ZodTypeAny

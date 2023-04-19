@@ -1,16 +1,17 @@
 import { StateValue } from "../../../../../sharedWithServer/SectionsMeta/values/StateValue";
-import { useSetterSection } from "../../../../../sharedWithServer/stateClassHooks/useSetterSection";
+import { validateStateValue } from "../../../../../sharedWithServer/SectionsMeta/values/valueMetas";
+import { useAction } from "../../../../../sharedWithServer/stateClassHooks/useAction";
+import { useGetterSection } from "../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { SelectAndItemizeEditorSection } from "../../../../appWide/SelectAndItemizeEditorSection";
 import { NumObjEntityEditor } from "../../../../inputs/NumObjEntityEditor";
 import { ListEditorSingleTime } from "./ValueShared.tsx/ListEditorSingleTime";
 
 type Props = { feId: string };
 export function RepairValue({ feId }: Props) {
-  const repairValue = useSetterSection({
-    sectionName: "repairValue",
-    feId,
-  });
-  const valueSourceName = repairValue.value("valueSourceName");
+  const feInfo = { sectionName: "repairValue", feId } as const;
+  const updateValue = useAction("updateValue");
+  const repairValue = useGetterSection(feInfo);
+  const valueSourceName = repairValue.valueNext("valueSourceName");
   const equalsValue = valueSourceName === "zero" ? "$0" : undefined;
 
   const menuItems: [StateValue<"repairValueSource">, string][] = [
@@ -26,8 +27,11 @@ export function RepairValue({ feId }: Props) {
         menuItems,
         selectValue: valueSourceName,
         onChange: (e) => {
-          const value = e.target.value as string;
-          repairValue.varb("valueSourceName").updateValue(value);
+          updateValue({
+            ...feInfo,
+            varbName: "valueSourceName",
+            value: validateStateValue(e.target.value, "repairValueSource"),
+          });
         },
         makeEditor:
           valueSourceName === "valueEditor"
@@ -41,7 +45,7 @@ export function RepairValue({ feId }: Props) {
               )
             : undefined,
         equalsValue,
-        total: repairValue.get.varbNext("value").displayVarb(),
+        total: repairValue.varbNext("value").displayVarb(),
         itemizeValue: "listTotal",
         itemizedModalTitle: "Repairs",
         itemsComponent: (

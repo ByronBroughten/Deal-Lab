@@ -4,7 +4,9 @@ import { VarbName } from "../../sharedWithServer/SectionsMeta/baseSectionsDerive
 import { ChildName } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/ChildName";
 import { SectionNameByType } from "../../sharedWithServer/SectionsMeta/SectionNameByType";
 import { StateValue } from "../../sharedWithServer/SectionsMeta/values/StateValue";
-import { useSetterSection } from "../../sharedWithServer/stateClassHooks/useSetterSection";
+import { validateStateValue } from "../../sharedWithServer/SectionsMeta/values/valueMetas";
+import { useAction } from "../../sharedWithServer/stateClassHooks/useAction";
+import { useGetterSection } from "../../sharedWithServer/stateClassHooks/useGetterSection";
 import theme from "../../theme/Theme";
 import { BigStringEditor } from "../inputs/BigStringEditor";
 import { NumObjEntityEditor } from "../inputs/NumObjEntityEditor";
@@ -46,10 +48,12 @@ export function ValueSectionGeneric<
   makeItemizedListNode,
   showXBtn = true,
 }: Props<SN>) {
-  const section = useSetterSection({ sectionName, feId });
+  const feInfo = { sectionName, feId } as const;
+  const updateValue = useAction("updateValue");
+  const section = useGetterSection(feInfo);
   const listChildName = getChildName(sectionName);
-  const valueSource = section.value("valueSourceName");
-  const displayNameValue = section.value("displayName").mainText;
+  const valueSource = section.valueNext("valueSourceName");
+  const displayNameValue = section.valueNext("displayName").mainText;
 
   const menuItems: [StateValue<"customValueSource">, string][] = [
     ["valueEditor", "Enter amount"],
@@ -98,10 +102,13 @@ export function ValueSectionGeneric<
                 : undefined,
             menuItems,
             onChange: (e) => {
-              const value = e.target.value as string;
-              section.varb("valueSourceName").updateValue(value);
+              updateValue({
+                ...feInfo,
+                varbName: "valueSourceName",
+                value: validateStateValue(e.target.value, "customValueSource"),
+              });
             },
-            total: section.get.varbNext(valueName).displayVarb(),
+            total: section.varbNext(valueName).displayVarb(),
             itemizeValue: "listTotal",
             itemizedModalTitle: displayNameValue,
             itemsComponent: makeItemizedListNode({

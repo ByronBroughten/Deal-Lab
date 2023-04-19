@@ -1,6 +1,8 @@
 import { FeVarbInfo } from "../../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { StateValue } from "../../../../../sharedWithServer/SectionsMeta/values/StateValue";
-import { useSetterSection } from "../../../../../sharedWithServer/stateClassHooks/useSetterSection";
+import { validateStateValue } from "../../../../../sharedWithServer/SectionsMeta/values/valueMetas";
+import { useAction } from "../../../../../sharedWithServer/stateClassHooks/useAction";
+import { useGetterSection } from "../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { ValueFixedVarbPathName } from "../../../../../sharedWithServer/StateEntityGetters/ValueInEntityInfo";
 import { GetterSection } from "../../../../../sharedWithServer/StateGetters/GetterSection";
 import { SelectEditorSection } from "../../../../appWide/SelectEditorSection";
@@ -41,12 +43,11 @@ function getProps(getter: GetterSection<"loanBaseValue">): {
 }
 
 export function LoanBaseValue({ feId }: { feId: string }) {
-  const vacancyLoss = useSetterSection({
-    sectionName: "loanBaseValue",
-    feId,
-  });
-  const { editorProps, equalsValue } = getProps(vacancyLoss.get);
-  const valueSourceName = vacancyLoss.value("valueSourceName");
+  const feInfo = { sectionName: "loanBaseValue", feId } as const;
+  const updateValue = useAction("updateValue");
+  const vacancyLoss = useGetterSection(feInfo);
+  const { editorProps, equalsValue } = getProps(vacancyLoss);
+  const valueSourceName = vacancyLoss.valueNext("valueSourceName");
   const menuItems: [StateValue<"loanBaseValueSource">, string][] = [
     [
       "eightyFivePercentAsset",
@@ -76,8 +77,11 @@ export function LoanBaseValue({ feId }: { feId: string }) {
           : undefined,
         selectValue: valueSourceName,
         onChange: (e) => {
-          const value = e.target.value as string;
-          vacancyLoss.varb("valueSourceName").updateValue(value);
+          updateValue({
+            ...feInfo,
+            varbName: "valueSourceName",
+            value: validateStateValue(e.target.value, "loanBaseValueSource"),
+          });
         },
         menuItems,
         equalsValue,

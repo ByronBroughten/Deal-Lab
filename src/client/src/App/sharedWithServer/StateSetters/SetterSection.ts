@@ -94,13 +94,7 @@ export class SetterSection<
     return this.get.childFeIds(childName);
   }
   oneChildFeId(childName: ChildName<SN>): string {
-    const ids = this.childFeIds(childName);
-    if (ids.length !== 1) {
-      throw new Error(
-        `Here, section "${this.get.sectionName}" should have exactly one of this child, "${childName}, but has ${ids.length}".`
-      );
-    }
-    return ids[0];
+    return this.get.oneChildFeId(childName);
   }
   get parent(): SetterSection<ParentNameSafe<SN>> {
     return new SetterSection({

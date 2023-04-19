@@ -867,6 +867,15 @@ export class GetterSection<
       throw this.isNotValidChildNameError(childName);
     }
   }
+  oneChildFeId(childName: ChildName<SN>): string {
+    const ids = this.childFeIds(childName);
+    if (ids.length !== 1) {
+      throw new Error(
+        `Here, section "${this.sectionName}" should have exactly one of this child, "${childName}, but has ${ids.length}".`
+      );
+    }
+    return ids[0];
+  }
 
   childrenDbIds<CN extends ChildName<SN>>(childName: CN): string[] {
     return this.children(childName).map(({ dbId }) => dbId);

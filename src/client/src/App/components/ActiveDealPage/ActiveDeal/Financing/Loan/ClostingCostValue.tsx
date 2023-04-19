@@ -1,15 +1,20 @@
-import { useSetterSection } from "../../../../../sharedWithServer/stateClassHooks/useSetterSection";
+import { validateStateValue } from "../../../../../sharedWithServer/SectionsMeta/values/valueMetas";
+import { useAction } from "../../../../../sharedWithServer/stateClassHooks/useAction";
+import { useGetterSection } from "../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { SelectAndItemizeEditorSection } from "../../../../appWide/SelectAndItemizeEditorSection";
 import { NumObjEntityEditor } from "../../../../inputs/NumObjEntityEditor";
 import { ListEditorSingleTime } from "../../PropertyGeneral/Property/ValueShared.tsx/ListEditorSingleTime";
 
 type Props = { feId: string; fivePercentLoanDisplay: string };
 export function ClosingCostValue({ feId, fivePercentLoanDisplay }: Props) {
-  const closingCostValue = useSetterSection({
+  const updateValue = useAction("updateValue");
+  const feInfo = { sectionName: "closingCostValue", feId } as const;
+
+  const closingCostValue = useGetterSection({
     sectionName: "closingCostValue",
     feId,
   });
-  const valueSourceName = closingCostValue.value("valueSourceName");
+  const valueSourceName = closingCostValue.valueNext("valueSourceName");
   const equalsValue =
     valueSourceName === "fivePercentLoan" ? fivePercentLoanDisplay : undefined;
   return (
@@ -20,8 +25,11 @@ export function ClosingCostValue({ feId, fivePercentLoanDisplay }: Props) {
         // make a note that this does not include Prepaid items
         selectValue: valueSourceName,
         onChange: (e) => {
-          const value = e.target.value as string;
-          closingCostValue.varb("valueSourceName").updateValue(value);
+          updateValue({
+            ...feInfo,
+            varbName: "valueSourceName",
+            value: validateStateValue(e.target.value, "closingCostValueSource"),
+          });
         },
         makeEditor:
           valueSourceName === "valueEditor"
@@ -41,7 +49,7 @@ export function ClosingCostValue({ feId, fivePercentLoanDisplay }: Props) {
           ["listTotal", "Itemize"],
         ],
         equalsValue,
-        total: closingCostValue.get.varbNext("value").displayVarb(),
+        total: closingCostValue.varbNext("value").displayVarb(),
         itemizeValue: "listTotal",
         itemizedModalTitle: "Closing Costs",
         itemsComponent: (

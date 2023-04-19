@@ -1,6 +1,8 @@
 import { FeVarbInfo } from "../../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { StateValue } from "../../../../../sharedWithServer/SectionsMeta/values/StateValue";
-import { useSetterSection } from "../../../../../sharedWithServer/stateClassHooks/useSetterSection";
+import { validateStateValue } from "../../../../../sharedWithServer/SectionsMeta/values/valueMetas";
+import { useAction } from "../../../../../sharedWithServer/stateClassHooks/useAction";
+import { useGetterSection } from "../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { ValueFixedVarbPathName } from "../../../../../sharedWithServer/StateEntityGetters/ValueInEntityInfo";
 import { GetterSection } from "../../../../../sharedWithServer/StateGetters/GetterSection";
 import { SelectEditorSection } from "../../../../appWide/SelectEditorSection";
@@ -54,12 +56,11 @@ function getProps(getter: GetterSection<"mgmtBasePayValue">): {
 }
 
 export function BasePayValue({ feId }: { feId: string }) {
-  const basePayValue = useSetterSection({
-    sectionName: "mgmtBasePayValue",
-    feId,
-  });
-  const { editorProps, equalsValue } = getProps(basePayValue.get);
-  const valueSourceName = basePayValue.value("valueSourceName");
+  const feInfo = { sectionName: "mgmtBasePayValue", feId } as const;
+  const updateValue = useAction("updateValue");
+  const basePayValue = useGetterSection(feInfo);
+  const { editorProps, equalsValue } = getProps(basePayValue);
+  const valueSourceName = basePayValue.valueNext("valueSourceName");
   const menuItems: [StateValue<"mgmtBasePayValueSource">, string][] = [
     ["zero", "Owner managed (no pay)"],
     [
@@ -93,8 +94,11 @@ export function BasePayValue({ feId }: { feId: string }) {
           : undefined,
         selectValue: valueSourceName,
         onChange: (e) => {
-          const value = e.target.value as string;
-          basePayValue.varb("valueSourceName").updateValue(value);
+          updateValue({
+            ...feInfo,
+            varbName: "valueSourceName",
+            value: validateStateValue(e.target.value, "mgmtBasePayValueSource"),
+          });
         },
         menuItems,
         equalsValue,
