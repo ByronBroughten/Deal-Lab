@@ -52,7 +52,7 @@ export function SectionIndexRows<
             {...{
               size: "small",
               className: "SectionIndexRows-filter",
-              placeholder: "Filter",
+              placeholder: "Search",
               variant: "filled",
               value: filter,
               onChange: ({ currentTarget }) => {

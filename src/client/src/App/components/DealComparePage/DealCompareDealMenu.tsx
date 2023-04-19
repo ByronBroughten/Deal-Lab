@@ -38,7 +38,7 @@ export function DealCompareDealMenu({ closeMenu }: Props) {
         {...{
           ...nameFilterVarb.feVarbInfo,
           placeholder: "Filter",
-          style: { minWidth: 120 },
+          sx: { minWidth: 120 },
         }}
       />
       <View

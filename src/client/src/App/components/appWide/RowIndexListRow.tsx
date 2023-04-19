@@ -28,6 +28,7 @@ export const StyledRowIndexRow = styled.div`
     min-width: 25px;
   }
   .LoadSectionBtn-root {
+    color: ${theme.dark};
     display: flex;
     flex: 1;
     justify-content: flex-start;

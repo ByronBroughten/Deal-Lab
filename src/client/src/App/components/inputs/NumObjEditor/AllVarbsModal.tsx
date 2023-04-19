@@ -46,7 +46,7 @@ export function AllVarbsModal({
           {...{
             ...variablesMenu.varbNext("nameFilter").feVarbInfo,
             placeholder: "Filter",
-            style: { minWidth: 120 },
+            sx: { minWidth: 120 },
           }}
         />
         <StyledActionBtn

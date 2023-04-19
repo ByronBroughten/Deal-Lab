@@ -1,3 +1,4 @@
+import { SxProps } from "@mui/material";
 import React from "react";
 import { FeVarbInfo } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { GetterVarb } from "./../../sharedWithServer/StateGetters/GetterVarb";
@@ -9,29 +10,29 @@ interface StringEditorProps extends FeVarbInfo {
   label?: string;
   handleReturn?: HandleReturn;
   placeholder?: string;
-  style?: React.CSSProperties;
+  sx?: SxProps;
 }
 
 export function MaterialStringEditor({
   className,
   label,
   handleReturn,
-  style,
   placeholder,
+  sx,
   ...feVarbInfo
 }: StringEditorProps) {
   let { editorState, setEditorState } = useDraftInput(feVarbInfo);
   return (
     <MaterialDraftEditor
-      className={"MaterialStringEditor-root " + className ?? ""}
-      id={GetterVarb.feVarbInfoToVarbId(feVarbInfo)}
       {...{
+        id: GetterVarb.feVarbInfoToVarbId(feVarbInfo),
+        className,
         placeholder,
         handleReturn,
         setEditorState,
         editorState,
         label,
-        style,
+        sx,
       }}
     />
   );

@@ -35,7 +35,7 @@ export function StyledActionBtn({
             },
             ...(isActive && {
               color: nativeTheme.light,
-              backgroundColor: nativeTheme.secondary.main,
+              backgroundColor: nativeTheme.darkBlue.main,
             }),
             ...(showAsDisabled && {
               color: nativeTheme.notice.dark,

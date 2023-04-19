@@ -17,7 +17,7 @@ export function ActionSaveAsNewBtn({ btnProps, ...feInfo }: Props) {
   const section = useMainSectionActor(feInfo);
   const { feVarbInfo } = section.get.varb("displayName");
   const { isGuest } = section.feStore;
-  const toastWarn = () => toastLoginNotice("save");
+  const warnMustLogin = () => toastLoginNotice("save");
   return (
     <DropdownBtnWrapper
       {...{
@@ -25,7 +25,7 @@ export function ActionSaveAsNewBtn({ btnProps, ...feInfo }: Props) {
           <StyledActionBtn
             middle={"Save as component"}
             left={<AiOutlineSave size={23} />}
-            onClick={isGuest ? toastWarn : toggleDropdown}
+            onClick={isGuest ? warnMustLogin : toggleDropdown}
             isActive={dropdownIsOpen}
             showAsDisabled={isGuest}
             {...btnProps}
@@ -34,6 +34,8 @@ export function ActionSaveAsNewBtn({ btnProps, ...feInfo }: Props) {
         renderDropdownContent: () => (
           <View
             style={{
+              position: "relative",
+              left: 8,
               backgroundColor: nativeTheme.light,
               borderRadius: nativeTheme.br0,
             }}
@@ -41,7 +43,9 @@ export function ActionSaveAsNewBtn({ btnProps, ...feInfo }: Props) {
             <MaterialStringEditor
               {...{
                 ...feVarbInfo,
-                style: { minWidth: 130 },
+                sx: {
+                  minWidth: 130,
+                },
                 label: "Title",
                 handleReturn: () => {
                   section.saveAsNew();
@@ -55,6 +59,12 @@ export function ActionSaveAsNewBtn({ btnProps, ...feInfo }: Props) {
                   borderTopWidth: 0,
                   borderTopLeftRadius: 0,
                   borderTopRightRadius: 0,
+                  backgroundColor: nativeTheme.darkBlue.light,
+                  color: nativeTheme.dark,
+                  "&:hover": {
+                    borderTopWidth: 0,
+                    backgroundColor: nativeTheme.secondary.main,
+                  },
                 },
                 middle: "Save",
                 onClick: () => section.saveAsNew(),
