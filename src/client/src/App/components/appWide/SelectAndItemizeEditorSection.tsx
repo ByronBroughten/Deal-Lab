@@ -15,10 +15,7 @@ export function SelectAndItemizeEditorSection({
   ...rest
 }: Props) {
   return (
-    <FormSectionLabeled
-      className={`SelectAndItemizeEditorSection ${className ?? ""}`}
-      label={label}
-    >
+    <FormSectionLabeled className={`${className ?? ""}`} label={label}>
       <SelectAndItemizeEditor {...rest} />
     </FormSectionLabeled>
   );

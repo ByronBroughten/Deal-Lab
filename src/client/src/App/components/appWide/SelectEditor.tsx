@@ -1,6 +1,7 @@
-import { FormControl, MenuItem, Select, SxProps } from "@mui/material";
+import { Box, FormControl, MenuItem, Select, SxProps } from "@mui/material";
 import React from "react";
 import styled from "styled-components";
+import { nativeTheme } from "../../theme/nativeTheme";
 import theme from "../../theme/Theme";
 import { MuiSelectOnChange } from "../../utils/mui";
 
@@ -75,7 +76,17 @@ export function SelectEditor({
         })}
       {rightOfControls ?? null}
       {equalsValue && (
-        <div className="SelectEditor-equalsValue">{`= ${equalsValue}`}</div>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            fontSize: "18px",
+            flexWrap: "nowrap",
+            whiteSpace: "nowrap",
+            alignItems: "center",
+            ml: nativeTheme.s2,
+          }}
+        >{`= ${equalsValue}`}</Box>
       )}
     </Styled>
   );
@@ -86,13 +97,6 @@ const Styled = styled.div`
   margin-top: ${theme.s2};
   .SelectEditor-select {
     min-width: 0px;
-  }
-  .SelectEditor-equalsValue {
-    display: flex;
-    align-items: center;
-    flex-wrap: nowrap;
-    margin-left: ${theme.s2};
-    white-space: nowrap;
   }
   .SelectEditor-formControl {
     border: solid 1px ${theme["gray-300"]};

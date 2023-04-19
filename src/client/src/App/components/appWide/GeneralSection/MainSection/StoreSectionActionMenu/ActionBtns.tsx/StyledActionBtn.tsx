@@ -23,7 +23,7 @@ export function StyledActionBtn({
             borderWidth: 1,
             borderStyle: "solid",
             borderColor: "transparent",
-            color: nativeTheme.darkBlue.dark,
+            color: nativeTheme.darkBlue.main,
             borderRadius: 5,
             paddingLeft: nativeTheme.s25,
             paddingRight: nativeTheme.s25,
