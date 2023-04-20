@@ -12,6 +12,7 @@ import { GetterVarb } from "../../sharedWithServer/StateGetters/GetterVarb";
 import { EditorTextStatus } from "../../sharedWithServer/StateGetters/GetterVarbNumObj";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { arrSx, useMemoSx } from "../../utils/mui";
+import { useShowEqualsContext } from "../appWide/customContexts/showEquals";
 import { MaterialDraftEditor } from "./MaterialDraftEditor";
 import { NumObjVarbSelector } from "./NumObjEditor/NumObjVarbSelector";
 import {
@@ -31,7 +32,6 @@ type Props = PropAdornments & {
   label?: any;
   labeled?: boolean;
   bypassNumeric?: boolean;
-  doEquals?: boolean;
   editorType?: NumEditorType;
   quickViewVarbNames?: ValueFixedVarbPathName[];
 };
@@ -44,7 +44,6 @@ export function NumObjEntityEditor({
   className,
   labeled = true,
   bypassNumeric = false,
-  doEquals = true,
   quickViewVarbNames,
   label,
   sx,
@@ -54,6 +53,9 @@ export function NumObjEntityEditor({
     ...feVarbInfo,
     compositeDecorator: varSpanDecorator,
   });
+
+  const showEqualsStatus = useShowEqualsContext();
+  const doEquals = showEqualsStatus === "showAll" ? true : varb.isPureUserVarb;
 
   const msx = useMemoSx(sx);
   return (

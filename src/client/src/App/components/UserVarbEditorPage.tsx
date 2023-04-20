@@ -1,10 +1,13 @@
 import { BackBtnWrapper } from "./appWide/BackBtnWrapper";
+import { ShowEqualsProvider } from "./appWide/customContexts/showEquals";
 import { UserVarbEditor } from "./UserVarbEditorPage/UserVarbEditor";
 
 export function UserVarbEditorPage() {
   return (
     <BackBtnWrapper {...{ to: -1, label: "Back" }}>
-      <UserVarbEditor />
+      <ShowEqualsProvider showEqualsStatus="showPure">
+        <UserVarbEditor />
+      </ShowEqualsProvider>
     </BackBtnWrapper>
   );
 }

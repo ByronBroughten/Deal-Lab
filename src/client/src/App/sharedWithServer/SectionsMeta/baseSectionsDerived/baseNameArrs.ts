@@ -36,6 +36,12 @@ function makeBaseNameArrs() {
         "ongoingList",
       ] as const);
     },
+    get userVariable() {
+      return Arr.extractStrict(sectionNames, [
+        "numVarbItem",
+        "boolVarbItem",
+      ] as const);
+    },
     get varbValue() {
       return Arr.extractStrict(sectionNames, [
         "ongoingValue",
