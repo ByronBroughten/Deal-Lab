@@ -1,23 +1,33 @@
 import { SxProps } from "@mui/material";
 import { AiOutlineSave } from "react-icons/ai";
 import { View } from "react-native";
-import { useMainSectionActor } from "../../../../../modules/sectionActorHooks/useMainSectionActor";
 import { FeInfoByType } from "../../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
+import { useAction } from "../../../../../sharedWithServer/stateClassHooks/useAction";
+import { useGetterFeStore } from "../../../../../sharedWithServer/stateClassHooks/useFeStore";
+import { useGetterSection } from "../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { nativeTheme } from "../../../../../theme/nativeTheme";
+import { useConfirmation } from "../../../../general/ConfirmationService";
 import { DropdownBtnWrapper } from "../../../../general/DropdownBtnWrapper";
 import { MaterialStringEditor } from "../../../../inputs/MaterialStringEditor";
 import { SectionBtn } from "../../../SectionBtn";
-import { toastLoginNotice } from "../../../toast";
 import { StyledActionBtn } from "./ActionBtns.tsx/StyledActionBtn";
 
 interface Props extends FeInfoByType<"hasIndexStore"> {
   btnProps?: { sx?: SxProps };
 }
 export function ActionSaveAsNewBtn({ btnProps, ...feInfo }: Props) {
-  const section = useMainSectionActor(feInfo);
-  const { feVarbInfo } = section.get.varb("displayName");
-  const { isGuest } = section.feStore;
-  const warnMustLogin = () => toastLoginNotice("save");
+  const section = useGetterSection(feInfo);
+  const feStore = useGetterFeStore();
+  const displayNameVarb = section.varb("displayName");
+  const howManyWithDisplayName = feStore.howManyWithDisplayName(
+    section.mainStoreName,
+    section.valueNext("displayName").mainText
+  );
+
+  const saveAndOverwrite = useAction("saveAndOverwriteToStore");
+  const confirm = useConfirmation();
+  const doSave = () => saveAndOverwrite({ feInfo });
+
   return (
     <DropdownBtnWrapper
       {...{
@@ -25,9 +35,8 @@ export function ActionSaveAsNewBtn({ btnProps, ...feInfo }: Props) {
           <StyledActionBtn
             middle={"Save as component"}
             left={<AiOutlineSave size={23} />}
-            onClick={isGuest ? warnMustLogin : toggleDropdown}
+            onClick={toggleDropdown}
             isActive={dropdownIsOpen}
-            showAsDisabled={isGuest}
             {...btnProps}
           />
         ),
@@ -42,15 +51,9 @@ export function ActionSaveAsNewBtn({ btnProps, ...feInfo }: Props) {
           >
             <MaterialStringEditor
               {...{
-                ...feVarbInfo,
-                sx: {
-                  minWidth: 130,
-                },
+                ...displayNameVarb.feVarbInfo,
+                sx: { minWidth: 130 },
                 label: "Title",
-                handleReturn: () => {
-                  section.saveAsNew();
-                  return "handled";
-                },
               }}
             />
             <SectionBtn
@@ -67,7 +70,31 @@ export function ActionSaveAsNewBtn({ btnProps, ...feInfo }: Props) {
                   },
                 },
                 middle: "Save",
-                onClick: () => section.saveAsNew(),
+                onClick: () => {
+                  if (howManyWithDisplayName === 0) {
+                    doSave();
+                  } else {
+                    const options =
+                      howManyWithDisplayName === 1
+                        ? {
+                            title: "An entry with that title is already saved",
+                            description: "Would you like to overwrite it?",
+                          }
+                        : {
+                            title:
+                              "Multiple entries with that title are already saved",
+                            description:
+                              "Would you like to overwrite ALL of them?",
+                          };
+                    confirm({
+                      variant: "danger",
+                      catchOnCancel: true,
+                      ...options,
+                    })
+                      .then(doSave)
+                      .catch();
+                  }
+                },
               }}
             />
           </View>

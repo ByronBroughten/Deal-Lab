@@ -77,7 +77,12 @@ export class MainSectionActor<
   get isSaved(): boolean {
     return this.mainSolver.isSaved;
   }
-
+  get howManyWithDisplayName(): number {
+    return this.mainSolver.howManyWithDisplayName;
+  }
+  get isSavedByDisplayName() {
+    return this.mainSolver.isSavedByDisplayName;
+  }
   get asSavedPack(): SectionPack<SN> {
     return this.mainSolver.asSavedPack;
   }

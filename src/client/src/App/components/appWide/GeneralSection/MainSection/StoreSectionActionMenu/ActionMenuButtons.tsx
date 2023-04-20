@@ -72,7 +72,7 @@ export function useActionMenuBtns<
       return (
         <LabeledIconBtn
           key="saveAsNew"
-          label="Save as component"
+          label="Add to components"
           icon={<AiOutlineSave size="25" />}
           onClick={() => mainSection.saveAsNew()}
           disabled={isGuest}

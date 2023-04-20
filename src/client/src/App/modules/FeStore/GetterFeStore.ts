@@ -47,6 +47,13 @@ export class GetterFeStore extends GetterSectionBase<"feStore"> {
   get timeOfSave(): number {
     return this.get.valueNext("timeOfSave");
   }
+  howManyWithDisplayName(storeName: StoreName, displayName: string) {
+    const stored = this.get.children(storeName);
+    const withName = stored.filter(
+      (child) => child.valueNext("displayName").mainText === displayName
+    );
+    return withName.length;
+  }
   get saveStatus(): StateValue<"appSaveStatus"> {
     if (this.noneToSaveNorSaving) {
       return "saved";

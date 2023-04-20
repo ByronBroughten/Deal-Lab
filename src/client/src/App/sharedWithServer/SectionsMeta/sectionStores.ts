@@ -58,7 +58,7 @@ export function sectionStoreNames<SN extends StoreSectionName>(
   return sectionToStoreNames[sectionName] as StoreName<SN>[];
 }
 
-interface StoreNameProp<CN extends StoreName = StoreName> {
+export interface StoreNameProp<CN extends StoreName = StoreName> {
   storeName: CN;
 }
 export interface FeStoreInfo<CN extends StoreName = StoreName>

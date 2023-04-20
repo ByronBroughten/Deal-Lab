@@ -6,6 +6,7 @@ import { FeSectionInfo, FeVarbInfo } from "../SectionsMeta/SectionInfo/FeInfo";
 import { VarbInfoMixed } from "../SectionsMeta/SectionInfo/MixedSectionInfo";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
+import { StoreSectionName } from "../SectionsMeta/sectionStores";
 import { GetterSections } from "../StateGetters/GetterSections";
 import { GetterVarb } from "../StateGetters/GetterVarb";
 import { PackBuilderSections } from "../StatePackers/PackBuilderSections";
@@ -190,6 +191,13 @@ export class SolverSections extends SolverSectionsBase {
     feStore.addToStore({ storeName: "dealMain" }, false);
     const { feId } = feStore.get.youngestChild("dealMain");
     this.activateDealAndSolve(feId);
+  }
+  saveAndOverwriteToStore(feInfo: FeSectionInfo<StoreSectionName>) {
+    const section = this.getterSections.section(feInfo);
+    this.feStore.saveAndOverwriteToStore({
+      storeName: section.mainStoreName,
+      sectionPack: section.makeSectionPack(),
+    });
   }
   removeStoredDeal(feId: string) {
     if (this.getterSections.isActiveDeal(feId)) {

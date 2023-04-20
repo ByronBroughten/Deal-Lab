@@ -80,6 +80,16 @@ export class MainSectionSolver<
   get isSaved(): boolean {
     return this.storeSolver.hasByDbId(this.dbId);
   }
+  get howManyWithDisplayName(): number {
+    return this.storeSolver.howManyWithDisplayName(
+      this.get.valueNext("displayName").mainText
+    );
+  }
+  get isSavedByDisplayName(): boolean {
+    return this.storeSolver.hasByDisplayName(
+      this.get.valueNext("displayName").mainText
+    );
+  }
   get displayItems(): DisplayItemProps[] {
     return this.storeSolver.displayItems;
   }

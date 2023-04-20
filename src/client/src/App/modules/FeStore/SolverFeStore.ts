@@ -1,7 +1,9 @@
+import { SectionPack } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/SectionPack";
 import {
   FeStoreInfo,
   isStoreNameByType,
   StoreName,
+  StoreNameProp,
   StoreSectionName,
 } from "../../sharedWithServer/SectionsMeta/sectionStores";
 import {
@@ -23,9 +25,14 @@ import { timeS } from "../../sharedWithServer/utils/timeS";
 import { toastNotice } from "./../../components/appWide/toast";
 import { GetterFeStore } from "./GetterFeStore";
 
-export interface AddToStoreProps<CN extends StoreName = StoreName> {
-  storeName: CN;
+export interface AddToStoreProps<CN extends StoreName = StoreName>
+  extends StoreNameProp<CN> {
   options?: AddChildOptions<"feStore", CN>;
+}
+
+export interface SaveAsToStoreProps<CN extends StoreName = StoreName>
+  extends StoreNameProp<CN> {
+  sectionPack: SectionPack<StoreSectionName<CN>>;
 }
 
 export interface RemoveFromStoreProps extends FeStoreInfo {}
@@ -96,6 +103,21 @@ export class SolverFeStore extends SolverSectionBase<"feStore"> {
     const clonePack = clone.packMaker.makeSectionPack();
     addedSection.basicSolvePrepper.loadSelfSectionPack(clonePack);
     addedSection.updateValuesAndSolve(timeS.makeDateTimeFirstLastSaved());
+  }
+  saveAndOverwriteToStore({ storeName, sectionPack }: SaveAsToStoreProps) {
+    this.addToStore({ storeName }, false);
+    const added = this.solver.youngestChild(storeName);
+    added.loadSelfAndSolve(sectionPack);
+    added.updater.newDbId();
+    const addedName = added.value("displayName").mainText;
+    for (const child of this.get.children(storeName)) {
+      if (child.feId !== added.get.feId) {
+        const childName = child.valueNext("displayName").mainText;
+        if (childName === addedName) {
+          this.removeFromStore({ storeName, feId: child.feId });
+        }
+      }
+    }
   }
   addToStore({ storeName, options }: AddToStoreProps, doSolve: boolean = true) {
     const storedCount = this.get.childCount(storeName);

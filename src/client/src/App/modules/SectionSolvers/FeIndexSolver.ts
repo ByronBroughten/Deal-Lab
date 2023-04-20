@@ -65,6 +65,20 @@ export class FeIndexSolver<
   getItemPack(dbId: string): SectionPack<ChildSectionName<"feStore", CN>> {
     return this.getItem(dbId).packMaker.makeSectionPack();
   }
+  howManyWithDisplayName(displayName: string): number {
+    const children = this.get.children(this.itemName);
+    const withName = children.filter(
+      (child) => child.valueNext("displayName").mainText === displayName
+    );
+    return withName.length;
+  }
+  hasByDisplayName(displayName: string): boolean {
+    const children = this.get.children(this.itemName);
+    const withName = children.filter(
+      (child) => child.valueNext("displayName").mainText === displayName
+    );
+    return withName.length > 0 ? true : false;
+  }
   hasByDbId(dbId: string) {
     return this.get.hasChildByDbInfo({
       childName: this.itemName,

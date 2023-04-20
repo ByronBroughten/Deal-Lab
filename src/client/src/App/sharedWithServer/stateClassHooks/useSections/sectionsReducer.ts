@@ -8,7 +8,11 @@ import {
 } from "../../SectionsMeta/SectionInfo/FeInfo";
 import { FeIdProp } from "../../SectionsMeta/SectionInfo/NanoIdInfo";
 import { SectionName } from "../../SectionsMeta/SectionName";
-import { FeStoreInfo, StoreName } from "../../SectionsMeta/sectionStores";
+import {
+  FeStoreInfo,
+  StoreName,
+  StoreSectionName,
+} from "../../SectionsMeta/sectionStores";
 import { StateSections } from "../../StateSections/StateSections";
 import { EditorUpdaterVarb } from "../../StateSetters/EditorUpdaterVarb";
 import { SolverSections } from "../../StateSolvers/SolverSections";
@@ -35,6 +39,11 @@ interface AddToStore<CN extends StoreName = StoreName>
   extends AddToStoreProps<CN> {
   type: "addToStore";
 }
+interface SaveAsToStore {
+  feInfo: FeSectionInfo<StoreSectionName>;
+  type: "saveAndOverwriteToStore";
+}
+
 interface CopyInStore extends FeStoreInfo {
   type: "copyInStore";
 }
@@ -97,12 +106,16 @@ export type SectionsAction =
   | FinishSaveAttempt
   | AddActiveDeal
   | RemoveStoredDeal
-  | ActivateDeal;
+  | ActivateDeal
+  | SaveAsToStore;
 
 type SectionActionName = SectionsAction["type"];
 const reducerActionNameMap: Record<SectionActionName, 0> = {
   addChild: 0,
   addToStore: 0,
+  saveAndOverwriteToStore: 0,
+  activateDeal: 0,
+  addActiveDeal: 0,
   copyInStore: 0,
   removeSelf: 0,
   removeFromStore: 0,
@@ -111,8 +124,6 @@ const reducerActionNameMap: Record<SectionActionName, 0> = {
   onChangeIdle: 0,
   setState: 0,
   finishSave: 0,
-  addActiveDeal: 0,
-  activateDeal: 0,
   removeStoredDeal: 0,
 };
 export const sectionActionNames = Obj.keys(reducerActionNameMap);
@@ -173,14 +184,16 @@ export const sectionsReducer: React.Reducer<StateSections, SectionsAction> = (
       solverSections.addActiveDeal();
       break;
     }
-
     case "removeStoredDeal": {
       solverSections.removeStoredDeal(action.feId);
       break;
     }
-
     case "addToStore": {
       solverSections.feStore.addToStore(action);
+      break;
+    }
+    case "saveAndOverwriteToStore": {
+      solverSections.saveAndOverwriteToStore(action.feInfo);
       break;
     }
     case "copyInStore": {

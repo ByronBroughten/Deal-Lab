@@ -7,6 +7,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Normalize } from "styled-normalize";
 import { SuperTokensWrapper } from "supertokens-auth-react";
+import { ConfirmationServiceProvider } from "./App/components/general/ConfirmationService";
 import { initSupertokens } from "./App/modules/initSupertokens";
 import { IdOfSectionToSaveProvider } from "./App/sharedWithServer/stateClassHooks/useIdOfSectionToSave";
 import {
@@ -44,10 +45,12 @@ const App: React.FC = () => {
                 <SectionsContext.Provider value={sectionsContext}>
                   <SectionsDispatchContext.Provider value={sectionsDispatch}>
                     <IdOfSectionToSaveProvider storeId="">
-                      <GlobalFonts />
-                      <GlobalStyle />
-                      <Main />
-                      <ToastContainer />
+                      <ConfirmationServiceProvider>
+                        <GlobalFonts />
+                        <GlobalStyle />
+                        <Main />
+                        <ToastContainer />
+                      </ConfirmationServiceProvider>
                     </IdOfSectionToSaveProvider>
                   </SectionsDispatchContext.Provider>
                 </SectionsContext.Provider>
