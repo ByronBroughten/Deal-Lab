@@ -29,7 +29,7 @@ export function StyledActionBtn({
             paddingRight: nativeTheme.s25,
             fontSize: 15,
             "&:hover": {
-              color: nativeTheme.light,
+              color: nativeTheme.yellowGreen.main,
               backgroundColor: nativeTheme.darkBlue.main,
               borderColor: nativeTheme.darkBlue.main,
             },

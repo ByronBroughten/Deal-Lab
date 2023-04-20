@@ -176,6 +176,7 @@ export function makeAllBaseSectionVarbs() {
     }),
     property: baseSectionVarbs({
       ...baseVarbsS.savableSection,
+      address: baseVarb("string"),
       ...baseVarbs(
         "numObj",
         [

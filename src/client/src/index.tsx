@@ -7,27 +7,6 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
-// 1. Make the list and main components use the same menu
-//    - Don't rely on name arrs of buttons for their order
-// 2. Make a styled version of the edit button from Saved Deals
-// 3. Use the new styled button for all ActionBtns
-
-// - For every e.target.value, get rid of the setterVarb involved
-
-// - How should I handle ViewOutputs?
-// - Make "ViewOutputs" button be the whole width and height
-
-// Update the buttons to copy the better AccountPage ones?
-// - Save message:
-//   - You already have a property called "Example Property 3". Would you like
-//     to overwrite it? "Yes", "Cancel"
-// - Saved properties >
-// - Implement viewing saved properties, loans, and mgmts
-// - Implement editing saved properties, loans, and mgmts
-
-// - Make the variables page not show an equal sign with impure variables
-// - Do the same with all the component editor pages
-
 // - Add FixNFlip
 //   - Add ARV
 //   - Add holding period
@@ -37,9 +16,12 @@ AppRegistry.runApplication("App", {
 //   - Add cost overrun
 //   - Contractor management costs for mgmt?
 
-// - Mark incomplete deals in Saved Deals as such
+// Add more differentiating stats for Financing and Property
+// Add address for property
+// Maybe add a way to load property right from deal menu
 
-// - Convert messy NavDropdown component to sx
+// - Mark incomplete deals in Saved Deals as such
+//   - For this, the deal itself must have the completionStatus value, right?
 
 // - Add empty dbChildIds to DbStore, to control the orders of components
 //   - They'll likely be pretty easy to update, later.

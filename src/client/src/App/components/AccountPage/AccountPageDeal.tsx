@@ -5,7 +5,7 @@ import { useActionWithProps } from "../../sharedWithServer/stateClassHooks/useAc
 import { nativeTheme } from "../../theme/nativeTheme";
 import { reactNativeS } from "../../utils/reactNative";
 import { useGoToPage } from "../appWide/customHooks/useGoToPage";
-import { PlainIconBtn, PlainIconBtnProps } from "../general/PlainIconBtn";
+import { StyledActionBtn } from "../appWide/GeneralSection/MainSection/StoreSectionActionMenu/ActionBtns.tsx/StyledActionBtn";
 import { useGetterSection } from "./../../sharedWithServer/stateClassHooks/useGetterSection";
 import { Row } from "./../general/Row";
 import { icons } from "./../Icons";
@@ -129,7 +129,7 @@ export function AccountPageDeal({
           <Text {...dealTypeProps}>{dealModeLabels[dealMode]}</Text>
         </Row>
         <Row>
-          <PillIconBtn
+          <StyledActionBtn
             {...{
               sx: {
                 margin: nativeTheme.s15,
@@ -141,7 +141,7 @@ export function AccountPageDeal({
               onClick: editDeal,
             }}
           />
-          <PillIconBtn
+          <StyledActionBtn
             {...{
               onClick: copyDeal,
               sx: {
@@ -153,7 +153,7 @@ export function AccountPageDeal({
               middle: "Copy",
             }}
           />
-          <PillIconBtn
+          <StyledActionBtn
             {...{
               onClick: deleteDeal,
               sx: {
@@ -172,31 +172,5 @@ export function AccountPageDeal({
         </Row>
       </Row>
     </View>
-  );
-}
-
-function PillIconBtn({ sx, ...rest }: PlainIconBtnProps) {
-  return (
-    <PlainIconBtn
-      {...{
-        ...rest,
-        sx: {
-          borderWidth: 1,
-          borderStyle: "solid",
-          borderColor: "transparent",
-          color: nativeTheme.darkBlue.dark,
-          borderRadius: 5,
-          paddingLeft: nativeTheme.s25,
-          paddingRight: nativeTheme.s25,
-          fontSize: nativeTheme.fs14,
-          "&:hover": {
-            color: nativeTheme.light,
-            backgroundColor: nativeTheme.darkBlue.main,
-            borderColor: nativeTheme.darkBlue.main,
-          },
-          ...sx,
-        },
-      }}
-    />
   );
 }
