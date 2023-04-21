@@ -107,6 +107,18 @@ export class SolveValueVarb<
       }
     },
     numberOne: (): 1 => 1,
+    activeIsComplete: (): boolean => {
+      const { sectionContextName } = this.getterSection;
+      if (sectionContextName !== "activeDealSystem") {
+        return this.getterVarb.value("boolean");
+      } else {
+        const { updateFnProps } = this.inEntityVarb;
+        const varb = this.getterSection.varbByFocalMixed(
+          updateFnProps.completionStatus as UpdateFnProp
+        );
+        return varb.value("completionStatus") === "allValid";
+      }
+    },
     completionStatus: (): UnionValue<"completionStatus"> => {
       const { updateFnProps } = this.inEntityVarb;
       const { nonZeros, validInputs, othersValid, nonNone, notFalse } =

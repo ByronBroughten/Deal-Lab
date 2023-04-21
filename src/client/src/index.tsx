@@ -8,7 +8,11 @@ AppRegistry.runApplication("App", {
 });
 // Make it stop trying to save after a failed attempt.
 
+// - Mark incomplete deals in Saved Deals as such
+//   - For this, the deal itself must have the completionStatus value, right?
+
 // - Add FixNFlip
+//  - Copy DealCheck
 //   - Add ARV
 //   - Add holding period
 //   - Add holding costs
@@ -20,9 +24,6 @@ AppRegistry.runApplication("App", {
 // Add more differentiating stats for Financing and Property
 // Add address for property
 // Maybe add a way to load property right from deal menu
-
-// - Mark incomplete deals in Saved Deals as such
-//   - For this, the deal itself must have the completionStatus value, right?
 
 // - Add empty dbChildIds to DbStore, to control the orders of components
 //   - They'll likely be pretty easy to update, later.

@@ -1,3 +1,4 @@
+import { Box } from "@mui/system";
 import { unstable_batchedUpdates } from "react-dom";
 import { Text, View, ViewStyle } from "react-native";
 import { dealModeLabels } from "../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
@@ -82,37 +83,6 @@ export function AccountPageDeal({
     >
       <Row style={{ justifyContent: "space-between" }}>
         <Text {...titleProps}>{deal.stringValue("displayName")}</Text>
-        {/* <Row {...rowProps}>
-          {icons.property(iconProps)}
-          <Text {...titleProps}>{names.property}</Text>
-        </Row>
-        <Row {...rowProps}>
-          <MdOutlineAttachMoney
-            {...{
-              ...iconProps,
-              style: {
-                ...iconProps.style,
-                marginRight: -5,
-              },
-            }}
-          />
-          <Text
-            {...{
-              ...titleProps,
-              style: {
-                ...titleProps.style,
-                paddingLeft: -3,
-              },
-            }}
-          >
-            {names.financing}
-          </Text>
-        </Row>
-        <Row {...rowProps}>
-          <FaUserTie {...iconProps} />
-          <Text {...titleProps}>{names.mgmt}</Text>
-        </Row>
-         */}
         <Row
           style={{
             ...rowStyle,
@@ -127,6 +97,17 @@ export function AccountPageDeal({
         <Row style={rowStyle}>
           {icons["buyAndHold"](iconProps)}
           <Text {...dealTypeProps}>{dealModeLabels[dealMode]}</Text>
+          {!deal.valueNext("isComplete") && (
+            <Box
+              sx={{
+                color: nativeTheme.notice.dark,
+                ml: nativeTheme.s3,
+                fontStyle: "italic",
+              }}
+            >
+              {"Incomplete"}
+            </Box>
+          )}
         </Row>
         <Row>
           <StyledActionBtn

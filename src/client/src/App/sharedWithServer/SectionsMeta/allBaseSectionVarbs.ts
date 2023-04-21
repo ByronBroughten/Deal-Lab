@@ -314,6 +314,7 @@ export function makeAllBaseSectionVarbs() {
       dealMode: baseVarb("dealMode"),
       ...baseVarbsS.savableSection,
       ...baseVarbsS.displayNameEditor,
+      isComplete: baseVarb("boolean"),
       displayNameSource: baseVarb("dealDisplayNameSource"),
       ...baseVarbsS.ongoingDollars("expenses"),
       ...baseVarbsS.ongoingDollars("revenue"),

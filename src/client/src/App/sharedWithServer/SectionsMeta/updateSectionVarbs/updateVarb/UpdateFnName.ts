@@ -47,7 +47,7 @@ const updateFnNames = checkUpdateFnNames({
     "defaultDealDisplayName",
   ] as const,
   number: [...commonUpdateFnNames, "numberOne"] as const,
-  boolean: [...commonUpdateFnNames, "varbExists"] as const,
+  boolean: [...commonUpdateFnNames, "varbExists", "activeIsComplete"] as const,
   completionStatus: [...commonUpdateFnNames, "completionStatus"] as const,
 });
 

@@ -36,6 +36,16 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
     displayNameSource: updateVarb("dealDisplayNameSource", {
       initValue: "displayNameEditor",
     }),
+    isComplete: updateVarb("boolean", {
+      initValue: true,
+      updateFnName: "activeIsComplete",
+      updateFnProps: {
+        completionStatus: updateFnPropS.pathName(
+          "calculatedVarbsFocal",
+          "dealCompletionStatus"
+        ),
+      },
+    }),
     dealMode: updateVarb("dealMode", { initValue: "buyAndHold" }),
     totalInvestment: updateVarbS.leftRightPropFn(
       "simpleSubtract",
