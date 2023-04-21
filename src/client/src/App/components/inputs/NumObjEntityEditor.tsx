@@ -160,7 +160,7 @@ const MemoNumObjEntityEditor = React.memo(function MemoNumObjEntityEditor({
             "& .MaterialDraftEditor-wrapper": {
               borderColor:
                 editorType === "equation"
-                  ? nativeTheme.complementary.light
+                  ? nativeTheme.secondary.main
                   : nativeTheme["gray-300"],
             },
             "& .DraftTextField-root": {

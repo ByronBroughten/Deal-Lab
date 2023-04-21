@@ -6,6 +6,7 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
+// Make it stop trying to save after a failed attempt.
 
 // - Add FixNFlip
 //   - Add ARV

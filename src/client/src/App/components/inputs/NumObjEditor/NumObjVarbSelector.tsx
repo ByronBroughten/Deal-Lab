@@ -1,16 +1,17 @@
 import { EditorState } from "draft-js";
 import React from "react";
-import { AiOutlineInfoCircle } from "react-icons/ai";
 import styled from "styled-components";
 import { useToggleView } from "../../../modules/customHooks/useToggleView";
 import { FeSectionInfo } from "../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { mixedInfoS } from "../../../sharedWithServer/SectionsMeta/SectionInfo/MixedSectionInfo";
 import { useGetterSection } from "../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { ValueFixedVarbPathName } from "../../../sharedWithServer/StateEntityGetters/ValueInEntityInfo";
+import { nativeTheme } from "../../../theme/nativeTheme";
 import theme from "../../../theme/Theme";
 import { HollowBtn } from "../../appWide/HollowBtn";
 import { ModalText } from "../../appWide/ModalText";
 import { DropdownContainer } from "../../general/DropdownContainer";
+import { icons } from "../../Icons";
 import { PopperRef } from "../VarbAutoComplete";
 import { AllVarbsModal } from "./AllVarbsModal";
 import { insertVarbEntity } from "./NumObjVarbSelector/insertVarbEntity";
@@ -58,10 +59,21 @@ export const NumObjVarbSelector = React.memo(
                 <AddVarbBtn
                   {...{ middle: "+ Variable", onClick: toggleVarbs }}
                 />
-                <InfoBtn
+                <HollowBtn
                   className="NumObjVarbSelector-infoBtn"
-                  middle={<AiOutlineInfoCircle size={19} />}
+                  middle={icons.info({ size: 21 })}
                   onClick={openInfo}
+                  sx={{
+                    borderRadius: 0,
+                    border: "none",
+                    color: nativeTheme.complementary.main,
+                    padding: nativeTheme.s2,
+                    borderLeft: `1px solid ${nativeTheme.complementary.light}`,
+                    height: selectorHeight,
+                    "&:hover": {
+                      backgroundColor: nativeTheme.complementary.light,
+                    },
+                  }}
                 />
                 <ModalText
                   {...{
@@ -118,18 +130,6 @@ export const NumObjVarbSelector = React.memo(
 
 const selectorHeight = "30px";
 
-const InfoBtn = styled(HollowBtn)`
-  border-radius: 0;
-  border: none;
-  color: ${theme.primary.main};
-  padding: ${theme.s2} ${theme.s2} 0 ${theme.s2};
-  border-left: 1px solid ${theme.primary.light};
-  height: ${selectorHeight};
-  :hover {
-    background-color: ${theme.primary.main};
-  }
-`;
-
 const AddVarbBtn = styled(HollowBtn)`
   height: ${selectorHeight};
   width: 98px;
@@ -138,7 +138,7 @@ const AddVarbBtn = styled(HollowBtn)`
   border: none;
   color: ${theme.primary.main};
   :hover {
-    background-color: ${theme.primary.main};
+    background-color: ${theme.primary.light};
   }
 `;
 

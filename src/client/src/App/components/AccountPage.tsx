@@ -8,6 +8,7 @@ import { View } from "react-native";
 import { FeRouteName } from "../Constants/feRoutes";
 import { useActionWithProps } from "../sharedWithServer/stateClassHooks/useAction";
 import { nativeTheme } from "../theme/nativeTheme";
+import { arrSx } from "../utils/mui";
 import { AccountPageDeals } from "./AccountPage/SavedDeals";
 import { useGoToPage } from "./appWide/customHooks/useGoToPage";
 import { HollowBtn } from "./appWide/HollowBtn";
@@ -34,7 +35,7 @@ export function AccountPage() {
           <AccountBtn
             onClick={addActiveDeal}
             feRouteName="activeDeal"
-            text={<Box>Add Deal</Box>}
+            text={<Box>New Deal</Box>}
             icon={<BsFillHouseAddFill size={iconSize} />}
           />
           <AccountBtn
@@ -109,14 +110,24 @@ function AccountBtn({
             {text}
           </Box>
         ),
-        sx: {
-          margin: nativeTheme.dealMenuElement.margin,
-          fontSize: nativeTheme.fs22,
-          height: size,
-          width: size,
-          whiteSpace: "normal",
-          ...sx,
-        },
+        sx: [
+          {
+            margin: nativeTheme.dealMenuElement.margin,
+            fontSize: nativeTheme.fs22,
+            height: size,
+            width: size,
+            whiteSpace: "normal",
+
+            borderColor: nativeTheme.darkBlue.main,
+            color: nativeTheme.darkBlue.main,
+            "&:hover": {
+              color: nativeTheme.light,
+              backgroundColor: nativeTheme.darkBlue.light,
+              borderColor: nativeTheme.darkBlue.main,
+            },
+          },
+          ...arrSx(sx),
+        ],
         ...rest,
       }}
     />

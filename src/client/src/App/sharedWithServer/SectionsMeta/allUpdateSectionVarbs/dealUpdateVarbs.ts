@@ -34,7 +34,7 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
       ],
     }),
     displayNameSource: updateVarb("dealDisplayNameSource", {
-      initValue: "defaultDisplayName",
+      initValue: "displayNameEditor",
     }),
     dealMode: updateVarb("dealMode", { initValue: "buyAndHold" }),
     totalInvestment: updateVarbS.leftRightPropFn(

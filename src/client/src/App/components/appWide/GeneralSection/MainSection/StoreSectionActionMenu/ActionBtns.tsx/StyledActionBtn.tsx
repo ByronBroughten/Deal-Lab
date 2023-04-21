@@ -29,8 +29,8 @@ export function StyledActionBtn({
             paddingRight: nativeTheme.s25,
             fontSize: 15,
             "&:hover": {
-              color: nativeTheme.yellowGreen.main,
-              backgroundColor: nativeTheme.darkBlue.main,
+              color: nativeTheme.light,
+              backgroundColor: nativeTheme.darkBlue.light,
               borderColor: nativeTheme.darkBlue.main,
             },
             ...(isActive && {

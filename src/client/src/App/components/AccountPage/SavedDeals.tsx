@@ -38,7 +38,7 @@ export function AccountPageDeals() {
   return (
     <Row
       style={{
-        ...nativeTheme.mainSection,
+        // ...nativeTheme.mainSection,
         flex: 1,
         height: "100%",
         margin: nativeTheme.dealMenuElement.margin,
@@ -46,6 +46,12 @@ export function AccountPageDeals() {
         paddingLeft: nativeTheme.s45,
         paddingRight: nativeTheme.s45,
         paddingBottom: nativeTheme.s5,
+        paddingTop: nativeTheme.s4,
+        borderColor: nativeTheme.primary.main,
+        borderWidth: 1,
+        borderStyle: "solid",
+        borderRadius: nativeTheme.br0,
+        backgroundColor: nativeTheme.light,
       }}
     >
       <View style={{ alignItems: "center", flex: 1 }}>

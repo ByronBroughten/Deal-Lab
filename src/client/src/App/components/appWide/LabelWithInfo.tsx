@@ -1,9 +1,9 @@
 import React from "react";
-import { BiHelpCircle } from "react-icons/bi";
 import styled from "styled-components";
 import { useToggleView } from "../../modules/customHooks/useToggleView";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { PlainIconBtn } from "../general/PlainIconBtn";
+import { icons } from "../Icons";
 import { ModalText } from "./ModalText";
 
 type Props = {
@@ -24,16 +24,13 @@ export function LabelWithInfo({
       <span>{label}</span>
       <PlainIconBtn
         onClick={openInfo}
-        middle={
-          <BiHelpCircle
-            size={22}
-            style={{
-              marginLeft: nativeTheme.s2,
-              color: nativeTheme.complementary.main,
-            }}
-            className="LabelWithInfo-infoCircle"
-          />
-        }
+        middle={icons.info({
+          size: 22,
+          style: {
+            marginLeft: nativeTheme.s2,
+            color: nativeTheme.complementary.main,
+          },
+        })}
       />
       <ModalText
         {...{

@@ -1,13 +1,13 @@
 import { IconBaseProps } from "react-icons";
 import { AiFillEdit } from "react-icons/ai";
-import { BiCopy } from "react-icons/bi";
+import { BiCopy, BiHelpCircle } from "react-icons/bi";
 import { BsFillHouseFill } from "react-icons/bs";
 import { FaHandHoldingUsd } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 
 interface IconProps extends IconBaseProps {}
 
-type IconName = "property" | "buyAndHold" | "delete" | "edit" | "copy";
+type IconName = "property" | "buyAndHold" | "delete" | "edit" | "copy" | "info";
 export const icons: Record<IconName, (props?: IconProps) => React.ReactNode> = {
   property(props) {
     return <BsFillHouseFill {...props} />;
@@ -24,5 +24,8 @@ export const icons: Record<IconName, (props?: IconProps) => React.ReactNode> = {
   },
   delete(props) {
     return <MdDelete {...props} />;
+  },
+  info(props) {
+    return <BiHelpCircle {...props} />;
   },
 };

@@ -11,13 +11,13 @@ export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
   return {
     ...updateVarbsS._typeUniformity,
     ...updateVarbsS.savableSection,
+    address: updateVarb("string"),
     one: updateVarbS.one(),
     purchasePrice: updateVarb("numObj"),
     sqft: updateVarb("numObj"),
     ...updateVarbsS.ongoingInputNext("taxes", {
       switchInit: "yearly",
     }),
-
     afterRepairValue: updateVarb("numObj"),
     sellingCosts: updateVarb("numObj"),
     numUnits: updateVarbS.sumChildNums("unit", "one"),
