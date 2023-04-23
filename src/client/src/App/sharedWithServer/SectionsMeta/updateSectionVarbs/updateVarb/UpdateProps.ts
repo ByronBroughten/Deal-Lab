@@ -31,32 +31,55 @@ function updateProps<
 >({}) {}
 
 export const updatePropsS = {
-  simple<UN extends UpdateFnName>(updateFnName: UN) {
+  simple<UN extends UpdateFnName>(
+    updateFnName: UN
+  ): {
+    updateFnName: UN;
+    updateFnProps: {};
+    updateOverrides: [];
+  } {
     return {
       updateFnName,
       updateFnProps: {},
       updateOverrides: [],
-    } as const;
+    };
   },
-  sumNums<N = UpdateFnProp[]>(nums: N) {
+  sumNums<UN = UpdateFnProp[]>(
+    nums: UN
+  ): {
+    updateFnName: "sumNums";
+    updateFnProps: { nums: UN };
+    updateOverrides: [];
+  } {
     return {
       updateFnName: "sumNums",
       updateFnProps: { nums },
       updateOverrides: [],
-    } as const;
+    };
   },
-  singlePropCalc(updateFnName: NumPropCalcName, num: UpdateFnProp) {
+  singlePropCalc<UN extends NumPropCalcName>(
+    updateFnName: UN,
+    num: UpdateFnProp
+  ): {
+    updateFnName: UN;
+    updateFnProps: { num: UpdateFnProp };
+    updateOverrides: [];
+  } {
     return {
       updateFnName,
       updateFnProps: { num },
       updateOverrides: [],
-    } as const;
+    };
   },
-  leftRightPropCalc(
-    updateFnName: LeftRightPropCalcName,
+  leftRightPropCalc<UN extends LeftRightPropCalcName>(
+    updateFnName: UN,
     leftSide: UpdateFnProp,
     rightSide: UpdateFnProp
-  ) {
+  ): {
+    updateFnName: UN;
+    updateFnProps: { leftSide: UpdateFnProp; rightSide: UpdateFnProp };
+    updateOverrides: [];
+  } {
     return {
       updateFnName,
       updateFnProps: { leftSide, rightSide },

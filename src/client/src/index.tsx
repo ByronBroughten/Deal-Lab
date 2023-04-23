@@ -8,10 +8,43 @@ AppRegistry.runApplication("App", {
 });
 // Make it stop trying to save after a failed attempt.
 
-// - Mark incomplete deals in Saved Deals as such
-//   - For this, the deal itself must have the completionStatus value, right?
-
 // - Add FixNFlip
+// Add the necessary inputs
+// * After Repair Value
+
+// Purchase Loan
+// Down payment or Loan Amount
+// Loan amount method
+//  % of Purchase Price
+//  % of Rehab Costs
+//  % Price and Rehab Costs
+
+// DollarAmount
+
+// Create a separate sectionValue for each of those
+// downPayment % or loanAmount %
+
+// purchasePriceLoanAmount
+
+// Refinance Loan
+// * percentOf ARV
+
+// - Probably factor repairs into loans
+// - Also factor in downPayments
+// Add the necessary outputs
+// Create default a default output list for each
+// Add overrides to the component completionStatuses
+
+// Add multiple units at once
+// Add optional description information to property (parking, lot size, zoning, MLS number?, notes)
+// Display units in groups of like units (2) Unit Info; (1) Unit Info;
+// Add a unit label?
+// Add unit sqft?
+// Add "property type" to property, to open up different fields
+// Add a full address to properties? (Street, city, state, zipcode) with autofill
+// Add tags to deals?
+// Add a short description to deals?
+
 //  - Copy DealCheck
 //   - Add ARV
 //   - Add holding period
