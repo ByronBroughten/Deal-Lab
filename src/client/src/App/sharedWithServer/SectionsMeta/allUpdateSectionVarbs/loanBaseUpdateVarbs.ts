@@ -15,6 +15,9 @@ export function loanBaseUpdateVarbs(): UpdateSectionVarbs<"loanBaseValue"> {
     valueSourceName: updateVarb("loanBaseValueSource", {
       initValue: "none",
     }),
+    valueSourceNameNext: updateVarb("loanBaseValueSourceNext", {
+      initValue: "purchasePriceValue",
+    }),
     valuePercentEditor: updateVarb("numObj"),
     valueDollarsEditor: updateVarb("numObj"),
     valueDollars: updateVarb("numObj", {
