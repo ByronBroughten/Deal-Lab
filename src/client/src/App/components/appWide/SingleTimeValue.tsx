@@ -7,7 +7,6 @@ export interface ValueSectionOneTimeProps {
   displayName?: string;
   showXBtn?: boolean;
 }
-
 export function SingleTimeValue(props: ValueSectionOneTimeProps) {
   return (
     <ValueSectionGeneric

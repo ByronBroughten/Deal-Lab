@@ -5,6 +5,19 @@ const valueSources = {
   dealDisplayNameSource: ["displayNameEditor", "defaultDisplayName"],
   loanPurpose: ["purchasePrice", "upfrontRepairs", "purchasePriceAndRepairs"],
   loanAmountInputMode: ["downPayment", "loanAmount"],
+  percentDollarsSource: [
+    "offPercent",
+    "offDollars",
+    "amountPercent",
+    "amountDollars",
+  ],
+  loanBaseValueSourceNext: [
+    "none",
+    "purchasePriceValue",
+    "repairLoanValue",
+    "arvLoanValue",
+    "customAmountEditor",
+  ],
   loanBaseValueSource: [
     "none",
     "percentOfAssetEditor",
@@ -53,7 +66,9 @@ const valueSources = {
 } as const;
 
 type ValueSources = typeof valueSources;
-export type ValueSource = ValueSources[keyof ValueSources][number];
+export type ValueSourceType = keyof ValueSources;
+export type ValueSource<VT extends ValueSourceType = ValueSourceType> =
+  ValueSources[VT][number];
 
 const unionValueArrs = {
   ...valueSources,

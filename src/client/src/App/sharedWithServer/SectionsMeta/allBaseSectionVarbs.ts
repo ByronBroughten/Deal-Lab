@@ -265,17 +265,91 @@ export function makeAllBaseSectionVarbs() {
       ),
     } as const),
     loanBaseValue: baseSectionVarbs({
+      valueSourceNameNext: baseVarb("loanBaseValueSourceNext"),
       valueSourceName: baseVarb("loanBaseValueSource"),
       valueDollars: baseVarb("numObj", dollars),
       valueDollarsEditor: baseVarb("numObj", dollars),
-      valuePercentEditor: baseVarb("numObj", percent),
+
+      // These are probably unnecessary now
       valuePercent: baseVarb("numObj", percent),
       valueDecimal: baseVarb("numObj", decimal),
+      valuePercentEditor: baseVarb("numObj", percent),
     }),
+    loanValue: baseSectionVarbs({
+      valueSourceName: baseVarb("percentDollarsSource"),
+      percentOfWhat: baseVarb("inEntityValue"),
+
+      offPercentEditor: baseVarb("numObj", percent), // Down payment percent
+      offDollarsEditor: baseVarb("numObj"), // Down payment amount
+      amountPercentEditor: baseVarb("numObj", percent), // Loan percent
+      amountDollarsEditor: baseVarb("numObj"), // Loan Amount
+
+      offDollars: baseVarb("numObj", dollars),
+      offPercent: baseVarb("numObj", percent),
+      offDecimal: baseVarb("numObj", decimal),
+      amountDollars: baseVarb("numObj", dollars),
+      amountPercent: baseVarb("numObj", percent),
+      amountDecimal: baseVarb("numObj", decimal),
+    }),
+    // Now, how do I handle the problem of being able to use
+    // loans both for the purchase and refinance phase?
+
+    // 1. Leave things basically as they are—loans are flexible and
+    //    have all three options no matter what. Whatever is entered is entered,
+    //    even if it doesn't really make sense to have ARV in the purchase phase
+
+    // 3. Make loans just have "percent of price". When they're
+    //    in the refinance slot, it's from ARV. When they're in the purchase
+    //    slot, it's from purchasePrice
+
+    purchasePriceLoanValue: baseSectionVarbs({
+      valueSourceName: baseVarb("percentDollarsSource"),
+
+      offPercentEditor: baseVarb("numObj", percent), // Down payment percent
+      offDollarsEditor: baseVarb("numObj"), // Down payment amount
+      amountPercentEditor: baseVarb("numObj", percent), // Loan percent
+      amountDollarsEditor: baseVarb("numObj"), //Loan Amount
+
+      offPercent: baseVarb("numObj", percent),
+      offDollars: baseVarb("numObj", dollars),
+      amountDollars: baseVarb("numObj", dollars),
+      amountPercent: baseVarb("numObj", percent),
+      // display the three that aren't being used?
+    }),
+    repairLoanValue: baseSectionVarbs({
+      valueSourceName: baseVarb("percentDollarsSource"),
+
+      offPercentEditor: baseVarb("numObj", percent), // Down payment percent
+      offDollarsEditor: baseVarb("numObj"), // Down payment amount
+      amountPercentEditor: baseVarb("numObj", percent), // Loan percent
+      amountDollarsEditor: baseVarb("numObj"), // Loan Amount
+
+      offPercent: baseVarb("numObj", percent),
+      offDollars: baseVarb("numObj", dollars),
+      amountDollars: baseVarb("numObj", dollars),
+      amountPercent: baseVarb("numObj", percent),
+      // display the three that aren't being used?
+    }),
+    arvLoanValue: baseSectionVarbs({
+      valueSourceName: baseVarb("percentDollarsSource"),
+
+      offPercentEditor: baseVarb("numObj", percent), // Down payment percent
+      offDollarsEditor: baseVarb("numObj"), // Down payment amount
+      amountPercentEditor: baseVarb("numObj", percent), // Loan percent
+      amountDollarsEditor: baseVarb("numObj"), // Loan Amount
+
+      offPercent: baseVarb("numObj", percent),
+      offDollars: baseVarb("numObj", dollars),
+      amountDollars: baseVarb("numObj", dollars),
+      amountPercent: baseVarb("numObj", percent),
+      // display the three that aren't being used?
+    }),
+
     downPaymentValue: baseSectionVarbs({
       valueSourceName: baseVarb("downPaymentValueSource"),
       valueDollars: baseVarb("numObj", dollars),
       valueDollarsEditor: baseVarb("numObj", dollars),
+
       valuePercentEditor: baseVarb("numObj", percent),
       valuePercent: baseVarb("numObj", percent),
       valueDecimal: baseVarb("numObj", decimal),
@@ -387,7 +461,8 @@ export function makeAllBaseSectionVarbs() {
     feStore: baseSectionVarbs({
       changesToSave: baseVarb("changesToSave"),
       changesSaving: baseVarb("changesSaving"),
-      saveFailed: baseVarb("boolean"),
+
+      timeOfFailedSave: baseVarb("number"),
       timeOfChangeIdle: baseVarb("number"),
       timeOfLastChange: baseVarb("number"),
       timeOfSave: baseVarb("number"),

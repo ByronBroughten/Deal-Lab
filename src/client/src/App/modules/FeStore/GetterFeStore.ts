@@ -54,12 +54,15 @@ export class GetterFeStore extends GetterSectionBase<"feStore"> {
     );
     return withName.length;
   }
+  get currentChangesFailedToSave() {
+    return this.get.valueNext("timeOfFailedSave") >= this.timeOfLastChange;
+  }
   get saveStatus(): StateValue<"appSaveStatus"> {
     if (this.noneToSaveNorSaving) {
       return "saved";
     } else if (this.allSaving) {
       return "saving";
-    } else if (this.get.valueNext("saveFailed")) {
+    } else if (this.currentChangesFailedToSave) {
       return "saveFailed";
     } else {
       return "unsaved";

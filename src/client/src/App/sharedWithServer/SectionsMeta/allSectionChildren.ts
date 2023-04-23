@@ -139,6 +139,11 @@ export const allSectionChildren = checkAllSectionChildren({
     wrappedInLoanValue: "singleTimeValue",
     customVarb: "customVarb",
   }),
+  loanBaseValue: sectionChildren({
+    purchasePriceLoanValue: "purchasePriceLoanValue",
+    repairLoanValue: "repairLoanValue",
+    arvLoanValue: "arvLoanValue",
+  }),
   closingCostValue: { singleTimeList: sectionChild("singleTimeList") },
   propertyGeneral: { property: sectionChild("property") },
   property: sectionChildren({

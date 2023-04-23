@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useToggleView } from "../../modules/customHooks/useToggleView";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { PlainIconBtn } from "../general/PlainIconBtn";
+import StandardLabel from "../general/StandardLabel";
 import { icons } from "../Icons";
 import { ModalText } from "./ModalText";
 
@@ -20,8 +21,8 @@ export function LabelWithInfo({
 }: Props) {
   const { infoIsOpen, closeInfo, openInfo } = useToggleView("info", false);
   return (
-    <Styled className={`LabelWithInfo-root ${className ?? ""}`}>
-      <span>{label}</span>
+    <Styled className={`${className ?? ""}`}>
+      <StandardLabel>{label}</StandardLabel>
       <PlainIconBtn
         onClick={openInfo}
         middle={icons.info({

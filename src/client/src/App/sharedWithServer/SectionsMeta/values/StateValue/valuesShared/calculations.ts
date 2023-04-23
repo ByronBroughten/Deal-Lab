@@ -19,6 +19,7 @@ const solvableTextByArgs = {
     monthsToYears: ({ num }: NumProp) => `${num} / 12`,
     decimalToPercent: ({ num }: NumProp) => `${num} * 100`,
     percentToDecimal: ({ num }: NumProp) => `${num} / 100`,
+    oneHundredMinus: ({ num }: NumProp) => `100 - ${num}`,
     onePercent: ({ num }: NumProp) => `${num}*.01`,
     twoPercent: ({ num }: NumProp) => `${num}*.02`,
     fivePercent: ({ num }: NumProp) => `${num}*.05`,

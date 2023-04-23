@@ -4,20 +4,20 @@ import { useActionNoSave } from "./useAction";
 import { useGetterFeStore } from "./useFeStore";
 import { useQueryAction } from "./useQueryAction";
 
-export function useAutoSaveNext() {
+export function useAutoSave() {
   const feStore = useGetterFeStore();
 
   const onChangeIdle = useActionNoSave("onChangeIdle");
-  const { noneSaving, timeOfLastChange } = feStore;
+  const { noneSaving, timeOfLastChange, currentChangesFailedToSave } = feStore;
   React.useEffect(() => {
-    if (noneSaving) {
+    if (noneSaving && !currentChangesFailedToSave) {
       let timerFunc = setTimeout(
         () => onChangeIdle({}),
         constants.saveDelayInMs
       );
       return () => clearTimeout(timerFunc);
     }
-  }, [noneSaving, timeOfLastChange, onChangeIdle]);
+  }, [timeOfLastChange, noneSaving, currentChangesFailedToSave, onChangeIdle]);
 
   const queryAction = useQueryAction();
   const { timeOfSave } = feStore;

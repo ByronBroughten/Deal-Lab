@@ -113,7 +113,7 @@ const fontSize = {
 } as const;
 
 const sectionSize = {
-  valueSectionSize: "85px",
+  valueSectionSize: "90px",
   inputHeight: "calc(1.5em + 0.5rem + 2px)",
 };
 

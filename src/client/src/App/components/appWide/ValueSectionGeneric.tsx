@@ -71,6 +71,11 @@ export function ValueSectionGeneric<
                 className: "ValueSection-nameEditor",
                 feVarbInfo: section.varbInfo("displayNameEditor"),
                 placeholder: "Name",
+                sx: {
+                  "& .DraftEditor-root": {
+                    minWidth: 150,
+                  },
+                },
               }}
             />
           )}
@@ -157,11 +162,6 @@ const Styled = styled.div`
     justify-content: space-between;
   }
 
-  .ValueSection-nameEditor {
-    .DraftTextField-root {
-      min-width: 150px;
-    }
-  }
   .ValueSection-valueEditor {
     .DraftTextField-root {
       min-width: 100px;

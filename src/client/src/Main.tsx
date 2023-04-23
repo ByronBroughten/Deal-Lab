@@ -15,7 +15,7 @@ import { UserVarbEditorPage } from "./App/components/UserVarbEditorPage";
 import { feRoutes } from "./App/Constants/feRoutes";
 import { useSubscriptions } from "./App/modules/customHooks/useSubscriptions";
 import { useControlUserData } from "./App/modules/SectionActors/UserDataActor";
-import { useAutoSaveNext } from "./App/sharedWithServer/stateClassHooks/useAutoSaveSections";
+import { useAutoSave } from "./App/sharedWithServer/stateClassHooks/useAutoSaveSections";
 import { nativeTheme } from "./App/theme/nativeTheme";
 import { PrivacyPolicyPage } from "./PrivacyPolicyPage";
 import { UserComponentRoutes } from "./UserComponentRoutes";
@@ -23,7 +23,7 @@ import { UserComponentRoutes } from "./UserComponentRoutes";
 export function Main() {
   useControlUserData();
   useSubscriptions();
-  useAutoSaveNext();
+  useAutoSave();
   return (
     <Styled className="App-root">
       <Routes>

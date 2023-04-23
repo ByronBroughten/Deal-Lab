@@ -5,6 +5,7 @@ import { downPaymentUpdateVarbs } from "./allUpdateSectionVarbs/downPaymentUpdat
 import { financingUpdateVarbs } from "./allUpdateSectionVarbs/financingUpdateVarbs";
 import { loanBaseUpdateVarbs } from "./allUpdateSectionVarbs/loanBaseUpdateVarbs";
 import { loanUpdateVarbs } from "./allUpdateSectionVarbs/loanUpdateVarbs";
+import { loanValueUpdateVarbs } from "./allUpdateSectionVarbs/loanValueUpdateVarbs";
 import { mgmtBasePayValueVarbs } from "./allUpdateSectionVarbs/mgmtBasePayUpdateVarbs";
 import { mgmtRelVarbs } from "./allUpdateSectionVarbs/mgmtUpdateVarbs";
 import {
@@ -65,6 +66,18 @@ function makeAllUpdateSections() {
   return checkAllUpdateSections({
     ...makeAllDefaultUpdateSections(),
     ...updateSectionProp("loan", loanUpdateVarbs()),
+    ...updateSectionProp(
+      "purchasePriceLoanValue",
+      loanValueUpdateVarbs(updateFnPropS.varbPathName("purchasePrice"))
+    ),
+    ...updateSectionProp(
+      "repairLoanValue",
+      loanValueUpdateVarbs(updateFnPropS.varbPathName("upfrontRepairCosts"))
+    ),
+    ...updateSectionProp(
+      "arvLoanValue",
+      loanValueUpdateVarbs(updateFnPropS.varbPathName("afterRepairValue"))
+    ),
     ...updateSectionProp("loanBaseValue", loanBaseUpdateVarbs()),
     ...updateSectionProp("downPaymentValue", downPaymentUpdateVarbs()),
     ...updateSectionProp("mgmt", mgmtRelVarbs()),
@@ -289,7 +302,6 @@ function makeAllUpdateSections() {
       }),
     }),
     ...updateSectionProp("feStore", {
-      saveFailed: updateVarb("boolean", { initValue: false }),
       authStatus: updateVarb("authStatus", { initValue: "guest" }),
       labSubscription: updateVarb("labSubscription", {
         initValue: "basicPlan",

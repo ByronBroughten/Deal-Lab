@@ -198,7 +198,6 @@ export class SolverFeStore extends SolverSectionBase<"feStore"> {
       timeOfSave: timeS.now(),
       changesSaving: this.getterFeStore.toSaveToSaving(),
       changesToSave: {},
-      saveFailed: false,
     });
   }
   private preSaveAndSolve() {
@@ -233,7 +232,7 @@ export class SolverFeStore extends SolverSectionBase<"feStore"> {
     }
     this.basicSolvePrepper.updateValues({
       changesSaving: {},
-      saveFailed: true,
+      timeOfFailedSave: timeS.now(),
     });
   }
   private reIntegrateFailedChanges(

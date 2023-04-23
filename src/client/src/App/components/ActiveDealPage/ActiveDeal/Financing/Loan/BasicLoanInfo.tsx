@@ -45,7 +45,6 @@ export default function BasicLoanInfo({ feId, className }: Props) {
         <div>
           <TogglerBooleanTitleVarb
             {...{
-              className: "BasicLoanInfo-toggler",
               feVarbInfo: hasMortInsVarb.feVarbInfo,
               label: (
                 <LabelWithInfo

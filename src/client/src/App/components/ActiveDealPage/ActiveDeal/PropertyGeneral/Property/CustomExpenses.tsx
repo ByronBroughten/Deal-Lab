@@ -6,6 +6,7 @@ import { MainSectionInner } from "../../../../appWide/GeneralSection/MainSection
 import { ValueGroupOngoing } from "../../../../appWide/ListGroup/ValueGroupOngoing";
 import { ValueGroupSingleTime } from "../../../../appWide/ListGroup/ValueGroupSingleTime";
 import { TogglerBooleanTitleVarb } from "../../../../appWide/TogglerBooleanTitleVarb";
+import StandardLabel from "../../../../general/StandardLabel";
 
 export function CustomExpenses({
   feId,
@@ -26,7 +27,9 @@ export function CustomExpenses({
           {...{
             className: "BasicLoanInfo-toggler",
             feVarbInfo: section.varbInfo("useCustomCosts"),
-            label: "Add custom expenses (optional)",
+            label: (
+              <StandardLabel>Add custom expenses (optional)</StandardLabel>
+            ),
             name: "use custom payments toggle",
           }}
         />

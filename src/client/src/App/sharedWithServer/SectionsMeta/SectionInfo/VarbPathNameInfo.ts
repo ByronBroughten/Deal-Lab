@@ -46,6 +46,7 @@ const allVarbPathParams = {
   ]),
   ...sectionVarbNameParams("propertyFocal", "Property", [
     "purchasePrice",
+    "afterRepairValue",
     "sqft",
     "numBedrooms",
     "numUnits",
@@ -53,6 +54,11 @@ const allVarbPathParams = {
     ...targetNames("homeIns", "ongoing"),
     ...targetNames("targetRent", "ongoing"),
   ]),
+  upfrontRepairCosts: fixedVarbPathParams(
+    "Property",
+    "repairCostFocal",
+    "value"
+  ),
   ...sectionVarbNameParams("mgmtFocal", "Management", [
     "vacancyLossPercent",
     ...targetNames("basePayDollars", "ongoing"),
