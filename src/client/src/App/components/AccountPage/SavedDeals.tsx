@@ -47,7 +47,7 @@ export function AccountPageDeals() {
         paddingRight: nativeTheme.s45,
         paddingBottom: nativeTheme.s5,
         paddingTop: nativeTheme.s4,
-        borderColor: nativeTheme.darkBlue.main,
+        borderColor: nativeTheme.primary.main,
         borderWidth: 1,
         borderStyle: "solid",
         borderRadius: nativeTheme.br0,
@@ -58,7 +58,7 @@ export function AccountPageDeals() {
         <Text
           style={{
             fontSize: nativeTheme.fs22,
-            color: nativeTheme.darkBlue.main,
+            color: nativeTheme.primary.main,
           }}
         >
           Saved Deals

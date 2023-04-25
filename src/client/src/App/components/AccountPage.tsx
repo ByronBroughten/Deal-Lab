@@ -118,12 +118,12 @@ function AccountBtn({
             width: size,
             whiteSpace: "normal",
 
-            borderColor: nativeTheme.darkBlue.main,
-            color: nativeTheme.darkBlue.main,
+            borderColor: nativeTheme.primary.main,
+            color: nativeTheme.primary.main,
             "&:hover": {
               color: nativeTheme.light,
-              backgroundColor: nativeTheme.darkBlue.light,
-              borderColor: nativeTheme.darkBlue.main,
+              backgroundColor: nativeTheme.secondary.main,
+              borderColor: nativeTheme.secondary.main,
             },
           },
           ...arrSx(sx),
