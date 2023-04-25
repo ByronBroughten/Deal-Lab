@@ -1,8 +1,7 @@
-import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { View } from "react-native";
-import { useAction } from "../../sharedWithServer/stateClassHooks/useAction";
 import { BackBtnWrapper } from "../appWide/BackBtnWrapper";
 import { BackgroundContainer } from "../appWide/BackgroundContainter";
+import { MuiSelect } from "../appWide/MuiSelect";
 import { BigStringEditor } from "../inputs/BigStringEditor";
 import { nativeTheme } from "./../../theme/nativeTheme";
 import { SectionTitle } from "./../appWide/SectionTitle";
@@ -21,8 +20,6 @@ export function ActiveDealMain() {
   const { deal, calcVarbs, feStore } = useActiveDealPage();
   const completionStatus = calcVarbs.value("dealCompletionStatus");
   const dealMode = deal.valueNext("dealMode");
-  const updateValue = useAction("updateValue");
-
   return (
     <BackBtnWrapper {...{ to: "account", label: "Deal Menu" }}>
       <BackgroundContainer>
@@ -36,30 +33,22 @@ export function ActiveDealMain() {
             marginTop: nativeTheme.s35,
           }}
         >
-          <FormControl size={"small"} variant="filled">
-            <InputLabel
-              sx={{
-                fontSize: nativeTheme.fs22,
-                color: nativeTheme.primary.main,
-              }}
-            >
-              Type
-            </InputLabel>
-            <Select
-              sx={{
-                backgroundColor: nativeTheme.light,
-                ...nativeTheme.subSection.borderLines,
-                borderBottomWidth: 0,
-              }}
-              labelId="ActiveDeal-modeSelector"
-              id="demo-simple-select"
-              value={dealMode}
-              label={"Type"}
-            >
-              <MenuItem value={"buyAndHold"}>Buy & Hold</MenuItem>
-              <MenuItem value={"moreToCome"}>More to Come...</MenuItem>
-            </Select>
-          </FormControl>
+          <MuiSelect
+            {...{
+              feVarbInfo: {
+                sectionName: "deal",
+                feId: deal.feId,
+                varbName: "dealMode",
+              },
+              unionValueName: "dealMode",
+              value: dealMode,
+              items: [
+                ["buyAndHold", "Buy & Hold"],
+                ["moreToCome", "More to come"],
+              ],
+              label: "Type",
+            }}
+          />
           <BigStringEditor
             {...{
               label: "Title",

@@ -1,12 +1,13 @@
+import { PathInVarbInfo } from "../sectionChildrenDerived/RelInOutVarbInfo";
 import { updateVarb } from "../updateSectionVarbs/updateVarb";
 import { updateBasicsS } from "../updateSectionVarbs/updateVarb/UpdateBasics";
 import {
-  UpdateFnProp,
+  updateFnProp,
   updateFnPropS,
 } from "../updateSectionVarbs/updateVarb/UpdateFnProps";
 import { valueSourceOverrides } from "../updateSectionVarbs/updateVarb/UpdateOverrides";
 
-export function loanValueUpdateVarbs(percentOfWhatProp: UpdateFnProp) {
+export function loanValueUpdateVarbs(percentOfWhatInfo: PathInVarbInfo) {
   return {
     valueSourceName: updateVarb("percentDollarsSource", {
       initValue: "offPercent",
@@ -23,17 +24,17 @@ export function loanValueUpdateVarbs(percentOfWhatProp: UpdateFnProp) {
         offDollars: updateBasicsS.loadFromLocal("offDollarsEditor"),
         amountDollars: updateBasicsS.equationLeftRight(
           "simpleSubtract",
-          percentOfWhatProp,
+          updateFnProp(percentOfWhatInfo),
           updateFnPropS.local("amountDollars")
         ),
         offPercent: updateBasicsS.equationLeftRight(
           "simpleMultiply",
-          percentOfWhatProp,
+          updateFnProp(percentOfWhatInfo),
           updateFnPropS.local("offDecimal")
         ),
         amountPercent: updateBasicsS.equationLeftRight(
           "simpleMultiply",
-          percentOfWhatProp,
+          updateFnProp(percentOfWhatInfo),
           updateFnPropS.local("offDecimal")
         ),
       }),
@@ -44,17 +45,17 @@ export function loanValueUpdateVarbs(percentOfWhatProp: UpdateFnProp) {
         amountDollars: updateBasicsS.loadFromLocal("amountDollarsEditor"),
         offDollars: updateBasicsS.equationLeftRight(
           "simpleSubtract",
-          percentOfWhatProp,
+          updateFnProp(percentOfWhatInfo),
           updateFnPropS.local("offDollars")
         ),
         amountPercent: updateBasicsS.equationLeftRight(
           "simpleMultiply",
-          percentOfWhatProp,
+          updateFnProp(percentOfWhatInfo),
           updateFnPropS.local("amountDecimal")
         ),
         offPercent: updateBasicsS.equationLeftRight(
           "simpleMultiply",
-          percentOfWhatProp,
+          updateFnProp(percentOfWhatInfo),
           updateFnPropS.local("amountDecimal")
         ),
       }),
@@ -101,12 +102,12 @@ export function loanValueUpdateVarbs(percentOfWhatProp: UpdateFnProp) {
         amountDollars: updateBasicsS.equationLeftRight(
           "simpleDivide",
           updateFnPropS.local("amountDollars"),
-          percentOfWhatProp
+          updateFnProp(percentOfWhatInfo)
         ),
         offDollars: updateBasicsS.equationLeftRight(
           "simpleDivide",
           updateFnPropS.local("amountDollars"),
-          percentOfWhatProp
+          updateFnProp(percentOfWhatInfo)
         ),
         amountPercent: updateBasicsS.equationSimple(
           "percentToDecimal",
@@ -124,12 +125,12 @@ export function loanValueUpdateVarbs(percentOfWhatProp: UpdateFnProp) {
         amountDollars: updateBasicsS.equationLeftRight(
           "simpleDivide",
           updateFnPropS.local("offDollars"),
-          percentOfWhatProp
+          updateFnProp(percentOfWhatInfo)
         ),
         offDollars: updateBasicsS.equationLeftRight(
           "simpleDivide",
           updateFnPropS.local("offDollars"),
-          percentOfWhatProp
+          updateFnProp(percentOfWhatInfo)
         ),
         amountPercent: updateBasicsS.equationSimple(
           "percentToDecimal",

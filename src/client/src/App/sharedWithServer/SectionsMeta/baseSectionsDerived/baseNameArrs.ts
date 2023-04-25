@@ -42,6 +42,13 @@ function makeBaseNameArrs() {
         "boolVarbItem",
       ] as const);
     },
+    get loanBaseSubValue() {
+      return Arr.extractStrict(sectionNames, [
+        "purchasePriceLoanValue",
+        "repairLoanValue",
+        "arvLoanValue",
+      ] as const);
+    },
     get varbValue() {
       return Arr.extractStrict(sectionNames, [
         "ongoingValue",

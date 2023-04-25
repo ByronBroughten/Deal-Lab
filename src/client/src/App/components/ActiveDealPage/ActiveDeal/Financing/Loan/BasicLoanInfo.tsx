@@ -6,7 +6,7 @@ import { LabelWithInfo } from "../../../../appWide/LabelWithInfo";
 import { TogglerBooleanTitleVarb } from "../../../../appWide/TogglerBooleanTitleVarb";
 import { TogglerBooleanVarb } from "../../../../appWide/TogglerBooleanVarb";
 import { NumObjEntityEditor } from "../../../../inputs/NumObjEntityEditor";
-import { LoanBaseValue } from "./LoanBaseValue";
+import { LoanBaseValueNext } from "./LoanBaseValueNext";
 
 type Props = { feId: string; className?: string };
 export default function BasicLoanInfo({ feId, className }: Props) {
@@ -19,7 +19,7 @@ export default function BasicLoanInfo({ feId, className }: Props) {
     <Styled
       {...{ className: `BasicLoanInfo-root ${className}`, sectionName: "loan" }}
     >
-      <LoanBaseValue feId={loan.onlyChildFeId("loanBaseValue")} />
+      <LoanBaseValueNext feId={loan.onlyChildFeId("loanBaseValue")} />
       <FormSection className="BasicLoanInfo-otherInfo">
         <div className="BasicLoanInfo-rateAndTermRow BasicLoanInfo-editorsRow">
           <NumObjEntityEditor

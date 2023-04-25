@@ -4,6 +4,7 @@ import { useGoToPage } from "../../components/appWide/customHooks/useGoToPage";
 import { QueryRes } from "../../sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import { makeReq } from "../../sharedWithServer/apiQueriesShared/makeReqAndRes";
 import { StateValue } from "../../sharedWithServer/SectionsMeta/values/StateValue";
+import { useQueryAction } from "../../sharedWithServer/stateClassHooks/useQueryAction";
 import { useSetterSectionOnlyOneProps } from "../../sharedWithServer/stateClassHooks/useSetterSectionsProps";
 import { SetterSection } from "../../sharedWithServer/StateSetters/SetterSection";
 import { getErrorMessage } from "../../utils/error";
@@ -21,7 +22,7 @@ export function useUserDataActor(): UserDataActor {
     ...sectionProps,
     goToAuthPage,
     goToAccountPage,
-    apiQueries: apiQueries,
+    apiQueries,
   });
 }
 
@@ -123,6 +124,7 @@ export class UserDataActor extends SectionActorBase<"feStore"> {
 }
 
 export function useControlUserData() {
+  const query = useQueryAction();
   const userDataActor = useUserDataActor();
   const { userDataStatus, userDataFetchTryCount } = userDataActor;
 
@@ -132,7 +134,7 @@ export function useControlUserData() {
 
   React.useEffect(() => {
     if (userDataStatus === "loading") {
-      userDataActor.tryLoadUserData();
+      query({ type: "loadUserData" });
     }
   }, [userDataStatus, userDataFetchTryCount]);
 }

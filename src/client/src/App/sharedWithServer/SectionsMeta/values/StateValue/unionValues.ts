@@ -17,6 +17,7 @@ const valueSources = {
     "repairLoanValue",
     "arvLoanValue",
     "customAmountEditor",
+    "priceAndRepairValues",
   ],
   loanBaseValueSource: [
     "none",
@@ -78,7 +79,7 @@ const unionValueArrs = {
   labSubscription: ["basicPlan", "fullPlan"],
   autoSyncControl: ["autoSyncOff", "autoSyncOn"],
   completionStatus: ["allEmpty", "allValid", "someInvalid"],
-  dealMode: ["buyAndHold", "fixAndFlip", "brrrr"],
+  dealMode: ["buyAndHold", "moreToCome"], // "fixAndFlip", "brrrr"
   financingMode: ["cashOnly", "useLoan", ""],
   userDataStatus: [
     "notLoaded",
@@ -116,6 +117,7 @@ export function isLabSubscription(
 
 export const dealModeLabels: Record<UnionValue<"dealMode">, string> = {
   buyAndHold: "Buy & Hold",
-  fixAndFlip: "Fix & Flip",
-  brrrr: "BRRRR",
+  moreToCome: "More to Come",
+  // fixAndFlip: "Fix & Flip",
+  // brrrr: "BRRRR",
 };

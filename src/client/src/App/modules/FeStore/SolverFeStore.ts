@@ -1,3 +1,4 @@
+import { UserData } from "../../sharedWithServer/apiQueriesShared/validateUserData";
 import { SectionPack } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/SectionPack";
 import {
   FeStoreInfo,
@@ -44,6 +45,7 @@ export class SolverFeStore extends SolverSectionBase<"feStore"> {
       ...props,
     });
   }
+
   get getterFeStore(): GetterFeStore {
     return new GetterFeStore(this.getterSectionsBase.getterSectionsProps);
   }
@@ -67,6 +69,20 @@ export class SolverFeStore extends SolverSectionBase<"feStore"> {
   }
   solve() {
     this.solver.solve();
+  }
+  loadUserData(userData: UserData) {
+    this.appWideSolvePrepSections.deactivateDealAndDealSystem();
+    this.solver.loadSelfAndSolve(userData.feStore);
+    this.basicSolvePrepper.updateValues({
+      userDataFetchTryCount: 0,
+    });
+  }
+
+  incrementGetUserDataTry() {
+    const count = this.get.valueNext("userDataFetchTryCount");
+    this.basicSolvePrepper.updateValues({
+      userDataFetchTryCount: count + 1,
+    });
   }
   copyInStore(props: FeStoreInfo) {
     const { storeName, feId } = props;

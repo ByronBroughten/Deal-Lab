@@ -13,6 +13,11 @@ import {
   SwitchOptionsProps,
   SwitchVarbName,
 } from "./baseSwitchNames";
+import { baseOptions } from "./baseUnits";
+
+const dollars = baseOptions.dollars;
+const percent = baseOptions.percent;
+const decimal = baseOptions.decimal;
 
 const customValueUnits = {
   numObj: ["dollars", "percent", "decimal", "months", "years"],
@@ -289,5 +294,22 @@ export const baseVarbsS = {
     return {
       valueEntityInfo: baseVarb("inEntityValue"),
     } as const;
+  },
+  get loanValue() {
+    return {
+      valueSourceName: baseVarb("percentDollarsSource"),
+
+      offPercentEditor: baseVarb("numObj", percent), // Down payment percent
+      offDollarsEditor: baseVarb("numObj"), // Down payment amount
+      amountPercentEditor: baseVarb("numObj", percent), // Loan percent
+      amountDollarsEditor: baseVarb("numObj"), //Loan Amount
+
+      offPercent: baseVarb("numObj", percent),
+      offDollars: baseVarb("numObj", dollars),
+      offDecimal: baseVarb("numObj", decimal),
+      amountDollars: baseVarb("numObj", dollars),
+      amountPercent: baseVarb("numObj", percent),
+      amountDecimal: baseVarb("numObj", decimal),
+    };
   },
 } as const;

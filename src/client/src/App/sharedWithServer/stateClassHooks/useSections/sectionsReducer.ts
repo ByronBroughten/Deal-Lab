@@ -1,5 +1,6 @@
 import { ContentState } from "draft-js";
 import { AddToStoreProps } from "../../../modules/FeStore/SolverFeStore";
+import { UserData } from "../../apiQueriesShared/validateUserData";
 import { ChildName } from "../../SectionsMeta/sectionChildrenDerived/ChildName";
 import {
   FeSectionInfo,
@@ -66,6 +67,11 @@ interface RemoveSelfAction extends IdOfSectionToSaveProp, FeSectionInfo {
   type: "removeSelf";
 }
 
+interface LoadUserData {
+  userData: UserData;
+  type: "loadUserData";
+}
+
 interface UpdateValueAction extends FeVarbValueInfo {
   idOfSectionToSave?: string;
   type: "updateValue";
@@ -93,6 +99,10 @@ interface RemoveStoredDeal {
   type: "removeStoredDeal";
 }
 
+interface IncrementGetUserDataTry {
+  type: "incrementGetUserDataTry";
+}
+
 export type SectionsAction =
   | { type: "setState"; sections: StateSections }
   | AddChildAction
@@ -107,7 +117,9 @@ export type SectionsAction =
   | AddActiveDeal
   | RemoveStoredDeal
   | ActivateDeal
-  | SaveAsToStore;
+  | SaveAsToStore
+  | LoadUserData
+  | IncrementGetUserDataTry;
 
 type SectionActionName = SectionsAction["type"];
 const reducerActionNameMap: Record<SectionActionName, 0> = {
@@ -125,6 +137,8 @@ const reducerActionNameMap: Record<SectionActionName, 0> = {
   setState: 0,
   finishSave: 0,
   removeStoredDeal: 0,
+  loadUserData: 0,
+  incrementGetUserDataTry: 0,
 };
 export const sectionActionNames = Obj.keys(reducerActionNameMap);
 export function isSectionActionName(value: any): value is SectionActionName {
@@ -198,6 +212,14 @@ export const sectionsReducer: React.Reducer<StateSections, SectionsAction> = (
     }
     case "copyInStore": {
       solverSections.feStore.copyInStore(action);
+      break;
+    }
+    case "loadUserData": {
+      solverSections.feStore.loadUserData(action.userData);
+      break;
+    }
+    case "incrementGetUserDataTry": {
+      solverSections.feStore.incrementGetUserDataTry();
       break;
     }
     case "removeFromStore": {

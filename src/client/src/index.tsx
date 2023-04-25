@@ -6,6 +6,18 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
+
+// Now, how do I handle the problem of being able to use
+// loans both for the purchase and refinance phase?
+
+// 1. Leave things basically as they are—loans are flexible and
+//    have all three options no matter what. Whatever is entered is entered,
+//    even if it doesn't really make sense to have ARV in the purchase phase
+
+// 3. Make loans just have "percent of price". When they're
+//    in the refinance slot, it's from ARV. When they're in the purchase
+//    slot, it's from purchasePrice
+
 // Make it stop trying to save after a failed attempt.
 
 // - Add FixNFlip

@@ -15,6 +15,7 @@ import {
 import { propertyUpdateVarbs } from "./allUpdateSectionVarbs/propertyUpdateVarbs";
 import { vacancyLossUpdateVarbs } from "./allUpdateSectionVarbs/vacancyLossUpdateVarbs";
 import { VarbName } from "./baseSectionsDerived/baseSectionsVarbsTypes";
+import { mixedInfoS } from "./SectionInfo/MixedSectionInfo";
 import { SectionName, sectionNames } from "./SectionName";
 import {
   defaultSectionUpdateVarbs,
@@ -68,15 +69,15 @@ function makeAllUpdateSections() {
     ...updateSectionProp("loan", loanUpdateVarbs()),
     ...updateSectionProp(
       "purchasePriceLoanValue",
-      loanValueUpdateVarbs(updateFnPropS.varbPathName("purchasePrice"))
+      loanValueUpdateVarbs(mixedInfoS.varbPathName("purchasePrice"))
     ),
     ...updateSectionProp(
       "repairLoanValue",
-      loanValueUpdateVarbs(updateFnPropS.varbPathName("upfrontRepairCosts"))
+      loanValueUpdateVarbs(mixedInfoS.varbPathName("upfrontRepairCosts"))
     ),
     ...updateSectionProp(
       "arvLoanValue",
-      loanValueUpdateVarbs(updateFnPropS.varbPathName("afterRepairValue"))
+      loanValueUpdateVarbs(mixedInfoS.varbPathName("afterRepairValue"))
     ),
     ...updateSectionProp("loanBaseValue", loanBaseUpdateVarbs()),
     ...updateSectionProp("downPaymentValue", downPaymentUpdateVarbs()),
