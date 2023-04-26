@@ -1,11 +1,27 @@
+import { Box, SxProps } from "@mui/material";
 import styled from "styled-components";
 import theme from "../../theme/Theme";
+import { arrSx } from "../../utils/mui";
 import { LabeledVarb, LabeledVarbProps } from "./LabeledVarb";
 
-type Props = { varbPropArr: LabeledVarbProps[]; className?: string };
-export function LabeledVarbRow({ varbPropArr, className }: Props) {
+type Props = {
+  varbPropArr: LabeledVarbProps[];
+  className?: string;
+  sx?: SxProps;
+};
+export function LabeledVarbRow({ varbPropArr, className, sx }: Props) {
   return (
-    <StyledLabeledVarbRow className={`LabeledVarbRow-root ${className}`}>
+    <StyledLabeledVarbRow
+      sx={[
+        {
+          display: "flex",
+          flexDirection: "row",
+          flexWrap: "wrap",
+        },
+        ...arrSx(sx),
+      ]}
+      className={className}
+    >
       {varbPropArr.map((props) => (
         <LabeledVarb
           {...{
@@ -18,11 +34,7 @@ export function LabeledVarbRow({ varbPropArr, className }: Props) {
   );
 }
 
-export const StyledLabeledVarbRow = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  align-items: stretch;
-
+export const StyledLabeledVarbRow = styled(Box)`
   .LabeledVarb-root {
     margin: ${theme.s25} ${theme.s25};
   }

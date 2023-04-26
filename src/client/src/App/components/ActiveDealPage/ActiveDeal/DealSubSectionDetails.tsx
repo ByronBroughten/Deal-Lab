@@ -1,5 +1,3 @@
-import styled from "styled-components";
-import theme from "../../../theme/Theme";
 import { LabeledVarbProps } from "../../appWide/LabeledVarb";
 import { LabeledVarbRow } from "../../appWide/LabeledVarbRow";
 
@@ -13,20 +11,10 @@ export function DealSubSectionDetails({
   detailVarbPropArr,
 }: Props) {
   return (
-    <Styled className="MainSubSection-detailsDiv">
-      {/* <div className="MainSubSection-displayNameDiv">{displayName}</div> */}
-      <LabeledVarbRow
-        {...{
-          varbPropArr: detailVarbPropArr,
-        }}
-      />
-    </Styled>
+    <LabeledVarbRow
+      {...{
+        varbPropArr: detailVarbPropArr,
+      }}
+    />
   );
 }
-
-const Styled = styled.div`
-  .MainSubSection-displayNameDiv {
-    font-size: ${theme.smallTitleSize};
-    margin-bottom: ${theme.s25};
-  }
-`;

@@ -7,6 +7,26 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
+// completionStatus hell for the new
+// loan base value...
+
+// New Loan situation
+
+// - Get baseLoanAmount section to get its values from the appropriate
+//   child or children
+
+// - Figure out how to display two values under one label,
+//   with a light grey divider in between them (or just one value
+//   if only one is provided)
+
+// - Figure out how to not include the value that is entered as
+//   an input
+
+// - Figure out how to display everything when purchasePrice & repairs
+//   is selected
+
+// -
+
 // Now, how do I handle the problem of being able to use
 // loans both for the purchase and refinance phase?
 

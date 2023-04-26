@@ -49,9 +49,6 @@ function makeDealFocals(dealPath: ChildName[]) {
     get loanBaseFocal() {
       return abs("loanBaseValue", [...loanPath, "loanBaseValue"]);
     },
-    get downPaymentFocal() {
-      return abs("downPaymentValue", [...loanPath, "downPaymentValue"]);
-    },
     get closingCostFocal() {
       return abs("closingCostValue", [
         ...this.loanFocal.path,

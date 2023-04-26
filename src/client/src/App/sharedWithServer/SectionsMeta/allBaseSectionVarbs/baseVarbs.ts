@@ -300,9 +300,9 @@ export const baseVarbsS = {
       valueSourceName: baseVarb("percentDollarsSource"),
 
       offPercentEditor: baseVarb("numObj", percent), // Down payment percent
-      offDollarsEditor: baseVarb("numObj"), // Down payment amount
+      offDollarsEditor: baseVarb("numObj", dollars), // Down payment amount
       amountPercentEditor: baseVarb("numObj", percent), // Loan percent
-      amountDollarsEditor: baseVarb("numObj"), //Loan Amount
+      amountDollarsEditor: baseVarb("numObj", dollars), //Loan Amount
 
       offPercent: baseVarb("numObj", percent),
       offDollars: baseVarb("numObj", dollars),

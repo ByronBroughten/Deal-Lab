@@ -1,20 +1,32 @@
 import styled from "styled-components";
+import { nativeTheme } from "../../../../theme/nativeTheme";
 import theme from "../../../../theme/Theme";
+import { arrSx } from "../../../../utils/mui";
 import { PlainIconBtn, PlainIconBtnProps } from "../../../general/PlainIconBtn";
 
-export function MainSectionBtn(props: PlainIconBtnProps) {
-  return <Styled {...props} />;
+export function MainSectionBtn({ sx, ...rest }: PlainIconBtnProps) {
+  return (
+    <Styled
+      {...{
+        ...rest,
+        sx: [
+          {
+            borderRadius: nativeTheme.br0,
+            display: "flex",
+            alignItems: "center",
+            backgroundColor: nativeTheme.light,
+            color: nativeTheme.primary.main,
+            p: nativeTheme.s4,
+            boxShadow: theme.boxShadow1,
+            fontSize: theme.titleSize,
+          },
+          ...arrSx(sx),
+        ],
+      }}
+    />
+  );
 }
 const Styled = styled(PlainIconBtn)`
-  display: flex;
-  align-items: center;
-  background-color: ${theme.light};
-  color: ${theme.primaryNext};
-  padding: ${theme.s4};
-  border-radius: ${theme.br0};
-  box-shadow: ${theme.boxShadow1};
-  font-size: ${theme.titleSize};
-
   :hover {
     background-color: ${theme.secondary};
     color: ${theme.light};

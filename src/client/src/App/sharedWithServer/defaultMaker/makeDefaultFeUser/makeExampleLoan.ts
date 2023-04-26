@@ -17,19 +17,16 @@ type ExampleLoanProps = {
     | "hasMortgageIns"
     | "loanAmountInputMode"
   >;
+  purchaseLoanValue?: StrictPick<
+    SectionValues<"purchaseLoanValue">,
+    "amountPercentEditor"
+  >;
   baseLoan?: Partial<
     StrictPick<
       SectionValues<"loanBaseValue">,
-      "valueSourceName" | "valuePercentEditor" | "valueDollarsEditor"
+      "valueSourceName" | "valueDollarsEditor"
     >
   >;
-  downPayment?: Partial<
-    StrictPick<
-      SectionValues<"downPaymentValue">,
-      "valueSourceName" | "valuePercentEditor" | "valueDollarsEditor"
-    >
-  >;
-
   closingCosts: {
     valueSourceName: StateValue<"closingCostValueSource">;
     valueDollarsEditor?: NumObj;
@@ -50,6 +47,9 @@ function makeExampleLoan(props: ExampleLoanProps) {
   });
   const loanBaseValue = loan.onlyChild("loanBaseValue");
   loanBaseValue.updateValues({ ...props.baseLoan });
+
+  const purchaseValue = loanBaseValue.onlyChild("purchaseLoanValue");
+  purchaseValue.updateValues({ ...props.purchaseLoanValue });
 
   const closingCostValue = loan.onlyChild("closingCostValue");
   const { items = [], ...costProps } = props.closingCosts;
@@ -75,8 +75,10 @@ export const dealExampleLoan = makeExampleLoan({
     loanAmountInputMode: "loanAmount",
   },
   baseLoan: {
-    valueSourceName: "percentOfAssetEditor",
-    valuePercentEditor: numObj(80),
+    valueSourceName: "purchaseLoanValue",
+  },
+  purchaseLoanValue: {
+    amountPercentEditor: numObj(80),
   },
   closingCosts: {
     valueSourceName: "valueEditor",

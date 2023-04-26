@@ -10,9 +10,8 @@ export function makeDefaultLoanPack(): SectionPack<"loan"> {
       loanAmountInputMode: "loanAmount",
     },
   });
-  loan.addChild("downPaymentValue");
   const baseValue = loan.addAndGetChild("loanBaseValue");
-  baseValue.addChild("purchasePriceLoanValue");
+  baseValue.addChild("purchaseLoanValue");
   baseValue.addChild("repairLoanValue");
   baseValue.addChild("arvLoanValue");
 

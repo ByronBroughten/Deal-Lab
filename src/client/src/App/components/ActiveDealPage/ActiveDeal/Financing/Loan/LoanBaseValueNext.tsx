@@ -1,118 +1,154 @@
-import { FeVarbInfo } from "../../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
+import { Box } from "@mui/material";
+import { VarbName } from "../../../../../sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
+import { FeSectionInfo } from "../../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
+import {
+  SectionNameByType,
+  sectionNameS,
+} from "../../../../../sharedWithServer/SectionsMeta/SectionNameByType";
 import { StateValue } from "../../../../../sharedWithServer/SectionsMeta/values/StateValue";
-import { validateStateValue } from "../../../../../sharedWithServer/SectionsMeta/values/valueMetas";
-import { useAction } from "../../../../../sharedWithServer/stateClassHooks/useAction";
 import { useGetterSection } from "../../../../../sharedWithServer/stateClassHooks/useGetterSection";
-import { ValueFixedVarbPathName } from "../../../../../sharedWithServer/StateEntityGetters/ValueInEntityInfo";
-import { GetterSection } from "../../../../../sharedWithServer/StateGetters/GetterSection";
+import { nativeTheme } from "../../../../../theme/nativeTheme";
 import { FormSectionLabeled } from "../../../../appWide/FormSectionLabeled";
+import { LabeledVarbRow } from "../../../../appWide/LabeledVarbRow";
 import { MuiSelect } from "../../../../appWide/MuiSelect";
-import { SelectEditorSection } from "../../../../appWide/SelectEditorSection";
 import { NumObjEntityEditor } from "../../../../inputs/NumObjEntityEditor";
 import { LoanBaseSubValue } from "./LoanBaseSubValue";
 
-function getProps(getter: GetterSection<"loanBaseValue">): {
-  equalsValue?: string;
-  editorProps?: {
-    quickViewVarbNames: ValueFixedVarbPathName[];
-    feVarbInfo: FeVarbInfo;
-  };
-} {
-  const valueSourceName = getter.valueNext("valueSourceName");
-  const dollarsVarb = getter.varbNext("valueDollars");
-  switch (valueSourceName) {
-    case "none":
-      return {};
-    case "eightyFivePercentAsset":
-      return { equalsValue: dollarsVarb.displayVarb() };
-    case "percentOfAssetEditor":
-      return {
-        equalsValue: dollarsVarb.displayVarb(),
-        editorProps: {
-          feVarbInfo: getter.varbNext("valuePercentEditor").feVarbInfo,
-          quickViewVarbNames: ["purchasePrice", "upfrontRepairCost"],
-        },
-      };
-    case "dollarsEditor": {
-      return {
-        equalsValue: `${getter.displayVarb("valuePercent")}`,
-        editorProps: {
-          feVarbInfo: getter.varbNext("valueDollarsEditor").feVarbInfo,
-          quickViewVarbNames: ["purchasePrice", "upfrontRepairCost"],
-        },
-      };
-    }
-  }
-}
-
 export function LoanBaseValueNext({ feId }: { feId: string }) {
   const feInfo = { sectionName: "loanBaseValue", feId } as const;
-  const updateValue = useAction("updateValue");
   const baseValue = useGetterSection(feInfo);
-  const { editorProps, equalsValue } = getProps(baseValue);
-  const valueSourceName = baseValue.valueNext("valueSourceName");
-  const menuItems: [StateValue<"loanBaseValueSourceNext">, string][] = [
-    ["purchasePriceValue", "Purchase price"],
-    ["repairLoanValue", "Upfront repair cost"],
-    ["priceAndRepairValues", "Custom percent"],
-  ];
-
+  const valueSourceNext = baseValue.valueNext("valueSourceName");
   return (
-    <>
-      <FormSectionLabeled
-        {...{
-          label: "Loan Amount",
-        }}
+    <FormSectionLabeled
+      {...{
+        label: "Loan Amount",
+      }}
+    >
+      <Box
+        sx={{ display: "flex", flexDirection: "row", alignItems: "flex-end" }}
       >
         <MuiSelect
           {...{
             label: "Pay for what",
+            sx: { minWidth: "110px" },
             feVarbInfo: {
               ...feInfo,
-              varbName: "valueSourceNameNext",
+              varbName: "valueSourceName",
             },
             unionValueName: "loanBaseValueSourceNext",
-            value: baseValue.valueNext("valueSourceNameNext"),
+            value: valueSourceNext,
             items: [
-              ["purchasePriceValue", "Property purchase"],
+              ["purchaseLoanValue", "Property purchase"],
               ["repairLoanValue", "Upfront repairs"],
               ["priceAndRepairValues", "Purchase and repairs"],
+              ["customAmountEditor", "Custom"],
             ],
           }}
         />
-      </FormSectionLabeled>
-      <LoanBaseSubValue
-        {...{
-          sectionName: "purchasePriceLoanValue",
-          feId: baseValue.onlyChildFeId("purchasePriceLoanValue"),
-        }}
-      />
-
-      <SelectEditorSection
-        {...{
-          label: "Loan Amount",
-          makeEditor: editorProps
-            ? (props) => (
-                <NumObjEntityEditor
-                  {...{
-                    ...props,
-                    ...editorProps,
-                  }}
-                />
-              )
-            : undefined,
-          selectValue: valueSourceName,
-          onChange: (e) => {
-            updateValue({
-              ...feInfo,
-              varbName: "valueSourceName",
-              value: validateStateValue(e.target.value, "loanBaseValueSource"),
-            });
-          },
-          menuItems,
-          equalsValue,
-        }}
-      />
-    </>
+        <Box sx={{ ml: nativeTheme.s3 }}>
+          <LoanBaseValueEditorArea {...{ feId }} />
+        </Box>
+      </Box>
+      {sectionNameS.is(valueSourceNext, "loanBaseSubValue") && (
+        <ValueNumbers
+          {...{
+            sectionName: valueSourceNext,
+            feId: baseValue.onlyChildFeId(valueSourceNext),
+          }}
+        />
+      )}
+    </FormSectionLabeled>
   );
+}
+
+interface ValueNumbersProps<SN extends SectionNameByType<"loanBaseSubValue">>
+  extends FeSectionInfo<SN> {}
+function ValueNumbers<SN extends SectionNameByType<"loanBaseSubValue">>({
+  sectionName,
+  feId,
+}: ValueNumbersProps<SN>) {
+  const subValue = useGetterSection({
+    sectionName,
+    feId,
+  });
+  const valueSourceName = subValue.valueNext("valueSourceName");
+  const sourceToDisplayName: Record<
+    StateValue<"percentDollarsSource">,
+    VarbName<SectionNameByType<"loanBaseSubValue">>
+  > = {
+    amountDollarsEditor: "amountDollars",
+    amountPercentEditor: "amountPercent",
+    offDollarsEditor: "offDollars",
+    offPercentEditor: "offPercent",
+  };
+
+  const editorText = subValue.valueNext(valueSourceName).mainText;
+  const varbNames = (
+    ["offPercent", "offDollars", "amountPercent", "amountDollars"] as const
+  ).filter((varbName) => varbName !== sourceToDisplayName[valueSourceName]);
+
+  return editorText ? (
+    <LabeledVarbRow
+      {...{
+        sx: { mt: nativeTheme.s2 },
+        varbPropArr: subValue.varbInfoArr(varbNames),
+      }}
+    />
+  ) : null;
+}
+
+function LoanBaseValueEditorArea({ feId }: { feId: string }) {
+  const baseValue = useGetterSection({ sectionName: "loanBaseValue", feId });
+  const valueSource = baseValue.valueNext("valueSourceName");
+  switch (valueSource) {
+    case "priceAndRepairValues": {
+      return (
+        <Box sx={{ display: "flex", alignItems: "center" }}>
+          <LoanBaseSubValue
+            {...{
+              label: "Purchase price",
+              sectionName: "purchaseLoanValue",
+              feId: baseValue.onlyChildFeId("purchaseLoanValue"),
+            }}
+          />
+          <LoanBaseSubValue
+            {...{
+              label: "Repair costs",
+              sectionName: "repairLoanValue",
+              feId: baseValue.onlyChildFeId("repairLoanValue"),
+              sx: { ml: nativeTheme.s3 },
+            }}
+          />
+        </Box>
+      );
+    }
+    case "customAmountEditor": {
+      return (
+        <NumObjEntityEditor
+          {...{
+            feVarbInfo: baseValue.varbInfo("valueDollarsEditor"),
+            labeled: false,
+            sx: {
+              "& .MaterialDraftEditor-wrapper": {},
+              "& .MuiInputBase-root": {
+                minWidth: 80,
+                pt: "8px",
+                pb: "4px",
+              },
+            },
+          }}
+        />
+      );
+    }
+    default: {
+      return (
+        <LoanBaseSubValue
+          {...{
+            sectionName: valueSource,
+            feId: baseValue.onlyChildFeId(valueSource),
+          }}
+        />
+      );
+    }
+  }
 }

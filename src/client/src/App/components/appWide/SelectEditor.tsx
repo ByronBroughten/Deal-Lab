@@ -1,61 +1,61 @@
-import { Box, FormControl, MenuItem, Select, SxProps } from "@mui/material";
+import { Box, SxProps } from "@mui/material";
 import React from "react";
-import styled from "styled-components";
 import { nativeTheme } from "../../theme/nativeTheme";
-import theme from "../../theme/Theme";
-import { MuiSelectOnChange } from "../../utils/mui";
+import { arrSx, MuiSelectOnChange } from "../../utils/mui";
+import { MuiSelectStyled } from "./MuiSelectStyled";
 
 type MakeEditor = (props: { sx: SxProps; labeled: boolean }) => React.ReactNode;
 
 export type SelectEditorProps = {
   className?: string;
+  label?: React.ReactNode;
   selectValue: string;
   onChange?: MuiSelectOnChange;
   makeEditor?: MakeEditor;
   menuItems: [string, string][];
   equalsValue?: string;
   rightOfControls?: React.ReactNode;
+  sx?: SxProps;
 };
 export function SelectEditor({
   className,
+  label,
   selectValue,
   onChange,
   makeEditor,
   menuItems,
   equalsValue,
   rightOfControls,
+  sx,
 }: SelectEditorProps) {
   return (
-    <Styled className={`SelectEditor-controlDiv ${className ?? ""}`}>
-      <FormControl
-        className="SelectEditor-formControl"
-        size="small"
-        variant="filled"
-        style={{ minWidth: "120px" }}
-        hiddenLabel
-      >
-        <Select
-          className={`SelectEditor-select ${
-            selectValue === "none" ? "SelectEditor-noneSelected" : ""
-          }`}
-          labelId="RepairsValue-modeLabel"
-          id="demo-simple-select"
-          autoWidth={true}
-          value={selectValue}
-          onChange={onChange}
-        >
-          {selectValue === "none" && (
-            <MenuItem value="none" disabled={true}>
-              Choose Method
-            </MenuItem>
-          )}
-          {menuItems.map((item) => (
-            <MenuItem key={item[0]} value={item[0]}>
-              {item[1]}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
+    <Box
+      {...{
+        className,
+        sx: [
+          {
+            display: "flex",
+            marginTop: nativeTheme.s2,
+          },
+          ...arrSx(sx),
+        ],
+      }}
+    >
+      <MuiSelectStyled
+        {...{
+          label,
+          onChange,
+          items: menuItems,
+          value: selectValue,
+          sx: {
+            borderTopRightRadius: 0,
+            borderRight: "none",
+            "& .MuiInputBase-root": {
+              borderTopRightRadius: 0,
+            },
+          },
+        }}
+      />
       {makeEditor &&
         makeEditor({
           labeled: false,
@@ -68,8 +68,14 @@ export function SelectEditor({
               "& .MuiInputBase-root": {
                 minWidth: 50,
                 borderTopLeftRadius: 0,
-                pt: "8px",
-                pb: "7px",
+                ...(!label && {
+                  pt: "8px",
+                  pb: "8px",
+                }),
+                ...(label && {
+                  pt: "20px",
+                  pb: "4px",
+                }),
               },
             },
           },
@@ -88,31 +94,6 @@ export function SelectEditor({
           }}
         >{`= ${equalsValue}`}</Box>
       )}
-    </Styled>
+    </Box>
   );
 }
-
-const Styled = styled.div`
-  display: flex;
-  margin-top: ${theme.s2};
-  .SelectEditor-select {
-    min-width: 0px;
-  }
-  .SelectEditor-formControl {
-    border: solid 1px ${theme["gray-300"]};
-    border-right: none;
-    border-bottom: none;
-    border-top-left-radius: ${theme.br0};
-    .MuiSelect-root {
-      padding: 10px 32px 10px 12px;
-    }
-    .MuiInputBase-root {
-      height: 40px;
-      border-top-right-radius: 0;
-    }
-  }
-
-  .SelectEditor-noneSelected {
-    color: ${theme["gray-600"]};
-  }
-`;

@@ -1,7 +1,6 @@
 import { timeS } from "../utils/timeS";
 import { calculatedUpdateVarbs } from "./allUpdateSectionVarbs/calculatedUpdateVarbs";
 import { dealUpdateVarbs } from "./allUpdateSectionVarbs/dealUpdateVarbs";
-import { downPaymentUpdateVarbs } from "./allUpdateSectionVarbs/downPaymentUpdateVarbs";
 import { financingUpdateVarbs } from "./allUpdateSectionVarbs/financingUpdateVarbs";
 import { loanBaseUpdateVarbs } from "./allUpdateSectionVarbs/loanBaseUpdateVarbs";
 import { loanUpdateVarbs } from "./allUpdateSectionVarbs/loanUpdateVarbs";
@@ -67,8 +66,9 @@ function makeAllUpdateSections() {
   return checkAllUpdateSections({
     ...makeAllDefaultUpdateSections(),
     ...updateSectionProp("loan", loanUpdateVarbs()),
+    ...updateSectionProp("loanBaseValue", loanBaseUpdateVarbs()),
     ...updateSectionProp(
-      "purchasePriceLoanValue",
+      "purchaseLoanValue",
       loanValueUpdateVarbs(mixedInfoS.varbPathName("purchasePrice"))
     ),
     ...updateSectionProp(
@@ -79,8 +79,6 @@ function makeAllUpdateSections() {
       "arvLoanValue",
       loanValueUpdateVarbs(mixedInfoS.varbPathName("afterRepairValue"))
     ),
-    ...updateSectionProp("loanBaseValue", loanBaseUpdateVarbs()),
-    ...updateSectionProp("downPaymentValue", downPaymentUpdateVarbs()),
     ...updateSectionProp("mgmt", mgmtRelVarbs()),
     ...updateSectionProp("vacancyLossValue", vacancyLossUpdateVarbs()),
     ...updateSectionProp("mgmtBasePayValue", mgmtBasePayValueVarbs()),

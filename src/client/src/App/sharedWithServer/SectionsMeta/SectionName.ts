@@ -65,13 +65,12 @@ export const sectionNames = [
   "financing",
   "loan",
   "loanBaseValue",
-  "purchasePriceLoanValue",
+  "purchaseLoanValue",
   "repairLoanValue",
   "arvLoanValue",
   "loanValue",
 
   "closingCostValue",
-  "downPaymentValue",
 
   "mgmtGeneral",
   "mgmt",

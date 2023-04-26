@@ -44,7 +44,7 @@ function makeBaseNameArrs() {
     },
     get loanBaseSubValue() {
       return Arr.extractStrict(sectionNames, [
-        "purchasePriceLoanValue",
+        "purchaseLoanValue",
         "repairLoanValue",
         "arvLoanValue",
       ] as const);

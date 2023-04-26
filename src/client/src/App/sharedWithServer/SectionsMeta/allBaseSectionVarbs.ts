@@ -265,31 +265,15 @@ export function makeAllBaseSectionVarbs() {
       ),
     } as const),
     loanBaseValue: baseSectionVarbs({
-      valueSourceNameNext: baseVarb("loanBaseValueSourceNext"),
-      valueSourceName: baseVarb("loanBaseValueSource"),
+      valueSourceName: baseVarb("loanBaseValueSourceNext"),
       valueDollars: baseVarb("numObj", dollars),
       valueDollarsEditor: baseVarb("numObj", dollars),
-
-      // These are probably unnecessary now
-      valuePercent: baseVarb("numObj", percent),
-      valueDecimal: baseVarb("numObj", decimal),
-      valuePercentEditor: baseVarb("numObj", percent),
     }),
-    loanValue: baseVarbsS.loanValue,
-
-    purchasePriceLoanValue: baseVarbsS.loanValue,
+    purchaseLoanValue: baseVarbsS.loanValue,
     repairLoanValue: baseVarbsS.loanValue,
     arvLoanValue: baseVarbsS.loanValue,
 
-    downPaymentValue: baseSectionVarbs({
-      valueSourceName: baseVarb("downPaymentValueSource"),
-      valueDollars: baseVarb("numObj", dollars),
-      valueDollarsEditor: baseVarb("numObj", dollars),
-
-      valuePercentEditor: baseVarb("numObj", percent),
-      valuePercent: baseVarb("numObj", percent),
-      valueDecimal: baseVarb("numObj", decimal),
-    }),
+    loanValue: baseVarbsS.loanValue,
 
     mgmt: baseSectionVarbs({
       ...baseVarbsS.savableSection,

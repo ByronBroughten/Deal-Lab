@@ -1,4 +1,4 @@
-import { FormControl, FormControlLabel, RadioGroup } from "@mui/material";
+import { Box, FormControl, FormControlLabel, RadioGroup } from "@mui/material";
 import styled from "styled-components";
 import { StateValue } from "../../../sharedWithServer/SectionsMeta/values/StateValue";
 import { useAction } from "../../../sharedWithServer/stateClassHooks/useAction";
@@ -48,33 +48,54 @@ export function FinancingEditor({ feId }: Props) {
         />
       </div>
       <FormSection>
-        <div className="Financing-inputDiv">
-          <FormControl className="Financing-financingTypeControl">
-            <RadioGroup
-              aria-labelledby="financing-type-radio-buttons-group"
-              name="financing-type-radio-buttons-group"
-              value={financingMode}
-              onChange={(e) =>
-                updateValue({
-                  ...financingModeVarb.feVarbInfo,
-                  value: e.currentTarget.value,
-                })
-              }
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            flex: 1,
+          }}
+        >
+          <div>
+            <FormControl
+              className="Financing-financingTypeControl"
+              sx={{
+                m: 0,
+                p: 0,
+                mt: nativeTheme.s2,
+              }}
             >
-              <FormControlLabel
-                value={values.cashOnly}
-                control={<Radio color="primary" />}
-                label="Cash Only"
-              />
-              <FormControlLabel
-                value={values.useLoan}
-                control={<Radio color="primary" />}
-                label="Use Loan(s)"
-              />
-            </RadioGroup>
-          </FormControl>
+              <RadioGroup
+                aria-labelledby="financing-type-radio-buttons-group"
+                name="financing-type-radio-buttons-group"
+                value={financingMode}
+                onChange={(e) =>
+                  updateValue({
+                    ...financingModeVarb.feVarbInfo,
+                    value: e.currentTarget.value,
+                  })
+                }
+              >
+                <FormControlLabel
+                  value={values.cashOnly}
+                  control={<Radio color="primary" />}
+                  label="Cash Only"
+                />
+                <FormControlLabel
+                  value={values.useLoan}
+                  control={<Radio color="primary" />}
+                  label="Use Loan(s)"
+                />
+              </RadioGroup>
+            </FormControl>
+          </div>
           {financingMode === "useLoan" && (
-            <>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                flex: 1,
+              }}
+            >
               <div className={"Financing-loans"}>
                 {loanIds.map((feId, idx) => (
                   <Loan
@@ -90,9 +111,9 @@ export function FinancingEditor({ feId }: Props) {
                 onClick={addLoan}
                 text="+ Loan"
               />
-            </>
+            </Box>
           )}
-        </div>
+        </Box>
       </FormSection>
     </Styled>
   );
@@ -100,15 +121,11 @@ export function FinancingEditor({ feId }: Props) {
 
 const Styled = styled.div`
   .Financing-inputDiv {
-    display: flex;
+    /* display: flex;
     flex-direction: column;
-    flex: 1;
+    flex: 1; */
   }
   .Financing-financingTypeControl {
-    margin: 0;
-    padding: 0;
-    margin-top: ${theme.s2};
-
     .MuiFormLabel-root {
       font-size: ${theme.infoSize};
       color: ${theme.dark};

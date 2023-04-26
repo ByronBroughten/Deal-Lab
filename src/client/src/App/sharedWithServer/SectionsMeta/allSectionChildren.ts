@@ -133,14 +133,13 @@ export const allSectionChildren = checkAllSectionChildren({
   }),
   financing: { loan: sectionChild("loan") },
   loan: sectionChildren({
-    downPaymentValue: "downPaymentValue",
     loanBaseValue: "loanBaseValue",
     closingCostValue: "closingCostValue",
     wrappedInLoanValue: "singleTimeValue",
     customVarb: "customVarb",
   }),
   loanBaseValue: sectionChildren({
-    purchasePriceLoanValue: "purchasePriceLoanValue",
+    purchaseLoanValue: "purchaseLoanValue",
     repairLoanValue: "repairLoanValue",
     arvLoanValue: "arvLoanValue",
   }),

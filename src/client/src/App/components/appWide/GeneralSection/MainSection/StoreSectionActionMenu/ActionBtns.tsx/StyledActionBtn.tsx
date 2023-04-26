@@ -30,7 +30,7 @@ export function StyledActionBtn({
             fontSize: 15,
             "&:hover": {
               color: nativeTheme.light,
-              backgroundColor: nativeTheme.darkBlue.light,
+              backgroundColor: nativeTheme.darkBlue.main,
               borderColor: nativeTheme.darkBlue.main,
             },
             ...(isActive && {

@@ -10,7 +10,7 @@ export function useAutoSave() {
   const onChangeIdle = useActionNoSave("onChangeIdle");
   const { noneSaving, timeOfLastChange, currentChangesFailedToSave } = feStore;
   React.useEffect(() => {
-    if (noneSaving && !currentChangesFailedToSave) {
+    if (timeOfLastChange && noneSaving && !currentChangesFailedToSave) {
       let timerFunc = setTimeout(
         () => onChangeIdle({}),
         constants.saveDelayInMs

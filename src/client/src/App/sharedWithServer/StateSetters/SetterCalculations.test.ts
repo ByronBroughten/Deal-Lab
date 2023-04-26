@@ -51,8 +51,8 @@ describe("SetterCalculations", () => {
     });
     const baseValue = loan.onlyChild("loanBaseValue");
     baseValue.updateValues({
-      valueSourceName: "percentOfAssetEditor",
-      valuePercentEditor: numObj(0),
+      valueSourceName: "customAmountEditor",
+      valueDollarsEditor: numObj(0),
     });
     const wrappedValue = loan.addAndGetChild("wrappedInLoanValue");
     wrappedValue.updateValues({
@@ -184,9 +184,11 @@ function addTestLoan(dealTester: SetterTesterSection<"deal">): void {
   });
 
   const baseValue = loan.onlyChild("loanBaseValue");
-  baseValue.updateValues({
-    valueSourceName: "percentOfAssetEditor",
-    valuePercentEditor: numObj(75),
+  baseValue.updateValues({ valueSourceName: "purchaseLoanValue" });
+  const purchaseValue = baseValue.onlyChild("purchaseLoanValue");
+  purchaseValue.updateValues({
+    valueSourceName: "amountPercentEditor",
+    amountPercentEditor: numObj(75),
   });
 
   loan.varb("hasMortgageIns").updateValue(true);
@@ -217,7 +219,7 @@ function addInterestOnlyLoan(dealTester: SetterTesterSection<"deal">): void {
   });
   const baseValue = loan.onlyChild("loanBaseValue");
   baseValue.updateValues({
-    valueSourceName: "dollarsEditor",
+    valueSourceName: "customAmountEditor",
     valueDollarsEditor: numObj(10000),
   });
 }

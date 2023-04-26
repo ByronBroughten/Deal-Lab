@@ -122,6 +122,7 @@ const Styled = styled.div`
   padding: ${theme.s3};
 
   .LabeledVarb-label {
+    white-space: nowrap;
     color: ${nativeTheme.darkBlue.main};
   }
   .LabeledVarb-output {

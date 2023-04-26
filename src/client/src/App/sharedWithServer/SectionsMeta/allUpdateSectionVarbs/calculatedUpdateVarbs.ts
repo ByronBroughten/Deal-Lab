@@ -333,12 +333,6 @@ export function calculatedUpdateVarbs(): UpdateSectionVarbs<"calculatedVarbs"> {
                 updateFnPropS.pathName("loanBaseFocal", "valueDollarsEditor", [
                   overrideSwitchS.local("valueSourceName", "dollarsEditor"),
                 ]),
-                updateFnPropS.pathName("loanBaseFocal", "valuePercentEditor", [
-                  overrideSwitchS.local(
-                    "valueSourceName",
-                    "percentOfAssetEditor"
-                  ),
-                ]),
                 updateFnPropS.pathName(
                   "loanFocal",
                   "interestRatePercentOngoingEditor"

@@ -99,8 +99,6 @@ export const allDisplaySectionVarbs = {
   ...displaySectionVarbsProp("loanBaseValue", {
     valueDollars: varb("Base loan amount"),
     valueDollarsEditor: varb("Base loan amount"),
-    valuePercent: varb("Base loan percent"),
-    valuePercentEditor: varb("Base loan percent"),
   }),
   ...displaySectionVarbsProp("loan", {
     ...editorDisplayGroup("monthsYearsInput", "loanTerm", "Loan term"),
@@ -157,6 +155,25 @@ export const allDisplaySectionVarbs = {
       },
     }),
   }),
+  ...displaySectionVarbsProp("purchaseLoanValue", {
+    offPercent: varb("Down payment"),
+    offDollars: varb("Down payment"),
+    amountPercent: varb("Loan to value ratio"),
+    amountDollars: varb("Loan amount"),
+  }),
+  ...displaySectionVarbsProp("repairLoanValue", {
+    offPercent: varb("Down payment"),
+    offDollars: varb("Down payment"),
+    amountPercent: varb("Loan to value ratio"),
+    amountDollars: varb("Loan amount"),
+  }),
+  ...displaySectionVarbsProp("arvLoanValue", {
+    offPercent: varb("Down payment"),
+    offDollars: varb("Down payment"),
+    amountPercent: varb("Loan to value ratio"),
+    amountDollars: varb("Loan amount"),
+  }),
+
   ...displaySectionVarbsProp("numVarbItem", {
     value: varb(relVarbInfoS.local("displayName")),
   }),

@@ -19,7 +19,6 @@ export const materialDraftEditor = (label?: React.ReactNode) =>
       borderColor: themeColors["gray-300"],
       borderBottomWidth: 0,
       backgroundColor: themeColors.light,
-      pt: "1px",
     },
     "& .MuiFilledInput-adornedStart": {
       pl: 0,
