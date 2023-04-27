@@ -11,6 +11,7 @@ export const userComponentNames = Arr.extractStrict(listChildrenNames, [
   "repairsListMain",
   "utilitiesListMain",
   "capExListMain",
+  "sellingListMain",
   "closingCostsListMain",
   "singleTimeListMain",
   "ongoingListMain",

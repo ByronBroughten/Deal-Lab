@@ -27,59 +27,60 @@ type DefaultSectionsVarbs = {
   [SN in SectionName]: BaseSectionVarbs;
 };
 
+const varbs = baseSectionVarbs;
 const defaults = sectionNames.reduce((defaults, sectionName) => {
-  defaults[sectionName] = baseSectionVarbs();
+  defaults[sectionName] = varbs();
   return defaults;
 }, {} as DefaultSectionsVarbs);
 
 const dollars = baseOptions.dollars;
 const percent = baseOptions.percent;
 const decimal = baseOptions.decimal;
-const varbs = baseVarbsS;
+const varbsS = baseVarbsS;
 export function makeAllBaseSectionVarbs() {
   return checkAllBaseSectionVarbs({
     ...defaults,
-    editorControls: baseSectionVarbs({
+    editorControls: varbs({
       editedDealDbId: baseVarb("string"),
     }),
-    mainDealMenu: baseSectionVarbs({
+    mainDealMenu: varbs({
       dealNameFilter: baseVarb("string"),
       dealModeFilter: baseVarb("dealMode"),
       dealSort: baseVarb("dealSort"),
       showArchived: baseVarb("boolean"),
     }),
-    compareSection: baseSectionVarbs({
+    compareSection: varbs({
       dealNameFilter: baseVarb("string"),
       valueNameFilter: baseVarb("string"),
     }),
-    compareOption: baseSectionVarbs({
+    compareOption: varbs({
       dbId: baseVarb("string"),
     }),
-    compareValue: baseSectionVarbs({
+    compareValue: varbs({
       valueEntityInfo: baseVarb("inEntityValue"),
     }),
-    variablesMenu: baseSectionVarbs({
+    variablesMenu: varbs({
       nameFilter: baseVarb("string"),
     }),
-    proxyStoreItem: baseSectionVarbs({
+    proxyStoreItem: varbs({
       dbId: baseVarb("string"),
     }),
-    compareTable: baseSectionVarbs({
+    compareTable: varbs({
       titleFilter: baseVarb("string"),
     } as const),
-    tableRow: baseSectionVarbs({
+    tableRow: varbs({
       displayName: baseVarb("string"),
       compareToggle: baseVarb("boolean"),
     }),
-    column: baseSectionVarbs({
+    column: varbs({
       varbInfo: baseVarb("inEntityValue"),
     }),
-    cell: baseSectionVarbs({
+    cell: varbs({
       columnFeId: baseVarb("string"),
       valueEntityInfo: baseVarb("inEntityValue"),
       displayVarb: baseVarb("string"),
     }),
-    conditionalRow: baseSectionVarbs({
+    conditionalRow: varbs({
       level: baseVarb("number"),
       type: baseVarb("string"),
       // if
@@ -90,64 +91,72 @@ export function makeAllBaseSectionVarbs() {
       // then
       then: baseVarb("numObj"),
     }),
-    singleTimeValueGroup: baseSectionVarbs({
+    singleTimeValueGroup: varbs({
       total: baseVarb("numObj", dollars),
     }),
-    singleTimeValue: baseSectionVarbs({
-      ...varbs.displayNameAndEditor,
+    sellingCostValue: varbs({
+      valueSourceName: baseVarb("sellingCostSource"),
+      valueDollars: baseVarb("numObj", dollars),
+      valueDollarsEditor: baseVarb("numObj", dollars),
+      valuePercent: baseVarb("numObj", percent),
+      valuePercentEditor: baseVarb("numObj", percent),
+      valueDecimal: baseVarb("numObj", decimal),
+    }),
+    singleTimeValue: varbs({
+      ...varbsS.displayNameAndEditor,
       value: baseVarb("numObj", dollars),
       valueEditor: baseVarb("numObj"),
       valueSourceName: baseVarb("customValueSource"),
       isItemized: baseVarb("boolean"),
     }),
-    singleTimeList: baseSectionVarbs({
-      ...varbs.savableSection,
+    singleTimeList: varbs({
+      ...varbsS.savableSection,
       total: baseVarb("numObj", dollars),
       itemValueSource: baseVarb("editorValueSource"),
     }),
-    ongoingValueGroup: baseSectionVarbs({
-      ...varbs.ongoingDollars("total"),
+    ongoingValueGroup: varbs({
+      ...varbsS.ongoingDollars("total"),
     }),
-    ongoingValue: baseSectionVarbs({
-      ...varbs.displayNameAndEditor,
-      ...varbs.ongoingDollarsInput("value"),
+    ongoingValue: varbs({
+      ...varbsS.displayNameAndEditor,
+      ...varbsS.ongoingDollarsInput("value"),
       valueSourceName: baseVarb("customValueSource"),
     }),
-    ongoingList: baseSectionVarbs({
+    ongoingList: varbs({
       ...baseVarbsS.savableSection,
       ...baseVarbsS.ongoingDollars("total"),
       itemValueSource: baseVarb("editorValueSource"),
       itemOngoingSwitch: baseVarb("string"),
     }),
-    capExList: baseSectionVarbs({
+    capExList: varbs({
       ...baseVarbsS.savableSection,
       ...baseVarbsS.ongoingDollars("total"),
       itemOngoingSwitch: baseVarb("string"),
     }),
     capExItem: baseCapExItem,
     ongoingItem: baseOngoingItem,
-    numVarbList: baseSectionVarbs({
+    numVarbList: varbs({
       ...baseVarbsS.savableSection,
       itemValueSource: baseVarb("editorValueSource"),
     }),
-    boolVarbList: baseSectionVarbs({
+    boolVarbList: varbs({
       ...baseVarbsS.savableSection,
       itemValueSource: baseVarb("editorValueSource"),
     }),
-    outputList: baseSectionVarbs({
+    outputList: varbs({
       ...baseVarbsS.savableSection,
       itemValueSource: baseVarb("loadedVarbSource"),
     }),
-    singleTimeItem: baseSectionVarbs({
+    singleTimeItem: varbs({
       ...baseVarbsS.displayNameAndEditor,
       value: baseVarb("numObj"),
       valueEditor: baseVarb("numObj"),
       valueSourceName: baseVarb("customValueSource"),
     }),
-    outputItem: baseSectionVarbs({
+    outputItem: varbs({
       valueEntityInfo: baseVarb("inEntityValue"),
     }),
-    virtualVarb: baseSectionVarbs({
+    virtualVarb: varbs({
       valueEntityInfo: baseVarb("inEntityValue"),
       value: baseVarb("numObj"),
       ...baseVarbs("stringObj", [
@@ -156,25 +165,25 @@ export function makeAllBaseSectionVarbs() {
         "endAdornment",
       ] as const),
     }),
-    customVarb: baseSectionVarbs(baseVarbsS.loadableVarb),
-    boolVarbItem: baseSectionVarbs({
+    customVarb: varbs(baseVarbsS.loadableVarb),
+    boolVarbItem: varbs({
       ...baseVarbsS.displayNameAndEditor,
       value: baseVarb("boolean"),
       leftOperandi: baseVarb("numObj"),
       rightOperandi: baseVarb("numObj"),
       operator: baseVarb("string"),
     }),
-    numVarbItem: baseSectionVarbs({
+    numVarbItem: varbs({
       value: baseVarb("numObj"),
       valueEditor: baseVarb("numObj"),
       valueSourceName: baseVarb("editorValueSource"),
       ...baseVarbsS.displayNameAndEditor,
       ...baseVarbsS.loadableVarb,
     }),
-    conditionalRowList: baseSectionVarbs({
+    conditionalRowList: varbs({
       value: baseVarb("numObj"),
     }),
-    property: baseSectionVarbs({
+    property: varbs({
       ...baseVarbsS.savableSection,
       propertyMode: baseVarb("dealMode"),
       address: baseVarb("string"),
@@ -202,12 +211,12 @@ export function makeAllBaseSectionVarbs() {
       ...baseVarbsS.monthsYearsInput("holdingPeriod"),
       useCustomCosts: baseVarb("boolean"),
     }),
-    unit: baseSectionVarbs({
+    unit: varbs({
       one: baseVarb("number"),
       numBedrooms: baseVarb("numObj"),
       ...baseVarbsS.ongoingDollarsInput("targetRent"),
     }),
-    costOverrunValue: baseSectionVarbs({
+    costOverrunValue: varbs({
       valueDollars: baseVarb("numObj", dollars),
       valuePercent: baseVarb("numObj", percent),
       valueDecimal: baseVarb("numObj", decimal),
@@ -215,41 +224,41 @@ export function makeAllBaseSectionVarbs() {
       valueDollarsEditor: baseVarb("numObj", dollars),
       valuePercentEditor: baseVarb("numObj", percent),
     }),
-    repairValue: baseSectionVarbs({
+    repairValue: varbs({
       value: baseVarb("numObj", dollars),
       valueSourceName: baseVarb("repairValueSource"),
       valueDollarsEditor: baseVarb("numObj", dollars),
     }),
-    utilityValue: baseSectionVarbs({
+    utilityValue: varbs({
       ...baseVarbsS.ongoingDollars("value"),
       valueSourceName: baseVarb("utilityValueSource"),
     }),
-    maintenanceValue: baseSectionVarbs({
+    maintenanceValue: varbs({
       ...baseVarbsS.ongoingDollars("value"),
       valueSourceName: baseVarb("maintainanceValueSource"),
       valueDollarsEditor: baseVarb("numObj", dollars),
     }),
-    capExValue: baseSectionVarbs({
+    capExValue: varbs({
       ...baseVarbsS.ongoingDollars("value"),
       valueSourceName: baseVarb("capExValueSource"),
       valueDollarsEditor: baseVarb("numObj", dollars),
     }),
-    closingCostValue: baseSectionVarbs({
+    closingCostValue: varbs({
       value: baseVarb("numObj", dollars),
       valueSourceName: baseVarb("closingCostValueSource"),
       valueDollarsEditor: baseVarb("numObj", dollars),
     }),
-    loan: baseSectionVarbs({
+    loan: varbs({
       ...baseVarbsS.savableSection,
       loanPurpose: baseVarb("loanPurpose"),
       loanAmountInputMode: baseVarb("loanAmountInputMode"),
       loanPurchasedAssetValue: baseVarb("numObj", dollars),
       loanBaseDollars: baseVarb("numObj", dollars),
 
-      ...varbs.ongoingPercentInput("interestRatePercent"),
+      ...varbsS.ongoingPercentInput("interestRatePercent"),
       ...baseVarbsS.ongoingDecimal("interestRateDecimal"),
 
-      ...varbs.monthsYearsInput("loanTerm"),
+      ...varbsS.monthsYearsInput("loanTerm"),
 
       isInterestOnly: baseVarb("boolean"),
       ...baseVarbsS.ongoingDollars("interestOnlySimple"),
@@ -274,7 +283,7 @@ export function makeAllBaseSectionVarbs() {
         dollars
       ),
     } as const),
-    loanBaseValue: baseSectionVarbs({
+    loanBaseValue: varbs({
       valueSourceName: baseVarb("loanBaseValueSourceNext"),
       valueDollars: baseVarb("numObj", dollars),
       valueDollarsEditor: baseVarb("numObj", dollars),
@@ -285,7 +294,7 @@ export function makeAllBaseSectionVarbs() {
 
     loanValue: baseVarbsS.loanValue,
 
-    mgmt: baseSectionVarbs({
+    mgmt: varbs({
       ...baseVarbsS.savableSection,
       useCustomCosts: baseVarb("boolean"),
       one: baseVarb("number"),
@@ -296,25 +305,25 @@ export function makeAllBaseSectionVarbs() {
       upfrontExpenses: baseVarb("numObj", dollars),
       ...baseVarbsS.ongoingDollars("expenses"),
     } as const),
-    mgmtBasePayValue: baseSectionVarbs({
+    mgmtBasePayValue: varbs({
       valueSourceName: baseVarb("mgmtBasePayValueSource"),
       ...baseVarbsS.ongoingDollarsInput("valueDollars"),
       valuePercentEditor: baseVarb("numObj", percent),
       valuePercent: baseVarb("numObj", percent),
       valueDecimal: baseVarb("numObj", decimal),
     }),
-    vacancyLossValue: baseSectionVarbs({
+    vacancyLossValue: varbs({
       valueSourceName: baseVarb("vacancyLossValueSource"),
       ...baseVarbsS.ongoingDollarsInput("valueDollars"),
       valuePercentEditor: baseVarb("numObj", percent),
       valuePercent: baseVarb("numObj", percent),
       valueDecimal: baseVarb("numObj", decimal),
     }),
-    outputSection: baseSectionVarbs({
+    outputSection: varbs({
       ...baseVarbsS.savableSection,
       showOutputs: baseVarb("boolean"),
     }),
-    deal: baseSectionVarbs({
+    deal: varbs({
       dealMode: baseVarb("dealMode"),
       ...baseVarbsS.savableSection,
       ...baseVarbsS.displayNameEditor,
@@ -336,12 +345,12 @@ export function makeAllBaseSectionVarbs() {
         dollars
       ),
     }),
-    financing: baseSectionVarbs({
+    financing: varbs({
       displayName: baseVarb("stringObj"),
       financingMode: baseVarb("financingMode"),
       one: baseVarb("number"),
     }),
-    calculatedVarbs: baseSectionVarbs({
+    calculatedVarbs: varbs({
       downPaymentDollars: baseVarb("numObj", dollars),
       downPaymentPercent: baseVarb("numObj", percent),
       downPaymentDecimal: baseVarb("numObj", decimal),
@@ -388,7 +397,7 @@ export function makeAllBaseSectionVarbs() {
       mgmtCompletionStatus: baseVarb("completionStatus"),
       dealCompletionStatus: baseVarb("completionStatus"),
     }),
-    feStore: baseSectionVarbs({
+    feStore: varbs({
       changesToSave: baseVarb("changesToSave"),
       changesSaving: baseVarb("changesSaving"),
 
@@ -404,23 +413,23 @@ export function makeAllBaseSectionVarbs() {
       labSubscription: baseVarb("labSubscription"),
       labSubscriptionExp: baseVarb("number"),
     }),
-    userInfo: baseSectionVarbs({
+    userInfo: varbs({
       ...baseVarbs("string", ["email", "userName"] as const),
       timeJoined: baseVarb("dateTime"),
     }),
-    stripeSubscription: baseSectionVarbs({
+    stripeSubscription: varbs({
       subId: baseVarb("string"),
       status: baseVarb("string"),
       priceIds: baseVarb("stringArray"),
       currentPeriodEnd: baseVarb("dateTime"),
     }),
-    authInfoPrivate: baseSectionVarbs({
+    authInfoPrivate: varbs({
       authId: baseVarb("string"),
     }),
-    stripeInfoPrivate: baseSectionVarbs({
+    stripeInfoPrivate: varbs({
       customerId: baseVarb("string"),
     } as const),
-    userInfoPrivate: baseSectionVarbs({
+    userInfoPrivate: varbs({
       ...baseVarbs("string", [
         "encryptedPassword",
         "emailAsSubmitted",

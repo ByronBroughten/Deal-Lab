@@ -153,6 +153,7 @@ export const allSectionChildren = checkAllSectionChildren({
     unit: "unit",
     repairValue: "repairValue",
     costOverrunValue: "costOverrunValue",
+    sellingCostValue: "sellingCostValue",
     utilityValue: "utilityValue",
     maintenanceValue: "maintenanceValue",
     capExValue: "capExValue",
@@ -162,6 +163,9 @@ export const allSectionChildren = checkAllSectionChildren({
     ongoingExpenseGroup: "ongoingValueGroup",
     ongoingRevenueGroup: "ongoingValueGroup",
     customVarb: "customVarb",
+  }),
+  sellingCostValue: sectionChildren({
+    singleTimeList: "singleTimeList",
   }),
   repairValue: sectionChildren({
     singleTimeList: "singleTimeList",

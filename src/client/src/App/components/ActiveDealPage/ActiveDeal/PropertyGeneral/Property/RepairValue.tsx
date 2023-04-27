@@ -17,7 +17,7 @@ export function RepairValue({ feId }: Props) {
           ...feInfo,
           varbName: "valueSourceName",
         },
-        label: "Repair Cost Base",
+        label: "Repair cost base",
         items: [
           ["zero", "Turnkey (no repairs)"],
           ["valueEditor", "Enter lump sum"],

@@ -74,6 +74,7 @@ const calculations = {
   ...solvableTextByArgs.nums,
   one: ({}) => "1",
   two: ({}) => "2",
+  six: ({}) => "6",
   portionToDecimal: ({
     base,
     portionOfBase,

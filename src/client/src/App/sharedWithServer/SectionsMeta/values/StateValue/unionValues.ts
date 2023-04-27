@@ -50,6 +50,12 @@ const valueSources = {
   utilityValueSource: ["none", "zero", "listTotal", "twentyPercentRent"],
   repairValueSource: ["none", "zero", "valueEditor", "listTotal"],
   overrunValueSource: ["valuePercentEditor", "valueDollarsEditor"],
+  sellingCostSource: [
+    "sixPercent",
+    "valuePercentEditor",
+    "valueDollarsEditor",
+    "itemize",
+  ],
   // maybe just needs percentEditor and dollarsEditor.
   maintainanceValueSource: [
     "none",

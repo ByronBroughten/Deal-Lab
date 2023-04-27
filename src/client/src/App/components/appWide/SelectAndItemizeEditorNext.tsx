@@ -3,6 +3,7 @@ import React from "react";
 import { unstable_batchedUpdates } from "react-dom";
 import { useToggleView } from "../../modules/customHooks/useToggleView";
 import { SectionName } from "../../sharedWithServer/SectionsMeta/SectionName";
+import { StateValue } from "../../sharedWithServer/SectionsMeta/values/StateValue";
 import { UnionValueName } from "../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
 import { useGetterVarbNext } from "../../sharedWithServer/stateClassHooks/useGetterVarb";
 import { nativeTheme } from "../../theme/nativeTheme";
@@ -15,7 +16,7 @@ export interface SelectAndItemizeEditorProps<
   SN extends SectionName
 > extends SelectEditorPropsNext<UVN, SN> {
   total: string;
-  itemizeValue: string;
+  itemizeValue: StateValue<UVN>;
   itemsComponent: React.ReactNode;
   itemizedModalTitle: React.ReactNode;
 }

@@ -5,6 +5,7 @@ import {
   MdAttachMoney,
   MdOutlineHomeRepairService,
   MdOutlineRoofing,
+  MdSell,
 } from "react-icons/md";
 import { VscOutput } from "react-icons/vsc";
 import { StoreName } from "./../../sharedWithServer/SectionsMeta/sectionStores";
@@ -41,6 +42,7 @@ export const componentProps: ComponentProps = {
   capExListMain: props("Capital Expenses", "Cap Ex", () => (
     <MdOutlineRoofing {...iconProps} />
   )),
+  sellingListMain: props("Selling Costs", "selling costs", () => <MdSell />),
   closingCostsListMain: props("Closing Costs", "closing costs", () => (
     <FaMoneyCheckAlt {...iconProps} />
   )),

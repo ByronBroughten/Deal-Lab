@@ -37,6 +37,7 @@ export const feRoutes = {
 
   components: componentsRoute,
   repairsListMain: componentsRoute + "/repairs",
+  sellingListMain: componentsRoute + "/repairs",
   utilitiesListMain: componentsRoute + "/utilities",
   capExListMain: componentsRoute + "/cap-ex",
   closingCostsListMain: componentsRoute + "/closing-costs",

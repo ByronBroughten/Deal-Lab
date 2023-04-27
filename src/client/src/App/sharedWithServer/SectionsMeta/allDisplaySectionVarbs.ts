@@ -44,7 +44,7 @@ export const allDisplaySectionVarbs = {
   ...displaySectionVarbsProp("property", {
     purchasePrice: varb("Purchase price"),
     sqft: varb("Square feet"),
-    afterRepairValue: varb("ARV"),
+    afterRepairValue: varb("After repair value"),
     rehabCost: varb("Rehab costs"),
     sellingCosts: varb("Selling costs"),
     numUnits: varb("Unit count"),

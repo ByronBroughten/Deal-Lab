@@ -6,8 +6,8 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-// Add CostOverrunValue and use it for B&H and F&F
 // Add SellingCostValue and use it for F&F
+// (6% arv, custom %, custom amt, itemized)
 
 // Basic info
 // Purchase price, ARV, SellingCostValue (6% arv, custom %, custom amt, itemized)

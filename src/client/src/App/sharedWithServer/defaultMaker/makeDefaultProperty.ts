@@ -24,6 +24,9 @@ export function makeDefaultProperty(
     valueSourceName: "valuePercentEditor",
   });
 
+  const sellingCost = property.addAndGetChild("sellingCostValue");
+  sellingCost.addChild("singleTimeList");
+
   const repairValue = property.addAndGetChild("repairValue");
   repairValue.addChild("singleTimeList");
 

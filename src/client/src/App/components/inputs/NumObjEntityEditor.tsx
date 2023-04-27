@@ -11,7 +11,7 @@ import { ValueFixedVarbPathName } from "../../sharedWithServer/StateEntityGetter
 import { GetterVarb } from "../../sharedWithServer/StateGetters/GetterVarb";
 import { EditorTextStatus } from "../../sharedWithServer/StateGetters/GetterVarbNumObj";
 import { nativeTheme } from "../../theme/nativeTheme";
-import { arrSx, useMemoSx } from "../../utils/mui";
+import { arrSx } from "../../utils/mui";
 import { useShowEqualsContext } from "../appWide/customContexts/showEquals";
 import { MaterialDraftEditor } from "./MaterialDraftEditor";
 import { NumObjVarbSelector } from "./NumObjEditor/NumObjVarbSelector";
@@ -57,11 +57,10 @@ export function NumObjEntityEditor({
   const showEqualsStatus = useShowEqualsContext();
   const doEquals = showEqualsStatus === "showAll" ? true : varb.isPureUserVarb;
 
-  const msx = useMemoSx(sx);
   return (
     <MemoNumObjEntityEditor
       {...{
-        sx: msx,
+        sx,
         editorType,
         displayValue: varb.displayValue,
         editorTextStatus: varb.numObj.editorTextStatus,
@@ -87,7 +86,7 @@ export function NumObjEntityEditor({
 }
 
 interface MemoProps extends Adornments, FeVarbInfo {
-  sx: SxProps;
+  sx?: SxProps;
   displayValue: string;
   editorTextStatus: EditorTextStatus;
   displayName: string;
