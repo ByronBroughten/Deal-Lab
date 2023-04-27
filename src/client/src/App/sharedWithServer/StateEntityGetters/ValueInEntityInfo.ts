@@ -21,7 +21,8 @@ export const fixedVarbOptionNames = Arr.extractOrder(varbPathNames, [
   "numBedrooms",
   "targetRentMonthly",
   "targetRentYearly",
-  "upfrontRepairCost",
+  "rehabCost",
+  "repairCostBase",
 
   "downPaymentDollars",
   "downPaymentPercent",

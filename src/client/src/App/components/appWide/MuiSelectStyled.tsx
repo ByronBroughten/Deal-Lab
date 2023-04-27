@@ -9,12 +9,13 @@ import React from "react";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { arrSx, MuiSelectOnChange } from "../../utils/mui";
 
-interface MuiSelectStyledProps {
+export interface MuiSelectStyledProps {
   className?: string;
   label?: React.ReactNode;
   value: string;
   onChange?: MuiSelectOnChange;
   items: [string, string][];
+  selectProps?: { sx?: SxProps };
   sx?: SxProps;
 }
 export function MuiSelectStyled({
@@ -23,6 +24,7 @@ export function MuiSelectStyled({
   value,
   onChange,
   items,
+  selectProps = {},
   sx,
 }: MuiSelectStyledProps) {
   return (
@@ -72,14 +74,18 @@ export function MuiSelectStyled({
           id: "demo-simple-select",
           ...(label && { label }),
           autoWidth: true,
-          sx: {
-            backgroundColor: nativeTheme["gray-200"],
-            borderBottomWidth: 0,
-            minWidth: 0,
-            ...(value === "none" && {
-              color: nativeTheme["gray-600"],
-            }),
-          },
+          sx: [
+            {
+              backgroundColor: nativeTheme["gray-200"],
+              borderBottomWidth: 0,
+              minWidth: 0,
+
+              ...(value === "none" && {
+                color: nativeTheme["gray-600"],
+              }),
+            },
+            ...arrSx(selectProps?.sx),
+          ],
         }}
       >
         {items.map(([itemValue, itemLabel]) => (

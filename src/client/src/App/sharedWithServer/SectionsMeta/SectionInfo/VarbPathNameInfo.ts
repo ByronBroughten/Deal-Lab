@@ -54,11 +54,6 @@ const allVarbPathParams = {
     ...targetNames("homeIns", "ongoing"),
     ...targetNames("targetRent", "ongoing"),
   ]),
-  upfrontRepairCosts: fixedVarbPathParams(
-    "Property",
-    "repairCostFocal",
-    "value"
-  ),
   ...sectionVarbNameParams("mgmtFocal", "Management", [
     "vacancyLossPercent",
     ...targetNames("basePayDollars", "ongoing"),
@@ -119,11 +114,8 @@ const allVarbPathParams = {
     ...targetNames("cocRoi", "ongoing"),
   ]),
   userVarbValue: varbPathParams("numVarbItemMain", "value"),
-  upfrontRepairCost: fixedVarbPathParams(
-    "Property",
-    "repairCostFocal",
-    "value"
-  ),
+  repairCostBase: fixedVarbPathParams("Property", "repairCostFocal", "value"),
+  rehabCost: fixedVarbPathParams("Property", "propertyFocal", "rehabCost"),
 };
 
 export const varbPathNames = Obj.keys(allVarbPathParams);

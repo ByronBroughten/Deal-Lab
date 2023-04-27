@@ -6,26 +6,71 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
+// Add CostOverrunValue and use it for B&H and F&F
+// Add SellingCostValue and use it for F&F
 
-// completionStatus hell for the new
-// loan base value...
+// Basic info
+// Purchase price, ARV, SellingCostValue (6% arv, custom %, custom amt, itemized)
+
+// Rehab
+// UpfrontRepairValue, CostOverrunValue (no overrun, 10%, percent, amount)
+
+// Holding costs
+// holdingPeriod taxes, insurance, UtilityValue (slightly modified language)
+// otherHoldingCosts (custom ongoing + checkboxes: landscaping, HOA, accounting),
+
+// Custom
+// misc upfrontCosts (custom upfront)
+
+// "makeDefault" can now have props. I should include that in the
+// "addChild" props
+
+// How many completionStatuses would there be? Maybe just one,
+// with overrides
+
+// Ok. Here's what I'd like to be possible:
+// - Deal has one property for each property type
+//   This substantially increases the size of each deal
+//   That might be fine, though.
+
+// - Maybe when the deal saves, it first removes its extra children
+// - This could work if I implement sectionPack loading that builds
+//   off of the default section, which is necessary for updating the system
+
+// - To be able to load from any property, it would be
+//   easiest to use only one type of section for property
+
+// - "Tenant pays utilities" shouldn't really be an option
+//   for f&f, though. That would only require a tiny adjustment.
+//   And I would have to make an adjustment, anyways—by switching
+//   the property to the correct type.
+
+// - The last worry I have is that the type of property might accidentally
+//   get changed, or a property of the wrong type might get in
+//   the wrong spot, if it's just a variable and not its own section type.
+//   I want something in between variables and sectionTypes.
+
+// - I'm just going to use a variable for it
+
+// Maybe it's best to have "F&F" properties that are separate.
+// I think that's the way to go.
+// Still, it would be nice to have a way to borrow from B&H properties,
+// Or at least the curretn b&h property
+
+// Selling Costs
+// - New value?
+
+// Add Closing Costs - Custom Percent of base loan
 
 // New Loan situation
-
-// - Get baseLoanAmount section to get its values from the appropriate
-//   child or children
+// - rethink completionStatus?
 
 // - Figure out how to display two values under one label,
 //   with a light grey divider in between them (or just one value
 //   if only one is provided)
 
-// - Figure out how to not include the value that is entered as
-//   an input
-
 // - Figure out how to display everything when purchasePrice & repairs
 //   is selected
-
-// -
 
 // Now, how do I handle the problem of being able to use
 // loans both for the purchase and refinance phase?
@@ -37,8 +82,6 @@ AppRegistry.runApplication("App", {
 // 3. Make loans just have "percent of price". When they're
 //    in the refinance slot, it's from ARV. When they're in the purchase
 //    slot, it's from purchasePrice
-
-// Make it stop trying to save after a failed attempt.
 
 // - Add FixNFlip
 // Add the necessary inputs

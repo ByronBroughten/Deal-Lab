@@ -54,6 +54,8 @@ export const sectionNames = [
   "propertyGeneral",
   "property",
   "repairValue",
+  "costOverrunValue",
+  "sellingCostValue",
   "utilityValue",
 
   "maintenanceValue",

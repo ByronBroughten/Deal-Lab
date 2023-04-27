@@ -29,9 +29,25 @@ export function makeDefaultDealPack(): SectionPack<"deal"> {
     childName: "loan",
     sectionPack: makeDefaultLoanPack(),
   });
+
+  deal.loadChild({
+    childName: "buyAndHoldProperty",
+    sectionPack: makeDefaultProperty("buyAndHold"),
+  });
+
+  deal.loadChild({
+    childName: "fixAndFlipProperty",
+    sectionPack: makeDefaultProperty("fixAndFlip"),
+  });
+
+  // deal.loadChild({
+  //   childName: "brrrrProperty",
+  //   sectionPack: makeDefaultProperty(),
+  // });
+
   deal.loadChild({
     childName: "property",
-    sectionPack: makeDefaultProperty(),
+    sectionPack: makeDefaultProperty("buyAndHold"),
   });
   deal.loadChild({
     childName: "mgmt",

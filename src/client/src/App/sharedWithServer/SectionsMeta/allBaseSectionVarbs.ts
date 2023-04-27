@@ -176,11 +176,13 @@ export function makeAllBaseSectionVarbs() {
     }),
     property: baseSectionVarbs({
       ...baseVarbsS.savableSection,
+      propertyMode: baseVarb("dealMode"),
       address: baseVarb("string"),
       ...baseVarbs(
         "numObj",
         [
           "purchasePrice",
+          "rehabCost",
           "upfrontExpenses",
           "upfrontRevenue",
           "afterRepairValue",
@@ -204,6 +206,14 @@ export function makeAllBaseSectionVarbs() {
       one: baseVarb("number"),
       numBedrooms: baseVarb("numObj"),
       ...baseVarbsS.ongoingDollarsInput("targetRent"),
+    }),
+    costOverrunValue: baseSectionVarbs({
+      valueDollars: baseVarb("numObj", dollars),
+      valuePercent: baseVarb("numObj", percent),
+      valueDecimal: baseVarb("numObj", decimal),
+      valueSourceName: baseVarb("overrunValueSource"),
+      valueDollarsEditor: baseVarb("numObj", dollars),
+      valuePercentEditor: baseVarb("numObj", percent),
     }),
     repairValue: baseSectionVarbs({
       value: baseVarb("numObj", dollars),

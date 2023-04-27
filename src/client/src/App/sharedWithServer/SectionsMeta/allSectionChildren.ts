@@ -127,6 +127,10 @@ export const allSectionChildren = checkAllSectionChildren({
   },
   conditionalRowList: { conditionalRow: sectionChild("conditionalRow") },
   deal: sectionChildren({
+    buyAndHoldProperty: "property",
+    fixAndFlipProperty: "property",
+    // brrrrProperty: "property",
+
     property: "property",
     financing: "financing",
     mgmt: "mgmt",
@@ -148,6 +152,7 @@ export const allSectionChildren = checkAllSectionChildren({
   property: sectionChildren({
     unit: "unit",
     repairValue: "repairValue",
+    costOverrunValue: "costOverrunValue",
     utilityValue: "utilityValue",
     maintenanceValue: "maintenanceValue",
     capExValue: "capExValue",

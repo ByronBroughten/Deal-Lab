@@ -49,6 +49,8 @@ const valueSources = {
   customValueSource: ["none", "valueEditor", "listTotal"],
   utilityValueSource: ["none", "zero", "listTotal", "twentyPercentRent"],
   repairValueSource: ["none", "zero", "valueEditor", "listTotal"],
+  overrunValueSource: ["valuePercentEditor", "valueDollarsEditor"],
+  // maybe just needs percentEditor and dollarsEditor.
   maintainanceValueSource: [
     "none",
     "onePercentPrice",
@@ -78,7 +80,7 @@ const unionValueArrs = {
   labSubscription: ["basicPlan", "fullPlan"],
   autoSyncControl: ["autoSyncOff", "autoSyncOn"],
   completionStatus: ["allEmpty", "allValid", "someInvalid"],
-  dealMode: ["buyAndHold", "moreToCome"], // "fixAndFlip", "brrrr"
+  dealMode: ["buyAndHold", "fixAndFlip"], //"brrrr"
   financingMode: ["cashOnly", "useLoan", ""],
   userDataStatus: [
     "notLoaded",
@@ -116,7 +118,6 @@ export function isLabSubscription(
 
 export const dealModeLabels: Record<UnionValue<"dealMode">, string> = {
   buyAndHold: "Buy & Hold",
-  moreToCome: "More to Come",
-  // fixAndFlip: "Fix & Flip",
+  fixAndFlip: "Fix & Flip",
   // brrrr: "BRRRR",
 };

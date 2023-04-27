@@ -1,5 +1,6 @@
 import { timeS } from "../utils/timeS";
 import { calculatedUpdateVarbs } from "./allUpdateSectionVarbs/calculatedUpdateVarbs";
+import { costOverrunUpdateVarbs } from "./allUpdateSectionVarbs/costOverrunUpdateVarbs";
 import { dealUpdateVarbs } from "./allUpdateSectionVarbs/dealUpdateVarbs";
 import { financingUpdateVarbs } from "./allUpdateSectionVarbs/financingUpdateVarbs";
 import { loanBaseUpdateVarbs } from "./allUpdateSectionVarbs/loanBaseUpdateVarbs";
@@ -73,7 +74,7 @@ function makeAllUpdateSections() {
     ),
     ...updateSectionProp(
       "repairLoanValue",
-      loanValueUpdateVarbs(mixedInfoS.varbPathName("upfrontRepairCosts"))
+      loanValueUpdateVarbs(mixedInfoS.varbPathName("rehabCost"))
     ),
     ...updateSectionProp(
       "arvLoanValue",
@@ -85,6 +86,7 @@ function makeAllUpdateSections() {
     ...updateSectionProp("deal", dealUpdateVarbs()),
     ...updateSectionProp("financing", financingUpdateVarbs()),
     ...updateSectionProp("property", propertyUpdateVarbs()),
+    ...updateSectionProp("costOverrunValue", costOverrunUpdateVarbs()),
     ...updateSectionProp("unit", {
       one: updateVarbS.one(),
       numBedrooms: updateVarb("numObj"),

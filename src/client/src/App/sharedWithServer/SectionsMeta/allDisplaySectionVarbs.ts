@@ -45,6 +45,7 @@ export const allDisplaySectionVarbs = {
     purchasePrice: varb("Purchase price"),
     sqft: varb("Square feet"),
     afterRepairValue: varb("ARV"),
+    rehabCost: varb("Rehab costs"),
     sellingCosts: varb("Selling costs"),
     numUnits: varb("Unit count"),
     numBedrooms: varb("Bedrooms"),
@@ -55,6 +56,9 @@ export const allDisplaySectionVarbs = {
       "holdingPeriod",
       "Holding period"
     ),
+    ...displaySectionVarbsProp("repairValue", {
+      value: varb("Repair cost base"),
+    }),
     ...editorDisplayGroup("ongoingInput", "taxes", "Taxes", {
       monthly: { displayNameWithVariant: "Taxes monthly" },
       yearly: { displayNameWithVariant: "Taxes yearly" },

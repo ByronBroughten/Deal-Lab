@@ -11,6 +11,9 @@ export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
   return {
     ...updateVarbsS._typeUniformity,
     ...updateVarbsS.savableSection,
+    propertyMode: updateVarb("dealMode", {
+      initValue: "buyAndHold",
+    }),
     address: updateVarb("string"),
     one: updateVarbS.one(),
     purchasePrice: updateVarb("numObj"),
@@ -23,9 +26,13 @@ export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
     numUnits: updateVarbS.sumChildNums("unit", "one"),
     numBedrooms: updateVarbS.sumChildNums("unit", "numBedrooms"),
     useCustomCosts: updateVarb("boolean", { initValue: false }),
+    rehabCost: updateVarbS.sumNums([
+      updateFnPropS.children("repairValue", "value"),
+      updateFnPropS.children("costOverrunValue", "valueDollars"),
+    ]),
     upfrontExpenses: updateVarbS.sumNums([
       updateFnPropS.local("purchasePrice"),
-      updateFnPropS.children("repairValue", "value"),
+      updateFnPropS.local("rehabCost"),
       updateFnPropS.onlyChild("upfrontExpenseGroup", "total", [
         overrideSwitchS.pathHasValue("propertyFocal", "useCustomCosts", true),
       ]),

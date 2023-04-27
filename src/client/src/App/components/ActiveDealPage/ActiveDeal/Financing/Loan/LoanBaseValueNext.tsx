@@ -17,7 +17,7 @@ import { LoanBaseSubValue } from "./LoanBaseSubValue";
 export function LoanBaseValueNext({ feId }: { feId: string }) {
   const feInfo = { sectionName: "loanBaseValue", feId } as const;
   const baseValue = useGetterSection(feInfo);
-  const valueSourceNext = baseValue.valueNext("valueSourceName");
+  const valueSource = baseValue.valueNext("valueSourceName");
   return (
     <FormSectionLabeled
       {...{
@@ -36,7 +36,6 @@ export function LoanBaseValueNext({ feId }: { feId: string }) {
               varbName: "valueSourceName",
             },
             unionValueName: "loanBaseValueSourceNext",
-            value: valueSourceNext,
             items: [
               ["purchaseLoanValue", "Property purchase"],
               ["repairLoanValue", "Upfront repairs"],
@@ -49,11 +48,11 @@ export function LoanBaseValueNext({ feId }: { feId: string }) {
           <LoanBaseValueEditorArea {...{ feId }} />
         </Box>
       </Box>
-      {sectionNameS.is(valueSourceNext, "loanBaseSubValue") && (
+      {sectionNameS.is(valueSource, "loanBaseSubValue") && (
         <ValueNumbers
           {...{
-            sectionName: valueSourceNext,
-            feId: baseValue.onlyChildFeId(valueSourceNext),
+            sectionName: valueSource,
+            feId: baseValue.onlyChildFeId(valueSource),
           }}
         />
       )}

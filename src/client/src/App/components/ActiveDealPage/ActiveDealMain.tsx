@@ -19,7 +19,6 @@ const dealElementProps = {
 export function ActiveDealMain() {
   const { deal, calcVarbs, feStore } = useActiveDealPage();
   const completionStatus = calcVarbs.value("dealCompletionStatus");
-  const dealMode = deal.valueNext("dealMode");
   return (
     <BackBtnWrapper {...{ to: "account", label: "Deal Menu" }}>
       <BackgroundContainer>
@@ -41,10 +40,9 @@ export function ActiveDealMain() {
                 varbName: "dealMode",
               },
               unionValueName: "dealMode",
-              value: dealMode,
               items: [
                 ["buyAndHold", "Buy & Hold"],
-                ["moreToCome", "More to come"],
+                ["fixAndFlip", "Fix & Flip"],
               ],
               label: "Type",
             }}
