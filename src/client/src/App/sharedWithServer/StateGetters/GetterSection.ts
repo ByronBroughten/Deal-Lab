@@ -42,6 +42,7 @@ import {
   FeParentInfoSafe,
   FeSectionInfo,
   FeVarbInfo,
+  FeVarbInfoNext,
 } from "../SectionsMeta/SectionInfo/FeInfo";
 import {
   mixedInfoS,
@@ -685,6 +686,9 @@ export class GetterSection<
   }
   varbInfo(varbName: VarbName<SN>): FeVarbInfo<SN> {
     return this.varb(varbName as string).feVarbInfo;
+  }
+  varbInfoNext<VN extends VarbName<SN>>(varbName: VN): FeVarbInfoNext<SN, VN> {
+    return this.varb(varbName).feVarbInfo as FeVarbInfoNext<SN, VN>;
   }
   varbInfoArr(varbNames: readonly VarbName<SN>[]): FeVarbInfo<SN>[] {
     return varbNames.map((varbName) => this.varbInfo(varbName));

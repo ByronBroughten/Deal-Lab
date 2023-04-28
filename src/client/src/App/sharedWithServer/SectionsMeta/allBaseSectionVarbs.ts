@@ -209,6 +209,9 @@ export function makeAllBaseSectionVarbs() {
       ...baseVarbsS.ongoingDollars("miscRevenue"),
       ...baseVarbsS.ongoingDollars("revenue"),
       ...baseVarbsS.monthsYearsInput("holdingPeriod"),
+      useCustomOngoingCosts: baseVarb("boolean"),
+      useCustomOneTimeCosts: baseVarb("boolean"),
+
       useCustomCosts: baseVarb("boolean"),
     }),
     unit: varbs({

@@ -50,7 +50,7 @@ export function ValueGroupGeneric<
   const { areMultiple: areMultipleValues } = useHowMany(values);
   return (
     <Styled className={`ValueGroup-root ` + className ?? ""}>
-      <div className="ValueGroup-viewable">
+      <div>
         <div className="ValueGroup-titleRow">
           <SectionTitleAndCost
             className="ValueGroup-titleRowLeft"

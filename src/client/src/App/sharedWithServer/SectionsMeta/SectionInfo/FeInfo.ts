@@ -1,3 +1,4 @@
+import { VarbName } from "../baseSectionsDerived/baseSectionsVarbsTypes";
 import { Id } from "../IdS";
 import {
   ParentName,
@@ -44,9 +45,11 @@ export interface FeVarbInfo<
 > extends FeSectionInfo<SN>,
     VarbProp {}
 
-export interface FeVarbInfoNext<SN extends SectionName = SectionName>
-  extends FeSectionInfo<SN>,
-    VarbPropNext<SN> {}
+export interface FeVarbInfoNext<
+  SN extends SectionName = SectionName,
+  VN extends VarbName<SN> = VarbName<SN>
+> extends FeSectionInfo<SN>,
+    VarbPropNext<SN, VN> {}
 
 export interface FeVarbValueInfo<
   SN extends SectionNameByType = SectionNameByType<"hasVarb">

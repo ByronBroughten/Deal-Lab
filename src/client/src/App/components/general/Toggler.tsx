@@ -5,9 +5,9 @@ import theme from "../../theme/Theme";
 
 type Props = {
   checked: boolean;
-  name: string;
   label: React.ReactNode;
   onChange: () => void;
+  name?: string;
   className?: string;
 };
 export function Toggler({ label, className, ...rest }: Props) {

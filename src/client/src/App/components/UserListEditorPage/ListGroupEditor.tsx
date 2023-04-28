@@ -13,23 +13,14 @@ import { SectionTitle } from "../appWide/SectionTitle";
 import { VarbListCapEx } from "../appWide/VarbLists/VarbListCapEx";
 import { VarbListOngoing } from "../appWide/VarbLists/VarbListOngoing";
 import { Row } from "../general/Row";
+import { componentProps } from "../props/userComponentPropGroups";
 
 const listTypeNames = ["capEx", "ongoing", "singleTime"] as const;
 type ListTypeName = typeof listTypeNames[number];
 
-export const listTitles = {
-  repairsListMain: "Repair List Templates",
-  utilitiesListMain: "Utility List Templates",
-  holdingCostsListMain: "Holding Cost Lists",
-  capExListMain: "CapEx List Templates",
-  closingCostsListMain: "Closing Cost List Templates",
-  outputListMain: "Output Templates",
-  singleTimeListMain: "Custom Cost Templates",
-  ongoingListMain: "Custom Ongoing Cost Templates",
-} as const;
-
 type ListProps = Record<ListChildName, ListTypeName>;
 const listTypes: ListProps = {
+  sellingListMain: "singleTime",
   repairsListMain: "singleTime",
   utilitiesListMain: "ongoing",
   holdingCostsListMain: "ongoing",
@@ -76,13 +67,12 @@ function useListNodeMakers(
 }
 
 export function ListGroupEditor({ listName }: Props) {
-  const title = listTitles[listName];
   const listTypeName = listTypes[listName];
   const feStore = useGetterSectionOnlyOne("feStore");
   const addToStore = useAction("addToStore");
-
   const nodeMakers = useListNodeMakers(listName);
 
+  const { title } = componentProps[listName];
   return (
     <BackBtnWrapper {...{ to: -1, label: "Back" }}>
       <SubSectionOpen>

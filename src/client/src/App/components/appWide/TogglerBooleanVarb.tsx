@@ -6,8 +6,9 @@ import { Toggler } from "../general/Toggler";
 
 interface Props {
   feVarbInfo: FeVarbInfo;
-  name: string;
+
   label: React.ReactNode;
+  name?: string;
   onChange?: (nextValue?: boolean) => void;
   className?: string;
 }

@@ -1,10 +1,11 @@
+import { SxProps } from "@mui/material";
 import { useGetterSection } from "../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { SelectAndItemizeEditorNext } from "../../../../appWide/SelectAndItemizeEditorNext";
 import { NumObjEntityEditor } from "../../../../inputs/NumObjEntityEditor";
 import { ListEditorSingleTime } from "./ValueShared.tsx/ListEditorSingleTime";
 
-type Props = { feId: string };
-export function RepairValue({ feId }: Props) {
+type Props = { feId: string; sx?: SxProps };
+export function RepairValue({ feId, sx }: Props) {
   const feInfo = { sectionName: "repairValue", feId } as const;
   const repairValue = useGetterSection(feInfo);
   const valueSourceName = repairValue.valueNext("valueSourceName");
@@ -12,6 +13,7 @@ export function RepairValue({ feId }: Props) {
   return (
     <SelectAndItemizeEditorNext
       {...{
+        sx,
         unionValueName: "repairValueSource",
         feVarbInfo: {
           ...feInfo,
@@ -19,6 +21,7 @@ export function RepairValue({ feId }: Props) {
         },
         label: "Repair cost base",
         items: [
+          ["none", "Choose method"],
           ["zero", "Turnkey (no repairs)"],
           ["valueEditor", "Enter lump sum"],
           ["listTotal", "Itemize"],

@@ -6,6 +6,7 @@ import { PropertyEditor } from "./PropertyEditor";
 
 export function ActiveDealProperty() {
   const { isComplete, ...rest } = useActiveDealSection("property");
+
   return (
     <DealSubSectionOpen {...{ finishIsAllowed: isComplete }}>
       <PropertyEditor {...rest} />

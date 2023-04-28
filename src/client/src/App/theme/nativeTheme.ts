@@ -59,6 +59,11 @@ export const nativeTheme = {
       color: themeColors["gray-500"],
     },
   },
+  editorMargins: {
+    my: unitSizes.s3,
+    mr: unitSizes.s4,
+    ml: 0,
+  },
   mainSection,
   subSection,
   comparedDeal,

@@ -29,7 +29,7 @@ export function MuiSelectStyled({
 }: MuiSelectStyledProps) {
   return (
     <FormControl
-      className={className}
+      className={`MuiSelectStyled-root ${className ?? ""}`}
       hiddenLabel={!label}
       sx={[
         {

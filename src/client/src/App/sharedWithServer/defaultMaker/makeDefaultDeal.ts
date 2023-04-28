@@ -1,10 +1,18 @@
+import { ChildName } from "../SectionsMeta/sectionChildrenDerived/ChildName";
 import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
+import { StateValue } from "../SectionsMeta/values/StateValue";
 import { GetterSection } from "../StateGetters/GetterSection";
 import { PackBuilderSection } from "../StatePackers/PackBuilderSection";
 import { makeDefaultLoanPack } from "./makeDefaultLoanPack";
 import { makeDefaultMgmtPack } from "./makeDefaultMgmtPack";
 import { makeDefaultProperty } from "./makeDefaultProperty";
 
+type ChildByDealMode = Record<StateValue<"dealMode">, ChildName<"deal">>;
+const testPropertiesByType = <T extends ChildByDealMode>(t: T): T => t;
+export const dealPropertiesByType = testPropertiesByType({
+  buyAndHold: "buyAndHoldProperty",
+  fixAndFlip: "fixAndFlipProperty",
+});
 export const dealSectionNames = ["property", "financing", "mgmt"] as const;
 type DealSectionName = typeof dealSectionNames[number];
 

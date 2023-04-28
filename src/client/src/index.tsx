@@ -6,17 +6,9 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-// Add SellingCostValue and use it for F&F
-// (6% arv, custom %, custom amt, itemized)
-
-// Basic info
-// Purchase price, ARV, SellingCostValue (6% arv, custom %, custom amt, itemized)
-
-// Rehab
-// UpfrontRepairValue, CostOverrunValue (no overrun, 10%, percent, amount)
 
 // Holding costs
-// holdingPeriod taxes, insurance, UtilityValue (slightly modified language)
+// UtilityValue (slightly modified language)
 // otherHoldingCosts (custom ongoing + checkboxes: landscaping, HOA, accounting),
 
 // Custom

@@ -44,7 +44,6 @@ export function CustomExpenses({
             />
             <ValueGroupOngoing
               {...{
-                className: "CustomExpenses-ongoingCostGroup",
                 feId: section.onlyChild("ongoingExpenseGroup").feId,
                 titleText: "Custom Ongoing Costs",
               }}

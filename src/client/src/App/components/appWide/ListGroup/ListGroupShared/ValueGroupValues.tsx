@@ -14,7 +14,7 @@ interface Props {
   feIds: string[];
   makeValueNode: MakeValueNode;
   addValue: () => void;
-  extraValueChildren: React.ReactNode;
+  extraValueChildren?: React.ReactNode;
   className?: string;
 }
 export function ValueGroupValues({
@@ -26,7 +26,7 @@ export function ValueGroupValues({
 }: Props) {
   return (
     <Styled className={`ValueGroup-values ${className ?? ""}`}>
-      {extraValueChildren}
+      {extraValueChildren ?? null}
       {feIds.map((feId) => {
         return makeValueNode({
           feId,

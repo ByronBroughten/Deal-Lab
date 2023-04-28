@@ -1,42 +1,27 @@
-import { StateValue } from "../../../../../sharedWithServer/SectionsMeta/values/StateValue";
-import { validateStateValue } from "../../../../../sharedWithServer/SectionsMeta/values/valueMetas";
-import { useAction } from "../../../../../sharedWithServer/stateClassHooks/useAction";
 import { useGetterSection } from "../../../../../sharedWithServer/stateClassHooks/useGetterSection";
-import { SelectAndItemizeEditorSection } from "../../../../appWide/SelectAndItemizeEditorSection";
+import { SelectAndItemizeEditorNext } from "../../../../appWide/SelectAndItemizeEditorNext";
 import { ListEditorOngoing } from "./ValueShared.tsx/ListEditorOngoing";
 
-export function UtilityValue({
-  feId,
-  labeled,
-}: {
-  feId: string;
-  labeled?: boolean;
-}) {
+export function UtilityValueNext({ feId }: { feId: string }) {
   const feInfo = { sectionName: "utilityValue", feId } as const;
-  const updateValue = useAction("updateValue");
   const utilityValue = useGetterSection(feInfo);
   const valueSourceName = utilityValue.valueNext("valueSourceName");
   const valueVarb = utilityValue.switchVarb("value", "ongoing");
   const equalsValue = valueSourceName === "zero" ? "$0" : undefined;
-
-  const menuItems: [StateValue<"utilityValueSource">, string][] = [
-    ["zero", "Tenant pays all utilities"],
-    ["listTotal", "Itemize"],
-  ];
-
   return (
-    <SelectAndItemizeEditorSection
+    <SelectAndItemizeEditorNext
       {...{
-        label: "Utility Costs",
-        selectValue: valueSourceName,
-        onChange: (e) => {
-          updateValue({
-            ...feInfo,
-            varbName: "valueSourceName",
-            value: validateStateValue(e.target.value, "utilityValueSource"),
-          });
+        selectProps: { sx: { minWidth: 160 } },
+        unionValueName: "utilityValueSource",
+        label: "Utilities",
+        feVarbInfo: {
+          ...feInfo,
+          varbName: "valueSourceName",
         },
-        menuItems,
+        items: [
+          ["zero", "Tenant pays all utilities"],
+          ["listTotal", "Itemize"],
+        ],
         equalsValue,
         itemizedModalTitle: "Utilities",
         itemizeValue: "listTotal",

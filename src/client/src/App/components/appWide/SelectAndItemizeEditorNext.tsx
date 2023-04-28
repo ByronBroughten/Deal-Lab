@@ -7,6 +7,8 @@ import { StateValue } from "../../sharedWithServer/SectionsMeta/values/StateValu
 import { UnionValueName } from "../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
 import { useGetterVarbNext } from "../../sharedWithServer/stateClassHooks/useGetterVarb";
 import { nativeTheme } from "../../theme/nativeTheme";
+import { arrSx } from "../../utils/mui";
+import { MuiRow } from "../general/MuiRow";
 import { EditSectionBtn } from "./EditSectionBtn";
 import { ModalSection } from "./ModalSection";
 import { SelectEditorNext, SelectEditorPropsNext } from "./SelectEditorNext";
@@ -25,6 +27,7 @@ export function SelectAndItemizeEditorNext<
   UVN extends UnionValueName,
   SN extends SectionName
 >({
+  sx,
   total,
   itemsComponent,
   rightOfControls,
@@ -39,9 +42,13 @@ export function SelectAndItemizeEditorNext<
   const value = varb.value(rest.unionValueName);
   const isItemized = value === itemizeValue;
   return (
-    <Box sx={{ display: "flex", flexDirection: "row" }}>
+    <MuiRow
+      className="SelectAndItemizeEditor-root"
+      sx={[{ flexWrap: "nowrap" }, ...arrSx(sx)]}
+    >
       <SelectEditorNext
         {...{
+          className: "SelectAndItemizeEditor-selectEditor",
           onChange: (e, ...args) => {
             unstable_batchedUpdates(() => {
               onChange && onChange(e, ...args);
@@ -57,7 +64,13 @@ export function SelectAndItemizeEditorNext<
         : isItemized && (
             <Box
               sx={{
-                ml: nativeTheme.s3,
+                ...(rest.label && { height: 46, pt: "1px" }),
+                ...(!rest.label && { height: 30 }),
+                ...nativeTheme.subSection.borderLines,
+                borderLeftWidth: 0,
+                borderBottomColor: nativeTheme["gray-600"],
+                borderTopRightRadius: nativeTheme.muiBr0,
+                pl: nativeTheme.s3,
                 display: "flex",
                 flexDirection: "row",
                 alignItems: "center",
@@ -74,6 +87,6 @@ export function SelectAndItemizeEditorNext<
               </ModalSection>
             </Box>
           )}
-    </Box>
+    </MuiRow>
   );
 }

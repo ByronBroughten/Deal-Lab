@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { SectionNameByType } from "../../sharedWithServer/SectionsMeta/SectionNameByType";
 import { nativeTheme } from "../../theme/nativeTheme";
 import theme from "../../theme/Theme";
+import { MuiRow } from "../general/MuiRow";
 import { StoreSectionActions } from "./GeneralSection/MainSection/StoreSectionActions";
 import { useSaveStatus } from "./GeneralSection/MainSection/useSaveStatus";
 import { RemoveSectionXBtn } from "./RemoveSectionXBtn";
@@ -12,6 +13,7 @@ import { SectionTitle } from "./SectionTitle";
 type Props = {
   className?: string;
   sectionTitle: string;
+  titleAppend?: string;
   sectionName: SectionNameByType<"mainDealSection">;
   feId: string;
   belowTitle?: React.ReactNode;
@@ -27,6 +29,7 @@ type CheckmarkStatus = "hidden" | "checked" | "unchecked";
 export function MainSectionTopRows({
   className,
   sectionTitle,
+  titleAppend,
   belowTitle,
   checkmarkStatus = "hidden",
   showXBtn,
@@ -39,13 +42,23 @@ export function MainSectionTopRows({
   return (
     <Styled className={`MainSectionTopRows-root ${className ?? ""}`}>
       <div className="MainSectionTopRows-topRow">
-        <div className="MainSectionTopRows-topLeft">
+        <MuiRow>
           <SectionTitle
             text={sectionTitle}
             className="MainSectionTopRows-sectionTitle"
           />
+          {titleAppend && (
+            <Box
+              sx={{
+                fontSize: nativeTheme.fs17,
+                color: nativeTheme["gray-700"],
+              }}
+            >
+              {titleAppend}
+            </Box>
+          )}
           {topLeft}
-        </div>
+        </MuiRow>
         <div className="MainSectionTopRows-topRight">
           {topRight}
           {showControls && showXBtn && (
@@ -74,12 +87,8 @@ const Styled = styled.div`
   padding-bottom: ${theme.s35};
 
   .MainSectionTopRows-topRow,
-  .MainSectionTopRows-topLeft,
   .MainSectionTopRows-topRight {
     display: flex;
-  }
-  .MainSectionTopRows-topLeft {
-    align-items: center;
   }
 
   .MainSectionTopRows-sectionTitle {
@@ -89,10 +98,6 @@ const Styled = styled.div`
 
   .MainSectionTopRows-topRight {
     align-items: flex-start;
-  }
-
-  .MainSectionTopRows-topLeft {
-    flex-wrap: wrap;
   }
 
   .MainSectionTopRows-topRow {

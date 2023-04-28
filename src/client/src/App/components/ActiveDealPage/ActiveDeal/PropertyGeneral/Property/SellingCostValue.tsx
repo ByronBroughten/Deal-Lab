@@ -38,7 +38,7 @@ export function SellingCostValue({ feId, sx }: Props) {
     <SelectAndItemizeEditorNext
       {...{
         sx,
-        label: "Selling cost",
+        label: "Selling costs",
         selectProps: { sx: { minWidth: 160 } },
         itemizedModalTitle: "Selling costs",
         unionValueName: "sellingCostSource",
@@ -47,6 +47,7 @@ export function SellingCostValue({ feId, sx }: Props) {
           ["sixPercent", "6% (common)"],
           ["valueDollarsEditor", "Dollar amount"],
           ["valuePercentEditor", "Percent"],
+          ["itemize", "Itemize"],
         ],
         feVarbInfo: {
           ...feInfo,

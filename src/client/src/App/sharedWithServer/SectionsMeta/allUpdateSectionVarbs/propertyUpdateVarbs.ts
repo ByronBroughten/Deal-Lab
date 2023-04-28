@@ -26,6 +26,8 @@ export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
     numUnits: updateVarbS.sumChildNums("unit", "one"),
     numBedrooms: updateVarbS.sumChildNums("unit", "numBedrooms"),
     useCustomCosts: updateVarb("boolean", { initValue: false }),
+    useCustomOngoingCosts: updateVarb("boolean", { initValue: false }),
+    useCustomOneTimeCosts: updateVarb("boolean", { initValue: false }),
     rehabCost: updateVarbS.sumNums([
       updateFnPropS.children("repairValue", "value"),
       updateFnPropS.children("costOverrunValue", "valueDollars"),

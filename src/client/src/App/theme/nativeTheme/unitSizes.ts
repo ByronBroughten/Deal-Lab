@@ -16,6 +16,7 @@ const spacings = {
 const fontSizes = {
   fs14: 14,
   fs16: 16,
+  fs17: 17,
   fs18: 18,
   fs20: 20,
   fs22: 22,

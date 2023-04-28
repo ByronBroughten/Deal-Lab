@@ -6,11 +6,16 @@ import { nativeTheme } from "../../theme/nativeTheme";
 import { arrSx } from "../../utils/mui";
 import { MuiSelect, MuiSelectProps } from "./MuiSelect";
 
-type MakeEditor = (props: { sx: SxProps; labeled: boolean }) => React.ReactNode;
+type MakeEditor = (props: {
+  sx: SxProps;
+  labeled: boolean;
+  className: string;
+}) => React.ReactNode;
 export interface SelectEditorPropsNext<
   UVN extends UnionValueName,
   SN extends SectionName
 > extends MuiSelectProps<UVN, SN> {
+  className?: string;
   makeEditor?: MakeEditor;
   equalsValue?: string;
   rightOfControls?: React.ReactNode;
@@ -24,19 +29,15 @@ export function SelectEditorNext<
   equalsValue,
   rightOfControls,
   label,
+  className,
   sx,
   ...rest
 }: SelectEditorPropsNext<UVN, SN>) {
   return (
     <Box
       {...{
-        sx: [
-          {
-            display: "flex",
-            marginTop: nativeTheme.s2,
-          },
-          ...arrSx(sx),
-        ],
+        className: `SelectEditor-root ${className ?? ""}`,
+        sx: [{ display: "flex" }, ...arrSx(sx)],
       }}
     >
       <MuiSelect
@@ -54,6 +55,7 @@ export function SelectEditorNext<
       />
       {makeEditor &&
         makeEditor({
+          className: "SelectEditor-editor",
           labeled: false,
           sx: {
             "& .NumObjEditor-materialDraftEditor": {
