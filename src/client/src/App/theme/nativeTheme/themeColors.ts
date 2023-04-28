@@ -14,6 +14,7 @@ const basicColors = {
   cyan: "#0dcaf0",
   white: "#fff",
   "gray-100": "#f8f9fa",
+  "gray-150": "#f0f0f0",
   "gray-200": "#e9ecef",
   "gray-300": "#dee2e6",
   "gray-400": "#ced4da",

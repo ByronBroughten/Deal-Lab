@@ -36,6 +36,10 @@ export function CapExValue({ feId }: { feId: string }) {
     ["valueEditor", "Custom amount"],
   ];
 
+  if (valueSourceName === "none") {
+    menuItems.push(["none", "Choose method"]);
+  }
+
   return (
     <SelectAndItemizeEditorSection
       {...{

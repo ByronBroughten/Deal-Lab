@@ -24,6 +24,10 @@ export function UtilityValue({
     ["listTotal", "Itemize"],
   ];
 
+  if (valueSourceName === "none") {
+    menuItems.push(["none", "Choose method"]);
+  }
+
   return (
     <SelectAndItemizeEditorSection
       {...{

@@ -75,12 +75,6 @@ function PropertyFixAndFlipEditor({ feId }: { feId: string }) {
         </SectionToggler>
       </FormSectionLabeled>
       <RehabSection {...{ feId }} />
-      {/* <ValueGroupSingleTime
-        {...{
-          feId: property.onlyChild("upfrontExpenseGroup").feId,
-          titleText: "Custom Upfront Costs",
-        }}
-      /> */}
     </PropertyEditorBody>
   );
 }

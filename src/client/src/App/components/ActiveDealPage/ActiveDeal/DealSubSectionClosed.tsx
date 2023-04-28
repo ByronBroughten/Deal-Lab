@@ -35,15 +35,35 @@ type SectionProps = {
   detailVarbPropArr: LabeledVarbProps[];
 };
 
+const propsByDealMode = {
+  property: {
+    buyAndHold: {
+      dealChildName: "buyAndHoldProperty",
+      detailVarbNames: [
+        "targetRentYearly",
+        "upfrontExpenses",
+        "expensesYearly",
+      ] as const,
+    },
+    fixAndFlip: {
+      dealChildName: "fixAndFlipProperty",
+      detailVarbNames: [
+        "holdingPeriodMonths",
+        "upfrontExpenses",
+        // "grossProfit",
+      ] as const,
+    },
+  },
+} as const;
+
 function getPropertyProps(property: GetterSection<"property">): SectionProps {
+  const mode = property.valueNext("propertyMode");
   return {
     sectionTitle: "Property",
     displayName: property.valueNext("displayName").mainText,
-    detailVarbPropArr: property.varbInfoArr([
-      "targetRentYearly",
-      "upfrontExpenses",
-      "expensesYearly",
-    ] as const),
+    detailVarbPropArr: property.varbInfoArr(
+      propsByDealMode.property[mode].detailVarbNames
+    ),
   };
 }
 
@@ -89,13 +109,14 @@ function getMgmtProps(mgmt: GetterSection<"mgmt">): SectionProps {
 
 function useSectionProps(sectionName: ActiveDealSectionName) {
   const { deal } = useActiveDealPage();
-  const section = deal.onlyChild(sectionName);
-  if (section.isOfSectionName("property")) {
-    return getPropertyProps(section);
-  } else if (section.isOfSectionName("financing")) {
-    return getFinancingProps(section);
-  } else if (section.isOfSectionName("mgmt")) {
-    return getMgmtProps(section);
+  if (sectionName === "property") {
+    const dealMode = deal.valueNext("dealMode");
+    const { dealChildName } = propsByDealMode.property[dealMode];
+    return getPropertyProps(deal.onlyChild(dealChildName));
+  } else if (sectionName === "financing") {
+    return getFinancingProps(deal.onlyChild("financing"));
+  } else if (sectionName === "mgmt") {
+    return getMgmtProps(deal.onlyChild("mgmt"));
   } else throw new Error(`Invalid sectionName: ${sectionName}`);
 }
 

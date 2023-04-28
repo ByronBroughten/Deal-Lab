@@ -29,6 +29,10 @@ export function MaintenanceValue({ feId }: { feId: string }) {
     ["valueEditor", "Custom amount"],
   ];
 
+  if (valueSourceName === "none") {
+    menuItems.push(["none", "Choose method"]);
+  }
+
   return (
     <SelectEditorSection
       {...{

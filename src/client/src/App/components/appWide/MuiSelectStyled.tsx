@@ -76,7 +76,7 @@ export function MuiSelectStyled({
           autoWidth: true,
           sx: [
             {
-              backgroundColor: nativeTheme["gray-200"],
+              backgroundColor: nativeTheme["gray-150"],
               borderBottomWidth: 0,
               minWidth: 0,
 
