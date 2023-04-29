@@ -11,136 +11,97 @@ import { FeIdProp } from "../../SectionsMeta/SectionInfo/NanoIdInfo";
 import { SectionName } from "../../SectionsMeta/SectionName";
 import {
   FeStoreInfo,
-  StoreName,
+  StoreNameProp,
   StoreSectionName,
 } from "../../SectionsMeta/sectionStores";
+import { StateValue } from "../../SectionsMeta/values/StateValue";
 import { StateSections } from "../../StateSections/StateSections";
 import { EditorUpdaterVarb } from "../../StateSetters/EditorUpdaterVarb";
 import { SolverSections } from "../../StateSolvers/SolverSections";
 import { AddChildOptions } from "../../StateUpdaters/UpdaterSection";
 import { Arr } from "../../utils/Arr";
-import { Obj } from "../../utils/Obj";
+import { Merge } from "../../utils/Obj/merge";
 
-interface IdOfSectionToSaveProp {
-  idOfSectionToSave?: string;
-}
+const sectionActionNames = [
+  "addChild",
+  "addToStore",
+  "saveAndOverwriteToStore",
+  "activateDeal",
+  "addActiveDeal",
+  "copyInStore",
+  "removeSelf",
+  "removeFromStore",
+  "updateValue",
+  "updateValueFromContent",
+  "onChangeIdle",
+  "setState",
+  "finishSave",
+  "removeStoredDeal",
+  "loadUserData",
+  "incrementGetUserDataTry",
+  "changeActiveDealMode",
+] as const;
+export type SectionActionName = typeof sectionActionNames[number];
 
-export interface VarbContentInfo extends FeVarbInfo {
-  contentState: ContentState;
-}
+type _CheckSectionActionProps<
+  T extends Partial<Record<SectionActionName, any>>
+> = T;
+type DefaultActionProps = _CheckSectionActionProps<
+  Record<SectionActionName, {}>
+>;
+type ExtraActionProps = _CheckSectionActionProps<{
+  setState: { sections: StateSections };
 
-interface LoginUser {
-  type: "loginUser";
-}
+  loadUserData: { userData: UserData };
+  finishSave: { success: boolean };
 
-interface ActivateDeal extends FeIdProp {
-  type: "activateDeal";
-}
-interface AddToStore<CN extends StoreName = StoreName>
-  extends AddToStoreProps<CN> {
-  type: "addToStore";
-}
-interface SaveAsToStore {
-  feInfo: FeSectionInfo<StoreSectionName>;
-  type: "saveAndOverwriteToStore";
-}
+  activateDeal: FeIdProp;
+  changeActiveDealMode: { dealMode: StateValue<"dealMode"> };
+  removeStoredDeal: FeIdProp;
 
-interface CopyInStore extends FeStoreInfo {
-  type: "copyInStore";
-}
-interface RemoveFromStore<CN extends StoreName = StoreName> {
-  storeName: CN;
-  feId: string;
-  type: "removeFromStore";
-}
+  addChild: AddChildActionProps;
+  updateValue: UpdateValueProps;
+  updateValueFromContent: UpdateContentValueProps;
+  removeSelf: RemoveSelfProps;
 
-interface AddChildAction<
+  addToStore: AddToStoreProps;
+  saveAndOverwriteToStore: { feInfo: FeSectionInfo<StoreSectionName> };
+  copyInStore: FeStoreInfo;
+  removeFromStore: RemoveFromStoreProps;
+}>;
+
+export type ActionPropsMap = _CheckSectionActionProps<
+  Merge<DefaultActionProps, ExtraActionProps>
+>;
+
+export type SectionActionsMap = {
+  [AN in SectionActionName]: ActionPropsMap[AN] & { type: AN };
+};
+
+export type SectionsAction = SectionActionsMap[SectionActionName];
+
+interface UpdateValueProps extends FeVarbValueInfo, IdOfSectionToSaveProp {}
+interface UpdateContentValueProps
+  extends VarbContentInfo,
+    IdOfSectionToSaveProp {}
+interface RemoveFromStoreProps extends StoreNameProp, FeIdProp {}
+interface AddChildActionProps<
   SN extends SectionName = SectionName,
   CN extends ChildName<SN> = ChildName<SN>
 > extends IdOfSectionToSaveProp {
   feInfo: FeSectionInfo<SN>;
   childName: CN;
   options?: AddChildOptions<SN, CN>;
-  type: "addChild";
 }
-interface RemoveSelfAction extends IdOfSectionToSaveProp, FeSectionInfo {
-  type: "removeSelf";
-}
+interface RemoveSelfProps extends IdOfSectionToSaveProp, FeSectionInfo {}
 
-interface LoadUserData {
-  userData: UserData;
-  type: "loadUserData";
-}
-
-interface UpdateValueAction extends FeVarbValueInfo {
+interface IdOfSectionToSaveProp {
   idOfSectionToSave?: string;
-  type: "updateValue";
 }
-interface UpdateValueFromEditorAction extends VarbContentInfo {
-  idOfSectionToSave?: string;
-  type: "updateValueFromContent";
+export interface VarbContentInfo extends FeVarbInfo {
+  contentState: ContentState;
 }
 
-interface InitializeSaveAttempts {
-  type: "onChangeIdle";
-}
-
-interface FinishSaveAttempt {
-  type: "finishSave";
-  success: boolean;
-}
-
-interface AddActiveDeal {
-  type: "addActiveDeal";
-}
-
-interface RemoveStoredDeal {
-  feId: string;
-  type: "removeStoredDeal";
-}
-
-interface IncrementGetUserDataTry {
-  type: "incrementGetUserDataTry";
-}
-
-export type SectionsAction =
-  | { type: "setState"; sections: StateSections }
-  | AddChildAction
-  | RemoveSelfAction
-  | AddToStore
-  | CopyInStore
-  | RemoveFromStore
-  | UpdateValueAction
-  | UpdateValueFromEditorAction
-  | InitializeSaveAttempts
-  | FinishSaveAttempt
-  | AddActiveDeal
-  | RemoveStoredDeal
-  | ActivateDeal
-  | SaveAsToStore
-  | LoadUserData
-  | IncrementGetUserDataTry;
-
-type SectionActionName = SectionsAction["type"];
-const reducerActionNameMap: Record<SectionActionName, 0> = {
-  addChild: 0,
-  addToStore: 0,
-  saveAndOverwriteToStore: 0,
-  activateDeal: 0,
-  addActiveDeal: 0,
-  copyInStore: 0,
-  removeSelf: 0,
-  removeFromStore: 0,
-  updateValue: 0,
-  updateValueFromContent: 0,
-  onChangeIdle: 0,
-  setState: 0,
-  finishSave: 0,
-  removeStoredDeal: 0,
-  loadUserData: 0,
-  incrementGetUserDataTry: 0,
-};
-export const sectionActionNames = Obj.keys(reducerActionNameMap);
 export function isSectionActionName(value: any): value is SectionActionName {
   return sectionActionNames.includes(value);
 }
@@ -158,16 +119,11 @@ export function isSavableActionName(value: any): value is SavableActionName {
   return savableActionNames.includes(value);
 }
 
-export type ReducerActionName = SectionsAction["type"];
+export type SectionActionProps<T extends SectionActionName> = ActionPropsMap[T];
 
-export type SectionActionsTypeMap = {
-  [ST in ReducerActionName]: Extract<SectionsAction, { type: ST }>;
+type ReducerActions = {
+  [AN in SectionActionName]: (prop: ActionPropsMap[AN]) => void;
 };
-type SectionActionsPropsMap = {
-  [ST in ReducerActionName]: Omit<SectionActionsTypeMap[ST], "type">;
-};
-export type SectionActionProps<T extends ReducerActionName> =
-  SectionActionsPropsMap[T];
 
 export const sectionsReducer: React.Reducer<StateSections, SectionsAction> = (
   currentSections,
@@ -181,51 +137,57 @@ export const sectionsReducer: React.Reducer<StateSections, SectionsAction> = (
     sectionsShare: { sections: currentSections },
   });
 
+  const reducerActions: ReducerActions = {
+    setState: () => {
+      throw new Error("State should already be returned.");
+    },
+
+    loadUserData: ({ userData }) =>
+      solverSections.feStore.loadUserData(userData),
+    incrementGetUserDataTry: () =>
+      solverSections.feStore.incrementGetUserDataTry(),
+
+    onChangeIdle: () => solverSections.feStore.onChangeIdle(),
+    finishSave: (props) => solverSections.feStore.finishSave(props),
+
+    addChild: ({ feInfo, childName, options }) => {
+      const section = solverSections.solverSection(feInfo);
+      section.addChildAndSolve(childName, options);
+    },
+    removeSelf: (props) => {
+      const section = solverSections.solverSection(props);
+      section.removeSelfAndSolve();
+    },
+    updateValue: (props) => {
+      const varb = solverSections.solverVarb(props);
+      varb.directUpdateAndSolve(props.value);
+    },
+    updateValueFromContent: (props) => {
+      // Needed because previous value is required for new value
+      const varb = solverSections.solverVarb(props);
+      const { contentState } = props;
+      const editorVarb = new EditorUpdaterVarb(
+        varb.getterVarbBase.getterVarbProps
+      );
+      const value = editorVarb.valueFromContentState(contentState);
+      varb.editorUpdateAndSolve(value);
+    },
+
+    addToStore: (props) => solverSections.feStore.addToStore(props),
+    removeFromStore: (props) => solverSections.feStore.removeFromStore(props),
+    saveAndOverwriteToStore: ({ feInfo }) =>
+      solverSections.saveAndOverwriteToStore(feInfo),
+    copyInStore: (props) => solverSections.feStore.copyInStore(props),
+
+    removeStoredDeal: ({ feId }) => solverSections.removeStoredDeal(feId),
+
+    activateDeal: ({ feId }) => solverSections.activateDealAndSolve(feId),
+    addActiveDeal: () => solverSections.addActiveDeal(),
+    changeActiveDealMode: ({ dealMode }) =>
+      solverSections.changeActiveDealMode(dealMode),
+  };
+
   switch (action.type) {
-    case "onChangeIdle": {
-      solverSections.feStore.onChangeIdle();
-      break;
-    }
-    case "finishSave": {
-      solverSections.feStore.finishSave(action);
-      break;
-    }
-    case "activateDeal": {
-      solverSections.activateDealAndSolve(action.feId);
-      break;
-    }
-    case "addActiveDeal": {
-      solverSections.addActiveDeal();
-      break;
-    }
-    case "removeStoredDeal": {
-      solverSections.removeStoredDeal(action.feId);
-      break;
-    }
-    case "addToStore": {
-      solverSections.feStore.addToStore(action);
-      break;
-    }
-    case "saveAndOverwriteToStore": {
-      solverSections.saveAndOverwriteToStore(action.feInfo);
-      break;
-    }
-    case "copyInStore": {
-      solverSections.feStore.copyInStore(action);
-      break;
-    }
-    case "loadUserData": {
-      solverSections.feStore.loadUserData(action.userData);
-      break;
-    }
-    case "incrementGetUserDataTry": {
-      solverSections.feStore.incrementGetUserDataTry();
-      break;
-    }
-    case "removeFromStore": {
-      solverSections.feStore.removeFromStore(action);
-      break;
-    }
     case "addChild":
     case "removeSelf":
     case "updateValue":
@@ -235,37 +197,9 @@ export const sectionsReducer: React.Reducer<StateSections, SectionsAction> = (
           changeName: "update",
         });
       }
-      switch (action.type) {
-        case "addChild": {
-          const section = solverSections.solverSection(action.feInfo);
-          section.addChildAndSolve(action.childName, action.options);
-          break;
-        }
-        case "removeSelf": {
-          const section = solverSections.solverSection(action);
-          section.removeSelfAndSolve();
-          break;
-        }
-        case "updateValue":
-        case "updateValueFromContent": {
-          const varb = solverSections.solverVarb(action);
-          if (action.type === "updateValue") {
-            varb.directUpdateAndSolve(action.value);
-          } else {
-            // This case is needed because the previous value is required to
-            // make the new value
-            const { contentState } = action;
-            const editorVarb = new EditorUpdaterVarb(
-              varb.getterVarbBase.getterVarbProps
-            );
-            const value = editorVarb.valueFromContentState(contentState);
-            varb.editorUpdateAndSolve(value);
-          }
-          break;
-        }
-      }
-      break;
     }
   }
+
+  reducerActions[action.type](action as any);
   return solverSections.stateSections;
 };

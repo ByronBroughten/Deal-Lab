@@ -3,10 +3,7 @@ import { ChildSectionName } from "../SectionsMeta/sectionChildrenDerived/ChildSe
 import { ChildArrPack } from "../SectionsMeta/sectionChildrenDerived/ChildSectionPack";
 import { ParentNameSafe } from "../SectionsMeta/sectionChildrenDerived/ParentName";
 import { FeSectionInfo } from "../SectionsMeta/SectionInfo/FeInfo";
-import {
-  SectionNameByType,
-  sectionNameS,
-} from "../SectionsMeta/SectionNameByType";
+import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { GetterSection } from "../StateGetters/GetterSection";
 import { GetterSections } from "../StateGetters/GetterSections";
 import { InEntityGetterSection } from "../StateGetters/InEntityGetterSection";
@@ -149,11 +146,8 @@ export class AddSolverSection<
   private finalizeAddedThis() {
     const { selfAndDescendantVarbIds, sectionName, feId } = this.get;
     this.addToAddedVarbIds(...selfAndDescendantVarbIds);
-    if (sectionNameS.is(sectionName, "dealSupports")) {
-      this.prepperSections.applyVariablesToDealPage({
-        sectionName,
-        feId,
-      });
+    if (sectionName === "dealSystem") {
+      this.prepperSections.applyVariablesToDealSystem(feId);
     }
   }
 

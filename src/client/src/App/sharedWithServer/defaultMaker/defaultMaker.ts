@@ -1,10 +1,7 @@
 import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { makeDefaultDealPack } from "./makeDefaultDeal";
-import {
-  makeDefaultDealSupplements,
-  makeDefaultDealSystem,
-} from "./makeDefaultDealSystem";
+import { makeDefaultDealSystem } from "./makeDefaultDealSystem";
 import { makeDefaultFeUserPack } from "./makeDefaultFeUser";
 import { makeDefaultLoanPack } from "./makeDefaultLoanPack";
 import { makeDefaultMain } from "./makeDefaultMain";
@@ -45,6 +42,5 @@ export const defaultMaker = new DefaultSectionPackMaker({
   deal: makeDefaultDealPack,
   main: makeDefaultMain,
   dealSystem: makeDefaultDealSystem,
-  dealSupplements: makeDefaultDealSupplements,
   feStore: makeDefaultFeUserPack,
 } as const);

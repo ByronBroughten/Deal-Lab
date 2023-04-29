@@ -1,10 +1,6 @@
 import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
 import { FeSectionInfo } from "../SectionsMeta/SectionInfo/FeInfo";
 import { SectionName } from "../SectionsMeta/SectionName";
-import {
-  SectionNameByType,
-  sectionNameS,
-} from "../SectionsMeta/SectionNameByType";
 import { GetterList } from "../StateGetters/GetterList";
 import { GetterSections } from "../StateGetters/GetterSections";
 import { SolverAdderPrepSection } from "./SolverAdderPrepSection";
@@ -32,26 +28,16 @@ export class SolverAdderPrepSections extends SolverSectionsBase {
     const { feInfo } = this.getterSections.oneAndOnly(sectionName);
     return this.adderPrepSection(feInfo);
   }
-  applyVariablesToDealPages() {
-    for (const sectionName of sectionNameS.arrs.dealSupports) {
-      const { feIds } = this.getterList(sectionName);
-      const userVarbPacks = this.getSavedUserVarbPacks();
-      for (const feId of feIds) {
-        this.applyVarbPacksToDealPage(
-          {
-            sectionName,
-            feId,
-          },
-          userVarbPacks
-        );
-      }
+  applyVariablesToDealSystems() {
+    const { feIds } = this.getterList("dealSystem");
+    const userVarbPacks = this.getSavedUserVarbPacks();
+    for (const feId of feIds) {
+      this.applyVarbPacksToDealPage(feId, userVarbPacks);
     }
   }
-  applyVariablesToDealPage(
-    feInfo: FeSectionInfo<SectionNameByType<"dealSupports">>
-  ) {
+  applyVariablesToDealSystem(feId: string) {
     const userVarbPacks = this.getSavedUserVarbPacks();
-    this.applyVarbPacksToDealPage(feInfo, userVarbPacks);
+    this.applyVarbPacksToDealPage(feId, userVarbPacks);
   }
   private getSavedUserVarbPacks(): SectionPack<"numVarbList">[] {
     const feStore = this.oneAndOnly("feStore");
@@ -59,11 +45,14 @@ export class SolverAdderPrepSections extends SolverSectionsBase {
     return userVarbLists.map((list) => list.packMaker.makeSectionPack());
   }
   private applyVarbPacksToDealPage(
-    feInfo: FeSectionInfo<SectionNameByType<"dealSupports">>,
+    feId: string,
     numVarbPacks: SectionPack<"numVarbList">[]
   ): void {
-    const dealSupport = this.adderPrepSection(feInfo);
-    dealSupport.replaceChildPackArrs({
+    const dealSystem = this.adderPrepSection({
+      sectionName: "dealSystem",
+      feId,
+    });
+    dealSystem.replaceChildPackArrs({
       numVarbList: numVarbPacks,
     });
   }

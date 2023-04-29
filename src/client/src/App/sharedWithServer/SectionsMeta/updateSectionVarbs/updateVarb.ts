@@ -62,7 +62,7 @@ export function updateVarb<VN extends ValueName>(
 
 export type UpdateVarbOptions<VN extends ValueName> = Partial<UpdateVarb<VN>>;
 
-export type LeftRightVarbInfos = [UpdateFnProp, UpdateFnProp];
+export type LeftRightUpdateProps = [UpdateFnProp, UpdateFnProp];
 export const updateVarbS = {
   get displayNameEditor() {
     return updateVarb("string", updatePropsS.simple("manualUpdateOnly"));
@@ -102,7 +102,7 @@ export const updateVarbS = {
   },
   leftRightPropFn(
     updateFnName: LeftRightPropCalcName,
-    leftRight: LeftRightVarbInfos,
+    leftRight: LeftRightUpdateProps,
     options?: UpdateVarbOptions<"numObj">
   ): UpdateVarb<"numObj"> {
     const [left, right] = leftRight;

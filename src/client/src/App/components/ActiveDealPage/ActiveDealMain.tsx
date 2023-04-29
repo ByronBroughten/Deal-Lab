@@ -3,6 +3,8 @@ import { BackBtnWrapper } from "../appWide/BackBtnWrapper";
 import { BackgroundContainer } from "../appWide/BackgroundContainter";
 import { MuiSelect } from "../appWide/MuiSelect";
 import { BigStringEditor } from "../inputs/BigStringEditor";
+import { validateStateValue } from "./../../sharedWithServer/SectionsMeta/values/valueMetas";
+import { useAction } from "./../../sharedWithServer/stateClassHooks/useAction";
 import { nativeTheme } from "./../../theme/nativeTheme";
 import { SectionTitle } from "./../appWide/SectionTitle";
 import { Row } from "./../general/Row";
@@ -20,6 +22,7 @@ export function ActiveDealMain() {
   const { deal, calcVarbs, feStore } = useActiveDealPage();
   const dealMode = deal.valueNext("dealMode");
   const completionStatus = calcVarbs.value("dealCompletionStatus");
+  const changeDealMode = useAction("changeActiveDealMode");
   return (
     <BackBtnWrapper {...{ to: "account", label: "Deal Menu" }}>
       <BackgroundContainer>
@@ -35,6 +38,11 @@ export function ActiveDealMain() {
         >
           <MuiSelect
             {...{
+              onChangeOverride: (e) => {
+                changeDealMode({
+                  dealMode: validateStateValue(e.target.value, "dealMode"),
+                });
+              },
               feVarbInfo: {
                 sectionName: "deal",
                 feId: deal.feId,

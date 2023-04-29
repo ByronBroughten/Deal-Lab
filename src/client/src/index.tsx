@@ -15,20 +15,13 @@ AppRegistry.runApplication("App", {
 // - Try jamming Brrrr in the picture?
 
 // Add the outputs for Fix and Flip
-//   "totalInvestment",
+//   "totalInvestment" (change to cash needed?),
 //   "totalProfit",
 //   "roi",
 //   "roiAnnualized", - (make CocRoi update in the same way)
 
-// - Cash Needed They're only factoring in closing costs and rehab costs
-//   - Why wouldn't Cash Needed include holding costs?
-
-// - Cash needed
-//   - downPayment + rehabCosts + selling costs + holdingCosts
-
 // - Total Profit
-//   - ARV minus Selling costs (Sale Proceeds)
-//   - minus cashNeeded, loanRepayment
+//   - ARV minus (totalInvestment + loanRepayment)
 // - (Post Tax Profit?)
 
 // - ROI

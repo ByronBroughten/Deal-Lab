@@ -1,5 +1,4 @@
 import { FeRouteName } from "../../../Constants/feRoutes";
-import { dealPropertiesByType } from "../../../sharedWithServer/defaultMaker/makeDefaultDeal";
 import { StateValue } from "../../../sharedWithServer/SectionsMeta/values/StateValue";
 import { useSetterMain } from "../../../sharedWithServer/stateClassHooks/useMain";
 import { useGoToPage } from "../../appWide/customHooks/useGoToPage";
@@ -47,22 +46,11 @@ export function useActiveDealSection(sectionName: ActiveDealSectionName) {
   const dealMode = deal.valueNext("dealMode");
   return {
     dealMode,
-    feId: deal.onlyChildFeId(dealChildName(dealMode, sectionName)),
+    feId: deal.onlyChildFeId(sectionName),
     isComplete: completionStatus === "allValid",
     backBtnProps: {
       backToWhat: "Deal",
       onClick: goToIndex,
     },
   };
-}
-
-function dealChildName(
-  dealMode: StateValue<"dealMode">,
-  sectionName: ActiveDealSectionName
-) {
-  if (sectionName === "property") {
-    return dealPropertiesByType[dealMode];
-  } else {
-    return sectionName;
-  }
 }

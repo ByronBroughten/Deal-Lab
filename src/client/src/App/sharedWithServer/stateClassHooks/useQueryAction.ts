@@ -18,11 +18,11 @@ interface TrySaveAttempt {
 type QueryAction = TrySaveAttempt | LoadUserData;
 type QueryActionName = QueryAction["type"];
 
-export type SectionActionsTypeMap = {
+type QueryActionsMap = {
   [ST in QueryActionName]: Extract<SectionsAction, { type: ST }>;
 };
 type ActionPropsMap = {
-  [AN in QueryActionName]: Omit<SectionActionsTypeMap[AN], "type">;
+  [AN in QueryActionName]: Omit<QueryActionsMap[AN], "type">;
 };
 export type ActionProps<T extends QueryActionName> = ActionPropsMap[T];
 

@@ -18,30 +18,38 @@ export interface MuiSelectProps<
   unionValueName: UVN;
   items: [StateValue<UVN>, string][];
   feVarbInfo: FeVarbInfoNext<SN>;
-  onChange?: MuiSelectOnChange;
+  onChangeOverride?: MuiSelectOnChange;
+  batchedWithChange?: MuiSelectOnChange;
   selectProps?: { sx?: SxProps };
   label?: React.ReactNode;
   sx?: SxProps;
 }
+
 export function MuiSelect<UVN extends UnionValueName, SN extends SectionName>({
   unionValueName,
   feVarbInfo,
-  onChange,
+  onChangeOverride,
+  batchedWithChange,
   ...rest
 }: MuiSelectProps<UVN, SN>) {
   const varb = useGetterVarbNext(feVarbInfo);
   const updateValue = useAction("updateValue");
+  const onChangeDefault: MuiSelectOnChange = (e) => {
+    updateValue({
+      ...feVarbInfo,
+      value: validateStateValue(e.target.value, unionValueName),
+    });
+  };
+
+  const onChange = onChangeOverride ?? onChangeDefault;
   return (
     <MuiSelectStyled
       {...{
         value: varb.value(unionValueName),
         onChange: (e, ...args) => {
           unstable_batchedUpdates(() => {
-            onChange && onChange(e, ...args);
-            updateValue({
-              ...feVarbInfo,
-              value: validateStateValue(e.target.value, unionValueName),
-            });
+            batchedWithChange && batchedWithChange(e, ...args);
+            onChange(e, ...args);
           });
         },
         ...rest,

@@ -1,6 +1,5 @@
 import { Box } from "@mui/material";
 import React from "react";
-import { unstable_batchedUpdates } from "react-dom";
 import { useToggleView } from "../../modules/customHooks/useToggleView";
 import { SectionName } from "../../sharedWithServer/SectionsMeta/SectionName";
 import { StateValue } from "../../sharedWithServer/SectionsMeta/values/StateValue";
@@ -33,7 +32,7 @@ export function SelectAndItemizeEditorNext<
   rightOfControls,
   itemizeValue,
   itemizedModalTitle,
-  onChange,
+  batchedWithChange,
   ...rest
 }: SelectAndItemizeEditorProps<UVN, SN>) {
   const { itemsIsOpen, closeItems, openItems } = useToggleView("items", false);
@@ -49,11 +48,9 @@ export function SelectAndItemizeEditorNext<
       <SelectEditorNext
         {...{
           className: "SelectAndItemizeEditor-selectEditor",
-          onChange: (e, ...args) => {
-            unstable_batchedUpdates(() => {
-              onChange && onChange(e, ...args);
-              e.target.value === itemizeValue && openItems();
-            });
+          batchedWithChange: (e, ...args) => {
+            batchedWithChange && batchedWithChange(e, ...args);
+            e.target.value === itemizeValue && openItems();
           },
           ...rest,
           rightOfControls,

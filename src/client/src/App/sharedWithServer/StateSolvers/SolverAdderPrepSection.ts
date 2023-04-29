@@ -6,7 +6,6 @@ import { ParentNameSafe } from "../SectionsMeta/sectionChildrenDerived/ParentNam
 import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
 import { FeSectionInfo } from "../SectionsMeta/SectionInfo/FeInfo";
 import { SectionName } from "../SectionsMeta/SectionName";
-import { sectionNameS } from "../SectionsMeta/SectionNameByType";
 import { SectionValues } from "../SectionsMeta/values/StateValue";
 import { GetterSection } from "../StateGetters/GetterSection";
 import {
@@ -113,17 +112,17 @@ export class SolverAdderPrepSection<
   }
   private updateVariablesIfNeeded() {
     const { sectionName, feId } = this.get;
-    if (sectionNameS.is(sectionName, "dealSupports")) {
-      this.prepperSections.applyVariablesToDealPage({
-        sectionName,
-        feId,
-      });
+    if (sectionName === "dealSystem") {
+      this.prepperSections.applyVariablesToDealSystem(feId);
     }
   }
   loadSelfSectionPack(sectionPack: SectionPack<SN>): void {
     this.removePrepper.prepForRemoveSelf();
     this.loader.loadSelfSectionPack(sectionPack);
     this.finalizeAddedThis();
+  }
+  removeSelf(): void {
+    this.removePrepper.removeSelf();
   }
   resetToDefault(): void {
     const { feInfo, feId, idx, dbId } = this.get;

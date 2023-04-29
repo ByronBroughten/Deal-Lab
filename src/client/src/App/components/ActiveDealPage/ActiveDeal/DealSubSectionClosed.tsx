@@ -38,7 +38,6 @@ type SectionProps = {
 const propsByDealMode = {
   property: {
     buyAndHold: {
-      dealChildName: "buyAndHoldProperty",
       detailVarbNames: [
         "targetRentYearly",
         "upfrontExpenses",
@@ -46,7 +45,6 @@ const propsByDealMode = {
       ] as const,
     },
     fixAndFlip: {
-      dealChildName: "fixAndFlipProperty",
       detailVarbNames: [
         "holdingPeriodMonths",
         "upfrontExpenses",
@@ -111,8 +109,7 @@ function useSectionProps(sectionName: ActiveDealSectionName) {
   const { deal } = useActiveDealPage();
   if (sectionName === "property") {
     const dealMode = deal.valueNext("dealMode");
-    const { dealChildName } = propsByDealMode.property[dealMode];
-    return getPropertyProps(deal.onlyChild(dealChildName));
+    return getPropertyProps(deal.onlyChild("property"));
   } else if (sectionName === "financing") {
     return getFinancingProps(deal.onlyChild("financing"));
   } else if (sectionName === "mgmt") {

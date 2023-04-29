@@ -170,6 +170,16 @@ export const updateFnPropS = {
       andSwitches
     );
   },
+  onlyChildBase(
+    childName: ChildName,
+    varbName: string,
+    andSwitches?: UpdateOverrideSwitch[]
+  ) {
+    return updateFnProp(
+      relVarbInfoS.onlyChild(childName, varbName),
+      andSwitches
+    );
+  },
   pathName<PN extends SectionPathName>(
     pathName: PN,
     varbName: SectionPathVarbName<PN>,

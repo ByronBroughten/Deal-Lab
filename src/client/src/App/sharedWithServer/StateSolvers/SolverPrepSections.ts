@@ -3,7 +3,6 @@ import { ChildSectionName } from "../SectionsMeta/sectionChildrenDerived/ChildSe
 import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
 import { FeSectionInfo } from "../SectionsMeta/SectionInfo/FeInfo";
 import { SectionName } from "../SectionsMeta/SectionName";
-import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import {
   activeDealPathIdx,
   SectionPathContextName,
@@ -49,14 +48,12 @@ export class SolverPrepSections extends SolverSectionsBase {
       solverVarb.addOutEntitiesFromAllInEntities();
     }
   }
-  applyVariablesToDealPage(
-    feInfo: FeSectionInfo<SectionNameByType<"dealSupports">>
-  ) {
-    this.adderPrepSections.applyVariablesToDealPage(feInfo);
+  applyVariablesToDealSystem(feId: string) {
+    this.adderPrepSections.applyVariablesToDealSystem(feId);
     this.addAppWideMissingOutEntities();
   }
-  applyVariablesToDealPages() {
-    this.adderPrepSections.applyVariablesToDealPages();
+  applyVariablesToDealSystems() {
+    this.adderPrepSections.applyVariablesToDealSystems();
     this.addAppWideMissingOutEntities();
   }
 

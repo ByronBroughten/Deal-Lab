@@ -1,11 +1,16 @@
+import { relVarbInfoS } from "../SectionInfo/RelVarbInfo";
 import { UpdateSectionVarbs } from "../updateSectionVarbs/updateSectionVarbs";
 import { updateVarb, updateVarbS } from "../updateSectionVarbs/updateVarb";
+import { updateBasicsS } from "../updateSectionVarbs/updateVarb/UpdateBasics";
 import {
   updateFnPropS,
   updateFnPropsS,
 } from "../updateSectionVarbs/updateVarb/UpdateFnProps";
 import { updateVarbsS } from "../updateSectionVarbs/updateVarbs";
-import { overrideSwitchS } from "./../updateSectionVarbs/updateVarb/UpdateOverrides";
+import {
+  overrideSwitchS,
+  unionSwitchOverride,
+} from "./../updateSectionVarbs/updateVarb/UpdateOverrides";
 
 export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
   return {
@@ -22,7 +27,10 @@ export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
       switchInit: "yearly",
     }),
     afterRepairValue: updateVarb("numObj"),
-    sellingCosts: updateVarb("numObj"),
+    sellingCosts: updateVarb(
+      "numObj",
+      updateBasicsS.loadFromChild("sellingCostValue", "valueDollars")
+    ),
     numUnits: updateVarbS.sumChildNums("unit", "one"),
     numBedrooms: updateVarbS.sumChildNums("unit", "numBedrooms"),
     useCustomCosts: updateVarb("boolean", { initValue: false }),
@@ -32,13 +40,49 @@ export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
       updateFnPropS.children("repairValue", "value"),
       updateFnPropS.children("costOverrunValue", "valueDollars"),
     ]),
-    upfrontExpenses: updateVarbS.sumNums([
-      updateFnPropS.local("purchasePrice"),
-      updateFnPropS.local("rehabCost"),
-      updateFnPropS.onlyChild("upfrontExpenseGroup", "total", [
-        overrideSwitchS.pathHasValue("propertyFocal", "useCustomCosts", true),
-      ]),
+    ...updateVarbsS.ongoingSumNumsNext("holdingCost", "monthly", {
+      updateFnProps: [
+        updateFnPropS.localBaseName("taxes"),
+        updateFnPropS.localBaseName("homeIns"),
+        updateFnPropS.onlyChildBase("utilityValue", "value"),
+        updateFnPropS.onlyChild("ongoingExpenseGroup", "total", [
+          overrideSwitchS.pathHasValue(
+            "propertyFocal",
+            "useCustomOngoingCosts",
+            true
+          ),
+        ]),
+      ],
+    }),
+    holdingCostTotal: updateVarbS.leftRightPropFn("simpleMultiply", [
+      updateFnPropS.local("holdingPeriodMonths"),
+      updateFnPropS.local("holdingCostMonthly"),
     ]),
+    upfrontExpenses: updateVarb("numObj", {
+      updateOverrides: unionSwitchOverride(
+        "dealMode",
+        relVarbInfoS.local("propertyMode"),
+        {
+          buyAndHold: updateVarbS.sumNums([
+            updateFnPropS.local("purchasePrice"),
+            updateFnPropS.local("rehabCost"),
+            updateFnPropS.onlyChild("upfrontExpenseGroup", "total", [
+              overrideSwitchS.pathHasValue(
+                "propertyFocal",
+                "useCustomCosts",
+                true
+              ),
+            ]),
+          ]),
+          fixAndFlip: updateVarbS.sumNums([
+            updateFnPropS.local("purchasePrice"),
+            updateFnPropS.local("rehabCost"),
+            updateFnPropS.local("sellingCosts"),
+            updateFnPropS.local("holdingCostTotal"),
+          ]),
+        }
+      ),
+    }),
     ...updateVarbsS.ongoingSumNums(
       "expenses",
       [

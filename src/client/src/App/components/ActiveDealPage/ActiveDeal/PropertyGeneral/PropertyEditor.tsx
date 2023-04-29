@@ -84,7 +84,7 @@ function PropertyFixAndFlipEditor({ feId }: { feId: string }) {
           />
         </SectionToggler>
       </FormSectionLabeled>
-      <RehabSection {...{ feId }} />
+      <RehabSection {...{ feId, dealMode: "fixAndFlip" }} />
     </PropertyEditorBody>
   );
 }
@@ -97,7 +97,7 @@ function PropertyBuyAndHoldEditor({ feId }: { feId: string }) {
     >
       <BasicBuyAndHoldInfo feId={feId} />
       <Units {...{ feId }} />
-      <RehabSection {...{ feId }} />
+      <RehabSection {...{ feId, dealMode: "fixAndFlip" }} />
       <UtilityValue feId={property.onlyChildFeId("utilityValue")} />
       <CapExValue feId={property.onlyChildFeId("capExValue")} />
       <MaintenanceValue feId={property.onlyChildFeId("maintenanceValue")} />

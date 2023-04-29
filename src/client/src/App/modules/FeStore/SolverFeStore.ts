@@ -227,7 +227,7 @@ export class SolverFeStore extends SolverSectionBase<"feStore"> {
       }
     }
     if (doVariableUpdate) {
-      this.appWideSolvePrepSections.applyVariablesToDealPages();
+      this.appWideSolvePrepSections.applyVariablesToDealSystems();
     }
   }
   finishSave({ success }: { success: boolean }) {

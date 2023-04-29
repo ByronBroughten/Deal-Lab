@@ -1,6 +1,7 @@
+import { relVarbInfoS } from "../SectionInfo/RelVarbInfo";
 import { UpdateSectionVarbs } from "../updateSectionVarbs/updateSectionVarbs";
 import {
-  LeftRightVarbInfos,
+  LeftRightUpdateProps,
   updateVarb,
   updateVarbS,
 } from "../updateSectionVarbs/updateVarb";
@@ -11,6 +12,7 @@ import {
 import { updateFnPropS } from "../updateSectionVarbs/updateVarb/UpdateFnProps";
 import {
   overrideSwitchS,
+  unionSwitchOverride,
   updateOverride,
 } from "../updateSectionVarbs/updateVarb/UpdateOverrides";
 import { updateVarbsS } from "../updateSectionVarbs/updateVarbs";
@@ -20,6 +22,7 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
     ...updateVarbsS._typeUniformity,
     ...updateVarbsS.savableSection,
     ...updateVarbsS.displayNameAndEditor,
+
     displayName: updateVarb("stringObj", {
       updateFnName: "throwIfReached",
       updateOverrides: [
@@ -52,21 +55,21 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
       updateFnPropS.localArr(
         "outOfPocketExpenses",
         "upfrontRevenue"
-      ) as LeftRightVarbInfos
+      ) as LeftRightUpdateProps
     ),
     cashFlowMonthly: updateVarbS.leftRightPropFn(
       "simpleSubtract",
       updateFnPropS.localArr(
         "revenueMonthly",
         "expensesMonthly"
-      ) as LeftRightVarbInfos
+      ) as LeftRightUpdateProps
     ),
     cashFlowYearly: updateVarbS.leftRightPropFn(
       "simpleSubtract",
       updateFnPropS.localArr(
         "revenueYearly",
         "expensesYearly"
-      ) as LeftRightVarbInfos
+      ) as LeftRightUpdateProps
     ),
     cashFlowOngoingSwitch: updateVarb("string", {
       initValue: "yearly",
@@ -76,7 +79,7 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
       updateFnPropS.localArr(
         "cashFlowMonthly",
         "totalInvestment"
-      ) as LeftRightVarbInfos
+      ) as LeftRightUpdateProps
     ),
     cocRoiMonthly: updateVarbS.singlePropFn(
       "decimalToPercent",
@@ -87,7 +90,7 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
       updateFnPropS.localArr(
         "cashFlowYearly",
         "totalInvestment"
-      ) as LeftRightVarbInfos
+      ) as LeftRightUpdateProps
     ),
     cocRoiYearly: updateVarbS.singlePropFn(
       "decimalToPercent",
@@ -96,11 +99,47 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
     cocRoiOngoingSwitch: updateVarb("string", {
       initValue: "yearly",
     }),
-    upfrontExpenses: updateVarbS.sumNums([
-      updateFnPropS.pathNameBase("propertyFocal", "upfrontExpenses"),
-      updateFnPropS.pathNameBase("mgmtFocal", "upfrontExpenses"),
-      updateFnPropS.varbPathName("loanUpfrontExpenses"),
+    neededCashPlusLoanRepay: updateVarbS.sumNums([
+      updateFnPropS.varbPathName("loanTotalDollars"),
+      updateFnPropS.local("totalInvestment"),
     ]),
+    totalProfit: updateVarb("numObj", {
+      // shoot. propertyFocal isn't going to work right.
+      // this really needs updateFn: "N/A"
+
+      ...updateBasicsS.equationLeftRight(
+        "simpleSubtract",
+        updateFnPropS.onlyChild("property", "afterRepairValue"),
+        updateFnPropS.local("neededCashPlusLoanRepay")
+      ),
+    }),
+    // Ok, now there is only one focalProperty.
+    // Let's do a typecheck.
+
+    // roiDecimal,
+    // roiPercent,
+    // roiPercentAnnualized,
+
+    // totalProfit / totalExpenses
+
+    upfrontExpenses: updateVarb("numObj", {
+      updateFnName: "throwIfReached",
+      updateOverrides: unionSwitchOverride(
+        "dealMode",
+        relVarbInfoS.local("dealMode"),
+        {
+          buyAndHold: updateVarbS.sumNums([
+            updateFnPropS.pathNameBase("propertyFocal", "upfrontExpenses"),
+            updateFnPropS.pathNameBase("mgmtFocal", "upfrontExpenses"),
+            updateFnPropS.varbPathName("loanUpfrontExpenses"),
+          ]),
+          fixAndFlip: updateVarbS.sumNums([
+            updateFnPropS.pathNameBase("propertyFocal", "upfrontExpenses"),
+            updateFnPropS.varbPathName("loanUpfrontExpenses"),
+          ]),
+        }
+      ),
+    }),
     outOfPocketExpenses: updateVarbS.leftRightPropFn("simpleSubtract", [
       updateFnPropS.local("upfrontExpenses"),
       updateFnPropS.varbPathName("loanTotalDollars"),

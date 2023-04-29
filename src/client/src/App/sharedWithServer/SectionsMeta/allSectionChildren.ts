@@ -28,12 +28,6 @@ function checkAllSectionChildren<CS extends GenericChildSections>(
   return allSectionChildren;
 }
 
-const dealSupplements = {
-  calculatedVarbs: "calculatedVarbs",
-  numVarbList: "numVarbList",
-  boolVarbList: "boolVarbList",
-} as const;
-
 export const allSectionChildren = checkAllSectionChildren({
   ...defaults,
   root: sectionChildren({
@@ -79,7 +73,6 @@ export const allSectionChildren = checkAllSectionChildren({
     numVarbList: "numVarbList",
     boolVarbList: "boolVarbList",
   }),
-  dealSupplements: sectionChildren(dealSupplements),
   userVarbEditor: sectionChildren({
     numVarbListMain: "numVarbList",
   }),
@@ -127,11 +120,11 @@ export const allSectionChildren = checkAllSectionChildren({
   },
   conditionalRowList: { conditionalRow: sectionChild("conditionalRow") },
   deal: sectionChildren({
+    property: "property",
     buyAndHoldProperty: "property",
     fixAndFlipProperty: "property",
     // brrrrProperty: "property",
 
-    property: "property",
     financing: "financing",
     mgmt: "mgmt",
   }),

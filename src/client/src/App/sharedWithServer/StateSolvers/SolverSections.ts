@@ -1,12 +1,14 @@
 import { pick } from "lodash";
 import { SolverFeStore } from "../../modules/FeStore/SolverFeStore";
 import { defaultMaker } from "../defaultMaker/defaultMaker";
+import { propertyNameByDealMode } from "../defaultMaker/makeDefaultDeal";
 import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
 import { FeSectionInfo, FeVarbInfo } from "../SectionsMeta/SectionInfo/FeInfo";
 import { VarbInfoMixed } from "../SectionsMeta/SectionInfo/MixedSectionInfo";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { StoreSectionName } from "../SectionsMeta/sectionStores";
+import { StateValue } from "../SectionsMeta/values/StateValue";
 import { GetterSections } from "../StateGetters/GetterSections";
 import { GetterVarb } from "../StateGetters/GetterVarb";
 import { PackBuilderSections } from "../StatePackers/PackBuilderSections";
@@ -130,14 +132,12 @@ export class SolverSections extends SolverSectionsBase {
       ...feVarbInfo,
     });
   }
-  applyVariablesToDealPage(
-    feInfo: FeSectionInfo<SectionNameByType<"dealSupports">>
-  ): void {
-    this.prepperSections.applyVariablesToDealPage(feInfo);
+  applyVariablesToDealSystem(feId: string): void {
+    this.prepperSections.applyVariablesToDealSystem(feId);
     this.solve();
   }
-  applyVariablesToDealPages(): void {
-    this.prepperSections.applyVariablesToDealPages();
+  applyVariablesToDealSystems(): void {
+    this.prepperSections.applyVariablesToDealSystems();
     this.solve();
   }
   static init(props: GetterSectionsProps) {
@@ -192,6 +192,45 @@ export class SolverSections extends SolverSectionsBase {
     const { feId } = feStore.get.youngestChild("dealMain");
     this.activateDealAndSolve(feId);
   }
+  changeActiveDealMode(dealMode: StateValue<"dealMode">) {
+    this.cacheActiveDealProperty();
+    const activeDeal = this.getActiveDeal();
+    activeDeal.basicSolvePrepper.updateValues({ dealMode });
+    this.loadActiveDealProperty();
+
+    this.prepperSections.addAppWideMissingOutEntities();
+    this.solve();
+  }
+  private cacheActiveDealProperty() {
+    const activeDeal = this.getActiveDeal();
+    const property = activeDeal.onlyChild("property");
+    const sectionPack = property.packMaker.makeSectionPack();
+    property.basicSolvePrepper.removeSelf();
+
+    const childName = propertyNameByDealMode(activeDeal.value("dealMode"));
+    activeDeal.basicSolvePrepper.loadChild({
+      childName,
+      sectionPack,
+    });
+  }
+  private loadActiveDealProperty() {
+    const activeDeal = this.getActiveDeal();
+
+    const childName = propertyNameByDealMode(activeDeal.value("dealMode"));
+    const property = activeDeal.onlyChild(childName);
+    const sectionPack = property.packMaker.makeSectionPack();
+    property.basicSolvePrepper.removeSelf();
+
+    activeDeal.basicSolvePrepper.loadChild({
+      childName: "property",
+      sectionPack,
+    });
+  }
+  get activeDealSystem(): SolverSection<"dealSystem"> {
+    const main = this.oneAndOnly("main");
+    return main.onlyChild("activeDealSystem");
+  }
+
   saveAndOverwriteToStore(feInfo: FeSectionInfo<StoreSectionName>) {
     const section = this.getterSections.section(feInfo);
     this.feStore.saveAndOverwriteToStore({

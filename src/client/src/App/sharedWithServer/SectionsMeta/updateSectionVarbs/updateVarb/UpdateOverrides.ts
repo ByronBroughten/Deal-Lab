@@ -26,6 +26,8 @@ import {
   SectionPathVarbName,
 } from "../../sectionPathContexts/sectionPathNames";
 import {
+  UnionValue,
+  UnionValueName,
   ValueSource,
   ValueSourceType,
 } from "../../values/StateValue/unionValues";
@@ -46,11 +48,23 @@ export function valueSourceOverrides<VT extends ValueSourceType>(
   _valueSourceType: VT,
   updateBasics: Record<ValueSource<VT>, UpdateBasics>
 ): UpdateOverrides {
-  return Obj.keys(updateBasics).reduce((overrides, valueSourceName) => {
+  return unionSwitchOverride(
+    _valueSourceType,
+    relVarbInfoS.local("valueSourceName"),
+    updateBasics
+  );
+}
+
+export function unionSwitchOverride<UVN extends UnionValueName>(
+  _unionValueName: UVN,
+  switchInfo: UpdateOverrideSwitchInfo,
+  updateBasics: Record<UnionValue<UVN>, UpdateBasics>
+) {
+  return Obj.keys(updateBasics).reduce((overrides, unionValue) => {
     overrides.push(
       updateOverride(
-        [overrideSwitchS.valueSourceIs(valueSourceName)],
-        updateBasics[valueSourceName]
+        [{ switchInfo, switchValues: [unionValue] }],
+        updateBasics[unionValue]
       )
     );
     return overrides;

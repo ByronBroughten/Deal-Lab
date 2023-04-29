@@ -3,12 +3,12 @@ import { useIdOfSectionToSave } from "./useIdOfSectionToSave";
 import { useSectionsDispatch } from "./useSections";
 import {
   isSavableActionName,
-  ReducerActionName,
+  SectionActionName,
   SectionActionProps,
   SectionsAction,
 } from "./useSections/sectionsReducer";
 
-export function useActionWithProps<T extends ReducerActionName>(
+export function useActionWithProps<T extends SectionActionName>(
   type: T,
   props: SectionActionProps<T>
 ) {
@@ -23,7 +23,7 @@ export function useActionWithProps<T extends ReducerActionName>(
   );
 }
 
-export function useAction<T extends ReducerActionName>(type: T) {
+export function useAction<T extends SectionActionName>(type: T) {
   const dispatch = useDispatchAndSave();
   return useCallback(
     (props: SectionActionProps<T>) =>
@@ -35,7 +35,7 @@ export function useAction<T extends ReducerActionName>(type: T) {
   );
 }
 
-export function useActionNoSave<T extends ReducerActionName>(type: T) {
+export function useActionNoSave<T extends SectionActionName>(type: T) {
   const dispatch = useSectionsDispatch();
   return useCallback(
     (props: SectionActionProps<T>) =>

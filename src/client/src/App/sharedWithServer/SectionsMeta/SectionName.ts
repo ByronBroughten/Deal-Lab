@@ -48,7 +48,6 @@ export const sectionNames = [
   "calculatedVarbs",
 
   "deal",
-  "dealSupplements",
   "dealSystem",
 
   "propertyGeneral",

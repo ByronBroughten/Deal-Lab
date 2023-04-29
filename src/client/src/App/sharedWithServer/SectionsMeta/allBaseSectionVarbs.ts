@@ -209,9 +209,10 @@ export function makeAllBaseSectionVarbs() {
       ...baseVarbsS.ongoingDollars("miscRevenue"),
       ...baseVarbsS.ongoingDollars("revenue"),
       ...baseVarbsS.monthsYearsInput("holdingPeriod"),
+      ...baseVarbsS.ongoingDollars("holdingCost"),
+      holdingCostTotal: baseVarb("numObj", dollars),
       useCustomOngoingCosts: baseVarb("boolean"),
       useCustomOneTimeCosts: baseVarb("boolean"),
-
       useCustomCosts: baseVarb("boolean"),
     }),
     unit: varbs({
@@ -347,6 +348,12 @@ export function makeAllBaseSectionVarbs() {
         ] as const,
         dollars
       ),
+      cashNeeded: baseVarb("numObj", dollars),
+      neededCashPlusLoanRepay: baseVarb("numObj", dollars),
+      totalProfit: baseVarb("numObj", dollars),
+      roiDecimal: baseVarb("numObj", decimal),
+      roiPercent: baseVarb("numObj", percent),
+      roiPercentAnnualized: baseVarb("numObj", percent),
     }),
     financing: varbs({
       displayName: baseVarb("stringObj"),

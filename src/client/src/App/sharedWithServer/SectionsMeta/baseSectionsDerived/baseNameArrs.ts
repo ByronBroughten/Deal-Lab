@@ -22,10 +22,6 @@ function makeBaseNameArrs() {
       "loan",
       "mgmt",
     ] as const),
-    dealSupports: Arr.extractStrict(sectionNames, [
-      "dealSupplements",
-      "dealSystem",
-    ] as const),
     notRootNorOmni: Arr.excludeStrict(sectionNames, [
       "root",
       "omniParent",
