@@ -8,6 +8,10 @@ import {
 } from "@mui/material";
 import * as React from "react";
 
+// Tonight, I can transform this app.
+// I can implement the input info dots.
+// I can finish the Fix and Flip section.
+
 export interface ConfirmationOptions {
   catchOnCancel?: boolean;
   variant: "danger" | "info";

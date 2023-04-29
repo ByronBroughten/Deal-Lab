@@ -61,7 +61,7 @@ export const MaterialDraftEditor = React.memo(function MaterialDraftEditor({
   const hasFocus = editorState.getSelection().getHasFocus();
   const hasText = editorState.getCurrentContent().hasText();
 
-  const shrinkLabel = hasFocus || hasText;
+  const shrinkLabel = true; // hasFocus || hasText;
   ({ endAdornment, startAdornment } = getEntityEditorAdornments(shrinkLabel, {
     startAdornment,
     endAdornment,
@@ -78,7 +78,9 @@ export const MaterialDraftEditor = React.memo(function MaterialDraftEditor({
       <div className="MaterialDraftEditor-wrapper">
         <TextField
           {...{
-            className: `DraftTextField-root ${label ? "labeled" : ""}`,
+            className: `DraftTextField-root ${
+              label ? "DraftTextField-labeled" : ""
+            }`,
             id,
             name: id,
             label: label ?? "",
@@ -105,7 +107,9 @@ export const MaterialDraftEditor = React.memo(function MaterialDraftEditor({
               handleDrop: () => "handled",
               handleDroppedFiles: () => "handled",
             } as any,
-            startAdornment,
+            startAdornment: startAdornment || (
+              <span style={{ visibility: "hidden" }}>.</span>
+            ),
             endAdornment,
           }}
           InputLabelProps={{

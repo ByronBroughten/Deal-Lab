@@ -1,6 +1,5 @@
-import { ThemeProvider } from "@mui/material";
+import { CssBaseline, ThemeProvider } from "@mui/material";
 import StyledEngineProvider from "@mui/material/StyledEngineProvider";
-import { createTheme } from "@mui/material/styles";
 import React from "react";
 import { BrowserRouter } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
@@ -8,7 +7,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { Normalize } from "styled-normalize";
 import { SuperTokensWrapper } from "supertokens-auth-react";
 import { ShowEqualsProvider } from "./App/components/appWide/customContexts/showEquals";
-import { ConfirmationServiceProvider } from "./App/components/general/ConfirmationService";
+import { ConfirmationDialogueProvider } from "./App/components/general/ConfirmationDialogueProvider";
+import { InfoModalProvider } from "./App/components/general/InfoModalProvider";
 import { initSupertokens } from "./App/modules/initSupertokens";
 import { IdOfSectionToSaveProvider } from "./App/sharedWithServer/stateClassHooks/useIdOfSectionToSave";
 import {
@@ -16,11 +16,17 @@ import {
   SectionsDispatchContext,
   useDealLabSections,
 } from "./App/sharedWithServer/stateClassHooks/useSections";
-import { nativeTheme } from "./App/theme/nativeTheme";
 import { Theme } from "./App/theme/Theme";
 import { GlobalFonts } from "./fonts/fonts";
-import GlobalStyle from "./globalStyles";
+import {
+  muiGlobalStyles,
+  muiTheme,
+  StyledComponentsGlobalStyle,
+} from "./globalStyles";
 import { Main } from "./Main";
+
+const styledComponentsGlobalStyle = <StyledComponentsGlobalStyle />;
+const styledComponentsGlobalFonts = <GlobalFonts />;
 
 initSupertokens();
 const App: React.FC = () => {
@@ -28,13 +34,6 @@ const App: React.FC = () => {
     storeSectionsLocally: true,
   });
 
-  const muiTheme = createTheme({
-    palette: {
-      primary: {
-        main: nativeTheme.secondary.main,
-      },
-    },
-  });
   return (
     <SuperTokensWrapper>
       <React.StrictMode>
@@ -46,14 +45,18 @@ const App: React.FC = () => {
                 <SectionsContext.Provider value={sectionsContext}>
                   <SectionsDispatchContext.Provider value={sectionsDispatch}>
                     <IdOfSectionToSaveProvider storeId="">
-                      <ConfirmationServiceProvider>
+                      <ConfirmationDialogueProvider>
                         <ShowEqualsProvider showEqualsStatus="showAll">
-                          <GlobalFonts />
-                          <GlobalStyle />
-                          <Main />
+                          <CssBaseline />
+                          {muiGlobalStyles}
+                          {styledComponentsGlobalFonts}
+                          {styledComponentsGlobalStyle}
+                          <InfoModalProvider>
+                            <Main />
+                          </InfoModalProvider>
                           <ToastContainer />
                         </ShowEqualsProvider>
-                      </ConfirmationServiceProvider>
+                      </ConfirmationDialogueProvider>
                     </IdOfSectionToSaveProvider>
                   </SectionsDispatchContext.Provider>
                 </SectionsContext.Provider>

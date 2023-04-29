@@ -4,14 +4,14 @@ import {
   ConfirmationOptions,
 } from "./ConfirmationDialogue";
 
-const ConfirmationServiceContext = React.createContext<
+const ConfirmationDialogueContext = React.createContext<
   (options: ConfirmationOptions) => Promise<void>
 >(Promise.reject);
 
 export const useConfirmation = () =>
-  React.useContext(ConfirmationServiceContext);
+  React.useContext(ConfirmationDialogueContext);
 
-export const ConfirmationServiceProvider = ({
+export const ConfirmationDialogueProvider = ({
   children,
 }: {
   children: React.ReactNode;
@@ -44,10 +44,9 @@ export const ConfirmationServiceProvider = ({
     }
     setConfirmationState(null);
   };
-
   return (
     <>
-      <ConfirmationServiceContext.Provider
+      <ConfirmationDialogueContext.Provider
         value={openConfirmation}
         children={children}
       />

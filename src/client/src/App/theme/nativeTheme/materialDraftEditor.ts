@@ -43,6 +43,7 @@ export const materialDraftEditor = (label?: React.ReactNode) =>
     "& .DraftEditor-root": {
       display: "inline-block",
       fontSize,
+      minWidth: 7,
     },
     "& .public-DraftEditor-content": {
       display: "inline-block",

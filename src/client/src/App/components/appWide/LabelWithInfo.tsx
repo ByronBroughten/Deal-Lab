@@ -1,11 +1,10 @@
+import { Box } from "@mui/material";
 import React from "react";
 import styled from "styled-components";
-import { useToggleView } from "../../modules/customHooks/useToggleView";
 import { nativeTheme } from "../../theme/nativeTheme";
+import { useInfoModal } from "../general/InfoModalProvider";
 import { PlainIconBtn } from "../general/PlainIconBtn";
-import StandardLabel from "../general/StandardLabel";
 import { icons } from "../Icons";
-import { ModalText } from "./ModalText";
 
 type Props = {
   label: React.ReactNode;
@@ -19,12 +18,17 @@ export function LabelWithInfo({
   className,
   infoText,
 }: Props) {
-  const { infoIsOpen, closeInfo, openInfo } = useToggleView("info", false);
+  const openInfoModal = useInfoModal();
   return (
-    <Styled className={`${className ?? ""}`}>
-      <StandardLabel>{label}</StandardLabel>
+    <Styled className={className}>
+      <Box>{label}</Box>
       <PlainIconBtn
-        onClick={openInfo}
+        onClick={() =>
+          openInfoModal({
+            title: infoTitle,
+            infoText,
+          })
+        }
         middle={icons.info({
           size: 22,
           style: {
@@ -33,16 +37,6 @@ export function LabelWithInfo({
           },
         })}
       />
-      <ModalText
-        {...{
-          show: infoIsOpen,
-          closeModal: closeInfo,
-          className: "LabelWithInfo-infoModal",
-          title: infoTitle,
-        }}
-      >
-        {infoText}
-      </ModalText>
     </Styled>
   );
 }
@@ -50,10 +44,5 @@ export function LabelWithInfo({
 const Styled = styled.div`
   display: flex;
   align-items: center;
-
-  .LabelWithInfo-infoModal {
-    .ModalSection-mainSection {
-      max-width: 600px;
-    }
-  }
+  z-index: 10;
 `;

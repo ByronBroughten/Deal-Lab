@@ -10,7 +10,7 @@ export function BasicInfoEditorRow({ children }: Props) {
       sx={{
         "& .NumObjEditor-root": {
           ...nativeTheme.editorMargins,
-          "& .MuiFormControl-root.labeled": {
+          "& .DraftTextField-labeled": {
             minWidth: 141,
           },
         },

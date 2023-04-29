@@ -3,6 +3,7 @@ import { useGetterSection } from "../../../../../sharedWithServer/stateClassHook
 import { nativeTheme } from "../../../../../theme/nativeTheme";
 import theme from "../../../../../theme/Theme";
 import { FormSection } from "../../../../appWide/FormSection";
+import { LabelWithInfo } from "../../../../appWide/LabelWithInfo";
 import StandardLabel from "../../../../general/StandardLabel";
 import { NumObjEntityEditor } from "../../../../inputs/NumObjEntityEditor";
 import { BasicInfoEditorRow } from "./BasicInfoEditorRow";
@@ -16,7 +17,20 @@ export function BasicFixAndFlipInfo({ feId }: Props) {
       <div>
         <StandardLabel>Basics</StandardLabel>
         <BasicInfoEditorRow>
-          <NumObjEntityEditor feVarbInfo={property.varbInfo("purchasePrice")} />
+          <NumObjEntityEditor
+            {...{
+              label: (
+                <LabelWithInfo
+                  {...{
+                    label: "Purchase price",
+                    infoTitle: "Purchase Price",
+                    infoText: "You know what purchase price is",
+                  }}
+                />
+              ),
+              feVarbInfo: property.varbInfo("purchasePrice"),
+            }}
+          />
           <NumObjEntityEditor feVarbInfo={property.varbInfo("sqft")} />
           <NumObjEntityEditor
             sx={{

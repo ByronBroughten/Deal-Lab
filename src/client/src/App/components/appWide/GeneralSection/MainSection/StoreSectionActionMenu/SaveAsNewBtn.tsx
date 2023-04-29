@@ -6,7 +6,7 @@ import { useAction } from "../../../../../sharedWithServer/stateClassHooks/useAc
 import { useGetterFeStore } from "../../../../../sharedWithServer/stateClassHooks/useFeStore";
 import { useGetterSection } from "../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { nativeTheme } from "../../../../../theme/nativeTheme";
-import { useConfirmation } from "../../../../general/ConfirmationService";
+import { useConfirmation } from "../../../../general/ConfirmationDialogueProvider";
 import { DropdownBtnWrapper } from "../../../../general/DropdownBtnWrapper";
 import { MaterialStringEditor } from "../../../../inputs/MaterialStringEditor";
 import { SectionBtn } from "../../../SectionBtn";

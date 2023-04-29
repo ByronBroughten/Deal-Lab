@@ -18,6 +18,7 @@ const dealElementProps = {
 
 export function ActiveDealMain() {
   const { deal, calcVarbs, feStore } = useActiveDealPage();
+  const dealMode = deal.valueNext("dealMode");
   const completionStatus = calcVarbs.value("dealCompletionStatus");
   return (
     <BackBtnWrapper {...{ to: "account", label: "Deal Menu" }}>
@@ -59,7 +60,9 @@ export function ActiveDealMain() {
         <View>
           <DealSubSectionClosed {...dealElementProps} sectionName="property" />
           <DealSubSectionClosed {...dealElementProps} sectionName="financing" />
-          <DealSubSectionClosed {...dealElementProps} sectionName="mgmt" />
+          {dealMode !== "fixAndFlip" && (
+            <DealSubSectionClosed {...dealElementProps} sectionName="mgmt" />
+          )}
         </View>
         <OutputSection
           {...dealElementProps}

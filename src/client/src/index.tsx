@@ -7,9 +7,59 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
-// Holding costs
-// UtilityValue (slightly modified language)
-// otherHoldingCosts (custom ongoing + checkboxes: landscaping, HOA, accounting),
+// - No Mgmt necessary for buyAndHold
+// - Add "N/A" value for numObj
+// - Add lots of dealMode-based override switches
+// - Add tests for fixAndFlip
+
+// - Try jamming Brrrr in the picture?
+
+// Add the outputs for Fix and Flip
+//   "totalInvestment",
+//   "totalProfit",
+//   "roi",
+//   "roiAnnualized", - (make CocRoi update in the same way)
+
+// - Cash Needed They're only factoring in closing costs and rehab costs
+//   - Why wouldn't Cash Needed include holding costs?
+
+// - Cash needed
+//   - downPayment + rehabCosts + selling costs + holdingCosts
+
+// - Total Profit
+//   - ARV minus Selling costs (Sale Proceeds)
+//   - minus cashNeeded, loanRepayment
+// - (Post Tax Profit?)
+
+// - ROI
+//   - totalProfit / cashNeeded
+
+// - Annualized ROI (technically comparable to CoC ROI)
+//   - (12 * ROI)/holdingPeriodMonths
+
+// 70% Rule
+// - Implement dealMode outputs lists
+
+// One of the easier ways to get started, the way I did, is to buy a duplex with a loan that had a relatively low down payment. An FHA loan could work—that goes as low as 3.5% down. In Saint Paul, you could probably find a decent duplex for $250,000. That would be an $8750 down payment. You'd need to save somewhat more than that, though, to cover some closing costs and meet bank requirements for having extra funds on hand. So you'd need to save maybe like $15,000-$18,000.
+
+// See if Emily will look at Fix and Flip—have her weigh in
+// on if I should copy that style for Buy and Hold
+
+/* 
+  I'd need a good way to add info dots where necessary
+
+  Buy and Hold new order:
+  - Basics: price, sqft, units
+  - Ongoing costs: taxes, insurance, Utilities, CapEx, Maintenance
+  - Rehab
+  - Custom expensese (?)
+*/
+/* 
+  Fix and Flip Optimal:
+  - Selling costs is its own FormSection value at the end
+  - Holding Costs has an extra little itemizer
+    with checkboxes for accounting, legal, and landscaping
+*/
 
 // Custom
 // misc upfrontCosts (custom upfront)

@@ -1,7 +1,8 @@
+import { Box, SxProps } from "@mui/material";
 import { AiOutlineClose } from "react-icons/ai";
-import styled from "styled-components";
 import useOnOutsideClickRef from "../../modules/customHooks/useOnOutsideClickRef";
-import theme from "../../theme/Theme";
+import { nativeTheme } from "../../theme/nativeTheme";
+import { arrSx } from "../../utils/mui";
 import { ModalWrapper, ModalWrapperProps } from "../general/ModalWrapper";
 import { PlainIconBtn } from "../general/PlainIconBtn";
 import { MainSection } from "./GeneralSection/MainSection";
@@ -11,6 +12,7 @@ import { SectionTitle } from "./SectionTitle";
 export interface ModalSectionProps extends ModalWrapperProps {
   closeModal: () => void;
   title: React.ReactNode;
+  modalSectionProps?: { sx?: SxProps };
 }
 export function ModalSection({
   children,
@@ -18,36 +20,31 @@ export function ModalSection({
   closeModal,
   title,
   show,
+  modalSectionProps,
 }: ModalSectionProps) {
   const modalRef = useOnOutsideClickRef(closeModal);
   return (
-    <Styled {...{ show }} className={`ModalSection-root ${className ?? ""}`}>
-      <div className="ModalSection-refDiv" ref={modalRef}>
-        <MainSection className="ModalSection-mainSection">
+    <ModalWrapper
+      {...{ show }}
+      className={`ModalSection-root ${className ?? ""}`}
+    >
+      <div ref={modalRef}>
+        <MainSection
+          {...{
+            className: "ModalSection-mainSection",
+            ...modalSectionProps,
+            sx: [{ minWidth: 250 }, ...arrSx(modalSectionProps?.sx)],
+          }}
+        >
           <SectionTitleRow
-            leftSide={
-              <SectionTitle
-                className="ModalSection-sectionTitle"
-                text={title}
-              />
-            }
+            leftSide={<SectionTitle text={title} />}
             rightSide={
               <PlainIconBtn middle={<AiOutlineClose />} onClick={closeModal} />
             }
           />
-          <div className="ModalSection-content">{children}</div>
+          <Box sx={{ mt: nativeTheme.s3 }}>{children}</Box>
         </MainSection>
       </div>
-    </Styled>
+    </ModalWrapper>
   );
 }
-
-const Styled = styled(ModalWrapper)`
-  .ModalSection-mainSection {
-    min-width: 250px;
-  }
-
-  .ModalSection-content {
-    margin-top: ${theme.s3};
-  }
-`;

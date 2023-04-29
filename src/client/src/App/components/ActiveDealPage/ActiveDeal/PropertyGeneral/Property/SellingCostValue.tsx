@@ -2,6 +2,7 @@ import { SxProps } from "@mui/material";
 import { StateValue } from "../../../../../sharedWithServer/SectionsMeta/values/StateValue";
 import { useGetterSection } from "../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { StrictExtract } from "../../../../../sharedWithServer/utils/types";
+import { LabelWithInfo } from "../../../../appWide/LabelWithInfo";
 import { SelectAndItemizeEditorNext } from "../../../../appWide/SelectAndItemizeEditorNext";
 import { NumObjEntityEditor } from "../../../../inputs/NumObjEntityEditor";
 import { ListEditorSingleTime } from "./ValueShared.tsx/ListEditorSingleTime";
@@ -38,7 +39,16 @@ export function SellingCostValue({ feId, sx }: Props) {
     <SelectAndItemizeEditorNext
       {...{
         sx,
-        label: "Selling costs",
+        label: (
+          <LabelWithInfo
+            {...{
+              label: "Selling costs",
+              infoTitle: "Selling Costs",
+              infoText:
+                "Selling costs are the costs associated with selling a property. These costs are to pay for things things real estate agents, title fees, broker companies, etc. Selling costs are commonly around 5-6% of the price that the property is being sold for",
+            }}
+          />
+        ),
         selectProps: { sx: { minWidth: 160 } },
         itemizedModalTitle: "Selling costs",
         unionValueName: "sellingCostSource",

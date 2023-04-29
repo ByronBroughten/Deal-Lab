@@ -9,8 +9,8 @@ import { ValueFixedVarbPathName } from "../../../sharedWithServer/StateEntityGet
 import { nativeTheme } from "../../../theme/nativeTheme";
 import theme from "../../../theme/Theme";
 import { HollowBtn } from "../../appWide/HollowBtn";
-import { ModalText } from "../../appWide/ModalText";
 import { DropdownContainer } from "../../general/DropdownContainer";
+import { InfoModal } from "../../general/InfoModal";
 import { icons } from "../../Icons";
 import { PopperRef } from "../VarbAutoComplete";
 import { AllVarbsModal } from "./AllVarbsModal";
@@ -75,15 +75,14 @@ export const NumObjVarbSelector = React.memo(
                     },
                   }}
                 />
-                <ModalText
+                <InfoModal
                   {...{
-                    show: infoIsOpen,
+                    showModal: infoIsOpen,
                     closeModal: closeInfo,
                     title: "Equation Editor and Variables",
+                    infoText: `This input is an Equation Editor. It lets you enter numbers as well as symbols to add (+), subtract (-), multiply (*) and divide (/).\n\nAdditionally, you may also enter variables. This lets the input respond to other inputs, much excel spreadsheet cells with formulas.\n\nTo add a variable, simply click the "+ Variable" button and choose one from the dropdown that appears.`,
                   }}
-                >
-                  {`This input is an Equation Editor. It lets you enter numbers as well as symbols to add (+), subtract (-), multiply (*) and divide (/).\n\nAdditionally, you may also enter variables. This lets the input respond to other inputs, much excel spreadsheet cells with formulas.\n\nTo add a variable, simply click the "+ Variable" button and choose one from the dropdown that appears.`}
-                </ModalText>
+                />
               </div>
               {varbsIsOpen && (
                 <DropdownContainer

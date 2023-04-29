@@ -10,6 +10,13 @@ export const outputNames = [
   "cocRoiYearly",
 ] as const;
 
+export const fixAndFlipOutputNames = [
+  "totalInvestment",
+  "totalProfit",
+  "roi",
+  "roiAnnualized",
+] as const;
+
 export const defaultDealOutputInfos: ValueInEntityInfo[] = outputNames.map(
   (varbPathName) => {
     return mixedInfoS.varbPathName(varbPathName);
