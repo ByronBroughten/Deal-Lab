@@ -45,7 +45,7 @@ export function SellingCostValue({ feId, sx }: Props) {
               label: "Selling costs",
               infoTitle: "Selling Costs",
               infoText:
-                "Selling costs are the costs associated with selling a property. These costs are to pay for things things real estate agents, title fees, broker companies, etc. Selling costs are commonly around 5-6% of the price that the property is being sold for",
+                "Selling costs are the costs associated with selling a property, to pay for things things real estate agents, title fees, broker companies, etc.\n\nThese costs commonly add up to around 5-6% of the price that the property is being sold at.",
             }}
           />
         ),
@@ -55,8 +55,8 @@ export function SellingCostValue({ feId, sx }: Props) {
         itemizeValue: "itemize",
         items: [
           ["sixPercent", "6% (common)"],
-          ["valueDollarsEditor", "Dollar amount"],
-          ["valuePercentEditor", "Percent"],
+          ["valueDollarsEditor", "Custom amount"],
+          ["valuePercentEditor", "Custom percent"],
           ["itemize", "Itemize"],
         ],
         feVarbInfo: {

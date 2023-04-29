@@ -19,20 +19,24 @@ export function BasicFixAndFlipInfo({ feId }: Props) {
         <BasicInfoEditorRow>
           <NumObjEntityEditor
             {...{
-              label: (
-                <LabelWithInfo
-                  {...{
-                    label: "Purchase price",
-                    infoTitle: "Purchase Price",
-                    infoText: "You know what purchase price is",
-                  }}
-                />
-              ),
+              label: "Purchase price",
               feVarbInfo: property.varbInfo("purchasePrice"),
             }}
           />
           <NumObjEntityEditor feVarbInfo={property.varbInfo("sqft")} />
           <NumObjEntityEditor
+            editorType="equation"
+            feVarbInfo={property.varbInfo("afterRepairValue")}
+            quickViewVarbNames={["purchasePrice", "rehabCost"]}
+            label={
+              <LabelWithInfo
+                {...{
+                  label: "After repair value",
+                  infoTitle: "After Repair Value",
+                  infoText: `This is the price that a property is sold at after repairs are made.`,
+                }}
+              />
+            }
             sx={{
               margin: nativeTheme.s3,
               marginLeft: 0,
@@ -41,9 +45,6 @@ export function BasicFixAndFlipInfo({ feId }: Props) {
                 minWidth: 150,
               },
             }}
-            editorType="equation"
-            feVarbInfo={property.varbInfo("afterRepairValue")}
-            quickViewVarbNames={["purchasePrice", "rehabCost"]}
           />
           <SellingCostValue feId={property.onlyChildFeId("sellingCostValue")} />
         </BasicInfoEditorRow>

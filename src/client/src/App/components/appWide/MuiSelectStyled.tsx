@@ -42,7 +42,8 @@ export function MuiSelectStyled({
               top: "16px",
             },
             "& .MuiFormLabel-root": {
-              transform: `translate(12px, 2px) scale(0.75)`,
+              fontSize: nativeTheme.fs17,
+              transform: `translate(12px, 2px) scale(1)`,
             },
           }),
           ...(!label && {
@@ -61,7 +62,7 @@ export function MuiSelectStyled({
     >
       {label && (
         <InputLabel
-          sx={{ fontSize: nativeTheme.fs22, color: nativeTheme.primary.main }}
+          sx={{ fontSize: nativeTheme.fs22, color: nativeTheme.inactiveLabel }}
         >
           {label}
         </InputLabel>

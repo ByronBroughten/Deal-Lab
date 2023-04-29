@@ -3,7 +3,10 @@ import { timeS } from "../../sharedWithServer/utils/timeS";
 import { StrictOmit } from "../../sharedWithServer/utils/types";
 import { InfoModal, InfoModalProps } from "./InfoModal";
 
-type InfoModalOptions = StrictOmit<InfoModalProps, "showModal" | "closeModal">;
+export type InfoModalOptions = StrictOmit<
+  InfoModalProps,
+  "showModal" | "closeModal"
+>;
 const InfoModalContext = React.createContext<
   (options: InfoModalOptions) => void
 >(() => {});

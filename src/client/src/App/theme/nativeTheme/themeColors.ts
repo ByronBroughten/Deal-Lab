@@ -29,7 +29,7 @@ const basicColors = {
 const baseThemeColors = {
   primary: "#00684A",
   secondary: "#00A35C",
-  darkBlue: "#2b6988",
+  darkBlue: "#3c7c9c",
   notice: "#ff9868",
   danger: "#ff3527",
   yellowGreen: "#ECF87F",
@@ -42,6 +42,8 @@ const baseThemeColors = {
 export const themeColors = {
   ...basicColors,
   ...baseThemeColors,
+  inactiveLabel: baseThemeColors.primary,
+  activeLabel: baseThemeColors.darkBlue,
   primary: colorVariants(baseThemeColors.primary),
   secondary: colorVariants(baseThemeColors.secondary),
   darkBlue: colorVariants(baseThemeColors.darkBlue),

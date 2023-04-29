@@ -1,5 +1,6 @@
 import { SxProps } from "@mui/material";
 import { useGetterSection } from "../../../../../sharedWithServer/stateClassHooks/useGetterSection";
+import { LabelWithInfo } from "../../../../appWide/LabelWithInfo";
 import { SelectEditorNext } from "../../../../appWide/SelectEditorNext";
 import { NumObjEntityEditor } from "../../../../inputs/NumObjEntityEditor";
 
@@ -15,11 +16,19 @@ export function CostOverrunValue({ feId, sx }: Props) {
       {...{
         sx,
         selectProps: { sx: { minWidth: 160 } },
-        label: "Cost overrun",
+        label: (
+          <LabelWithInfo
+            {...{
+              label: "Cost overrun",
+              infoTitle: "Cost Overrun",
+              infoText: `Cost overrun is the sum of costs over the entirety of a project that were not anticipated upfront. Cost overrun is common, especially for larger projects.\n\nFor sizable rehab projects, it's common to factor in an extra 10-15% of the base rehab estimate for cost overrun. That may not be necessary for turnkey properties or light rehab.`,
+            }}
+          />
+        ),
         unionValueName: "overrunValueSource",
         items: [
-          ["valueDollarsEditor", "Dollar amount"],
-          ["valuePercentEditor", "Percent"],
+          ["valueDollarsEditor", "Custom amount"],
+          ["valuePercentEditor", "Custom percent"],
         ],
         feVarbInfo: {
           ...feInfo,

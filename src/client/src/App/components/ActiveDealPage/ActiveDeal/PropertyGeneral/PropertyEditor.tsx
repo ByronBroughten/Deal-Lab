@@ -4,6 +4,7 @@ import { useGetterSection } from "../../../../sharedWithServer/stateClassHooks/u
 import { nativeTheme } from "../../../../theme/nativeTheme";
 import { FormSectionLabeled } from "../../../appWide/FormSectionLabeled";
 import MainSectionBody from "../../../appWide/GeneralSection/MainSection/MainSectionBody";
+import { LabelWithInfo } from "../../../appWide/LabelWithInfo";
 import { ChildValuesOngoing } from "../../../appWide/ListGroup/ListGroupShared/ChildValuesOngoing";
 import { MainSectionTopRows } from "../../../appWide/MainSectionTopRows";
 import { SectionToggler } from "../../../appWide/SectionToggler";
@@ -46,6 +47,15 @@ function PropertyFixAndFlipEditor({ feId }: { feId: string }) {
       <FormSectionLabeled label="Holding Costs">
         <BasicInfoEditorRow>
           <NumObjEntityEditor
+            label={
+              <LabelWithInfo
+                {...{
+                  label: "Holding period",
+                  infoTitle: "Holding Period",
+                  infoText: `This is the amount of time that a property is owned before its rehab is complete and it is either sold (in the case of fix and flip) or refinanced and rented out (in the case of brrrr).\n\nTypically, the longer the holding period, the more that costs will accumulate.`,
+                }}
+              />
+            }
             feVarbInfo={property.varbInfo("holdingPeriodSpanEditor")}
           />
           <NumObjEntityEditor

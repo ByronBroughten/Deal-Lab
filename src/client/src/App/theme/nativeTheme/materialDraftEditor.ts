@@ -62,11 +62,11 @@ export const materialDraftEditor = (label?: React.ReactNode) =>
         pb: "2px",
       },
       "& .MuiFormLabel-root": {
-        color: themeColors["gray-600"],
+        color: themeColors.inactiveLabel,
         whiteSpace: "nowrap",
       },
       "& .MuiFormLabel-root.Mui-focused": {
-        color: themeColors.primary.main,
+        color: themeColors.darkBlue.main,
       },
       // label location when editor is empty
       "& .MuiInputLabel-filled": {

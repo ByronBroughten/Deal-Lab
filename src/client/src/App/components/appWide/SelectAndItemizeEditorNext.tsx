@@ -64,7 +64,7 @@ export function SelectAndItemizeEditorNext<
         : isItemized && (
             <Box
               sx={{
-                ...(rest.label && { height: 46, pt: "1px" }),
+                ...(rest.label && { height: 49 }),
                 ...(!rest.label && { height: 30 }),
                 ...nativeTheme.subSection.borderLines,
                 borderLeftWidth: 0,

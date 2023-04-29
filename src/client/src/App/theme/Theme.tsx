@@ -82,6 +82,7 @@ const themeColors = {
   loan: "#ff7f68",
   mgmt: "#ff9868",
   info: "#ff9868",
+  inactiveLabel: color["gray-700"],
   get plus() {
     return this.primaryNext;
   },

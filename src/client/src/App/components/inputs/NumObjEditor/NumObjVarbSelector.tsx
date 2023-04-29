@@ -12,7 +12,6 @@ import { HollowBtn } from "../../appWide/HollowBtn";
 import { DropdownContainer } from "../../general/DropdownContainer";
 import { InfoModal } from "../../general/InfoModal";
 import { icons } from "../../Icons";
-import { PopperRef } from "../VarbAutoComplete";
 import { AllVarbsModal } from "./AllVarbsModal";
 import { insertVarbEntity } from "./NumObjVarbSelector/insertVarbEntity";
 import {
@@ -21,6 +20,8 @@ import {
 } from "./NumObjVarbSelector/VarbSelectorCollection";
 import { VarbSelectorRow } from "./NumObjVarbSelector/VarbSelectorRow";
 import { VarbSelectorShell } from "./NumObjVarbSelector/VarbSelectorShell";
+
+export type PopperRef = React.Ref<HTMLDivElement>;
 
 interface Props extends FeSectionInfo {
   setEditorState: React.Dispatch<React.SetStateAction<EditorState>>;
@@ -66,12 +67,12 @@ export const NumObjVarbSelector = React.memo(
                   sx={{
                     borderRadius: 0,
                     border: "none",
-                    color: nativeTheme.complementary.main,
+                    color: nativeTheme.darkBlue.main,
                     padding: nativeTheme.s2,
-                    borderLeft: `1px solid ${nativeTheme.complementary.light}`,
+                    borderLeft: `1px solid ${nativeTheme.darkBlue.light}`,
                     height: selectorHeight,
                     "&:hover": {
-                      backgroundColor: nativeTheme.complementary.light,
+                      backgroundColor: nativeTheme.darkBlue.light,
                     },
                   }}
                 />
@@ -135,21 +136,21 @@ const AddVarbBtn = styled(HollowBtn)`
   padding: ${theme.s25};
   border-radius: 0;
   border: none;
-  color: ${theme.primary.main};
+  color: ${nativeTheme.darkBlue.main};
   :hover {
-    background-color: ${theme.primary.light};
+    background-color: ${nativeTheme.darkBlue.main};
   }
 `;
 
 const ViewAllRow = styled(VarbSelectorRow)`
   background-color: ${theme.light};
   .VarbSelectorRow-Btn {
-    color: ${theme.primary.main};
+    color: ${nativeTheme.darkBlue.main};
     justify-content: center;
     padding: 0;
     :hover {
       color: ${theme.light};
-      background-color: ${theme.primary.main};
+      background-color: ${nativeTheme.darkBlue.main};
     }
   }
 `;
@@ -158,16 +159,10 @@ const Styled = styled.div`
   position: relative;
 
   .NumObjVarbSelector-BtnDiv {
-    border-top: 1px solid ${theme.primary.light};
+    border-top: 1px solid ${nativeTheme.darkBlue.light};
     display: flex;
     align-items: center;
     background: ${theme.light};
-  }
-
-  .VarbAutoComplete-root {
-    .MuiInputBase-root {
-      margin-top: ${theme.s1};
-    }
   }
 
   .NumObjVarbSelector-absolute {
@@ -177,9 +172,9 @@ const Styled = styled.div`
   }
   .NumObjVarbSelector-wrapper {
     border: 2px solid;
-    border-top: 0px solid;
+    border-color: ${nativeTheme.darkBlue.main};
+    border-top: 0px;
     border-left: 1px solid;
-    border-color: ${theme.next.dark};
     border-top-left-radius: 0;
   }
 `;
