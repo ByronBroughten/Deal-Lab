@@ -39,15 +39,17 @@ const propsByDealMode = {
   property: {
     buyAndHold: {
       detailVarbNames: [
+        "purchasePrice",
+        "rehabCost",
         "targetRentYearly",
-        "upfrontExpenses",
         "expensesYearly",
       ] as const,
     },
     fixAndFlip: {
       detailVarbNames: [
+        "purchasePrice",
+        "afterRepairValue",
         "holdingPeriodMonths",
-        "upfrontExpenses",
         // "grossProfit",
       ] as const,
     },
@@ -99,8 +101,8 @@ function getMgmtProps(mgmt: GetterSection<"mgmt">): SectionProps {
     sectionTitle: "Management",
     displayName: mgmt.valueNext("displayName").mainText,
     detailVarbPropArr: mgmt.varbInfoArr([
-      "upfrontExpenses",
       "expensesYearly",
+      "customUpfrontCosts",
     ] as const),
   };
 }

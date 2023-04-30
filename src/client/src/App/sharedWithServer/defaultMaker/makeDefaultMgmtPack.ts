@@ -11,7 +11,5 @@ export function makeDefaultMgmtPack(): SectionPack<"mgmt"> {
   });
   mgmt.addChild("mgmtBasePayValue");
   mgmt.addChild("vacancyLossValue");
-  mgmt.addChild("upfrontExpenseGroup");
-  mgmt.addChild("ongoingExpenseGroup");
   return mgmt.makeSectionPack();
 }

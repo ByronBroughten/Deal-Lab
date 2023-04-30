@@ -69,18 +69,20 @@ function sumOngoingLoanVarb<BN extends string>(
 export function calculatedUpdateVarbs(): UpdateSectionVarbs<"calculatedVarbs"> {
   return {
     ...updateVarbsS._typeUniformity,
-    downPaymentDollars: updateVarbS.leftRightPropFn("simpleSubtract", [
+    downPaymentDollars: updateVarbS.leftRightPropFn(
+      "simpleSubtract",
       updateFnPropS.varbPathName("purchasePrice"),
-      updateFnPropS.varbPathName("loanBaseDollars"),
-    ]),
+      updateFnPropS.varbPathName("loanBaseDollars")
+    ),
     downPaymentPercent: updateVarbS.singlePropFn(
       "decimalToPercent",
       updateFnPropS.local("downPaymentDecimal")
     ),
-    downPaymentDecimal: updateVarbS.leftRightPropFn("simpleDivide", [
+    downPaymentDecimal: updateVarbS.leftRightPropFn(
+      "divide",
       updateFnPropS.local("downPaymentDollars"),
-      updateFnPropS.varbPathName("purchasePrice"),
-    ]),
+      updateFnPropS.varbPathName("purchasePrice")
+    ),
     ...updateVarbsS.ongoingSumNumsNext("piti", "monthly", {
       updateFnProps: [
         updateFnPropS.varbPathBase("loanPayment"),
@@ -102,9 +104,8 @@ export function calculatedUpdateVarbs(): UpdateSectionVarbs<"calculatedVarbs"> {
     ...sumOngoingLoanVarb("loanPayment", "loanPayment"),
 
     // Property
-    two: updateVarb("numObj", {
-      ...updateBasics("two"),
-    }),
+    two: updateVarb("numObj", updateBasics("two")),
+    twelve: updateVarb("numObj", updateBasics("twelve")),
     onePercentPrice: updateVarb("numObj", {
       ...updateBasicsS.equationSimple(
         "onePercent",
@@ -146,7 +147,7 @@ export function calculatedUpdateVarbs(): UpdateSectionVarbs<"calculatedVarbs"> {
     }),
     onePercentPriceSqftAverage: updateVarb("numObj", {
       ...updateBasicsS.varbPathLeftRight(
-        "simpleDivide",
+        "divide",
         "onePercentPricePlusSqft",
         "two"
       ),

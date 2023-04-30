@@ -322,14 +322,6 @@ function makeAllUpdateSections() {
         initValue: "loadedVarb",
       } as const),
     }),
-    ...updateSectionProp("singleTimeValueGroup", {
-      total: updateVarbS.sumNums([
-        updateFnPropS.children("singleTimeValue", "value"),
-      ]),
-      itemValueSource: updateVarb("string", {
-        initValue: "valueEditor",
-      }),
-    }),
     ...updateSectionProp("singleTimeList", {
       total: updateVarbS.sumNums([
         updateFnPropS.children("singleTimeItem", "value"),

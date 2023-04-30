@@ -50,12 +50,6 @@ export const allDisplaySectionVarbs = {
     numUnits: varb("Unit count"),
     numBedrooms: varb("Bedrooms"),
     upfrontExpenses: varb("Upfront expenses"),
-    upfrontRevenue: varb("Upfront revenues"),
-    ...editorDisplayGroup(
-      "monthsYearsInput",
-      "holdingPeriod",
-      "Holding period"
-    ),
     ...displaySectionVarbsProp("repairValue", {
       value: varb("Repair cost base"),
     }),
@@ -146,7 +140,6 @@ export const allDisplaySectionVarbs = {
       },
     }),
     vacancyLossPercent: varb("Vacancy loss percent of rent"),
-    upfrontExpenses: varb("Upfront expenses"),
     ...group("ongoing", "expenses", "Ongoing expenses", {
       targets: { displayNameWithSection: "Management expenses" },
       monthly: {
@@ -177,14 +170,13 @@ export const allDisplaySectionVarbs = {
     amountPercent: varb("Loan to value ratio"),
     amountDollars: varb("Loan amount"),
   }),
-
   ...displaySectionVarbsProp("numVarbItem", {
     value: varb(relVarbInfoS.local("displayName")),
   }),
   ...displaySectionVarbsProp("deal", {
-    upfrontExpenses: varb("Upfront expenses"),
-    outOfPocketExpenses: varb("Out of pocket expenses"),
-    upfrontRevenue: varb("Upfront revenue"),
+    totalProfit: varb("Total profit"),
+    roiPercent: varb("ROI"),
+    roiPercentAnnualized: varb("ROI Annualized"),
     totalInvestment: varb("Total investment"),
     ...group("dollarsPercentDecimal", "downPayment", "Down payment", {
       dollars: { displayNameWithVariant: "Down payment" },
@@ -229,9 +221,6 @@ export const allDisplaySectionVarbs = {
         displayNameFullContext: "Yearly deal revenue",
       },
     }),
-  }),
-  ...displaySectionVarbsProp("singleTimeValueGroup", {
-    total: varb("Total"),
   }),
   ...displaySectionVarbsProp("singleTimeValue", {
     value: varb(relVarbInfoS.local("displayName")),

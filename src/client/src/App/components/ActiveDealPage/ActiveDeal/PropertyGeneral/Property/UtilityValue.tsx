@@ -19,15 +19,12 @@ export function UtilityValue({
   const valueVarb = utilityValue.switchVarb("value", "ongoing");
   const equalsValue = valueSourceName === "zero" ? "$0" : undefined;
 
-  const menuItems: [StateValue<"utilityValueSource">, string][] = [
+  let menuItems: [StateValue<"utilityValueSource">, string][] = [
     ["zero", "Tenant pays all utilities"],
     ["listTotal", "Itemize"],
   ];
 
-  if (valueSourceName === "none") {
-    menuItems.push(["none", "Choose method"]);
-  }
-
+  menuItems = [["none", "Choose method"], ...menuItems];
   return (
     <SelectAndItemizeEditorSection
       {...{

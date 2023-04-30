@@ -19,8 +19,8 @@ export function costOverrunUpdateVarbs(): UpdateSectionVarbs<"costOverrunValue">
       ...basics.throw,
       updateOverrides: valueSourceOverrides("overrunValueSource", {
         valueDollarsEditor: basics.loadFromLocal("valueDollarsEditor"),
-        valuePercentEditor: basics.equationLeftRight(
-          "simpleMultiply",
+        valuePercentEditor: basics.equationLR(
+          "multiply",
           fnProp.local("valueDecimal"),
           fnProp.varbPathName("repairCostBase")
         ),
@@ -29,8 +29,8 @@ export function costOverrunUpdateVarbs(): UpdateSectionVarbs<"costOverrunValue">
     valueDecimal: updateVarb("numObj", {
       ...basics.throw,
       updateOverrides: valueSourceOverrides("overrunValueSource", {
-        valueDollarsEditor: basics.equationLeftRight(
-          "simpleDivide",
+        valueDollarsEditor: basics.equationLR(
+          "divide",
           fnProp.local("valueDollarsEditor"),
           fnProp.varbPathName("repairCostBase")
         ),

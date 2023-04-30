@@ -21,21 +21,6 @@ export function RehabSection({ feId, dealMode }: Props) {
           feId={property.onlyChildFeId("costOverrunValue")}
           sx={nativeTheme.editorMargins}
         />
-        {/* <SectionToggler
-          {...{
-            sx: { mt: nativeTheme.s3 },
-            labelProps: { sx: { fontSize: nativeTheme.fs17 } },
-            labelText: "Custom rehab costs",
-            feVarbInfo: property.varbInfoNext("useCustomOneTimeCosts"),
-          }}
-        >
-          <ChildValuesOneTime
-            {...{
-              sectionName: "singleTimeValueGroup",
-              feId: property.onlyChildFeId("upfrontExpenseGroup"),
-            }}
-          />
-        </SectionToggler> */}
       </MuiRow>
     </FormSectionLabeled>
   );

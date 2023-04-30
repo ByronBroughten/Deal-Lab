@@ -29,9 +29,7 @@ describe("SetterCalculations", () => {
     const property = dealTester.setter.onlyChild("property");
     property.varb("purchasePrice").updateValue(numObj(200000));
 
-    const propertyCostListGroup = property.onlyChild("upfrontExpenseGroup");
-    const propertyCostValue =
-      propertyCostListGroup.addAndGetChild("singleTimeValue");
+    const propertyCostValue = property.addAndGetChild("customUpfrontExpense");
     propertyCostValue.updateValues({ valueSourceName: "listTotal" });
 
     const propertyCostList = propertyCostValue.onlyChild("singleTimeList");
@@ -61,8 +59,7 @@ describe("SetterCalculations", () => {
     });
 
     const mgmt = dealTester.setter.onlyChild("mgmt");
-    const expenseGroup = mgmt.onlyChild("upfrontExpenseGroup");
-    const expenseValue = expenseGroup.addAndGetChild("singleTimeValue", {
+    const expenseValue = mgmt.addAndGetChild("customUpfrontExpense", {
       sectionValues: { valueSourceName: "listTotal" },
     });
     const mgmtCostList = expenseValue.onlyChild("singleTimeList");
@@ -98,8 +95,7 @@ describe("SetterCalculations", () => {
     property.varb("homeInsOngoingSwitch").updateValue("yearly");
     property.varb("homeInsOngoingEditor").updateValue(numObj(1200));
 
-    const propertyCostListGroup = property.onlyChild("ongoingExpenseGroup");
-    const ongoingValue = propertyCostListGroup.addAndGetChild("ongoingValue", {
+    const ongoingValue = property.addAndGetChild("customOngoingExpense", {
       sectionValues: { valueSourceName: "listTotal" },
     });
     const propertyCostList = ongoingValue.onlyChild("ongoingList");
@@ -129,8 +125,7 @@ describe("SetterCalculations", () => {
     const vacancyLossValue = mgmt.onlyChild("vacancyLossValue");
     vacancyLossValue.updateValues({ valueSourceName: "fivePercentRent" });
 
-    const expenseGroup = mgmt.onlyChild("ongoingExpenseGroup");
-    const mgmtCostListGroup = expenseGroup.addAndGetChild("ongoingValue", {
+    const mgmtCostListGroup = mgmt.addAndGetChild("customOngoingExpense", {
       sectionValues: { valueSourceName: "listTotal" },
     });
     const mgmtCostList = mgmtCostListGroup.onlyChild("ongoingList");

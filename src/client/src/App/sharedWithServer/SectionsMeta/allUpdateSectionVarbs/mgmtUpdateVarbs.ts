@@ -6,48 +6,54 @@ import {
   updateFnPropS,
   updateFnPropsS,
 } from "../updateSectionVarbs/updateVarb/UpdateFnProps";
-import { overrideSwitchS } from "../updateSectionVarbs/updateVarb/UpdateOverrides";
+import {
+  overrideSwitchS,
+  updateOverride,
+} from "../updateSectionVarbs/updateVarb/UpdateOverrides";
 import { updateVarbsS } from "../updateSectionVarbs/updateVarbs";
 
+const propS = updateFnPropS;
+
+const basicsS = updateBasicsS;
 export function mgmtRelVarbs(): UpdateSectionVarbs<"mgmt"> {
   return {
     ...updateVarbsS._typeUniformity,
     ...updateVarbsS.savableSection,
     one: updateVarbS.one(),
     ...updateGroupS.group("basePayDollars", "ongoing", "monthly", {
-      monthly: updateBasicsS.loadFromChild(
-        "mgmtBasePayValue",
-        "valueDollarsMonthly"
-      ),
-      yearly: updateBasicsS.loadFromChild(
-        "mgmtBasePayValue",
-        "valueDollarsYearly"
-      ),
+      monthly: basicsS.loadFromChild("mgmtBasePayValue", "valueDollarsMonthly"),
+      yearly: basicsS.loadFromChild("mgmtBasePayValue", "valueDollarsYearly"),
     }),
     basePayPercent: updateVarb(
       "numObj",
-      updateBasicsS.loadFromChild("mgmtBasePayValue", "valuePercent")
+      basicsS.loadFromChild("mgmtBasePayValue", "valuePercent")
     ),
     ...updateGroupS.group("vacancyLossDollars", "ongoing", "monthly", {
-      monthly: updateBasicsS.loadFromChild(
-        "vacancyLossValue",
-        "valueDollarsMonthly"
-      ),
-      yearly: updateBasicsS.loadFromChild(
-        "vacancyLossValue",
-        "valueDollarsYearly"
-      ),
+      monthly: basicsS.loadFromChild("vacancyLossValue", "valueDollarsMonthly"),
+      yearly: basicsS.loadFromChild("vacancyLossValue", "valueDollarsYearly"),
     }),
     vacancyLossPercent: updateVarb(
       "numObj",
-      updateBasicsS.loadFromChild("vacancyLossValue", "valuePercent")
+      basicsS.loadFromChild("vacancyLossValue", "valuePercent")
     ),
     useCustomCosts: updateVarb("boolean", { initValue: false }),
-    upfrontExpenses: updateVarbS.sumNums([
-      updateFnPropS.children("upfrontExpenseGroup", "total", [
-        overrideSwitchS.pathHasValue("mgmtFocal", "useCustomCosts", true),
-      ]),
-    ]),
+    ...updateVarbsS.ongoingSumNumsNext("customCosts", "monthly", {
+      updateFnProps: [propS.children("customOngoingExpense", "value")],
+    }),
+    customUpfrontCosts: updateVarb("numObj", {
+      updateFnName: "throwIfReached",
+      updateOverrides: [
+        updateOverride(
+          [overrideSwitchS.localIsTrue("useCustomCosts")],
+          basicsS.sumChildren("customUpfrontExpense", "value")
+        ),
+        updateOverride(
+          [overrideSwitchS.localIsFalse("useCustomCosts")],
+          basicsS.zero
+        ),
+      ],
+    }),
+
     ...updateVarbsS.ongoingSumNums(
       "expenses",
       [
@@ -55,7 +61,7 @@ export function mgmtRelVarbs(): UpdateSectionVarbs<"mgmt"> {
           "basePayDollars",
           "vacancyLossDollars",
         ]),
-        updateFnPropS.onlyChild("ongoingExpenseGroup", "total", [
+        propS.children("customOngoingExpense", "value", [
           overrideSwitchS.pathHasValue("mgmtFocal", "useCustomCosts", true),
         ]),
       ],

@@ -81,13 +81,13 @@ export const updateBasicsS = {
     leftSide: VarbPathName,
     rightSide: VarbPathName
   ): UpdateBasics<"numObj"> {
-    return this.equationLeftRight(
+    return this.equationLR(
       updateFnName,
       updateFnPropS.varbPathName(leftSide),
       updateFnPropS.varbPathName(rightSide)
     );
   },
-  equationLeftRight(
+  equationLR(
     updateFnName: LeftRightPropCalcName,
     leftSide: UpdateFnProp,
     rightSide: UpdateFnProp

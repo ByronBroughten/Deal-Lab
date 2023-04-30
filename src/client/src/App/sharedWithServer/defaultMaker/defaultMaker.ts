@@ -2,13 +2,12 @@ import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack"
 import { SectionName } from "../SectionsMeta/SectionName";
 import { makeDefaultDealPack } from "./makeDefaultDeal";
 import { makeDefaultDealSystem } from "./makeDefaultDealSystem";
-import { makeDefaultFeUserPack } from "./makeDefaultFeUser";
+import { makeDefaultFeUserPack } from "./makeDefaultFeStore";
 import { makeDefaultLoanPack } from "./makeDefaultLoanPack";
 import { makeDefaultMain } from "./makeDefaultMain";
 import { makeDefaultMgmtPack } from "./makeDefaultMgmtPack";
 import { makeDefaultOneTimeValue } from "./makeDefaultOneTimeValue";
 import { makeDefaultOngoingValue } from "./makeDefaultOngoingValue";
-import { makeDefaultOutputList } from "./makeDefaultOutputList";
 import { makeDefaultProperty } from "./makeDefaultProperty";
 import { makeDefaultUserVarbItem } from "./makeDefaultUserVarbItem";
 
@@ -38,7 +37,6 @@ export const defaultMaker = new DefaultSectionPackMaker({
   ongoingValue: makeDefaultOngoingValue,
   mgmt: makeDefaultMgmtPack,
   loan: makeDefaultLoanPack,
-  outputList: makeDefaultOutputList,
   deal: makeDefaultDealPack,
   main: makeDefaultMain,
   dealSystem: makeDefaultDealSystem,

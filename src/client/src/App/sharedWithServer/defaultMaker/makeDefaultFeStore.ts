@@ -2,7 +2,7 @@ import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack"
 import { PackBuilderSection } from "../StatePackers/PackBuilderSection";
 import { timeS } from "../utils/timeS";
 import { makeDefaultDealPack } from "./makeDefaultDeal";
-import { makeDefaultOutputList } from "./makeDefaultOutputList";
+import { makeDefaultOutputSection } from "./makeDefaultOutputSection";
 
 export function makeDefaultFeUserPack(): SectionPack<"feStore"> {
   const feStore = PackBuilderSection.initAsOmniChild("feStore");
@@ -14,10 +14,9 @@ export function makeDefaultFeUserPack(): SectionPack<"feStore"> {
     authStatus: "guest",
     userDataStatus: "notLoaded",
   });
-  const outputSection = feStore.addAndGetChild("outputSection");
-  outputSection.loadChild({
-    childName: "buyAndHoldOutputList",
-    sectionPack: makeDefaultOutputList(),
+  feStore.loadChild({
+    childName: "outputSection",
+    sectionPack: makeDefaultOutputSection(),
   });
   feStore.loadChild({
     childName: "dealMain",

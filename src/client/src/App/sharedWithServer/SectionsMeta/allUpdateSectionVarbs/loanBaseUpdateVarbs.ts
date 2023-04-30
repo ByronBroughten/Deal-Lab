@@ -4,35 +4,44 @@ import { updateBasicsS } from "../updateSectionVarbs/updateVarb/UpdateBasics";
 import { updateFnPropS } from "../updateSectionVarbs/updateVarb/UpdateFnProps";
 import { valueSourceOverrides } from "../updateSectionVarbs/updateVarb/UpdateOverrides";
 import { updateVarbsS } from "../updateSectionVarbs/updateVarbs";
+import { StateValue } from "../values/StateValue";
+import { UpdateBasics } from "./../updateSectionVarbs/updateVarb/UpdateBasics";
+
+const basicsS = updateBasicsS;
+function sourceOverrides(
+  overrideMap: Record<StateValue<"loanBaseValueSource">, UpdateBasics>
+) {
+  return updateVarb("numObj", {
+    updateFnName: "throwIfReached",
+    updateOverrides: valueSourceOverrides("loanBaseValueSource", overrideMap),
+  });
+}
 
 export function loanBaseUpdateVarbs(): UpdateSectionVarbs<"loanBaseValue"> {
   return {
     ...updateVarbsS._typeUniformity,
-    valueSourceName: updateVarb("loanBaseValueSourceNext", {
+    valueSourceName: updateVarb("loanBaseValueSource", {
       initValue: "purchaseLoanValue",
     }),
     valueDollarsEditor: updateVarb("numObj"),
-    valueDollars: updateVarb("numObj", {
-      updateFnName: "throwIfReached",
-      updateOverrides: valueSourceOverrides("loanBaseValueSourceNext", {
-        purchaseLoanValue: updateBasicsS.loadFromChild(
-          "purchaseLoanValue",
-          "amountDollars"
-        ),
-        repairLoanValue: updateBasicsS.loadFromChild(
-          "repairLoanValue",
-          "amountDollars"
-        ),
-        arvLoanValue: updateBasicsS.loadFromChild(
-          "repairLoanValue",
-          "amountDollars"
-        ),
-        customAmountEditor: updateBasicsS.loadFromLocal("valueDollarsEditor"),
-        priceAndRepairValues: updateBasicsS.sumNums(
-          updateFnPropS.onlyChild("purchaseLoanValue", "amountDollars"),
-          updateFnPropS.onlyChild("repairLoanValue", "amountDollars")
-        ),
-      }),
+    valueDollars: sourceOverrides({
+      purchaseLoanValue: updateBasicsS.loadFromChild(
+        "purchaseLoanValue",
+        "amountDollars"
+      ),
+      repairLoanValue: updateBasicsS.loadFromChild(
+        "repairLoanValue",
+        "amountDollars"
+      ),
+      arvLoanValue: updateBasicsS.loadFromChild(
+        "repairLoanValue",
+        "amountDollars"
+      ),
+      customAmountEditor: updateBasicsS.loadFromLocal("valueDollarsEditor"),
+      priceAndRepairValues: updateBasicsS.sumNums(
+        updateFnPropS.onlyChild("purchaseLoanValue", "amountDollars"),
+        updateFnPropS.onlyChild("repairLoanValue", "amountDollars")
+      ),
     }),
   };
 }

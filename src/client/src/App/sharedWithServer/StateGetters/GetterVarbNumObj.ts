@@ -5,6 +5,7 @@ import {
   EntitiesAndEditorText,
   NumberOrQ,
   NumObj,
+  NumObjOutput,
 } from "../SectionsMeta/values/StateValue/NumObj";
 import { ValueInEntity } from "../SectionsMeta/values/StateValue/valuesShared/entities";
 import { Arr } from "../utils/Arr";
@@ -75,7 +76,7 @@ export class GetterVarbNumObj<
   solveTextToNumString(solvableText: string): string {
     return `${this.solveText(solvableText)}`;
   }
-  solveText(text: string): NumberOrQ {
+  solveText(text: string): NumObjOutput {
     const { calcRound, valueName } = this.get.meta;
     if (!(valueName === "numObj")) {
       throw new Error("This is only for numObjs.");

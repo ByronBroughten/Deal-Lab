@@ -76,12 +76,7 @@ function PropertyFixAndFlipEditor({ feId }: { feId: string }) {
             feVarbInfo: property.varbInfoNext("useCustomOngoingCosts"),
           }}
         >
-          <ChildValuesOngoing
-            {...{
-              sectionName: "ongoingValueGroup",
-              feId: property.onlyChildFeId("ongoingExpenseGroup"),
-            }}
-          />
+          <ChildValuesOngoing {...feInfo} />
         </SectionToggler>
       </FormSectionLabeled>
       <RehabSection {...{ feId, dealMode: "fixAndFlip" }} />

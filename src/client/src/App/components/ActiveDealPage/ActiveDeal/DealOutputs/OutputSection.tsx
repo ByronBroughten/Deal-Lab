@@ -3,6 +3,8 @@ import { CgDetailsLess, CgDetailsMore } from "react-icons/cg";
 import { toast } from "react-toastify";
 import styled from "styled-components";
 import { useToggleView } from "../../../../modules/customHooks/useToggleView";
+import { outputListName } from "../../../../sharedWithServer/defaultMaker/makeDefaultOutputSection";
+import { StateValue } from "../../../../sharedWithServer/SectionsMeta/values/StateValue";
 import { useSetterSection } from "../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import theme from "../../../../theme/Theme";
 import { arrSx } from "../../../../utils/mui";
@@ -22,10 +24,12 @@ const warnNeedComplete = () =>
 export function OutputSection({
   feId,
   disableOpenOutputs,
+  dealMode,
   ...rest
 }: {
   sx?: SxProps;
   feId: string;
+  dealMode: StateValue<"dealMode">;
   disableOpenOutputs: boolean;
 }) {
   const outputSection = useSetterSection({
@@ -40,7 +44,7 @@ export function OutputSection({
     });
   };
 
-  const listId = outputSection.oneChildFeId("buyAndHoldOutputList");
+  const listId = outputSection.oneChildFeId(outputListName(dealMode));
   return !outputsIsOpen ? (
     <MainSectionBtn
       {...{

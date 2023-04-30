@@ -94,7 +94,7 @@ export const allSectionChildren = checkAllSectionChildren({
   outputSection: {
     buyAndHoldOutputList: sectionChild("outputList"),
     fixAndFlipOutputList: sectionChild("outputList"),
-    brrrrOutputList: sectionChild("outputList"),
+    // brrrrOutputList: sectionChild("outputList"),
   },
   outputItem: { virtualVarb: sectionChild("virtualVarb") },
   ongoingValueGroup: {
@@ -103,9 +103,7 @@ export const allSectionChildren = checkAllSectionChildren({
   ongoingValue: {
     ongoingList: sectionChild("ongoingList"),
   },
-  singleTimeValueGroup: {
-    singleTimeValue: sectionChild("singleTimeValue"),
-  },
+
   singleTimeValue: { singleTimeList: sectionChild("singleTimeList") },
   singleTimeList: { singleTimeItem: sectionChild("singleTimeItem") },
   ongoingList: {
@@ -151,9 +149,9 @@ export const allSectionChildren = checkAllSectionChildren({
     maintenanceValue: "maintenanceValue",
     capExValue: "capExValue",
 
-    upfrontExpenseGroup: "singleTimeValueGroup",
-    upfrontRevenueGroup: "singleTimeValueGroup",
-    ongoingExpenseGroup: "ongoingValueGroup",
+    customUpfrontExpense: "singleTimeValue",
+    customOngoingExpense: "ongoingValue",
+
     ongoingRevenueGroup: "ongoingValueGroup",
     customVarb: "customVarb",
   }),
@@ -177,8 +175,8 @@ export const allSectionChildren = checkAllSectionChildren({
   mgmt: sectionChildren({
     mgmtBasePayValue: "mgmtBasePayValue",
     vacancyLossValue: "vacancyLossValue",
-    upfrontExpenseGroup: "singleTimeValueGroup",
-    ongoingExpenseGroup: "ongoingValueGroup",
+    customUpfrontExpense: "singleTimeValue",
+    customOngoingExpense: "ongoingValue",
     customVarb: "customVarb",
   }),
 });

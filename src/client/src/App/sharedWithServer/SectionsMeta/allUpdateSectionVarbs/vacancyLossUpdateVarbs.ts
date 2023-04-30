@@ -72,8 +72,8 @@ export function vacancyLossUpdateVarbs(): UpdateSectionVarbs<"vacancyLossValue">
             overrideSwitchS.valueSourceIs("dollarsEditor"),
             overrideSwitchS.ongoing("valueDollars", "monthly"),
           ],
-          updateBasicsS.equationLeftRight(
-            "simpleDivide",
+          updateBasicsS.equationLR(
+            "divide",
             updateFnPropS.local("valueDollarsOngoingEditor"),
             updateFnPropS.pathNameBase("propertyFocal", "targetRentMonthly")
           )
@@ -83,8 +83,8 @@ export function vacancyLossUpdateVarbs(): UpdateSectionVarbs<"vacancyLossValue">
             overrideSwitchS.valueSourceIs("dollarsEditor"),
             overrideSwitchS.ongoing("valueDollars", "yearly"),
           ],
-          updateBasicsS.equationLeftRight(
-            "simpleDivide",
+          updateBasicsS.equationLR(
+            "divide",
             updateFnPropS.local("valueDollarsOngoingEditor"),
             updateFnPropS.pathNameBase("propertyFocal", "targetRentYearly")
           )
@@ -107,8 +107,8 @@ export function vacancyLossUpdateVarbs(): UpdateSectionVarbs<"vacancyLossValue">
           ),
           updateOverride(
             [overrideSwitchS.valueSourceIs("percentOfRentEditor")],
-            updateBasicsS.equationLeftRight(
-              "simpleMultiply",
+            updateBasicsS.equationLR(
+              "multiply",
               updateFnPropS.local("valueDecimal"),
               updateFnPropS.pathNameBase("propertyFocal", "targetRentMonthly")
             )
@@ -143,8 +143,8 @@ export function vacancyLossUpdateVarbs(): UpdateSectionVarbs<"vacancyLossValue">
           ),
           updateOverride(
             [overrideSwitchS.valueSourceIs("percentOfRentEditor")],
-            updateBasicsS.equationLeftRight(
-              "simpleMultiply",
+            updateBasicsS.equationLR(
+              "multiply",
               updateFnPropS.local("valueDecimal"),
               updateFnPropS.pathNameBase("propertyFocal", "targetRentYearly")
             )

@@ -37,8 +37,5 @@ export function makeDefaultProperty(
 
   const capExValue = property.addAndGetChild("capExValue");
   capExValue.addChild("capExList");
-
-  property.addChild("upfrontExpenseGroup");
-  property.addChild("ongoingExpenseGroup");
   return property.makeSectionPack();
 }

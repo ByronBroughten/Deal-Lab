@@ -102,10 +102,10 @@ export const updateVarbS = {
   },
   leftRightPropFn(
     updateFnName: LeftRightPropCalcName,
-    leftRight: LeftRightUpdateProps,
+    left: UpdateFnProp,
+    right: UpdateFnProp,
     options?: UpdateVarbOptions<"numObj">
   ): UpdateVarb<"numObj"> {
-    const [left, right] = leftRight;
     return updateVarb("numObj", {
       ...updatePropsS.leftRightPropCalc(updateFnName, left, right),
       ...options,

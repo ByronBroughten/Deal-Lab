@@ -19,6 +19,7 @@ const updateFnNames = checkUpdateFnNames({
   ...makeDefaults(),
   numObj: [
     "calcVarbs",
+    "notApplicable",
     "userVarb",
     "virtualNumObj",
     "loadSolvableTextByVarbInfo",

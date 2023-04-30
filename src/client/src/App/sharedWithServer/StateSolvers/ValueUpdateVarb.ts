@@ -11,7 +11,11 @@ import {
 } from "../SectionsMeta/updateSectionVarbs/updateVarb/UpdateFnProps";
 import { StateValue } from "../SectionsMeta/values/StateValue";
 import { InEntityValueInfo } from "../SectionsMeta/values/StateValue/InEntityValue";
-import { numObj, NumObj } from "../SectionsMeta/values/StateValue/NumObj";
+import {
+  notApplicableString,
+  numObj,
+  NumObj,
+} from "../SectionsMeta/values/StateValue/NumObj";
 import {
   stringObj,
   StringObj,
@@ -105,6 +109,12 @@ export class SolveValueVarb<
           mainText: "Cash Only",
         };
       }
+    },
+    notApplicable: (): NumObj => {
+      return {
+        ...this.getterVarb.value("numObj"),
+        solvableText: notApplicableString,
+      };
     },
     numberOne: (): 1 => 1,
     activeIsComplete: (): boolean => {

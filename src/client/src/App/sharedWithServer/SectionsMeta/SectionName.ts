@@ -19,7 +19,6 @@ export const sectionNames = [
   "cell",
   "conditionalRow",
   "singleTimeValue",
-  "singleTimeValueGroup",
   "singleTimeList",
   "singleTimeItem",
   "ongoingValueGroup",
@@ -62,6 +61,7 @@ export const sectionNames = [
   "capExList",
   "capExItem",
   "unit",
+  "miscIncomeValue", // lump sum or itemize
 
   "financing",
   "loan",

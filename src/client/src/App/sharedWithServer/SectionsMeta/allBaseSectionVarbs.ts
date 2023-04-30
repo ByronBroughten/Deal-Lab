@@ -91,9 +91,6 @@ export function makeAllBaseSectionVarbs() {
       // then
       then: baseVarb("numObj"),
     }),
-    singleTimeValueGroup: varbs({
-      total: baseVarb("numObj", dollars),
-    }),
     sellingCostValue: varbs({
       valueSourceName: baseVarb("sellingCostSource"),
       valueDollars: baseVarb("numObj", dollars),
@@ -193,7 +190,6 @@ export function makeAllBaseSectionVarbs() {
           "purchasePrice",
           "rehabCost",
           "upfrontExpenses",
-          "upfrontRevenue",
           "afterRepairValue",
           "sellingCosts",
         ] as const,
@@ -210,6 +206,8 @@ export function makeAllBaseSectionVarbs() {
       ...baseVarbsS.ongoingDollars("revenue"),
       ...baseVarbsS.monthsYearsInput("holdingPeriod"),
       ...baseVarbsS.ongoingDollars("holdingCost"),
+      ...baseVarbsS.ongoingDollars("customCosts"),
+      customUpfrontCosts: baseVarb("numObj", dollars),
       holdingCostTotal: baseVarb("numObj", dollars),
       useCustomOngoingCosts: baseVarb("boolean"),
       useCustomOneTimeCosts: baseVarb("boolean"),
@@ -288,7 +286,10 @@ export function makeAllBaseSectionVarbs() {
       ),
     } as const),
     loanBaseValue: varbs({
-      valueSourceName: baseVarb("loanBaseValueSourceNext"),
+      // Purchase downpayment
+      // Rehab downpayment
+
+      valueSourceName: baseVarb("loanBaseValueSource"),
       valueDollars: baseVarb("numObj", dollars),
       valueDollarsEditor: baseVarb("numObj", dollars),
     }),
@@ -300,13 +301,14 @@ export function makeAllBaseSectionVarbs() {
 
     mgmt: varbs({
       ...baseVarbsS.savableSection,
+      ...baseVarbsS.ongoingDollars("basePayDollars"),
+      ...baseVarbsS.ongoingDollars("vacancyLossDollars"),
+      ...baseVarbsS.ongoingDollars("customCosts"),
+      customUpfrontCosts: baseVarb("numObj", dollars),
       useCustomCosts: baseVarb("boolean"),
       one: baseVarb("number"),
-      ...baseVarbsS.ongoingDollars("basePayDollars"),
       basePayPercent: baseVarb("numObj", percent),
-      ...baseVarbsS.ongoingDollars("vacancyLossDollars"),
       vacancyLossPercent: baseVarb("numObj", percent),
-      upfrontExpenses: baseVarb("numObj", dollars),
       ...baseVarbsS.ongoingDollars("expenses"),
     } as const),
     mgmtBasePayValue: varbs({
@@ -334,25 +336,16 @@ export function makeAllBaseSectionVarbs() {
       isComplete: baseVarb("boolean"),
       displayNameSource: baseVarb("dealDisplayNameSource"),
       ...baseVarbsS.ongoingDollars("expenses"),
-      ...baseVarbsS.ongoingDollars("revenue"),
       ...baseVarbsS.ongoingDollars("cashFlow"),
       ...baseVarbsS.ongoingDecimal("cocRoiDecimal"),
       ...baseVarbsS.ongoingPercent("cocRoi"),
-      ...baseVarbs(
-        "numObj",
-        [
-          "upfrontRevenue",
-          "upfrontExpenses",
-          "outOfPocketExpenses",
-          "totalInvestment",
-        ] as const,
-        dollars
-      ),
-      cashNeeded: baseVarb("numObj", dollars),
-      neededCashPlusLoanRepay: baseVarb("numObj", dollars),
+      totalInvestment: baseVarb("numObj", dollars),
+      preFinanceOneTimeExpenses: baseVarb("numObj", dollars),
+      cashExpensesPlusLoanRepay: baseVarb("numObj", dollars),
       totalProfit: baseVarb("numObj", dollars),
       roiDecimal: baseVarb("numObj", decimal),
       roiPercent: baseVarb("numObj", percent),
+      roiPercentPerMonth: baseVarb("numObj", percent),
       roiPercentAnnualized: baseVarb("numObj", percent),
     }),
     financing: varbs({
@@ -384,6 +377,7 @@ export function makeAllBaseSectionVarbs() {
         "numObj",
         [
           "two",
+          "twelve",
           "onePercentPrice",
           "twoPercentPrice",
           "fivePercentRentMonthly",

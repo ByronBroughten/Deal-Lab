@@ -7,7 +7,7 @@ import {
   makeExampleUserSingleTimeLists,
 } from "./makeDefaultFeUser/makeExampleUserOngoingLists";
 import { makeExampleUserVarbLists } from "./makeDefaultFeUser/makeExampleUserVarbLists";
-import { makeDefaultOutputList } from "./makeDefaultOutputList";
+import { makeDefaultOutputSection } from "./makeDefaultOutputSection";
 
 export type DbStoreSeed = {
   authId: string;
@@ -38,10 +38,9 @@ export function makeDefaultDbStoreArrs({
   const stripeInfoPrivate = dbStore.addAndGetChild("stripeInfoPrivate");
   stripeInfoPrivate.updateValues({ customerId: "" });
 
-  const outputSection = dbStore.addAndGetChild("outputSection");
-  outputSection.loadChild({
-    childName: "buyAndHoldOutputList",
-    sectionPack: makeDefaultOutputList(),
+  dbStore.loadChild({
+    childName: "outputSection",
+    sectionPack: makeDefaultOutputSection(),
   });
 
   dbStore.loadChildren({
@@ -58,11 +57,7 @@ export function makeDefaultDbStoreArrs({
   });
   dbStore.loadChildren({
     childName: "dealMain",
-    sectionPacks: [
-      makeExampleDeal("Example 1"),
-      makeExampleDeal("Example 2"),
-      makeExampleDeal("Example 3"),
-    ],
+    sectionPacks: [makeExampleDeal("Example Deal")],
   });
   dbStore.loadChildren({
     childName: "propertyMain",

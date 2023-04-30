@@ -18,7 +18,11 @@ import {
   StateValueOrAny,
   ValueNameOrAny,
 } from "../SectionsMeta/values/StateValue";
-import { NumberOrQ } from "../SectionsMeta/values/StateValue/NumObj";
+import {
+  notApplicableString,
+  NumberOrQ,
+  NumObjOutput,
+} from "../SectionsMeta/values/StateValue/NumObj";
 import { isObjValue } from "../SectionsMeta/values/valueMetas";
 import { ValueName } from "../SectionsMeta/values/ValueName";
 import { VarbMeta } from "../SectionsMeta/VarbMeta";
@@ -108,6 +112,28 @@ export class GetterVarb<
     if (typeof num === "number") {
       return this.meta.roundForDisplay(num);
     } else return num;
+  }
+  get numObjOutput(): NumObjOutput {
+    try {
+      let val = this.numberValue;
+      if (`${val}` === "NaN") {
+        throw new Error("no NaN allowed");
+      }
+      return val;
+    } catch (ex) {
+      if (ex instanceof NotANumberError) {
+        if (
+          this.hasValueType("numObj") &&
+          this.value("numObj").solvableText === notApplicableString
+        ) {
+          return "N/A";
+        } else {
+          return "?";
+        }
+      } else {
+        throw ex;
+      }
+    }
   }
   get numberOrQuestionMark(): NumberOrQ {
     try {

@@ -2,8 +2,8 @@ import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack"
 import { inEntityValueInfo } from "../SectionsMeta/values/StateValue/InEntityValue";
 import { PackBuilderSection } from "../StatePackers/PackBuilderSection";
 import { makeDefaultDealPack } from "./makeDefaultDeal";
-import { makeDefaultFeUserPack } from "./makeDefaultFeUser";
-import { defaultDealOutputInfos } from "./makeDefaultOutputList";
+import { makeDefaultFeUserPack } from "./makeDefaultFeStore";
+import { defaultCompareInfos } from "./makeDefaultOutputList";
 
 export function makeDefaultMain(): SectionPack<"main"> {
   const main = PackBuilderSection.initAsOmniChild("main");
@@ -23,7 +23,7 @@ export function makeDefaultMain(): SectionPack<"main"> {
   });
 
   const dealCompare = main.addAndGetChild("dealCompare");
-  defaultDealOutputInfos.forEach((outputInfo) => {
+  defaultCompareInfos.forEach((outputInfo) => {
     const compareValue = dealCompare.addAndGetChild("compareValue");
     compareValue.updateValues({
       valueEntityInfo: inEntityValueInfo(outputInfo),

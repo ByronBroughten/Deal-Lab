@@ -20,6 +20,12 @@ export function CustomExpenses({
     feId,
   });
   const useCustomCosts = section.valueNext("useCustomCosts");
+
+  const customVarbNameOngoing = section.activeSwitchTargetName(
+    "customCosts",
+    "ongoing"
+  ) as "customCostsMonthly" | "customCostsYearly";
+
   return (
     <Styled>
       <div>
@@ -37,15 +43,21 @@ export function CustomExpenses({
           <MainSectionInner className="CustomExpenses-expenses">
             <ValueGroupSingleTime
               {...{
-                className: "CustomExpenses-upfrontCostGroup",
-                feId: section.onlyChild("upfrontExpenseGroup").feId,
                 titleText: "Custom Upfront Costs",
+                className: "CustomExpenses-upfrontCostGroup",
+                sectionName,
+                feId,
+                valueChildName: "customUpfrontExpense",
+                totalVarbName: "customUpfrontCosts",
               }}
             />
             <ValueGroupOngoing
               {...{
-                feId: section.onlyChild("ongoingExpenseGroup").feId,
                 titleText: "Custom Ongoing Costs",
+                sectionName,
+                feId,
+                valueChildName: "customOngoingExpense",
+                totalVarbName: customVarbNameOngoing,
               }}
             />
           </MainSectionInner>

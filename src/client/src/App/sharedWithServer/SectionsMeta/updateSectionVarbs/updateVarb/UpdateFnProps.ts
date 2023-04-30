@@ -139,8 +139,11 @@ export type UpdateFnProp = PathInVarbInfo & {
   andSwitches: UpdateOverrideSwitch[];
 };
 export const updateFnPropS = {
-  local(varbName: VarbNameWide): UpdateFnProp {
-    return updateFnProp(relVarbInfoS.local(varbName));
+  local(
+    varbName: VarbNameWide,
+    andSwitches?: UpdateOverrideSwitch[]
+  ): UpdateFnProp {
+    return updateFnProp(relVarbInfoS.local(varbName), andSwitches);
   },
   localBaseName(baseName: string) {
     return updateFnProp(relVarbInfoS.local(baseName));
@@ -162,7 +165,7 @@ export const updateFnPropS = {
   },
   onlyChild(
     childName: ChildName,
-    varbName: string,
+    varbName: VarbNameWide,
     andSwitches?: UpdateOverrideSwitch[]
   ) {
     return updateFnProp(

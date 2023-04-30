@@ -45,9 +45,14 @@ export const fixedVarbOptionNames = Arr.extractOrder(varbPathNames, [
   "managementExpensesMonthly",
   "managementExpensesYearly",
 
+  "totalInvestment",
+
   "cocRoiMonthly",
   "cocRoiYearly",
-  "totalInvestment",
+
+  "totalProfit",
+  "roiPercent",
+  "roiPercentAnnualized",
 ] as const);
 
 export type ValueFixedVarbPathName = typeof fixedVarbOptionNames[number];

@@ -73,9 +73,12 @@ export function ActiveDealMain() {
           )}
         </View>
         <OutputSection
-          {...dealElementProps}
-          feId={feStore.onlyChildFeId("outputSection")}
-          disableOpenOutputs={completionStatus !== "allValid"}
+          {...{
+            ...dealElementProps,
+            feId: feStore.onlyChildFeId("outputSection"),
+            disableOpenOutputs: completionStatus !== "allValid",
+            dealMode,
+          }}
         />
       </BackgroundContainer>
     </BackBtnWrapper>

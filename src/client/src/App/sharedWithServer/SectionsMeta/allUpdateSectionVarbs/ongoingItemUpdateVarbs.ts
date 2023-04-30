@@ -47,13 +47,13 @@ export function capExItemUpdateVarbs(): UpdateSectionVarbs<"capExItem"> {
     ...updateVarbsS._typeUniformity,
     ...updateVarbsS.displayNameAndEditor,
     ...updateVarbsS.group("value", "ongoing", "monthly", {
-      yearly: updateBasicsS.equationLeftRight(
-        "simpleDivide",
+      yearly: updateBasicsS.equationLR(
+        "divide",
         updateFnPropS.local("costToReplace"),
         updateFnPropS.local("lifespanYears")
       ),
-      monthly: updateBasicsS.equationLeftRight(
-        "simpleDivide",
+      monthly: updateBasicsS.equationLR(
+        "divide",
         updateFnPropS.local("costToReplace"),
         updateFnPropS.local("lifespanMonths")
       ),

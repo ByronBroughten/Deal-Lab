@@ -30,7 +30,10 @@ export function numObj(
     solvableText,
   };
 }
+
+export const notApplicableString = "N/A";
 export type NumberOrQ = number | "?";
+export type NumObjOutput = NumberOrQ | typeof notApplicableString;
 export type EntitiesAndEditorText = StrictPick<NumObj, "mainText" | "entities">;
 
 const zNumObj = z.object({

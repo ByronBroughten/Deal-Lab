@@ -27,13 +27,13 @@ const solvableTextByArgs = {
     noNegative: ({ num }: { num: NumProp }) => `${num} < 0 ? 0 : ${num}`,
   },
   leftRight: {
-    simpleMultiply: ({ leftSide, rightSide }: LRSides) => {
+    multiply: ({ leftSide, rightSide }: LRSides) => {
       return `${leftSide} * ${rightSide}`;
     },
     simpleSubtract: ({ leftSide, rightSide }: LRSides) => {
       return `${leftSide} - ${rightSide}`;
     },
-    simpleDivide: ({ leftSide, rightSide }: LRSides) => {
+    divide: ({ leftSide, rightSide }: LRSides) => {
       return `${leftSide} / ${rightSide}`;
     },
     subtractFloorZero: ({ leftSide, rightSide }: LRSides) => {
@@ -75,6 +75,7 @@ const calculations = {
   one: ({}) => "1",
   two: ({}) => "2",
   six: ({}) => "6",
+  twelve: ({}) => "12",
   portionToDecimal: ({
     base,
     portionOfBase,

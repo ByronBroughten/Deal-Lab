@@ -25,6 +25,7 @@ const allVarbPathParams = {
   ...sectionVarbNameParams("financingFocal", "Financing", ["financingMode"]),
   ...sectionVarbNameParams("calculatedVarbsFocal", "Property", [
     "two",
+    "twelve",
     "onePercentPrice",
     "twoPercentPrice",
     "onePercentPricePlusSqft",
@@ -91,22 +92,15 @@ const allVarbPathParams = {
     "expensesYearly"
   ),
 
-  dealRevenueMonthly: fixedVarbPathParams(
-    "Deal",
-    "dealFocal",
+  propertyRevenueMonthly: fixedVarbPathParams(
+    "Property",
+    "propertyFocal",
     "revenueMonthly"
   ),
-  dealRevenueYearly: fixedVarbPathParams("Deal", "dealFocal", "revenueYearly"),
-
-  dealUpfrontExpenses: fixedVarbPathParams(
-    "Deal",
-    "dealFocal",
-    "upfrontExpenses"
-  ),
-  dealUpfrontRevenue: fixedVarbPathParams(
-    "Deal",
-    "dealFocal",
-    "upfrontRevenue"
+  propertyRevenueYearly: fixedVarbPathParams(
+    "Property",
+    "propertyFocal",
+    "revenueYearly"
   ),
   ...sectionVarbNameParams("dealFocal", "Deal", [
     "totalInvestment",
@@ -116,6 +110,13 @@ const allVarbPathParams = {
   userVarbValue: varbPathParams("numVarbItemMain", "value"),
   repairCostBase: fixedVarbPathParams("Property", "repairCostFocal", "value"),
   rehabCost: fixedVarbPathParams("Property", "propertyFocal", "rehabCost"),
+  roiPercent: fixedVarbPathParams("Deal", "dealFocal", "roiPercent"),
+  roiPercentAnnualized: fixedVarbPathParams(
+    "Deal",
+    "dealFocal",
+    "roiPercentAnnualized"
+  ),
+  totalProfit: fixedVarbPathParams("Deal", "dealFocal", "totalProfit"),
 };
 
 export const varbPathNames = Obj.keys(allVarbPathParams);

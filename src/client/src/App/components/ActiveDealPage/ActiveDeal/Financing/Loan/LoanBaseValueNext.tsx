@@ -35,7 +35,7 @@ export function LoanBaseValueNext({ feId }: { feId: string }) {
               ...feInfo,
               varbName: "valueSourceName",
             },
-            unionValueName: "loanBaseValueSourceNext",
+            unionValueName: "loanBaseValueSource",
             items: [
               ["purchaseLoanValue", "Property purchase"],
               ["repairLoanValue", "Upfront repairs"],

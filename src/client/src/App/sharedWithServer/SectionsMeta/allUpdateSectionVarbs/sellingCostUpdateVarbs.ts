@@ -23,13 +23,13 @@ export function sellingCostUpdateVarbs(): UpdateSectionVarbs<"sellingCostValue">
       updateOverrides: valueSourceOverrides("sellingCostSource", {
         valueDollarsEditor: basics.loadFromLocal("valueDollarsEditor"),
         itemize: basics.loadFromChild("singleTimeList", "total"),
-        valuePercentEditor: basics.equationLeftRight(
-          "simpleMultiply",
+        valuePercentEditor: basics.equationLR(
+          "multiply",
           fnProp.local("valueDecimal"),
           fnProp.varbPathName("afterRepairValue")
         ),
-        sixPercent: basics.equationLeftRight(
-          "simpleMultiply",
+        sixPercent: basics.equationLR(
+          "multiply",
           fnProp.local("valueDecimal"),
           fnProp.varbPathName("afterRepairValue")
         ),
@@ -38,13 +38,13 @@ export function sellingCostUpdateVarbs(): UpdateSectionVarbs<"sellingCostValue">
     valueDecimal: updateVarb("numObj", {
       ...basics.throw,
       updateOverrides: valueSourceOverrides("sellingCostSource", {
-        valueDollarsEditor: basics.equationLeftRight(
-          "simpleDivide",
+        valueDollarsEditor: basics.equationLR(
+          "divide",
           fnProp.local("valueDollarsEditor"),
           fnProp.varbPathName("afterRepairValue")
         ),
-        itemize: basics.equationLeftRight(
-          "simpleDivide",
+        itemize: basics.equationLR(
+          "divide",
           fnProp.local("valueDollarsEditor"),
           fnProp.varbPathName("afterRepairValue")
         ),

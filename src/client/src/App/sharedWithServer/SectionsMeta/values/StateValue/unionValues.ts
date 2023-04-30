@@ -11,18 +11,12 @@ const valueSources = {
     "amountPercentEditor",
     "amountDollarsEditor",
   ],
-  loanBaseValueSourceNext: [
+  loanBaseValueSource: [
     "purchaseLoanValue",
     "repairLoanValue",
     "arvLoanValue",
     "customAmountEditor",
     "priceAndRepairValues",
-  ],
-  loanBaseValueSource: [
-    "none",
-    "percentOfAssetEditor",
-    "dollarsEditor",
-    "eightyFivePercentAsset",
   ],
   downPaymentValueSource: [
     "none",
