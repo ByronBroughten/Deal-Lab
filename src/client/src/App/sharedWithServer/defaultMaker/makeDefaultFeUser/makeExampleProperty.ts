@@ -71,6 +71,7 @@ type NeededPropertyVarbs = CheckNeededPropertyVarbs<{
     property: CommonProperty & {
       afterRepairValue: NumObj;
       holdingPeriodMonths: NumObj;
+      numUnitsEditor: NumObj;
     };
 
     sellingCostValue: {
@@ -175,8 +176,10 @@ export function makeExampleProperty<DM extends StateValue<"dealMode">>(
   }
 
   if (props.dealMode === "fixAndFlip") {
-    const { afterRepairValue, holdingPeriodMonths } = props.property;
+    const { afterRepairValue, holdingPeriodMonths, numUnitsEditor } =
+      props.property;
     property.updateValues({
+      numUnitsEditor,
       afterRepairValue,
       holdingPeriodSpanEditor: holdingPeriodMonths,
       holdingPeriodSpanSwitch: "months",

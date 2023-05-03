@@ -105,7 +105,7 @@ export const propertyCompletionStatus = completionStatusVarb(
         nonNone: [propS.pathName("repairCostFocal", "valueSourceName")],
         validInputs: [
           ...propertySharedValidInputs,
-          propS.pathName("propertyFocal", "holdingPeriodMonths"),
+          propS.pathName("propertyFocal", "holdingPeriodSpanEditor"),
           propS.pathName("propertyFocal", "numUnitsEditor"),
         ],
       }),

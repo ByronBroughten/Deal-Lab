@@ -144,8 +144,12 @@ export class SolveValueVarb<
         isEmpty: boolean;
         isValid: boolean;
       }) => {
-        if (!isEmpty) allEmpty = false;
-        if (!isValid) allValid = false;
+        if (!isEmpty) {
+          allEmpty = false;
+        }
+        if (!isValid) {
+          allValid = false;
+        }
       };
 
       for (const updateProp of othersValid) {

@@ -1,10 +1,11 @@
 import { SectionPack } from "../../SectionsMeta/sectionChildrenDerived/SectionPack";
 import { numObj } from "../../SectionsMeta/values/StateValue/NumObj";
 import { numObjNext } from "../../SectionsMeta/values/StateValue/numObjNext";
+import { stringObj } from "../../SectionsMeta/values/StateValue/StringObj";
 import { PackBuilderSection } from "../../StatePackers/PackBuilderSection";
 import { timeS } from "../../utils/timeS";
 import { makeDefaultDealPack } from "../makeDefaultDeal";
-import { dealExampleLoan } from "./makeExampleLoan";
+import { makeExampleLoan } from "./makeExampleLoan";
 import { exampleDealMgmt } from "./makeExampleMgmt";
 import { makeExampleProperty } from "./makeExampleProperty";
 
@@ -24,13 +25,10 @@ export function makeExampleDeal(displayName: string) {
   fixAndFlip.loadSelf(exampleDealFixAndFlipProperty());
 
   const financing = deal.onlyChild("financing");
-  const loan = financing.onlyChild("loan");
-  loan.loadSelf(dealExampleLoan);
+  financing.updateValues({ financingMode: "useLoan" });
 
-  financing.updateValues({
-    financingMode: "useLoan",
-    displayName: loan.get.valueNext("displayName"),
-  });
+  const loan = financing.onlyChild("loan");
+  loan.loadSelf(exampleDealLoan());
 
   const mgmt = deal.onlyChild("mgmt");
   mgmt.loadSelf(exampleDealMgmt);
@@ -53,6 +51,28 @@ const examplePropertyCommon = {
   taxesYearly: numObj(2500),
   homeInsYearly: numObjNext("1000+(", ["numUnits"], "*200)"),
 } as const;
+
+function exampleDealLoan(): SectionPack<"loan"> {
+  return makeExampleLoan({
+    loan: {
+      displayName: stringObj("Conventional 20% Down"),
+      interestRatePercentOngoingEditor: numObj(6),
+      loanTermSpanEditor: numObj(30),
+      hasMortgageIns: false,
+      loanAmountInputMode: "loanAmount",
+    },
+    baseLoan: {
+      valueSourceName: "purchaseLoanValue",
+    },
+    purchaseLoanValue: {
+      offPercentEditor: numObj(20),
+    },
+    closingCosts: {
+      valueSourceName: "valueEditor",
+      valueDollarsEditor: numObj(6000),
+    },
+  });
+}
 
 function exampleDealBuyAndHoldProperty(): SectionPack<"property"> {
   return makeExampleProperty({
@@ -95,6 +115,7 @@ export function exampleDealFixAndFlipProperty(): SectionPack<"property"> {
     dealMode: "fixAndFlip",
     property: {
       ...examplePropertyCommon,
+      numUnitsEditor: numObj(2),
       afterRepairValue: numObj(320000),
       holdingPeriodMonths: numObj(4),
     },

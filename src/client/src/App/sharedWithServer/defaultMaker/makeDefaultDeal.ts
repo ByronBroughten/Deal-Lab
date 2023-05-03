@@ -60,7 +60,6 @@ export function makeDefaultDealPack(
       });
     }
   });
-
   const financing = deal.addAndGetChild("financing");
   financing.loadChild({
     childName: "loan",

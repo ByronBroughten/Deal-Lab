@@ -2,8 +2,7 @@ import {
   SectionValues,
   StateValue,
 } from "../../SectionsMeta/values/StateValue";
-import { NumObj, numObj } from "../../SectionsMeta/values/StateValue/NumObj";
-import { stringObj } from "../../SectionsMeta/values/StateValue/StringObj";
+import { NumObj } from "../../SectionsMeta/values/StateValue/NumObj";
 import { PackBuilderSection } from "../../StatePackers/PackBuilderSection";
 import { StrictPick } from "../../utils/types";
 import { makeDefaultLoanPack } from "../makeDefaultLoanPack";
@@ -19,7 +18,7 @@ type ExampleLoanProps = {
   >;
   purchaseLoanValue?: StrictPick<
     SectionValues<"purchaseLoanValue">,
-    "amountPercentEditor"
+    "offPercentEditor"
   >;
   baseLoan?: Partial<
     StrictPick<
@@ -37,7 +36,7 @@ type ExampleLoanProps = {
   };
 };
 
-function makeExampleLoan(props: ExampleLoanProps) {
+export function makeExampleLoan(props: ExampleLoanProps) {
   const loan = PackBuilderSection.initAsOmniChild("loan");
   loan.loadSelf(makeDefaultLoanPack());
   loan.updateValues({
@@ -46,12 +45,15 @@ function makeExampleLoan(props: ExampleLoanProps) {
     loanTermSpanSwitch: "years",
   });
   const loanBaseValue = loan.onlyChild("loanBaseValue");
-  loanBaseValue.updateValues({ ...props.baseLoan });
+  loanBaseValue.updateValues({
+    valueSourceName: "purchaseLoanValue",
+    ...props.baseLoan,
+  });
 
   const purchaseValue = loanBaseValue.onlyChild("purchaseLoanValue");
   purchaseValue.updateValues({
     ...props.purchaseLoanValue,
-    valueSourceName: "amountPercentEditor",
+    valueSourceName: "offPercentEditor",
   });
 
   const closingCostValue = loan.onlyChild("closingCostValue");
@@ -68,23 +70,3 @@ function makeExampleLoan(props: ExampleLoanProps) {
   }
   return loan.makeSectionPack();
 }
-
-export const dealExampleLoan = makeExampleLoan({
-  loan: {
-    displayName: stringObj("Conventional 20% Down"),
-    interestRatePercentOngoingEditor: numObj(6),
-    loanTermSpanEditor: numObj(30),
-    hasMortgageIns: false,
-    loanAmountInputMode: "loanAmount",
-  },
-  baseLoan: {
-    valueSourceName: "purchaseLoanValue",
-  },
-  purchaseLoanValue: {
-    amountPercentEditor: numObj(80),
-  },
-  closingCosts: {
-    valueSourceName: "valueEditor",
-    valueDollarsEditor: numObj(6000),
-  },
-});
