@@ -40,10 +40,10 @@ export function propertyNameByDealMode<DM extends StateValue<"dealMode">>(
   return dealModeToPropertyName[dealMode];
 }
 
-export function makeDefaultDealPack(): SectionPack<"deal"> {
+export function makeDefaultDealPack(
+  dealMode: StateValue<"dealMode"> = "buyAndHold"
+): SectionPack<"deal"> {
   const deal = PackBuilderSection.initAsOmniChild("deal");
-
-  const dealMode = "buyAndHold";
   deal.updateValues({
     dealMode,
     displayNameSource: "defaultDisplayName",

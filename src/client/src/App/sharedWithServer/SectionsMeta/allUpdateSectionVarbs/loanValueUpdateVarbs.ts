@@ -5,7 +5,7 @@ import {
   updateFnProp,
   updateFnPropS,
 } from "../updateSectionVarbs/updateVarb/UpdateFnProps";
-import { valueSourceOverrides } from "../updateSectionVarbs/updateVarb/UpdateOverrides";
+import { valueSourceOverrides } from "../updateSectionVarbs/updateVarb/updateVarbUtils";
 
 export function loanValueUpdateVarbs(percentOfWhatInfo: PathInVarbInfo) {
   return {

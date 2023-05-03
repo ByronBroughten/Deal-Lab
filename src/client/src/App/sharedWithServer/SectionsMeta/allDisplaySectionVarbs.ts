@@ -46,13 +46,20 @@ export const allDisplaySectionVarbs = {
     afterRepairValue: varb("After repair value"),
     sellingCosts: varb("Selling costs"),
     sqft: varb("Square feet"),
-    rehabCost: varb("Rehab costs"),
+    rehabCost: varb("Rehab cost"),
     numUnits: varb("Unit count"),
+    ...editorDisplayGroup(
+      "monthsYearsInput",
+      "holdingPeriod",
+      "Holding period",
+      {
+        months: { displayNameWithVariant: "Holding period months" },
+        years: { displayNameWithVariant: "Holding period years" },
+      }
+    ),
+    numUnitsEditor: varb("Unit count"),
     numBedrooms: varb("Bedrooms"),
     upfrontExpenses: varb("Upfront expenses"),
-    ...displaySectionVarbsProp("repairValue", {
-      value: varb("Repair cost base"),
-    }),
     ...editorDisplayGroup("ongoingInput", "taxes", "Taxes", {
       monthly: { displayNameWithVariant: "Taxes monthly" },
       yearly: { displayNameWithVariant: "Taxes yearly" },
@@ -69,6 +76,9 @@ export const allDisplaySectionVarbs = {
     ...ongoingDollars("miscRevenue", "Misc revenue"),
     ...ongoingDollars("revenue", "Revenue"),
   }),
+  ...displaySectionVarbsProp("repairValue", {
+    value: varb("Repair cost base"),
+  }),
   ...displaySectionVarbsProp("unit", {
     numBedrooms: varb("Bedrooms"),
     ...ongoingInputDollars("targetRent", "Rent"),
@@ -78,7 +88,16 @@ export const allDisplaySectionVarbs = {
       monthly: { displayNameWithVariant: "Monthly loan payments" },
       yearly: { displayNameWithVariant: "Yearly loan payments" },
     }),
-    downPaymentDollars: varb("Down payment"),
+    downPaymentDollars: varb("Down payment", {
+      displayNameWithVariant: "Down payment amount",
+    }),
+    downPaymentPercent: varb("Down payment", {
+      displayNameWithVariant: "Down payment percent",
+    }),
+    ...group("ongoing", "piti", "PITI", {
+      monthly: { displayNameWithVariant: "PITI monthly" },
+      yearly: { displayNameWithVariant: "PITI yearly" },
+    }),
     ...group("ongoing", "loanExpenses", "Ongoing expenses", {
       monthly: { displayNameWithSection: "Ongoing loan expenses" },
       yearly: { displayNameWithSection: "Ongoing loan expenses" },

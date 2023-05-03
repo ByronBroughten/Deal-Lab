@@ -49,7 +49,10 @@ function makeExampleLoan(props: ExampleLoanProps) {
   loanBaseValue.updateValues({ ...props.baseLoan });
 
   const purchaseValue = loanBaseValue.onlyChild("purchaseLoanValue");
-  purchaseValue.updateValues({ ...props.purchaseLoanValue });
+  purchaseValue.updateValues({
+    ...props.purchaseLoanValue,
+    valueSourceName: "amountPercentEditor",
+  });
 
   const closingCostValue = loan.onlyChild("closingCostValue");
   const { items = [], ...costProps } = props.closingCosts;

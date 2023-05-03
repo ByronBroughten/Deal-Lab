@@ -6,10 +6,10 @@ import {
   updateFnPropS,
   updateFnPropsS,
 } from "../updateSectionVarbs/updateVarb/UpdateFnProps";
+import { unionSwitchOverride } from "../updateSectionVarbs/updateVarb/updateVarbUtils";
 import { updateVarbsS } from "../updateSectionVarbs/updateVarbs";
 import {
   overrideSwitchS,
-  unionSwitchOverride,
   updateOverride,
 } from "./../updateSectionVarbs/updateVarb/UpdateOverrides";
 
@@ -24,7 +24,10 @@ export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
     propertyMode: updateVarb("dealMode", {
       initValue: "buyAndHold",
     }),
-    address: updateVarb("string"),
+    streetAddress: updateVarb("string"),
+    city: updateVarb("string"),
+    state: updateVarb("string"),
+    zipCode: updateVarb("string"),
     one: updateVarbS.one(),
     purchasePrice: updateVarb("numObj"),
     sqft: updateVarb("numObj"),
@@ -36,7 +39,18 @@ export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
       "numObj",
       basicsS.loadFromChild("sellingCostValue", "valueDollars")
     ),
-    numUnits: updateVarbS.sumChildNums("unit", "one"),
+    numUnitsEditor: updateVarb("numObj"),
+    numUnits: updateVarb("numObj", {
+      updateFnName: "throwIfReached",
+      updateOverrides: unionSwitchOverride(
+        "dealMode",
+        relVarbInfoS.local("propertyMode"),
+        {
+          buyAndHold: basicsS.sumChildren("unit", "one"),
+          fixAndFlip: basicsS.loadFromLocal("numUnitsEditor"),
+        }
+      ),
+    }),
     numBedrooms: updateVarbS.sumChildNums("unit", "numBedrooms"),
     useCustomCosts: updateVarb("boolean", { initValue: false }),
     useCustomOngoingCosts: updateVarb("boolean", { initValue: false }),

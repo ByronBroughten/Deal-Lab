@@ -80,7 +80,7 @@ const allVarbPathParams = {
     "propertyFocal",
     "expensesYearly"
   ),
-
+  dealMode: fixedVarbPathParams("Deal", "dealFocal", "dealMode"),
   dealExpensesMonthly: fixedVarbPathParams(
     "Deal",
     "dealFocal",

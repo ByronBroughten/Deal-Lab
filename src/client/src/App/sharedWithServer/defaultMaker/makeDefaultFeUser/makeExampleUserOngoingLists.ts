@@ -15,10 +15,6 @@ export function makeExampleUserOngoingLists(): SectionPack<"ongoingList">[] {
     childName: "ongoingListMain",
     sectionPack: makeUtilityList(exampleUserUtilityProps, "exampleUtil1"),
   });
-  // feStore.loadChild({
-  //   childName: "ongoingListMain",
-  //   sectionPack: makeCapExList(exampleUserCapExProps, "exampleCapX1"),
-  // });
   return feStore.makeChildPackArr("ongoingListMain");
 }
 

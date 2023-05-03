@@ -44,6 +44,7 @@ const valueSources = {
   utilityValueSource: ["none", "zero", "listTotal", "twentyPercentRent"],
   repairValueSource: ["none", "zero", "valueEditor", "listTotal"],
   overrunValueSource: ["valuePercentEditor", "valueDollarsEditor"],
+  dollarsOrList: ["dollarsEditor", "listTotal"],
   sellingCostSource: [
     "sixPercent",
     "valuePercentEditor",

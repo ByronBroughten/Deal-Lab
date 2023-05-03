@@ -47,6 +47,9 @@ export function updateBasics<VN extends ValueName>(
 }
 
 export const updateBasicsS = {
+  get calcVarbs() {
+    return updateBasicsNext("calcVarbs");
+  },
   get zero() {
     return updateBasicsNext("solvableTextZero");
   },

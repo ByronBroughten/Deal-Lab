@@ -1,19 +1,25 @@
-import { Box, SxProps, Typography } from "@mui/material";
+import { Box, SxProps } from "@mui/material";
 import { nativeTheme } from "../../theme/nativeTheme";
+import { arrSx } from "../../utils/mui";
 
-type Props = { className?: string; sx?: SxProps; text: React.ReactNode };
-export function SectionTitle({ className, sx, text }: Props) {
+export type SectionTitleProps = {
+  className?: string;
+  sx?: SxProps;
+  text: React.ReactNode;
+};
+export function SectionTitle({ className, sx, text }: SectionTitleProps) {
   return (
-    <Box className={className} sx={sx}>
-      <Typography
-        {...{
+    <Box
+      className={className}
+      sx={[
+        {
           fontSize: nativeTheme.fs20,
           color: nativeTheme.primary.main,
-          // fontFamily: "Source Sans Pro",
-        }}
-      >
-        {text}
-      </Typography>
+        },
+        ...arrSx(sx),
+      ]}
+    >
+      {text}
     </Box>
   );
 }

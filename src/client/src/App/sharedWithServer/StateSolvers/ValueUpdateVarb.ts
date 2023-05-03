@@ -5,10 +5,10 @@ import { RelVarbInfo } from "../SectionsMeta/SectionInfo/RelVarbInfo";
 import { DbVarbInfoMixed } from "../SectionsMeta/SectionInfo/VarbInfoBase";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import {
-  CompletionStatusProps,
   UpdateFnProp,
   UpdateFnProps,
 } from "../SectionsMeta/updateSectionVarbs/updateVarb/UpdateFnProps";
+import { CompletionStatusProps } from "../SectionsMeta/updateSectionVarbs/updateVarb/updateVarbUtils";
 import { StateValue } from "../SectionsMeta/values/StateValue";
 import { InEntityValueInfo } from "../SectionsMeta/values/StateValue/InEntityValue";
 import {

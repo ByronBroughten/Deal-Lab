@@ -223,11 +223,12 @@ function switchEndingToUpdateProp<
         switchKey
       ) as any as VarbPathName,
     };
-  } else
+  } else {
     return {
       ...info,
       varbName: getSwitchVarbName(info.varbName, switchName, switchKey) as any,
-    };
+    } as any;
+  }
 }
 
 function updatePropsPlusGroupEnding<

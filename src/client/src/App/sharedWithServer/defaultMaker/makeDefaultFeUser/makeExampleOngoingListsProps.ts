@@ -1,4 +1,4 @@
-import { numObj } from "../../SectionsMeta/values/StateValue/NumObj";
+import { NumObj, numObj } from "../../SectionsMeta/values/StateValue/NumObj";
 import { numObjNext } from "../../SectionsMeta/values/StateValue/numObjNext";
 
 const userVarbCapExNames = {
@@ -55,7 +55,11 @@ export const defaultPropertyCapExListProps = [
   [names.landscaping, numObj(), numObj()],
 ] as const;
 
-export const examplePropertyCapExListProps = [
+export const examplePropertyCapExListProps: [
+  string,
+  number | NumObj,
+  number | NumObj
+][] = [
   [...spans.roof, numObj(8000)],
   [...spans.waterHeater, numObjNext("1200*", ["numUnits"])],
   [...spans.hvac, numObjNext("3500*", ["numUnits"])],
@@ -68,32 +72,36 @@ export const examplePropertyCapExListProps = [
   [...spans.structure, numObjNext(10000)],
   [...spans.cabinetsCounters, numObjNext("4000*", ["numUnits"])],
   [...spans.landscaping, numObjNext(1000)],
-] as const;
+];
 
-export const exampleUserCapExProps = [
+export const exampleUserCapExProps: [
+  string,
+  number | NumObj,
+  number | NumObj
+][] = [
   ...examplePropertyCapExListProps,
   [...userVarbLifespans.laundry, numObjNext(1200)],
   [...userVarbLifespans.driveway, numObjNext(5000)],
   [...userVarbLifespans.garageDoor, numObjNext(1000)],
-] as const;
+];
 
-export const examplePropertyUtilityProps = [
+export const examplePropertyUtilityProps: [string, number | NumObj][] = [
   ["Water", numObjNext("60*", ["numUnits"])],
   ["Garbage", numObjNext("40*", ["numUnits"])],
   ["LawnCare", numObjNext(20)],
-] as const;
+];
 
-export const blankPropertyUtilityProps = [
+export const blankPropertyUtilityProps: [string, number | NumObj][] = [
   ["Water", numObj("")],
   ["Garbage", numObj("")],
   ["Heat", numObj("")],
   ["Electricity", numObj("")],
-] as const;
+];
 
-export const exampleUserUtilityProps = [
+export const exampleUserUtilityProps: [string, number | NumObj][] = [
   ...examplePropertyUtilityProps,
   ["Energy", numObjNext("120*", ["numUnits"])],
-] as const;
+];
 
 export const priceSqftMiscRepairHybrid = numObjNext(
   "(",
@@ -103,15 +111,15 @@ export const priceSqftMiscRepairHybrid = numObjNext(
   ")/2"
 );
 
-export const userRepairVarbProps = [
+export const userRepairVarbProps: [string, number | NumObj][] = [
   ["Inspection", 500],
   ["Change locks", 120],
   ["Entryway mats", 100],
   ["Radon test", 200],
-] as const;
+];
 
-export const examplePropetyRepairProps = [
+export const examplePropertyRepairProps: [string, number | NumObj][] = [
   ...userRepairVarbProps,
   ["Replace toilet", 200],
   ["Pest control", 200],
-] as const;
+];

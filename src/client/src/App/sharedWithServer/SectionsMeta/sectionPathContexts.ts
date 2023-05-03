@@ -17,6 +17,7 @@ function makeDealFocals(dealPath: ChildName[]) {
   const propertyPath: ChildName[] = [...dealPath, "property"];
   const financingPath: ChildName[] = [...dealPath, "financing"];
   const loanPath: ChildName[] = [...financingPath, "loan"];
+  const loanBasePath: ChildName[] = [...loanPath, "loanBaseValue"];
   const mgmtPath: ChildName[] = [...dealPath, "mgmt"];
   return {
     get dealFocal() {
@@ -40,20 +41,40 @@ function makeDealFocals(dealPath: ChildName[]) {
     get maintenanceCostFocal() {
       return abs("maintenanceValue", [...propertyPath, "maintenanceValue"]);
     },
+    get costOverrunFocal() {
+      return abs("costOverrunValue", [...propertyPath, "costOverrunValue"]);
+    },
+    get sellingCostFocal() {
+      return abs("sellingCostValue", [...propertyPath, "sellingCostValue"]);
+    },
+    get miscHoldingCostFocal() {
+      return abs("miscHoldingCost", [...propertyPath, "miscHoldingCost"]);
+    },
+    get miscIncomeFocal() {
+      return abs("miscIncomeValue", [...propertyPath, "miscIncomeValue"]);
+    },
+
     get financingFocal() {
       return abs("financing", financingPath);
     },
     get loanFocal() {
-      return abs("loan", [...financingPath, "loan"]);
+      return abs("loan", loanPath);
     },
     get loanBaseFocal() {
-      return abs("loanBaseValue", [...loanPath, "loanBaseValue"]);
+      return abs("loanBaseValue", loanBasePath);
     },
+    get purchaseLoanFocal() {
+      return abs("purchaseLoanValue", [...loanBasePath, "purchaseLoanValue"]);
+    },
+    get repairLoanFocal() {
+      return abs("repairLoanValue", [...loanBasePath, "repairLoanValue"]);
+    },
+    get arvLoanFocal() {
+      return abs("arvLoanValue", [...loanBasePath, "arvLoanValue"]);
+    },
+
     get closingCostFocal() {
-      return abs("closingCostValue", [
-        ...this.loanFocal.path,
-        "closingCostValue",
-      ]);
+      return abs("closingCostValue", [...loanPath, "closingCostValue"]);
     },
     get mgmtFocal() {
       return abs("mgmt", [...dealPath, "mgmt"]);

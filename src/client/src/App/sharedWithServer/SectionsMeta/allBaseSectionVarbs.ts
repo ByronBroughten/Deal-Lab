@@ -183,7 +183,10 @@ export function makeAllBaseSectionVarbs() {
     property: varbs({
       ...baseVarbsS.savableSection,
       propertyMode: baseVarb("dealMode"),
-      address: baseVarb("string"),
+      streetAddress: baseVarb("string"),
+      city: baseVarb("string"),
+      state: baseVarb("string"),
+      zipCode: baseVarb("string"),
       ...baseVarbs(
         "numObj",
         [
@@ -197,6 +200,7 @@ export function makeAllBaseSectionVarbs() {
       ),
       one: baseVarb("number"),
       numUnits: baseVarb("numObj"),
+      numUnitsEditor: baseVarb("numObj"),
       ...baseVarbs("numObj", ["sqft", "numBedrooms"] as const),
       ...baseVarbsS.ongoingDollarsInput("taxes"),
       ...baseVarbsS.ongoingDollarsInput("homeIns"),
@@ -217,6 +221,14 @@ export function makeAllBaseSectionVarbs() {
       one: baseVarb("number"),
       numBedrooms: baseVarb("numObj"),
       ...baseVarbsS.ongoingDollarsInput("targetRent"),
+    }),
+    miscIncomeValue: varbs({
+      valueSourceName: baseVarb("dollarsOrList"),
+      ...baseVarbsS.ongoingDollarsInput("valueDollars"),
+    }),
+    miscHoldingCost: varbs({
+      valueSourceName: baseVarb("dollarsOrList"),
+      ...baseVarbsS.ongoingDollarsInput("valueDollars"),
     }),
     costOverrunValue: varbs({
       valueDollars: baseVarb("numObj", dollars),
@@ -396,10 +408,16 @@ export function makeAllBaseSectionVarbs() {
         "financingExists",
         "mgmtExists",
       ] as const),
-      propertyCompletionStatus: baseVarb("completionStatus"),
-      financingCompletionStatus: baseVarb("completionStatus"),
-      mgmtCompletionStatus: baseVarb("completionStatus"),
-      dealCompletionStatus: baseVarb("completionStatus"),
+      ...baseVarbs("completionStatus", [
+        "propertyCompletionStatus",
+        "financingCompletionStatus",
+        "mgmtCompletionStatus",
+        "dealCompletionStatus",
+        "purchaseLoanCompletionStatus",
+        "repairLoanCompletionStatus",
+        "arvLoanCompletionStatus",
+        "baseLoanCompletionStatus",
+      ] as const),
     }),
     feStore: varbs({
       changesToSave: baseVarb("changesToSave"),

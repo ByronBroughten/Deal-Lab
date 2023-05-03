@@ -139,7 +139,6 @@ export const allSectionChildren = checkAllSectionChildren({
     arvLoanValue: "arvLoanValue",
   }),
   closingCostValue: { singleTimeList: sectionChild("singleTimeList") },
-  propertyGeneral: { property: sectionChild("property") },
   property: sectionChildren({
     unit: "unit",
     repairValue: "repairValue",
@@ -148,12 +147,20 @@ export const allSectionChildren = checkAllSectionChildren({
     utilityValue: "utilityValue",
     maintenanceValue: "maintenanceValue",
     capExValue: "capExValue",
+    miscHoldingCost: "miscHoldingCost",
+    miscIncomeValue: "miscIncomeValue",
 
     customUpfrontExpense: "singleTimeValue",
     customOngoingExpense: "ongoingValue",
 
     ongoingRevenueGroup: "ongoingValueGroup",
     customVarb: "customVarb",
+  }),
+  miscIncomeValue: sectionChildren({
+    ongoingList: "ongoingList",
+  }),
+  miscHoldingCost: sectionChildren({
+    ongoingList: "ongoingList",
   }),
   sellingCostValue: sectionChildren({
     singleTimeList: "singleTimeList",

@@ -2,11 +2,11 @@ import { View } from "react-native";
 import { BackBtnWrapper } from "../appWide/BackBtnWrapper";
 import { BackgroundContainer } from "../appWide/BackgroundContainter";
 import { MuiSelect } from "../appWide/MuiSelect";
+import { SectionTitleMain } from "../appWide/SectionTitleMain";
 import { BigStringEditor } from "../inputs/BigStringEditor";
 import { validateStateValue } from "./../../sharedWithServer/SectionsMeta/values/valueMetas";
 import { useAction } from "./../../sharedWithServer/stateClassHooks/useAction";
 import { nativeTheme } from "./../../theme/nativeTheme";
-import { SectionTitle } from "./../appWide/SectionTitle";
 import { Row } from "./../general/Row";
 import { OutputSection } from "./ActiveDeal/DealOutputs/OutputSection";
 import { DealSubSectionClosed } from "./ActiveDeal/DealSubSectionClosed";
@@ -26,10 +26,7 @@ export function ActiveDealMain() {
   return (
     <BackBtnWrapper {...{ to: "account", label: "Deal Menu" }}>
       <BackgroundContainer>
-        <SectionTitle
-          sx={{ fontSize: nativeTheme.fs24, marginTop: nativeTheme.s35 }}
-          text="Deal"
-        />
+        <SectionTitleMain sx={{ marginTop: nativeTheme.s35 }} text="Deal" />
         <Row
           style={{
             alignItems: "flex-end",

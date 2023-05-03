@@ -6,34 +6,48 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
+// What are the things I want to do before I show to more people?
+// - factor the parameters into propertyCompletionStatus based
+//   on dealMode
+// - label all visible variables
 
-// - No Mgmt necessary for buyAndHold
-// - Add "N/A" value for numObj
-// - Add lots of dealMode-based override switches
+// It tries to save and update sections when you reload
+// the page and you're not logged in.
+// Why does it do that?
+
+// - The unitCount editor really ought to be in a separate
+//   "additional info" section, or something
+// - Get the example fix & flip numbers to work
+
+// See if Emily will look at it
+
+// - Try condensing buyAndHold's inputs, like with f&f
+// - Add primaryResidence mode (no income)
+
+// See if Marina and Katie will look at it
+
+// - Add miscUpfrontCosts for f&f and b&h(?)
+
+// - Add misc revenue value for b&h (this is how you
+//   eliminate ongoingRevenueGroup)
+// - Add miscHoldingCost value for f&f
+// - Add different variable options based on dealMode
+// - Add a dealMode dropdown for CompareDeals
+//   - Mixed will have (totalInvestment, annualizedRoi, and CoCROI)
+
 // - Add tests for fixAndFlip
 
-// - Try jamming Brrrr in the picture?
+// - Add Brrrr
 
-// Add the outputs for Fix and Flip
-//   "totalInvestment" (change to cash needed?),
-//   "totalProfit",
-//   "roi",
-//   "roiAnnualized", - (make CocRoi update in the same way)
-
-// - Total Profit
-//   - ARV minus (totalInvestment + loanRepayment)
-// - (Post Tax Profit?)
-
-// - ROI
-//   - totalProfit / cashNeeded
-
-// - Annualized ROI (technically comparable to CoC ROI)
-//   - (12 * ROI)/holdingPeriodMonths
+// Launch
+// - restrict editing to only the n most recent deals
+// - Make output lists customizable
+// - Add passFail outputs
+// - Add customVariables to property
+// - Add public housing data api
 
 // 70% Rule
 // - Implement dealMode outputs lists
-
-// One of the easier ways to get started, the way I did, is to buy a duplex with a loan that had a relatively low down payment. An FHA loan could work—that goes as low as 3.5% down. In Saint Paul, you could probably find a decent duplex for $250,000. That would be an $8750 down payment. You'd need to save somewhat more than that, though, to cover some closing costs and meet bank requirements for having extra funds on hand. So you'd need to save maybe like $15,000-$18,000.
 
 // See if Emily will look at Fix and Flip—have her weigh in
 // on if I should copy that style for Buy and Hold
@@ -62,38 +76,6 @@ AppRegistry.runApplication("App", {
 
 // How many completionStatuses would there be? Maybe just one,
 // with overrides
-
-// Ok. Here's what I'd like to be possible:
-// - Deal has one property for each property type
-//   This substantially increases the size of each deal
-//   That might be fine, though.
-
-// - Maybe when the deal saves, it first removes its extra children
-// - This could work if I implement sectionPack loading that builds
-//   off of the default section, which is necessary for updating the system
-
-// - To be able to load from any property, it would be
-//   easiest to use only one type of section for property
-
-// - "Tenant pays utilities" shouldn't really be an option
-//   for f&f, though. That would only require a tiny adjustment.
-//   And I would have to make an adjustment, anyways—by switching
-//   the property to the correct type.
-
-// - The last worry I have is that the type of property might accidentally
-//   get changed, or a property of the wrong type might get in
-//   the wrong spot, if it's just a variable and not its own section type.
-//   I want something in between variables and sectionTypes.
-
-// - I'm just going to use a variable for it
-
-// Maybe it's best to have "F&F" properties that are separate.
-// I think that's the way to go.
-// Still, it would be nice to have a way to borrow from B&H properties,
-// Or at least the curretn b&h property
-
-// Selling Costs
-// - New value?
 
 // Add Closing Costs - Custom Percent of base loan
 
@@ -419,3 +401,5 @@ AppRegistry.runApplication("App", {
 //   - Share variables, lists, properties, etc
 //   - Forum, or a reddit thread or discord
 //     This would be too much I think
+
+// One of the easier ways to get started, the way I did, is to buy a duplex with a loan that had a relatively low down payment. An FHA loan could work—that goes as low as 3.5% down. In Saint Paul, you could probably find a decent duplex for $250,000. That would be an $8750 down payment. You'd need to save somewhat more than that, though, to cover some closing costs and meet bank requirements for having extra funds on hand. So you'd need to save maybe like $15,000-$18,000.

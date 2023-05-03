@@ -7,11 +7,8 @@ import {
 import { stringObj } from "../../SectionsMeta/values/StateValue/StringObj";
 import { PackBuilderSection } from "../../StatePackers/PackBuilderSection";
 
-type UtilityItemProp = readonly [string, NumObj];
-export function makeUtilityList(
-  itemPropArr: readonly UtilityItemProp[],
-  dbId?: string
-) {
+type UtilityItemProp = [string, number | NumObj];
+export function makeUtilityList(itemPropArr: UtilityItemProp[], dbId?: string) {
   const feStore = PackBuilderSection.initAsOmniChild("feStore");
 
   const valueSource = "valueEditor";
@@ -30,7 +27,7 @@ export function makeUtilityList(
         displayNameEditor: itemProps[0],
         valueOngoingSwitch: "monthly",
         valueSourceName: valueSource,
-        valueOngoingEditor: itemProps[1],
+        valueOngoingEditor: numToObj(itemProps[1]),
       },
     });
   }

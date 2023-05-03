@@ -1,43 +1,16 @@
-import { relVarbInfoS } from "../SectionInfo/RelVarbInfo";
 import { UpdateSectionVarbs } from "../updateSectionVarbs/updateSectionVarbs";
+import { updateVarb, updateVarbS } from "../updateSectionVarbs/updateVarb";
 import {
-  UpdateVarb,
-  updateVarb,
-  updateVarbS,
-} from "../updateSectionVarbs/updateVarb";
-import {
-  UpdateBasics,
   updateBasics,
   updateBasicsS,
 } from "../updateSectionVarbs/updateVarb/UpdateBasics";
 import { updateFnPropS } from "../updateSectionVarbs/updateVarb/UpdateFnProps";
 import {
   overrideSwitchS,
-  unionSwitchOverride,
   updateOverride,
-  UpdateOverrides,
 } from "../updateSectionVarbs/updateVarb/UpdateOverrides";
+import { dealModeVarb } from "../updateSectionVarbs/updateVarb/updateVarbUtils";
 import { updateVarbsS } from "../updateSectionVarbs/updateVarbs";
-import { StateValue } from "../values/StateValue";
-
-function dealModeOverride(
-  overrideMap: Record<StateValue<"dealMode">, UpdateBasics>
-): UpdateOverrides {
-  return unionSwitchOverride(
-    "dealMode",
-    relVarbInfoS.local("dealMode"),
-    overrideMap
-  );
-}
-
-function dealModeVarb(
-  overrideMap: Record<StateValue<"dealMode">, UpdateBasics>
-): UpdateVarb<"numObj"> {
-  return updateVarb("numObj", {
-    updateFnName: "throwIfReached",
-    updateOverrides: dealModeOverride(overrideMap),
-  });
-}
 
 const notApplicable = () => updateBasics("notApplicable");
 const propS = updateFnPropS;

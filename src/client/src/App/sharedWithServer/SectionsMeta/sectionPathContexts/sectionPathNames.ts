@@ -18,9 +18,17 @@ const sectionPathNameToSn = checkPathTypeToSectionName({
   maintenanceCostFocal: "maintenanceValue",
   capExCostFocal: "capExValue",
 
+  costOverrunFocal: "costOverrunValue",
+  sellingCostFocal: "sellingCostValue",
+  miscHoldingCostFocal: "miscHoldingCost",
+  miscIncomeFocal: "miscIncomeValue",
+
   financingFocal: "financing",
   loanFocal: "loan",
   loanBaseFocal: "loanBaseValue",
+  purchaseLoanFocal: "purchaseLoanValue",
+  repairLoanFocal: "repairLoanValue",
+  arvLoanFocal: "arvLoanValue",
   closingCostFocal: "closingCostValue",
 
   mgmtFocal: "mgmt",

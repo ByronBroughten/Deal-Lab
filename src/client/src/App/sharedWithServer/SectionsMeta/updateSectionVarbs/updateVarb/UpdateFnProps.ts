@@ -17,27 +17,6 @@ export type UpdateFnProps = {
   [propName: string]: UpdateFnProp | UpdateFnProp[];
 };
 
-export type CompletionStatusProps = {
-  nonZeros: UpdateFnProp[];
-  nonNone: UpdateFnProp[];
-  notFalse: UpdateFnProp[];
-  validInputs: UpdateFnProp[];
-  othersValid: UpdateFnProp[];
-};
-
-export function completionStatusProps(
-  props: Partial<CompletionStatusProps>
-): CompletionStatusProps {
-  return {
-    nonZeros: [],
-    nonNone: [],
-    notFalse: [],
-    validInputs: [],
-    othersValid: [],
-    ...props,
-  };
-}
-
 export function collectUpdateFnSwitchProps(
   updateFnProps: UpdateFnProps
 ): UpdateFnProps {

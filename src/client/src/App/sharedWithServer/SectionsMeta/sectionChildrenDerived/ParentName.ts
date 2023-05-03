@@ -19,7 +19,7 @@ function _testParentNameOrNever() {
   type CellParent = ParentNameOrNever<"cell">;
   const _case1: CellParent = "tableRow";
   //@ts-expect-error
-  const _case3: CellParent = "propertyGeneral";
+  const _case3: CellParent = "property";
 }
 
 type SectionToParentOrNever = {
@@ -70,7 +70,7 @@ export type PiblingName<SN extends SectionName = SectionName> = StepSiblingName<
 
 function _testParentName() {
   type OneParentTest = ParentName<"property">;
-  const _case1: OneParentTest = "propertyGeneral";
+  const _case1: OneParentTest = "deal";
   //@ts-expect-error
   const _case2: OneParentTest = "loan";
 

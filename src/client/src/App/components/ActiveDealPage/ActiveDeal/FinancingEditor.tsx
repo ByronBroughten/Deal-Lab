@@ -6,7 +6,7 @@ import { useGetterSection } from "../../../sharedWithServer/stateClassHooks/useG
 import { nativeTheme } from "../../../theme/nativeTheme";
 import { FormSection } from "../../appWide/FormSection";
 import { SubSectionBtn } from "../../appWide/GeneralSection/GeneralSectionTitle/SubSectionBtn";
-import { SectionTitle } from "../../appWide/SectionTitle";
+import { SectionTitleMain } from "../../appWide/SectionTitleMain";
 import Radio from "../../general/Radio";
 import theme from "./../../../theme/Theme";
 import { Loan } from "./Financing/Loan";
@@ -42,10 +42,7 @@ export function FinancingEditor({ feId }: Props) {
   return (
     <Styled>
       <div className="Financing-titleRow">
-        <SectionTitle
-          text={"Financing"}
-          className="MainSectionTopRows-sectionTitle"
-        />
+        <SectionTitleMain text={"Financing"} />
       </div>
       <FormSection>
         <Box

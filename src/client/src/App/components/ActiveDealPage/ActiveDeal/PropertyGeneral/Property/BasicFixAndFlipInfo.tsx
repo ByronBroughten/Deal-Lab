@@ -23,6 +23,9 @@ export function BasicFixAndFlipInfo({ feId }: Props) {
               feVarbInfo: property.varbInfo("purchasePrice"),
             }}
           />
+          <NumObjEntityEditor
+            feVarbInfo={property.varbInfo("numUnitsEditor")}
+          />
           <NumObjEntityEditor feVarbInfo={property.varbInfo("sqft")} />
           <NumObjEntityEditor
             editorType="equation"

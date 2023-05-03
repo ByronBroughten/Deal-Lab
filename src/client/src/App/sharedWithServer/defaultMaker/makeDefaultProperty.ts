@@ -27,6 +27,12 @@ export function makeDefaultProperty(
   const sellingCost = property.addAndGetChild("sellingCostValue");
   sellingCost.addChild("singleTimeList");
 
+  const miscIncome = property.addAndGetChild("miscIncomeValue");
+  miscIncome.addChild("ongoingList");
+
+  const miscHoldingCost = property.addAndGetChild("miscHoldingCost");
+  miscHoldingCost.addChild("ongoingList");
+
   const repairValue = property.addAndGetChild("repairValue");
   repairValue.addChild("singleTimeList");
 

@@ -8,16 +8,32 @@ export function useAutoSave() {
   const feStore = useGetterFeStore();
 
   const onChangeIdle = useActionNoSave("onChangeIdle");
-  const { noneSaving, timeOfLastChange, currentChangesFailedToSave } = feStore;
+  const {
+    noneSaving,
+    timeOfLastChange,
+    currentChangesFailedToSave,
+    isLoggedIn,
+  } = feStore;
   React.useEffect(() => {
-    if (timeOfLastChange && noneSaving && !currentChangesFailedToSave) {
+    if (
+      isLoggedIn &&
+      timeOfLastChange &&
+      noneSaving &&
+      !currentChangesFailedToSave
+    ) {
       let timerFunc = setTimeout(
         () => onChangeIdle({}),
         constants.saveDelayInMs
       );
       return () => clearTimeout(timerFunc);
     }
-  }, [timeOfLastChange, noneSaving, currentChangesFailedToSave, onChangeIdle]);
+  }, [
+    isLoggedIn,
+    timeOfLastChange,
+    noneSaving,
+    currentChangesFailedToSave,
+    onChangeIdle,
+  ]);
 
   const queryAction = useQueryAction();
   const { timeOfSave } = feStore;

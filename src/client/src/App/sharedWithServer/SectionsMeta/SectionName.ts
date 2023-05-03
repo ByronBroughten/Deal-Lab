@@ -49,7 +49,6 @@ export const sectionNames = [
   "deal",
   "dealSystem",
 
-  "propertyGeneral",
   "property",
   "repairValue",
   "costOverrunValue",
@@ -61,7 +60,8 @@ export const sectionNames = [
   "capExList",
   "capExItem",
   "unit",
-  "miscIncomeValue", // lump sum or itemize
+  "miscIncomeValue",
+  "miscHoldingCost",
 
   "financing",
   "loan",

@@ -208,6 +208,7 @@ export class SolverSections extends SolverSectionsBase {
     property.basicSolvePrepper.removeSelf();
 
     const childName = propertyNameByDealMode(activeDeal.value("dealMode"));
+    console.log(childName);
     activeDeal.basicSolvePrepper.loadChild({
       childName,
       sectionPack,

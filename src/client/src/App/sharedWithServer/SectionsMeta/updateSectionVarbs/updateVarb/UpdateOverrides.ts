@@ -1,4 +1,3 @@
-import { Obj } from "../../../utils/Obj";
 import {
   getSwitchVarbName,
   SwitchName,
@@ -25,12 +24,7 @@ import {
   SectionPathName,
   SectionPathVarbName,
 } from "../../sectionPathContexts/sectionPathNames";
-import {
-  UnionValue,
-  UnionValueName,
-  ValueSource,
-  ValueSourceType,
-} from "../../values/StateValue/unionValues";
+import { ValueSource } from "../../values/StateValue/unionValues";
 import { ValueName } from "../../values/ValueName";
 import { updateBasics, UpdateBasics, updateBasicsS } from "./UpdateBasics";
 import { UpdateFnName } from "./UpdateFnName";
@@ -44,33 +38,6 @@ import {
 export type UpdateOverrides<VN extends ValueName = ValueName> =
   UpdateOverride<VN>[];
 
-export function valueSourceOverrides<VT extends ValueSourceType>(
-  _valueSourceType: VT,
-  updateBasics: Record<ValueSource<VT>, UpdateBasics>
-): UpdateOverrides {
-  return unionSwitchOverride(
-    _valueSourceType,
-    relVarbInfoS.local("valueSourceName"),
-    updateBasics
-  );
-}
-
-export function unionSwitchOverride<UVN extends UnionValueName>(
-  _unionValueName: UVN,
-  switchInfo: UpdateOverrideSwitchInfo,
-  updateBasics: Record<UnionValue<UVN>, UpdateBasics>
-) {
-  return Obj.keys(updateBasics).reduce((overrides, unionValue) => {
-    overrides.push(
-      updateOverride(
-        [{ switchInfo, switchValues: [unionValue] }],
-        updateBasics[unionValue]
-      )
-    );
-    return overrides;
-  }, [] as UpdateOverrides);
-}
-
 export interface UpdateOverride<VN extends ValueName = ValueName>
   extends UpdateBasics<VN> {
   switches: UpdateOverrideSwitches;
@@ -78,7 +45,7 @@ export interface UpdateOverride<VN extends ValueName = ValueName>
 
 export type UpdateOverrideSwitches = readonly UpdateOverrideSwitch[];
 
-type UpdateOverrideSwitchInfo =
+export type UpdateOverrideSwitchInfo =
   | RelChildrenVarbInfo
   | RelLocalVarbInfo
   | VarbPathNameInfoMixed

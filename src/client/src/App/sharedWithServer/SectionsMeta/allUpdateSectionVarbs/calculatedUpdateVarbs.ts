@@ -1,5 +1,4 @@
 import { VarbNameByValueName } from "../baseSectionsDerived/baseSectionValues";
-import { mixedInfoS } from "../SectionInfo/MixedSectionInfo";
 import { UpdateGroup } from "../updateSectionVarbs/switchUpdateVarbs";
 import { UpdateSectionVarbs } from "../updateSectionVarbs/updateSectionVarbs";
 import {
@@ -11,17 +10,20 @@ import {
   updateBasics,
   updateBasicsS,
 } from "../updateSectionVarbs/updateVarb/UpdateBasics";
+import { updateFnPropS } from "../updateSectionVarbs/updateVarb/UpdateFnProps";
 import {
-  completionStatusProps,
-  updateFnPropS,
-  updateFnPropsS,
-} from "../updateSectionVarbs/updateVarb/UpdateFnProps";
-import {
-  overrideSwitch,
   overrideSwitchS,
   updateOverride,
 } from "../updateSectionVarbs/updateVarb/UpdateOverrides";
 import { updateVarbsS } from "../updateSectionVarbs/updateVarbs";
+import {
+  baseLoanCompletionStatus,
+  dealCompletionStatus,
+  financingCompletionStatus,
+  loanValueCompletionStatus,
+  mgmtCompletionStatus,
+  propertyCompletionStatus,
+} from "./calculatedUpdateVarbs/completionStatusVarbs";
 
 function sumLoanVarb(
   loanVarbName: VarbNameByValueName<"loan", "numObj">
@@ -152,26 +154,6 @@ export function calculatedUpdateVarbs(): UpdateSectionVarbs<"calculatedVarbs"> {
         "two"
       ),
     }),
-    dealCompletionStatus: updateVarb("completionStatus", {
-      initValue: "allEmpty",
-      updateFnName: "completionStatus",
-      updateFnProps: completionStatusProps({
-        othersValid: [
-          updateFnPropS.pathName(
-            "calculatedVarbsFocal",
-            "propertyCompletionStatus"
-          ),
-          updateFnPropS.pathName(
-            "calculatedVarbsFocal",
-            "financingCompletionStatus"
-          ),
-          updateFnPropS.pathName(
-            "calculatedVarbsFocal",
-            "mgmtCompletionStatus"
-          ),
-        ],
-      }),
-    }),
     propertyExists: updateVarb("boolean", {
       initValue: false,
       updateFnName: "varbExists",
@@ -191,175 +173,14 @@ export function calculatedUpdateVarbs(): UpdateSectionVarbs<"calculatedVarbs"> {
       updateFnName: "varbExists",
       updateFnProps: { varbInfo: updateFnPropS.pathName("mgmtFocal", "one") },
     }),
-    propertyCompletionStatus: updateVarb("completionStatus", {
-      initValue: "allEmpty",
-      updateOverrides: [
-        updateOverride(
-          [overrideSwitchS.localIsFalse("propertyExists")],
-          updateBasics(
-            "completionStatus",
-            completionStatusProps({
-              notFalse: [updateFnPropS.local("propertyExists")],
-            })
-          )
-        ),
-      ],
-      updateFnName: "completionStatus",
-      updateFnProps: completionStatusProps({
-        nonZeros: [updateFnPropS.pathName("propertyFocal", "numUnits")],
-        nonNone: [
-          updateFnPropS.pathName("repairCostFocal", "valueSourceName"),
-          updateFnPropS.pathName("utilityCostFocal", "valueSourceName"),
-          updateFnPropS.pathName("maintenanceCostFocal", "valueSourceName"),
-          updateFnPropS.pathName("capExCostFocal", "valueSourceName"),
-        ],
-        validInputs: [
-          ...updateFnPropsS.varbPathArr("purchasePrice", "sqft"),
-          updateFnPropS.pathName("propertyFocal", "taxesOngoingEditor"),
-          updateFnPropS.pathName("propertyFocal", "homeInsOngoingEditor"),
-          // Separate the unit stuff into its own completion status eventually?
-          // updateFnPropS.pathName("unitFocal", "targetRentOngoingEditor"),
-          // updateFnPropS.pathName("unitFocal", "numBedrooms"),
-          updateFnPropS.pathName("capExCostFocal", "valueDollarsEditor", [
-            overrideSwitch(
-              mixedInfoS.pathNameVarb("capExCostFocal", "valueSourceName"),
-              "valueEditor"
-            ),
-          ]),
-          updateFnPropS.pathName("repairCostFocal", "valueDollarsEditor", [
-            overrideSwitch(
-              mixedInfoS.pathNameVarb("repairCostFocal", "valueSourceName"),
-              "valueEditor"
-            ),
-          ]),
-          updateFnPropS.pathName("maintenanceCostFocal", "valueDollarsEditor", [
-            overrideSwitch(
-              mixedInfoS.pathNameVarb(
-                "maintenanceCostFocal",
-                "valueSourceName"
-              ),
-              "valueEditor"
-            ),
-          ]),
-        ],
-      }),
-    }),
-    mgmtCompletionStatus: updateVarb("completionStatus", {
-      initValue: "allEmpty",
-      updateOverrides: [
-        updateOverride(
-          [overrideSwitchS.localIsFalse("mgmtExists")],
-          updateBasics(
-            "completionStatus",
-            completionStatusProps({
-              notFalse: [updateFnPropS.local("mgmtExists")],
-            })
-          )
-        ),
-      ],
-      updateFnName: "completionStatus",
-      updateFnProps: completionStatusProps({
-        nonNone: [
-          updateFnPropS.pathName("mgmtBasePayFocal", "valueSourceName"),
-          updateFnPropS.pathName("vacancyLossFocal", "valueSourceName"),
-        ],
-        validInputs: [
-          updateFnPropS.pathName(
-            "mgmtBasePayFocal",
-            "valueDollarsOngoingEditor",
-            [
-              overrideSwitch(
-                mixedInfoS.pathNameVarb("mgmtBasePayFocal", "valueSourceName"),
-                "dollarsEditor"
-              ),
-            ]
-          ),
-          updateFnPropS.pathName("mgmtBasePayFocal", "valuePercentEditor", [
-            overrideSwitch(
-              mixedInfoS.pathNameVarb("mgmtBasePayFocal", "valueSourceName"),
-              "percentOfRentEditor"
-            ),
-          ]),
-          updateFnPropS.pathName(
-            "vacancyLossFocal",
-            "valueDollarsOngoingEditor",
-            [
-              overrideSwitch(
-                mixedInfoS.pathNameVarb("vacancyLossFocal", "valueSourceName"),
-                "dollarsEditor"
-              ),
-            ]
-          ),
-          updateFnPropS.pathName("vacancyLossFocal", "valuePercentEditor", [
-            overrideSwitch(
-              mixedInfoS.pathNameVarb("vacancyLossFocal", "valueSourceName"),
-              "percentOfRentEditor"
-            ),
-          ]),
-        ],
-      }),
-    }),
-    financingCompletionStatus: updateVarb("completionStatus", {
-      initValue: "allEmpty",
-      updateFnName: "throwIfReached",
-      updateOverrides: [
-        updateOverride(
-          [overrideSwitchS.localIsFalse("financingExists")],
-          updateBasics(
-            "completionStatus",
-            completionStatusProps({
-              notFalse: [updateFnPropS.local("financingExists")],
-            })
-          )
-        ),
-        updateOverride(
-          [overrideSwitchS.varbIsValue("financingMode", "", "cashOnly")],
-          updateBasics(
-            "completionStatus",
-            completionStatusProps({
-              validInputs: [updateFnPropS.varbPathName("financingMode")],
-            })
-          )
-        ),
-        updateOverride(
-          [overrideSwitchS.varbIsValue("financingMode", "useLoan")],
-          updateBasics(
-            "completionStatus",
-            completionStatusProps({
-              nonNone: [
-                updateFnPropS.pathName("loanBaseFocal", "valueSourceName"),
-                updateFnPropS.pathName("closingCostFocal", "valueSourceName"),
-              ],
-              validInputs: [
-                updateFnPropS.pathName("loanBaseFocal", "valueDollarsEditor", [
-                  overrideSwitchS.local("valueSourceName", "dollarsEditor"),
-                ]),
-                updateFnPropS.pathName(
-                  "loanFocal",
-                  "interestRatePercentOngoingEditor"
-                ),
-                updateFnPropS.pathName("loanFocal", "loanTermSpanEditor"),
-                // Ultimately optional
-                // updateFnPropS.pathName(
-                //   "loanFocal",
-                //   "mortgageInsUpfrontEditor",
-                //   [overrideSwitch(relVarbInfoS.local("hasMortgageIns"), true)]
-                // ),
-                // updateFnPropS.pathName(
-                //   "loanFocal",
-                //   "mortgageInsOngoingEditor",
-                //   [overrideSwitch(relVarbInfoS.local("hasMortgageIns"), true)]
-                // ),
-                updateFnPropS.pathName(
-                  "closingCostFocal",
-                  "valueDollarsEditor",
-                  [overrideSwitchS.valueSourceIs("valueEditor")]
-                ),
-              ],
-            })
-          )
-        ),
-      ],
-    }),
+    dealCompletionStatus,
+    propertyCompletionStatus,
+    financingCompletionStatus,
+    baseLoanCompletionStatus,
+    purchaseLoanCompletionStatus:
+      loanValueCompletionStatus("purchaseLoanFocal"),
+    repairLoanCompletionStatus: loanValueCompletionStatus("repairLoanFocal"),
+    arvLoanCompletionStatus: loanValueCompletionStatus("arvLoanFocal"),
+    mgmtCompletionStatus,
   };
 }

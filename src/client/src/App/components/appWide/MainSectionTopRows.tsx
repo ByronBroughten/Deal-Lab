@@ -8,7 +8,7 @@ import { MuiRow } from "../general/MuiRow";
 import { StoreSectionActions } from "./GeneralSection/MainSection/StoreSectionActions";
 import { useSaveStatus } from "./GeneralSection/MainSection/useSaveStatus";
 import { RemoveSectionXBtn } from "./RemoveSectionXBtn";
-import { SectionTitle } from "./SectionTitle";
+import { SectionTitleMain } from "./SectionTitleMain";
 
 type Props = {
   className?: string;
@@ -43,10 +43,7 @@ export function MainSectionTopRows({
     <Styled className={`MainSectionTopRows-root ${className ?? ""}`}>
       <div className="MainSectionTopRows-topRow">
         <MuiRow>
-          <SectionTitle
-            text={sectionTitle}
-            className="MainSectionTopRows-sectionTitle"
-          />
+          <SectionTitleMain sx={{ mr: nativeTheme.s3 }} text={sectionTitle} />
           {titleAppend && (
             <Box
               sx={{
@@ -89,11 +86,6 @@ const Styled = styled.div`
   .MainSectionTopRows-topRow,
   .MainSectionTopRows-topRight {
     display: flex;
-  }
-
-  .MainSectionTopRows-sectionTitle {
-    font-size: 24px;
-    margin-right: ${theme.s3};
   }
 
   .MainSectionTopRows-topRight {

@@ -3,7 +3,6 @@ import { View } from "react-native";
 import styled from "styled-components";
 import { FeSectionInfo } from "../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { useGetterSectionOnlyOne } from "../../../sharedWithServer/stateClassHooks/useGetterSection";
-import { nativeTheme } from "../../../theme/nativeTheme";
 import theme from "../../../theme/Theme";
 import { useGoToPage } from "../../appWide/customHooks/useGoToPage";
 import { StyledActionBtn } from "../../appWide/GeneralSection/MainSection/StoreSectionActionMenu/ActionBtns.tsx/StyledActionBtn";
@@ -34,7 +33,6 @@ export function AllVarbsModal({
         title: "Variable Select",
         closeModal: closeAllVarbs,
         show: allVarbsIsOpen,
-        modalSectionProps: { sx: { backgroundColor: nativeTheme["gray-300"] } },
       }}
     >
       <View
