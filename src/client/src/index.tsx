@@ -6,21 +6,13 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-// What are the things I want to do before I show to more people?
-// - factor the parameters into propertyCompletionStatus based
-//   on dealMode
-// - label all visible variables
-
-// It tries to save and update sections when you reload
-// the page and you're not logged in.
-// Why does it do that?
-
-// - The unitCount editor really ought to be in a separate
-//   "additional info" section, or something
-// - Get the example fix & flip numbers to work
 
 // See if Emily will look at it
 
+// - Get rid of ongoingRevenueGroup
+
+// - Make different variable opotions based on deal mode
+// - Get the example fix & flip numbers to work
 // - Try condensing buyAndHold's inputs, like with f&f
 // - Add primaryResidence mode (no income)
 

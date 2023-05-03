@@ -1,6 +1,7 @@
 import { Obj } from "../../utils/Obj";
 import { Merge, merge } from "../../utils/Obj/merge";
 import { ValueName, valueNames } from "../values/ValueName";
+import { baseSectionVarbs } from "./baseSectionVarbs";
 import {
   GetSwitchOptions,
   getSwitchOptions,
@@ -296,7 +297,7 @@ export const baseVarbsS = {
     } as const;
   },
   get loanValue() {
-    return {
+    return baseSectionVarbs({
       valueSourceName: baseVarb("percentDollarsSource"),
 
       offPercentEditor: baseVarb("numObj", percent), // Down payment percent
@@ -310,6 +311,6 @@ export const baseVarbsS = {
       amountDollars: baseVarb("numObj", dollars),
       amountPercent: baseVarb("numObj", percent),
       amountDecimal: baseVarb("numObj", decimal),
-    };
+    });
   },
 } as const;
