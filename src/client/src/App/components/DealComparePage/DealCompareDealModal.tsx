@@ -43,7 +43,7 @@ export function DealCompareDealModal({ dealCount }: Props) {
       />
       <ModalSection
         {...{
-          title: "Select a deal to compare...",
+          title: "Select a deal to compare",
           closeModal: closeDealMenu,
           show: dealMenuIsOpen,
         }}

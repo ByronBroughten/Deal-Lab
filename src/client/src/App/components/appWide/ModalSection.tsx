@@ -39,7 +39,11 @@ export function ModalSection({
           <SectionTitleRow
             leftSide={<SectionTitle text={title} />}
             rightSide={
-              <PlainIconBtn middle={<AiOutlineClose />} onClick={closeModal} />
+              <PlainIconBtn
+                sx={{ ml: nativeTheme.s3 }}
+                middle={<AiOutlineClose />}
+                onClick={closeModal}
+              />
             }
           />
           <Box sx={{ mt: nativeTheme.s3 }}>{children}</Box>

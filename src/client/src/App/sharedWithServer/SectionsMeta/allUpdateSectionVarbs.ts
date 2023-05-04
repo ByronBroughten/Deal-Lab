@@ -62,21 +62,6 @@ function makeAllDefaultUpdateSections() {
     return defaultUpdateSections;
   }, {} as DefaultRelSectionsVarbs);
 }
-// loanBaseValue.valueDollars is based on
-// purchaseLoanValue.amountDollars
-
-// purchaseLoanValue.amountDollars is based
-// purchaseLoanValue.amountDecimal
-// purchaseLoanValue.amountDecimal is based
-// on purchaseLoanValue.offPercent
-
-// purchaseLoanCompletionStatus is based on
-// purchaseLoanValue.offPercentEditor
-
-// loanBaseCompletionStatus is based on
-// loanBaseValue.something and
-// purchaseLoanCompletionStatus
-
 function makeAllUpdateSections() {
   return checkAllUpdateSections({
     ...makeAllDefaultUpdateSections(),
