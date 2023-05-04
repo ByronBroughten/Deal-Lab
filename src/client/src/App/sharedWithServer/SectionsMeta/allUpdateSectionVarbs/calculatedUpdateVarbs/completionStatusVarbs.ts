@@ -3,6 +3,7 @@ import { mixedInfoS } from "../../SectionInfo/MixedSectionInfo";
 import { sectionPathNames } from "../../sectionPathContexts/sectionPathNames";
 import { updateVarb, UpdateVarb } from "../../updateSectionVarbs/updateVarb";
 import {
+  UpdateFnProp,
   updateFnPropS,
   updateFnPropsS,
 } from "../../updateSectionVarbs/updateVarb/UpdateFnProps";
@@ -39,29 +40,32 @@ export const dealCompletionStatus = updateVarb("completionStatus", {
   }),
 });
 
-const propertySharedValidInputs = [
-  ...propsS.varbPathArr("purchasePrice", "sqft"),
-  propS.pathName("propertyFocal", "taxesOngoingEditor"),
-  propS.pathName("propertyFocal", "homeInsOngoingEditor"),
-  propS.pathName("repairCostFocal", "valueDollarsEditor", [
-    overrideSwitch(
-      mixedInfoS.pathNameVarb("repairCostFocal", "valueSourceName"),
-      "valueEditor"
-    ),
-  ]),
-  propS.pathName("costOverrunFocal", "valueDollarsEditor", [
-    oSwitch(
-      mixedInfoS.pathNameVarb("costOverrunFocal", "valueSourceName"),
-      "valueDollarsEditor"
-    ),
-  ]),
-  propS.pathName("costOverrunFocal", "valuePercentEditor", [
-    oSwitch(
-      mixedInfoS.pathNameVarb("costOverrunFocal", "valueSourceName"),
-      "valuePercentEditor"
-    ),
-  ]),
-] as const;
+function propertySharedValidInputs(): UpdateFnProp[] {
+  return [
+    ...propsS.varbPathArr("purchasePrice", "sqft"),
+    propS.pathName("propertyFocal", "taxesOngoingEditor"),
+    propS.pathName("propertyFocal", "homeInsOngoingEditor"),
+    propS.pathName("repairCostFocal", "valueDollarsEditor", [
+      overrideSwitch(
+        mixedInfoS.pathNameVarb("repairCostFocal", "valueSourceName"),
+        "valueEditor"
+      ),
+    ]),
+    propS.pathName("costOverrunFocal", "valueDollarsEditor", [
+      oSwitch(
+        mixedInfoS.pathNameVarb("costOverrunFocal", "valueSourceName"),
+        "valueDollarsEditor"
+      ),
+    ]),
+    propS.pathName("costOverrunFocal", "valuePercentEditor", [
+      oSwitch(
+        mixedInfoS.pathNameVarb("costOverrunFocal", "valueSourceName"),
+        "valuePercentEditor"
+      ),
+    ]),
+  ];
+}
+
 export const propertyCompletionStatus = completionStatusVarb(
   updateOverride(
     [switchS.localIsFalse("propertyExists")],
@@ -80,7 +84,7 @@ export const propertyCompletionStatus = completionStatusVarb(
           propS.pathName("capExCostFocal", "valueSourceName"),
         ],
         validInputs: [
-          ...propertySharedValidInputs,
+          ...propertySharedValidInputs(),
           // Separate the unit stuff into its own completion status?
           // propS.pathName("unitFocal", "targetRentOngoingEditor"),
           // propS.pathName("unitFocal", "numBedrooms"),
@@ -104,7 +108,7 @@ export const propertyCompletionStatus = completionStatusVarb(
       fixAndFlip: cBasics({
         nonNone: [propS.pathName("repairCostFocal", "valueSourceName")],
         validInputs: [
-          ...propertySharedValidInputs,
+          ...propertySharedValidInputs(),
           propS.pathName("propertyFocal", "holdingPeriodSpanEditor"),
           propS.pathName("propertyFocal", "numUnitsEditor"),
         ],
@@ -122,6 +126,15 @@ const loanPathNames = Arr.extractStrict(sectionPathNames, [
 
 type LoanPathName = typeof loanPathNames[number];
 
+function noFinancingOverride() {
+  return updateOverride(
+    [switchS.localIsFalse("financingExists")],
+    cBasics({
+      notFalse: [propS.local("financingExists")],
+    })
+  );
+}
+
 export function loanValueCompletionStatus(
   loanPathName: LoanPathName
 ): UpdateVarb<"completionStatus"> {
@@ -138,23 +151,13 @@ export function loanValueCompletionStatus(
     return overrides;
   }, [] as UpdateOverrides);
   return completionStatusVarb(
-    updateOverride(
-      [switchS.localIsFalse("financingExists")],
-      cBasics({
-        notFalse: [propS.local("financingExists")],
-      })
-    ),
+    // noFinancingOverride(),
     ...extraOverrides
   );
 }
 
 export const baseLoanCompletionStatus = completionStatusVarb(
-  updateOverride(
-    [switchS.localIsFalse("financingExists")],
-    cBasics({
-      notFalse: [propS.local("financingExists")],
-    })
-  ),
+  // noFinancingOverride(),
   ...valueSourceOverrides(
     "loanBaseValueSource",
     {
@@ -182,12 +185,7 @@ export const baseLoanCompletionStatus = completionStatusVarb(
 );
 
 export const financingCompletionStatus = completionStatusVarb(
-  updateOverride(
-    [switchS.localIsFalse("financingExists")],
-    cBasics({
-      notFalse: [propS.local("financingExists")],
-    })
-  ),
+  // noFinancingOverride(),
   updateOverride(
     [switchS.varbIsValue("financingMode", "", "cashOnly")],
     cBasics({

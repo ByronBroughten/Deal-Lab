@@ -151,7 +151,6 @@ export class SolveValueVarb<
           allValid = false;
         }
       };
-
       for (const updateProp of othersValid) {
         const varbs = this.activePropVarbs(updateProp);
         for (const varb of varbs) {

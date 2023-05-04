@@ -53,7 +53,8 @@ export class SolverSections extends SolverSectionsBase {
   }
   solve() {
     const orderedInfos = this.gatherAndSortInfosToSolve();
-    for (const varbInfo of orderedInfos) {
+    for (let i = 0; i < orderedInfos.length; i++) {
+      const varbInfo = orderedInfos[i];
       const solverVarb = this.solverVarb(varbInfo);
       solverVarb.calculateAndUpdateValue();
     }
