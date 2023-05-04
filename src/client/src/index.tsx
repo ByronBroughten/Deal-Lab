@@ -6,6 +6,11 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
+// Should I start making the wordpress site?
+// Which advantages do I want to list on WP?
+// - Break deals down into reusable parts
+// - Modes for home buyers, landlords, fix and flippers, and more
+// -
 
 // See if Emily will look at it
 // - Get rid of ongoingRevenueGroup

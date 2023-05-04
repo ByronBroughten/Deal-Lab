@@ -42,7 +42,9 @@ export const componentProps: ComponentProps = {
   capExListMain: props("Capital Expenses", "Cap Ex", () => (
     <MdOutlineRoofing {...iconProps} />
   )),
-  sellingListMain: props("Selling Costs", "selling costs", () => <MdSell />),
+  sellingListMain: props("Selling Costs", "selling costs", () => (
+    <MdSell {...iconProps} />
+  )),
   closingCostsListMain: props("Closing Costs", "closing costs", () => (
     <FaMoneyCheckAlt {...iconProps} />
   )),
