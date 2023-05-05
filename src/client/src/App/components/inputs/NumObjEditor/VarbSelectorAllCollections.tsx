@@ -1,16 +1,18 @@
 import styled from "styled-components";
 import { mixedInfoS } from "../../../sharedWithServer/SectionsMeta/SectionInfo/MixedSectionInfo";
 import { collectionNamesFixed } from "../../../sharedWithServer/SectionsMeta/SectionInfo/VarbPathNameInfo";
+import { DealModeOrMixed } from "../../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
 import { useGetterMainOnlyChild } from "../../../sharedWithServer/stateClassHooks/useMain";
 import {
   ValueCustomVarbPathInfo,
   ValueInEntityInfo,
 } from "../../../sharedWithServer/StateEntityGetters/ValueInEntityInfo";
-import { varbPathOptionArr } from "../../../sharedWithServer/StateEntityGetters/varbPathOptions";
+import { fixedVarbOptionArrs } from "../../../sharedWithServer/StateEntityGetters/varbPathOptions";
 import { GetterSection } from "../../../sharedWithServer/StateGetters/GetterSection";
 import { Arr } from "../../../sharedWithServer/utils/Arr";
 import ccs from "../../../theme/cssChunks";
 import theme from "../../../theme/Theme";
+import { useDealModeContext } from "../../appWide/customContexts/dealModeContext";
 import {
   OnVarbSelect,
   VarbSelectorCollection,
@@ -25,10 +27,11 @@ export function VarbSelectorAllCollections({
   onVarbSelect,
   nameFilter,
 }: Props) {
+  const dealMode = useDealModeContext();
   const latent = useGetterMainOnlyChild("latentDealSystem");
   const collectionProps: CollectionProps = [];
 
-  const fixedCollections = useFixedCollections();
+  const fixedCollections = useFixedCollections(dealMode);
   collectionProps.push(...fixedCollections);
 
   const userVarbCollections = useUserVarbCollections(latent);
@@ -63,7 +66,7 @@ type CollectionProps = {
   rowInfos: ValueInEntityInfo[];
 }[];
 
-function useFixedCollections(): CollectionProps {
+function useFixedCollections(dealMode: DealModeOrMixed): CollectionProps {
   const orderedCollectionNames = Arr.extractStrict(collectionNamesFixed, [
     "Property",
     "Financing",
@@ -71,8 +74,9 @@ function useFixedCollections(): CollectionProps {
     "Deal",
   ] as const);
 
+  const optionArr = fixedVarbOptionArrs[dealMode];
   return orderedCollectionNames.map((collectionName) => {
-    const rowInfos = varbPathOptionArr
+    const rowInfos = optionArr
       .filter((p) => p.collectionName === collectionName)
       .map(({ varbPathName }) => mixedInfoS.varbPathName(varbPathName));
     return {

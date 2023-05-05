@@ -460,20 +460,6 @@ function makeAllUpdateSections() {
         initValue: false,
       }),
     }),
-    ...updateSectionProp("ongoingValueGroup", {
-      ...updateVarbsS.ongoingSumNums(
-        "total",
-        [updateFnPropS.children("ongoingValue", "value")],
-        "monthly"
-      ),
-      value: updateVarb("numObj"),
-      itemValueSource: updateVarb("string", {
-        initValue: "valueEditor",
-      }),
-      itemOngoingSwitch: updateVarb("string", {
-        initValue: "monthly",
-      }),
-    }),
     ...updateSectionProp("ongoingList", {
       ...updateVarbsS.ongoingSumNums(
         "total",

@@ -46,6 +46,9 @@ const allVarbPathParams = {
     ...targetNames("loanExpenses", "ongoing"),
   ]),
   ...sectionVarbNameParams("propertyFocal", "Property", [
+    "sellingCosts",
+    "holdingPeriodMonths",
+    "holdingPeriodYears",
     "purchasePrice",
     "afterRepairValue",
     "sqft",
@@ -69,7 +72,20 @@ const allVarbPathParams = {
     "mgmtFocal",
     "expensesYearly"
   ),
-
+  ...sectionVarbNameParams("utilityCostFocal", "Property", [
+    "valueMonthly",
+    "valueYearly",
+  ]),
+  utilitiesMonthly: fixedVarbPathParams(
+    "Property",
+    "utilityCostFocal",
+    "valueMonthly"
+  ),
+  utilitiesYearly: fixedVarbPathParams(
+    "Property",
+    "utilityCostFocal",
+    "valueYearly"
+  ),
   propertyExpensesMonthly: fixedVarbPathParams(
     "Property",
     "propertyFocal",

@@ -43,7 +43,7 @@ export const validateS = {
       );
     }
   },
-  unionLiteral: <L extends any>(value: any, arr: L[]): L => {
+  unionLiteral: <L extends any>(value: any, arr: readonly L[]): L => {
     if (arr.includes(value)) {
       return value;
     } else {

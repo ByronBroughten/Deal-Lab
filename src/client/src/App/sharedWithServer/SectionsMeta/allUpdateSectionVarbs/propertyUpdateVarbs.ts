@@ -126,7 +126,7 @@ export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
     ...updateVarbsS.monthsYearsInput("holdingPeriod", "months"),
     ...updateVarbsS.ongoingSumNums(
       "miscRevenue",
-      [propS.children("ongoingRevenueGroup", "total")],
+      [propS.children("miscIncomeValue", "valueDollars")],
       "monthly"
       //
     ),

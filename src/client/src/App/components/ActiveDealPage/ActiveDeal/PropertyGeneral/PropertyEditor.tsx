@@ -88,7 +88,7 @@ function PropertyBuyAndHoldEditor({ feId }: { feId: string }) {
   const property = useGetterSection(feInfo);
   return (
     <PropertyEditorBody
-      {...{ feId, sectionTitle: "Property", titleAppend: "Buy & Hold" }}
+      {...{ feId, sectionTitle: "Property", titleAppend: "Rental Property" }}
     >
       <BasicBuyAndHoldInfo feId={feId} />
       <Units {...{ feId }} />

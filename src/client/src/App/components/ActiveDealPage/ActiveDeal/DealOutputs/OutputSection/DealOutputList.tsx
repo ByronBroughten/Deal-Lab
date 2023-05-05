@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import { inEntityValueInfo } from "../../../../../sharedWithServer/SectionsMeta/values/StateValue/InEntityValue";
+import { InEntityValue } from "../../../../../sharedWithServer/SectionsMeta/values/StateValue/InEntityValue";
 import { useGetterSection } from "../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { useSetterSection } from "../../../../../sharedWithServer/stateClassHooks/useSetterSection";
-import { VariableOption } from "../../../../../sharedWithServer/StateEntityGetters/varbPathOptions";
+import { VarbPathArrParam } from "../../../../../sharedWithServer/StateEntityGetters/varbPathOptions";
 import theme from "../../../../../theme/Theme";
 import { LabeledVarbProps } from "../../../../appWide/LabeledVarb";
 import { LabeledVarbRow } from "../../../../appWide/LabeledVarbRow";
@@ -26,10 +26,16 @@ export function DealOutputList({ feId }: { feId: string }) {
     feId,
   });
 
-  const onSelectNext = ({ varbInfo }: VariableOption) =>
+  const onSelectNext = (param: VarbPathArrParam) => {
     outPutList.addChild("outputItem", {
-      sectionValues: { valueEntityInfo: inEntityValueInfo(varbInfo) },
+      sectionValues: {
+        valueEntityInfo: {
+          infoType: "varbPathName",
+          varbPathName: param.varbPathName,
+        } as InEntityValue,
+      },
     });
+  };
 
   const propArr = useLoadedOutputRowProps(feId);
   return (

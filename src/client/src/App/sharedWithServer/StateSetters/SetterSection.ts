@@ -1,4 +1,3 @@
-import { pick } from "lodash";
 import { SwitchName } from "../SectionsMeta/allBaseSectionVarbs/baseSwitchNames";
 import { VarbName } from "../SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
 import {
@@ -18,7 +17,6 @@ import {
   SectionNameType,
 } from "../SectionsMeta/SectionNameByType";
 import { SectionValues, VarbValue } from "../SectionsMeta/values/StateValue";
-import { SectionOption } from "../StateEntityGetters/VariableGetterSections";
 import { GetterSection } from "../StateGetters/GetterSection";
 import { GetterVarb } from "../StateGetters/GetterVarb";
 import {
@@ -218,10 +216,5 @@ export class SetterSection<
   }
   get feInfo(): FeSectionInfo<SN> {
     return this.get.feInfo;
-  }
-  get siblingOptions(): SectionOption[] {
-    return this.get.siblings.map(
-      (sibling) => pick(sibling, ["dbId", "displayName"]) as SectionOption
-    );
   }
 }

@@ -46,7 +46,7 @@ const examplePropertyCommon = {
   state: "IL",
   zipCode: "60614",
   displayName: "",
-  purchasePrice: numObj(250000),
+  purchasePrice: numObj(230000),
   sqft: numObj(2500),
   taxesYearly: numObj(2500),
   homeInsYearly: numObjNext("1000+(", ["numUnits"], "*200)"),

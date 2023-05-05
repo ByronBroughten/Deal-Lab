@@ -248,9 +248,6 @@ export const allDisplaySectionVarbs = {
   ...displaySectionVarbsProp("singleTimeList", {
     total: varb(relVarbInfoS.local("displayName")),
   }),
-  ...displaySectionVarbsProp("ongoingValueGroup", {
-    ...group("ongoing", "total", relVarbInfoS.local("displayName")),
-  }),
   ...displaySectionVarbsProp(
     "ongoingValue",
     editorDisplayGroup(

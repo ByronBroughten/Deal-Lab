@@ -1,6 +1,17 @@
 import { ValidationError } from "../../../utils/Error";
 import { Obj } from "../../../utils/Obj";
 
+export const dealModes = [
+  // homeBuyer
+  "buyAndHold",
+  "fixAndFlip",
+  // brrrr
+] as const;
+export type DealMode = typeof dealModes[number];
+
+export const dealModesPlusMixed = [...dealModes, "mixed"] as const;
+export type DealModeOrMixed = typeof dealModesPlusMixed[number];
+
 const valueSources = {
   dealDisplayNameSource: ["displayNameEditor", "defaultDisplayName"],
   loanPurpose: ["purchasePrice", "upfrontRepairs", "purchasePriceAndRepairs"],
@@ -81,7 +92,7 @@ const unionValueArrs = {
   labSubscription: ["basicPlan", "fullPlan"],
   autoSyncControl: ["autoSyncOff", "autoSyncOn"],
   completionStatus: ["allEmpty", "allValid", "someInvalid"],
-  dealMode: ["buyAndHold", "fixAndFlip"], //"brrrr"
+  dealMode: dealModes,
   financingMode: ["cashOnly", "useLoan", ""],
   userDataStatus: [
     "notLoaded",
@@ -118,7 +129,7 @@ export function isLabSubscription(
 }
 
 export const dealModeLabels: Record<UnionValue<"dealMode">, string> = {
-  buyAndHold: "Buy & Hold",
+  buyAndHold: "Rental Property",
   fixAndFlip: "Fix & Flip",
   // brrrr: "BRRRR",
 };

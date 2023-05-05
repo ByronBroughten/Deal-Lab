@@ -1,61 +1,128 @@
 import { Id } from "../SectionsMeta/IdS";
 import {
+  VarbPathName,
   VarbPathNameDbInfoMixed,
   VarbPathNameInfoMixed,
   varbPathNames,
 } from "../SectionsMeta/SectionInfo/VarbPathNameInfo";
+import { DealModeOrMixed } from "../SectionsMeta/values/StateValue/unionValues";
 import { Arr } from "../utils/Arr";
 import { ValidationError } from "../utils/Error";
 import { Obj } from "../utils/Obj";
 import { validateS } from "../validateS";
 
-export const fixedVarbOptionNames = Arr.extractOrder(varbPathNames, [
-  "purchasePrice",
+const checkFixedVarbNames = <
+  T extends Record<DealModeOrMixed, readonly VarbPathName[]>
+>(
+  t: T
+) => t;
+
+const sharedBasics = ["purchasePrice", "sqft", "numUnits"] as const;
+
+const sharedOngoing = [
   "taxesMonthly",
   "taxesYearly",
   "homeInsMonthly",
   "homeInsYearly",
-  "sqft",
+  "utilitiesMonthly",
+] as const;
 
-  "numUnits",
-  "numBedrooms",
-  "targetRentMonthly",
-  "targetRentYearly",
-  "rehabCost",
-  "repairCostBase",
+const sharedUpfront = ["rehabCost", "repairCostBase"] as const;
 
+const financing = [
   "downPaymentDollars",
   "downPaymentPercent",
-  "cashFlowMonthly",
-  "cashFlowYearly",
-
-  "onePercentPrice",
-  "twoPercentPrice",
-  "fivePercentRentMonthly",
-  "fivePercentRentYearly",
-
   "loanTotalDollars",
   "loanPaymentMonthly",
   "loanPaymentYearly",
   "pitiMonthly",
   "pitiYearly",
+] as const;
 
+const mgmt = [
   "basePayDollarsMonthly",
   "basePayDollarsYearly",
   "managementExpensesMonthly",
   "managementExpensesYearly",
+] as const;
 
-  "totalInvestment",
+const sharedOutputs = ["totalInvestment"] as const;
+const sharedExtras = ["onePercentPrice", "twoPercentPrice"] as const;
 
-  "cocRoiMonthly",
-  "cocRoiYearly",
-
+const fixAndFlipBasics = [
+  "afterRepairValue",
+  "sellingCosts",
+  "holdingPeriodMonths",
+] as const;
+const fixAndFlipOutputs = [
   "totalProfit",
   "roiPercent",
   "roiPercentAnnualized",
-] as const);
+] as const;
+const fixAndFlip = [
+  ...sharedBasics,
+  ...fixAndFlipBasics,
+  ...sharedOngoing,
+  ...sharedUpfront,
+  ...financing,
+  ...sharedOutputs,
+  ...fixAndFlipOutputs,
+  ...sharedExtras,
+] as const;
 
-export type ValueFixedVarbPathName = typeof fixedVarbOptionNames[number];
+const buyAndHoldBasics = [
+  "numBedrooms",
+  "targetRentMonthly",
+  "targetRentYearly",
+] as const;
+const buyAndHoldOutputs = [
+  "cashFlowMonthly",
+  "cashFlowYearly",
+  "cocRoiMonthly",
+  "cocRoiYearly",
+] as const;
+const buyAndHoldExtras = [
+  "fivePercentRentMonthly",
+  "fivePercentRentYearly",
+] as const;
+const buyAndHold = [
+  ...sharedBasics,
+  ...buyAndHoldBasics,
+  ...sharedOngoing,
+  ...sharedUpfront,
+  ...financing,
+  ...mgmt,
+  ...sharedOutputs,
+  ...buyAndHoldOutputs,
+  ...sharedExtras,
+  ...buyAndHoldExtras,
+] as const;
+
+export const fixedVarbPathNames = checkFixedVarbNames({
+  buyAndHold,
+  fixAndFlip,
+  mixed: [
+    ...sharedBasics,
+    ...buyAndHoldBasics,
+    ...fixAndFlipBasics,
+    ...sharedOngoing,
+    ...sharedUpfront,
+    ...financing,
+    ...mgmt,
+    ...sharedOutputs,
+    ...buyAndHoldOutputs,
+    ...fixAndFlipOutputs,
+    ...sharedExtras,
+    ...buyAndHoldExtras,
+  ] as const,
+});
+type FixedVarbPathOptions = typeof fixedVarbPathNames;
+export type ValueFixedVarbPathName =
+  FixedVarbPathOptions[DealModeOrMixed][number];
+
+const mixedVarbPathNames: readonly ValueFixedVarbPathName[] =
+  fixedVarbPathNames["mixed"];
+
 export interface ValueFixedVarbPathInfo<
   VPN extends ValueFixedVarbPathName = ValueFixedVarbPathName
 > extends VarbPathNameInfoMixed<VPN> {}
@@ -64,10 +131,7 @@ export function validateInEntityInfoFixed(value: any): ValueFixedVarbPathInfo {
   const obj = Obj.validateObjToAny(value) as ValueFixedVarbPathInfo;
   return {
     infoType: validateS.literal(obj.infoType, "varbPathName"),
-    varbPathName: validateS.unionLiteral(
-      obj.varbPathName,
-      fixedVarbOptionNames
-    ),
+    varbPathName: validateS.unionLiteral(obj.varbPathName, mixedVarbPathNames),
   };
 }
 

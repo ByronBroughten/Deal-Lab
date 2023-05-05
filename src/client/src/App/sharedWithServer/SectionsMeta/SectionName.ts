@@ -21,7 +21,6 @@ export const sectionNames = [
   "singleTimeValue",
   "singleTimeList",
   "singleTimeItem",
-  "ongoingValueGroup",
   "ongoingValue",
   "ongoingList",
   "ongoingItem",

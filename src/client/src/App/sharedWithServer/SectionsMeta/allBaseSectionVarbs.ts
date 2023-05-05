@@ -111,9 +111,6 @@ export function makeAllBaseSectionVarbs() {
       total: baseVarb("numObj", dollars),
       itemValueSource: baseVarb("editorValueSource"),
     }),
-    ongoingValueGroup: varbs({
-      ...varbsS.ongoingDollars("total"),
-    }),
     ongoingValue: varbs({
       ...varbsS.displayNameAndEditor,
       ...varbsS.ongoingDollarsInput("value"),

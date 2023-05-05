@@ -3,8 +3,6 @@ import { FeSectionInfo, FeVarbInfo } from "../SectionsMeta/SectionInfo/FeInfo";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { StateValue } from "../SectionsMeta/values/StateValue";
 import { isStateValue } from "../SectionsMeta/values/valueMetas";
-import { VariableOption } from "../StateEntityGetters/varbPathOptions";
-import { VariableGetterSections } from "../StateEntityGetters/VariableGetterSections";
 import { GetterList } from "../StateGetters/GetterList";
 import { GetterSections } from "../StateGetters/GetterSections";
 import { GetterVarb } from "../StateGetters/GetterVarb";
@@ -63,11 +61,6 @@ export class SetterSections extends SetterSectionsBase {
   get main(): SetterSection<"main"> {
     return this.section(this.get.main.feInfo);
   }
-  get variableSections() {
-    return new VariableGetterSections(
-      this.getterSectionsBase.getterSectionsProps
-    );
-  }
   isValidTarget(target: any): target is ValidTarget {
     return isStateValue(target.value) && typeof target.name === "string";
   }
@@ -87,8 +80,5 @@ export class SetterSections extends SetterSectionsBase {
       const varb = this.varb(feVarbInfo);
       varb.updateValue(value);
     }
-  }
-  variableOptions(): VariableOption[] {
-    return this.variableSections.variableOptions();
   }
 }

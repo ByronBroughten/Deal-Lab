@@ -97,9 +97,6 @@ export const allSectionChildren = checkAllSectionChildren({
     // brrrrOutputList: sectionChild("outputList"),
   },
   outputItem: { virtualVarb: sectionChild("virtualVarb") },
-  ongoingValueGroup: {
-    ongoingValue: sectionChild("ongoingValue"),
-  },
   ongoingValue: {
     ongoingList: sectionChild("ongoingList"),
   },
@@ -152,8 +149,6 @@ export const allSectionChildren = checkAllSectionChildren({
 
     customUpfrontExpense: "singleTimeValue",
     customOngoingExpense: "ongoingValue",
-
-    ongoingRevenueGroup: "ongoingValueGroup",
     customVarb: "customVarb",
   }),
   miscIncomeValue: sectionChildren({

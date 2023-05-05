@@ -8,13 +8,11 @@ AppRegistry.runApplication("App", {
 });
 // Should I start making the wordpress site?
 // Which advantages do I want to list on WP?
+// - Compare deals side by side
+// - Use custom variables
 // - Break deals down into reusable parts
 // - Modes for home buyers, landlords, fix and flippers, and more
-// -
 
-// See if Emily will look at it
-// - Get rid of ongoingRevenueGroup
-// - Make different variable options based on deal mode
 // - Get the example fix & flip numbers to work
 // - Try condensing buyAndHold's inputs, like with f&f
 // - Add primaryResidence mode (no income)
