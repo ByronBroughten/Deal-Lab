@@ -1,9 +1,9 @@
-import { validateStateValue } from "../../../../../sharedWithServer/SectionsMeta/values/valueMetas";
-import { useAction } from "../../../../../sharedWithServer/stateClassHooks/useAction";
-import { useGetterSection } from "../../../../../sharedWithServer/stateClassHooks/useGetterSection";
-import { SelectAndItemizeEditorSection } from "../../../../appWide/SelectAndItemizeEditorSection";
-import { NumObjEntityEditor } from "../../../../inputs/NumObjEntityEditor";
-import { ListEditorSingleTime } from "../../PropertyGeneral/Property/ValueShared.tsx/ListEditorSingleTime";
+import { validateStateValue } from "../../../../../../sharedWithServer/SectionsMeta/values/valueMetas";
+import { useAction } from "../../../../../../sharedWithServer/stateClassHooks/useAction";
+import { useGetterSection } from "../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
+import { SelectAndItemizeEditorSection } from "../../../../../appWide/SelectAndItemizeEditorSection";
+import { NumObjEntityEditor } from "../../../../../inputs/NumObjEntityEditor";
+import { ListEditorSingleTime } from "../../PropertyEditor/ValueShared.tsx/ListEditorSingleTime";
 
 type Props = { feId: string; fivePercentLoanDisplay: string };
 export function ClosingCostValue({ feId, fivePercentLoanDisplay }: Props) {

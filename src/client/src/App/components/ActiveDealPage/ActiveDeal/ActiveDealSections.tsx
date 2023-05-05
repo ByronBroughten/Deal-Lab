@@ -1,8 +1,8 @@
-import { DealSubSectionOpen } from "../DealSubSectionOpen";
-import { FinancingEditor } from "../FinancingEditor";
-import { MgmtEditor } from "../MgmtGeneral/MgmtEditor";
-import { useActiveDealSection } from "../useActiveDealSection";
-import { PropertyEditor } from "./PropertyEditor";
+import { FinancingEditor } from "./ActiveDealSections/FinancingEditor";
+import { MgmtEditor } from "./ActiveDealSections/MgmtEditor";
+import { PropertyEditor } from "./ActiveDealSections/PropertyEditor";
+import { DealSubSectionOpen } from "./DealSubSectionOpen";
+import { useActiveDealSection } from "./useActiveDealSection";
 
 export function ActiveDealProperty() {
   const { isComplete, ...rest } = useActiveDealSection("property");

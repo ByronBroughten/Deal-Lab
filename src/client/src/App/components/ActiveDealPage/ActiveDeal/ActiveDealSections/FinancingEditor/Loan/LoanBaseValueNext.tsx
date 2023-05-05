@@ -1,17 +1,17 @@
 import { Box } from "@mui/material";
-import { VarbName } from "../../../../../sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
-import { FeSectionInfo } from "../../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
+import { VarbName } from "../../../../../../sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
+import { FeSectionInfo } from "../../../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import {
   SectionNameByType,
   sectionNameS,
-} from "../../../../../sharedWithServer/SectionsMeta/SectionNameByType";
-import { StateValue } from "../../../../../sharedWithServer/SectionsMeta/values/StateValue";
-import { useGetterSection } from "../../../../../sharedWithServer/stateClassHooks/useGetterSection";
-import { nativeTheme } from "../../../../../theme/nativeTheme";
-import { FormSectionLabeled } from "../../../../appWide/FormSectionLabeled";
-import { LabeledVarbRow } from "../../../../appWide/LabeledVarbRow";
-import { MuiSelect } from "../../../../appWide/MuiSelect";
-import { NumObjEntityEditor } from "../../../../inputs/NumObjEntityEditor";
+} from "../../../../../../sharedWithServer/SectionsMeta/SectionNameByType";
+import { StateValue } from "../../../../../../sharedWithServer/SectionsMeta/values/StateValue";
+import { useGetterSection } from "../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
+import { nativeTheme } from "../../../../../../theme/nativeTheme";
+import { FormSectionLabeled } from "../../../../../appWide/FormSectionLabeled";
+import { LabeledVarbRow } from "../../../../../appWide/LabeledVarbRow";
+import { MuiSelect } from "../../../../../appWide/MuiSelect";
+import { NumObjEntityEditor } from "../../../../../inputs/NumObjEntityEditor";
 import { LoanBaseSubValue } from "./LoanBaseSubValue";
 
 export function LoanBaseValueNext({ feId }: { feId: string }) {

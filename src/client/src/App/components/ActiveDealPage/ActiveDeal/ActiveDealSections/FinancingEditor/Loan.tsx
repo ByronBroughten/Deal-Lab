@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import { useGetterSection } from "../../../../sharedWithServer/stateClassHooks/useGetterSection";
-import MainSectionBody from "../../../appWide/GeneralSection/MainSection/MainSectionBody";
-import { MainSectionInner } from "../../../appWide/GeneralSection/MainSectionInner";
-import { MainSectionTopRows } from "../../../appWide/MainSectionTopRows";
+import { useGetterSection } from "../../../../../sharedWithServer/stateClassHooks/useGetterSection";
+import MainSectionBody from "../../../../appWide/GeneralSection/MainSection/MainSectionBody";
+import { MainSectionInner } from "../../../../appWide/GeneralSection/MainSectionInner";
+import { MainSectionTopRows } from "../../../../appWide/MainSectionTopRows";
 import BasicLoanInfo from "./Loan/BasicLoanInfo";
 import { ClosingCostValue } from "./Loan/ClostingCostValue";
 

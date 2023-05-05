@@ -3,7 +3,7 @@ import {
   ActiveDealFinancing,
   ActiveDealMgmt,
   ActiveDealProperty,
-} from "./App/components/ActiveDealPage/ActiveDeal/PropertyGeneral/ActiveDealSections";
+} from "./App/components/ActiveDealPage/ActiveDeal/ActiveDealSections";
 import { ActiveDealMain } from "./App/components/ActiveDealPage/ActiveDealMain";
 import { DealModeProvider } from "./App/components/appWide/customContexts/dealModeContext";
 import { UserDataNeededPage } from "./App/components/AuthProtectedPage";

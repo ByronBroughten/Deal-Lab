@@ -3,8 +3,8 @@ import { StateValue } from "../../../../sharedWithServer/SectionsMeta/values/Sta
 import theme from "../../../../theme/Theme";
 import MainSectionBody from "../../../appWide/GeneralSection/MainSection/MainSectionBody";
 import { MainSectionTopRows } from "../../../appWide/MainSectionTopRows";
-import { CustomExpenses } from "../PropertyGeneral/Property/CustomExpenses";
-import { BasicMgmtInfo } from "./Mgmt/BasicMgmtInfo";
+import { BasicMgmtInfo } from "./MgmtEditor/BasicMgmtInfo";
+import { CustomExpenses } from "./PropertyEditor/CustomExpenses";
 
 type Props = {
   feId: string;

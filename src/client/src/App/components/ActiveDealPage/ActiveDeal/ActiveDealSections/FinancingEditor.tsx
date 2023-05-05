@@ -1,15 +1,15 @@
 import { Box, FormControl, FormControlLabel, RadioGroup } from "@mui/material";
 import styled from "styled-components";
-import { StateValue } from "../../../sharedWithServer/SectionsMeta/values/StateValue";
-import { useAction } from "../../../sharedWithServer/stateClassHooks/useAction";
-import { useGetterSection } from "../../../sharedWithServer/stateClassHooks/useGetterSection";
-import { nativeTheme } from "../../../theme/nativeTheme";
-import { FormSection } from "../../appWide/FormSection";
-import { SubSectionBtn } from "../../appWide/GeneralSection/GeneralSectionTitle/SubSectionBtn";
-import { SectionTitleMain } from "../../appWide/SectionTitleMain";
-import Radio from "../../general/Radio";
-import theme from "./../../../theme/Theme";
-import { Loan } from "./Financing/Loan";
+import { StateValue } from "../../../../sharedWithServer/SectionsMeta/values/StateValue";
+import { useAction } from "../../../../sharedWithServer/stateClassHooks/useAction";
+import { useGetterSection } from "../../../../sharedWithServer/stateClassHooks/useGetterSection";
+import { nativeTheme } from "../../../../theme/nativeTheme";
+import theme from "../../../../theme/Theme";
+import { FormSection } from "../../../appWide/FormSection";
+import { SubSectionBtn } from "../../../appWide/GeneralSection/GeneralSectionTitle/SubSectionBtn";
+import { SectionTitleMain } from "../../../appWide/SectionTitleMain";
+import Radio from "../../../general/Radio";
+import { Loan } from "./FinancingEditor/Loan";
 
 type Props = {
   feId: string;

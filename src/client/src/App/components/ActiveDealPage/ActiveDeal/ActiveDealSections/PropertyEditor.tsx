@@ -9,16 +9,16 @@ import { ChildValuesOngoing } from "../../../appWide/ListGroup/ListGroupShared/C
 import { MainSectionTopRows } from "../../../appWide/MainSectionTopRows";
 import { SectionToggler } from "../../../appWide/SectionToggler";
 import { NumObjEntityEditor } from "../../../inputs/NumObjEntityEditor";
-import { BasicBuyAndHoldInfo } from "./Property/BasicBuyAndHoldInfo";
-import { BasicFixAndFlipInfo } from "./Property/BasicFixAndFlipInfo";
-import { BasicInfoEditorRow } from "./Property/BasicInfoEditorRow";
-import { CapExValue } from "./Property/CapExValue";
-import { CustomExpenses } from "./Property/CustomExpenses";
-import { MaintenanceValue } from "./Property/MaintenanceValue";
-import { RehabSection } from "./Property/RehabSection";
-import { Units } from "./Property/Units";
-import { UtilityValue } from "./Property/UtilityValue";
-import { UtilityValueNext } from "./Property/UtilityValueNext";
+import { BasicBuyAndHoldInfo } from "./PropertyEditor/BasicBuyAndHoldInfo";
+import { BasicFixAndFlipInfo } from "./PropertyEditor/BasicFixAndFlipInfo";
+import { BasicInfoEditorRow } from "./PropertyEditor/BasicInfoEditorRow";
+import { CapExValue } from "./PropertyEditor/CapExValue";
+import { CustomExpenses } from "./PropertyEditor/CustomExpenses";
+import { MaintenanceValue } from "./PropertyEditor/MaintenanceValue";
+import { RehabSection } from "./PropertyEditor/RehabSection";
+import { Units } from "./PropertyEditor/Units";
+import { UtilityValue } from "./PropertyEditor/UtilityValue";
+import { UtilityValueNext } from "./PropertyEditor/UtilityValueNext";
 
 type FeIdProp = { feId: string };
 

@@ -1,5 +1,5 @@
 import { useSetterSection } from "../../sharedWithServer/stateClassHooks/useSetterSection";
-import { ListEditorOngoing } from "../ActiveDealPage/ActiveDeal/PropertyGeneral/Property/ValueShared.tsx/ListEditorOngoing";
+import { ListEditorOngoing } from "../ActiveDealPage/ActiveDeal/ActiveDealSections/PropertyEditor/ValueShared.tsx/ListEditorOngoing";
 import { ValueSectionGeneric } from "./ValueSectionGeneric";
 
 interface Props {

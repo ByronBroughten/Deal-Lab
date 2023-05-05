@@ -1,11 +1,11 @@
 import styled from "styled-components";
-import { useGetterSection } from "../../../../../sharedWithServer/stateClassHooks/useGetterSection";
-import theme from "../../../../../theme/Theme";
-import { FormSection } from "../../../../appWide/FormSection";
-import { LabelWithInfo } from "../../../../appWide/LabelWithInfo";
-import { TogglerBooleanTitleVarb } from "../../../../appWide/TogglerBooleanTitleVarb";
-import { TogglerBooleanVarb } from "../../../../appWide/TogglerBooleanVarb";
-import { NumObjEntityEditor } from "../../../../inputs/NumObjEntityEditor";
+import { useGetterSection } from "../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
+import theme from "../../../../../../theme/Theme";
+import { FormSection } from "../../../../../appWide/FormSection";
+import { LabelWithInfo } from "../../../../../appWide/LabelWithInfo";
+import { TogglerBooleanTitleVarb } from "../../../../../appWide/TogglerBooleanTitleVarb";
+import { TogglerBooleanVarb } from "../../../../../appWide/TogglerBooleanVarb";
+import { NumObjEntityEditor } from "../../../../../inputs/NumObjEntityEditor";
 import { LoanBaseValueNext } from "./LoanBaseValueNext";
 
 type Props = { feId: string; className?: string };

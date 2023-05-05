@@ -1,13 +1,13 @@
 import { SxProps } from "@mui/material";
 import React from "react";
-import { SectionNameByType } from "../../../../../sharedWithServer/SectionsMeta/SectionNameByType";
-import { StateValue } from "../../../../../sharedWithServer/SectionsMeta/values/StateValue";
-import { validateStateValue } from "../../../../../sharedWithServer/SectionsMeta/values/valueMetas";
-import { useAction } from "../../../../../sharedWithServer/stateClassHooks/useAction";
-import { useGetterSection } from "../../../../../sharedWithServer/stateClassHooks/useGetterSection";
-import { SelectEditor } from "../../../../appWide/SelectEditor";
-import { NumObjEntityEditor } from "../../../../inputs/NumObjEntityEditor";
-import { FeSectionInfo } from "./../../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
+import { FeSectionInfo } from "../../../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
+import { SectionNameByType } from "../../../../../../sharedWithServer/SectionsMeta/SectionNameByType";
+import { StateValue } from "../../../../../../sharedWithServer/SectionsMeta/values/StateValue";
+import { validateStateValue } from "../../../../../../sharedWithServer/SectionsMeta/values/valueMetas";
+import { useAction } from "../../../../../../sharedWithServer/stateClassHooks/useAction";
+import { useGetterSection } from "../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
+import { SelectEditor } from "../../../../../appWide/SelectEditor";
+import { NumObjEntityEditor } from "../../../../../inputs/NumObjEntityEditor";
 
 type SName = SectionNameByType<"loanBaseSubValue">;
 interface Props<SN extends SName> extends FeSectionInfo<SN> {
