@@ -54,9 +54,9 @@ export function SellingCostValue({ feId, sx }: Props) {
         unionValueName: "sellingCostSource",
         itemizeValue: "itemize",
         items: [
-          ["sixPercent", "6% (common)"],
+          ["sixPercent", "6% ARV (common)"],
           ["valueDollarsEditor", "Custom amount"],
-          ["valuePercentEditor", "Custom percent"],
+          ["valuePercentEditor", "Percent of ARV"],
           ["itemize", "Itemize"],
         ],
         feVarbInfo: {

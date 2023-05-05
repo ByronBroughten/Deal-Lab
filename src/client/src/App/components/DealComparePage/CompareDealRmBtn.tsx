@@ -16,8 +16,8 @@ export function CompareDealRmBtn({ sx, ...rest }: Props) {
           borderRadius: nativeTheme.muiBr0,
           ...nativeTheme.subSection.borderLines,
           "&:hover": {
-            borderColor: nativeTheme.notice.dark,
-            backgroundColor: nativeTheme.notice.dark,
+            borderColor: nativeTheme.notice.light,
+            backgroundColor: nativeTheme.notice.main,
             color: nativeTheme.light,
           },
           ...sx,
