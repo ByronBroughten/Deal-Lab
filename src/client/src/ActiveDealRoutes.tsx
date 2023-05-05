@@ -5,6 +5,7 @@ import {
   ActiveDealProperty,
 } from "./App/components/ActiveDealPage/ActiveDeal/PropertyGeneral/ActiveDealSections";
 import { ActiveDealMain } from "./App/components/ActiveDealPage/ActiveDealMain";
+import { DealModeProvider } from "./App/components/appWide/customContexts/dealModeContext";
 import { UserDataNeededPage } from "./App/components/AuthProtectedPage";
 import { feRoutes } from "./App/Constants/feRoutes";
 import { useGetterSections } from "./App/sharedWithServer/stateClassHooks/useGetterSections";
@@ -32,7 +33,9 @@ function ActiveDealWrapper() {
   const deal = getters.getActiveDeal();
   return (
     <IdOfSectionToSaveProvider storeId={deal.mainStoreId}>
-      <UserDataNeededPage />
+      <DealModeProvider dealMode={deal.valueNext("dealMode")}>
+        <UserDataNeededPage />
+      </DealModeProvider>
     </IdOfSectionToSaveProvider>
   );
 }

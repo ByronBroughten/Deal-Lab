@@ -41,6 +41,12 @@ const varb = displayVarbOptions;
 const group = displayGroup;
 export const allDisplaySectionVarbs = {
   ...allDefaultDisplaySectionVarbs(),
+  ...displaySectionVarbsProp("utilityValue", {
+    ...group("ongoing", "value", "Utilities", {
+      monthly: { displayNameWithVariant: "Utilities monthly" },
+      yearly: { displayNameWithVariant: "Utilities yearly" },
+    }),
+  }),
   ...displaySectionVarbsProp("property", {
     purchasePrice: varb("Purchase price"),
     afterRepairValue: varb("After repair value"),

@@ -46,7 +46,11 @@ export function AllVarbsModal({
           {...{
             ...variablesMenu.varbNext("nameFilter").feVarbInfo,
             placeholder: "Filter",
-            sx: { minWidth: 120 },
+            sx: {
+              "& .DraftEditor-root": {
+                minWidth: 120,
+              },
+            },
           }}
         />
         <StyledActionBtn
