@@ -28,7 +28,7 @@ export function RepairValue({ feId, dealMode, sx }: Props) {
           ...feInfo,
           varbName: "valueSourceName",
         },
-        label: "Repair cost base",
+        label: "Repair cost",
         items: items.filter(
           (item) => dealMode === "buyAndHold" || item[0] !== "zero"
         ),

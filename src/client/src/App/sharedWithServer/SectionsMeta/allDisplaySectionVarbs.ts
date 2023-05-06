@@ -83,7 +83,7 @@ export const allDisplaySectionVarbs = {
     ...ongoingDollars("revenue", "Revenue"),
   }),
   ...displaySectionVarbsProp("repairValue", {
-    value: varb("Repair cost base"),
+    value: varb("Repair cost"),
   }),
   ...displaySectionVarbsProp("unit", {
     numBedrooms: varb("Bedrooms"),
