@@ -104,9 +104,9 @@ export function FinancingEditor({ feId }: Props) {
                 ))}
               </div>
               <SubSectionBtn
-                sx={{ mt: nativeTheme.s3 }}
+                sx={{ mt: nativeTheme.s45, height: "80px" }}
                 onClick={addLoan}
-                text="+ Loan"
+                middle="+ Loan"
               />
             </Box>
           )}

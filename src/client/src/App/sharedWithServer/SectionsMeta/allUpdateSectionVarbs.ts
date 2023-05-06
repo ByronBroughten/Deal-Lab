@@ -13,6 +13,7 @@ import {
   ongoingItemUpdateVarbs,
 } from "./allUpdateSectionVarbs/ongoingItemUpdateVarbs";
 import { propertyUpdateVarbs } from "./allUpdateSectionVarbs/propertyUpdateVarbs";
+import { sellingCostUpdateVarbs } from "./allUpdateSectionVarbs/sellingCostUpdateVarbs";
 import { vacancyLossUpdateVarbs } from "./allUpdateSectionVarbs/vacancyLossUpdateVarbs";
 import { VarbName } from "./baseSectionsDerived/baseSectionsVarbsTypes";
 import { mixedInfoS } from "./SectionInfo/MixedSectionInfo";
@@ -79,6 +80,7 @@ function makeAllUpdateSections() {
       "arvLoanValue",
       loanValueUpdateVarbs(mixedInfoS.varbPathName("afterRepairValue"))
     ),
+    ...updateSectionProp("sellingCostValue", sellingCostUpdateVarbs()),
     ...updateSectionProp("mgmt", mgmtRelVarbs()),
     ...updateSectionProp("vacancyLossValue", vacancyLossUpdateVarbs()),
     ...updateSectionProp("mgmtBasePayValue", mgmtBasePayValueVarbs()),
@@ -201,7 +203,7 @@ function makeAllUpdateSections() {
         monthly: updateBasicsS.sumChildren("capExItem", "valueMonthly"),
         yearly: updateBasicsS.sumChildren("capExItem", "valueYearly"),
       }),
-      itemOngoingSwitch: updateVarb("string", { initValue: "monthly" }),
+      itemOngoingSwitch: updateVarb("ongoingSwitch", { initValue: "monthly" }),
     }),
     ...updateSectionProp("capExItem", capExItemUpdateVarbs()),
     ...updateSectionProp("maintenanceValue", {
@@ -454,6 +456,26 @@ function makeAllUpdateSections() {
         editor: { updateFnName: "calcVarbs" },
       }),
     }),
+    ...updateSectionProp("miscIncomeValue", {
+      valueDollarsOngoingEditor: updateVarb("numObj", {
+        initValue: numObj(0),
+      }),
+    }),
+    ...updateSectionProp("miscOngoingCost", {
+      valueDollarsOngoingEditor: updateVarb("numObj", {
+        initValue: numObj(0),
+      }),
+    }),
+    ...updateSectionProp("miscHoldingCost", {
+      valueDollarsOngoingEditor: updateVarb("numObj", {
+        initValue: numObj(0),
+      }),
+    }),
+    ...updateSectionProp("miscOnetimeCost", {
+      valueDollarsEditor: updateVarb("numObj", {
+        initValue: numObj(0),
+      }),
+    }),
     ...updateSectionProp("calculatedVarbs", calculatedUpdateVarbs()),
     ...updateSectionProp("outputSection", {
       showOutputs: updateVarb("boolean", {
@@ -469,7 +491,7 @@ function makeAllUpdateSections() {
       itemValueSource: updateVarb("editorValueSource", {
         initValue: "valueEditor",
       }),
-      itemOngoingSwitch: updateVarb("string", {
+      itemOngoingSwitch: updateVarb("ongoingSwitch", {
         initValue: "monthly",
       }),
     }),

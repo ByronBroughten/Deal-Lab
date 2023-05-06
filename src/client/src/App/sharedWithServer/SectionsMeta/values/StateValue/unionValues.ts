@@ -1,3 +1,4 @@
+import { Arr } from "../../../utils/Arr";
 import { ValidationError } from "../../../utils/Error";
 import { Obj } from "../../../utils/Obj";
 
@@ -7,12 +8,15 @@ export const dealModes = [
   "fixAndFlip",
   // brrrr
 ] as const;
-export type DealMode = typeof dealModes[number];
+export type DealMode = (typeof dealModes)[number];
 
 export const dealModesPlusMixed = [...dealModes, "mixed"] as const;
-export type DealModeOrMixed = typeof dealModesPlusMixed[number];
+export type DealModeOrMixed = (typeof dealModesPlusMixed)[number];
 
 const valueSources = {
+  ongoingSwitch: ["monthly", "yearly"],
+  monthsYearsSwitch: ["months", "years"],
+
   dealDisplayNameSource: ["displayNameEditor", "defaultDisplayName"],
   loanPurpose: ["purchasePrice", "upfrontRepairs", "purchasePriceAndRepairs"],
   loanAmountInputMode: ["downPayment", "loanAmount"],
@@ -127,6 +131,11 @@ export function isLabSubscription(
   const subscriptions = unionValueArr("labSubscription");
   return subscriptions.includes(value);
 }
+
+export const switchValueNames = Arr.extractStrict(unionValueNames, [
+  "ongoingSwitch",
+  "monthsYearsSwitch",
+] as const);
 
 export const dealModeLabels: Record<UnionValue<"dealMode">, string> = {
   buyAndHold: "Rental Property",

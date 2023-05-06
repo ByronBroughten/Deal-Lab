@@ -30,6 +30,7 @@ const borderRadiuses = {
 
 const muiBr = {
   muiBr0: "5px",
+  sBr0: "20px",
 } as const;
 
 export const unitSizes = {

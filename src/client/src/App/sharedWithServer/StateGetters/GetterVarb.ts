@@ -23,6 +23,7 @@ import {
   NumberOrQ,
   NumObjOutput,
 } from "../SectionsMeta/values/StateValue/NumObj";
+import { switchValueNames } from "../SectionsMeta/values/StateValue/unionValues";
 import { isObjValue } from "../SectionsMeta/values/valueMetas";
 import { ValueName } from "../SectionsMeta/values/ValueName";
 import { VarbMeta } from "../SectionsMeta/VarbMeta";
@@ -238,7 +239,7 @@ export class GetterVarb<
       } else if (Array.isArray(finder)) {
         for (const override of finder as DisplayOverrideSwitches) {
           const switchVarb = this.section.varbByFocalMixed(override.switchInfo);
-          const switchValue = switchVarb.value("string");
+          const switchValue = switchVarb.multiValue(...switchValueNames);
           if (override.switchValue === switchValue) {
             source = this.section.varbByFocalMixed(override.sourceInfo);
             break;

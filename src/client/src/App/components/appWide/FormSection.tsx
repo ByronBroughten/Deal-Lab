@@ -1,10 +1,11 @@
-import styled from "styled-components";
-import theme from "../../theme/Theme";
+import { styled } from "@mui/material";
+import { nativeTheme } from "../../theme/nativeTheme";
 
-export const FormSection = styled.div`
-  display: flex;
-  padding: ${theme.s2};
-  padding-top: ${theme.s4};
-  padding-bottom: ${theme.s45};
-  ${theme.sectionBorderChunk};
-`;
+export const FormSection = styled("div")({
+  display: "flex",
+  padding: nativeTheme.s2,
+  paddingTop: nativeTheme.s4,
+  paddingBottom: nativeTheme.s45,
+  borderWidth: 0,
+  ...nativeTheme.formSection,
+});

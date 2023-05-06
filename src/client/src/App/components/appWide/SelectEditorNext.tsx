@@ -71,7 +71,7 @@ export function SelectEditorNext<
                   pb: "8px",
                 }),
                 ...(label && {
-                  pt: "20px",
+                  pt: "26px",
                   pb: "4px",
                 }),
               },

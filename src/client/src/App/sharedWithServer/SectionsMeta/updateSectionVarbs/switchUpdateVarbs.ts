@@ -10,10 +10,13 @@ import {
   switchOptionNames,
   SwitchTargetKey,
   switchTargetKeys,
+  switchValueName,
+  SwitchValueName,
   SwitchVarbNameRecord,
 } from "../allBaseSectionVarbs/baseSwitchNames";
 import { validateAnyVarbName } from "../baseSectionsDerived/baseSectionsVarbsTypes";
 import { VarbPathName } from "../SectionInfo/VarbPathNameInfo";
+import { StateValue } from "../values/StateValue";
 import { UpdateVarb, updateVarb, UpdateVarbOptions } from "./updateVarb";
 import {
   UpdateBasics,
@@ -36,7 +39,12 @@ import { updateVarbsS } from "./updateVarbs";
 export type UpdateGroup<
   BN extends string,
   SN extends SwitchName
-> = SwitchVarbNameRecord<BN, SN, UpdateVarb<"numObj">, UpdateVarb<"string">>;
+> = SwitchVarbNameRecord<
+  BN,
+  SN,
+  UpdateVarb<"numObj">,
+  UpdateVarb<SwitchValueName<SN>>
+>;
 
 type UpdateOptionName<SN extends SwitchName> = Exclude<
   SwitchOptionName<SN>,
@@ -50,7 +58,7 @@ function updateOptionNames<SN extends SwitchName>(
 
 type SwitchOptionsFull<SN extends SwitchName> = {
   [SON in UpdateOptionName<SN>]: SON extends "switch"
-    ? UpdateVarbOptions<"string">
+    ? UpdateVarbOptions<SwitchValueName<SN>>
     : UpdateVarbOptions<"numObj">;
 };
 type SwitchOptions<SN extends SwitchName> = Partial<SwitchOptionsFull<SN>>;
@@ -70,7 +78,7 @@ function switchOptionsToFull<SN extends SwitchName>(
 function updateGroup<BN extends string, SN extends SwitchName>(
   baseName: BN,
   switchName: SN,
-  switchInit: string,
+  switchInit: StateValue<SwitchValueName<SN>>,
   options: SwitchOptions<SN>
 ): UpdateGroup<BN, SN> {
   const fullOptions = switchOptionsToFull(options, switchName);
@@ -78,7 +86,7 @@ function updateGroup<BN extends string, SN extends SwitchName>(
   return keys.reduce((varbs, key) => {
     const varbName = getSwitchVarbName(baseName, switchName, key);
     if (key === "switch") {
-      (varbs as any)[varbName] = updateVarb("string", {
+      (varbs as any)[varbName] = updateVarb(switchValueName(switchName), {
         ...fullOptions[key as "switch"],
         initValue: switchInit,
       });
@@ -98,7 +106,7 @@ export function ongoingInputNext<BN extends string>(
     switchInit = "monthly",
     ...options
   }: SwitchOptions<"ongoingInput"> & {
-    switchInit?: SwitchTargetKey<"ongoingInput">;
+    switchInit?: StateValue<SwitchValueName<"ongoingInput">>;
   } = {}
 ): UpdateGroup<BN, "ongoingInput"> {
   const names = switchKeyToVarbNames(baseName, "ongoingInput");
@@ -275,7 +283,7 @@ type OngoingUpdatePacks = {
 
 export function monthsYearsInput<BN extends string>(
   baseName: BN,
-  switchInit: SwitchTargetKey<"monthsYearsInput">,
+  switchInit: StateValue<SwitchValueName<"monthsYearsInput">>,
   options?: SwitchOptions<"monthsYearsInput">
 ): UpdateGroup<BN, "monthsYearsInput"> {
   const varbNames = switchKeyToVarbNames(baseName, "monthsYearsInput");

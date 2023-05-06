@@ -5,7 +5,7 @@ import { SectionName } from "../../sharedWithServer/SectionsMeta/SectionName";
 import { useGetterVarbNext } from "../../sharedWithServer/stateClassHooks/useGetterVarb";
 import { MuiRow } from "../general/MuiRow";
 import StandardLabel from "../general/StandardLabel";
-import { TogglerBooleanTitleVarb } from "./TogglerBooleanTitleVarb";
+import { TogglerBooleanVarb } from "./TogglerBooleanVarb";
 
 type Props<SN extends SectionName, VN extends VarbName<SN>> = {
   children: React.ReactNode;
@@ -23,7 +23,7 @@ export function SectionToggler<
   return (
     <Box sx={sx}>
       <MuiRow>
-        <TogglerBooleanTitleVarb
+        <TogglerBooleanVarb
           {...{
             feVarbInfo,
             label: <StandardLabel {...labelProps}>{labelText}</StandardLabel>,

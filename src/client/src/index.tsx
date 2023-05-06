@@ -6,31 +6,49 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
+// change "singleTimeList to onetimeList"
+// "singleTimeListMain"
+// SingleTimeList
+
+// Fix multiple loans not working
+
 // Should I start making the wordpress site?
 // Which advantages do I want to list on WP?
 // - Compare deals side by side
 // - Use custom variables
 // - Break deals down into reusable parts
 // - Modes for home buyers, landlords, fix and flippers, and more
+// - Gain confidence that you're getting the best deal you can
 
-// - Get the example fix & flip numbers to work
+// Change completionStatus to something like:
+// - { invalidInputs: { reason: "empty", ...feVarbInfo }[] }
+
+// - Add homeBuyer mode (no income)
+//   - Buy and hold basics
+//   - ongoing costs (utilities, capEx, maintenance (this will be low... unless you have kids, misc ongoing costs))
+//   - numBedrooms input
+//   - rehab (misc oneTime costs)
+//   - outputs: totalInvestment (Cash Investment), monthlyExpenses, totalInterestPaid, totalPrincipal paid
+
 // - Try condensing buyAndHold's inputs, like with f&f
-// - Add primaryResidence mode (no income)
+//   - Add miscOnetimeCost (singleTimeValue clone, incorporated by costOverrun)
+//   - Add miscRevenueValue (can be the same)
+//   - Add miscOngoingValue (can be the same)
+//   - Add miscHoldingCost value for f&f
 
-// See if Marina and Katie will look at it
+// See if Marina and Kate 'O will look at it
 
-// - Add miscUpfrontCosts for f&f and b&h(?)
-
-// - Add misc revenue value for b&h (this is how you
-//   eliminate ongoingRevenueGroup)
-// - Add miscHoldingCost value for f&f
-// - Add different variable options based on dealMode
-// - Add a dealMode dropdown for CompareDeals
-//   - Mixed will have (totalInvestment, annualizedRoi, and CoCROI)
+// - Add a dealMode dealCompare, to change:
+//   - deals that show up the search
+//   - variables that show up in column select
+//   - the set of columns that is activated
+//     - Mixed will have (totalInvestment, annualizedRoi, and CoCROI)
 
 // - Add tests for fixAndFlip
 
 // - Add Brrrr
+//   - Mostly the same inputs and outputs as b&h + f&f
+//   - I'll have to differentiate between a buy loan and a refi loan
 
 // Launch
 // - restrict editing to only the n most recent deals

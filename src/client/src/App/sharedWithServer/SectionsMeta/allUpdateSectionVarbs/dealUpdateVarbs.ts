@@ -63,7 +63,7 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
         propS.varbPathBase("loanExpensesYearly")
       ),
     }),
-    expensesOngoingSwitch: updateVarb("string", {
+    expensesOngoingSwitch: updateVarb("ongoingSwitch", {
       initValue: "monthly",
     }),
     cashFlowMonthly: dealModeVarb({
@@ -82,7 +82,7 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
         propS.local("expensesYearly")
       ),
     }),
-    cashFlowOngoingSwitch: updateVarb("string", {
+    cashFlowOngoingSwitch: updateVarb("ongoingSwitch", {
       initValue: "yearly",
     }),
     cocRoiDecimalMonthly: dealModeVarb({
@@ -101,7 +101,7 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
         propS.local("totalInvestment")
       ),
     }),
-    cocRoiDecimalOngoingSwitch: updateVarb("string", {
+    cocRoiDecimalOngoingSwitch: updateVarb("ongoingSwitch", {
       initValue: "yearly",
     }),
     cocRoiMonthly: dealModeVarb({
@@ -118,7 +118,7 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
         propS.local("cocRoiDecimalYearly")
       ),
     }),
-    cocRoiOngoingSwitch: updateVarb("string", {
+    cocRoiOngoingSwitch: updateVarb("ongoingSwitch", {
       initValue: "yearly",
     }),
     cashExpensesPlusLoanRepay: dealModeVarb({

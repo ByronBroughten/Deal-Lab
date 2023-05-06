@@ -16,7 +16,7 @@ describe("PackBuilderSection", () => {
     displayName: stringObj("Some string"),
     purchasePrice: numObj(200000),
     taxesOngoingSwitch: "yearly",
-  };
+  } as const;
 
   it("should make a sectionPack with the added values and children", () => {
     const property = PackBuilderSection.initAsOmniChild("property", {

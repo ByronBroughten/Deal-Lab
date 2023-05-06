@@ -5,14 +5,14 @@ import { InfoIcon } from "./InfoIcon";
 
 type Props = {
   label: React.ReactNode;
-  infoTitle: React.ReactNode;
+  infoTitle?: React.ReactNode;
   infoText: string;
   className?: string;
 };
 export function LabelWithInfo({
-  label,
-  infoTitle,
   className,
+  label,
+  infoTitle = label,
   infoText,
 }: Props) {
   return (

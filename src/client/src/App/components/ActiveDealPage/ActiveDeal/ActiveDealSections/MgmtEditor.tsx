@@ -3,19 +3,14 @@ import { StateValue } from "../../../../sharedWithServer/SectionsMeta/values/Sta
 import theme from "../../../../theme/Theme";
 import MainSectionBody from "../../../appWide/GeneralSection/MainSection/MainSectionBody";
 import { MainSectionTopRows } from "../../../appWide/MainSectionTopRows";
-import { BasicMgmtInfo } from "./MgmtEditor/BasicMgmtInfo";
-import { CustomExpenses } from "./PropertyEditor/CustomExpenses";
+import { BasicMgmtInfo } from "./MgmtEditor/MgmtOngoingCosts";
 
 type Props = {
   feId: string;
   dealMode: StateValue<"dealMode">;
-  backBtnProps: {
-    backToWhat: string;
-    onClick: () => void;
-  };
 };
 
-export function MgmtEditor({ feId, backBtnProps }: Props) {
+export function MgmtEditor({ feId }: Props) {
   const feInfo = { sectionName: "mgmt", feId } as const;
   return (
     <Styled>
@@ -26,8 +21,7 @@ export function MgmtEditor({ feId, backBtnProps }: Props) {
         }}
       />
       <MainSectionBody themeName="mgmt">
-        <BasicMgmtInfo feId={feId} className="Mgmt-basicInfo" />
-        <CustomExpenses {...feInfo} />
+        <BasicMgmtInfo feId={feId} />
       </MainSectionBody>
     </Styled>
   );

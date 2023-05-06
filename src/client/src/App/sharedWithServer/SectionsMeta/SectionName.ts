@@ -59,7 +59,9 @@ export const sectionNames = [
   "capExList",
   "capExItem",
   "unit",
+  "miscOnetimeCost",
   "miscIncomeValue",
+  "miscOngoingCost",
   "miscHoldingCost",
 
   "financing",
@@ -72,7 +74,6 @@ export const sectionNames = [
 
   "closingCostValue",
 
-  "mgmtGeneral",
   "mgmt",
   "mgmtBasePayValue",
   "vacancyLossValue",
@@ -95,7 +96,7 @@ export function validateSectionName(value: any): SectionName {
   }
 }
 
-export type SectionName = typeof sectionNames[number];
+export type SectionName = (typeof sectionNames)[number];
 export function isSectionName(value: any): value is SectionName {
   return sectionNames.includes(value);
 }

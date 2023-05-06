@@ -38,12 +38,15 @@ export function MuiSelectStyled({
           borderTopLeftRadius: nativeTheme.muiBr0,
           borderTopRightRadius: nativeTheme.muiBr0,
           ...(label && {
+            "& .MuiInputBase-root": {
+              height: "54px",
+            },
             "& .MuiSvgIcon-root": {
-              top: "16px",
+              top: "24px",
             },
             "& .MuiFormLabel-root": {
-              fontSize: nativeTheme.fs17,
-              transform: `translate(12px, 2px) scale(1)`,
+              fontSize: nativeTheme.inputLabel.fontSize,
+              transform: `translate(12px, 0px) scale(1)`,
             },
           }),
           ...(!label && {
@@ -77,6 +80,7 @@ export function MuiSelectStyled({
           autoWidth: true,
           sx: [
             {
+              fontSize: nativeTheme.inputEditor.fontSize,
               backgroundColor: nativeTheme["gray-150"],
               borderBottomWidth: 0,
               minWidth: 0,

@@ -2,56 +2,72 @@ import { Arr } from "../../utils/Arr";
 import { Obj } from "../../utils/Obj";
 import { Merge, Spread } from "../../utils/Obj/merge";
 import { StrictExtract } from "../../utils/types";
+import { UnionValue, UnionValueName } from "../values/StateValue/unionValues";
 
-type GeneralBaseSwitchSchemas = {
-  [key: string]: {
+const switchNames = [
+  "ongoing",
+  "ongoingInput",
+  "monthsYears",
+  "monthsYearsInput",
+] as const;
+
+export type SwitchName = (typeof switchNames)[number];
+
+type SwitchValueNamesGeneric = Record<SwitchName, UnionValueName>;
+const checkSwitchValueNames = <T extends SwitchValueNamesGeneric>(t: T) => t;
+
+const switchValueNames = checkSwitchValueNames({
+  ongoing: "ongoingSwitch",
+  ongoingInput: "ongoingSwitch",
+  monthsYears: "monthsYearsSwitch",
+  monthsYearsInput: "monthsYearsSwitch",
+});
+type SwitchValueNames = typeof switchValueNames;
+export type SwitchValueName<SN extends SwitchName> = SwitchValueNames[SN];
+export function switchValueName<SN extends SwitchName>(
+  switchName: SN
+): SwitchValueName<SN> {
+  return switchValueNames[switchName];
+}
+
+export type SwitchValue<SN extends SwitchName> = UnionValue<
+  SwitchValueName<SN>
+>;
+
+type GeneralBaseSwitchSchemas = Record<
+  SwitchName,
+  {
     [key: string]: string;
     switch: string;
-  };
-};
-export const switchVarbNameEndings = {
-  percent: {
-    percent: "Percent",
-    switch: "UnitSwitch",
-  },
-  get dollarsPercent() {
-    return {
-      ...this.percent,
-      dollars: "Dollars",
-    } as const;
-  },
-  get dollarsPercentDecimal() {
-    return {
-      ...this.dollarsPercent,
-      decimal: "Decimal",
-    } as const;
-  },
-  get ongoingInput() {
-    return {
-      ...this.ongoing,
-      editor: "OngoingEditor",
-    } as const;
-  },
-  get monthsYearsInput() {
-    return {
-      ...this.monthsYears,
-      editor: "SpanEditor",
-    } as const;
-  },
-  ongoing: {
-    monthly: "Monthly",
-    yearly: "Yearly",
-    switch: "OngoingSwitch",
-  },
-  monthsYears: {
-    months: "Months",
-    years: "Years",
-    switch: "SpanSwitch",
-  },
+  }
+>;
+
+const checkSwitchVarbNameEndings = <T extends GeneralBaseSwitchSchemas>(t: T) =>
+  t;
+
+const ongoingEndings = {
+  monthly: "Monthly",
+  yearly: "Yearly",
+  switch: "OngoingSwitch",
 } as const;
-const _testBaseSwitchSchemas = <BSS extends GeneralBaseSwitchSchemas>(_: BSS) =>
-  undefined;
-_testBaseSwitchSchemas(switchVarbNameEndings);
+const spanEndings = {
+  months: "Months",
+  years: "Years",
+  switch: "SpanSwitch",
+} as const;
+export const switchVarbNameEndings = checkSwitchVarbNameEndings({
+  ongoing: ongoingEndings,
+  ongoingInput: {
+    ...ongoingEndings,
+    editor: "OngoingEditor",
+  },
+  monthsYears: spanEndings,
+  monthsYearsInput: {
+    ...spanEndings,
+    editor: "SpanEditor",
+  },
+} as const);
+
 type SwitchVarbNameEndings = typeof switchVarbNameEndings;
 
 export type SwitchKey<SN extends SwitchName> = keyof SwitchVarbNameEndings[SN];
@@ -61,7 +77,6 @@ export function switchKeys<SN extends SwitchName>(
   return Obj.keys(switchVarbNameEndings[switchName]);
 }
 
-export type SwitchName = keyof SwitchVarbNameEndings;
 export type EditorSwitchName = StrictExtract<
   SwitchName,
   "ongoingInput" | "monthsYearsInput"
@@ -144,7 +159,7 @@ export type SwitchVarbNameRecord<
 };
 
 const extraSwitchOptionNames = ["targets", "all"] as const;
-type ExtraSwitchOptionName = typeof extraSwitchOptionNames[number];
+type ExtraSwitchOptionName = (typeof extraSwitchOptionNames)[number];
 export type SwitchOptionName<SN extends SwitchName> =
   | SwitchKey<SN>
   | ExtraSwitchOptionName;

@@ -5,7 +5,7 @@ import {
 import { stringObj } from "../../SectionsMeta/values/StateValue/StringObj";
 import { PackBuilderSection } from "../../StatePackers/PackBuilderSection";
 import { StrictPick } from "../../utils/types";
-import { makeDefaultMgmtPack } from "../makeDefaultMgmtPack";
+import { makeDefaultMgmt } from "../makeDefaultMgmt";
 
 type ExampleMgmtProps = {
   mgmt: StrictPick<SectionValues<"mgmt">, "displayName">;
@@ -19,7 +19,7 @@ type ExampleMgmtProps = {
 
 function exampleMgmt(props: ExampleMgmtProps) {
   const mgmt = PackBuilderSection.initAsOmniChild("mgmt");
-  mgmt.loadSelf(makeDefaultMgmtPack());
+  mgmt.loadSelf(makeDefaultMgmt());
   mgmt.updateValues(props.mgmt);
 
   const vacancyLoss = mgmt.onlyChild("vacancyLossValue");

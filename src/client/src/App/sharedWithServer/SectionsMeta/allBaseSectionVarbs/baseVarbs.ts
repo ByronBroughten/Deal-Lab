@@ -3,15 +3,15 @@ import { Merge, merge } from "../../utils/Obj/merge";
 import { ValueName, valueNames } from "../values/ValueName";
 import { baseSectionVarbs } from "./baseSectionVarbs";
 import {
-  GetSwitchOptions,
   getSwitchOptions,
-  GetTargetOptions,
   getTargetOptions,
   SwitchKey,
   switchKeyToVarbNames,
   SwitchName,
   switchOptions,
   SwitchOptionsProps,
+  switchValueName,
+  SwitchValueName,
   SwitchVarbName,
 } from "./baseSwitchNames";
 import { baseOptions } from "./baseUnits";
@@ -124,19 +124,9 @@ export function baseVarbs<
   }, {} as SimpleBaseVarbs<VN, VNS>);
 }
 
-type BaseSwitchVarbs<
-  BN extends string,
-  SN extends SwitchName,
-  O extends SwitchOptionsProps<SN, Options>
-> = {
-  [SK in SwitchKey<SN> as SwitchVarbName<BN, SN, SK>]: SK extends "switch"
-    ? BaseVarb<"string", GetSwitchOptions<SN, SK, O>>
-    : BaseVarb<"numObj", GetTargetOptions<SN, SK, O>>;
-};
-
 type SimpleBaseSwitchVarbs<BN extends string, SN extends SwitchName> = {
   [SK in SwitchKey<SN> as SwitchVarbName<BN, SN, SK>]: SK extends "switch"
-    ? SimpleBaseVarb<"string">
+    ? SimpleBaseVarb<SwitchValueName<SN>>
     : SimpleBaseVarb<"numObj">;
 };
 
@@ -144,31 +134,21 @@ const ongoingOptions = {
   monthly: { valueTimespan: "monthly" },
   yearly: { valueTimespan: "yearly" },
 } as const;
-type OngoingOptions = typeof ongoingOptions;
 
 const ongoingDollarsOptions = {
   targets: { valueUnit: "dollars" },
   ...ongoingOptions,
 } as const;
-type OngoingDollarsOptions = typeof ongoingDollarsOptions;
+
 const ongoingPercentOptions = {
   targets: { valueUnit: "percent" },
   ...ongoingOptions,
 } as const;
-type OngoingPercentOptions = typeof ongoingPercentOptions;
-
-const dollarsPercentDecimalOptions = {
-  dollars: { valueUnit: "dollars" },
-  percent: { valueUnit: "percent" },
-  decimal: { valueUnit: "decimal" },
-} as const;
-type DollarsPercentDecimalOptions = typeof dollarsPercentDecimalOptions;
 
 const monthsYearsOptions = {
   months: { valueUnit: "months" },
   years: { valueUnit: "years" },
 } as const;
-type MonthsYearsOptions = typeof monthsYearsOptions;
 
 export const baseVarbsS = {
   get typeUniformity() {
@@ -189,7 +169,7 @@ export const baseVarbsS = {
       const varbName = keyToVarbNames[key];
       if (key === "switch") {
         varbs[varbName] = {
-          ...baseVarb("string"),
+          ...baseVarb(switchValueName(switchName)),
           ...getSwitchOptions(switchName, key, fullOptions as any),
         } as any as SimpleBaseSwitchVarbs<BN, SN>[typeof varbName];
       } else {
@@ -243,15 +223,6 @@ export const baseVarbsS = {
     baseName: BN
   ): SimpleBaseSwitchVarbs<BN, "monthsYearsInput"> {
     return this.group(baseName, "monthsYearsInput", monthsYearsOptions);
-  },
-  dollarsPercentDecimal<BN extends string>(
-    baseName: BN
-  ): SimpleBaseSwitchVarbs<BN, "dollarsPercentDecimal"> {
-    return this.group(
-      baseName,
-      "dollarsPercentDecimal",
-      dollarsPercentDecimalOptions
-    );
   },
   get displayName() {
     return {

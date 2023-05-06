@@ -1,5 +1,7 @@
+import { sxProps } from "../utils/mui";
 import { reactNativeS } from "../utils/reactNative";
 import { comparedDeal } from "./nativeTheme/comparedDeal";
+import { inputStyles } from "./nativeTheme/inputsStyles";
 import { mainSection } from "./nativeTheme/mainSection";
 import { materialDraftEditor } from "./nativeTheme/materialDraftEditor";
 import { subSection } from "./nativeTheme/subSection";
@@ -19,6 +21,7 @@ export const nativeTheme = {
   ...themeShadows,
   ...unitSizes,
   ...mediaQuery,
+  ...inputStyles,
   standardBorder(borderColor: string) {
     return view({
       borderStyle: "solid",
@@ -60,10 +63,13 @@ export const nativeTheme = {
     },
   },
   editorMargins: {
-    my: unitSizes.s3,
-    mr: unitSizes.s4,
+    my: unitSizes.s4,
+    mr: unitSizes.s45,
     ml: 0,
   },
+  sectionTitle: sxProps({
+    fontSize: unitSizes.fs24,
+  }),
   mainSection,
   subSection,
   comparedDeal,

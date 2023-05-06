@@ -120,12 +120,12 @@ export function makeAllBaseSectionVarbs() {
       ...baseVarbsS.savableSection,
       ...baseVarbsS.ongoingDollars("total"),
       itemValueSource: baseVarb("editorValueSource"),
-      itemOngoingSwitch: baseVarb("string"),
+      itemOngoingSwitch: baseVarb("ongoingSwitch"),
     }),
     capExList: varbs({
       ...baseVarbsS.savableSection,
       ...baseVarbsS.ongoingDollars("total"),
-      itemOngoingSwitch: baseVarb("string"),
+      itemOngoingSwitch: baseVarb("ongoingSwitch"),
     }),
     capExItem: baseCapExItem,
     ongoingItem: baseOngoingItem,
@@ -218,6 +218,15 @@ export function makeAllBaseSectionVarbs() {
       one: baseVarb("number"),
       numBedrooms: baseVarb("numObj"),
       ...baseVarbsS.ongoingDollarsInput("targetRent"),
+    }),
+    miscOnetimeCost: varbs({
+      valueSourceName: baseVarb("dollarsOrList"),
+      valueDollarsEditor: baseVarb("numObj", dollars),
+      valueDollars: baseVarb("numObj", dollars),
+    }),
+    miscOngoingCost: varbs({
+      valueSourceName: baseVarb("dollarsOrList"),
+      ...baseVarbsS.ongoingDollarsInput("valueDollars"),
     }),
     miscIncomeValue: varbs({
       valueSourceName: baseVarb("dollarsOrList"),

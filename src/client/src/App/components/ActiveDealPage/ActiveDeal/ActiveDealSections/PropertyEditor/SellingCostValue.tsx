@@ -5,7 +5,7 @@ import { StrictExtract } from "../../../../../sharedWithServer/utils/types";
 import { LabelWithInfo } from "../../../../appWide/LabelWithInfo";
 import { SelectAndItemizeEditorNext } from "../../../../appWide/SelectAndItemizeEditorNext";
 import { NumObjEntityEditor } from "../../../../inputs/NumObjEntityEditor";
-import { ListEditorSingleTime } from "./ValueShared.tsx/ListEditorSingleTime";
+import { ListEditorSingleTime } from "./ValueShared/ListEditorSingleTime";
 
 function isEditorSource(
   value: any

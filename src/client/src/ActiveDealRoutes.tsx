@@ -32,10 +32,10 @@ function ActiveDealWrapper() {
   const getters = useGetterSections();
   const deal = getters.getActiveDeal();
   return (
-    <IdOfSectionToSaveProvider storeId={deal.mainStoreId}>
-      <DealModeProvider dealMode={deal.valueNext("dealMode")}>
+    <DealModeProvider dealMode={deal.valueNext("dealMode")}>
+      <IdOfSectionToSaveProvider storeId={deal.mainStoreId}>
         <UserDataNeededPage />
-      </DealModeProvider>
-    </IdOfSectionToSaveProvider>
+      </IdOfSectionToSaveProvider>
+    </DealModeProvider>
   );
 }

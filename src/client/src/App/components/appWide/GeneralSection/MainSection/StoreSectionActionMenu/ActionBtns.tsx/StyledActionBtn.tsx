@@ -27,7 +27,7 @@ export function StyledActionBtn({
             borderRadius: 5,
             paddingLeft: nativeTheme.s25,
             paddingRight: nativeTheme.s25,
-            fontSize: 15,
+            fontSize: nativeTheme.fs16,
             "&:hover": {
               color: nativeTheme.light,
               backgroundColor: nativeTheme.darkBlue.main,

@@ -4,7 +4,7 @@ import { FeVarbInfo } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeIn
 import { useSetterVarb } from "../../sharedWithServer/stateClassHooks/useSetterVarb";
 import { Toggler } from "../general/Toggler";
 
-interface Props {
+export interface TogglerBooleanVarbProps {
   feVarbInfo: FeVarbInfo;
 
   label: React.ReactNode;
@@ -13,7 +13,11 @@ interface Props {
   className?: string;
 }
 
-export function TogglerBooleanVarb({ feVarbInfo, onChange, ...rest }: Props) {
+export function TogglerBooleanVarb({
+  feVarbInfo,
+  onChange,
+  ...rest
+}: TogglerBooleanVarbProps) {
   const boolVarb = useSetterVarb(feVarbInfo);
   const checked = boolVarb.value("boolean");
   return (

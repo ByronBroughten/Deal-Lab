@@ -14,7 +14,7 @@ import { MuiSelect } from "../../../../../appWide/MuiSelect";
 import { NumObjEntityEditor } from "../../../../../inputs/NumObjEntityEditor";
 import { LoanBaseSubValue } from "./LoanBaseSubValue";
 
-export function LoanBaseValueNext({ feId }: { feId: string }) {
+export function LoanBaseValue({ feId }: { feId: string }) {
   const feInfo = { sectionName: "loanBaseValue", feId } as const;
   const baseValue = useGetterSection(feInfo);
   const valueSource = baseValue.valueNext("valueSourceName");
@@ -25,12 +25,20 @@ export function LoanBaseValueNext({ feId }: { feId: string }) {
       }}
     >
       <Box
-        sx={{ display: "flex", flexDirection: "row", alignItems: "flex-end" }}
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "flex-end",
+          mt: nativeTheme.editorMargins.my,
+        }}
       >
         <MuiSelect
           {...{
-            label: "Pay for what",
-            sx: { minWidth: "110px" },
+            label: "Loan for what",
+            sx: {
+              minWidth: "110px",
+              mr: nativeTheme.s35,
+            },
             feVarbInfo: {
               ...feInfo,
               varbName: "valueSourceName",
@@ -89,7 +97,7 @@ function ValueNumbers<SN extends SectionNameByType<"loanBaseSubValue">>({
   return editorText ? (
     <LabeledVarbRow
       {...{
-        sx: { mt: nativeTheme.s2 },
+        sx: { pt: nativeTheme.s35 },
         varbPropArr: subValue.varbInfoArr(varbNames),
       }}
     />

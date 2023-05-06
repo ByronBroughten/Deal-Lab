@@ -3,7 +3,7 @@ import { validateStateValue } from "../../../../../sharedWithServer/SectionsMeta
 import { useAction } from "../../../../../sharedWithServer/stateClassHooks/useAction";
 import { useGetterSection } from "../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { SelectAndItemizeEditorSection } from "../../../../appWide/SelectAndItemizeEditorSection";
-import { ListEditorOngoing } from "./ValueShared.tsx/ListEditorOngoing";
+import { ListEditorOngoing } from "./ValueShared/ListEditorOngoing";
 
 export function UtilityValue({
   feId,

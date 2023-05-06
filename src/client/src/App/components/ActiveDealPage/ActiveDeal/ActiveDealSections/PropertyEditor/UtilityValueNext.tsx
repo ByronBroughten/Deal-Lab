@@ -1,6 +1,6 @@
 import { useGetterSection } from "../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { SelectAndItemizeEditorNext } from "../../../../appWide/SelectAndItemizeEditorNext";
-import { ListEditorOngoing } from "./ValueShared.tsx/ListEditorOngoing";
+import { ListEditorOngoing } from "./ValueShared/ListEditorOngoing";
 
 export function UtilityValueNext({ feId }: { feId: string }) {
   const feInfo = { sectionName: "utilityValue", feId } as const;
@@ -11,7 +11,7 @@ export function UtilityValueNext({ feId }: { feId: string }) {
   return (
     <SelectAndItemizeEditorNext
       {...{
-        selectProps: { sx: { minWidth: 160 } },
+        selectProps: { sx: { minWidth: 170 } },
         unionValueName: "utilityValueSource",
         label: "Utilities",
         feVarbInfo: {

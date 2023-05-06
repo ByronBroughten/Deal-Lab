@@ -9,7 +9,7 @@ import { useGetterSection } from "../../../../../sharedWithServer/stateClassHook
 import { LabelWithInfo } from "../../../../appWide/LabelWithInfo";
 import { SelectAndItemizeEditorSection } from "../../../../appWide/SelectAndItemizeEditorSection";
 import { NumObjEntityEditor } from "../../../../inputs/NumObjEntityEditor";
-import { CapExValueList } from "./ValueShared.tsx/CapExListEditor";
+import { CapExValueList } from "./ValueShared/CapExListEditor";
 
 export function CapExValue({ feId }: { feId: string }) {
   const feInfo = { sectionName: "capExValue", feId } as const;

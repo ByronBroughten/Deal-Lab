@@ -5,7 +5,7 @@ import { FormSection } from "../../../../appWide/FormSection";
 import { MainSectionInner } from "../../../../appWide/GeneralSection/MainSectionInner";
 import { ValueGroupOngoing } from "../../../../appWide/ListGroup/ValueGroupOngoing";
 import { ValueGroupSingleTime } from "../../../../appWide/ListGroup/ValueGroupSingleTime";
-import { TogglerBooleanTitleVarb } from "../../../../appWide/TogglerBooleanTitleVarb";
+import { TogglerBooleanVarb } from "../../../../appWide/TogglerBooleanVarb";
 import StandardLabel from "../../../../general/StandardLabel";
 
 export function CustomExpenses({
@@ -29,7 +29,7 @@ export function CustomExpenses({
   return (
     <Styled>
       <div>
-        <TogglerBooleanTitleVarb
+        <TogglerBooleanVarb
           {...{
             className: "BasicLoanInfo-toggler",
             feVarbInfo: section.varbInfo("useCustomCosts"),

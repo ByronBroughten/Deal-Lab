@@ -1,11 +1,12 @@
 import React from "react";
-import styled from "styled-components";
+import { useWindowDimensions } from "react-native";
 import { useGetterSection } from "../../../../../sharedWithServer/stateClassHooks/useGetterSection";
+import { nativeTheme } from "../../../../../theme/nativeTheme";
 import MainSectionBody from "../../../../appWide/GeneralSection/MainSection/MainSectionBody";
 import { MainSectionInner } from "../../../../appWide/GeneralSection/MainSectionInner";
 import { MainSectionTopRows } from "../../../../appWide/MainSectionTopRows";
-import BasicLoanInfo from "./Loan/BasicLoanInfo";
-import { ClosingCostValue } from "./Loan/ClostingCostValue";
+import { LoanBaseValue } from "./Loan/LoanBaseValue";
+import { LoanTerms } from "./Loan/LoanTerms";
 
 export function Loan({
   feId,
@@ -22,8 +23,28 @@ export function Loan({
   } as const;
 
   const loan = useGetterSection(feInfo);
+
+  const dimensions = useWindowDimensions();
+  const { mediaPhone, s5, s15 } = nativeTheme;
+  const paddingLR = dimensions.width > mediaPhone ? s5 : s15;
+
   return (
-    <Styled className={`Loan-root ${className ?? ""}`}>
+    <MainSectionInner
+      className={className}
+      sx={{
+        paddingTop: nativeTheme.s45,
+        paddingLeft: paddingLR,
+        paddingRight: paddingLR,
+        "& .MainSectionTopRows-xBtn": {
+          visibility: "hidden",
+        },
+        "& :hover": {
+          "& .MainSectionTopRows-xBtn": {
+            visibility: "visible",
+          },
+        },
+      }}
+    >
       <MainSectionTopRows
         {...{
           ...feInfo,
@@ -32,31 +53,9 @@ export function Loan({
         }}
       />
       <MainSectionBody themeName="loan">
-        <BasicLoanInfo feId={feId} />
-        <ClosingCostValue
-          {...{
-            feId: loan.onlyChildFeId("closingCostValue"),
-            fivePercentLoanDisplay: loan
-              .varbNext("fivePercentBaseLoan")
-              .displayVarb(),
-          }}
-        />
+        <LoanBaseValue feId={loan.onlyChildFeId("loanBaseValue")} />
+        <LoanTerms feId={loan.feId} />
       </MainSectionBody>
-    </Styled>
+    </MainSectionInner>
   );
 }
-
-const Styled = styled(MainSectionInner)`
-  .ClosingCostValue-root {
-    padding-bottom: 0;
-  }
-  .MainSectionTopRows-xBtn {
-    visibility: hidden;
-  }
-
-  :hover {
-    .MainSectionTopRows-xBtn {
-      visibility: visible;
-    }
-  }
-`;

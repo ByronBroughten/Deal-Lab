@@ -1,15 +1,13 @@
-import { validateStateValue } from "../../../../../../sharedWithServer/SectionsMeta/values/valueMetas";
-import { useAction } from "../../../../../../sharedWithServer/stateClassHooks/useAction";
 import { useGetterSection } from "../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
-import { SelectAndItemizeEditorSection } from "../../../../../appWide/SelectAndItemizeEditorSection";
+import { nativeTheme } from "../../../../../../theme/nativeTheme";
+import { LabelWithInfo } from "../../../../../appWide/LabelWithInfo";
+import { SelectAndItemizeEditorNext } from "../../../../../appWide/SelectAndItemizeEditorNext";
 import { NumObjEntityEditor } from "../../../../../inputs/NumObjEntityEditor";
-import { ListEditorSingleTime } from "../../PropertyEditor/ValueShared.tsx/ListEditorSingleTime";
+import { ListEditorSingleTime } from "../../PropertyEditor/ValueShared/ListEditorSingleTime";
 
 type Props = { feId: string; fivePercentLoanDisplay: string };
 export function ClosingCostValue({ feId, fivePercentLoanDisplay }: Props) {
-  const updateValue = useAction("updateValue");
   const feInfo = { sectionName: "closingCostValue", feId } as const;
-
   const closingCostValue = useGetterSection({
     sectionName: "closingCostValue",
     feId,
@@ -18,19 +16,22 @@ export function ClosingCostValue({ feId, fivePercentLoanDisplay }: Props) {
   const equalsValue =
     valueSourceName === "fivePercentLoan" ? fivePercentLoanDisplay : undefined;
   return (
-    <SelectAndItemizeEditorSection
+    <SelectAndItemizeEditorNext
       {...{
-        className: "ClosingCostValue-root",
-        label: "Closing Costs",
-        // make a note that this does not include Prepaid items
-        selectValue: valueSourceName,
-        onChange: (e) => {
-          updateValue({
-            ...feInfo,
-            varbName: "valueSourceName",
-            value: validateStateValue(e.target.value, "closingCostValueSource"),
-          });
+        sx: { pt: nativeTheme.editorMargins.my },
+        feVarbInfo: {
+          ...feInfo,
+          varbName: "valueSourceName",
         },
+        unionValueName: "closingCostValueSource",
+        label: (
+          <LabelWithInfo
+            {...{
+              label: "Closing costs",
+              infoText: `Most loans require that the borrower pay a number of one-time fees—appraisal fees, title fees, government fees. Collectively, these fees are called closing costs.\n\nNote that closing costs don't include prepaid or escrow costs, such as prepaid home insurance or taxes.`,
+            }}
+          />
+        ),
         makeEditor:
           valueSourceName === "valueEditor"
             ? (props) => (
@@ -43,7 +44,7 @@ export function ClosingCostValue({ feId, fivePercentLoanDisplay }: Props) {
                 />
               )
             : undefined,
-        menuItems: [
+        items: [
           ["fivePercentLoan", "5% of Base Loan"],
           ["valueEditor", "Enter lump sum"],
           ["listTotal", "Itemize"],

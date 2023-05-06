@@ -44,8 +44,8 @@ export function BasicFixAndFlipInfo({ feId }: Props) {
               margin: nativeTheme.s3,
               marginLeft: 0,
               marginRight: nativeTheme.s4,
-              "& .DraftTextField-root": {
-                minWidth: 150,
+              "& .DraftEditor-root": {
+                minWidth: 145,
               },
             }}
           />

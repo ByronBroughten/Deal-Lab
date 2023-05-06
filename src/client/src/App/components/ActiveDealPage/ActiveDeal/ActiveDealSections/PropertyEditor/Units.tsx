@@ -35,26 +35,24 @@ export function Units({ feId }: Props) {
   return (
     <Styled className="Units-root">
       {unitsIsOpen && (
-        <>
-          <FormSection>
-            <div style={{ height: "80px" }}></div>
-          </FormSection>
-          <ModalSection
-            {...{
-              title: "Units",
-              show: unitsIsOpen,
-              closeModal: closeUnits,
-            }}
-          >
-            <UnitList
-              {...{
-                feId,
-                className: "Units-unitList",
-              }}
-            />
-          </ModalSection>
-        </>
+        <FormSection>
+          <div style={{ height: "80px" }}></div>
+        </FormSection>
       )}
+      <ModalSection
+        {...{
+          title: "Units",
+          show: unitsIsOpen,
+          closeModal: closeUnits,
+        }}
+      >
+        <UnitList
+          {...{
+            feId,
+            className: "Units-unitList",
+          }}
+        />
+      </ModalSection>
       {unitsIsClosed && (
         <FormSection>
           <div>

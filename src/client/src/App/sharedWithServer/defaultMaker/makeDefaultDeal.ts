@@ -6,11 +6,11 @@ import { PackBuilderSection } from "../StatePackers/PackBuilderSection";
 import { Obj } from "../utils/Obj";
 import { StrictExclude } from "../utils/types";
 import { makeDefaultLoanPack } from "./makeDefaultLoanPack";
-import { makeDefaultMgmtPack } from "./makeDefaultMgmtPack";
+import { makeDefaultMgmt } from "./makeDefaultMgmt";
 import { makeDefaultProperty } from "./makeDefaultProperty";
 
 export const dealSectionNames = ["property", "financing", "mgmt"] as const;
-type DealSectionName = typeof dealSectionNames[number];
+type DealSectionName = (typeof dealSectionNames)[number];
 
 export function makeDefaultDealDisplayName(
   deal: GetterSection<"deal">
@@ -68,7 +68,7 @@ export function makeDefaultDealPack(
 
   deal.loadChild({
     childName: "mgmt",
-    sectionPack: makeDefaultMgmtPack(),
+    sectionPack: makeDefaultMgmt(),
   });
 
   return deal.makeSectionPack();

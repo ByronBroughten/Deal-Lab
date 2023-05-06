@@ -203,11 +203,6 @@ export const allDisplaySectionVarbs = {
     roiPercent: varb("ROI"),
     roiPercentAnnualized: varb("ROI Annualized"),
     totalInvestment: varb("Total investment"),
-    ...group("dollarsPercentDecimal", "downPayment", "Down payment", {
-      dollars: { displayNameWithVariant: "Down payment" },
-      percent: { displayNameWithVariant: "Down payment percent" },
-      decimal: { displayNameWithVariant: "Down payment as decimal" },
-    }),
     ...group("ongoing", "piti", "PITI payment", {
       monthly: { displayNameWithVariant: "Monthly PITI payment" },
       yearly: { displayNameWithVariant: "Yearly PITI payment" },

@@ -6,7 +6,7 @@ import { unitSizes } from "./unitSizes";
 export const mainSection = sxProps({
   background: themeColors.light,
   padding: unitSizes.s4,
-  borderRadius: unitSizes.br0,
+  borderRadius: unitSizes.sBr0,
   boxShadow: themeShadows.oldShadow1,
   "&:hover": {
     "& .MainSectionTitleRow-xBtn": {

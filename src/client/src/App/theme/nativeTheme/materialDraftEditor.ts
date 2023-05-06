@@ -1,10 +1,11 @@
 import React from "react";
 import { sxProps } from "../../utils/mui";
+import { inputStyles } from "./inputsStyles";
 import { themeColors } from "./themeColors";
 import { themeStandards } from "./themeStandards";
 import { unitSizes } from "./unitSizes";
 
-const fontSize = 18;
+const fontSize = inputStyles.inputEditor.fontSize;
 export const materialDraftEditor = (label?: React.ReactNode) =>
   sxProps({
     display: "inline-block",
@@ -58,7 +59,7 @@ export const materialDraftEditor = (label?: React.ReactNode) =>
     ...(label && {
       "& .MuiFilledInput-root": {
         px: unitSizes.s2,
-        pt: "20px",
+        pt: "24px",
         pb: "2px",
       },
       "& .MuiFormLabel-root": {
@@ -71,6 +72,7 @@ export const materialDraftEditor = (label?: React.ReactNode) =>
       // label location when editor is empty
       "& .MuiInputLabel-filled": {
         transform: `translate(${unitSizes.s2}, 20px) scale(1)`,
+        fontSize: inputStyles.inputLabel.fontSize,
       },
       // when editor is not empty
       "& .MuiInputLabel-filled.MuiInputLabel-shrink": {

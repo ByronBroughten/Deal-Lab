@@ -4,6 +4,7 @@ import {
   SwitchName,
   SwitchTargetKey,
   SwitchTargetName,
+  switchValueName,
 } from "../SectionsMeta/allBaseSectionVarbs/baseSwitchNames";
 import { DbSectionInfo } from "../SectionsMeta/allBaseSectionVarbs/DbSectionInfo";
 import { GenericChildTraits } from "../SectionsMeta/allChildrenTraits";
@@ -721,18 +722,14 @@ export class GetterSection<
 
   switchValue<SK extends SwitchName>(
     varbNameBase: string,
-    switchEnding: SK
+    switchName: SK
   ): SwitchTargetKey<SK> {
-    const varbNames = switchKeyToVarbNames(varbNameBase, switchEnding);
-    const switchValue = this.value(varbNames.switch, "string");
-    if (!(switchValue in varbNames) || switchValue === "switch") {
-      throw new Error(
-        `switchValue of "${switchValue}" not a switch key: ${Object.keys(
-          varbNames
-        )}`
-      );
-    }
-    return switchValue as SwitchTargetKey<SK>;
+    const varbNames = switchKeyToVarbNames(varbNameBase, switchName);
+    const switchValue = this.value(
+      varbNames.switch,
+      switchValueName(switchName)
+    );
+    return switchValue as any as SwitchTargetKey<SK>;
   }
   activeSwitchTarget(
     varbNameBase: string,

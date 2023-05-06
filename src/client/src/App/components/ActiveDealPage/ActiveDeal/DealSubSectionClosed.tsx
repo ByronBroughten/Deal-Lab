@@ -100,10 +100,7 @@ function getMgmtProps(mgmt: GetterSection<"mgmt">): SectionProps {
   return {
     sectionTitle: "Management",
     displayName: mgmt.valueNext("displayName").mainText,
-    detailVarbPropArr: mgmt.varbInfoArr([
-      "expensesYearly",
-      "customUpfrontCosts",
-    ] as const),
+    detailVarbPropArr: mgmt.varbInfoArr(["expensesYearly"] as const),
   };
 }
 

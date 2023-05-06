@@ -8,6 +8,7 @@ export interface PlainIconBtnProps extends MuiBtnPropsNext {
   left?: React.ReactNode;
   middle?: React.ReactNode;
   right?: React.ReactNode;
+  styleDisabled?: boolean;
 }
 export function PlainIconBtn({
   left,

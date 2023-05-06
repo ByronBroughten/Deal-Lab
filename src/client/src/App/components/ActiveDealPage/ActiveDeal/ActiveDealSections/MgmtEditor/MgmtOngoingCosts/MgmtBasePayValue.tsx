@@ -1,12 +1,9 @@
-import { FeVarbInfo } from "../../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
-import { StateValue } from "../../../../../sharedWithServer/SectionsMeta/values/StateValue";
-import { validateStateValue } from "../../../../../sharedWithServer/SectionsMeta/values/valueMetas";
-import { useAction } from "../../../../../sharedWithServer/stateClassHooks/useAction";
-import { useGetterSection } from "../../../../../sharedWithServer/stateClassHooks/useGetterSection";
-import { ValueFixedVarbPathName } from "../../../../../sharedWithServer/StateEntityGetters/ValueInEntityInfo";
-import { GetterSection } from "../../../../../sharedWithServer/StateGetters/GetterSection";
-import { SelectEditorSection } from "../../../../appWide/SelectEditorSection";
-import { NumObjEntityEditor } from "../../../../inputs/NumObjEntityEditor";
+import { FeVarbInfo } from "../../../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
+import { useGetterSection } from "../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
+import { ValueFixedVarbPathName } from "../../../../../../sharedWithServer/StateEntityGetters/ValueInEntityInfo";
+import { GetterSection } from "../../../../../../sharedWithServer/StateGetters/GetterSection";
+import { SelectEditorNext } from "../../../../../appWide/SelectEditorNext";
+import { NumObjEntityEditor } from "../../../../../inputs/NumObjEntityEditor";
 
 function getProps(getter: GetterSection<"mgmtBasePayValue">): {
   equalsValue?: string;
@@ -57,26 +54,29 @@ function getProps(getter: GetterSection<"mgmtBasePayValue">): {
 
 export function BasePayValue({ feId }: { feId: string }) {
   const feInfo = { sectionName: "mgmtBasePayValue", feId } as const;
-  const updateValue = useAction("updateValue");
   const basePayValue = useGetterSection(feInfo);
   const { editorProps, equalsValue } = getProps(basePayValue);
   const valueSourceName = basePayValue.valueNext("valueSourceName");
-  const menuItems: [StateValue<"mgmtBasePayValueSource">, string][] = [
-    ["zero", "Owner managed (no pay)"],
-    [
-      "tenPercentRent",
-      `10% rent${
-        valueSourceName === "tenPercentRent" ? "" : " (common estimate)"
-      }`,
-    ],
-    ["percentOfRentEditor", "Custom percent of rent"],
-    ["dollarsEditor", "Custom dollar amount"],
-  ];
-
   return (
-    <SelectEditorSection
+    <SelectEditorNext
       {...{
+        unionValueName: "mgmtBasePayValueSource",
+        feVarbInfo: {
+          ...feInfo,
+          varbName: "valueSourceName",
+        },
         label: "Base Pay",
+        items: [
+          ["zero", "Owner managed (no pay)"],
+          [
+            "tenPercentRent",
+            `10% rent${
+              valueSourceName === "tenPercentRent" ? "" : " (common estimate)"
+            }`,
+          ],
+          ["percentOfRentEditor", "Custom percent of rent"],
+          ["dollarsEditor", "Custom dollar amount"],
+        ],
         makeEditor: editorProps
           ? (props) => (
               <NumObjEntityEditor
@@ -93,14 +93,6 @@ export function BasePayValue({ feId }: { feId: string }) {
             )
           : undefined,
         selectValue: valueSourceName,
-        onChange: (e) => {
-          updateValue({
-            ...feInfo,
-            varbName: "valueSourceName",
-            value: validateStateValue(e.target.value, "mgmtBasePayValueSource"),
-          });
-        },
-        menuItems,
         equalsValue,
       }}
     />

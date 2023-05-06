@@ -39,8 +39,8 @@ export function MaintenanceValue({ feId }: { feId: string }) {
         label: (
           <LabelWithInfo
             {...{
-              label: "Ongoing Maintenance Budget",
-              infoTitle: "Ongoing Maintenance Budget",
+              label: "Ongoing Maintenance",
+              infoTitle: "Ongoing Maintenance",
               infoText: `Every property needs minor repairs from time to time. Doorknobs break. Oven igniters die. Pipes burst. To account for these and other miscellaneous happenings, there are a few common methods.\n\nThe first is to assume you will spend $1 per property square foot per year. The idea is that the more square feet there is, the more opportunity there is for something to go wrong.\n\nAnother common method is to assume that miscellanious repairs will cost 1% of the property's purchase price (or after repair value) per year. The reasoning here is that more expensive properties may generally have more expensive components that require more expensive repairs.\n\nAnd then there's a third method which is just to use the average between the other two.\n\nThere are probably other, more creative methods out there that work just as well, if not better. By selecting the "custom amount" method, you are free to enter or concoct any equation that suits you.`,
             }}
           />

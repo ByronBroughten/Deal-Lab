@@ -5,7 +5,7 @@ import { makeDefaultDealSystem } from "./makeDefaultDealSystem";
 import { makeDefaultFeUserPack } from "./makeDefaultFeStore";
 import { makeDefaultLoanPack } from "./makeDefaultLoanPack";
 import { makeDefaultMain } from "./makeDefaultMain";
-import { makeDefaultMgmtPack } from "./makeDefaultMgmtPack";
+import { makeDefaultMgmt } from "./makeDefaultMgmt";
 import { makeDefaultOneTimeValue } from "./makeDefaultOneTimeValue";
 import { makeDefaultOngoingValue } from "./makeDefaultOngoingValue";
 import { makeDefaultProperty } from "./makeDefaultProperty";
@@ -35,7 +35,7 @@ export const defaultMaker = new DefaultSectionPackMaker({
   property: makeDefaultProperty,
   singleTimeValue: makeDefaultOneTimeValue,
   ongoingValue: makeDefaultOngoingValue,
-  mgmt: makeDefaultMgmtPack,
+  mgmt: makeDefaultMgmt,
   loan: makeDefaultLoanPack,
   deal: makeDefaultDealPack,
   main: makeDefaultMain,

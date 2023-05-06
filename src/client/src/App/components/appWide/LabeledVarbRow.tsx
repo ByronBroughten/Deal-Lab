@@ -36,7 +36,9 @@ export function LabeledVarbRow({ varbPropArr, className, sx }: Props) {
 
 export const StyledLabeledVarbRow = styled(Box)`
   .LabeledVarb-root {
-    margin: ${theme.s25} ${theme.s25};
+    margin: ${theme.s25};
+    margin-left: 0;
+    margin-right: ${theme.s35};
   }
 
   .LabeledVarb-label,

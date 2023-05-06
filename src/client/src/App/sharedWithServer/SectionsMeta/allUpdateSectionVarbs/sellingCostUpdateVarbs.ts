@@ -50,11 +50,11 @@ export function sellingCostUpdateVarbs(): UpdateSectionVarbs<"sellingCostValue">
         ),
         valuePercentEditor: basics.equationSimple(
           "percentToDecimal",
-          fnProp.local("valuePercentEditor")
+          fnProp.local("valuePercent")
         ),
         sixPercent: basics.equationSimple(
           "percentToDecimal",
-          fnProp.local("valuePercentEditor")
+          fnProp.local("valuePercent")
         ),
       }),
     }),

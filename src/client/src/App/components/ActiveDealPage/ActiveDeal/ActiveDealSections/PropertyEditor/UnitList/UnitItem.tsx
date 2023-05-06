@@ -16,12 +16,8 @@ export function UnitItem({ feId, unitNumber }: Props) {
           <div className="UnitItem-titleText">Unit {unitNumber}</div>
           <RemoveSectionXBtn className="UnitItem-xBtn" {...feInfo} />
         </div>
+        <NumObjEntityEditor feVarbInfo={unit.varbInfo("numBedrooms")} />
         <NumObjEntityEditor
-          className="brs"
-          feVarbInfo={unit.varbInfo("numBedrooms")}
-        />
-        <NumObjEntityEditor
-          className="target-rent"
           feVarbInfo={unit.varbInfo("targetRentOngoingEditor")}
         />
       </div>

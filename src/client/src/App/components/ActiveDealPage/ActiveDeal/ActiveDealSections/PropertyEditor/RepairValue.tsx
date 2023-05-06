@@ -3,7 +3,7 @@ import { StateValue } from "../../../../../sharedWithServer/SectionsMeta/values/
 import { useGetterSection } from "../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { SelectAndItemizeEditorNext } from "../../../../appWide/SelectAndItemizeEditorNext";
 import { NumObjEntityEditor } from "../../../../inputs/NumObjEntityEditor";
-import { ListEditorSingleTime } from "./ValueShared.tsx/ListEditorSingleTime";
+import { ListEditorSingleTime } from "./ValueShared/ListEditorSingleTime";
 
 type Props = { feId: string; dealMode: StateValue<"dealMode">; sx?: SxProps };
 export function RepairValue({ feId, dealMode, sx }: Props) {

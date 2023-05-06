@@ -1,7 +1,6 @@
-import { FormControlLabel, FormGroup, Switch } from "@mui/material";
+import { FormControlLabel, FormGroup, styled, Switch } from "@mui/material";
 import React from "react";
-import styled from "styled-components";
-import theme from "../../theme/Theme";
+import { nativeTheme } from "../../theme/nativeTheme";
 
 type Props = {
   checked: boolean;
@@ -10,9 +9,42 @@ type Props = {
   name?: string;
   className?: string;
 };
-export function Toggler({ label, className, ...rest }: Props) {
+
+export const Toggler = styled(TogglerBase)({
+  borderWidth: 0,
+  ...nativeTheme.formSection,
+  "& .MuiFormControlLabel-labelPlacementStart": {
+    margin: 0,
+    padding: 0,
+  },
+  "& .MuiSwitch-colorPrimary": {
+    color: nativeTheme["gray-500"],
+  },
+  "& .MuiSwitch-colorPrimary.Mui-checked": {
+    color: nativeTheme.secondary.main,
+  },
+  "& .MuiFormControlLabel-label": {
+    width: 180,
+  },
+  "& .MuiFormControlLabel-label.MuiTypography-root": {
+    lineHeight: 1.2,
+    fontWeight: 500,
+    color: nativeTheme.primary.main,
+    fontSize: nativeTheme.inputLabel.fontSize,
+    m: 0,
+    p: 0,
+  },
+});
+
+function TogglerBase({ label, className, ...rest }: Props) {
   return (
-    <Styled className={`Toggler-root ${className ?? ""}`}>
+    <FormGroup
+      sx={{
+        ...nativeTheme.editorMargins,
+        pt: nativeTheme.s3,
+      }}
+      className={className}
+    >
       <div>
         <FormControlLabel
           control={
@@ -28,21 +60,6 @@ export function Toggler({ label, className, ...rest }: Props) {
           labelPlacement="start"
         />
       </div>
-    </Styled>
+    </FormGroup>
   );
 }
-const Styled = styled(FormGroup)`
-  .MuiFormControlLabel-labelPlacementStart {
-    margin: 0;
-    padding: 0;
-  }
-  .MuiFormControlLabel-root {
-    color: ${theme["gray-700"]};
-    .MuiSwitch-colorPrimary {
-      color: ${theme["gray-500"]};
-    }
-    .MuiSwitch-colorPrimary.Mui-checked {
-      color: ${theme.secondary};
-    }
-  }
-`;

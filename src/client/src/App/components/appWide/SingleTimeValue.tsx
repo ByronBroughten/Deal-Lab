@@ -1,4 +1,4 @@
-import { ListEditorSingleTime } from "../ActiveDealPage/ActiveDeal/ActiveDealSections/PropertyEditor/ValueShared.tsx/ListEditorSingleTime";
+import { ListEditorSingleTime } from "../ActiveDealPage/ActiveDeal/ActiveDealSections/PropertyEditor/ValueShared/ListEditorSingleTime";
 import { ValueSectionGeneric } from "./ValueSectionGeneric";
 
 export interface ValueSectionOneTimeProps {

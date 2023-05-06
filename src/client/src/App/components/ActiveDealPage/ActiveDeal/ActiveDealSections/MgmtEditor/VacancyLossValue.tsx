@@ -1,12 +1,9 @@
 import { FeVarbInfo } from "../../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
-import { StateValue } from "../../../../../sharedWithServer/SectionsMeta/values/StateValue";
-import { validateStateValue } from "../../../../../sharedWithServer/SectionsMeta/values/valueMetas";
-import { useAction } from "../../../../../sharedWithServer/stateClassHooks/useAction";
 import { useGetterSection } from "../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { ValueFixedVarbPathName } from "../../../../../sharedWithServer/StateEntityGetters/ValueInEntityInfo";
 import { GetterSection } from "../../../../../sharedWithServer/StateGetters/GetterSection";
 import { LabelWithInfo } from "../../../../appWide/LabelWithInfo";
-import { SelectEditorSection } from "../../../../appWide/SelectEditorSection";
+import { SelectEditorNext } from "../../../../appWide/SelectEditorNext";
 import { NumObjEntityEditor } from "../../../../inputs/NumObjEntityEditor";
 
 function getProps(getter: GetterSection<"vacancyLossValue">): {
@@ -57,30 +54,38 @@ function getProps(getter: GetterSection<"vacancyLossValue">): {
 
 export function VacancyLossValue({ feId }: { feId: string }) {
   const feInfo = { sectionName: "vacancyLossValue", feId } as const;
-  const updateValue = useAction("updateValue");
   const vacancyLoss = useGetterSection(feInfo);
   const { editorProps, equalsValue } = getProps(vacancyLoss);
   const valueSourceName = vacancyLoss.valueNext("valueSourceName");
-  const menuItems: [StateValue<"vacancyLossValueSource">, string][] = [
-    [
-      "fivePercentRent",
-      `5% rent${
-        valueSourceName === "fivePercentRent" ? "" : " (common low estimate)"
-      }`,
-    ],
-    [
-      "tenPercentRent",
-      `10% rent${
-        valueSourceName === "tenPercentRent" ? "" : " (common high estimate)"
-      }`,
-    ],
-    ["percentOfRentEditor", "Custom percent of rent"],
-    ["dollarsEditor", "Custom dollar amount"],
-  ];
-
   return (
-    <SelectEditorSection
+    <SelectEditorNext
       {...{
+        selectProps: { sx: { minWidth: 140 } },
+        feVarbInfo: {
+          ...feInfo,
+          varbName: "valueSourceName",
+        },
+        unionValueName: "vacancyLossValueSource",
+        items: [
+          [
+            "fivePercentRent",
+            `5% rent${
+              valueSourceName === "fivePercentRent"
+                ? ""
+                : " (common low estimate)"
+            }`,
+          ],
+          [
+            "tenPercentRent",
+            `10% rent${
+              valueSourceName === "tenPercentRent"
+                ? ""
+                : " (common high estimate)"
+            }`,
+          ],
+          ["percentOfRentEditor", "Custom percent of rent"],
+          ["dollarsEditor", "Custom dollar amount"],
+        ],
         label: (
           <LabelWithInfo
             {...{
@@ -101,15 +106,6 @@ export function VacancyLossValue({ feId }: { feId: string }) {
               />
             )
           : undefined,
-        selectValue: valueSourceName,
-        onChange: (e) => {
-          updateValue({
-            ...feInfo,
-            varbName: "valueSourceName",
-            value: validateStateValue(e.target.value, "vacancyLossValueSource"),
-          });
-        },
-        menuItems,
       }}
     />
   );
