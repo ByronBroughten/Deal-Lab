@@ -270,6 +270,7 @@ export const baseVarbsS = {
   get loanValue() {
     return baseSectionVarbs({
       valueSourceName: baseVarb("percentDollarsSource"),
+      completionStatus: baseVarb("completionStatus"),
 
       offPercentEditor: baseVarb("numObj", percent), // Down payment percent
       offDollarsEditor: baseVarb("numObj", dollars), // Down payment amount
