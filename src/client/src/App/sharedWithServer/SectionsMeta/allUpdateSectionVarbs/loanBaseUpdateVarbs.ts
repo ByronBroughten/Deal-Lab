@@ -20,6 +20,7 @@ function sourceOverrides(
 export function loanBaseUpdateVarbs(): UpdateSectionVarbs<"loanBaseValue"> {
   return {
     ...updateVarbsS._typeUniformity,
+    completionStatus: updateVarb("completionStatus"),
     valueSourceName: updateVarb("loanBaseValueSource", {
       initValue: "purchaseLoanValue",
     }),

@@ -303,9 +303,7 @@ export function makeAllBaseSectionVarbs() {
       ),
     } as const),
     loanBaseValue: varbs({
-      // Purchase downpayment
-      // Rehab downpayment
-
+      completionStatus: baseVarb("completionStatus"),
       valueSourceName: baseVarb("loanBaseValueSource"),
       valueDollars: baseVarb("numObj", dollars),
       valueDollarsEditor: baseVarb("numObj", dollars),
