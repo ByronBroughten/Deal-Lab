@@ -76,9 +76,9 @@ export function childNamesOfType<
 
 function _testChildNameOfType<
   SN extends "property" | "mgmt",
-  CN extends ChildNameOfType<SN, "ongoingValue">
+  CN extends ChildNameOfType<SN, "miscOngoingCost">
 >(sn: SN, cn: CN) {}
-_testChildNameOfType("property", "customOngoingExpense");
+_testChildNameOfType("property", "miscOngoingCost");
 
 export type SectionPackByType<ST extends SectionNameType> = SectionPack<
   SectionNameByType<ST>

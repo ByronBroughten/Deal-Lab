@@ -106,7 +106,7 @@ export function makeAllBaseSectionVarbs() {
       valueSourceName: baseVarb("customValueSource"),
       isItemized: baseVarb("boolean"),
     }),
-    singleTimeList: varbs({
+    onetimeList: varbs({
       ...varbsS.savableSection,
       total: baseVarb("numObj", dollars),
       itemValueSource: baseVarb("editorValueSource"),
@@ -178,6 +178,7 @@ export function makeAllBaseSectionVarbs() {
       value: baseVarb("numObj"),
     }),
     property: varbs({
+      // I shouldn't expect Riley
       ...baseVarbsS.savableSection,
       propertyMode: baseVarb("dealMode"),
       streetAddress: baseVarb("string"),
@@ -189,6 +190,7 @@ export function makeAllBaseSectionVarbs() {
         [
           "purchasePrice",
           "rehabCost",
+          "onetimeCostBase",
           "upfrontExpenses",
           "afterRepairValue",
           "sellingCosts",
@@ -207,12 +209,9 @@ export function makeAllBaseSectionVarbs() {
       ...baseVarbsS.ongoingDollars("revenue"),
       ...baseVarbsS.monthsYearsInput("holdingPeriod"),
       ...baseVarbsS.ongoingDollars("holdingCost"),
-      ...baseVarbsS.ongoingDollars("customCosts"),
-      customUpfrontCosts: baseVarb("numObj", dollars),
+      ...baseVarbsS.ongoingDollars("miscCosts"),
+      miscOnetimeCosts: baseVarb("numObj", dollars),
       holdingCostTotal: baseVarb("numObj", dollars),
-      useCustomOngoingCosts: baseVarb("boolean"),
-      useCustomOneTimeCosts: baseVarb("boolean"),
-      useCustomCosts: baseVarb("boolean"),
     }),
     unit: varbs({
       one: baseVarb("number"),
@@ -321,9 +320,8 @@ export function makeAllBaseSectionVarbs() {
       ...baseVarbsS.savableSection,
       ...baseVarbsS.ongoingDollars("basePayDollars"),
       ...baseVarbsS.ongoingDollars("vacancyLossDollars"),
-      ...baseVarbsS.ongoingDollars("customCosts"),
-      customUpfrontCosts: baseVarb("numObj", dollars),
-      useCustomCosts: baseVarb("boolean"),
+      ...baseVarbsS.ongoingDollars("miscCosts"),
+      miscOnetimeCosts: baseVarb("numObj", dollars),
       one: baseVarb("number"),
       basePayPercent: baseVarb("numObj", percent),
       vacancyLossPercent: baseVarb("numObj", percent),

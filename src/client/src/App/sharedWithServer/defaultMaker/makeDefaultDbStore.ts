@@ -10,8 +10,8 @@ import {
 } from "./makeDefaultFeUser/makeExampleOngoingListsProps";
 import { makeExampleProperty } from "./makeDefaultFeUser/makeExampleProperty";
 import {
+  makeExampleUserOneTimeLists,
   makeExampleUserOngoingLists,
-  makeExampleUserSingleTimeLists,
 } from "./makeDefaultFeUser/makeExampleUserOngoingLists";
 import { makeExampleUserVarbLists } from "./makeDefaultFeUser/makeExampleUserVarbLists";
 import { makeDefaultOutputSection } from "./makeDefaultOutputSection";
@@ -55,8 +55,8 @@ export function makeDefaultDbStoreArrs({
     sectionPacks: makeExampleUserVarbLists(),
   });
   dbStore.loadChildren({
-    childName: "singleTimeListMain",
-    sectionPacks: makeExampleUserSingleTimeLists(),
+    childName: "onetimeListMain",
+    sectionPacks: makeExampleUserOneTimeLists(),
   });
   dbStore.loadChildren({
     childName: "ongoingListMain",

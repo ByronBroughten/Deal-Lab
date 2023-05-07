@@ -33,7 +33,7 @@ function getChildName<SN extends ValueSectionName>(
   sectionName: SN
 ): ChildName<SN> {
   if (sectionName === "ongoingValue") return "ongoingList" as ChildName<SN>;
-  else return "singleTimeList" as ChildName<SN>;
+  else return "onetimeList" as ChildName<SN>;
 }
 
 export function ValueSectionGeneric<

@@ -1,7 +1,6 @@
 import { useGetterSection } from "../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { BasicBuyAndHoldInfo } from "./BasicBuyAndHoldInfo";
 import { CapExValue } from "./CapExValue";
-import { CustomExpenses } from "./CustomExpenses";
 import { MaintenanceValue } from "./MaintenanceValue";
 import { PropertyEditorBody } from "./PropertyEditorBody";
 import { RehabSection } from "./RehabSection";
@@ -21,7 +20,6 @@ export function PropertyBuyAndHoldView({ feId }: { feId: string }) {
       <UtilityValue feId={property.onlyChildFeId("utilityValue")} />
       <CapExValue feId={property.onlyChildFeId("capExValue")} />
       <MaintenanceValue feId={property.onlyChildFeId("maintenanceValue")} />
-      <CustomExpenses {...feInfo} />
     </PropertyEditorBody>
   );
 }

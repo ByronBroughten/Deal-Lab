@@ -41,11 +41,11 @@ export const feRoutes = {
   utilitiesListMain: componentsRoute + "/utilities",
   capExListMain: componentsRoute + "/cap-ex",
   closingCostsListMain: componentsRoute + "/closing-costs",
-  singleTimeListMain: componentsRoute + "/custom-one-time-costs",
+  onetimeListMain: componentsRoute + "/custom-one-time-costs",
   ongoingListMain: componentsRoute + "/custom-ongoing-costs",
 } as const;
 
 const feRouteNames = Obj.keys(feRoutes);
-export type FeRouteName = typeof feRouteNames[number];
+export type FeRouteName = (typeof feRouteNames)[number];
 export const isFeRouteName = (value: any): value is FeRouteName =>
   feRouteNames.includes(value);

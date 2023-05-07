@@ -49,7 +49,7 @@ export const componentProps: ComponentProps = {
     <FaMoneyCheckAlt {...iconProps} />
   )),
 
-  singleTimeListMain: props(
+  onetimeListMain: props(
     "Custom One-time Costs",
     "custom one-time costs",
     () => <MdAttachMoney {...iconProps} />

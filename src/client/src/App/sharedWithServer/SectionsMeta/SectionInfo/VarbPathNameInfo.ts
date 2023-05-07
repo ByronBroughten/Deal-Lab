@@ -125,7 +125,14 @@ const allVarbPathParams = {
   ]),
   userVarbValue: varbPathParams("numVarbItemMain", "value"),
   repairCostBase: fixedVarbPathParams("Property", "repairCostFocal", "value"),
+
+  propertyOnetimeCostBase: fixedVarbPathParams(
+    "Property",
+    "propertyFocal",
+    "onetimeCostBase"
+  ),
   rehabCost: fixedVarbPathParams("Property", "propertyFocal", "rehabCost"),
+
   roiPercent: fixedVarbPathParams("Deal", "dealFocal", "roiPercent"),
   roiPercentAnnualized: fixedVarbPathParams(
     "Deal",
@@ -213,7 +220,7 @@ export const collectionNamesFixed = [
   "Management",
   "Deal",
 ] as const;
-type CollectionNameFixed = typeof collectionNamesFixed[number];
+type CollectionNameFixed = (typeof collectionNamesFixed)[number];
 
 function varbPathParams<
   PN extends SectionPathName,

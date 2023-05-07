@@ -102,7 +102,7 @@ export const allChildrenTraits = checkAllChildrenTraits({
     closingCostsListMain: childTraits(storeName("closingCostsListMain")),
     outputListMain: childTraits(storeName("outputListMain")),
     numVarbListMain: childTraits(storeName("numVarbListMain")),
-    singleTimeListMain: childTraits(storeName("singleTimeListMain")),
+    onetimeListMain: childTraits(storeName("onetimeListMain")),
     ongoingListMain: childTraits(storeName("ongoingListMain")),
   }),
   compareSection: childrenTraits("compareSection", {
@@ -152,7 +152,7 @@ export const allChildrenTraits = checkAllChildrenTraits({
     }),
   }),
   repairValue: childrenTraits("repairValue", {
-    singleTimeList: childTraits(storeName("repairsListMain")),
+    onetimeList: childTraits(storeName("repairsListMain")),
   }),
   utilityValue: childrenTraits("utilityValue", {
     ongoingList: childTraits(storeName("utilitiesListMain")),
@@ -161,7 +161,7 @@ export const allChildrenTraits = checkAllChildrenTraits({
     capExList: childTraits(storeName("capExListMain")),
   }),
   closingCostValue: childrenTraits("closingCostValue", {
-    singleTimeList: childTraits(storeName("closingCostsListMain")),
+    onetimeList: childTraits(storeName("closingCostsListMain")),
   }),
 });
 

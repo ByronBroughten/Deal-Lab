@@ -1,4 +1,4 @@
-import { ListEditorSingleTime } from "../ActiveDealPage/ActiveDeal/ActiveDealSections/PropertyEditor/ValueShared/ListEditorSingleTime";
+import { ListEditorOneTime } from "../ActiveDealPage/ActiveDeal/ActiveDealSections/PropertyEditor/ValueShared/ListEditorOneTime";
 import { ValueSectionGeneric } from "./ValueSectionGeneric";
 
 export interface ValueSectionOneTimeProps {
@@ -7,7 +7,7 @@ export interface ValueSectionOneTimeProps {
   displayName?: string;
   showXBtn?: boolean;
 }
-export function SingleTimeValue(props: ValueSectionOneTimeProps) {
+export function OnetimeValue(props: ValueSectionOneTimeProps) {
   return (
     <ValueSectionGeneric
       {...{
@@ -16,11 +16,11 @@ export function SingleTimeValue(props: ValueSectionOneTimeProps) {
         valueName: "value",
         valueEditorName: "valueEditor",
         makeItemizedListNode: (props) => (
-          <ListEditorSingleTime
+          <ListEditorOneTime
             {...{
               routeBtnProps: {
                 title: "Custom Lists",
-                routeName: "singleTimeListMain",
+                routeName: "onetimeListMain",
               },
               menuType: "value",
               ...props,

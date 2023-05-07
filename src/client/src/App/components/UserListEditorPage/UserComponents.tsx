@@ -12,7 +12,7 @@ const orderedNames = Arr.extractOrder(userComponentNames, [
   "capExListMain",
   "closingCostsListMain",
   "sellingListMain",
-  "singleTimeListMain",
+  "onetimeListMain",
   "ongoingListMain",
 ] as const);
 

@@ -10,7 +10,7 @@ const listRoutes = [
   "utilitiesListMain",
   "capExListMain",
   "closingCostsListMain",
-  "singleTimeListMain",
+  "onetimeListMain",
   "ongoingListMain",
 ] as const;
 

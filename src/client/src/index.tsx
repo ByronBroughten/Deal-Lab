@@ -6,22 +6,18 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-// change "singleTimeList to onetimeList"
-// "singleTimeListMain"
-// SingleTimeList
 
 // Fix multiple loans not working
+// - what you must do is reference the switch from the
+//   updateFnProp's perspective, not from the main
+//   overrides
 
-// Should I start making the wordpress site?
-// Which advantages do I want to list on WP?
-// - Compare deals side by side
-// - Use custom variables
-// - Break deals down into reusable parts
-// - Modes for home buyers, landlords, fix and flippers, and more
-// - Gain confidence that you're getting the best deal you can
+// Make SolverSections tests that checks everything.
 
-// Change completionStatus to something like:
-// - { invalidInputs: { reason: "empty", ...feVarbInfo }[] }
+// Should dealMode be selected when you create a new deal?
+// Should dealMode not be changable?
+// These two things seem to make sense.
+// Then I would only need one property, with one propertyType
 
 // - Add homeBuyer mode (no income)
 //   - Buy and hold basics
@@ -30,15 +26,9 @@ AppRegistry.runApplication("App", {
 //   - rehab (misc oneTime costs)
 //   - outputs: totalInvestment (Cash Investment), monthlyExpenses, totalInterestPaid, totalPrincipal paid
 
-// - Try condensing buyAndHold's inputs, like with f&f
-//   - Add miscOnetimeCost (singleTimeValue clone, incorporated by costOverrun)
-//   - Add miscRevenueValue (can be the same)
-//   - Add miscOngoingValue (can be the same)
-//   - Add miscHoldingCost value for f&f
-
 // See if Marina and Kate 'O will look at it
 
-// - Add a dealMode dealCompare, to change:
+// - Add dealMode to dealCompare, to change:
 //   - deals that show up the search
 //   - variables that show up in column select
 //   - the set of columns that is activated
@@ -49,6 +39,14 @@ AppRegistry.runApplication("App", {
 // - Add Brrrr
 //   - Mostly the same inputs and outputs as b&h + f&f
 //   - I'll have to differentiate between a buy loan and a refi loan
+
+// Make the Wordpress site
+// Which advantages do I want to list on WP?
+// - Compare deals side by side
+// - Use custom variables
+// - Break deals down into reusable parts
+// - Modes for home buyers, landlords, fix and flippers, and more
+// - Gain confidence that you're getting the best deal you can
 
 // Launch
 // - restrict editing to only the n most recent deals

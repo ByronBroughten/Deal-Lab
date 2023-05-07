@@ -19,7 +19,7 @@ export const sectionNames = [
   "cell",
   "conditionalRow",
   "singleTimeValue",
-  "singleTimeList",
+  "onetimeList",
   "singleTimeItem",
   "ongoingValue",
   "ongoingList",

@@ -14,6 +14,6 @@ export function makeDefaultMgmt(): SectionPack<"mgmt"> {
   const ongoingCost = mgmt.addAndGetChild("miscOngoingCost");
   ongoingCost.addChild("ongoingList");
   const oneTimeCost = mgmt.addAndGetChild("miscOnetimeCost");
-  oneTimeCost.addChild("singleTimeList");
+  oneTimeCost.addChild("onetimeList");
   return mgmt.makeSectionPack();
 }

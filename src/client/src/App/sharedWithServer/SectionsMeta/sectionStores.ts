@@ -9,13 +9,13 @@ export const sectionStores = {
   propertyMain: "property",
   loanMain: "loan",
   mgmtMain: "mgmt",
-  repairsListMain: "singleTimeList",
+  repairsListMain: "onetimeList",
   utilitiesListMain: "ongoingList",
-  sellingListMain: "singleTimeList",
+  sellingListMain: "onetimeList",
   capExListMain: "capExList",
   holdingCostsListMain: "ongoingList",
-  closingCostsListMain: "singleTimeList",
-  singleTimeListMain: "singleTimeList",
+  closingCostsListMain: "onetimeList",
+  onetimeListMain: "onetimeList",
   ongoingListMain: "ongoingList",
   numVarbListMain: "numVarbList",
   boolVarbListMain: "boolVarbList",
@@ -23,7 +23,7 @@ export const sectionStores = {
 } as const;
 export const storeNames = Obj.keys(sectionStores);
 type SectionStores = typeof sectionStores;
-type BasicStoreName = typeof storeNames[number];
+type BasicStoreName = (typeof storeNames)[number];
 export type StoreSectionName<CN extends BasicStoreName = BasicStoreName> =
   SectionStores[CN];
 export const storeSectionNames = storeNames.reduce((names, storeName) => {
@@ -76,13 +76,13 @@ export const indexStoreNames = Arr.extractStrict(storeNames, [
   "capExListMain",
   "holdingCostsListMain",
   "closingCostsListMain",
-  "singleTimeListMain",
+  "onetimeListMain",
   "ongoingListMain",
   "numVarbListMain",
   "boolVarbListMain",
   "outputListMain",
 ] as const);
-export type IndexStoreName = typeof indexStoreNames[number];
+export type IndexStoreName = (typeof indexStoreNames)[number];
 export type IndexStoreSectionName<CN extends IndexStoreName = IndexStoreName> =
   SectionStores[CN];
 export const indexStoreSectionNames = indexStoreNames.reduce(
@@ -102,7 +102,7 @@ export const variableStoreNames = Arr.extractStrict(storeNames, [
 ]);
 
 const singleItemStoreNames = Arr.excludeStrict(storeNames, indexStoreNames);
-export type SingleItemStoreName = typeof singleItemStoreNames[number];
+export type SingleItemStoreName = (typeof singleItemStoreNames)[number];
 
 const storeNamesByType = {
   indexStore: indexStoreNames,
@@ -140,14 +140,14 @@ export type StoreNameByType<ST extends StoreTypeName> =
 
 // Depreciating
 export const listChildren = {
-  repairsListMain: "singleTimeList",
+  repairsListMain: "onetimeList",
   utilitiesListMain: "ongoingList",
   capExListMain: "capExList",
-  sellingListMain: "singleTimeList",
+  sellingListMain: "onetimeList",
   holdingCostsListMain: "ongoingList",
-  closingCostsListMain: "singleTimeList",
+  closingCostsListMain: "onetimeList",
   outputListMain: "outputList",
-  singleTimeListMain: "singleTimeList",
+  onetimeListMain: "onetimeList",
   ongoingListMain: "ongoingList",
 } as const;
 export const listChildrenNames: ListChildName[] = Obj.keys(listChildren);

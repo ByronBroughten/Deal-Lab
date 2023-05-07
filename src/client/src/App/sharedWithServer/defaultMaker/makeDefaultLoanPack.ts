@@ -16,6 +16,6 @@ export function makeDefaultLoanPack(): SectionPack<"loan"> {
   baseValue.addChild("arvLoanValue");
 
   const closingCostValue = loan.addAndGetChild("closingCostValue");
-  closingCostValue.addChild("singleTimeList");
+  closingCostValue.addChild("onetimeList");
   return loan.makeSectionPack();
 }

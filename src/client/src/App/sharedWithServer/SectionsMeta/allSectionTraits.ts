@@ -52,8 +52,8 @@ export const allSectionTraits = checkAllSectionTraits({
     varbListItem: "outputItem",
     defaultStoreName: "outputListMain",
   }),
-  singleTimeList: sectionTraits({
-    defaultStoreName: "singleTimeListMain",
+  onetimeList: sectionTraits({
+    defaultStoreName: "onetimeListMain",
     varbListItem: "singleTimeItem",
   }),
   ongoingList: sectionTraits({

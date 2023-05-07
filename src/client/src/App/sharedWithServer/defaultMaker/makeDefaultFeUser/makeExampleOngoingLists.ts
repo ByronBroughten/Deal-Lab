@@ -34,13 +34,13 @@ export function makeUtilityList(itemPropArr: UtilityItemProp[], dbId?: string) {
   return utilityList.makeSectionPack();
 }
 
-type SingleTimeItemProp = readonly [string, number | NumObj];
-export function makeExampleSingleTimeList(
+type OneTimeItemProp = readonly [string, number | NumObj];
+export function makeExampleOneTimeList(
   listTitle: string,
-  itemPropArr: readonly SingleTimeItemProp[],
+  itemPropArr: readonly OneTimeItemProp[],
   dbId?: string
-): SectionPack<"singleTimeList"> {
-  const list = PackBuilderSection.initAsOmniChild("singleTimeList");
+): SectionPack<"onetimeList"> {
+  const list = PackBuilderSection.initAsOmniChild("onetimeList");
   list.updateValues({ displayName: stringObj(listTitle) });
   dbId && list.updater.updateDbId(dbId);
 

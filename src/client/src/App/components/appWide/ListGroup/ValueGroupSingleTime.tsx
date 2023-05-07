@@ -1,7 +1,7 @@
 import { VarbName } from "../../../sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
 import { ParentName } from "../../../sharedWithServer/SectionsMeta/sectionChildrenDerived/ParentName";
 import { ChildNameOfType } from "../../../sharedWithServer/SectionsMeta/SectionNameByType";
-import { SingleTimeValue } from "../SingleTimeValue";
+import { OnetimeValue } from "../OnetimeValue";
 import { ValueGroupGeneric } from "./ListGroupShared/ValueGroupGeneric";
 
 interface Props<
@@ -17,7 +17,7 @@ interface Props<
   extraValueChildren?: React.ReactNode;
 }
 
-export function ValueGroupSingleTime<
+export function ValueGroupOneTime<
   SN extends ParentName<"singleTimeValue">,
   CN extends ChildNameOfType<SN, "singleTimeValue">
 >({
@@ -37,7 +37,7 @@ export function ValueGroupSingleTime<
         } as const,
         valueAsChildName: valueChildName,
         totalVarbName,
-        makeValueNode: (nodeProps) => <SingleTimeValue {...nodeProps} />,
+        makeValueNode: (nodeProps) => <OnetimeValue {...nodeProps} />,
       }}
     />
   );

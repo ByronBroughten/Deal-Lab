@@ -8,10 +8,7 @@ import {
 } from "../updateSectionVarbs/updateVarb/UpdateFnProps";
 import { unionSwitchOverride } from "../updateSectionVarbs/updateVarb/updateVarbUtils";
 import { updateVarbsS } from "../updateSectionVarbs/updateVarbs";
-import {
-  overrideSwitchS,
-  updateOverride,
-} from "./../updateSectionVarbs/updateVarb/UpdateOverrides";
+import { overrideSwitchS } from "./../updateSectionVarbs/updateVarb/UpdateOverrides";
 
 const basicsS = updateBasicsS;
 const switchS = overrideSwitchS;
@@ -52,11 +49,13 @@ export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
       ),
     }),
     numBedrooms: updateVarbS.sumChildNums("unit", "numBedrooms"),
-    useCustomCosts: updateVarb("boolean", { initValue: false }),
-    useCustomOngoingCosts: updateVarb("boolean", { initValue: false }),
-    useCustomOneTimeCosts: updateVarb("boolean", { initValue: false }),
+    onetimeCostBase: updateVarbS.sumNums([
+      propS.children("repairValue", "value"),
+      propS.children("miscOnetimeCost", "valueDollars"),
+    ]),
     rehabCost: updateVarbS.sumNums([
       propS.children("repairValue", "value"),
+      propS.children("miscOnetimeCost", "valueDollars"),
       propS.children("costOverrunValue", "valueDollars"),
     ]),
     ...updateVarbsS.ongoingSumNumsNext("holdingCost", "monthly", {
@@ -64,9 +63,7 @@ export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
         propS.localBaseName("taxes"),
         propS.localBaseName("homeIns"),
         propS.onlyChildBase("utilityValue", "value"),
-        propS.children("customOngoingExpense", "value", [
-          switchS.pathHasValue("propertyFocal", "useCustomCosts", true),
-        ]),
+        propS.localBaseName("miscCosts"),
       ],
     }),
     holdingCostTotal: updateVarbS.leftRightPropFn(
@@ -82,7 +79,7 @@ export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
           buyAndHold: updateVarbS.sumNums([
             propS.local("purchasePrice"),
             propS.local("rehabCost"),
-            propS.local("customUpfrontCosts"),
+            propS.local("miscOnetimeCosts"),
           ]),
           fixAndFlip: updateVarbS.sumNums([
             propS.local("purchasePrice"),
@@ -98,38 +95,31 @@ export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
       [
         propS.localBaseName("taxes"),
         propS.localBaseName("homeIns"),
+        propS.localBaseName("miscCosts"),
         propS.onlyChild("utilityValue", "value"),
         propS.onlyChild("maintenanceValue", "value"),
         propS.onlyChild("capExValue", "value"),
-        propS.onlyChild("customOngoingExpense", "value", [
-          switchS.pathHasValue("propertyFocal", "useCustomCosts", true),
-        ]),
       ],
       "monthly"
     ),
-    customUpfrontCosts: updateVarb("numObj", {
-      updateFnName: "throwIfReached",
-      updateOverrides: [
-        updateOverride(
-          [switchS.localIsTrue("useCustomCosts")],
-          basicsS.sumChildren("customUpfrontExpense", "value")
-        ),
-        updateOverride([switchS.localIsFalse("useCustomCosts")], basicsS.zero),
-      ],
-    }),
-    ...updateVarbsS.ongoingSumNumsNext("customCosts", "monthly", {
-      updateFnProps: [propS.children("customOngoingExpense", "value")],
-    }),
     ...updateVarbsS.ongoingInputNext("homeIns", {
       switchInit: "yearly",
     }),
-    ...updateVarbsS.monthsYearsInput("holdingPeriod", "months"),
-    ...updateVarbsS.ongoingSumNums(
-      "miscRevenue",
-      [propS.children("miscIncomeValue", "valueDollars")],
-      "monthly"
-      //
+
+    miscOnetimeCosts: updateVarb(
+      "numObj",
+      basicsS.loadFromChild("miscOnetimeCost", "valueDollars")
     ),
+
+    ...updateVarbsS.group("miscCosts", "ongoing", "monthly", {
+      monthly: basicsS.loadFromChild("miscOngoingCost", "valueDollarsMonthly"),
+      yearly: basicsS.loadFromChild("miscOngoingCost", "valueDollarsYearly"),
+    }),
+    ...updateVarbsS.group("miscRevenue", "ongoing", "monthly", {
+      monthly: basicsS.loadFromChild("miscIncomeValue", "valueDollarsMonthly"),
+      yearly: basicsS.loadFromChild("miscIncomeValue", "valueDollarsYearly"),
+    }),
+    ...updateVarbsS.monthsYearsInput("holdingPeriod", "months"),
     ...updateVarbsS.ongoingSumNums(
       "targetRent",
       [propS.children("unit", "targetRent")],

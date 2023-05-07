@@ -3,7 +3,7 @@ import { useGetterSection } from "../../../../../sharedWithServer/stateClassHook
 import { VarbListItemGeneric } from "../../ListGroupShared/VarbListItemGeneric";
 
 type MemoProps = { feId: string; valueSourceName: string };
-const ListItemSingleTimeMemo = React.memo(function ListItemSingleTimeMemo({
+const ListItemOneTimeMemo = React.memo(function ListItemOneTimeMemo({
   feId,
 }: MemoProps) {
   const feInfo = { sectionName: "singleTimeItem", feId } as const;
@@ -12,13 +12,13 @@ const ListItemSingleTimeMemo = React.memo(function ListItemSingleTimeMemo({
   );
 });
 
-export function ListItemSingleTime({ feId }: { feId: string }) {
+export function ListItemOneTime({ feId }: { feId: string }) {
   const item = useGetterSection({
     feId,
     sectionName: "singleTimeItem",
   });
   return (
-    <ListItemSingleTimeMemo
+    <ListItemOneTimeMemo
       {...{ feId, valueSourceName: item.valueNext("valueSourceName") }}
     />
   );

@@ -3,7 +3,7 @@ import { StateValue } from "../../../../../sharedWithServer/SectionsMeta/values/
 import { useGetterSection } from "../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { SelectAndItemizeEditorNext } from "../../../../appWide/SelectAndItemizeEditorNext";
 import { NumObjEntityEditor } from "../../../../inputs/NumObjEntityEditor";
-import { ListEditorSingleTime } from "./ValueShared/ListEditorSingleTime";
+import { ListEditorOneTime } from "./ValueShared/ListEditorOneTime";
 
 type Props = { feId: string; dealMode: StateValue<"dealMode">; sx?: SxProps };
 export function RepairValue({ feId, dealMode, sx }: Props) {
@@ -49,14 +49,14 @@ export function RepairValue({ feId, dealMode, sx }: Props) {
         itemizeValue: "listTotal",
         itemizedModalTitle: "Repairs",
         itemsComponent: (
-          <ListEditorSingleTime
+          <ListEditorOneTime
             {...{
               routeBtnProps: {
                 title: "Repair Lists",
                 routeName: "repairsListMain",
               },
               menuType: "value",
-              feId: repairValue.onlyChild("singleTimeList").feId,
+              feId: repairValue.onlyChild("onetimeList").feId,
             }}
           />
         ),

@@ -59,7 +59,7 @@ export function makeExampleLoan(props: ExampleLoanProps) {
   const closingCostValue = loan.onlyChild("closingCostValue");
   const { items = [], ...costProps } = props.closingCosts;
   closingCostValue.updateValues(costProps);
-  const closingCostList = closingCostValue.onlyChild("singleTimeList");
+  const closingCostList = closingCostValue.onlyChild("onetimeList");
   for (const item of items) {
     const closingCostItem = closingCostList.addAndGetChild("singleTimeItem");
     closingCostItem.updateValues({

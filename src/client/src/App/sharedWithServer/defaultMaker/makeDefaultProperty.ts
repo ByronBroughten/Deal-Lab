@@ -25,7 +25,7 @@ export function makeDefaultProperty(
   });
 
   const sellingCost = property.addAndGetChild("sellingCostValue");
-  sellingCost.addChild("singleTimeList");
+  sellingCost.addChild("onetimeList");
 
   const miscIncome = property.addAndGetChild("miscIncomeValue");
   miscIncome.addChild("ongoingList");
@@ -37,10 +37,10 @@ export function makeDefaultProperty(
   miscHoldingCost.addChild("ongoingList");
 
   const miscOnetimeCost = property.addAndGetChild("miscOnetimeCost");
-  miscOnetimeCost.addChild("singleTimeList");
+  miscOnetimeCost.addChild("onetimeList");
 
   const repairValue = property.addAndGetChild("repairValue");
-  repairValue.addChild("singleTimeList");
+  repairValue.addChild("onetimeList");
 
   const utilityValue = property.addAndGetChild("utilityValue");
   utilityValue.addChild("ongoingList");

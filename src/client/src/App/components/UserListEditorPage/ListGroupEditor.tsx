@@ -6,9 +6,9 @@ import { StoreId } from "../../sharedWithServer/StateGetters/StoreId";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { SubSectionOpen } from "../ActiveDealPage/ActiveDeal/SubSectionOpen";
 import { BackBtnWrapper } from "../appWide/BackBtnWrapper";
+import { VarbListOneTime } from "../appWide/ListGroup/ListGroupOneTime/VarbListOneTime";
 import { ListGroupGeneric } from "../appWide/ListGroup/ListGroupShared/ListGroupGeneric";
 import { MakeListNode } from "../appWide/ListGroup/ListGroupShared/ListGroupGeneric/ListGroupLists";
-import { VarbListSingleTime } from "../appWide/ListGroup/ListGroupSingleTime/VarbListSingleTime";
 import { SectionTitle } from "../appWide/SectionTitle";
 import { VarbListCapEx } from "../appWide/VarbLists/VarbListCapEx";
 import { VarbListOngoing } from "../appWide/VarbLists/VarbListOngoing";
@@ -16,7 +16,7 @@ import { Row } from "../general/Row";
 import { componentProps } from "../props/userComponentPropGroups";
 
 const listTypeNames = ["capEx", "ongoing", "singleTime"] as const;
-type ListTypeName = typeof listTypeNames[number];
+type ListTypeName = (typeof listTypeNames)[number];
 
 type ListProps = Record<ListChildName, ListTypeName>;
 const listTypes: ListProps = {
@@ -27,7 +27,7 @@ const listTypes: ListProps = {
   capExListMain: "capEx",
   closingCostsListMain: "ongoing",
   outputListMain: "singleTime",
-  singleTimeListMain: "singleTime",
+  onetimeListMain: "singleTime",
   ongoingListMain: "ongoing",
 };
 
@@ -41,7 +41,7 @@ function useListNodeMakers(
       <IdOfSectionToSaveProvider
         storeId={StoreId.make(listName, nodeProps.feId)}
       >
-        <VarbListSingleTime {...{ ...nodeProps, menuType: "editorPage" }} />
+        <VarbListOneTime {...{ ...nodeProps, menuType: "editorPage" }} />
       </IdOfSectionToSaveProvider>
     ),
     ongoing: (nodeProps) => (

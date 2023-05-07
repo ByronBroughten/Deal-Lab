@@ -1,8 +1,8 @@
 import {
   VarbListGeneric,
-  VarbListGenericMenuType,
+  VarbListGenericMenuType
 } from "../ListGroupShared/VarbListGeneric";
-import { ListItemSingleTime } from "./VarbListSingleTime/ListItemSingleTime";
+import { ListItemOneTime } from "./VarbListOneTime/ListItemOneTime";
 
 type Props = {
   feId: string;
@@ -10,8 +10,8 @@ type Props = {
   className?: string;
 };
 
-export function VarbListSingleTime({ feId, ...rest }: Props) {
-  const feInfo = { sectionName: "singleTimeList", feId } as const;
+export function VarbListOneTime({ feId, ...rest }: Props) {
+  const feInfo = { sectionName: "onetimeList", feId } as const;
   return (
     <VarbListGeneric
       {...{
@@ -20,11 +20,11 @@ export function VarbListSingleTime({ feId, ...rest }: Props) {
         contentTitle: "Cost",
         totalVarbName: "total",
         makeItemNode: ({ feId }) => (
-          <ListItemSingleTime {...{ feId, key: feId }} />
+          <ListItemOneTime {...{ feId, key: feId }} />
         ),
       }}
     />
   );
 }
 
-export function SingleTimeListTable() {}
+export function OneTimeListTable() {}

@@ -3,8 +3,8 @@ import { FeSectionInfo } from "../../sharedWithServer/SectionsMeta/SectionInfo/F
 import { SectionName } from "../../sharedWithServer/SectionsMeta/SectionName";
 import { useSetterSection } from "../../sharedWithServer/stateClassHooks/useSetterSection";
 import { ValueSectionBtn } from "./ListGroup/ListGroupShared/ValueSectionBtn";
+import { OnetimeValue } from "./OnetimeValue";
 import { ValueSectionOngoing } from "./OngoingValue";
-import { SingleTimeValue } from "./SingleTimeValue";
 
 interface Props<SN extends SectionName, CN extends ChildName<SN>>
   extends FeSectionInfo<SN> {
@@ -42,7 +42,7 @@ export function ValueSectionZone<
     const childSectionName = section.meta.childType(childName);
     switch (childSectionName) {
       case "singleTimeValue":
-        return <SingleTimeValue {...props} />;
+        return <OnetimeValue {...props} />;
       case "ongoingValue":
         return <ValueSectionOngoing {...props} />;
       default:

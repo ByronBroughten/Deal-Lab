@@ -22,7 +22,7 @@ export function sellingCostUpdateVarbs(): UpdateSectionVarbs<"sellingCostValue">
       ...basics.throw,
       updateOverrides: valueSourceOverrides("sellingCostSource", {
         valueDollarsEditor: basics.loadFromLocal("valueDollarsEditor"),
-        itemize: basics.loadFromChild("singleTimeList", "total"),
+        itemize: basics.loadFromChild("onetimeList", "total"),
         valuePercentEditor: basics.equationLR(
           "multiply",
           fnProp.local("valueDecimal"),

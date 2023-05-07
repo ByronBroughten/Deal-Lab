@@ -5,7 +5,7 @@ import { StrictExtract } from "../../../../../sharedWithServer/utils/types";
 import { LabelWithInfo } from "../../../../appWide/LabelWithInfo";
 import { SelectAndItemizeEditorNext } from "../../../../appWide/SelectAndItemizeEditorNext";
 import { NumObjEntityEditor } from "../../../../inputs/NumObjEntityEditor";
-import { ListEditorSingleTime } from "./ValueShared/ListEditorSingleTime";
+import { ListEditorOneTime } from "./ValueShared/ListEditorOneTime";
 
 function isEditorSource(
   value: any
@@ -81,14 +81,14 @@ export function SellingCostValue({ feId, sx }: Props) {
           : undefined,
         total: sellingCost.varbNext("valueDollars").displayVarb(),
         itemsComponent: (
-          <ListEditorSingleTime
+          <ListEditorOneTime
             {...{
               routeBtnProps: {
                 title: "Selling cost lists",
                 routeName: "sellingListMain",
               },
               menuType: "value",
-              feId: sellingCost.onlyChild("singleTimeList").feId,
+              feId: sellingCost.onlyChild("onetimeList").feId,
             }}
           />
         ),

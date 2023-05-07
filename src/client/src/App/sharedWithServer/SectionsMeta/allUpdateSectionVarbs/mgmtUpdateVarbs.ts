@@ -6,14 +6,9 @@ import {
   updateFnPropS,
   updateFnPropsS,
 } from "../updateSectionVarbs/updateVarb/UpdateFnProps";
-import {
-  overrideSwitchS,
-  updateOverride,
-} from "../updateSectionVarbs/updateVarb/UpdateOverrides";
 import { updateVarbsS } from "../updateSectionVarbs/updateVarbs";
 
 const propS = updateFnPropS;
-
 const basicsS = updateBasicsS;
 export function mgmtRelVarbs(): UpdateSectionVarbs<"mgmt"> {
   return {
@@ -36,35 +31,23 @@ export function mgmtRelVarbs(): UpdateSectionVarbs<"mgmt"> {
       "numObj",
       basicsS.loadFromChild("vacancyLossValue", "valuePercent")
     ),
-    useCustomCosts: updateVarb("boolean", { initValue: false }),
-    ...updateVarbsS.ongoingSumNumsNext("customCosts", "monthly", {
-      updateFnProps: [propS.children("customOngoingExpense", "value")],
+    ...updateVarbsS.group("miscCosts", "ongoing", "monthly", {
+      monthly: basicsS.loadFromChild("miscOngoingCost", "valueDollarsMonthly"),
+      yearly: basicsS.loadFromChild("miscOngoingCost", "valueDollarsYearly"),
     }),
-    customUpfrontCosts: updateVarb("numObj", {
-      updateFnName: "throwIfReached",
-      updateOverrides: [
-        updateOverride(
-          [overrideSwitchS.localIsTrue("useCustomCosts")],
-          basicsS.sumChildren("customUpfrontExpense", "value")
-        ),
-        updateOverride(
-          [overrideSwitchS.localIsFalse("useCustomCosts")],
-          basicsS.zero
-        ),
-      ],
-    }),
+
+    miscOnetimeCosts: updateVarb(
+      "numObj",
+      basicsS.loadFromChild("miscOnetimeCost", "valueDollars")
+    ),
 
     ...updateVarbsS.ongoingSumNums(
       "expenses",
-      [
-        ...updateFnPropsS.localBaseNameArr([
-          "basePayDollars",
-          "vacancyLossDollars",
-        ]),
-        propS.children("customOngoingExpense", "value", [
-          overrideSwitchS.pathHasValue("mgmtFocal", "useCustomCosts", true),
-        ]),
-      ],
+      updateFnPropsS.localBaseNameArr([
+        "basePayDollars",
+        "vacancyLossDollars",
+        "miscCosts",
+      ]),
       "monthly"
     ),
   };

@@ -3,7 +3,7 @@ import { nativeTheme } from "../../../../../../theme/nativeTheme";
 import { LabelWithInfo } from "../../../../../appWide/LabelWithInfo";
 import { SelectAndItemizeEditorNext } from "../../../../../appWide/SelectAndItemizeEditorNext";
 import { NumObjEntityEditor } from "../../../../../inputs/NumObjEntityEditor";
-import { ListEditorSingleTime } from "../../PropertyEditor/ValueShared/ListEditorSingleTime";
+import { ListEditorOneTime } from "../../PropertyEditor/ValueShared/ListEditorOneTime";
 
 type Props = { feId: string; fivePercentLoanDisplay: string };
 export function ClosingCostValue({ feId, fivePercentLoanDisplay }: Props) {
@@ -54,7 +54,7 @@ export function ClosingCostValue({ feId, fivePercentLoanDisplay }: Props) {
         itemizeValue: "listTotal",
         itemizedModalTitle: "Closing Costs",
         itemsComponent: (
-          <ListEditorSingleTime
+          <ListEditorOneTime
             {...{
               routeBtnProps: {
                 title: "Closing Cost Lists",
@@ -71,7 +71,7 @@ export function ClosingCostValue({ feId, fivePercentLoanDisplay }: Props) {
                 "Underwriting fees",
               ],
               menuType: "value",
-              feId: closingCostValue.oneChildFeId("singleTimeList"),
+              feId: closingCostValue.oneChildFeId("onetimeList"),
             }}
           />
         ),

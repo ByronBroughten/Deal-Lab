@@ -101,8 +101,8 @@ export const allSectionChildren = checkAllSectionChildren({
     ongoingList: sectionChild("ongoingList"),
   },
 
-  singleTimeValue: { singleTimeList: sectionChild("singleTimeList") },
-  singleTimeList: { singleTimeItem: sectionChild("singleTimeItem") },
+  singleTimeValue: { onetimeList: sectionChild("onetimeList") },
+  onetimeList: { singleTimeItem: sectionChild("singleTimeItem") },
   ongoingList: {
     ongoingItem: sectionChild("ongoingItem", {
       isListItem: true,
@@ -135,7 +135,7 @@ export const allSectionChildren = checkAllSectionChildren({
     repairLoanValue: "repairLoanValue",
     arvLoanValue: "arvLoanValue",
   }),
-  closingCostValue: { singleTimeList: sectionChild("singleTimeList") },
+  closingCostValue: { onetimeList: sectionChild("onetimeList") },
   property: sectionChildren({
     unit: "unit",
     repairValue: "repairValue",
@@ -150,8 +150,6 @@ export const allSectionChildren = checkAllSectionChildren({
     miscHoldingCost: "miscHoldingCost",
     miscOnetimeCost: "miscOnetimeCost",
 
-    customUpfrontExpense: "singleTimeValue",
-    customOngoingExpense: "ongoingValue",
     customVarb: "customVarb",
   }),
   miscOngoingCost: sectionChildren({
@@ -164,13 +162,13 @@ export const allSectionChildren = checkAllSectionChildren({
     ongoingList: "ongoingList",
   }),
   miscOnetimeCost: sectionChildren({
-    singleTimeList: "singleTimeList",
+    onetimeList: "onetimeList",
   }),
   sellingCostValue: sectionChildren({
-    singleTimeList: "singleTimeList",
+    onetimeList: "onetimeList",
   }),
   repairValue: sectionChildren({
-    singleTimeList: "singleTimeList",
+    onetimeList: "onetimeList",
   }),
   utilityValue: sectionChildren({
     ongoingList: "ongoingList",
@@ -186,9 +184,6 @@ export const allSectionChildren = checkAllSectionChildren({
     vacancyLossValue: "vacancyLossValue",
     miscOngoingCost: "miscOngoingCost",
     miscOnetimeCost: "miscOnetimeCost",
-
-    customUpfrontExpense: "singleTimeValue",
-    customOngoingExpense: "ongoingValue",
     customVarb: "customVarb",
   }),
 });

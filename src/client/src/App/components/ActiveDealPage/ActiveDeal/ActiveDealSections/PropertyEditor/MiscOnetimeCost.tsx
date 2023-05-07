@@ -3,7 +3,7 @@ import { useGetterSection } from "../../../../../sharedWithServer/stateClassHook
 import { nativeTheme } from "../../../../../theme/nativeTheme";
 import { SelectAndItemizeEditorNext } from "../../../../appWide/SelectAndItemizeEditorNext";
 import { NumObjEntityEditor } from "../../../../inputs/NumObjEntityEditor";
-import { ListEditorSingleTime } from "./ValueShared/ListEditorSingleTime";
+import { ListEditorOneTime } from "./ValueShared/ListEditorOneTime";
 
 interface Props extends FeIdProp {
   menuDisplayNames?: string[];
@@ -48,14 +48,14 @@ export function MiscOnetimeCost({ feId, menuDisplayNames }: Props) {
         itemizeValue: "listTotal",
         total: valueVarb.displayVarb(),
         itemsComponent: (
-          <ListEditorSingleTime
+          <ListEditorOneTime
             {...{
               menuDisplayNames,
-              feId: onetimeCost.oneChildFeId("singleTimeList"),
+              feId: onetimeCost.oneChildFeId("onetimeList"),
               menuType: "value",
               routeBtnProps: {
                 title: "Misc one-time lists",
-                routeName: "singleTimeListMain",
+                routeName: "onetimeListMain",
               },
             }}
           />

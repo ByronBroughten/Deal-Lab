@@ -12,7 +12,7 @@ import {
   makeSessionGetCookies,
 } from "./apiQueriesTestTools/testDbUser";
 
-const storeName = "singleTimeListMain";
+const storeName = "onetimeListMain";
 const sectionName = childToSectionName("dbStore", storeName);
 function makeReq(): SectionPackArrsReq {
   const reqMaker = SectionArrReqMaker.init(sectionName);

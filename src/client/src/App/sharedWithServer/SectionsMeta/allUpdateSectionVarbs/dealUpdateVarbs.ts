@@ -29,14 +29,14 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
         propS.onlyChild("property", "holdingCostTotal"),
         propS.onlyChild("property", "rehabCost"),
         propS.onlyChild("property", "sellingCosts"),
-        propS.onlyChild("property", "customUpfrontCosts")
+        propS.onlyChild("property", "miscOnetimeCosts")
       ),
       buyAndHold: basicsS.sumNums(
         propS.onlyChild("property", "purchasePrice"),
         propS.varbPathName("closingCosts"),
         propS.onlyChild("property", "rehabCost"),
-        propS.onlyChild("property", "customUpfrontCosts"),
-        propS.onlyChild("mgmt", "customUpfrontCosts")
+        propS.onlyChild("property", "miscOnetimeCosts"),
+        propS.onlyChild("mgmt", "miscOnetimeCosts")
       ),
     }),
     totalInvestment: updateVarb(

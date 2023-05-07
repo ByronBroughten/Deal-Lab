@@ -298,7 +298,7 @@ function makeAllUpdateSections() {
           ),
           updateOverride(
             [overrideSwitchS.local("valueSourceName", "listTotal")],
-            updateBasicsS.loadFromChild("singleTimeList", "total")
+            updateBasicsS.loadFromChild("onetimeList", "total")
           ),
         ],
       }),
@@ -323,7 +323,7 @@ function makeAllUpdateSections() {
         initValue: "loadedVarb",
       } as const),
     }),
-    ...updateSectionProp("singleTimeList", {
+    ...updateSectionProp("onetimeList", {
       total: updateVarbS.sumNums([
         updateFnPropS.children("singleTimeItem", "value"),
       ]),
@@ -349,7 +349,7 @@ function makeAllUpdateSections() {
           ),
           updateOverride(
             [overrideSwitchS.valueSourceIs("listTotal")],
-            updateBasicsS.loadFromChild("singleTimeList", "total")
+            updateBasicsS.loadFromChild("onetimeList", "total")
           ),
           updateOverride(
             [overrideSwitchS.valueSourceIs("valueEditor")],
@@ -370,7 +370,7 @@ function makeAllUpdateSections() {
           updateOverride(
             [overrideSwitchS.valueSourceIs("listTotal")],
             updateBasicsS.loadFromChild(
-              "singleTimeList",
+              "onetimeList",
               "total"
             ) as UpdateBasics<"numObj">
           ),

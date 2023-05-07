@@ -1,7 +1,7 @@
 import { SectionPack } from "../../SectionsMeta/sectionChildrenDerived/SectionPack";
 import { PackBuilderSection } from "../../StatePackers/PackBuilderSection";
 import {
-  makeExampleSingleTimeList,
+  makeExampleOneTimeList,
   makeUtilityList,
 } from "./makeExampleOngoingLists";
 import {
@@ -18,14 +18,14 @@ export function makeExampleUserOngoingLists(): SectionPack<"ongoingList">[] {
   return feStore.makeChildPackArr("ongoingListMain");
 }
 
-export function makeExampleUserSingleTimeLists() {
+export function makeExampleUserOneTimeLists() {
   const feStore = PackBuilderSection.initAsOmniChild("feStore");
   feStore.loadChild({
-    childName: "singleTimeListMain",
-    sectionPack: makeExampleSingleTimeList(
+    childName: "onetimeListMain",
+    sectionPack: makeExampleOneTimeList(
       "Misc upfront cost examples",
       userRepairVarbProps
     ),
   });
-  return feStore.makeChildPackArr("singleTimeListMain");
+  return feStore.makeChildPackArr("onetimeListMain");
 }

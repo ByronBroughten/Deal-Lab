@@ -19,7 +19,7 @@ const propertySectionNames = Arr.extractStrict(sectionNames, [
   "sellingCostValue",
 ] as const);
 
-type PropertySectionName = typeof propertySectionNames[number];
+type PropertySectionName = (typeof propertySectionNames)[number];
 type NeededPropertyVarbsSchema = Partial<{
   [SN in PropertySectionName]: any;
 }>;
@@ -113,7 +113,7 @@ export function makeExampleProperty<DM extends StateValue<"dealMode">>(
     valueSourceName: "listTotal",
   });
 
-  const repairList = repairValue.onlyChild("singleTimeList");
+  const repairList = repairValue.onlyChild("onetimeList");
   for (const [displayName, value] of props.repairValue) {
     const repairItem = repairList.addAndGetChild("singleTimeItem");
     repairItem.updateValues({

@@ -1,7 +1,7 @@
 import { useSetterSection } from "../../../../../../sharedWithServer/stateClassHooks/useSetterSection";
+import { ListItemOneTime } from "../../../../../appWide/ListGroup/ListGroupOneTime/VarbListOneTime/ListItemOneTime";
 import { VarbListGenericMenuType } from "../../../../../appWide/ListGroup/ListGroupShared/VarbListGeneric";
 import { VarbListTableSectionGeneric } from "../../../../../appWide/ListGroup/ListGroupShared/VarbListGeneric/VarbListTableSectionGeneric";
-import { ListItemSingleTime } from "../../../../../appWide/ListGroup/ListGroupSingleTime/VarbListSingleTime/ListItemSingleTime";
 import { ListRouteName } from "../../../../../UserListEditorPage/UserComponentClosed";
 import { ValueListGeneral } from "./ValueListGeneral";
 
@@ -14,27 +14,27 @@ type Props = {
     routeName: ListRouteName;
   };
 };
-export function ListEditorSingleTime({
+export function ListEditorOneTime({
   feId,
   menuType,
   menuDisplayNames,
   ...rest
 }: Props) {
-  const singleTimeList = useSetterSection({
-    sectionName: "singleTimeList",
+  const onetimeList = useSetterSection({
+    sectionName: "onetimeList",
     feId,
   });
 
-  const singleTimeItems = singleTimeList.get.children("singleTimeItem");
+  const onetimeItems = onetimeList.get.children("singleTimeItem");
 
-  const itemDisplayNames = singleTimeItems.map(
+  const itemDisplayNames = onetimeItems.map(
     (item) => item.valueNext("displayName").mainText
   );
 
-  const totalVarb = singleTimeList.get.varbNext("total");
+  const totalVarb = onetimeList.get.varbNext("total");
 
   const onChange = (displayName?: string) =>
-    singleTimeList.addChild("singleTimeItem", {
+    onetimeList.addChild("singleTimeItem", {
       sectionValues: {
         ...(displayName && { displayNameEditor: displayName }),
       },
@@ -43,7 +43,7 @@ export function ListEditorSingleTime({
   return (
     <ValueListGeneral
       {...{
-        ...singleTimeList.feInfo,
+        ...onetimeList.feInfo,
         ...rest,
         menuType,
         menuDisplayNames,
@@ -57,8 +57,8 @@ export function ListEditorSingleTime({
               addItem: () => onChange(),
             }}
           >
-            {singleTimeItems.map((item) => (
-              <ListItemSingleTime {...{ feId: item.feId, key: item.feId }} />
+            {onetimeItems.map((item) => (
+              <ListItemOneTime {...{ feId: item.feId, key: item.feId }} />
             ))}
           </VarbListTableSectionGeneric>
         ),

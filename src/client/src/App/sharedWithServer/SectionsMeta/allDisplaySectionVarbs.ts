@@ -246,7 +246,7 @@ export const allDisplaySectionVarbs = {
     value: varb(relVarbInfoS.local("displayName")),
     valueEditor: varb(relVarbInfoS.local("displayName")),
   }),
-  ...displaySectionVarbsProp("singleTimeList", {
+  ...displaySectionVarbsProp("onetimeList", {
     total: varb(relVarbInfoS.local("displayName")),
   }),
   ...displaySectionVarbsProp(

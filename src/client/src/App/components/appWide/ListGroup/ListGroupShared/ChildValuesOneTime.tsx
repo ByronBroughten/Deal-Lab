@@ -2,7 +2,7 @@ import { ParentName } from "../../../../sharedWithServer/SectionsMeta/sectionChi
 import { ChildNameOfType } from "../../../../sharedWithServer/SectionsMeta/SectionNameByType";
 import { useAction } from "../../../../sharedWithServer/stateClassHooks/useAction";
 import { useGetterSection } from "../../../../sharedWithServer/stateClassHooks/useGetterSection";
-import { SingleTimeValue } from "../../SingleTimeValue";
+import { OnetimeValue } from "../../OnetimeValue";
 import { ValueGroupValues } from "./ValueGroupValues";
 
 interface Props<
@@ -13,7 +13,7 @@ interface Props<
   feId: string;
   valueChildName: CN;
 }
-export function ChildValuesOneTime<
+export function ChildValuesOnetime<
   SN extends ParentName<"singleTimeValue">,
   CN extends ChildNameOfType<SN, "singleTimeValue">
 >({ valueChildName, ...feInfo }: Props<SN, CN>) {
@@ -23,7 +23,7 @@ export function ChildValuesOneTime<
     <ValueGroupValues
       {...{
         feIds: parent.childFeIds(valueChildName),
-        makeValueNode: (nodeProps) => <SingleTimeValue {...nodeProps} />,
+        makeValueNode: (nodeProps) => <OnetimeValue {...nodeProps} />,
         addValue: () =>
           addChild({
             feInfo,

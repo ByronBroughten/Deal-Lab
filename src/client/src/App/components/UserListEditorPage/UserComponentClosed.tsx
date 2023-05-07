@@ -13,11 +13,11 @@ export const userComponentNames = Arr.extractStrict(listChildrenNames, [
   "capExListMain",
   "sellingListMain",
   "closingCostsListMain",
-  "singleTimeListMain",
+  "onetimeListMain",
   "ongoingListMain",
 ]);
 
-type UserComponentName = typeof userComponentNames[number];
+type UserComponentName = (typeof userComponentNames)[number];
 export type ListRouteName = Extract<FeRouteName, UserComponentName>;
 
 type Props = {
