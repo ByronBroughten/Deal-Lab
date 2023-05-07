@@ -7,6 +7,10 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
+// calculatedVarbs.baseLoanCompletionStatus
+// - is trying to use loanBaseFocal.valueSourceName as a switch
+//   but there are multiple loanBaseFocal
+
 // Fix multiple loans not working
 // - what you must do is reference the switch from the
 //   updateFnProp's perspective, not from the main

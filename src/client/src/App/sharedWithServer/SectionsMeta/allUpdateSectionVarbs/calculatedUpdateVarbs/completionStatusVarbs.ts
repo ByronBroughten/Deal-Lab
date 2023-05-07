@@ -161,12 +161,6 @@ export const baseLoanCompletionStatus = completionStatusVarb(
   ...valueSourceOverrides(
     "loanBaseValueSource",
     {
-      // so... in reality, this will have to check on
-      // ALL of the baseLoanValues...
-      // I think I can configure it to do that...
-      // But it won't be pretty
-      // Or loan can have its own completionStatus
-
       purchaseLoanValue: cBasics({
         othersValid: [propS.local("purchaseLoanCompletionStatus")],
       }),
