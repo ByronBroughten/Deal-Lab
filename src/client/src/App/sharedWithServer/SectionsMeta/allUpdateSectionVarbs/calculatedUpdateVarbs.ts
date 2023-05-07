@@ -17,10 +17,8 @@ import {
 } from "../updateSectionVarbs/updateVarb/UpdateOverrides";
 import { updateVarbsS } from "../updateSectionVarbs/updateVarbs";
 import {
-  baseLoanCompletionStatus,
   dealCompletionStatus,
   financingCompletionStatus,
-  loanValueCompletionStatus,
   mgmtCompletionStatus,
   propertyCompletionStatus,
 } from "./calculatedUpdateVarbs/completionStatusVarbs";
@@ -176,11 +174,6 @@ export function calculatedUpdateVarbs(): UpdateSectionVarbs<"calculatedVarbs"> {
     dealCompletionStatus,
     propertyCompletionStatus,
     financingCompletionStatus,
-    baseLoanCompletionStatus,
-    purchaseLoanCompletionStatus:
-      loanValueCompletionStatus("purchaseLoanFocal"),
-    repairLoanCompletionStatus: loanValueCompletionStatus("repairLoanFocal"),
-    arvLoanCompletionStatus: loanValueCompletionStatus("arvLoanFocal"),
     mgmtCompletionStatus,
   };
 }

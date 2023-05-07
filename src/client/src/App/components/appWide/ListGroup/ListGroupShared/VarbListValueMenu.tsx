@@ -3,9 +3,9 @@ import { FeSectionInfo } from "../../../../sharedWithServer/SectionsMeta/Section
 import { SectionNameByType } from "../../../../sharedWithServer/SectionsMeta/SectionNameByType";
 import { ListRouteName } from "../../../UserListEditorPage/UserComponentClosed";
 import { useMakeGoToPage } from "../../customHooks/useGoToPage";
-import { StyledActionBtn } from "../../GeneralSection/MainSection/StoreSectionActionMenu/ActionBtns.tsx/StyledActionBtn";
-import { ActionLoadBtn } from "../../GeneralSection/MainSection/StoreSectionActionMenu/ActionLoadBtn";
-import { ActionSaveAsNewBtn } from "../../GeneralSection/MainSection/StoreSectionActionMenu/SaveAsNewBtn";
+import { ActionLoadBtn } from "../../GeneralSection/MainSection/ActionBtns/ActionLoadBtn";
+import { ActionSaveAsNewBtn } from "../../GeneralSection/MainSection/ActionBtns/SaveAsNewBtn";
+import { StyledActionBtn } from "../../GeneralSection/MainSection/StyledActionBtn";
 import { VarbListMenuStyled } from "./VarbListMenuStyled";
 
 interface Props<SN extends SectionNameByType<"varbListAllowed">>
@@ -27,13 +27,7 @@ export function VarbListValueMenu<
     <VarbListMenuStyled className={`VarbListMenu-root ${className ?? ""}`}>
       <div className="VarbListMenu-titleRow">
         <ActionSaveAsNewBtn {...{ ...feInfo }} />
-        <ActionLoadBtn
-          {...{
-            loadMode: "loadAndCopy",
-            loadWhat: "List",
-            feInfo,
-          }}
-        />
+        <ActionLoadBtn {...{ loadWhat: "List", feInfo }} />
         {routeBtnProps && (
           <StyledActionBtn
             middle={routeBtnProps.title}

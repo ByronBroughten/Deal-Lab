@@ -1,7 +1,9 @@
+import { SxProps } from "@mui/material";
 import React from "react";
 import { useWindowDimensions } from "react-native";
 import { useGetterSection } from "../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { nativeTheme } from "../../../../../theme/nativeTheme";
+import { arrSx } from "../../../../../utils/mui";
 import MainSectionBody from "../../../../appWide/GeneralSection/MainSection/MainSectionBody";
 import { MainSectionInner } from "../../../../appWide/GeneralSection/MainSectionInner";
 import { MainSectionTopRows } from "../../../../appWide/MainSectionTopRows";
@@ -12,7 +14,9 @@ export function Loan({
   feId,
   className,
   showXBtn,
+  sx,
 }: {
+  sx?: SxProps;
   feId: string;
   className?: string;
   showXBtn: boolean;
@@ -31,19 +35,22 @@ export function Loan({
   return (
     <MainSectionInner
       className={className}
-      sx={{
-        paddingTop: nativeTheme.s45,
-        paddingLeft: paddingLR,
-        paddingRight: paddingLR,
-        "& .MainSectionTopRows-xBtn": {
-          visibility: "hidden",
-        },
-        "& :hover": {
+      sx={[
+        {
+          paddingTop: nativeTheme.s45,
+          paddingLeft: paddingLR,
+          paddingRight: paddingLR,
           "& .MainSectionTopRows-xBtn": {
-            visibility: "visible",
+            visibility: "hidden",
+          },
+          "& :hover": {
+            "& .MainSectionTopRows-xBtn": {
+              visibility: "visible",
+            },
           },
         },
-      }}
+        ...arrSx(sx),
+      ]}
     >
       <MainSectionTopRows
         {...{

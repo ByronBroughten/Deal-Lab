@@ -98,7 +98,7 @@ export function FinancingEditor({ feId }: Props) {
                   <Loan
                     key={feId}
                     feId={feId}
-                    className={idx !== 0 ? "Financing-marginLoan" : ""}
+                    sx={idx !== 0 ? { mt: nativeTheme.s4 } : undefined}
                     showXBtn={loanIds.length > 1}
                   />
                 ))}
@@ -144,10 +144,6 @@ const Styled = styled.div`
     align-items: center;
     padding-bottom: ${theme.s3};
   }
-  .Financing-marginLoan {
-    margin-top: ${theme.s3};
-  }
-
   .Financing-loans {
     margin-top: ${theme.s4};
   }

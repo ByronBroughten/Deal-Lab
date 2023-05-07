@@ -11,6 +11,7 @@ import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection
 import { GetterSections } from "../../sharedWithServer/StateGetters/GetterSections";
 import { StoreId } from "../../sharedWithServer/StateGetters/StoreId";
 import { Obj } from "../../sharedWithServer/utils/Obj";
+import { Str } from "../../sharedWithServer/utils/Str";
 
 export class GetterFeStore extends GetterSectionBase<"feStore"> {
   constructor(props: GetterSectionsProps) {
@@ -46,6 +47,18 @@ export class GetterFeStore extends GetterSectionBase<"feStore"> {
   }
   get timeOfSave(): number {
     return this.get.valueNext("timeOfSave");
+  }
+  displayItems(storeName: StoreName): DisplayItemProps[] {
+    return this.get.children(storeName).map((child) => ({
+      displayName: child.valueNext("displayName").mainText,
+      dbId: child.dbId,
+    }));
+  }
+  alphabeticalDisplayItems(storeName: StoreName) {
+    const nameItems = this.displayItems(storeName);
+    return nameItems.sort((item1, item2) =>
+      Str.compareAlphanumerically(item1.displayName, item2.displayName)
+    );
   }
   howManyWithDisplayName(storeName: StoreName, displayName: string) {
     const stored = this.get.children(storeName);
@@ -130,3 +143,5 @@ export class GetterFeStore extends GetterSectionBase<"feStore"> {
     }, {} as StateValue<"changesSaving">);
   }
 }
+
+export type DisplayItemProps = { dbId: string; displayName: string };

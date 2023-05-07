@@ -3,7 +3,6 @@ import { ChildName } from "../../../../sharedWithServer/SectionsMeta/sectionChil
 import { FeSectionInfo } from "../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { SectionNameByType } from "../../../../sharedWithServer/SectionsMeta/SectionNameByType";
 import { useSetterSection } from "../../../../sharedWithServer/stateClassHooks/useSetterSection";
-import { useSaveStatus } from "../../GeneralSection/MainSection/useSaveStatus";
 import { VarbListTableSectionGeneric } from "./VarbListGeneric/VarbListTableSectionGeneric";
 import { VarbListMenuDual } from "./VarbListMenuDual";
 import { VarbListStyled } from "./VarbListStyled";
@@ -29,8 +28,6 @@ export function VarbListGeneric<SN extends VarbListAllowed>({
   menuType = "value",
   ...props
 }: Props<SN>) {
-  const disableSaveStatus = true;
-  let saveStatus = useSaveStatus(feInfo, disableSaveStatus);
   const list = useSetterSection(feInfo);
   const itemName = list.meta.varbListItem as ChildName<SN>;
   const addItem = props.addItem ?? (() => list.addChild(itemName));

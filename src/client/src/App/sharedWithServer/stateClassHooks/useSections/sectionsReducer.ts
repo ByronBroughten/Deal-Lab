@@ -7,7 +7,7 @@ import {
   FeVarbInfo,
   FeVarbValueInfo,
 } from "../../SectionsMeta/SectionInfo/FeInfo";
-import { FeIdProp } from "../../SectionsMeta/SectionInfo/NanoIdInfo";
+import { DbIdProp, FeIdProp } from "../../SectionsMeta/SectionInfo/NanoIdInfo";
 import { SectionName } from "../../SectionsMeta/SectionName";
 import {
   FeStoreInfo,
@@ -29,8 +29,11 @@ const sectionActionNames = [
   "activateDeal",
   "addActiveDeal",
   "copyInStore",
+  "loadSelfCopyFromStore",
   "removeSelf",
   "removeFromStore",
+  "removeFromStoreByDbId",
+  "resetSelfToDefault",
   "updateValue",
   "updateValueFromContent",
   "onChangeIdle",
@@ -41,7 +44,7 @@ const sectionActionNames = [
   "incrementGetUserDataTry",
   "changeActiveDealMode",
 ] as const;
-export type SectionActionName = typeof sectionActionNames[number];
+export type SectionActionName = (typeof sectionActionNames)[number];
 
 type _CheckSectionActionProps<
   T extends Partial<Record<SectionActionName, any>>
@@ -63,11 +66,14 @@ type ExtraActionProps = _CheckSectionActionProps<{
   updateValue: UpdateValueProps;
   updateValueFromContent: UpdateContentValueProps;
   removeSelf: RemoveSelfProps;
+  resetSelfToDefault: FeSectionInfo<StoreSectionName>;
+  loadSelfCopyFromStore: FeSectionInfo<StoreSectionName> & DbIdProp;
 
   addToStore: AddToStoreProps;
   saveAndOverwriteToStore: { feInfo: FeSectionInfo<StoreSectionName> };
   copyInStore: FeStoreInfo;
   removeFromStore: RemoveFromStoreProps;
+  removeFromStoreByDbId: RemoveFromStoreDbIdProps;
 }>;
 
 export type ActionPropsMap = _CheckSectionActionProps<
@@ -85,6 +91,7 @@ interface UpdateContentValueProps
   extends VarbContentInfo,
     IdOfSectionToSaveProp {}
 interface RemoveFromStoreProps extends StoreNameProp, FeIdProp {}
+interface RemoveFromStoreDbIdProps extends StoreNameProp, DbIdProp {}
 interface AddChildActionProps<
   SN extends SectionName = SectionName,
   CN extends ChildName<SN> = ChildName<SN>
@@ -112,6 +119,7 @@ type SavableActions = Extract<SectionsAction, { idOfSectionToSave?: string }>;
 const savableActionNames = Arr.extractStrict(sectionActionNames, [
   "addChild",
   "removeSelf",
+  "resetSelfToDefault",
   "updateValue",
   "updateValueFromContent",
 ] as const);
@@ -158,6 +166,20 @@ export const sectionsReducer: React.Reducer<StateSections, SectionsAction> = (
       const section = solverSections.solverSection(props);
       section.removeSelfAndSolve();
     },
+    resetSelfToDefault: (props) => {
+      const section = solverSections.solverSection(props);
+      section.resetToDefaultAndSolve();
+    },
+    loadSelfCopyFromStore: ({ dbId, sectionName, feId }) => {
+      const section = solverSections.solverSection({ sectionName, feId });
+      const { mainStoreName } = section.get;
+      const stored = solverSections.feStore.get.childByDbId({
+        childName: mainStoreName,
+        dbId,
+      });
+      section.loadSelfAndSolve(stored.makeSectionPack());
+      section.updater.newDbId();
+    },
     updateValue: (props) => {
       const varb = solverSections.solverVarb(props);
       varb.directUpdateAndSolve(props.value);
@@ -175,6 +197,8 @@ export const sectionsReducer: React.Reducer<StateSections, SectionsAction> = (
 
     addToStore: (props) => solverSections.feStore.addToStore(props),
     removeFromStore: (props) => solverSections.feStore.removeFromStore(props),
+    removeFromStoreByDbId: (props) =>
+      solverSections.feStore.removeFromStoreByDbId(props),
     saveAndOverwriteToStore: ({ feInfo }) =>
       solverSections.saveAndOverwriteToStore(feInfo),
     copyInStore: (props) => solverSections.feStore.copyInStore(props),

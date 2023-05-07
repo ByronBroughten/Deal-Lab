@@ -5,7 +5,7 @@ import { FeSectionInfo } from "../../../sharedWithServer/SectionsMeta/SectionInf
 import { useGetterSectionOnlyOne } from "../../../sharedWithServer/stateClassHooks/useGetterSection";
 import theme from "../../../theme/Theme";
 import { useGoToPage } from "../../appWide/customHooks/useGoToPage";
-import { StyledActionBtn } from "../../appWide/GeneralSection/MainSection/StoreSectionActionMenu/ActionBtns.tsx/StyledActionBtn";
+import { StyledActionBtn } from "../../appWide/GeneralSection/MainSection/StyledActionBtn";
 import { ModalSection } from "../../appWide/ModalSection";
 import { MaterialStringEditor } from "../MaterialStringEditor";
 import { OnVarbSelect } from "./NumObjVarbSelector/VarbSelectorCollection";

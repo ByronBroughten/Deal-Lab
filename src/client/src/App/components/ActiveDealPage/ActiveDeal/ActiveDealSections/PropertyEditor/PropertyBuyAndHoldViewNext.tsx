@@ -1,7 +1,7 @@
-import { BasicBuyAndHoldInfoNext } from "./BasicBuyAndHoldInfoNext";
-import { PropertyEditorBody } from "./PropertyEditorBody";
-import { PropertyOngoingCosts } from "./PropertyOngoingCosts";
-import { RehabSection } from "./RehabSection";
+import { BasicBuyAndHoldInfoNext } from "./ViewChunks/BasicBuyAndHoldInfoNext";
+import { PropertyEditorBody } from "./ViewChunks/PropertyEditorBody";
+import { PropertyOngoingCosts } from "./ViewChunks/PropertyOngoingCosts";
+import { RehabSection } from "./ViewChunks/PropertyRehab";
 
 export function PropertyBuyAndHoldViewNext({ feId }: { feId: string }) {
   return (

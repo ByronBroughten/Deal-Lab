@@ -1,4 +1,3 @@
-import bcrypt from "bcrypt";
 import { Response } from "express";
 import { pick } from "lodash";
 import mongoose from "mongoose";
@@ -16,7 +15,6 @@ import { PackBuilderSections } from "../../../../client/src/App/sharedWithServer
 import { Arr } from "../../../../client/src/App/sharedWithServer/utils/Arr";
 import { stripeS } from "../../../../client/src/App/sharedWithServer/utils/stripe";
 import { timeS } from "../../../../client/src/App/sharedWithServer/utils/timeS";
-import { HandledResStatusError } from "../../../../utils/resError";
 import { isProEmail } from "../../../routeUtils/proList";
 import { DbSections } from "./DbSections";
 import { DbUser } from "./DbUser";
@@ -122,19 +120,6 @@ export class LoadedDbUser extends GetterSectionBase<"dbStore"> {
   }
   get userInfoPrivate(): GetterSection<"userInfoPrivate"> {
     return this.get.onlyChild("userInfoPrivate");
-  }
-  async validatePassword(attemptedPassword: string): Promise<void> {
-    const encryptedPassword = this.userInfoPrivate.value(
-      "encryptedPassword",
-      "string"
-    );
-    const isValid = await bcrypt.compare(attemptedPassword, encryptedPassword);
-    if (!isValid) {
-      throw new HandledResStatusError({
-        resMessage: "That password is incorrect.",
-        status: 400,
-      });
-    }
   }
   collectUserData(): UserData {
     const feStore = PackBuilderSections.initFeStore();

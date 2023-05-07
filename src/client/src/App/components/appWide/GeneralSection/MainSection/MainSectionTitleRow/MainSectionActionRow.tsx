@@ -1,5 +1,5 @@
 import { SectionNameByType } from "../../../../../sharedWithServer/SectionsMeta/SectionNameByType";
-import { ActionMenuProps } from "../StoreSectionActionMenu/ActionMenuTypes";
+import { ActionMenuProps } from "../ActionBtns/ActionMenuTypes";
 import { StoreSectionActions } from "../StoreSectionActions";
 
 export interface MainSectionMenuOptions {

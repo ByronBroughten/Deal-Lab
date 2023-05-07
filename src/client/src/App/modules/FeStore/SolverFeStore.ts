@@ -1,5 +1,6 @@
 import { UserData } from "../../sharedWithServer/apiQueriesShared/validateUserData";
 import { SectionPack } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/SectionPack";
+import { DbIdProp } from "../../sharedWithServer/SectionsMeta/SectionInfo/NanoIdInfo";
 import {
   FeStoreInfo,
   isStoreNameByType,
@@ -37,6 +38,7 @@ export interface SaveAsToStoreProps<CN extends StoreName = StoreName>
 }
 
 export interface RemoveFromStoreProps extends FeStoreInfo {}
+export interface RemoveFromStoreByDbIdProps extends DbIdProp, StoreNameProp {}
 
 export class SolverFeStore extends SolverSectionBase<"feStore"> {
   constructor(props: SolverSectionsProps) {
@@ -170,6 +172,13 @@ export class SolverFeStore extends SolverSectionBase<"feStore"> {
       dbId: child.get.dbId,
     });
     child.removeSelfAndSolve();
+  }
+  removeFromStoreByDbId({ storeName, dbId }: RemoveFromStoreByDbIdProps) {
+    const { feId } = this.get.childByDbId({
+      childName: storeName,
+      dbId,
+    });
+    this.removeFromStore({ storeName, feId });
   }
   sectionByStoreId(storeId: string): SolverSection<StoreSectionName> {
     const { feInfo } = this.getterFeStore.sectionByStoreId(storeId);

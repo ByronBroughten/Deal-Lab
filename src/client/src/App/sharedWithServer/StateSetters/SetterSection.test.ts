@@ -9,11 +9,11 @@ import { SetterTesterSection } from "./TestUtils/SetterTesterSection";
 
 // loadSelfSectionPack
 // replaceChildArrs
-// replaceWithDefault, resetToDefault
+// resetToDefault
 
 describe("SetterSection", () => {
   const sectionPathNames = ["loanFocal"] as const;
-  type PathName = typeof sectionPathNames[number];
+  type PathName = (typeof sectionPathNames)[number];
   type SnTesterProps<TN extends PathName> = {
     tester: SetterTesterSection<PathSectionName<TN>>;
   };

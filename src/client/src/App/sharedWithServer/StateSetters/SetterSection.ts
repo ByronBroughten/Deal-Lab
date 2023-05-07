@@ -182,10 +182,6 @@ export class SetterSection<
     this.solver.removeSelfAndSolve();
     this.setSections();
   }
-  replaceWithDefault(): void {
-    this.solver.replaceWithDefaultAndSolve();
-    this.setSections();
-  }
   resetToDefault(): void {
     this.solver.resetToDefaultAndSolve();
     this.setSections();

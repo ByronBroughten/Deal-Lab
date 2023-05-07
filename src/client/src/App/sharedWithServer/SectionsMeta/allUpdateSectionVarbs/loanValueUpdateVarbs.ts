@@ -1,43 +1,14 @@
 import { PathInVarbInfo } from "../sectionChildrenDerived/RelInOutVarbInfo";
 import { UpdateSectionVarbs } from "../updateSectionVarbs/updateSectionVarbs";
-import { UpdateVarb, updateVarb } from "../updateSectionVarbs/updateVarb";
+import { updateVarb } from "../updateSectionVarbs/updateVarb";
 import { updateBasicsS } from "../updateSectionVarbs/updateVarb/UpdateBasics";
 import {
   updateFnProp,
   updateFnPropS,
 } from "../updateSectionVarbs/updateVarb/UpdateFnProps";
-import {
-  overrideSwitchS,
-  updateOverride,
-  UpdateOverrides,
-} from "../updateSectionVarbs/updateVarb/UpdateOverrides";
-import {
-  completionStatusBasics,
-  completionStatusVarb,
-  valueSourceOverrides,
-} from "../updateSectionVarbs/updateVarb/updateVarbUtils";
+import { valueSourceOverrides } from "../updateSectionVarbs/updateVarb/updateVarbUtils";
 import { updateVarbsS } from "../updateSectionVarbs/updateVarbs";
-import { unionValueArr } from "../values/StateValue/unionValues";
-
-const switchS = overrideSwitchS;
-const cBasics = completionStatusBasics;
-const propS = updateFnPropS;
-
-export function loanValueCompletionStatus(): UpdateVarb<"completionStatus"> {
-  const sourceNames = unionValueArr("percentDollarsSource");
-  const extraOverrides = sourceNames.reduce((overrides, sourceName) => {
-    overrides.push(
-      updateOverride(
-        [switchS.local("valueSourceName", sourceName)],
-        cBasics({
-          validInputs: [propS.local(sourceName)],
-        })
-      )
-    );
-    return overrides;
-  }, [] as UpdateOverrides);
-  return completionStatusVarb(...extraOverrides);
-}
+import { loanValueCompletionStatus } from "./calculatedUpdateVarbs/completionStatusVarbs";
 
 export function loanValueUpdateVarbs(
   percentOfWhatInfo: PathInVarbInfo

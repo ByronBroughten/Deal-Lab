@@ -135,57 +135,48 @@ function noFinancingOverride() {
   );
 }
 
-export function loanValueCompletionStatus(
-  loanPathName: LoanPathName
-): UpdateVarb<"completionStatus"> {
+export function loanValueCompletionStatus(): UpdateVarb<"completionStatus"> {
   const sourceNames = unionValueArr("percentDollarsSource");
   const extraOverrides = sourceNames.reduce((overrides, sourceName) => {
     overrides.push(
       updateOverride(
-        [switchS.pathHasValue(loanPathName, "valueSourceName", sourceName)],
+        [switchS.local("valueSourceName", sourceName)],
         cBasics({
-          validInputs: [propS.pathName(loanPathName, sourceName)],
+          validInputs: [propS.local(sourceName)],
         })
       )
     );
     return overrides;
   }, [] as UpdateOverrides);
-  return completionStatusVarb(
-    // noFinancingOverride(),
-    ...extraOverrides
-  );
+  return completionStatusVarb(...extraOverrides);
 }
 
-export const baseLoanCompletionStatus = completionStatusVarb(
-  // noFinancingOverride(),
-  ...valueSourceOverrides(
-    "loanBaseValueSource",
-    {
+export function baseLoanCompletionStatus() {
+  return completionStatusVarb(
+    ...valueSourceOverrides("loanBaseValueSource", {
       purchaseLoanValue: cBasics({
-        othersValid: [propS.local("purchaseLoanCompletionStatus")],
+        othersValid: [propS.onlyChild("purchaseLoanValue", "completionStatus")],
       }),
       repairLoanValue: cBasics({
-        othersValid: [propS.local("repairLoanCompletionStatus")],
+        othersValid: [propS.onlyChild("repairLoanValue", "completionStatus")],
       }),
       arvLoanValue: cBasics({
-        othersValid: [propS.local("arvLoanCompletionStatus")],
+        othersValid: [propS.onlyChild("arvLoanValue", "completionStatus")],
       }),
       priceAndRepairValues: cBasics({
         othersValid: [
-          propS.local("purchaseLoanCompletionStatus"),
-          propS.local("repairLoanCompletionStatus"),
+          propS.onlyChild("purchaseLoanValue", "completionStatus"),
+          propS.onlyChild("repairLoanValue", "completionStatus"),
         ],
       }),
       customAmountEditor: cBasics({
-        validInputs: [propS.pathName("loanBaseFocal", "valueDollarsEditor")],
+        validInputs: [propS.local("valueDollarsEditor")],
       }),
-    },
-    mixedInfoS.pathNameVarb("loanBaseFocal", "valueSourceName")
-  )
-);
+    })
+  );
+}
 
 export const financingCompletionStatus = completionStatusVarb(
-  // noFinancingOverride(),
   updateOverride(
     [switchS.varbIsValue("financingMode", "", "cashOnly")],
     cBasics({
@@ -195,7 +186,7 @@ export const financingCompletionStatus = completionStatusVarb(
   updateOverride(
     [switchS.varbIsValue("financingMode", "useLoan")],
     cBasics({
-      othersValid: [propS.local("baseLoanCompletionStatus")],
+      othersValid: [propS.pathName("loanBaseFocal", "completionStatus")],
       nonNone: [propS.pathName("closingCostFocal", "valueSourceName")],
       validInputs: [
         propS.pathName("loanFocal", "interestRatePercentOngoingEditor"),

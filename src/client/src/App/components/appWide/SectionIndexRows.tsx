@@ -3,10 +3,11 @@ import React from "react";
 import { unstable_batchedUpdates } from "react-dom";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import styled from "styled-components";
-import { useMainSectionActor } from "../../modules/sectionActorHooks/useMainSectionActor";
 import { FeSectionInfo } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { SectionNameByType } from "../../sharedWithServer/SectionsMeta/SectionNameByType";
-import { useAuthStatus } from "../../sharedWithServer/stateClassHooks/useAuthStatus";
+import { useAction } from "../../sharedWithServer/stateClassHooks/useAction";
+import { useGetterFeStore } from "../../sharedWithServer/stateClassHooks/useFeStore";
+import { useGetterSection } from "../../sharedWithServer/stateClassHooks/useGetterSection";
 import ccs from "../../theme/cssChunks";
 import theme, { ThemeName, themeSectionNameOrDefault } from "../../theme/Theme";
 import useHowMany from "./customHooks/useHowMany";
@@ -14,7 +15,6 @@ import { RowIndexListRow, StyledRowIndexRow } from "./RowIndexListRow";
 
 type Props<SN extends SectionNameByType<"hasIndexStore">> = {
   feInfo: FeSectionInfo<SN>;
-  loadMode: "load" | "loadAndCopy";
   className?: string;
   onClick?: () => void;
 };
@@ -28,18 +28,16 @@ function useScenarioKey(rows: any[]): ScenarioKey {
 
 export function SectionIndexRows<
   SN extends SectionNameByType<"hasIndexStore">
->({ feInfo, className, onClick, loadMode }: Props<SN>) {
-  const authStatus = useAuthStatus();
+>({ feInfo, className, onClick }: Props<SN>) {
+  const rmFromStore = useAction("removeFromStoreByDbId");
+  const loadSelf = useAction("loadSelfCopyFromStore");
+  const { mainStoreName } = useGetterSection(feInfo);
+  const feStore = useGetterFeStore();
+  const rows = feStore.alphabeticalDisplayItems(mainStoreName);
+  const { authStatus } = feStore;
+
   const [filter, setFilter] = React.useState("");
-  const section = useMainSectionActor(feInfo);
-  const rows = section.alphabeticalDisplayItems();
   const scenarioKey = useScenarioKey(rows);
-
-  const loadMethod = {
-    load: (dbId: string) => section.loadFromIndex(dbId),
-    loadAndCopy: (dbId: string) => section.loadAndCopy(dbId),
-  };
-
   const scenarios = {
     get areNone() {
       return <Message message="None Saved" />;
@@ -69,14 +67,15 @@ export function SectionIndexRows<
                       displayName,
                       load: () => {
                         unstable_batchedUpdates(() => {
-                          loadMethod[loadMode ?? "load"](dbId);
+                          loadSelf({ ...feInfo, dbId });
                           onClick && onClick();
                         });
                       },
                       del:
                         authStatus === "guest"
                           ? undefined
-                          : () => section.deleteFromIndex(dbId),
+                          : () =>
+                              rmFromStore({ storeName: mainStoreName, dbId }),
                       key: dbId,
                     }}
                   />

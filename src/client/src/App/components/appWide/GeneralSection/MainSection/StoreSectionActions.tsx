@@ -1,15 +1,15 @@
 import { AiOutlineArrowRight } from "react-icons/ai";
 import { BiReset } from "react-icons/bi";
 import styled from "styled-components";
-import { useMainSectionActor } from "../../../../modules/sectionActorHooks/useMainSectionActor";
 import { SectionNameByType } from "../../../../sharedWithServer/SectionsMeta/SectionNameByType";
+import { useAction } from "../../../../sharedWithServer/stateClassHooks/useAction";
 import theme from "../../../../theme/Theme";
 import { ListRouteName } from "../../../UserListEditorPage/UserComponentClosed";
 import { useMakeGoToPage } from "../../customHooks/useGoToPage";
-import { StyledActionBtn } from "./StoreSectionActionMenu/ActionBtns.tsx/StyledActionBtn";
-import { ActionLoadBtn } from "./StoreSectionActionMenu/ActionLoadBtn";
-import { ActionMenuProps } from "./StoreSectionActionMenu/ActionMenuTypes";
-import { ActionSaveAsNewBtn } from "./StoreSectionActionMenu/SaveAsNewBtn";
+import { ActionLoadBtn } from "./ActionBtns/ActionLoadBtn";
+import { ActionMenuProps } from "./ActionBtns/ActionMenuTypes";
+import { ActionSaveAsNewBtn } from "./ActionBtns/SaveAsNewBtn";
+import { StyledActionBtn } from "./StyledActionBtn";
 
 interface Props<SN extends SectionNameByType<"hasIndexStore">>
   extends ActionMenuProps {
@@ -26,27 +26,18 @@ interface Props<SN extends SectionNameByType<"hasIndexStore">>
 export function StoreSectionActions<
   SN extends SectionNameByType<"hasIndexStore">
 >({ className, sectionName, feId, routeBtnProps }: Props<SN>) {
-  const feInfo = { sectionName, feId };
-  const mainSection = useMainSectionActor(feInfo);
+  const feInfo = { sectionName, feId } as const;
+  const resetSelfToDefault = useAction("resetSelfToDefault");
   const makeGoToPage = useMakeGoToPage();
   return (
-    <Styled
-      {...{
-        className: `StoreSectionActionMenu-root ${className ?? ""}`,
-      }}
-    >
-      <ActionLoadBtn
-        {...{
-          feInfo,
-          loadMode: "loadAndCopy",
-        }}
-      />
+    <Styled {...{ className }}>
+      <ActionLoadBtn {...{ feInfo }} />
       <ActionSaveAsNewBtn {...{ btnProps: { sx: { ml: "2px" } }, ...feInfo }} />
       <StyledActionBtn
         sx={{ ml: "2px" }}
         middle="Reset default"
         left={<BiReset size={23} />}
-        onClick={() => mainSection.replaceWithDefault()}
+        onClick={() => resetSelfToDefault(feInfo)}
       />
       {routeBtnProps && (
         <StyledActionBtn

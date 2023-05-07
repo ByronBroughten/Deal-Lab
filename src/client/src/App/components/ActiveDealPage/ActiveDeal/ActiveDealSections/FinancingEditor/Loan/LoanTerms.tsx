@@ -4,10 +4,10 @@ import { useGetterSection } from "../../../../../../sharedWithServer/stateClassH
 import { nativeTheme } from "../../../../../../theme/nativeTheme";
 import { FormSectionLabeled } from "../../../../../appWide/FormSectionLabeled";
 import { LabelWithInfo } from "../../../../../appWide/LabelWithInfo";
+import { BasicInfoEditorRow } from "../../../../../appWide/MarginEditorRow";
 import { TogglerBooleanVarb } from "../../../../../appWide/TogglerBooleanVarb";
 import { MuiRow } from "../../../../../general/MuiRow";
 import { NumObjEntityEditor } from "../../../../../inputs/NumObjEntityEditor";
-import { BasicInfoEditorRow } from "../../PropertyEditor/BasicInfoEditorRow";
 import { ClosingCostValue } from "./ClostingCostValue";
 
 export function LoanTerms({ feId }: FeIdProp) {

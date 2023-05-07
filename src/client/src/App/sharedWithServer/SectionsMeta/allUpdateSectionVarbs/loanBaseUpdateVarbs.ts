@@ -6,8 +6,8 @@ import { valueSourceOverrides } from "../updateSectionVarbs/updateVarb/updateVar
 import { updateVarbsS } from "../updateSectionVarbs/updateVarbs";
 import { StateValue } from "../values/StateValue";
 import { UpdateBasics } from "./../updateSectionVarbs/updateVarb/UpdateBasics";
+import { baseLoanCompletionStatus } from "./calculatedUpdateVarbs/completionStatusVarbs";
 
-const basicsS = updateBasicsS;
 function sourceOverrides(
   overrideMap: Record<StateValue<"loanBaseValueSource">, UpdateBasics>
 ) {
@@ -20,7 +20,7 @@ function sourceOverrides(
 export function loanBaseUpdateVarbs(): UpdateSectionVarbs<"loanBaseValue"> {
   return {
     ...updateVarbsS._typeUniformity,
-    completionStatus: updateVarb("completionStatus"),
+    completionStatus: baseLoanCompletionStatus(),
     valueSourceName: updateVarb("loanBaseValueSource", {
       initValue: "purchaseLoanValue",
     }),

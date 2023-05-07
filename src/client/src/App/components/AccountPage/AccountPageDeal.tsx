@@ -6,7 +6,7 @@ import { useActionWithProps } from "../../sharedWithServer/stateClassHooks/useAc
 import { nativeTheme } from "../../theme/nativeTheme";
 import { reactNativeS } from "../../utils/reactNative";
 import { useGoToPage } from "../appWide/customHooks/useGoToPage";
-import { StyledActionBtn } from "../appWide/GeneralSection/MainSection/StoreSectionActionMenu/ActionBtns.tsx/StyledActionBtn";
+import { StyledActionBtn } from "../appWide/GeneralSection/MainSection/StyledActionBtn";
 import { useGetterSection } from "./../../sharedWithServer/stateClassHooks/useGetterSection";
 import { Row } from "./../general/Row";
 import { icons } from "./../Icons";

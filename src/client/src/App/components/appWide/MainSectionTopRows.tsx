@@ -6,7 +6,6 @@ import { nativeTheme } from "../../theme/nativeTheme";
 import theme from "../../theme/Theme";
 import { MuiRow } from "../general/MuiRow";
 import { StoreSectionActions } from "./GeneralSection/MainSection/StoreSectionActions";
-import { useSaveStatus } from "./GeneralSection/MainSection/useSaveStatus";
 import { RemoveSectionXBtn } from "./RemoveSectionXBtn";
 import { SectionTitleMain } from "./SectionTitleMain";
 
@@ -38,7 +37,6 @@ export function MainSectionTopRows({
   topLeft,
   ...feInfo
 }: Props) {
-  const saveStatus = useSaveStatus(feInfo);
   return (
     <Styled className={`MainSectionTopRows-root ${className ?? ""}`}>
       <div className="MainSectionTopRows-topRow">
@@ -67,14 +65,7 @@ export function MainSectionTopRows({
         </div>
       </div>
       <Box sx={{ flexDirection: "row", mt: nativeTheme.s3 }}>
-        {showControls && (
-          <StoreSectionActions
-            {...{
-              ...feInfo,
-              saveStatus,
-            }}
-          />
-        )}
+        {showControls && <StoreSectionActions {...feInfo} />}
       </Box>
     </Styled>
   );

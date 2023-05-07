@@ -1,8 +1,8 @@
 import { useGetterSection } from "../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { FormSectionLabeled } from "../../../../appWide/FormSectionLabeled";
-import { BasicInfoEditorRow } from "../PropertyEditor/BasicInfoEditorRow";
-import { MiscOnetimeCost } from "../PropertyEditor/MiscOnetimeCost";
-import { MiscOngoingCost } from "../PropertyEditor/MiscOngoingCost";
+import { BasicInfoEditorRow } from "../../../../appWide/MarginEditorRow";
+import { MiscOnetimeCost } from "../PropertyEditor/ViewChunks/ViewParts/MiscOnetimeCost";
+import { MiscOngoingCost } from "../PropertyEditor/ViewChunks/ViewParts/MiscOngoingCost";
 import { BasePayValue } from "./MgmtOngoingCosts/MgmtBasePayValue";
 import { VacancyLossValue } from "./VacancyLossValue";
 
