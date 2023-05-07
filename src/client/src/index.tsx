@@ -7,21 +7,10 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
-// calculatedVarbs.baseLoanCompletionStatus
-// - is trying to use loanBaseFocal.valueSourceName as a switch
-//   but there are multiple loanBaseFocal
-
-// Fix multiple loans not working
-// - what you must do is reference the switch from the
-//   updateFnProp's perspective, not from the main
-//   overrides
-
-// Make SolverSections tests that checks everything.
-
 // Should dealMode be selected when you create a new deal?
 // Should dealMode not be changable?
 // These two things seem to make sense.
-// Then I would only need one property, with one propertyType
+// Then deal would only need one property, with one propertyType
 
 // - Add homeBuyer mode (no income)
 //   - Buy and hold basics
@@ -43,6 +32,9 @@ AppRegistry.runApplication("App", {
 // - Add Brrrr
 //   - Mostly the same inputs and outputs as b&h + f&f
 //   - I'll have to differentiate between a buy loan and a refi loan
+
+// - just put completionStatus on the sections
+// - make SolverSections test suite to test the reducer actions
 
 // Make the Wordpress site
 // Which advantages do I want to list on WP?
