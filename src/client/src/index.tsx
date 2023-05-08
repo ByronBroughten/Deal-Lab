@@ -6,6 +6,8 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
+// I think I can add homeBuyer mode pretty easily
+// I'm just worried that I'm going to get in too deep
 
 // - Add homeBuyer mode (no income)
 //   - Buy and hold basics
@@ -22,11 +24,17 @@ AppRegistry.runApplication("App", {
 //   - the set of columns that is activated
 //     - Mixed will have (totalInvestment, annualizedRoi, and CoCROI)
 
-// - Add tests for fixAndFlip
-
 // - Add Brrrr
 //   - Mostly the same inputs and outputs as b&h + f&f
 //   - I'll have to differentiate between a buy loan and a refi loan
+
+// - Add tests for each dealMode
+
+// - allow customizing the output list
+// - give access to outputListMain
+// - allow loading output lists
+// - add pass or fail variables
+// - integrate pass or fail into the outputList
 
 // - just put completionStatus on the sections
 // - make SolverSections test suite to test the reducer actions
