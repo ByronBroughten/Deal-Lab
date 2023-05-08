@@ -2,8 +2,9 @@ import { AiOutlineArrowRight } from "react-icons/ai";
 import { BiReset } from "react-icons/bi";
 import styled from "styled-components";
 import { SectionNameByType } from "../../../../sharedWithServer/SectionsMeta/SectionNameByType";
-import { useAction } from "../../../../sharedWithServer/stateClassHooks/useAction";
+import { useActionWithProps } from "../../../../sharedWithServer/stateClassHooks/useAction";
 import theme from "../../../../theme/Theme";
+import { useConfirmation } from "../../../general/ConfirmationDialogueProvider";
 import { ListRouteName } from "../../../UserListEditorPage/UserComponentClosed";
 import { useMakeGoToPage } from "../../customHooks/useGoToPage";
 import { ActionLoadBtn } from "./ActionBtns/ActionLoadBtn";
@@ -27,17 +28,28 @@ export function StoreSectionActions<
   SN extends SectionNameByType<"hasIndexStore">
 >({ className, sectionName, feId, routeBtnProps }: Props<SN>) {
   const feInfo = { sectionName, feId } as const;
-  const resetSelfToDefault = useAction("resetSelfToDefault");
+  const resetSelfToDefault = useActionWithProps("resetSelfToDefault", feInfo);
   const makeGoToPage = useMakeGoToPage();
+  const confirm = useConfirmation();
+  const warnThenReset = () =>
+    confirm({
+      title: "Are you sure you want to reset this section to default?",
+      description: "If yes, you will lose all the changes made to it.",
+      variant: "danger",
+    })
+      .then(resetSelfToDefault)
+      .catch();
+
   return (
     <Styled {...{ className }}>
       <ActionLoadBtn {...{ feInfo }} />
       <ActionSaveAsNewBtn {...{ btnProps: { sx: { ml: "2px" } }, ...feInfo }} />
       <StyledActionBtn
         sx={{ ml: "2px" }}
+        isDangerous={true}
         middle="Reset default"
         left={<BiReset size={23} />}
-        onClick={() => resetSelfToDefault(feInfo)}
+        onClick={warnThenReset}
       />
       {routeBtnProps && (
         <StyledActionBtn

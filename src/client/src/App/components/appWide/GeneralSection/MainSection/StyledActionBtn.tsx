@@ -5,11 +5,13 @@ import { PlainIconBtn, PlainIconBtnProps } from "../../../general/PlainIconBtn";
 interface Props extends Omit<PlainIconBtnProps, "style"> {
   isActive?: boolean;
   showAsDisabled?: boolean;
+  isDangerous?: boolean;
 }
 export function StyledActionBtn({
   showAsDisabled = false,
   isActive = false,
   sx,
+  isDangerous,
   ...rest
 }: Props) {
   return (
@@ -30,6 +32,13 @@ export function StyledActionBtn({
               backgroundColor: nativeTheme.darkBlue.main,
               borderColor: nativeTheme.darkBlue.main,
             },
+            ...(isDangerous && {
+              "&:hover": {
+                color: nativeTheme.danger.dark,
+                backgroundColor: nativeTheme["gray-300"],
+                borderColor: nativeTheme.danger.dark,
+              },
+            }),
             ...(isActive && {
               color: nativeTheme.light,
               backgroundColor: nativeTheme.darkBlue.main,

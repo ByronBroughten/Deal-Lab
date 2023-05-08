@@ -56,8 +56,8 @@ export const ConfirmationDialogueProvider = ({
         onClose={handleClose}
         {...{
           catchOnCancel: true,
-          description: "NO DESCRIPTION",
-          title: "NO TITLE",
+          description: "",
+          title: "",
           variant: "danger",
           ...confirmationState,
         }}

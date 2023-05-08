@@ -7,6 +7,7 @@ import { nativeTheme } from "../../theme/nativeTheme";
 import { reactNativeS } from "../../utils/reactNative";
 import { useGoToPage } from "../appWide/customHooks/useGoToPage";
 import { StyledActionBtn } from "../appWide/GeneralSection/MainSection/StyledActionBtn";
+import { useConfirmation } from "../general/ConfirmationDialogueProvider";
 import { useGetterSection } from "./../../sharedWithServer/stateClassHooks/useGetterSection";
 import { Row } from "./../general/Row";
 import { icons } from "./../Icons";
@@ -51,8 +52,19 @@ export function AccountPageDeal({
   const deal = useGetterSection({ sectionName: "deal", feId });
   const goToActiveDeal = useGoToPage("activeDeal");
   const copyDeal = useActionWithProps("copyInStore", { storeName, feId });
-  const deleteDeal = useActionWithProps("removeStoredDeal", { feId });
   const activateDeal = useActionWithProps("activateDeal", { feId });
+
+  const deleteDeal = useActionWithProps("removeStoredDeal", { feId });
+  const confirm = useConfirmation();
+
+  const warnAndDelete = async () =>
+    confirm({
+      title: "Are you sure you want to delete this deal?",
+      description: "It will be deleted permanently.",
+      variant: "danger",
+    })
+      .then(deleteDeal)
+      .catch();
 
   const dateNumber = deal.valueNext("dateTimeFirstSaved");
   const dateCreated = new Intl.DateTimeFormat("en-US", {
@@ -141,15 +153,11 @@ export function AccountPageDeal({
           />
           <StyledActionBtn
             {...{
-              onClick: deleteDeal,
+              isDangerous: true,
+              onClick: warnAndDelete,
               sx: {
                 margin: nativeTheme.s1,
                 marginTop: nativeTheme.s25,
-                "&:hover": {
-                  color: nativeTheme.danger.dark,
-                  backgroundColor: nativeTheme["gray-300"],
-                  borderColor: nativeTheme.danger.dark,
-                },
               },
               left: icons.delete({ size: 20 }),
               middle: "Delete",

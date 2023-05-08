@@ -7,6 +7,7 @@ import {
   DialogTitle,
 } from "@mui/material";
 import * as React from "react";
+import { nativeTheme } from "../../theme/nativeTheme";
 
 // Tonight, I can transform this app.
 // I can implement the input info dots.
@@ -34,19 +35,51 @@ export const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({
   onClose,
 }) => {
   return (
-    <Dialog open={open}>
-      <DialogTitle id="alert-dialog-title">{title}</DialogTitle>
+    <Dialog
+      {...{
+        PaperProps: {
+          sx: {
+            borderColor: nativeTheme.notice.dark,
+            borderStyle: "solid",
+            borderWidth: 2,
+            background: nativeTheme["gray-200"],
+          },
+        },
+      }}
+      open={open}
+    >
+      <DialogTitle
+        sx={{ color: nativeTheme.notice.dark, fontSize: nativeTheme.fs22 }}
+        id="alert-dialog-title"
+      >
+        {title}
+      </DialogTitle>
       <DialogContent>
-        <DialogContentText>{description}</DialogContentText>
+        <DialogContentText
+          sx={{ fontSize: nativeTheme.fs18, color: nativeTheme["gray-800"] }}
+        >
+          {description}
+        </DialogContentText>
       </DialogContent>
       <DialogActions>
-        {variant === "danger" && (
+        {variant === "danger" && open && (
           <>
-            <Button color="primary" onClick={onSubmit}>
-              YES
+            <Button
+              sx={{ fontSize: nativeTheme.fs22 }}
+              size="large"
+              color="primary"
+              onClick={onSubmit}
+            >
+              Yes
             </Button>
-            <Button color="primary" onClick={onClose} autoFocus>
-              CANCEL
+            <Button
+              sx={{ fontSize: nativeTheme.fs22 }}
+              size="large"
+              color="primary"
+              onClick={onClose}
+              autoFocus
+            >
+              Cancel
             </Button>
           </>
         )}
