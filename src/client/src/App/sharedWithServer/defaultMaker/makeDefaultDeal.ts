@@ -46,7 +46,7 @@ export function makeDefaultDealPack(
   const deal = PackBuilderSection.initAsOmniChild("deal");
   deal.updateValues({
     dealMode,
-    displayNameSource: "defaultDisplayName",
+    displayNameSource: "displayNameEditor",
   });
   deal.loadChild({
     childName: "property",

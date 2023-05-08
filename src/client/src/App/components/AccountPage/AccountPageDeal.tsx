@@ -11,13 +11,14 @@ import { useGetterSection } from "./../../sharedWithServer/stateClassHooks/useGe
 import { Row } from "./../general/Row";
 import { icons } from "./../Icons";
 
-const titleProps = {
-  style: {
+const titleProps = (displayName: string) => ({
+  sx: {
     color: nativeTheme.primary.main,
     fontSize: nativeTheme.fs18,
     maxWidth: 800,
+    ...(!displayName && { fontStyle: "italic" }),
   },
-};
+});
 
 const dealTypeProps = {
   style: {
@@ -70,6 +71,8 @@ export function AccountPageDeal({
       goToActiveDeal();
     });
   };
+
+  const strDisplayName = deal.stringValue("displayName");
   return (
     <View
       style={{
@@ -82,7 +85,9 @@ export function AccountPageDeal({
       }}
     >
       <Row style={{ justifyContent: "space-between" }}>
-        <Text {...titleProps}>{deal.stringValue("displayName")}</Text>
+        <Box {...titleProps(strDisplayName)}>
+          {strDisplayName || "Untitled"}
+        </Box>
         <Row
           style={{
             ...rowStyle,
@@ -95,7 +100,7 @@ export function AccountPageDeal({
       </Row>
       <Row style={{ justifyContent: "space-between" }}>
         <Row style={rowStyle}>
-          {icons["buyAndHold"](iconProps)}
+          {icons[dealMode](iconProps)}
           <Text {...dealTypeProps}>{dealModeLabels[dealMode]}</Text>
           {!deal.valueNext("isComplete") && (
             <Box

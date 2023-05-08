@@ -40,8 +40,9 @@ export const allSectionChildren = checkAllSectionChildren({
     feStore: "feStore",
 
     // These are saved in local storage
-    variablesMenu: "variablesMenu",
+    newDealMenu: "newDealMenu",
     mainDealMenu: "mainDealMenu",
+    variablesMenu: "variablesMenu",
     editorControls: "editorControls",
 
     // These are not saved

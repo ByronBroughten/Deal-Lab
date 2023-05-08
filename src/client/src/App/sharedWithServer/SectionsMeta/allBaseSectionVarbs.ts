@@ -43,6 +43,7 @@ export function makeAllBaseSectionVarbs() {
     editorControls: varbs({
       editedDealDbId: baseVarb("string"),
     }),
+    newDealMenu: varbs({ dealMode: baseVarb("dealMode") }),
     mainDealMenu: varbs({
       dealNameFilter: baseVarb("string"),
       dealModeFilter: baseVarb("dealMode"),

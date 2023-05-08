@@ -1,10 +1,8 @@
 import { View } from "react-native";
 import { BackBtnWrapper } from "../appWide/BackBtnWrapper";
 import { BackgroundContainer } from "../appWide/BackgroundContainter";
-import { MuiSelect } from "../appWide/MuiSelect";
 import { SectionTitleMain } from "../appWide/SectionTitleMain";
 import { BigStringEditor } from "../inputs/BigStringEditor";
-import { validateStateValue } from "./../../sharedWithServer/SectionsMeta/values/valueMetas";
 import { useAction } from "./../../sharedWithServer/stateClassHooks/useAction";
 import { nativeTheme } from "./../../theme/nativeTheme";
 import { Row } from "./../general/Row";
@@ -34,32 +32,10 @@ export function ActiveDealMain() {
             marginTop: nativeTheme.s35,
           }}
         >
-          <MuiSelect
-            {...{
-              onChangeOverride: (e) => {
-                changeDealMode({
-                  dealMode: validateStateValue(e.target.value, "dealMode"),
-                });
-              },
-              feVarbInfo: {
-                sectionName: "deal",
-                feId: deal.feId,
-                varbName: "dealMode",
-              },
-              unionValueName: "dealMode",
-              items: [
-                ["buyAndHold", "Rental Property"],
-                ["fixAndFlip", "Fix & Flip"],
-              ],
-              label: "Type",
-            }}
-          />
           <BigStringEditor
             {...{
               label: "Title",
-              // placeholder: "Title",
               feVarbInfo: deal.varbNext("displayNameEditor").feVarbInfo,
-              sx: { ml: nativeTheme.s35 },
             }}
           />
         </Row>

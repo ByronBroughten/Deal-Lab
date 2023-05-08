@@ -79,7 +79,14 @@ export class SolverFeStore extends SolverSectionBase<"feStore"> {
       userDataFetchTryCount: 0,
     });
   }
-
+  newestEntry<SN extends StoreName>(
+    storeName: SN
+  ): SolverSection<StoreSectionName<SN>> {
+    const child = this.get.youngestChild(storeName);
+    return this.solver.solverSection(child.feInfo) as SolverSection<
+      StoreSectionName<SN>
+    >;
+  }
   incrementGetUserDataTry() {
     const count = this.get.valueNext("userDataFetchTryCount");
     this.basicSolvePrepper.updateValues({

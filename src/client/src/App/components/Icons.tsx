@@ -4,18 +4,20 @@ import { BiCopy, BiHelpCircle } from "react-icons/bi";
 import { BsFillHouseFill } from "react-icons/bs";
 import { GiHouseKeys } from "react-icons/gi";
 import { ImCheckmark } from "react-icons/im";
-import { MdDelete } from "react-icons/md";
+import { MdDelete, MdOutlineHomeRepairService } from "react-icons/md";
 
 interface IconProps extends IconBaseProps {}
 
 type IconName =
   | "property"
   | "buyAndHold"
-  | "addUnit"
+  | "fixAndFlip"
+  | "info"
+  | "repair"
   | "delete"
   | "edit"
   | "copy"
-  | "info"
+  | "addUnit"
   | "finish";
 export const icons: Record<IconName, (props?: IconProps) => React.ReactNode> = {
   property(props) {
@@ -23,6 +25,12 @@ export const icons: Record<IconName, (props?: IconProps) => React.ReactNode> = {
   },
   buyAndHold(props) {
     return <GiHouseKeys {...props} />;
+  },
+  fixAndFlip(props) {
+    return <MdOutlineHomeRepairService {...props} />;
+  },
+  repair(props) {
+    return <MdOutlineHomeRepairService {...props} />;
   },
   addUnit(props) {
     return <AiOutlinePlusSquare {...props} />;

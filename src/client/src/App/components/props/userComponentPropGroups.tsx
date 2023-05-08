@@ -1,13 +1,9 @@
 import React from "react";
 import { AiOutlineFieldTime } from "react-icons/ai";
 import { FaFaucet, FaHandHoldingUsd, FaMoneyCheckAlt } from "react-icons/fa";
-import {
-  MdAttachMoney,
-  MdOutlineHomeRepairService,
-  MdOutlineRoofing,
-  MdSell,
-} from "react-icons/md";
+import { MdAttachMoney, MdOutlineRoofing, MdSell } from "react-icons/md";
 import { VscOutput } from "react-icons/vsc";
+import { icons } from "../Icons";
 import { StoreName } from "./../../sharedWithServer/SectionsMeta/sectionStores";
 
 type Props = {
@@ -30,9 +26,7 @@ type ComponentProps = Record<StoreName, Props>;
 
 const iconProps = { size: 27 } as const;
 export const componentProps: ComponentProps = {
-  repairsListMain: props("Repairs", "repairs", () => (
-    <MdOutlineHomeRepairService {...iconProps} />
-  )),
+  repairsListMain: props("Repairs", "repairs", () => icons.repair(iconProps)),
   utilitiesListMain: props("Utilities", "utilities", () => (
     <FaFaucet {...iconProps} />
   )),

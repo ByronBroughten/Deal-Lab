@@ -6,35 +6,40 @@ import { HiOutlineVariable } from "react-icons/hi";
 import { SiWebcomponentsdotorg } from "react-icons/si";
 import { View } from "react-native";
 import { FeRouteName } from "../Constants/feRoutes";
-import { useActionWithProps } from "../sharedWithServer/stateClassHooks/useAction";
+import { useToggleView } from "../modules/customHooks/useToggleView";
+import { useAction } from "../sharedWithServer/stateClassHooks/useAction";
+import { useGetterSectionOnlyOne } from "../sharedWithServer/stateClassHooks/useGetterSection";
 import { nativeTheme } from "../theme/nativeTheme";
 import { arrSx } from "../utils/mui";
 import { AccountPageDeals } from "./AccountPage/SavedDeals";
-import { useGoToPage } from "./appWide/customHooks/useGoToPage";
+import {
+  useGoToPage,
+  useMakeGoToPage,
+} from "./appWide/customHooks/useGoToPage";
 import { HollowBtn } from "./appWide/HollowBtn";
+import { ModalSection } from "./appWide/ModalSection";
+import { MuiSelect } from "./appWide/MuiSelect";
+import { MuiRow } from "./general/MuiRow";
 import { Row } from "./general/Row";
 import { MuiBtnPropsNext } from "./general/StandardProps";
 
-// - Make them sortable
-// - Maybe show default metrics depending on deal type
-// - It wouldn't be too hard to add custom tags, like Keep has
-//   - Maybe start with a couple, "In process", "Closed"
-
 const iconSize = 40;
 export function AccountPage() {
-  const addActiveDeal = useActionWithProps("addActiveDeal", {});
+  const newDealMenu = useGetterSectionOnlyOne("newDealMenu");
+  const addActiveDeal = useAction("addActiveDeal");
+  const goToActiveDeal = useGoToPage("activeDeal");
+  const initNewDeal = () =>
+    unstable_batchedUpdates(() => {
+      addActiveDeal({ dealMode: newDealMenu.valueNext("dealMode") });
+      goToActiveDeal();
+    });
+  const { addDealIsOpen, openAddDeal, closeAddDeal } = useToggleView("addDeal");
   return (
     <View>
-      <Row
-        style={{
-          flexWrap: "wrap",
-          justifyContent: "center",
-        }}
-      >
+      <MuiRow sx={{ justifyContent: "center" }}>
         <Row style={{ flexWrap: "wrap" }}>
           <AccountBtn
-            onClick={addActiveDeal}
-            feRouteName="activeDeal"
+            onClick={openAddDeal}
             text={<Box>New Deal</Box>}
             icon={<BsFillHouseAddFill size={iconSize} />}
           />
@@ -65,15 +70,51 @@ export function AccountPage() {
             icon={<HiOutlineVariable size={iconSize} />}
           />
         </Row>
-      </Row>
+      </MuiRow>
       <AccountPageDeals />
+      <ModalSection
+        {...{
+          title: "New Deal",
+          show: addDealIsOpen,
+          closeModal: closeAddDeal,
+        }}
+      >
+        <Box>
+          <MuiSelect
+            {...{
+              sx: { width: "100%", mt: nativeTheme.s3 },
+              selectProps: { sx: { width: "100%" } },
+              label: "Select type",
+              unionValueName: "dealMode",
+              feVarbInfo: {
+                ...newDealMenu.feInfo,
+                varbName: "dealMode",
+              },
+              items: [
+                ["buyAndHold", "Rental Property"],
+                ["fixAndFlip", "Fix & Flip"],
+              ],
+            }}
+          />
+          <HollowBtn
+            sx={{
+              mt: nativeTheme.s4,
+              width: "100%",
+              height: "50px",
+              fontSize: nativeTheme.fs20,
+            }}
+            middle={"Create Deal"}
+            onClick={initNewDeal}
+          />
+        </Box>
+      </ModalSection>
     </View>
   );
 }
 
 const size = 180;
 interface AccountBtnProps extends MuiBtnPropsNext {
-  feRouteName: FeRouteName;
+  feRouteName?: FeRouteName;
   onClick?: () => void;
   icon?: React.ReactNode;
   text?: React.ReactNode;
@@ -86,14 +127,16 @@ function AccountBtn({
   onClick,
   ...rest
 }: AccountBtnProps) {
-  const goToPage = useGoToPage(feRouteName);
+  const makeGoToPage = useMakeGoToPage();
   return (
     <HollowBtn
       {...{
         onClick: () => {
           unstable_batchedUpdates(() => {
             onClick && onClick();
-            goToPage();
+            if (feRouteName) {
+              makeGoToPage(feRouteName)();
+            }
           });
         },
         middle: (

@@ -13,11 +13,12 @@ import { SolverSection } from "../../StateSolvers/SolverSection";
 import { SolverSections } from "../../StateSolvers/SolverSections";
 
 const storeChildNames = [
-  "variablesMenu",
+  "newDealMenu",
   "mainDealMenu",
+  "variablesMenu",
   "editorControls",
 ] as const;
-type StoredChildName = typeof storeChildNames[number];
+type StoredChildName = (typeof storeChildNames)[number];
 
 type StoredSectionsState = {
   [CN in StoredChildName]: ChildSectionPack<"main", CN>[];

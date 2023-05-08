@@ -8,6 +8,7 @@ import { defaultCompareInfos } from "./makeDefaultOutputList";
 export function makeDefaultMain(): SectionPack<"main"> {
   const main = PackBuilderSection.initAsOmniChild("main");
 
+  main.addChild("newDealMenu");
   main.addChild("mainDealMenu");
   main.addChild("variablesMenu");
   main.loadChild({

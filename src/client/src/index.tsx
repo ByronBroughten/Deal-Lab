@@ -7,11 +7,6 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
-// Should dealMode be selected when you create a new deal?
-// Should dealMode not be changable?
-// These two things seem to make sense.
-// Then deal would only need one property, with one propertyType
-
 // - Add homeBuyer mode (no income)
 //   - Buy and hold basics
 //   - ongoing costs (utilities, capEx, maintenance (this will be low... unless you have kids, misc ongoing costs))

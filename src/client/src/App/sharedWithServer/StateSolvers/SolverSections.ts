@@ -9,6 +9,7 @@ import { SectionName } from "../SectionsMeta/SectionName";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { StoreSectionName } from "../SectionsMeta/sectionStores";
 import { StateValue } from "../SectionsMeta/values/StateValue";
+import { DealMode } from "../SectionsMeta/values/StateValue/unionValues";
 import { GetterSections } from "../StateGetters/GetterSections";
 import { GetterVarb } from "../StateGetters/GetterVarb";
 import { PackBuilderSections } from "../StatePackers/PackBuilderSections";
@@ -187,11 +188,16 @@ export class SolverSections extends SolverSectionsBase {
   hasActiveDeal(): boolean {
     return this.prepperSections.hasActiveDeal();
   }
-  addActiveDeal() {
+  addActiveDeal(dealMode: DealMode) {
     const { feStore } = this;
     feStore.addToStore({ storeName: "dealMain" }, false);
-    const { feId } = feStore.get.youngestChild("dealMain");
-    this.activateDealAndSolve(feId);
+    const newDeal = feStore.newestEntry("dealMain");
+    const property = newDeal.onlyChild("property");
+
+    newDeal.basicSolvePrepper.updateValues({ dealMode });
+    property.basicSolvePrepper.updateValues({ propertyMode: dealMode });
+
+    this.activateDealAndSolve(newDeal.get.feId);
   }
   changeActiveDealMode(dealMode: StateValue<"dealMode">) {
     this.cacheActiveDealProperty();
@@ -248,6 +254,7 @@ export class SolverSections extends SolverSectionsBase {
   }
   activateDealAndSolve(feId: string): void {
     this.prepperSections.activateDeal(feId);
+    this.prepperSections.addAppWideMissingOutEntities();
     this.solve();
   }
 }

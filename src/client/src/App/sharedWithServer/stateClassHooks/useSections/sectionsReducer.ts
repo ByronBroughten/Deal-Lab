@@ -15,6 +15,7 @@ import {
   StoreSectionName,
 } from "../../SectionsMeta/sectionStores";
 import { StateValue } from "../../SectionsMeta/values/StateValue";
+import { DealMode } from "../../SectionsMeta/values/StateValue/unionValues";
 import { StateSections } from "../../StateSections/StateSections";
 import { EditorUpdaterVarb } from "../../StateSetters/EditorUpdaterVarb";
 import { SolverSections } from "../../StateSolvers/SolverSections";
@@ -58,6 +59,7 @@ type ExtraActionProps = _CheckSectionActionProps<{
   loadUserData: { userData: UserData };
   finishSave: { success: boolean };
 
+  addActiveDeal: { dealMode: DealMode };
   activateDeal: FeIdProp;
   changeActiveDealMode: { dealMode: StateValue<"dealMode"> };
   removeStoredDeal: FeIdProp;
@@ -206,7 +208,7 @@ export const sectionsReducer: React.Reducer<StateSections, SectionsAction> = (
     removeStoredDeal: ({ feId }) => solverSections.removeStoredDeal(feId),
 
     activateDeal: ({ feId }) => solverSections.activateDealAndSolve(feId),
-    addActiveDeal: () => solverSections.addActiveDeal(),
+    addActiveDeal: ({ dealMode }) => solverSections.addActiveDeal(dealMode),
     changeActiveDealMode: ({ dealMode }) =>
       solverSections.changeActiveDealMode(dealMode),
   };

@@ -4,6 +4,7 @@ import { ValidationError } from "../utils/Error";
 export const sectionNames = [
   "root",
   "main",
+  "newDealMenu",
   "mainDealMenu",
   "editorControls",
   "variablesMenu",
