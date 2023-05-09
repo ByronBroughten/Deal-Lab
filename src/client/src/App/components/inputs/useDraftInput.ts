@@ -66,12 +66,13 @@ function useUpdateEditorFromValue({
   }, [contentState]);
 
   const value = setterVarb.get.value();
+  const strValue = JSON.stringify(value);
   useEffect(() => {
     const valueFromEditor = setterVarb.valueFromContentState(contentState);
     if (!contentIsUpdated && !isEqual(value, valueFromEditor)) {
       setEditorState(setterVarb.createEditor(rest));
     }
-  }, [contentIsUpdated, JSON.stringify(value), contentState]);
+  }, [contentIsUpdated, strValue, contentState]);
 }
 
 interface Props extends FeVarbInfo {

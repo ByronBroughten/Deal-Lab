@@ -17,7 +17,7 @@ export function MiscIncomeValue({ feId }: { feId: string }) {
         label: "Misc income",
         itemizedModalTitle: "Misc Income",
         makeEditor:
-          sourceName === "dollarsEditor"
+          sourceName === "valueDollarsEditor"
             ? (props) => (
                 <NumObjEntityEditor
                   {...{
@@ -38,7 +38,7 @@ export function MiscIncomeValue({ feId }: { feId: string }) {
           varbName: "valueSourceName",
         },
         items: [
-          ["dollarsEditor", "Amount"],
+          ["valueDollarsEditor", "Amount"],
           ["listTotal", "Itemize"],
         ],
         itemizeValue: "listTotal",

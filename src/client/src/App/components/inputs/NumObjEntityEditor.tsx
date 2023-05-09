@@ -130,21 +130,21 @@ const MemoNumObjEntityEditor = React.memo(function MemoNumObjEntityEditor({
   useOnOutsideClickEffect(closeVarbSelector, [numObjEditorRef, popperRef]);
   const clickAndFocus = onClickAndFocus(editorType, openVarbSelector);
 
-  const regEx = /[\d.*/+()-]/;
-  const reverseRegEx = /[^\d.*/+()-]/;
   const handleBeforeInput = React.useCallback(
     (char: string): "handled" | "not-handled" => {
+      const regEx = /[\d.*/+()-]/;
       if (regEx.test(char)) return "not-handled";
       return "handled";
     },
     []
   );
 
-  const handlePastedText = (text: string): "handled" => {
+  const handlePastedText = React.useCallback((text: string): "handled" => {
+    const reverseRegEx = /[^\d.*/+()-]/;
     text = text.replaceAll(new RegExp(reverseRegEx, "g"), "");
     setEditorState((editorState) => insertChars(editorState, text));
     return "handled";
-  };
+  }, []);
 
   return (
     <SectionInfoContextProvider {...rest}>

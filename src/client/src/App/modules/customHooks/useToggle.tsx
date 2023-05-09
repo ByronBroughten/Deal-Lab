@@ -2,9 +2,8 @@ import * as React from "react";
 
 export default function useToggle(init: boolean = false) {
   const [value, setValue] = React.useState(init);
-  const toggle = () => setValue((prev) => !prev);
-  const setOn = () => setValue(() => true);
-  const setOff = () => setValue(() => false);
-
+  const toggle = React.useCallback(() => setValue((prev) => !prev), [setValue]);
+  const setOn = React.useCallback(() => setValue(() => true), [setValue]);
+  const setOff = React.useCallback(() => setValue(() => false), [setValue]);
   return { value, setValue, toggle, setOn, setOff };
 }

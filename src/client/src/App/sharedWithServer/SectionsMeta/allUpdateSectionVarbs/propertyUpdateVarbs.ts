@@ -49,11 +49,11 @@ export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
     }),
     numBedrooms: updateVarbS.sumChildNums("unit", "numBedrooms"),
     rehabCostBase: updateVarbS.sumNums([
-      propS.children("repairValue", "value"),
+      propS.children("repairValue", "valueDollars"),
       propS.children("miscOnetimeCost", "valueDollars"),
     ]),
     rehabCost: updateVarbS.sumNums([
-      propS.children("repairValue", "value"),
+      propS.children("repairValue", "valueDollars"),
       propS.children("miscOnetimeCost", "valueDollars"),
       propS.children("costOverrunValue", "valueDollars"),
     ]),

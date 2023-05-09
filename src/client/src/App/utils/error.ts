@@ -1,8 +1,4 @@
-export class HandledError extends Error {
-  constructor(message: string) {
-    super(message);
-  }
-}
+export class HandledError extends Error {}
 
 export function errorToHandledError(error: unknown): HandledError {
   return new HandledError(getErrorMessage(error));

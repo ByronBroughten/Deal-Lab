@@ -5,11 +5,7 @@ import { CompareDealRmBtn } from "./CompareDealRmBtn";
 type Props = { compareValueFeIds: string[] };
 export function ComparedDealXBtns({ compareValueFeIds }: Props) {
   return (
-    <View
-      style={{
-        paddingTop: nativeTheme.comparedDealRoot.padding,
-      }}
-    >
+    <View style={{ paddingTop: nativeTheme.comparedDealRoot.padding }}>
       <View style={{ height: nativeTheme.comparedDealHead.height }} />
       <View>
         {compareValueFeIds.map((feId, idx) => (
@@ -19,7 +15,7 @@ export function ComparedDealXBtns({ compareValueFeIds }: Props) {
               feId,
               sx: {
                 borderRadius: 0,
-                ...(idx == 0 && {
+                ...(idx === 0 && {
                   borderTopLeftRadius: nativeTheme.subSection.borderRadius,
                 }),
                 borderBottomWidth: 0,

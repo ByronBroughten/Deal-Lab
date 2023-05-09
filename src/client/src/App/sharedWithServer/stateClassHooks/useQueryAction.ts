@@ -64,6 +64,7 @@ export function useQueryAction() {
             );
           }
         }
+        break;
       }
       case "trySave": {
         try {

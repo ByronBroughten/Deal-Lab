@@ -33,7 +33,7 @@ export function NavDropDown({
     } else {
       closeView();
     }
-  }, [doCloseViewToggle]);
+  }, [doCloseViewToggle, closeView]);
 
   return (
     <Styled

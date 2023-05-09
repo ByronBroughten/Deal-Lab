@@ -4,9 +4,9 @@ import { GetterSection } from "../../StateGetters/GetterSection";
 import { GetterVarb } from "../../StateGetters/GetterVarb";
 
 const conditionalTypes = ["if", "or if"] as const;
-type ConditionalTypeName = typeof conditionalTypes[number];
+type ConditionalTypeName = (typeof conditionalTypes)[number];
 const resultTypes = ["then", "or else"];
-type ResultTypeName = typeof resultTypes[number];
+type ResultTypeName = (typeof resultTypes)[number];
 export type ConditionalRowTypeName = ConditionalTypeName | ResultTypeName;
 
 type LevelsThatPass = Record<number, boolean>;
@@ -107,19 +107,19 @@ export class ConditionalValueSolver extends GetterSectionBase<"conditionalRowLis
 }
 
 const valueOperators = ["===", "!==", ">", ">=", "<", "<="] as const;
-type ValueOperator = typeof valueOperators[number];
+type ValueOperator = (typeof valueOperators)[number];
 function isValueOperator(value: string): value is ValueOperator {
   return listOperators.includes(value as any);
 }
 
 export const listOperators = ["is in", "isn't in"] as const;
-type ListOperator = typeof listOperators[number];
+type ListOperator = (typeof listOperators)[number];
 function isListOperator(value: string): value is ListOperator {
   return listOperators.includes(value as any);
 }
 
 const logicOperators = [...valueOperators, ...listOperators] as const;
-export type LogicOperator = typeof logicOperators[number];
+export type LogicOperator = (typeof logicOperators)[number];
 
 function isResultRow(
   rowLevel: number,
@@ -150,6 +150,7 @@ function testValue(
   }
 
   const testString = getTestString();
+  // eslint-disable-next-line no-new-func
   if (testString) return Function(testString)();
   else return false;
 }

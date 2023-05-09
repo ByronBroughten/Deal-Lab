@@ -21,7 +21,7 @@ export function MiscOnetimeCost({ feId, menuDisplayNames }: Props) {
         label: "Misc one-time costs",
         itemizedModalTitle: "Misc one-time costs",
         makeEditor:
-          sourceName === "dollarsEditor"
+          sourceName === "valueDollarsEditor"
             ? (props) => (
                 <NumObjEntityEditor
                   {...{
@@ -42,7 +42,7 @@ export function MiscOnetimeCost({ feId, menuDisplayNames }: Props) {
           varbName: "valueSourceName",
         },
         items: [
-          ["dollarsEditor", "Amount"],
+          ["valueDollarsEditor", "Amount"],
           ["listTotal", "Itemize"],
         ],
         itemizeValue: "listTotal",

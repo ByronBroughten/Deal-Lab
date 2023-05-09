@@ -55,6 +55,7 @@
     "react-spinners": "^0.13.8",
     "react-toastify": "^8.1.1",
     "react-transition-group": "^4.4.2",
+    "source-map-explorer": "^2.5.3",
     "styled-components": "^5.3.3",
     "styled-normalize": "^8.0.7",
     "supertokens-auth-react": "^0.24.2",
@@ -65,6 +66,7 @@
     "zod": "^3.11.6"
   },
   "scripts": {
+    "analyze": "source-map-explorer 'build/static/js/*.js'",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

@@ -288,7 +288,7 @@ function makeAllUpdateSections() {
     }),
     ...updateSectionProp("repairValue", {
       valueSourceName: updateVarb("repairValueSource", { initValue: "none" }),
-      value: updateVarb("numObj", {
+      valueDollars: updateVarb("numObj", {
         updateFnName: "throwIfReached",
         updateOverrides: [
           updateOverride(
@@ -300,7 +300,7 @@ function makeAllUpdateSections() {
             updateBasicsS.zero
           ),
           updateOverride(
-            [switchS.local("valueSourceName", "valueEditor")],
+            [switchS.local("valueSourceName", "valueDollarsEditor")],
             updateBasicsS.loadFromLocal("valueDollarsEditor")
           ),
           updateOverride(
@@ -468,7 +468,7 @@ function makeAllUpdateSections() {
       valueDollars: updateVarb("numObj", {
         updateFnName: "throwIfReached",
         updateOverrides: valueSourceOverrides("dollarsOrList", {
-          dollarsEditor: updateBasicsS.loadFromLocal("valueDollarsEditor"),
+          valueDollarsEditor: updateBasicsS.loadFromLocal("valueDollarsEditor"),
           listTotal: updateBasicsS.loadFromChild("onetimeList", "total"),
         }),
       }),

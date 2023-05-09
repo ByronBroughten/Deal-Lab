@@ -8,10 +8,7 @@ import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack"
 import { FeSectionInfo } from "../SectionsMeta/SectionInfo/FeInfo";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
-import {
-  GetterSectionBase,
-  GetterSectionProps,
-} from "../StateGetters/Bases/GetterSectionBase";
+import { GetterSectionBase } from "../StateGetters/Bases/GetterSectionBase";
 import { GetterSection } from "../StateGetters/GetterSection";
 import { UpdaterSection } from "../StateUpdaters/UpdaterSection";
 import { Obj } from "../utils/Obj";
@@ -24,9 +21,6 @@ import { SelfPackLoader } from "./PackLoaderSection/SelfPackLoader";
 export class PackLoaderSection<
   SN extends SectionNameByType
 > extends GetterSectionBase<SN> {
-  constructor(props: GetterSectionProps<SN>) {
-    super(props);
-  }
   get update(): UpdaterSection<SN> {
     return new UpdaterSection(this.getterSectionProps);
   }

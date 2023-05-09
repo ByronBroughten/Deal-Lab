@@ -15,7 +15,7 @@ export function RepairValue({ feId, dealMode, sx }: Props) {
   const items: [StateValue<"repairValueSource">, string][] = [
     ["none", "Choose method"],
     ["zero", "Turnkey (no repairs)"],
-    ["valueEditor", "Enter lump sum"],
+    ["valueDollarsEditor", "Enter lump sum"],
     ["listTotal", "Itemize"],
   ];
 
@@ -34,7 +34,7 @@ export function RepairValue({ feId, dealMode, sx }: Props) {
         ),
         selectProps: { sx: { minWidth: 160 } },
         makeEditor:
-          valueSourceName === "valueEditor"
+          valueSourceName === "valueDollarsEditor"
             ? (props) => (
                 <NumObjEntityEditor
                   {...{
@@ -45,7 +45,7 @@ export function RepairValue({ feId, dealMode, sx }: Props) {
               )
             : undefined,
         equalsValue,
-        total: repairValue.varbNext("value").displayVarb(),
+        total: repairValue.varbNext("valueDollars").displayVarb(),
         itemizeValue: "listTotal",
         itemizedModalTitle: "Repairs",
         itemsComponent: (

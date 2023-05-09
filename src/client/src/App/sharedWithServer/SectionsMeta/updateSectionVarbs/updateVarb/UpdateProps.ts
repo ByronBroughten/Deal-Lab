@@ -5,30 +5,13 @@ import {
 import { ValueName } from "../../values/ValueName";
 import { UpdateBasics } from "./UpdateBasics";
 import { UpdateFnName } from "./UpdateFnName";
-import { UpdateFnProp, UpdateFnProps } from "./UpdateFnProps";
+import { UpdateFnProp } from "./UpdateFnProps";
 import { UpdateOverrides } from "./UpdateOverrides";
 
 export interface UpdateProps<VN extends ValueName = ValueName>
   extends UpdateBasics<VN> {
   updateOverrides: UpdateOverrides<VN>;
 }
-
-interface UpdatePropsNext<
-  VN extends ValueName = ValueName,
-  UN extends UpdateFnName<VN> = UpdateFnName<VN>,
-  UP extends UpdateFnProps = UpdateFnProps,
-  UO extends UpdateOverrides<VN> = UpdateOverrides<VN>
-> {
-  updateFnName: UN;
-  updateFnProps: UP;
-  updateOverrides: UO;
-}
-function updateProps<
-  VN extends ValueName = ValueName,
-  UN extends UpdateFnName<VN> = UpdateFnName<VN>,
-  UP extends UpdateFnProps = UpdateFnProps,
-  UO extends UpdateOverrides<VN> = UpdateOverrides<VN>
->({}) {}
 
 export const updatePropsS = {
   simple<UN extends UpdateFnName>(

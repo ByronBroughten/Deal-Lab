@@ -57,9 +57,9 @@ const valueSources = {
   loadedVarbSource: ["loadedVarb"],
   customValueSource: ["none", "valueEditor", "listTotal"],
   utilityValueSource: ["none", "zero", "listTotal", "twentyPercentRent"],
-  repairValueSource: ["none", "zero", "valueEditor", "listTotal"],
-  overrunValueSource: ["valuePercentEditor", "valueDollarsEditor"],
-  dollarsOrList: ["dollarsEditor", "listTotal"],
+  repairValueSource: ["none", "zero", "valueDollarsEditor", "listTotal"],
+  overrunValueSource: ["valueDollarsEditor", "valuePercentEditor"],
+  dollarsOrList: ["valueDollarsEditor", "listTotal"],
   sellingCostSource: [
     "sixPercent",
     "valuePercentEditor",

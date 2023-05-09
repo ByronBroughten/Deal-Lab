@@ -11,11 +11,12 @@ const init = () => {
   console.log("init placeholder");
 };
 
-function log(error) {
-  console.log(error);
+function log(errorMessage: string) {
+  console.log(errorMessage);
 }
-
-export default {
+const logService = {
   init,
   log,
 };
+
+export default logService;

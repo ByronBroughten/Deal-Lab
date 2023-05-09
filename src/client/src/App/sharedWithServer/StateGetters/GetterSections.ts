@@ -121,7 +121,7 @@ export class GetterSections extends GetterSectionsBase {
             sectionName,
             descendantNames,
           });
-        } else if (infoMixed.infoType === "absolutePathDbId") {
+        } else {
           return this.root.descendantByPathAndDbId({
             sectionName,
             descendantNames,

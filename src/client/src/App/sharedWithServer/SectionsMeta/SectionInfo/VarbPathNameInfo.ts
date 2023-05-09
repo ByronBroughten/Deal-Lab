@@ -124,8 +124,11 @@ const allVarbPathParams = {
     ...targetNames("cocRoi", "ongoing"),
   ]),
   userVarbValue: varbPathParams("numVarbItemMain", "value"),
-  repairCostBase: fixedVarbPathParams("Property", "repairCostFocal", "value"),
-
+  repairCostBase: fixedVarbPathParams(
+    "Property",
+    "repairCostFocal",
+    "valueDollars"
+  ),
   rehabCostBase: fixedVarbPathParams(
     "Property",
     "propertyFocal",

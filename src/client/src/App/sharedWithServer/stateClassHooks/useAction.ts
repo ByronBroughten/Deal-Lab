@@ -13,14 +13,11 @@ export function useActionWithProps<T extends SectionActionName>(
   props: SectionActionProps<T>
 ) {
   const dispatch = useDispatchAndSave();
-  return useCallback(
-    () =>
-      dispatch({
-        type,
-        ...props,
-      } as SectionsAction),
-    [type, dispatch, ...Object.values(props)]
-  );
+  return () =>
+    dispatch({
+      type,
+      ...props,
+    } as SectionsAction);
 }
 
 export function useAction<T extends SectionActionName>(type: T) {

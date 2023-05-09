@@ -132,11 +132,16 @@ export function useControlUserData() {
     userDataActor.controlUserData();
   });
 
+  const fetchCountRef = React.useRef(null as null | number);
   React.useEffect(() => {
-    if (userDataStatus === "loading") {
+    if (
+      userDataStatus === "loading" &&
+      fetchCountRef.current !== userDataFetchTryCount
+    ) {
+      fetchCountRef.current = userDataFetchTryCount;
       query({ type: "loadUserData" });
     }
-  }, [userDataStatus, userDataFetchTryCount]);
+  }, [userDataStatus, userDataFetchTryCount, query]);
 }
 
 export function useLogout() {

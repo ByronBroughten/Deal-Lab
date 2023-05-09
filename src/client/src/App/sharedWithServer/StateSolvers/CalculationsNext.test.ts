@@ -1,5 +1,8 @@
 import { numObj } from "../SectionsMeta/values/StateValue/NumObj";
-import { DealMode } from "../SectionsMeta/values/StateValue/unionValues";
+import {
+  DealMode,
+  dealModes,
+} from "../SectionsMeta/values/StateValue/unionValues";
 import { switchKeyToVarbNames } from "./../SectionsMeta/allBaseSectionVarbs/baseSwitchNames";
 import { SolverActiveDeal } from "./SolverActiveDeal";
 import { SolverSection } from "./SolverSection";
@@ -58,18 +61,31 @@ describe("Property calculations", () => {
     }
     testDollars(7000);
   });
-  it("should calculate miscOneTimeCosts correctly", () => {
+
+  type OnetimeCostSN = "miscOnetimeCost" | "repairValue" | "costOverrunValue";
+  const setOnetimeEditor = <SN extends OnetimeCostSN>(
+    onetime: SolverSection<SN>,
+    num: number
+  ) => {
+    (
+      onetime as SolverSection<any> as SolverSection<OnetimeCostSN>
+    ).updateValues({
+      valueSourceName: "valueDollarsEditor",
+      valueDollarsEditor: numObj(num),
+    });
+  };
+
+  const testOnetimeValue = (
+    sectionName: "miscOnetimeCost" | "repairValue",
+    varbName: "miscOnetimeCosts" | "rehabCostBase"
+  ) => {
     for (const dealMode of ["buyAndHold", "fixAndFlip"] as const) {
       const property = getProperty(dealMode);
       const test = (num: number) => {
-        expect(property.numValue("miscOnetimeCosts")).toBe(num);
+        expect(property.numValue(varbName)).toBe(num);
       };
-      const onetimeCost = property.onlyChild("miscOnetimeCost");
-
-      onetimeCost.updateValues({
-        valueSourceName: "dollarsEditor",
-        valueDollarsEditor: numObj(2000),
-      });
+      const onetimeCost = property.onlyChild(sectionName);
+      setOnetimeEditor(onetimeCost, 2000);
       test(2000);
 
       onetimeCost.updateValues({ valueSourceName: "listTotal" });
@@ -85,8 +101,53 @@ describe("Property calculations", () => {
       }
       test(1000);
     }
+  };
+  it("should calculate repairValue correctly", () => {
+    testOnetimeValue("repairValue", "rehabCostBase");
   });
+  it("should calculate miscOneTimeCosts correctly", () => {
+    testOnetimeValue("miscOnetimeCost", "miscOnetimeCosts");
+  });
+  it("should calculate costOverrun correctly", () => {
+    for (const dealMode of dealModes) {
+      const property = getProperty(dealMode);
+      const overrun = property.onlyChild("costOverrunValue");
+      const test = (num: number) => {
+        expect(overrun.numValue("valueDollars")).toBe(num);
+      };
 
+      overrun.updateValues({
+        valueSourceName: "valueDollarsEditor",
+        valueDollarsEditor: numObj(1500),
+      });
+      test(1500);
+
+      const repairValue = property.onlyChild("repairValue");
+      setOnetimeEditor(repairValue, 9000);
+      const onetime = property.onlyChild("miscOnetimeCost");
+      setOnetimeEditor(onetime, 1000);
+      overrun.updateValues({
+        valueSourceName: "valuePercentEditor",
+        valuePercentEditor: numObj(10),
+      });
+      test(1000);
+    }
+  });
+  it("should calculate rehabCost values correctly", () => {
+    for (const dealMode of dealModes) {
+      const property = getProperty(dealMode);
+
+      const repairValue = property.onlyChild("repairValue");
+      setOnetimeEditor(repairValue, 500);
+      const onetime = property.onlyChild("miscOnetimeCost");
+      setOnetimeEditor(onetime, 300);
+      const overrun = property.onlyChild("costOverrunValue");
+      setOnetimeEditor(overrun, 200);
+
+      expect(property.numValue("rehabCostBase")).toBe(800);
+      expect(property.numValue("rehabCost")).toBe(1000);
+    }
+  });
   const testOngoing = (
     dealMode: DealMode,
     baseName: "miscRevenue" | "miscCosts" | "holdingCost",
@@ -102,7 +163,7 @@ describe("Property calculations", () => {
 
     const value = property.onlyChild(childName);
     value.updateValues({
-      valueSourceName: "dollarsEditor",
+      valueSourceName: "valueDollarsEditor",
       valueDollarsOngoingSwitch: "monthly",
       valueDollarsOngoingEditor: numObj(100),
     });
@@ -154,7 +215,7 @@ describe("Property calculations", () => {
 
     const holdingCost = property.onlyChild("miscHoldingCost");
     holdingCost.updateValues({
-      valueSourceName: "dollarsEditor",
+      valueSourceName: "valueDollarsEditor",
       valueDollarsOngoingEditor: numObj(200),
       valueDollarsOngoingSwitch: "yearly",
     });
@@ -185,4 +246,6 @@ describe("Property calculations", () => {
     const holdingCostsMonthly = 4200 / 12;
     test(holdingCostsMonthly * holdingPeriod);
   });
+  it("should calculate rehabBaseCost", () => {});
+  it("should calculate costOverrun", () => {});
 });

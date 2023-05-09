@@ -10,7 +10,6 @@ import {
   SectionPathName,
   SectionPathVarbName,
 } from "../../sectionPathContexts/sectionPathNames";
-import { NumObj } from "../../values/StateValue/NumObj";
 import { UpdateOverrideSwitch } from "./UpdateOverrides";
 
 export type UpdateFnProps = {
@@ -104,15 +103,6 @@ export function updateFnProp(
   };
 }
 
-type FinderUpdateFnProp = PathInVarbInfo & {
-  propType: "finder";
-  entityId: string;
-  andSwitches: UpdateOverrideSwitch[];
-};
-type NumObjUpdateFnProp = {
-  propType: "numObj";
-  value: NumObj;
-};
 export type UpdateFnProp = PathInVarbInfo & {
   entityId: string;
   andSwitches: UpdateOverrideSwitch[];

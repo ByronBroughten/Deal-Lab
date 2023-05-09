@@ -252,7 +252,7 @@ export function makeAllBaseSectionVarbs() {
       valuePercentEditor: baseVarb("numObj", percent),
     }),
     repairValue: varbs({
-      value: baseVarb("numObj", dollars),
+      valueDollars: baseVarb("numObj", dollars),
       valueSourceName: baseVarb("repairValueSource"),
       valueDollarsEditor: baseVarb("numObj", dollars),
     }),

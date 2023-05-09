@@ -1,4 +1,3 @@
-import React from "react";
 import { capitalizeFirstLetter } from "../../sharedWithServer/utils/Str";
 import useToggle from "./useToggle";
 
@@ -30,8 +29,8 @@ function useNamedToggleView<T extends string>(
     [`${viewWhat}IsOpen`]: value,
     [`${viewWhat}IsClosed`]: !value,
     [`toggle${capitalViewWhat}`]: toggle,
-    [`open${capitalViewWhat}`]: React.useCallback(setOn, []),
-    [`close${capitalViewWhat}`]: React.useCallback(setOff, []),
+    [`open${capitalViewWhat}`]: setOn,
+    [`close${capitalViewWhat}`]: setOff,
   } as any;
 }
 

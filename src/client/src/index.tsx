@@ -6,6 +6,8 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
+// I must disallow "20% rent" for utilityValue when it's fixAndFlip
+
 // Why are table rows and cells so tall?
 
 // I want the setterCalculations tests to make it easier to figure
@@ -68,30 +70,14 @@ AppRegistry.runApplication("App", {
 // 70% Rule
 // - Implement dealMode outputs lists
 
-// See if Emily will look at Fix and Flip—have her weigh in
-// on if I should copy that style for Buy and Hold
+// what if each switchVarb was its own section
+// the section would have
 
-/* 
-  I'd need a good way to add info dots where necessary
-
-  Buy and Hold new order:
-  - Basics: price, sqft, units
-  - Ongoing costs: taxes, insurance, Utilities, CapEx, Maintenance
-  - Rehab
-  - Custom expensese (?)
-*/
-/* 
-  Fix and Flip Optimal:
-  - Selling costs is its own FormSection value at the end
-  - Holding Costs has an extra little itemizer
-    with checkboxes for accounting, legal, and landscaping
-*/
-
-// Custom
-// misc upfrontCosts (custom upfront)
-
-// "makeDefault" can now have props. I should include that in the
-// "addChild" props
+// valueSwitch
+// valueDollarsEditor
+// valueDollarsMonthly
+// valueDollarsYearly
+// then property would just have blahblahMonthly, blahblahYearly
 
 // How many completionStatuses would there be? Maybe just one,
 // with overrides
