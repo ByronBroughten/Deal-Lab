@@ -1,10 +1,8 @@
 import { z } from "zod";
-import { reqMonString } from "../../../utils/mongoose";
 import { Obj } from "../../../utils/Obj";
 import { StrictPick } from "../../../utils/types";
 import { validateS } from "../../../validateS";
 import {
-  mInEntities,
   validateValueInEntities,
   ValueInEntity,
   zValueInEntities,
@@ -41,11 +39,7 @@ const zNumObj = z.object({
   entities: zValueInEntities,
   solvableText: z.string(),
 } as { [K in keyof NumObj]: any });
-const mNumObj: Record<keyof NumObj, any> = {
-  mainText: reqMonString,
-  entities: mInEntities,
-  solvableText: reqMonString,
-};
+
 function isNumObj(value: any): value is NumObj {
   // top speed is important here, which is why we don't use zod
   return (
@@ -78,5 +72,4 @@ export const numObjMeta = {
     solvableText,
   }),
   zod: zNumObj,
-  mon: mNumObj,
 };

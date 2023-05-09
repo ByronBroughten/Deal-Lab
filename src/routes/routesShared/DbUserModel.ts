@@ -6,7 +6,6 @@ import {
   getChildNames,
 } from "../../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/ChildName";
 import { DbSectionPack } from "../../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/DbSectionPack";
-
 import {
   DbSectionName,
   DbStoreName,
@@ -21,7 +20,8 @@ import {
   OneDbSectionVarbInfo,
 } from "../../client/src/App/sharedWithServer/SectionsMeta/SectionInfo/DbStoreInfo";
 import { SectionName } from "../../client/src/App/sharedWithServer/SectionsMeta/SectionName";
-import { monSchemas } from "../../client/src/App/sharedWithServer/utils/mongoose";
+import { monSchemas } from "../../utils/mongoose";
+import { mongooseValues } from "./mongooseValues";
 
 export type DbSectionsModelCore = RawDbUser & { _id: mongoose.Types.ObjectId };
 
@@ -90,8 +90,8 @@ function monDbVarbs<SN extends SectionName>(sectionName: SN): Schema<any> {
   const sectionMeta = sectionsMeta.get(sectionName);
   const { varbNames } = sectionMeta;
   const frame = varbNames.reduce((monVarbs, varbName) => {
-    const valueMetas = sectionMeta.varb(varbName).value;
-    monVarbs[varbName] = valueMetas.mon;
+    const { valueName } = sectionMeta.varb(varbName);
+    monVarbs[varbName] = mongooseValues[valueName];
     return monVarbs;
   }, {} as Record<string, any>);
   return new Schema(frame);

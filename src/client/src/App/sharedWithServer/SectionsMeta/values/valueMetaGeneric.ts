@@ -6,7 +6,6 @@ export type ValueMeta<VN extends ValueName> = {
   validate: (value: any) => StateValue<VN>;
   is: (value: any) => value is StateValue<VN>;
   zod: any;
-  mon: any;
 };
 
 type ValueMetasGeneric = {

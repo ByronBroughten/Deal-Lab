@@ -1,10 +1,8 @@
 import { z } from "zod";
-import { monSchemas } from "../../../utils/mongoose";
 import { Obj } from "../../../utils/Obj";
 import { zS } from "../../../utils/zod";
 import { validateS } from "../../../validateS";
 import {
-  mInEntities,
   validateValueInEntities,
   zValueInEntities,
 } from "./valuesShared/entities";
@@ -54,15 +52,9 @@ const zStringObj = z.object({
   entities: zValueInEntities,
 } as { [K in keyof StringObj]: any });
 
-const mStringObj: Record<keyof StringObj, any> = {
-  mainText: monSchemas.reqString,
-  entities: mInEntities,
-};
-
 export const stringObjMeta = {
   is: isStringObj,
   validate: validateStringObj,
   initDefault: initDefaultStringObj,
   zod: zStringObj,
-  mon: mStringObj,
 };

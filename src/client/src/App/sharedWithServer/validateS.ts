@@ -1,4 +1,4 @@
-import { dbLimits } from "./utils/dbLimts";
+import { dbLimits } from "./utils/dbLimits";
 import { ValidationError } from "./utils/Error";
 import { mathS } from "./utils/math";
 import { Str } from "./utils/Str";

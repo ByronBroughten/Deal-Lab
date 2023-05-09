@@ -1,4 +1,3 @@
-import { Schema } from "mongoose";
 import { z } from "zod";
 import { StoreId } from "../../../StateGetters/StoreId";
 import { ValidationError } from "../../../utils/Error";
@@ -22,7 +21,7 @@ function validateChangeToSave(value: any): ChangeToSave {
   }
 }
 
-function validateChangesToSave(value: any): ChangesToSave {
+export function validateChangesToSave(value: any): ChangesToSave {
   const obj = Obj.validateObjToAny(value) as ChangesToSave;
   for (const storeId of Obj.keys(obj)) {
     StoreId.validate(storeId);
@@ -50,30 +49,16 @@ export const sectionChangeMetas = {
     validate: validateChangesToSave,
     initDefault: () => ({}),
     zod: z.any(),
-    mon: {
-      type: Schema.Types.Mixed,
-      required: false,
-      validate: {
-        validator: (v: any) => z.any().safeParse(v).success,
-      },
-    },
   },
   changesSaving: {
     is: isChangesSaving,
     validate: validateChangesSaving,
     initDefault: () => ({}),
     zod: z.any(),
-    mon: {
-      type: Schema.Types.Mixed,
-      required: false,
-      validate: {
-        validator: (v: any) => z.any().safeParse(v).success,
-      },
-    },
   },
 } as const;
 
-function validateChangeSaving(value: any): ChangeSaving {
+export function validateChangeSaving(value: any): ChangeSaving {
   const obj = Obj.validateObjToAny(value) as ChangeSaving;
   validateChangeName(obj.changeName);
   if (obj.changeName === "remove") {
@@ -150,7 +135,7 @@ function validateChangeName(value: any): ChangeName {
     throw new ValidationError(`value "${value}" is not a changeName`);
   }
 }
-type ChangeName = typeof changeNames[number];
+type ChangeName = (typeof changeNames)[number];
 type CheckUpdateValues<T extends ChangeGeneric> = T;
 type _TestSaving = CheckUpdateValues<ChangesSaving[string]>;
 type _TestToSave = CheckUpdateValues<ChangesToSave[string]>;

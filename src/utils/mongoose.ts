@@ -1,10 +1,26 @@
 import mongoose, { Schema } from "mongoose";
-import { validateS } from "../validateS";
-import { dbLimits } from "./dbLimts";
+import { validateValueInEntities } from "../client/src/App/sharedWithServer/SectionsMeta/values/StateValue/valuesShared/entities";
+import { dbLimits } from "../client/src/App/sharedWithServer/utils/dbLimits";
+import { validateS } from "../client/src/App/sharedWithServer/validateS";
 
 export function makeMongooseObjectId() {
   return new mongoose.Types.ObjectId();
 }
+
+export function mFromValidator(
+  validator: (value: any) => any,
+  required?: boolean
+) {
+  return {
+    type: Schema.Types.Mixed,
+    required: required ?? true,
+    validate: {
+      validator: validateS.makeIsChecker(validator),
+    },
+  };
+}
+
+export const mInEntities = mFromValidator(validateValueInEntities);
 
 export const monObjId = {
   type: mongoose.Schema.Types.ObjectId,
@@ -43,13 +59,5 @@ export const monSchemas = {
     minLength: dbLimits.dbId.length,
     required: true,
   },
-  fromValidator(validator: (value: any) => any) {
-    return {
-      type: Schema.Types.Mixed,
-      required: true,
-      validate: {
-        validator: validateS.makeIsChecker(validator),
-      },
-    };
-  },
+  fromValidator: mFromValidator,
 };

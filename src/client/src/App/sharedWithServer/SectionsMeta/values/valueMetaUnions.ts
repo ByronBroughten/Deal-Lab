@@ -1,6 +1,5 @@
 import { z } from "zod";
 import { ValidationError } from "../../utils/Error";
-import { monSchemas } from "../../utils/mongoose";
 import { StateValue } from "./StateValue";
 import {
   unionValueArr,
@@ -32,9 +31,6 @@ function makeUnionMeta<UN extends UnionValueName>(
       }
     },
     initDefault: () => first as StateValue<UN>,
-    get mon() {
-      return monSchemas.fromValidator(this.validate);
-    },
     zod: zodSchema,
   };
 }

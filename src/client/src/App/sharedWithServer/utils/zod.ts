@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { Id } from "../SectionsMeta/IdS";
-import { dbLimits } from "./dbLimts";
+import { dbLimits } from "./dbLimits";
 
 export const validationMessage = {
   min: (num: number) => {

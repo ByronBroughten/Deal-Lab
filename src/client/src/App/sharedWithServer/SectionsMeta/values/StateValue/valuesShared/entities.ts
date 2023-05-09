@@ -9,7 +9,6 @@ import {
 } from "../../../../StateEntityGetters/ValueInEntityInfo";
 import { Arr } from "../../../../utils/Arr";
 import { ValidationError } from "../../../../utils/Error";
-import { monSchemas } from "../../../../utils/mongoose";
 import { Obj } from "../../../../utils/Obj";
 import { zS } from "../../../../utils/zod";
 import { validateS } from "../../../../validateS";
@@ -94,10 +93,8 @@ type FixedInEntityInfo = PathInVarbInfo;
 export type FixedInEntity = FixedInEntityInfo & EntityIdProp;
 export type InEntity = FixedInEntity | ValueInEntity;
 
-export const mInEntities = monSchemas.fromValidator(validateValueInEntities);
-
 const entitySourceNames = ["localValueEntityInfo", "editor"] as const;
-export type EntitySource = typeof entitySourceNames[number];
+export type EntitySource = (typeof entitySourceNames)[number];
 export function validateValueInEntitySource(value: any): EntitySource {
   if (entitySourceNames.includes(value)) {
     return value;

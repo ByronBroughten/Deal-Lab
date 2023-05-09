@@ -1,4 +1,3 @@
-import { Schema } from "mongoose";
 import { z } from "zod";
 import {
   validateInEntityInfo,
@@ -26,7 +25,7 @@ export function inEntityValueInfo(
   };
 }
 
-function validateInEntityValue(value: any): InEntityValue {
+export function validateInEntityValue(value: any): InEntityValue {
   if (value === null) return value;
   return {
     entityId: validateEntityId((value as InEntityValue)?.entityId),
@@ -68,11 +67,4 @@ export const inEntityInfoValueSchema = {
   initDefault: () => null as InEntityValue,
   validate: validateInEntityValue,
   zod: zInEntityVarbInfoValue,
-  mon: {
-    type: Schema.Types.Mixed,
-    required: false,
-    validate: {
-      validator: (v: any) => zInEntityVarbInfoValue.safeParse(v).success,
-    },
-  },
 };

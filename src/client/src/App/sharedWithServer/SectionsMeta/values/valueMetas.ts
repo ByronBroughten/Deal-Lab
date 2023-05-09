@@ -1,7 +1,6 @@
 import { z } from "zod";
 import { Arr } from "../../utils/Arr";
 import { ValidationError } from "../../utils/Error";
-import { reqMonNumber, reqMonString } from "../../utils/mongoose";
 import { validateS } from "../../validateS";
 import { StateValue } from "./StateValue";
 import { inEntityInfoValueSchema } from "./StateValue/InEntityValue";
@@ -18,28 +17,24 @@ export const valueMetas = checkValueMetas({
     validate: validateS.number,
     initDefault: () => 0,
     zod: z.number(),
-    mon: reqMonNumber,
   },
   dateTime: {
     is: (v: any): v is number => typeof v === "number",
     validate: validateS.number,
     initDefault: () => 0,
     zod: z.number(),
-    mon: reqMonNumber,
   },
   boolean: {
     is: (v: any): v is boolean => typeof v === "boolean",
     validate: validateS.boolean,
     initDefault: () => true,
     zod: z.boolean(),
-    mon: { type: Boolean, required: true },
   },
   string: {
     is: (v: any): v is string => typeof v === "string",
     validate: validateS.stringOneLine,
     initDefault: () => "",
     zod: z.string(),
-    mon: reqMonString,
   },
   stringArray: {
     is(v: any): v is string[] {
@@ -66,7 +61,6 @@ export const valueMetas = checkValueMetas({
     },
     initDefault: () => [] as string[],
     zod: z.array(z.string()),
-    mon: [reqMonString],
   },
   stringObj: stringObjMeta,
   numObj: numObjMeta,
