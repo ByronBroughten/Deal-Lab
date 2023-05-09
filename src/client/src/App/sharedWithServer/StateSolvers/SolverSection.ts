@@ -117,6 +117,10 @@ export class SolverSection<
     this.appWideSolvePrepper.updateValues(values);
     this.solve();
   }
+  updateValues(values: Partial<SectionValues<SN>>): void {
+    this.appWideSolvePrepper.updateValues(values);
+    this.solve();
+  }
   removeSelfAndSolve(): void {
     this.appWideSolvePrepper.removeSelf();
     this.solve();
@@ -145,6 +149,9 @@ export class SolverSection<
   }
   value<VN extends VarbName<SN>>(varbName: VN): VarbValue<SN, VN> {
     return this.get.valueNext(varbName);
+  }
+  numValue<VN extends VarbName<SN>>(varbName: VN): number {
+    return this.get.varbNext(varbName).numberValue;
   }
   varb<VN extends VarbName<SN>>(varbName: VN): SolverVarb<SN> {
     return new SolverVarb({

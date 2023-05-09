@@ -49,7 +49,7 @@ export function CapExValueNext({ feId }: { feId: string }) {
           <LabelWithInfo
             {...{
               label: "Capital Expenses",
-              infoTitle: "Capital Expenses - What are those?",
+              infoTitle: "Capital Expenses",
               infoText: capExDescription,
             }}
           />

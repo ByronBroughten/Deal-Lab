@@ -6,6 +6,17 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
+// Why are table rows and cells so tall?
+
+// I want the setterCalculations tests to make it easier to figure
+// out what the problem is.
+// I should break them down into smaller tests.
+// One test per subSection
+// And just use SolverSections, not setter
+// Test Calculations
+// Define the numbers used in each test at the top of the test
+// along with the test itself, to be executed in a function
+
 // I think I can add homeBuyer mode pretty easily
 // I'm just worried that I'm going to get in too deep
 

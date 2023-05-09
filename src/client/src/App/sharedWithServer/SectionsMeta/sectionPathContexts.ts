@@ -51,7 +51,7 @@ function makeDealFocals(dealPath: ChildName[]) {
       return abs("miscHoldingCost", [...propertyPath, "miscHoldingCost"]);
     },
     get miscIncomeFocal() {
-      return abs("miscIncomeValue", [...propertyPath, "miscIncomeValue"]);
+      return abs("miscRevenueValue", [...propertyPath, "miscRevenueValue"]);
     },
 
     get financingFocal() {

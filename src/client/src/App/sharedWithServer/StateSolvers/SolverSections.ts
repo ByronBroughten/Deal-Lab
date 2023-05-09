@@ -149,12 +149,16 @@ export class SolverSections extends SolverSectionsBase {
     });
   }
   static initSectionsFromDefaultMain(): StateSections {
+    return this.initDefault().stateSections;
+  }
+  static initDefault(): SolverSections {
     const defaultMainPack = defaultMaker.makeSectionPack("main");
     const solver = this.initSolverFromMainPack(defaultMainPack);
     const { feId } = solver.onlyChild("feStore").youngestChild("dealMain").get;
     solver.solverSections.activateDealAndSolve(feId);
-    return solver.sectionsShare.sections;
+    return solver.solverSections;
   }
+
   static initRoot(): SolverSection<"root"> {
     const sections = StateSections.initWithRoot();
     const rootSection = sections.rawSectionList("root")[0];

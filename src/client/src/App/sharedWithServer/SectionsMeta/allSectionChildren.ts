@@ -146,7 +146,7 @@ export const allSectionChildren = checkAllSectionChildren({
     maintenanceValue: "maintenanceValue",
     capExValue: "capExValue",
 
-    miscIncomeValue: "miscIncomeValue",
+    miscRevenueValue: "miscRevenueValue",
     miscOngoingCost: "miscOngoingCost",
     miscHoldingCost: "miscHoldingCost",
     miscOnetimeCost: "miscOnetimeCost",
@@ -156,7 +156,7 @@ export const allSectionChildren = checkAllSectionChildren({
   miscOngoingCost: sectionChildren({
     ongoingList: "ongoingList",
   }),
-  miscIncomeValue: sectionChildren({
+  miscRevenueValue: sectionChildren({
     ongoingList: "ongoingList",
   }),
   miscHoldingCost: sectionChildren({

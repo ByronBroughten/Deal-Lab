@@ -15,7 +15,7 @@ export function VarbListTableCapEx({
 }: Props) {
   return (
     <VarbListTableSectionStyled
-      addItemBtnMiddle="+ Custom Item"
+      addItemBtnMiddle="+"
       headers={
         <tr>
           <th className="VarbListTable-nameHeader">Name</th>

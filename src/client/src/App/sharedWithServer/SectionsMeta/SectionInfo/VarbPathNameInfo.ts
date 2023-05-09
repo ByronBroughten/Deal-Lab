@@ -126,10 +126,10 @@ const allVarbPathParams = {
   userVarbValue: varbPathParams("numVarbItemMain", "value"),
   repairCostBase: fixedVarbPathParams("Property", "repairCostFocal", "value"),
 
-  propertyOnetimeCostBase: fixedVarbPathParams(
+  rehabCostBase: fixedVarbPathParams(
     "Property",
     "propertyFocal",
-    "onetimeCostBase"
+    "rehabCostBase"
   ),
   rehabCost: fixedVarbPathParams("Property", "propertyFocal", "rehabCost"),
 

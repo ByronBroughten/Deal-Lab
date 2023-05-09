@@ -22,7 +22,7 @@ export function costOverrunUpdateVarbs(): UpdateSectionVarbs<"costOverrunValue">
         valuePercentEditor: basics.equationLR(
           "multiply",
           fnProp.local("valueDecimal"),
-          fnProp.varbPathName("propertyOnetimeCostBase")
+          fnProp.varbPathName("rehabCostBase")
         ),
       }),
     }),

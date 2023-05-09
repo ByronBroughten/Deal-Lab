@@ -146,7 +146,7 @@ export function makeAllBaseSectionVarbs() {
       ...baseVarbsS.displayNameAndEditor,
       value: baseVarb("numObj"),
       valueEditor: baseVarb("numObj"),
-      valueSourceName: baseVarb("customValueSource"),
+      valueSourceName: baseVarb("editorValueSource"),
     }),
     outputItem: varbs({
       valueEntityInfo: baseVarb("inEntityValue"),
@@ -178,41 +178,48 @@ export function makeAllBaseSectionVarbs() {
     conditionalRowList: varbs({
       value: baseVarb("numObj"),
     }),
+
     property: varbs({
-      // I shouldn't expect Riley
       ...baseVarbsS.savableSection,
       propertyMode: baseVarb("dealMode"),
       streetAddress: baseVarb("string"),
       city: baseVarb("string"),
       state: baseVarb("string"),
       zipCode: baseVarb("string"),
+      one: baseVarb("number"),
       ...baseVarbs(
         "numObj",
         [
           "purchasePrice",
-          "rehabCost",
-          "onetimeCostBase",
-          "upfrontExpenses",
           "afterRepairValue",
+
           "sellingCosts",
+          "miscOnetimeCosts",
+          "rehabCostBase",
+          "holdingCostTotal",
+
+          "rehabCost",
+          "upfrontExpenses",
         ] as const,
         dollars
       ),
-      one: baseVarb("number"),
-      numUnits: baseVarb("numObj"),
-      numUnitsEditor: baseVarb("numObj"),
-      ...baseVarbs("numObj", ["sqft", "numBedrooms"] as const),
+      ...baseVarbs("numObj", [
+        "sqft",
+
+        "numBedrooms",
+        "numUnits",
+        "numUnitsEditor",
+      ] as const),
       ...baseVarbsS.ongoingDollarsInput("taxes"),
       ...baseVarbsS.ongoingDollarsInput("homeIns"),
-      ...baseVarbsS.ongoingDollars("targetRent"),
-      ...baseVarbsS.ongoingDollars("expenses"),
-      ...baseVarbsS.ongoingDollars("miscRevenue"),
-      ...baseVarbsS.ongoingDollars("revenue"),
       ...baseVarbsS.monthsYearsInput("holdingPeriod"),
-      ...baseVarbsS.ongoingDollars("holdingCost"),
+
+      ...baseVarbsS.ongoingDollars("targetRent"),
+      ...baseVarbsS.ongoingDollars("miscRevenue"),
       ...baseVarbsS.ongoingDollars("miscCosts"),
-      miscOnetimeCosts: baseVarb("numObj", dollars),
-      holdingCostTotal: baseVarb("numObj", dollars),
+      ...baseVarbsS.ongoingDollars("holdingCost"),
+      ...baseVarbsS.ongoingDollars("revenue"),
+      ...baseVarbsS.ongoingDollars("expenses"),
     }),
     unit: varbs({
       one: baseVarb("number"),
@@ -228,7 +235,7 @@ export function makeAllBaseSectionVarbs() {
       valueSourceName: baseVarb("dollarsOrList"),
       ...baseVarbsS.ongoingDollarsInput("valueDollars"),
     }),
-    miscIncomeValue: varbs({
+    miscRevenueValue: varbs({
       valueSourceName: baseVarb("dollarsOrList"),
       ...baseVarbsS.ongoingDollarsInput("valueDollars"),
     }),

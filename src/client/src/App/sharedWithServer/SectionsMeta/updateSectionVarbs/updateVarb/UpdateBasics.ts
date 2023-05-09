@@ -50,6 +50,9 @@ export const updateBasicsS = {
   get calcVarbs() {
     return updateBasicsNext("calcVarbs");
   },
+  get notApplicable() {
+    return updateBasicsNext("notApplicable");
+  },
   get zero() {
     return updateBasicsNext("solvableTextZero");
   },

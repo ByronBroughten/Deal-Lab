@@ -27,8 +27,8 @@ export function makeDefaultProperty(
   const sellingCost = property.addAndGetChild("sellingCostValue");
   sellingCost.addChild("onetimeList");
 
-  const miscIncome = property.addAndGetChild("miscIncomeValue");
-  miscIncome.addChild("ongoingList");
+  const miscRevenue = property.addAndGetChild("miscRevenueValue");
+  miscRevenue.addChild("ongoingList");
 
   const miscOngoingCost = property.addAndGetChild("miscOngoingCost");
   miscOngoingCost.addChild("ongoingList");

@@ -6,12 +6,11 @@ import {
   updateFnPropS,
   updateFnPropsS,
 } from "../updateSectionVarbs/updateVarb/UpdateFnProps";
+import { overrideSwitchS } from "../updateSectionVarbs/updateVarb/UpdateOverrides";
 import { unionSwitchOverride } from "../updateSectionVarbs/updateVarb/updateVarbUtils";
 import { updateVarbsS } from "../updateSectionVarbs/updateVarbs";
-import { overrideSwitchS } from "./../updateSectionVarbs/updateVarb/UpdateOverrides";
 
 const basicsS = updateBasicsS;
-const switchS = overrideSwitchS;
 const propS = updateFnPropS;
 
 export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
@@ -49,7 +48,7 @@ export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
       ),
     }),
     numBedrooms: updateVarbS.sumChildNums("unit", "numBedrooms"),
-    onetimeCostBase: updateVarbS.sumNums([
+    rehabCostBase: updateVarbS.sumNums([
       propS.children("repairValue", "value"),
       propS.children("miscOnetimeCost", "valueDollars"),
     ]),
@@ -59,11 +58,21 @@ export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
       propS.children("costOverrunValue", "valueDollars"),
     ]),
     ...updateVarbsS.ongoingSumNumsNext("holdingCost", "monthly", {
-      updateFnProps: [
-        propS.localBaseName("taxes"),
-        propS.localBaseName("homeIns"),
-        propS.onlyChildBase("utilityValue", "value"),
-        propS.localBaseName("miscCosts"),
+      updateBasics: { updateFnName: "throwIfReached", updateFnProps: {} },
+      updateOverrides: [
+        {
+          switches: [overrideSwitchS.local("propertyMode", "buyAndHold")],
+          updateBasics: basicsS.notApplicable,
+        },
+        {
+          switches: [overrideSwitchS.local("propertyMode", "fixAndFlip")],
+          updateFnProps: [
+            propS.localBaseName("taxes"),
+            propS.localBaseName("homeIns"),
+            propS.onlyChildBase("utilityValue", "value"),
+            propS.onlyChildBase("miscHoldingCost", "valueDollars"),
+          ],
+        },
       ],
     }),
     holdingCostTotal: updateVarbS.leftRightPropFn(
@@ -79,7 +88,6 @@ export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
           buyAndHold: updateVarbS.sumNums([
             propS.local("purchasePrice"),
             propS.local("rehabCost"),
-            propS.local("miscOnetimeCosts"),
           ]),
           fixAndFlip: updateVarbS.sumNums([
             propS.local("purchasePrice"),
@@ -116,8 +124,8 @@ export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
       yearly: basicsS.loadFromChild("miscOngoingCost", "valueDollarsYearly"),
     }),
     ...updateVarbsS.group("miscRevenue", "ongoing", "monthly", {
-      monthly: basicsS.loadFromChild("miscIncomeValue", "valueDollarsMonthly"),
-      yearly: basicsS.loadFromChild("miscIncomeValue", "valueDollarsYearly"),
+      monthly: basicsS.loadFromChild("miscRevenueValue", "valueDollarsMonthly"),
+      yearly: basicsS.loadFromChild("miscRevenueValue", "valueDollarsYearly"),
     }),
     ...updateVarbsS.monthsYearsInput("holdingPeriod", "months"),
     ...updateVarbsS.ongoingSumNums(

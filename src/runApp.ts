@@ -41,7 +41,7 @@ export function runApp() {
   useRoutes(app);
   app.use(errorBackstop);
   if (process.env.NODE_ENV === "production") {
-    app.get("*", function (req, res) {
+    app.get("*", function (_, res) {
       res.sendFile("index.html", { root: "src/client/build/" });
     });
   }

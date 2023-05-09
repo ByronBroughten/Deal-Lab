@@ -23,7 +23,7 @@ export function BasicBuyAndHoldInfoNext({ feId }: Props) {
         />
       </BasicInfoEditorRow>
       <UnitsNext feId={feId} />
-      <MiscIncomeValue feId={property.onlyChildFeId("miscIncomeValue")} />
+      <MiscIncomeValue feId={property.onlyChildFeId("miscRevenueValue")} />
     </FormSectionLabeled>
   );
 }

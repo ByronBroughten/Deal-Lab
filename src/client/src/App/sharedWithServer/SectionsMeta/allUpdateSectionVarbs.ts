@@ -1,4 +1,5 @@
 import { timeS } from "../utils/timeS";
+import { basicOngoingValueVarbs } from "./allUpdateSectionVarbs/basicOngoingValue";
 import { calculatedUpdateVarbs } from "./allUpdateSectionVarbs/calculatedUpdateVarbs";
 import { costOverrunUpdateVarbs } from "./allUpdateSectionVarbs/costOverrunUpdateVarbs";
 import { dealUpdateVarbs } from "./allUpdateSectionVarbs/dealUpdateVarbs";
@@ -38,8 +39,14 @@ import {
   updateOverride,
   updateOverrideS,
 } from "./updateSectionVarbs/updateVarb/UpdateOverrides";
+import { valueSourceOverrides } from "./updateSectionVarbs/updateVarb/updateVarbUtils";
 import { updateVarbsS } from "./updateSectionVarbs/updateVarbs";
 import { numObj } from "./values/StateValue/NumObj";
+
+const propS = updateFnPropS;
+const propsS = updateFnPropsS;
+const varbsS = updateVarbsS;
+const switchS = overrideSwitchS;
 
 type GenericAllUpdateSections = {
   [SN in SectionName]: UpdateSectionVarbs<SN>;
@@ -91,24 +98,24 @@ function makeAllUpdateSections() {
     ...updateSectionProp("unit", {
       one: updateVarbS.one(),
       numBedrooms: updateVarb("numObj"),
-      ...updateVarbsS.ongoingInputNext("targetRent"),
+      ...varbsS.ongoingInputNext("targetRent"),
     }),
     ...updateSectionProp("utilityValue", {
       valueSourceName: updateVarb("utilityValueSource", { initValue: "none" }),
-      ...updateVarbsS.group("value", "ongoing", "monthly", {
+      ...varbsS.group("value", "ongoing", "monthly", {
         targets: { updateFnName: "throwIfReached" },
         monthly: {
           updateOverrides: [
             updateOverride(
-              [overrideSwitchS.local("valueSourceName", "none")],
+              [switchS.local("valueSourceName", "none")],
               updateBasics("emptyNumObj")
             ),
             updateOverride(
-              [overrideSwitchS.local("valueSourceName", "zero")],
+              [switchS.local("valueSourceName", "zero")],
               updateBasics("solvableTextZero")
             ),
             updateOverride(
-              [overrideSwitchS.local("valueSourceName", "listTotal")],
+              [switchS.local("valueSourceName", "listTotal")],
               updateBasicsS.loadFromChild("ongoingList", "totalMonthly")
             ),
           ],
@@ -116,15 +123,15 @@ function makeAllUpdateSections() {
         yearly: {
           updateOverrides: [
             updateOverride(
-              [overrideSwitchS.local("valueSourceName", "none")],
+              [switchS.local("valueSourceName", "none")],
               updateBasics("emptyNumObj")
             ),
             updateOverride(
-              [overrideSwitchS.local("valueSourceName", "zero")],
+              [switchS.local("valueSourceName", "zero")],
               updateBasics("solvableTextZero")
             ),
             updateOverride(
-              [overrideSwitchS.local("valueSourceName", "listTotal")],
+              [switchS.local("valueSourceName", "listTotal")],
               updateBasicsS.loadFromChild("ongoingList", "totalYearly")
             ),
           ],
@@ -133,33 +140,33 @@ function makeAllUpdateSections() {
     }),
     ...updateSectionProp("capExValue", {
       valueSourceName: updateVarb("capExValueSource", { initValue: "none" }),
-      ...updateVarbsS.group("value", "ongoing", "monthly", {
+      ...varbsS.group("value", "ongoing", "monthly", {
         targets: { updateFnName: "throwIfReached" },
         monthly: {
           updateOverrides: [
             updateOverride(
-              [overrideSwitchS.local("valueSourceName", "none")],
+              [switchS.local("valueSourceName", "none")],
               updateBasics("emptyNumObj")
             ),
             updateOverride(
-              [overrideSwitchS.local("valueSourceName", "fivePercentRent")],
+              [switchS.local("valueSourceName", "fivePercentRent")],
               updateBasicsS.loadByVarbPathName("fivePercentRentMonthly")
             ),
             updateOverride(
-              [overrideSwitchS.local("valueSourceName", "listTotal")],
+              [switchS.local("valueSourceName", "listTotal")],
               updateBasicsS.loadFromChild("capExList", "totalMonthly")
             ),
             updateOverride(
               [
-                overrideSwitchS.local("valueSourceName", "valueEditor"),
-                overrideSwitchS.switchIsActive("value", "ongoing", "monthly"),
+                switchS.local("valueSourceName", "valueEditor"),
+                switchS.switchIsActive("value", "ongoing", "monthly"),
               ],
               updateBasicsS.loadFromLocal("valueDollarsEditor")
             ),
             updateOverride(
               [
-                overrideSwitchS.local("valueSourceName", "valueEditor"),
-                overrideSwitchS.switchIsActive("value", "ongoing", "yearly"),
+                switchS.local("valueSourceName", "valueEditor"),
+                switchS.switchIsActive("value", "ongoing", "yearly"),
               ],
               updateBasicsS.yearlyToMonthly("value")
             ),
@@ -168,28 +175,28 @@ function makeAllUpdateSections() {
         yearly: {
           updateOverrides: [
             updateOverride(
-              [overrideSwitchS.local("valueSourceName", "none")],
+              [switchS.local("valueSourceName", "none")],
               updateBasics("emptyNumObj")
             ),
             updateOverride(
-              [overrideSwitchS.local("valueSourceName", "fivePercentRent")],
+              [switchS.local("valueSourceName", "fivePercentRent")],
               updateBasicsS.loadByVarbPathName("fivePercentRentYearly")
             ),
             updateOverride(
-              [overrideSwitchS.local("valueSourceName", "listTotal")],
+              [switchS.local("valueSourceName", "listTotal")],
               updateBasicsS.loadFromChild("capExList", "totalYearly")
             ),
             updateOverride(
               [
-                overrideSwitchS.local("valueSourceName", "valueEditor"),
-                overrideSwitchS.switchIsActive("value", "ongoing", "yearly"),
+                switchS.local("valueSourceName", "valueEditor"),
+                switchS.switchIsActive("value", "ongoing", "yearly"),
               ],
               updateBasicsS.loadFromLocal("valueDollarsEditor")
             ),
             updateOverride(
               [
-                overrideSwitchS.local("valueSourceName", "valueEditor"),
-                overrideSwitchS.switchIsActive("value", "ongoing", "monthly"),
+                switchS.local("valueSourceName", "valueEditor"),
+                switchS.switchIsActive("value", "ongoing", "monthly"),
               ],
               updateBasicsS.monthlyToYearly("value")
             ),
@@ -198,8 +205,8 @@ function makeAllUpdateSections() {
       }),
     }),
     ...updateSectionProp("capExList", {
-      ...updateVarbsS.savableSection,
-      ...updateVarbsS.group("total", "ongoing", "monthly", {
+      ...varbsS.savableSection,
+      ...varbsS.group("total", "ongoing", "monthly", {
         monthly: updateBasicsS.sumChildren("capExItem", "valueMonthly"),
         yearly: updateBasicsS.sumChildren("capExItem", "valueYearly"),
       }),
@@ -210,31 +217,31 @@ function makeAllUpdateSections() {
       valueSourceName: updateVarb("maintainanceValueSource", {
         initValue: "none",
       }),
-      ...updateVarbsS.group("value", "ongoing", "monthly", {
+      ...varbsS.group("value", "ongoing", "monthly", {
         targets: { updateFnName: "throwIfReached" },
         monthly: {
           updateOverrides: [
             updateOverride(
-              [overrideSwitchS.local("valueSourceName", "none")],
+              [switchS.local("valueSourceName", "none")],
               updateBasics("emptyNumObj")
             ),
             updateOverride(
               [
-                overrideSwitchS.local("valueSourceName", "valueEditor"),
-                overrideSwitchS.switchIsActive("value", "ongoing", "monthly"),
+                switchS.local("valueSourceName", "valueEditor"),
+                switchS.switchIsActive("value", "ongoing", "monthly"),
               ],
               updateBasicsS.loadFromLocal("valueDollarsEditor")
             ),
             updateOverride(
               [
-                overrideSwitchS.local("valueSourceName", "valueEditor"),
-                overrideSwitchS.yearlyIsActive("value"),
+                switchS.local("valueSourceName", "valueEditor"),
+                switchS.yearlyIsActive("value"),
               ],
               updateBasicsS.yearlyToMonthly("value")
             ),
             updateOverride(
               [
-                overrideSwitchS.local(
+                switchS.local(
                   "valueSourceName",
                   ...["onePercentPrice", "sqft", "onePercentAndSqft"]
                 ),
@@ -246,33 +253,33 @@ function makeAllUpdateSections() {
         yearly: {
           updateOverrides: [
             updateOverride(
-              [overrideSwitchS.local("valueSourceName", "none")],
+              [switchS.local("valueSourceName", "none")],
               updateBasics("emptyNumObj")
             ),
             updateOverride(
               [
-                overrideSwitchS.local("valueSourceName", "valueEditor"),
-                overrideSwitchS.yearlyIsActive("value"),
+                switchS.local("valueSourceName", "valueEditor"),
+                switchS.yearlyIsActive("value"),
               ],
               updateBasicsS.loadFromLocal("valueDollarsEditor")
             ),
             updateOverride(
               [
-                overrideSwitchS.local("valueSourceName", "valueEditor"),
-                overrideSwitchS.monthlyIsActive("value"),
+                switchS.local("valueSourceName", "valueEditor"),
+                switchS.monthlyIsActive("value"),
               ],
               updateBasicsS.monthlyToYearly("value")
             ),
             updateOverride(
-              [overrideSwitchS.local("valueSourceName", "onePercentPrice")],
+              [switchS.local("valueSourceName", "onePercentPrice")],
               updateBasicsS.loadByVarbPathName("onePercentPrice")
             ),
             updateOverride(
-              [overrideSwitchS.local("valueSourceName", "sqft")],
+              [switchS.local("valueSourceName", "sqft")],
               updateBasicsS.loadByVarbPathName("sqft")
             ),
             updateOverride(
-              [overrideSwitchS.local("valueSourceName", "onePercentAndSqft")],
+              [switchS.local("valueSourceName", "onePercentAndSqft")],
               updateBasicsS.loadByVarbPathName("onePercentPriceSqftAverage")
             ),
           ],
@@ -285,19 +292,19 @@ function makeAllUpdateSections() {
         updateFnName: "throwIfReached",
         updateOverrides: [
           updateOverride(
-            [overrideSwitchS.local("valueSourceName", "none")],
+            [switchS.local("valueSourceName", "none")],
             updateBasics("emptyNumObj")
           ),
           updateOverride(
-            [overrideSwitchS.local("valueSourceName", "zero")],
+            [switchS.local("valueSourceName", "zero")],
             updateBasicsS.zero
           ),
           updateOverride(
-            [overrideSwitchS.local("valueSourceName", "valueEditor")],
+            [switchS.local("valueSourceName", "valueEditor")],
             updateBasicsS.loadFromLocal("valueDollarsEditor")
           ),
           updateOverride(
-            [overrideSwitchS.local("valueSourceName", "listTotal")],
+            [switchS.local("valueSourceName", "listTotal")],
             updateBasicsS.loadFromChild("onetimeList", "total")
           ),
         ],
@@ -324,9 +331,7 @@ function makeAllUpdateSections() {
       } as const),
     }),
     ...updateSectionProp("onetimeList", {
-      total: updateVarbS.sumNums([
-        updateFnPropS.children("singleTimeItem", "value"),
-      ]),
+      total: updateVarbS.sumNums([propS.children("singleTimeItem", "value")]),
       itemValueSource: updateVarb("editorValueSource", {
         initValue: "valueEditor",
       }),
@@ -340,42 +345,42 @@ function makeAllUpdateSections() {
         updateFnName: "throwIfReached",
         updateOverrides: [
           updateOverride(
-            [overrideSwitchS.valueSourceIs("none")],
+            [switchS.valueSourceIs("none")],
             updateBasics("emptyNumObj")
           ),
           updateOverride(
-            [overrideSwitchS.valueSourceIs("fivePercentLoan")],
+            [switchS.valueSourceIs("fivePercentLoan")],
             updateBasics("emptyNumObj")
           ),
           updateOverride(
-            [overrideSwitchS.valueSourceIs("listTotal")],
+            [switchS.valueSourceIs("listTotal")],
             updateBasicsS.loadFromChild("onetimeList", "total")
           ),
           updateOverride(
-            [overrideSwitchS.valueSourceIs("valueEditor")],
+            [switchS.valueSourceIs("valueEditor")],
             updateBasicsS.loadSolvableTextByVarbInfo("valueDollarsEditor")
           ),
         ],
       }),
     }),
     ...updateSectionProp("singleTimeValue", {
-      ...updateVarbsS.displayNameAndEditor,
+      ...varbsS.displayNameAndEditor,
       value: updateVarb("numObj", {
         updateFnName: "throwIfReached",
         updateOverrides: [
           updateOverride(
-            [overrideSwitchS.valueSourceIs("none")],
+            [switchS.valueSourceIs("none")],
             updateBasics("emptyNumObj")
           ),
           updateOverride(
-            [overrideSwitchS.valueSourceIs("listTotal")],
+            [switchS.valueSourceIs("listTotal")],
             updateBasicsS.loadFromChild(
               "onetimeList",
               "total"
             ) as UpdateBasics<"numObj">
           ),
           updateOverride(
-            [overrideSwitchS.valueSourceIs("valueEditor")],
+            [switchS.valueSourceIs("valueEditor")],
             updateBasicsS.loadSolvableTextByVarbInfo(
               "valueEditor"
             ) as UpdateBasics<"numObj">
@@ -388,20 +393,20 @@ function makeAllUpdateSections() {
       }),
     }),
     ...updateSectionProp("ongoingValue", {
-      ...updateVarbsS.displayNameAndEditor,
+      ...varbsS.displayNameAndEditor,
       valueSourceName: updateVarb("customValueSource", {
         initValue: "valueEditor",
       }),
-      ...updateVarbsS.ongoingInputNext("value", {
+      ...varbsS.ongoingInputNext("value", {
         monthly: {
           updateFnName: "throwIfReached",
           updateOverrides: [
             updateOverride(
-              [overrideSwitchS.valueSourceIs("none")],
+              [switchS.valueSourceIs("none")],
               updateBasics("emptyNumObj")
             ),
             updateOverride(
-              [overrideSwitchS.valueSourceIs("listTotal")],
+              [switchS.valueSourceIs("listTotal")],
               updateBasicsS.loadFromChild(
                 "ongoingList",
                 "totalMonthly"
@@ -409,15 +414,15 @@ function makeAllUpdateSections() {
             ),
             updateOverride(
               [
-                overrideSwitchS.valueSourceIs("valueEditor"),
-                overrideSwitchS.monthlyIsActive("value"),
+                switchS.valueSourceIs("valueEditor"),
+                switchS.monthlyIsActive("value"),
               ],
               updateBasicsS.loadFromLocal("valueOngoingEditor")
             ),
             updateOverride(
               [
-                overrideSwitchS.valueSourceIs("valueEditor"),
-                overrideSwitchS.yearlyIsActive("value"),
+                switchS.valueSourceIs("valueEditor"),
+                switchS.yearlyIsActive("value"),
               ],
               updateBasicsS.yearlyToMonthly("value")
             ),
@@ -427,11 +432,11 @@ function makeAllUpdateSections() {
           updateFnName: "throwIfReached",
           updateOverrides: [
             updateOverride(
-              [overrideSwitchS.valueSourceIs("none")],
+              [switchS.valueSourceIs("none")],
               updateBasics("emptyNumObj")
             ),
             updateOverride(
-              [overrideSwitchS.valueSourceIs("listTotal")],
+              [switchS.valueSourceIs("listTotal")],
               updateBasicsS.loadFromChild(
                 "ongoingList",
                 "totalYearly"
@@ -439,15 +444,15 @@ function makeAllUpdateSections() {
             ),
             updateOverride(
               [
-                overrideSwitchS.valueSourceIs("valueEditor"),
-                overrideSwitchS.yearlyIsActive("value"),
+                switchS.valueSourceIs("valueEditor"),
+                switchS.yearlyIsActive("value"),
               ],
               updateBasicsS.loadFromLocal("valueOngoingEditor")
             ),
             updateOverride(
               [
-                overrideSwitchS.valueSourceIs("valueEditor"),
-                overrideSwitchS.monthlyIsActive("value"),
+                switchS.valueSourceIs("valueEditor"),
+                switchS.monthlyIsActive("value"),
               ],
               updateBasicsS.monthlyToYearly("value")
             ),
@@ -456,22 +461,17 @@ function makeAllUpdateSections() {
         editor: { updateFnName: "calcVarbs" },
       }),
     }),
-    ...updateSectionProp("miscIncomeValue", {
-      valueDollarsOngoingEditor: updateVarb("numObj", {
-        initValue: numObj(0),
-      }),
-    }),
-    ...updateSectionProp("miscOngoingCost", {
-      valueDollarsOngoingEditor: updateVarb("numObj", {
-        initValue: numObj(0),
-      }),
-    }),
-    ...updateSectionProp("miscHoldingCost", {
-      valueDollarsOngoingEditor: updateVarb("numObj", {
-        initValue: numObj(0),
-      }),
-    }),
+    ...updateSectionProp("miscRevenueValue", basicOngoingValueVarbs()),
+    ...updateSectionProp("miscOngoingCost", basicOngoingValueVarbs()),
+    ...updateSectionProp("miscHoldingCost", basicOngoingValueVarbs()),
     ...updateSectionProp("miscOnetimeCost", {
+      valueDollars: updateVarb("numObj", {
+        updateFnName: "throwIfReached",
+        updateOverrides: valueSourceOverrides("dollarsOrList", {
+          dollarsEditor: updateBasicsS.loadFromLocal("valueDollarsEditor"),
+          listTotal: updateBasicsS.loadFromChild("onetimeList", "total"),
+        }),
+      }),
       valueDollarsEditor: updateVarb("numObj", {
         initValue: numObj(0),
       }),
@@ -483,9 +483,9 @@ function makeAllUpdateSections() {
       }),
     }),
     ...updateSectionProp("ongoingList", {
-      ...updateVarbsS.ongoingSumNums(
+      ...varbsS.ongoingSumNums(
         "total",
-        [updateFnPropS.children("ongoingItem", "value")],
+        [propS.children("ongoingItem", "value")],
         "monthly"
       ),
       itemValueSource: updateVarb("editorValueSource", {
@@ -508,7 +508,7 @@ function makeAllUpdateSections() {
       value: updateVarb("numObj", {
         updateFnName: "virtualNumObj",
         updateFnProps: {
-          varbInfo: updateFnPropS.local("valueEntityInfo"),
+          varbInfo: propS.local("valueEntityInfo"),
         },
       }),
       displayName: updateVarb("stringObj", {
@@ -525,34 +525,31 @@ function makeAllUpdateSections() {
       }),
     }),
     ...updateSectionProp("singleTimeItem", {
-      ...updateVarbsS._typeUniformity,
-      ...updateVarbsS.displayNameAndEditor,
+      ...varbsS._typeUniformity,
+      ...varbsS.displayNameAndEditor,
       value: updateVarb("numObj", {
         updateFnName: "throwIfReached",
         updateOverrides: [
           updateOverride(
-            [overrideSwitchS.local("valueSourceName", "valueEditor")],
+            [switchS.local("valueSourceName", "valueEditor")],
             updateBasicsS.loadFromLocalValueEditor()
           ),
         ],
       }),
-      valueSourceName: updateVarb("customValueSource", {
+      valueSourceName: updateVarb("editorValueSource", {
         initValue: "valueEditor",
       }),
       valueEditor: updateVarb("numObj"),
     }),
     ...updateSectionProp("ongoingItem", ongoingItemUpdateVarbs()),
     ...updateSectionProp("numVarbItem", {
-      ...updateVarbsS.displayNameAndEditor,
+      ...varbsS.displayNameAndEditor,
       value: updateVarb("numObj", {
         initValue: numObj(0),
         updateFnName: "userVarb",
         updateFnProps: {
-          ...updateFnPropsS.localByVarbName(["valueSourceName", "valueEditor"]),
-          conditionalValue: updateFnPropS.children(
-            "conditionalRowList",
-            "value"
-          ),
+          ...propsS.localByVarbName(["valueSourceName", "valueEditor"]),
+          conditionalValue: propS.children("conditionalRowList", "value"),
         },
       }),
       valueSourceName: updateVarb("editorValueSource", {
@@ -561,7 +558,7 @@ function makeAllUpdateSections() {
     }),
     ...updateSectionProp("conditionalRowList", {
       value: updateVarb("numObj", {
-        updateFnProps: updateFnPropsS.namedChildren("conditionalRow", {
+        updateFnProps: propsS.namedChildren("conditionalRow", {
           rowLevel: "level",
           rowType: "type",
           rowLeft: "left",

@@ -52,11 +52,6 @@ describe("SetterCalculations", () => {
       valueSourceName: "customAmountEditor",
       valueDollarsEditor: numObj(0),
     });
-    const wrappedValue = loan.addAndGetChild("wrappedInLoanValue");
-    wrappedValue.updateValues({
-      valueSourceName: "valueEditor",
-      valueEditor: numObj(5000),
-    });
 
     const mgmt = dealTester.setter.onlyChild("mgmt");
     const mgmtOnetime = mgmt.onlyChild("miscOnetimeCost");

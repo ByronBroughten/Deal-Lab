@@ -61,7 +61,7 @@ export const sectionNames = [
   "capExItem",
   "unit",
   "miscOnetimeCost",
-  "miscIncomeValue",
+  "miscRevenueValue",
   "miscOngoingCost",
   "miscHoldingCost",
 
