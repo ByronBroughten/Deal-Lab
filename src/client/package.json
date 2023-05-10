@@ -80,6 +80,9 @@
       "@typescript-eslint/no-unused-vars": "off"
     }
   },
+  "resolutions": {
+    "eslint-webpack-plugin": "2.3.0"
+  },
   "browserslist": {
     "production": [
       ">1%",
