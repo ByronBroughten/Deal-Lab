@@ -1,11 +1,13 @@
 import { Box } from "@mui/material";
 import React from "react";
 import { MuiRow } from "../general/MuiRow";
+import { IconProps } from "../Icons";
 import { InfoIcon } from "./InfoIcon";
 
 type Props = {
   label: React.ReactNode;
   infoTitle?: React.ReactNode;
+  iconProps?: IconProps;
   infoText: string;
   className?: string;
 };
@@ -14,6 +16,7 @@ export function LabelWithInfo({
   label,
   infoTitle = label,
   infoText,
+  iconProps,
 }: Props) {
   return (
     <MuiRow
@@ -26,6 +29,7 @@ export function LabelWithInfo({
       <Box>{label}</Box>
       <InfoIcon
         {...{
+          iconProps,
           title: infoTitle,
           infoText,
         }}

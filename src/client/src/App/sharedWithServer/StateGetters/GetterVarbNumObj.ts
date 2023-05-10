@@ -16,6 +16,9 @@ import { GetterVarbBase } from "./Bases/GetterVarbBase";
 import { GetterVarb } from "./GetterVarb";
 import { InEntityGetterVarb } from "./InEntityGetterVarb";
 
+// // @ts-ignore
+// const { create, evaluateDependencies } = await import("mathjs/lib/esm/number");
+
 const math = create(evaluateDependencies);
 // type Eval = (
 //   expr: MathExpression | MathExpression[] | Matrix,

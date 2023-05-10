@@ -22,6 +22,10 @@ const fontSizes = {
   fs22: 22,
   fs24: 24,
   fs26: 26,
+  fs28: 28,
+  fs30: 30,
+  fs32: 32,
+  fs34: 34,
 } as const;
 
 const borderRadiuses = {

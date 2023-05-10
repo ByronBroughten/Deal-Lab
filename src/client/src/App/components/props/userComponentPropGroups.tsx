@@ -43,12 +43,10 @@ export const componentProps: ComponentProps = {
     <FaMoneyCheckAlt {...iconProps} />
   )),
 
-  onetimeListMain: props(
-    "Custom One-time Costs",
-    "custom one-time costs",
-    () => <MdAttachMoney {...iconProps} />
-  ),
-  ongoingListMain: props("Custom Ongoing Costs", "custom ongoing costs", () => (
+  onetimeListMain: props("Custom One-time", "custom one-time costs", () => (
+    <MdAttachMoney {...iconProps} />
+  )),
+  ongoingListMain: props("Custom Ongoing", "custom ongoing costs", () => (
     <AiOutlineFieldTime {...iconProps} />
   )),
 

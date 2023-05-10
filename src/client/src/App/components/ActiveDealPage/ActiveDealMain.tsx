@@ -1,7 +1,7 @@
 import { View } from "react-native";
 import { BackBtnWrapper } from "../appWide/BackBtnWrapper";
 import { BackgroundContainer } from "../appWide/BackgroundContainter";
-import { SectionTitleMain } from "../appWide/SectionTitleMain";
+import { PageTitle } from "../appWide/PageTitle";
 import { BigStringEditor } from "../inputs/BigStringEditor";
 import { useAction } from "./../../sharedWithServer/stateClassHooks/useAction";
 import { nativeTheme } from "./../../theme/nativeTheme";
@@ -25,7 +25,7 @@ export function ActiveDealMain() {
   return (
     <BackBtnWrapper {...{ to: "account", label: "Deal Menu" }}>
       <BackgroundContainer>
-        <SectionTitleMain sx={{ marginTop: nativeTheme.s35 }} text="Deal" />
+        <PageTitle sx={{ marginTop: nativeTheme.s35 }} text="Deal" />
         <Row
           style={{
             alignItems: "flex-end",

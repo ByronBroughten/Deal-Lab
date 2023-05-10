@@ -22,6 +22,9 @@ export const nativeTheme = {
   ...unitSizes,
   ...mediaQuery,
   ...inputStyles,
+  pageTitleFs: unitSizes.fs30,
+  pageInfoDotSize: 28,
+  chunkTitleFs: unitSizes.fs24,
   standardBorder(borderColor: string) {
     return view({
       borderStyle: "solid",

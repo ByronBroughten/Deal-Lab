@@ -5,7 +5,7 @@ import { StateValue } from "../../../sharedWithServer/SectionsMeta/values/StateV
 import { nativeTheme } from "../../../theme/nativeTheme";
 import { CheckMarkCircle } from "../../appWide/checkMarkCircle";
 import { EditSectionBtn } from "../../appWide/EditSectionBtn";
-import { SectionTitle } from "../../appWide/SectionTitle";
+import ChunkTitle from "../../general/ChunkTitle";
 import { MainSectionLargeEditBtn } from "./MainSectionLargeEditBtn";
 
 type Props = {
@@ -29,10 +29,14 @@ export function DealSubSectionTitleRow({
           className: "DealSubSectionTitleRow-checkmarkCircle",
         }}
       />
-      <SectionTitle
-        className="DealSubSectionTitleRow-showInputsTitle"
-        text={sectionTitle}
-      />
+      <ChunkTitle
+        sx={{
+          color: nativeTheme.primary.main,
+          minWidth: "110px",
+        }}
+      >
+        {sectionTitle}
+      </ChunkTitle>
       {!isCompleted && (
         <MainSectionLargeEditBtn
           {...{
@@ -67,11 +71,6 @@ const Styled = styled.div`
 
   .DealSubSectionTitleRow-startIcon {
     margin-left: ${nativeTheme.s15};
-  }
-
-  .DealSubSectionTitleRow-showInputsTitle {
-    color: ${nativeTheme.primary.main};
-    min-width: 110px;
   }
 
   .DealSubSectionTitleRow-editBtn {

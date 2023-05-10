@@ -4,8 +4,7 @@ import { nativeTheme } from "../../theme/nativeTheme";
 import { SubSectionOpen } from "../ActiveDealPage/ActiveDeal/SubSectionOpen";
 import { BackBtnWrapper } from "../appWide/BackBtnWrapper";
 import { DealModeProvider } from "../appWide/customContexts/dealModeContext";
-import { LabelWithInfo } from "../appWide/LabelWithInfo";
-import { SectionTitle } from "../appWide/SectionTitle";
+import { PageTitle } from "../appWide/PageTitle";
 import { ComparedDeal } from "./ComparedDeal";
 import { ComparedDealXBtns } from "./ComparedDealXBtns";
 import { DealCompareDealModal } from "./DealCompareDealModal";
@@ -22,15 +21,16 @@ export function DealCompareSection() {
     <BackBtnWrapper {...{ label: "Deal Menu", to: "account" }}>
       <DealModeProvider dealMode={"mixed"}>
         <SubSectionOpen>
-          <SectionTitle
+          <PageTitle
             text={
-              <LabelWithInfo
-                {...{
-                  label: "Compare",
-                  infoTitle: "Compare",
-                  infoText: `This page lets you compare deals side-by-side. Just click the "+" button to add a deal, and choose which values to compare by adding or subtracting values at the top of the page.`,
-                }}
-              />
+              "Compare Deals"
+              // <LabelWithInfo
+              //   {...{
+              //     label: "Compare",
+              //     infoTitle: "Compare",
+              //     infoText: `Compare deals side-by-side. Just click the "+" button to add a deal, and choose which values to compare by adding or subtracting values at the top of the page.`,
+              //   }}
+              // />
             }
           />
           <View

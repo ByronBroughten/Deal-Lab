@@ -5,7 +5,7 @@ import theme from "../../../../../../theme/Theme";
 import { FormSection } from "../../../../../appWide/FormSection";
 import { LabelWithInfo } from "../../../../../appWide/LabelWithInfo";
 import { BasicInfoEditorRow } from "../../../../../appWide/MarginEditorRow";
-import StandardLabel from "../../../../../general/StandardLabel";
+import ChunkTitle from "../../../../../general/ChunkTitle";
 import { NumObjEntityEditor } from "../../../../../inputs/NumObjEntityEditor";
 import { SellingCostValue } from "./ViewParts/SellingCostValue";
 
@@ -15,7 +15,7 @@ export function BasicFixAndFlipInfo({ feId }: Props) {
   return (
     <Styled {...{ sectionName: "property" }}>
       <div>
-        <StandardLabel>Basics</StandardLabel>
+        <ChunkTitle>Basics</ChunkTitle>
         <BasicInfoEditorRow>
           <NumObjEntityEditor
             {...{

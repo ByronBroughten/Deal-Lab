@@ -6,7 +6,7 @@ import { GiHouseKeys } from "react-icons/gi";
 import { ImCheckmark } from "react-icons/im";
 import { MdDelete, MdOutlineHomeRepairService } from "react-icons/md";
 
-interface IconProps extends IconBaseProps {}
+export interface IconProps extends IconBaseProps {}
 
 type IconName =
   | "property"

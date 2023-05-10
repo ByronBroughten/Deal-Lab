@@ -1,12 +1,12 @@
 import styled from "styled-components";
 import theme from "../../theme/Theme";
-import StandardLabel from "../general/StandardLabel";
+import ChunkTitle from "../general/ChunkTitle";
 
 type Props = { className?: string; text: string; cost?: string };
 export function SectionTitleAndCost({ className, text, cost }: Props) {
   return (
     <Styled className={`SectionTitleAndCost-root ${className ?? ""}`}>
-      <StandardLabel>{text}</StandardLabel>
+      <ChunkTitle>{text}</ChunkTitle>
       {cost && <div className="SectionTitleAndCost-cost">{cost}</div>}
     </Styled>
   );

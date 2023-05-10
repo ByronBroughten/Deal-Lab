@@ -1,9 +1,10 @@
 import { Box } from "@mui/material";
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import { MoonLoader } from "react-spinners";
 import { useUserDataStatus } from "../../modules/SectionActors/UserDataActor";
 import { useGetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useGetterSection";
 import { nativeTheme } from "../../theme/nativeTheme";
+import ChunkTitle from "../general/ChunkTitle";
 import { Row } from "../general/Row";
 import { BigStringEditor } from "../inputs/BigStringEditor";
 import { AccountPageDeal } from "./AccountPageDeal";
@@ -55,14 +56,7 @@ export function AccountPageDeals() {
       }}
     >
       <View style={{ alignItems: "center", flex: 1 }}>
-        <Text
-          style={{
-            fontSize: nativeTheme.fs22,
-            color: nativeTheme.primary.main,
-          }}
-        >
-          Saved Deals
-        </Text>
+        <ChunkTitle>Saved Deals</ChunkTitle>
         {loading && (
           <MoonLoader
             {...{

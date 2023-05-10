@@ -6,8 +6,8 @@ import { nativeTheme } from "../../theme/nativeTheme";
 import theme from "../../theme/Theme";
 import { MuiRow } from "../general/MuiRow";
 import { StoreSectionActions } from "./GeneralSection/MainSection/StoreSectionActions";
+import { PageTitle } from "./PageTitle";
 import { RemoveSectionXBtn } from "./RemoveSectionXBtn";
-import { SectionTitleMain } from "./SectionTitleMain";
 
 type Props = {
   className?: string;
@@ -41,7 +41,7 @@ export function MainSectionTopRows({
     <Styled className={`MainSectionTopRows-root ${className ?? ""}`}>
       <div className="MainSectionTopRows-topRow">
         <MuiRow>
-          <SectionTitleMain sx={{ mr: nativeTheme.s3 }} text={sectionTitle} />
+          <PageTitle sx={{ mr: nativeTheme.s3 }} text={sectionTitle} />
           {titleAppend && (
             <Box
               sx={{

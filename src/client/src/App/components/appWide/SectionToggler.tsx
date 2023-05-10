@@ -3,8 +3,8 @@ import { VarbName } from "../../sharedWithServer/SectionsMeta/baseSectionsDerive
 import { FeVarbInfoNext } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { SectionName } from "../../sharedWithServer/SectionsMeta/SectionName";
 import { useGetterVarbNext } from "../../sharedWithServer/stateClassHooks/useGetterVarb";
+import ChunkTitle from "../general/ChunkTitle";
 import { MuiRow } from "../general/MuiRow";
-import StandardLabel from "../general/StandardLabel";
 import { TogglerBooleanVarb } from "./TogglerBooleanVarb";
 
 type Props<SN extends SectionName, VN extends VarbName<SN>> = {
@@ -26,7 +26,7 @@ export function SectionToggler<
         <TogglerBooleanVarb
           {...{
             feVarbInfo,
-            label: <StandardLabel {...labelProps}>{labelText}</StandardLabel>,
+            label: <ChunkTitle {...labelProps}>{labelText}</ChunkTitle>,
           }}
         />
       </MuiRow>

@@ -7,7 +7,7 @@ import { nativeTheme } from "../../../../theme/nativeTheme";
 import theme from "../../../../theme/Theme";
 import { FormSection } from "../../../appWide/FormSection";
 import { SubSectionBtn } from "../../../appWide/GeneralSection/GeneralSectionTitle/SubSectionBtn";
-import { SectionTitleMain } from "../../../appWide/SectionTitleMain";
+import { PageTitle } from "../../../appWide/PageTitle";
 import Radio from "../../../general/Radio";
 import { Loan } from "./FinancingEditor/Loan";
 
@@ -42,7 +42,7 @@ export function FinancingEditor({ feId }: Props) {
   return (
     <Styled>
       <div className="Financing-titleRow">
-        <SectionTitleMain text={"Financing"} />
+        <PageTitle text={"Financing"} />
       </div>
       <FormSection>
         <Box
@@ -104,7 +104,11 @@ export function FinancingEditor({ feId }: Props) {
                 ))}
               </div>
               <SubSectionBtn
-                sx={{ mt: nativeTheme.s45, height: "80px" }}
+                sx={{
+                  fontSize: nativeTheme.chunkTitleFs,
+                  mt: nativeTheme.s45,
+                  height: "80px",
+                }}
                 onClick={addLoan}
                 middle="+ Loan"
               />
