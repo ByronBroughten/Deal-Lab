@@ -67,7 +67,7 @@
   "scripts": {
     "analyze": "source-map-explorer 'build/static/js/*.js'",
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "set DISABLE_ESLINT_PLUGIN=true && set GENERATE_SOURCEMAP=false && react-scripts --max_old_space_size=2048 build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -79,9 +79,6 @@
     "rules": {
       "@typescript-eslint/no-unused-vars": "off"
     }
-  },
-  "resolutions": {
-    "eslint-webpack-plugin": "2.3.0"
   },
   "browserslist": {
     "production": [
