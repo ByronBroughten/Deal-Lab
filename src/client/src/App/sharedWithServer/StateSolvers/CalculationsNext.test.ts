@@ -7,9 +7,68 @@ import { switchKeyToVarbNames } from "./../SectionsMeta/allBaseSectionVarbs/base
 import { SolverActiveDeal } from "./SolverActiveDeal";
 import { SolverSection } from "./SolverSection";
 
+const allDealModes = dealModes;
+
+const add4200YearlyHoldingCosts = (property: SolverSection<"property">) => {
+  property.updateValues({
+    taxesOngoingEditor: numObj(2400),
+    taxesOngoingSwitch: "yearly",
+    homeInsOngoingEditor: numObj(1200),
+    homeInsOngoingSwitch: "yearly",
+  });
+  const utilityValue = property.onlyChild("utilityValue");
+  utilityValue.updateValues({
+    valueSourceName: "listTotal",
+  });
+  const ongoingList = utilityValue.onlyChild("ongoingList");
+  ongoingList.addChildAndSolve("ongoingItem", {
+    sectionValues: {
+      valueOngoingEditor: numObj(400),
+      valueOngoingSwitch: "yearly",
+      valueSourceName: "valueEditor",
+    },
+  });
+
+  const holdingCost = property.onlyChild("miscHoldingCost");
+  holdingCost.updateValues({
+    valueSourceName: "valueDollarsOngoingEditor",
+    valueDollarsOngoingEditor: numObj(200),
+    valueDollarsOngoingSwitch: "yearly",
+  });
+};
+
+type OngoingSectionName =
+  | "miscOngoingCost"
+  | "miscRevenueValue"
+  | "miscHoldingCost"
+  | "maintenanceValue"
+  | "capExValue";
+const addOngoing = <SN extends OngoingSectionName>(
+  section: SolverSection<SN>,
+  amount: number,
+  switchVal: "yearly" | "monthly"
+) => {
+  (section as any as SolverSection<OngoingSectionName>).updateValues({
+    valueSourceName: "valueDollarsOngoingEditor",
+    valueDollarsOngoingSwitch: switchVal,
+    valueDollarsOngoingEditor: numObj(amount),
+  });
+};
+
 describe("Property calculations", () => {
   const getProperty = (dealMode: DealMode) =>
     SolverActiveDeal.init(dealMode).property;
+
+  const forEveryDealModeWithProperty = (
+    test: (property: SolverSection<"property">) => void,
+    dealModes: readonly DealMode[] = allDealModes
+  ) => {
+    for (const dealMode of dealModes) {
+      const property = getProperty(dealMode);
+      test(property);
+    }
+  };
+
   it("should calculate buyAndHold numUnits", () => {
     const property = getProperty("buyAndHold");
     const numUnits = 3;
@@ -24,7 +83,37 @@ describe("Property calculations", () => {
     property.updateValuesAndSolve({ numUnitsEditor: numObj(numUnits) });
     expect(property.numValue("numUnits")).toBe(numUnits);
   });
-  it("should calculate sellingCosts correctly", () => {
+
+  const add6400Rent = (property: SolverSection<"property">) => {
+    const unitRents = [2000, 2100, 2300] as const;
+    for (const rent of unitRents) {
+      property.addChildAndSolve("unit", {
+        sectionValues: {
+          targetRentOngoingEditor: numObj(rent),
+          targetRentOngoingSwitch: "monthly",
+        },
+      });
+    }
+  };
+  it("should calculate targetRent", () => {
+    const property = getProperty("buyAndHold");
+    add6400Rent(property);
+    expect(property.numValue("targetRentMonthly")).toBe(6400);
+    expect(property.numValue("targetRentYearly")).toBe(6400 * 12);
+  }),
+    it("should calculate revenue", () => {
+      const property = getProperty("buyAndHold");
+      add6400Rent(property);
+      const value = property.onlyChild("miscRevenueValue");
+      value.updateValues({
+        valueSourceName: "valueDollarsOngoingEditor",
+        valueDollarsOngoingSwitch: "monthly",
+        valueDollarsOngoingEditor: numObj(1200),
+      });
+      expect(property.numValue("revenueMonthly")).toBe(7600);
+      expect(property.numValue("revenueYearly")).toBe(7600 * 12);
+    });
+  it("should calculate sellingCosts", () => {
     const property = getProperty("fixAndFlip");
     const sellingCosts = property.onlyChild("sellingCostValue");
 
@@ -62,7 +151,11 @@ describe("Property calculations", () => {
     testDollars(7000);
   });
 
-  type OnetimeCostSN = "miscOnetimeCost" | "repairValue" | "costOverrunValue";
+  type OnetimeCostSN =
+    | "miscOnetimeCost"
+    | "repairValue"
+    | "costOverrunValue"
+    | "sellingCostValue";
   const setOnetimeEditor = <SN extends OnetimeCostSN>(
     onetime: SolverSection<SN>,
     num: number
@@ -102,20 +195,26 @@ describe("Property calculations", () => {
       test(1000);
     }
   };
-  it("should calculate repairValue correctly", () => {
+  it("should calculate repairValue", () => {
     testOnetimeValue("repairValue", "rehabCostBase");
   });
-  it("should calculate miscOneTimeCosts correctly", () => {
+  it("should calculate miscOneTimeCosts", () => {
     testOnetimeValue("miscOnetimeCost", "miscOnetimeCosts");
   });
-  it("should calculate costOverrun correctly", () => {
+  it("should calculate rehabBaseCost", () => {
+    forEveryDealModeWithProperty((property) => {
+      setOnetimeEditor(property.onlyChild("repairValue"), 9000);
+      setOnetimeEditor(property.onlyChild("miscOnetimeCost"), 1000);
+      expect(property.numValue("rehabCostBase")).toBe(10000);
+    });
+  });
+  it("should calculate costOverrun", () => {
     for (const dealMode of dealModes) {
       const property = getProperty(dealMode);
       const overrun = property.onlyChild("costOverrunValue");
       const test = (num: number) => {
         expect(overrun.numValue("valueDollars")).toBe(num);
       };
-
       overrun.updateValues({
         valueSourceName: "valueDollarsEditor",
         valueDollarsEditor: numObj(1500),
@@ -137,17 +236,43 @@ describe("Property calculations", () => {
     for (const dealMode of dealModes) {
       const property = getProperty(dealMode);
 
-      const repairValue = property.onlyChild("repairValue");
-      setOnetimeEditor(repairValue, 500);
-      const onetime = property.onlyChild("miscOnetimeCost");
-      setOnetimeEditor(onetime, 300);
-      const overrun = property.onlyChild("costOverrunValue");
-      setOnetimeEditor(overrun, 200);
+      setOnetimeEditor(property.onlyChild("repairValue"), 500);
+      setOnetimeEditor(property.onlyChild("miscOnetimeCost"), 300);
+      setOnetimeEditor(property.onlyChild("costOverrunValue"), 200);
 
       expect(property.numValue("rehabCostBase")).toBe(800);
       expect(property.numValue("rehabCost")).toBe(1000);
     }
   });
+  it("should calculate upfrontExpenses", () => {
+    forEveryDealModeWithProperty((property) => {
+      const values = {
+        buyAndHold: 201000,
+        fixAndFlip: 215200,
+      } as const;
+
+      property.updateValues({
+        purchasePrice: numObj(200000),
+      });
+
+      setOnetimeEditor(property.onlyChild("repairValue"), 500);
+      setOnetimeEditor(property.onlyChild("miscOnetimeCost"), 300);
+      setOnetimeEditor(property.onlyChild("costOverrunValue"), 200);
+
+      setOnetimeEditor(property.onlyChild("sellingCostValue"), 10000);
+
+      add4200YearlyHoldingCosts(property);
+      property.updateValues({
+        holdingPeriodSpanEditor: numObj(12),
+        holdingPeriodSpanSwitch: "months",
+      });
+
+      expect(property.numValue("upfrontExpenses")).toBe(
+        values[property.value("propertyMode")]
+      );
+    });
+  });
+
   const testOngoing = (
     dealMode: DealMode,
     baseName: "miscRevenue" | "miscCosts" | "holdingCost",
@@ -162,11 +287,7 @@ describe("Property calculations", () => {
     };
 
     const value = property.onlyChild(childName);
-    value.updateValues({
-      valueSourceName: "valueDollarsEditor",
-      valueDollarsOngoingSwitch: "monthly",
-      valueDollarsOngoingEditor: numObj(100),
-    });
+    addOngoing(value, 100, "monthly");
     test(100);
 
     value.updateValues({ valueSourceName: "listTotal" });
@@ -192,8 +313,8 @@ describe("Property calculations", () => {
   it("should calculate ongoing miscRevenue", () => {
     testOngoing("buyAndHold", "miscRevenue", "miscRevenueValue");
   });
-
-  const add4200YearlyClosingCosts = (property: SolverSection<"property">) => {
+  it("should calculate ongoing expenses", () => {
+    const property = getProperty("buyAndHold");
     property.updateValues({
       taxesOngoingEditor: numObj(2400),
       taxesOngoingSwitch: "yearly",
@@ -207,26 +328,26 @@ describe("Property calculations", () => {
     const ongoingList = utilityValue.onlyChild("ongoingList");
     ongoingList.addChildAndSolve("ongoingItem", {
       sectionValues: {
-        valueOngoingEditor: numObj(400),
+        valueOngoingEditor: numObj(600),
         valueOngoingSwitch: "yearly",
         valueSourceName: "valueEditor",
       },
     });
 
-    const holdingCost = property.onlyChild("miscHoldingCost");
-    holdingCost.updateValues({
-      valueSourceName: "valueDollarsEditor",
-      valueDollarsOngoingEditor: numObj(200),
-      valueDollarsOngoingSwitch: "yearly",
-    });
-  };
+    addOngoing(property.onlyChild("miscOngoingCost"), 1500, "yearly");
+    addOngoing(property.onlyChild("maintenanceValue"), 1300, "yearly");
+    addOngoing(property.onlyChild("capExValue"), 5000, "yearly");
+
+    expect(property.numValue("expensesYearly")).toBe(12000);
+    expect(property.numValue("expensesMonthly")).toBe(12000 / 12);
+  });
   it("should calculate ongoing holding costs", () => {
     const property = getProperty("fixAndFlip");
     const test = (num: number) => {
       expect(property.numValue("holdingCostYearly")).toBe(num);
       expect(property.numValue("holdingCostMonthly")).toBe(num / 12);
     };
-    add4200YearlyClosingCosts(property);
+    add4200YearlyHoldingCosts(property);
     test(4200);
   });
   it("should calculate total holding costs", () => {
@@ -235,7 +356,7 @@ describe("Property calculations", () => {
       expect(property.numValue("holdingCostTotal")).toBe(num);
     };
 
-    add4200YearlyClosingCosts(property);
+    add4200YearlyHoldingCosts(property);
 
     const holdingPeriod = 6;
     property.updateValues({
@@ -246,6 +367,4 @@ describe("Property calculations", () => {
     const holdingCostsMonthly = 4200 / 12;
     test(holdingCostsMonthly * holdingPeriod);
   });
-  it("should calculate rehabBaseCost", () => {});
-  it("should calculate costOverrun", () => {});
 });

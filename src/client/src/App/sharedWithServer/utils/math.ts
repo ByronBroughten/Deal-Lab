@@ -1,6 +1,22 @@
 import { round } from "lodash";
+//@ts-ignore
+import { create, evaluateDependencies } from "mathjs/lib/esm/number";
 import { ValidationError } from "./Error";
 import { isStringRationalNumber } from "./Str";
+// // @ts-ignore
+// const { create, evaluateDependencies } = await import("mathjs/lib/esm/number");
+
+const mathjs = create(evaluateDependencies);
+const add = (a: number, b: number) => a + b;
+const subtract = (a: number, b: number) => a - b;
+const multiply = (a: number, b: number) => a * b;
+const divide = (a: number, b: number) => a / b;
+const pow = (a: number, b: number) => a ** b;
+
+mathjs.import({ add, subtract, multiply, divide, pow }, { override: true });
+export const evaluate = (numText: string) => {
+  return mathjs.evaluate(numText);
+};
 
 export class NotANumberError extends Error {}
 

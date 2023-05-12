@@ -73,18 +73,18 @@ const allVarbPathParams = {
     "expensesYearly"
   ),
   ...sectionVarbNameParams("utilityCostFocal", "Property", [
-    "valueMonthly",
-    "valueYearly",
+    "valueDollarsMonthly",
+    "valueDollarsYearly",
   ]),
   utilitiesMonthly: fixedVarbPathParams(
     "Property",
     "utilityCostFocal",
-    "valueMonthly"
+    "valueDollarsMonthly"
   ),
   utilitiesYearly: fixedVarbPathParams(
     "Property",
     "utilityCostFocal",
-    "valueYearly"
+    "valueDollarsYearly"
   ),
   propertyExpensesMonthly: fixedVarbPathParams(
     "Property",

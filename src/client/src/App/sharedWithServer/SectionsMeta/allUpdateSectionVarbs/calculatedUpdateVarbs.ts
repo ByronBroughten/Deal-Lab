@@ -20,7 +20,6 @@ import {
   dealCompletionStatus,
   financingCompletionStatus,
   mgmtCompletionStatus,
-  propertyCompletionStatus,
 } from "./calculatedUpdateVarbs/completionStatusVarbs";
 
 function sumLoanVarb(
@@ -172,7 +171,6 @@ export function calculatedUpdateVarbs(): UpdateSectionVarbs<"calculatedVarbs"> {
       updateFnProps: { varbInfo: updateFnPropS.pathName("mgmtFocal", "one") },
     }),
     dealCompletionStatus,
-    propertyCompletionStatus,
     financingCompletionStatus,
     mgmtCompletionStatus,
   };

@@ -55,7 +55,8 @@ export function useQueryAction() {
             "userDataFetchTryCount"
           );
           if (count > 5) {
-            logout();
+            console.log("logging out");
+            await logout();
             throw error;
           } else {
             setTimeout(

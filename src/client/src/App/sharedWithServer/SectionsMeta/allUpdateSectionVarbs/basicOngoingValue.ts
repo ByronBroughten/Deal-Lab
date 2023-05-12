@@ -19,8 +19,8 @@ const basicOngoingValueNames = [
 type BasicOngoingValueName = (typeof basicOngoingValueNames)[number];
 export function basicOngoingValueVarbs(): UpdateSectionVarbs<BasicOngoingValueName> {
   return {
-    valueSourceName: updateVarb("dollarsOrList", {
-      initValue: "valueDollarsEditor",
+    valueSourceName: updateVarb("dollarsOrListOngoing", {
+      initValue: "valueDollarsOngoingEditor",
     }),
     ...updateVarbsS._typeUniformity,
     ...updateVarbsS.group("valueDollars", "ongoingInput", "monthly", {

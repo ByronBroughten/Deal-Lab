@@ -1,6 +1,4 @@
 import { round } from "lodash";
-// @ts-ignore
-import { create, evaluateDependencies } from "mathjs/lib/esm/number";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import {
   EntitiesAndEditorText,
@@ -10,28 +8,11 @@ import {
 } from "../SectionsMeta/values/StateValue/NumObj";
 import { ValueInEntity } from "../SectionsMeta/values/StateValue/valuesShared/entities";
 import { Arr } from "../utils/Arr";
-import { arithmeticOperatorsArr, mathS } from "../utils/math";
+import { arithmeticOperatorsArr, evaluate, mathS } from "../utils/math";
 import { Str } from "../utils/Str";
 import { GetterVarbBase } from "./Bases/GetterVarbBase";
 import { GetterVarb } from "./GetterVarb";
 import { InEntityGetterVarb } from "./InEntityGetterVarb";
-
-// // @ts-ignore
-// const { create, evaluateDependencies } = await import("mathjs/lib/esm/number");
-
-const math = create(evaluateDependencies);
-// type Eval = (
-//   expr: MathExpression | MathExpression[] | Matrix,
-//   scope?: object | undefined
-// ) => any;
-
-const add = (a: number, b: number) => a + b;
-const subtract = (a: number, b: number) => a - b;
-const multiply = (a: number, b: number) => a * b;
-const divide = (a: number, b: number) => a / b;
-const pow = (a: number, b: number) => a ** b;
-
-math.import({ add, subtract, multiply, divide, pow }, { override: true });
 
 export type EditorTextStatus = "empty" | "number" | "solvableText";
 
@@ -114,7 +95,7 @@ export class GetterVarbNumObj<
       text = text.substring(0, text.length - 1);
 
     try {
-      let num = math.evaluate(text);
+      let num = evaluate(text);
       if (mathS.isRationalNumber(num)) {
         const finalNum = round(num, calcRound);
         return finalNum;

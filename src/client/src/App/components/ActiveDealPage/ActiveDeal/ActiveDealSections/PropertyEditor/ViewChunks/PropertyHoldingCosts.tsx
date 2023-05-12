@@ -5,7 +5,7 @@ import { LabelWithInfo } from "../../../../../appWide/LabelWithInfo";
 import { BasicInfoEditorRow } from "../../../../../appWide/MarginEditorRow";
 import { NumObjEntityEditor } from "../../../../../inputs/NumObjEntityEditor";
 import { MiscHoldingCost } from "./ViewParts/MiscHoldingCost";
-import { UtilityValueNext } from "./ViewParts/UtilityValueNext";
+import { UtilityValue } from "./ViewParts/UtilityValue";
 
 export function PropertyHoldingCosts({ feId }: FeIdProp) {
   const feInfo = { sectionName: "property", feId } as const;
@@ -33,7 +33,7 @@ export function PropertyHoldingCosts({ feId }: FeIdProp) {
           feVarbInfo={property.varbInfo("homeInsOngoingEditor")}
           quickViewVarbNames={["purchasePrice", "sqft", "numUnits"]}
         />
-        <UtilityValueNext feId={property.onlyChildFeId("utilityValue")} />
+        <UtilityValue feId={property.onlyChildFeId("utilityValue")} />
         <MiscHoldingCost feId={property.onlyChildFeId("miscHoldingCost")} />
       </BasicInfoEditorRow>
     </FormSectionLabeled>

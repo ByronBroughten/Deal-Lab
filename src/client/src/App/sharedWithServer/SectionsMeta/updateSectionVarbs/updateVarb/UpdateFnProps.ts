@@ -26,13 +26,20 @@ export function collectUpdateFnSwitchProps(
     for (const prop of arrProp) {
       const { andSwitches } = prop;
       for (const andSwitch of andSwitches) {
-        const { switchInfo } = andSwitch;
-        if (switchInfo.infoType === "local") {
-          if (prop.infoType === "pathName") {
+        const andSwitchInfo = andSwitch.switchInfo;
+        if (andSwitchInfo.infoType === "local") {
+          if (prop.infoType === "children") {
             andPropSwitches.push(
               updateFnProp({
                 ...prop,
-                varbName: switchInfo.varbName as any,
+                varbName: andSwitchInfo.varbName,
+              })
+            );
+          } else if (prop.infoType === "pathName") {
+            andPropSwitches.push(
+              updateFnProp({
+                ...prop,
+                varbName: andSwitchInfo.varbName as any,
               })
             );
           } else {
@@ -80,7 +87,7 @@ export const updateFnPropsS = {
       return localInfos;
     }, {} as UpdateFnProps);
   },
-  localArr(varbNames: VarbNameWide[]): UpdateFnProp[] {
+  localArr(...varbNames: VarbNameWide[]): UpdateFnProp[] {
     return varbNames.map((varbName) => {
       return updateFnPropS.local(varbName);
     });

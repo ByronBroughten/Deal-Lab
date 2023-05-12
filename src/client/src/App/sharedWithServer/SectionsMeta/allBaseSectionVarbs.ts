@@ -182,6 +182,7 @@ export function makeAllBaseSectionVarbs() {
     property: varbs({
       ...baseVarbsS.savableSection,
       propertyMode: baseVarb("dealMode"),
+      completionStatus: baseVarb("completionStatus"),
       streetAddress: baseVarb("string"),
       city: baseVarb("string"),
       state: baseVarb("string"),
@@ -232,15 +233,15 @@ export function makeAllBaseSectionVarbs() {
       valueDollars: baseVarb("numObj", dollars),
     }),
     miscOngoingCost: varbs({
-      valueSourceName: baseVarb("dollarsOrList"),
+      valueSourceName: baseVarb("dollarsOrListOngoing"),
       ...baseVarbsS.ongoingDollarsInput("valueDollars"),
     }),
     miscRevenueValue: varbs({
-      valueSourceName: baseVarb("dollarsOrList"),
+      valueSourceName: baseVarb("dollarsOrListOngoing"),
       ...baseVarbsS.ongoingDollarsInput("valueDollars"),
     }),
     miscHoldingCost: varbs({
-      valueSourceName: baseVarb("dollarsOrList"),
+      valueSourceName: baseVarb("dollarsOrListOngoing"),
       ...baseVarbsS.ongoingDollarsInput("valueDollars"),
     }),
     costOverrunValue: varbs({
@@ -257,18 +258,16 @@ export function makeAllBaseSectionVarbs() {
       valueDollarsEditor: baseVarb("numObj", dollars),
     }),
     utilityValue: varbs({
-      ...baseVarbsS.ongoingDollars("value"),
+      ...baseVarbsS.ongoingDollars("valueDollars"),
       valueSourceName: baseVarb("utilityValueSource"),
     }),
     maintenanceValue: varbs({
-      ...baseVarbsS.ongoingDollars("value"),
+      ...baseVarbsS.ongoingDollarsInput("valueDollars"),
       valueSourceName: baseVarb("maintainanceValueSource"),
-      valueDollarsEditor: baseVarb("numObj", dollars),
     }),
     capExValue: varbs({
-      ...baseVarbsS.ongoingDollars("value"),
+      ...baseVarbsS.ongoingDollarsInput("valueDollars"),
       valueSourceName: baseVarb("capExValueSource"),
-      valueDollarsEditor: baseVarb("numObj", dollars),
     }),
     closingCostValue: varbs({
       value: baseVarb("numObj", dollars),
@@ -417,7 +416,6 @@ export function makeAllBaseSectionVarbs() {
         "mgmtExists",
       ] as const),
       ...baseVarbs("completionStatus", [
-        "propertyCompletionStatus",
         "financingCompletionStatus",
         "mgmtCompletionStatus",
         "dealCompletionStatus",

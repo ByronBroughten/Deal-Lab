@@ -21,10 +21,11 @@ export function MiscHoldingCost({ feId }: { feId: string }) {
   return (
     <SelectAndItemizeEditorNext
       {...{
+        unionValueName: "dollarsOrListOngoing",
         label: "Misc holding costs",
         itemizedModalTitle: "Misc holding costs",
         makeEditor:
-          sourceName === "valueDollarsEditor"
+          sourceName === "valueDollarsOngoingEditor"
             ? (props) => (
                 <NumObjEntityEditor
                   {...{
@@ -39,13 +40,12 @@ export function MiscHoldingCost({ feId }: { feId: string }) {
             : undefined,
         sx: { ...nativeTheme.editorMargins },
         selectProps: { sx: { minWidth: 170 } },
-        unionValueName: "dollarsOrList",
         feVarbInfo: {
           ...feInfo,
           varbName: "valueSourceName",
         },
         items: [
-          ["valueDollarsEditor", "Amount"],
+          ["valueDollarsOngoingEditor", "Amount"],
           ["listTotal", "Itemize"],
         ],
         itemizeValue: "listTotal",

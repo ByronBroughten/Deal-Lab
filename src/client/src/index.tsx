@@ -6,7 +6,13 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-// I must disallow "20% rent" for utilityValue when it's fixAndFlip
+
+// For primary residence, for these selections:
+// - 20% rent for utilityValue (fixAndFlip, too)
+// - 5% rent for capEx
+// Make them return empty, or "?"
+// Label them as "Choose Method", and inlcude
+// them only if they are selected
 
 // Why are table rows and cells so tall?
 
@@ -18,9 +24,6 @@ AppRegistry.runApplication("App", {
 // Test Calculations
 // Define the numbers used in each test at the top of the test
 // along with the test itself, to be executed in a function
-
-// I think I can add homeBuyer mode pretty easily
-// I'm just worried that I'm going to get in too deep
 
 // - Add homeBuyer mode (no income)
 //   - Buy and hold basics

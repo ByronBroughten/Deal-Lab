@@ -9,11 +9,11 @@ import { SelectAndItemizeEditorNext } from "../../../../../../appWide/SelectAndI
 import { NumObjEntityEditor } from "../../../../../../inputs/NumObjEntityEditor";
 import { CapExValueList } from "../../ValueShared/CapExListEditor";
 
-export function CapExValueNext({ feId }: { feId: string }) {
+export function CapExValue({ feId }: { feId: string }) {
   const feInfo = { sectionName: "capExValue", feId } as const;
   const capExValue = useGetterSection(feInfo);
   const valueSourceName = capExValue.valueNext("valueSourceName");
-  const valueVarb = capExValue.switchVarb("value", "ongoing");
+  const valueVarb = capExValue.switchVarb("valueDollars", "ongoing");
 
   const showEquals: StateValue<"capExValueSource">[] = ["fivePercentRent"];
   const equalsValue = showEquals.includes(valueSourceName)
@@ -23,13 +23,13 @@ export function CapExValueNext({ feId }: { feId: string }) {
   return (
     <SelectAndItemizeEditorNext
       {...{
+        unionValueName: "capExValueSource",
         selectProps: { sx: { minWidth: 170 } },
         feVarbInfo: {
           ...feInfo,
           varbName: "valueSourceName",
         },
         total: valueVarb.displayVarb(),
-        unionValueName: "capExValueSource",
         items: [
           [
             "fivePercentRent",
@@ -43,7 +43,7 @@ export function CapExValueNext({ feId }: { feId: string }) {
               valueSourceName === "listTotal" ? "" : " (more accurate)"
             }`,
           ],
-          ["valueEditor", "Custom amount"],
+          ["valueDollarsOngoingEditor", "Custom amount"],
         ],
         label: (
           <LabelWithInfo
@@ -56,12 +56,12 @@ export function CapExValueNext({ feId }: { feId: string }) {
         ),
         selectValue: valueSourceName,
         makeEditor:
-          valueSourceName === "valueEditor"
+          valueSourceName === "valueDollarsOngoingEditor"
             ? (props) => (
                 <NumObjEntityEditor
                   {...{
                     ...props,
-                    feVarbInfo: capExValue.varbInfo("valueDollarsEditor"),
+                    feVarbInfo: capExValue.varbInfo(valueSourceName),
                   }}
                 />
               )

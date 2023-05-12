@@ -9,6 +9,7 @@ import {
 import { overrideSwitchS } from "../updateSectionVarbs/updateVarb/UpdateOverrides";
 import { unionSwitchOverride } from "../updateSectionVarbs/updateVarb/updateVarbUtils";
 import { updateVarbsS } from "../updateSectionVarbs/updateVarbs";
+import { propertyCompletionStatus } from "./calculatedUpdateVarbs/completionStatusVarbs";
 
 const basicsS = updateBasicsS;
 const propS = updateFnPropS;
@@ -20,6 +21,7 @@ export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
     propertyMode: updateVarb("dealMode", {
       initValue: "buyAndHold",
     }),
+    completionStatus: propertyCompletionStatus,
     streetAddress: updateVarb("string"),
     city: updateVarb("string"),
     state: updateVarb("string"),
@@ -69,7 +71,7 @@ export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
           updateFnProps: [
             propS.localBaseName("taxes"),
             propS.localBaseName("homeIns"),
-            propS.onlyChildBase("utilityValue", "value"),
+            propS.onlyChildBase("utilityValue", "valueDollars"),
             propS.onlyChildBase("miscHoldingCost", "valueDollars"),
           ],
         },
@@ -104,9 +106,9 @@ export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
         propS.localBaseName("taxes"),
         propS.localBaseName("homeIns"),
         propS.localBaseName("miscCosts"),
-        propS.onlyChild("utilityValue", "value"),
-        propS.onlyChild("maintenanceValue", "value"),
-        propS.onlyChild("capExValue", "value"),
+        propS.onlyChild("utilityValue", "valueDollars"),
+        propS.onlyChild("maintenanceValue", "valueDollars"),
+        propS.onlyChild("capExValue", "valueDollars"),
       ],
       "monthly"
     ),

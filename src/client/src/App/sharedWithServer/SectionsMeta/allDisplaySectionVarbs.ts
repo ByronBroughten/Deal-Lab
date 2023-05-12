@@ -42,7 +42,7 @@ const group = displayGroup;
 export const allDisplaySectionVarbs = {
   ...allDefaultDisplaySectionVarbs(),
   ...displaySectionVarbsProp("utilityValue", {
-    ...group("ongoing", "value", "Utilities", {
+    ...group("ongoing", "valueDollars", "Utilities", {
       monthly: { displayNameWithVariant: "Utilities monthly" },
       yearly: { displayNameWithVariant: "Utilities yearly" },
     }),

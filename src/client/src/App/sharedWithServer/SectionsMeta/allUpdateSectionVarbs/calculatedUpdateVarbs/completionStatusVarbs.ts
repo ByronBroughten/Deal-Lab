@@ -1,5 +1,6 @@
 import { Arr } from "../../../utils/Arr";
 import { mixedInfoS } from "../../SectionInfo/MixedSectionInfo";
+import { relVarbInfoS } from "../../SectionInfo/RelVarbInfo";
 import { sectionPathNames } from "../../sectionPathContexts/sectionPathNames";
 import { updateVarb, UpdateVarb } from "../../updateSectionVarbs/updateVarb";
 import {
@@ -33,7 +34,7 @@ export const dealCompletionStatus = updateVarb("completionStatus", {
   updateFnName: "completionStatus",
   updateFnProps: completionStatusProps({
     othersValid: [
-      propS.pathName("calculatedVarbsFocal", "propertyCompletionStatus"),
+      propS.pathName("propertyFocal", "completionStatus"),
       propS.pathName("calculatedVarbsFocal", "financingCompletionStatus"),
       propS.pathName("calculatedVarbsFocal", "mgmtCompletionStatus"),
     ],
@@ -42,65 +43,47 @@ export const dealCompletionStatus = updateVarb("completionStatus", {
 
 function propertySharedValidInputs(): UpdateFnProp[] {
   return [
-    ...propsS.varbPathArr("purchasePrice", "sqft"),
-    propS.pathName("propertyFocal", "taxesOngoingEditor"),
-    propS.pathName("propertyFocal", "homeInsOngoingEditor"),
-    propS.pathName("repairCostFocal", "valueDollarsEditor", [
-      overrideSwitch(
-        mixedInfoS.pathNameVarb("repairCostFocal", "valueSourceName"),
-        "valueEditor"
-      ),
+    ...propsS.localArr(
+      "purchasePrice",
+      "sqft",
+      "taxesOngoingEditor",
+      "homeInsOngoingEditor"
+    ),
+    propS.onlyChild("repairValue", "valueDollarsEditor", [
+      oSwitch(relVarbInfoS.local("valueSourceName"), "valueDollarsEditor"),
     ]),
-    propS.pathName("costOverrunFocal", "valueDollarsEditor", [
-      oSwitch(
-        mixedInfoS.pathNameVarb("costOverrunFocal", "valueSourceName"),
-        "valueDollarsEditor"
-      ),
+    propS.onlyChild("costOverrunValue", "valueDollarsEditor", [
+      oSwitch(relVarbInfoS.local("valueSourceName"), "valueDollarsEditor"),
     ]),
-    propS.pathName("costOverrunFocal", "valuePercentEditor", [
-      oSwitch(
-        mixedInfoS.pathNameVarb("costOverrunFocal", "valueSourceName"),
-        "valuePercentEditor"
-      ),
+    propS.onlyChild("costOverrunValue", "valuePercentEditor", [
+      oSwitch(relVarbInfoS.local("valueSourceName"), "valuePercentEditor"),
     ]),
   ];
 }
 
 export const propertyCompletionStatus = completionStatusVarb(
-  updateOverride(
-    [switchS.localIsFalse("propertyExists")],
-    cBasics({
-      notFalse: [propS.local("propertyExists")],
-    })
-  ),
   ...dealModeOverrides(
     {
       buyAndHold: cBasics({
-        nonZeros: [propS.pathName("propertyFocal", "numUnits")],
+        nonZeros: [propS.local("numUnits")],
         nonNone: [
-          propS.pathName("repairCostFocal", "valueSourceName"),
-          propS.pathName("utilityCostFocal", "valueSourceName"),
-          propS.pathName("maintenanceCostFocal", "valueSourceName"),
-          propS.pathName("capExCostFocal", "valueSourceName"),
+          propS.onlyChild("repairValue", "valueSourceName"),
+          propS.onlyChild("utilityValue", "valueSourceName"),
+          propS.onlyChild("maintenanceValue", "valueSourceName"),
+          propS.onlyChild("capExValue", "valueSourceName"),
         ],
         validInputs: [
           ...propertySharedValidInputs(),
-          // Separate the unit stuff into its own completion status?
-          // propS.pathName("unitFocal", "targetRentOngoingEditor"),
-          // propS.pathName("unitFocal", "numBedrooms"),
-          propS.pathName("capExCostFocal", "valueDollarsEditor", [
+          propS.onlyChild("capExValue", "valueDollarsOngoingEditor", [
             oSwitch(
-              mixedInfoS.pathNameVarb("capExCostFocal", "valueSourceName"),
-              "valueEditor"
+              relVarbInfoS.local("valueSourceName"),
+              "valueDollarsOngoingEditor"
             ),
           ]),
-          propS.pathName("maintenanceCostFocal", "valueDollarsEditor", [
+          propS.onlyChild("maintenanceValue", "valueDollarsOngoingEditor", [
             oSwitch(
-              mixedInfoS.pathNameVarb(
-                "maintenanceCostFocal",
-                "valueSourceName"
-              ),
-              "valueEditor"
+              relVarbInfoS.local("valueSourceName"),
+              "valueDollarsOngoingEditor"
             ),
           ]),
         ],
@@ -109,12 +92,12 @@ export const propertyCompletionStatus = completionStatusVarb(
         nonNone: [propS.pathName("repairCostFocal", "valueSourceName")],
         validInputs: [
           ...propertySharedValidInputs(),
-          propS.pathName("propertyFocal", "holdingPeriodSpanEditor"),
-          propS.pathName("propertyFocal", "numUnitsEditor"),
+          propS.local("holdingPeriodSpanEditor"),
+          propS.local("numUnitsEditor"),
         ],
       }),
     },
-    mixedInfoS.varbPathName("dealMode")
+    relVarbInfoS.local("propertyMode")
   )
 );
 

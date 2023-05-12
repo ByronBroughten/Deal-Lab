@@ -17,10 +17,11 @@ export function MiscOngoingCost({ feId, menuDisplayNames }: Props) {
   return (
     <SelectAndItemizeEditorNext
       {...{
+        unionValueName: "dollarsOrListOngoing",
         label: "Misc ongoing costs",
         itemizedModalTitle: "Misc ongoing costs",
         makeEditor:
-          sourceName === "valueDollarsEditor"
+          sourceName === "valueDollarsOngoingEditor"
             ? (props) => (
                 <NumObjEntityEditor
                   {...{
@@ -35,13 +36,12 @@ export function MiscOngoingCost({ feId, menuDisplayNames }: Props) {
             : undefined,
         sx: { ...nativeTheme.editorMargins },
         selectProps: { sx: { minWidth: 170 } },
-        unionValueName: "dollarsOrList",
         feVarbInfo: {
           ...feInfo,
           varbName: "valueSourceName",
         },
         items: [
-          ["valueDollarsEditor", "Amount"],
+          ["valueDollarsOngoingEditor", "Amount"],
           ["listTotal", "Itemize"],
         ],
         itemizeValue: "listTotal",

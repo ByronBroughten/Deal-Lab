@@ -19,6 +19,7 @@ import {
 import { HollowBtn } from "./appWide/HollowBtn";
 import { ModalSection } from "./appWide/ModalSection";
 import { MuiSelect } from "./appWide/MuiSelect";
+import ChunkTitle from "./general/ChunkTitle";
 import { MuiRow } from "./general/MuiRow";
 import { Row } from "./general/Row";
 import { MuiBtnPropsNext } from "./general/StandardProps";
@@ -74,7 +75,7 @@ export function AccountPage() {
       <AccountPageDeals />
       <ModalSection
         {...{
-          title: "New Deal",
+          title: <ChunkTitle>New Deal</ChunkTitle>,
           show: addDealIsOpen,
           closeModal: closeAddDeal,
         }}

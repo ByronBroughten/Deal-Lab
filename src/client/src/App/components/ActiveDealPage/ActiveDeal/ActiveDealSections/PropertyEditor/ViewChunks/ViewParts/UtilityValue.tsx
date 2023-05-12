@@ -2,11 +2,11 @@ import { useGetterSection } from "../../../../../../../sharedWithServer/stateCla
 import { SelectAndItemizeEditorNext } from "../../../../../../appWide/SelectAndItemizeEditorNext";
 import { ListEditorOngoing } from "../../ValueShared/ListEditorOngoing";
 
-export function UtilityValueNext({ feId }: { feId: string }) {
+export function UtilityValue({ feId }: { feId: string }) {
   const feInfo = { sectionName: "utilityValue", feId } as const;
   const utilityValue = useGetterSection(feInfo);
   const valueSourceName = utilityValue.valueNext("valueSourceName");
-  const valueVarb = utilityValue.switchVarb("value", "ongoing");
+  const valueVarb = utilityValue.switchVarb("valueDollars", "ongoing");
   const equalsValue = valueSourceName === "zero" ? "$0" : undefined;
   return (
     <SelectAndItemizeEditorNext

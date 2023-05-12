@@ -102,7 +102,7 @@ function makeAllUpdateSections() {
     }),
     ...updateSectionProp("utilityValue", {
       valueSourceName: updateVarb("utilityValueSource", { initValue: "none" }),
-      ...varbsS.group("value", "ongoing", "monthly", {
+      ...varbsS.group("valueDollars", "ongoing", "monthly", {
         targets: { updateFnName: "throwIfReached" },
         monthly: {
           updateOverrides: [
@@ -140,7 +140,7 @@ function makeAllUpdateSections() {
     }),
     ...updateSectionProp("capExValue", {
       valueSourceName: updateVarb("capExValueSource", { initValue: "none" }),
-      ...varbsS.group("value", "ongoing", "monthly", {
+      ...varbsS.group("valueDollars", "ongoing", "monthly", {
         targets: { updateFnName: "throwIfReached" },
         monthly: {
           updateOverrides: [
@@ -158,17 +158,17 @@ function makeAllUpdateSections() {
             ),
             updateOverride(
               [
-                switchS.local("valueSourceName", "valueEditor"),
-                switchS.switchIsActive("value", "ongoing", "monthly"),
+                switchS.local("valueSourceName", "valueDollarsOngoingEditor"),
+                switchS.switchIsActive("valueDollars", "ongoing", "monthly"),
               ],
-              updateBasicsS.loadFromLocal("valueDollarsEditor")
+              updateBasicsS.loadFromLocal("valueDollarsOngoingEditor")
             ),
             updateOverride(
               [
-                switchS.local("valueSourceName", "valueEditor"),
-                switchS.switchIsActive("value", "ongoing", "yearly"),
+                switchS.local("valueSourceName", "valueDollarsOngoingEditor"),
+                switchS.switchIsActive("valueDollars", "ongoing", "yearly"),
               ],
-              updateBasicsS.yearlyToMonthly("value")
+              updateBasicsS.yearlyToMonthly("valueDollars")
             ),
           ],
         },
@@ -188,17 +188,17 @@ function makeAllUpdateSections() {
             ),
             updateOverride(
               [
-                switchS.local("valueSourceName", "valueEditor"),
-                switchS.switchIsActive("value", "ongoing", "yearly"),
+                switchS.local("valueSourceName", "valueDollarsOngoingEditor"),
+                switchS.switchIsActive("valueDollars", "ongoing", "yearly"),
               ],
-              updateBasicsS.loadFromLocal("valueDollarsEditor")
+              updateBasicsS.loadFromLocal("valueDollarsOngoingEditor")
             ),
             updateOverride(
               [
-                switchS.local("valueSourceName", "valueEditor"),
-                switchS.switchIsActive("value", "ongoing", "monthly"),
+                switchS.local("valueSourceName", "valueDollarsOngoingEditor"),
+                switchS.switchIsActive("valueDollars", "ongoing", "monthly"),
               ],
-              updateBasicsS.monthlyToYearly("value")
+              updateBasicsS.monthlyToYearly("valueDollars")
             ),
           ],
         },
@@ -217,7 +217,7 @@ function makeAllUpdateSections() {
       valueSourceName: updateVarb("maintainanceValueSource", {
         initValue: "none",
       }),
-      ...varbsS.group("value", "ongoing", "monthly", {
+      ...varbsS.group("valueDollars", "ongoing", "monthly", {
         targets: { updateFnName: "throwIfReached" },
         monthly: {
           updateOverrides: [
@@ -227,17 +227,17 @@ function makeAllUpdateSections() {
             ),
             updateOverride(
               [
-                switchS.local("valueSourceName", "valueEditor"),
-                switchS.switchIsActive("value", "ongoing", "monthly"),
+                switchS.local("valueSourceName", "valueDollarsOngoingEditor"),
+                switchS.switchIsActive("valueDollars", "ongoing", "monthly"),
               ],
-              updateBasicsS.loadFromLocal("valueDollarsEditor")
+              updateBasicsS.loadFromLocal("valueDollarsOngoingEditor")
             ),
             updateOverride(
               [
-                switchS.local("valueSourceName", "valueEditor"),
-                switchS.yearlyIsActive("value"),
+                switchS.local("valueSourceName", "valueDollarsOngoingEditor"),
+                switchS.yearlyIsActive("valueDollars"),
               ],
-              updateBasicsS.yearlyToMonthly("value")
+              updateBasicsS.yearlyToMonthly("valueDollars")
             ),
             updateOverride(
               [
@@ -246,7 +246,7 @@ function makeAllUpdateSections() {
                   ...["onePercentPrice", "sqft", "onePercentAndSqft"]
                 ),
               ],
-              updateBasicsS.yearlyToMonthly("value")
+              updateBasicsS.yearlyToMonthly("valueDollars")
             ),
           ],
         },
@@ -258,17 +258,17 @@ function makeAllUpdateSections() {
             ),
             updateOverride(
               [
-                switchS.local("valueSourceName", "valueEditor"),
-                switchS.yearlyIsActive("value"),
+                switchS.local("valueSourceName", "valueDollarsOngoingEditor"),
+                switchS.yearlyIsActive("valueDollars"),
               ],
-              updateBasicsS.loadFromLocal("valueDollarsEditor")
+              updateBasicsS.loadFromLocal("valueDollarsOngoingEditor")
             ),
             updateOverride(
               [
-                switchS.local("valueSourceName", "valueEditor"),
-                switchS.monthlyIsActive("value"),
+                switchS.local("valueSourceName", "valueDollarsOngoingEditor"),
+                switchS.monthlyIsActive("valueDollars"),
               ],
-              updateBasicsS.monthlyToYearly("value")
+              updateBasicsS.monthlyToYearly("valueDollars")
             ),
             updateOverride(
               [switchS.local("valueSourceName", "onePercentPrice")],

@@ -1,16 +1,14 @@
 import { StateValue } from "../../../../../../../sharedWithServer/SectionsMeta/values/StateValue";
-import { useAction } from "../../../../../../../sharedWithServer/stateClassHooks/useAction";
 import { useGetterSection } from "../../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { LabelWithInfo } from "../../../../../../appWide/LabelWithInfo";
 import { SelectEditorNext } from "../../../../../../appWide/SelectEditorNext";
 import { NumObjEntityEditor } from "../../../../../../inputs/NumObjEntityEditor";
 
-export function MaintenanceValueNext({ feId }: { feId: string }) {
+export function MaintenanceValue({ feId }: { feId: string }) {
   const feInfo = { sectionName: "maintenanceValue", feId } as const;
-  const updateValue = useAction("updateValue");
   const maintenanceValue = useGetterSection(feInfo);
   const valueSourceName = maintenanceValue.valueNext("valueSourceName");
-  const valueVarb = maintenanceValue.switchVarb("value", "ongoing");
+  const valueVarb = maintenanceValue.switchVarb("valueDollars", "ongoing");
   const showEquals: StateValue<"maintainanceValueSource">[] = [
     "onePercentAndSqft",
     "onePercentPrice",
@@ -25,7 +23,7 @@ export function MaintenanceValueNext({ feId }: { feId: string }) {
     ["onePercentPrice", "1% purchase price"],
     ["sqft", "$1 per sqft"],
     ["onePercentAndSqft", "1% purchase price and $1 sqft, average"],
-    ["valueEditor", "Custom amount"],
+    ["valueDollarsOngoingEditor", "Custom amount"],
   ];
 
   if (valueSourceName === "none") {
@@ -35,6 +33,9 @@ export function MaintenanceValueNext({ feId }: { feId: string }) {
   return (
     <SelectEditorNext
       {...{
+        selectProps: {
+          sx: { minWidth: 206 },
+        },
         feVarbInfo: {
           ...feInfo,
           varbName: "valueSourceName",
@@ -53,12 +54,14 @@ export function MaintenanceValueNext({ feId }: { feId: string }) {
           />
         ),
         makeEditor:
-          valueSourceName === "valueEditor"
+          valueSourceName === "valueDollarsOngoingEditor"
             ? (props) => (
                 <NumObjEntityEditor
                   {...{
                     ...props,
-                    feVarbInfo: maintenanceValue.varbInfo("valueDollarsEditor"),
+                    feVarbInfo: maintenanceValue.varbInfo(
+                      "valueDollarsOngoingEditor"
+                    ),
                     quickViewVarbNames: ["sqft", "numUnits", "numBedrooms"],
                   }}
                 />

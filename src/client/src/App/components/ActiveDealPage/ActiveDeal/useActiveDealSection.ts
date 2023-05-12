@@ -27,8 +27,12 @@ const completionStatusNames = {
 export function useActiveDealCompletionStatus(
   sectionName: ActiveDealSectionName
 ): StateValue<"completionStatus"> {
-  const { calcVarbs } = useActiveDealPage();
-  return calcVarbs.valueNext(completionStatusNames[sectionName]);
+  const { calcVarbs, deal } = useActiveDealPage();
+  if (sectionName === "property") {
+    return deal.onlyChild("property").valueNext("completionStatus");
+  } else {
+    return calcVarbs.valueNext(completionStatusNames[sectionName]);
+  }
 }
 
 export const activeDealRouteNames: Record<ActiveDealSectionName, FeRouteName> =
@@ -39,9 +43,8 @@ export const activeDealRouteNames: Record<ActiveDealSectionName, FeRouteName> =
   };
 
 export function useActiveDealSection(sectionName: ActiveDealSectionName) {
-  const { deal, calcVarbs } = useActiveDealPage();
-  const completionStatusName = completionStatusNames[sectionName];
-  const completionStatus = calcVarbs.valueNext(completionStatusName);
+  const { deal } = useActiveDealPage();
+  const completionStatus = useActiveDealCompletionStatus(sectionName);
   const goToIndex = useGoToPage("activeDeal");
   const dealMode = deal.valueNext("dealMode");
   return {

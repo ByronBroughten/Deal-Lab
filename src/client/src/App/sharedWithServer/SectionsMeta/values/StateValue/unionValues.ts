@@ -55,26 +55,33 @@ const valueSources = {
   ],
   editorValueSource: ["valueEditor"],
   loadedVarbSource: ["loadedVarb"],
+
   customValueSource: ["none", "valueEditor", "listTotal"],
+
   utilityValueSource: ["none", "zero", "listTotal", "twentyPercentRent"],
   repairValueSource: ["none", "zero", "valueDollarsEditor", "listTotal"],
   overrunValueSource: ["valueDollarsEditor", "valuePercentEditor"],
   dollarsOrList: ["valueDollarsEditor", "listTotal"],
+  dollarsOrListOngoing: ["valueDollarsOngoingEditor", "listTotal"],
   sellingCostSource: [
     "sixPercent",
     "valuePercentEditor",
     "valueDollarsEditor",
     "itemize",
   ],
-  // maybe just needs percentEditor and dollarsEditor.
   maintainanceValueSource: [
     "none",
     "onePercentPrice",
     "sqft",
     "onePercentAndSqft",
-    "valueEditor",
+    "valueDollarsOngoingEditor",
   ],
-  capExValueSource: ["none", "fivePercentRent", "valueEditor", "listTotal"],
+  capExValueSource: [
+    "none",
+    "fivePercentRent",
+    "valueDollarsOngoingEditor",
+    "listTotal",
+  ],
   closingCostValueSource: [
     "none",
     "fivePercentLoan",

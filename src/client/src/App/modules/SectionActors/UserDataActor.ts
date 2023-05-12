@@ -115,8 +115,8 @@ export class UserDataActor extends SectionActorBase<"feStore"> {
   }
   async unloadUserData(): Promise<void> {
     userTokenS.removeUserAuthDataToken();
+    await authS.endSession();
     unstable_batchedUpdates(async () => {
-      await authS.endSession();
       this.mainSetter.resetToDefault();
       this.goToAuthPage();
     });
@@ -147,6 +147,6 @@ export function useControlUserData() {
 export function useLogout() {
   const userDataActor = useUserDataActor();
   return async function logout() {
-    await userDataActor.unloadUserData();
+    return userDataActor.unloadUserData();
   };
 }
