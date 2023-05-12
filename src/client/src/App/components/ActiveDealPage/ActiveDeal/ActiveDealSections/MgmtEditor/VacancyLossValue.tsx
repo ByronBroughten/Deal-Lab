@@ -3,7 +3,7 @@ import { useGetterSection } from "../../../../../sharedWithServer/stateClassHook
 import { ValueFixedVarbPathName } from "../../../../../sharedWithServer/StateEntityGetters/ValueInEntityInfo";
 import { GetterSection } from "../../../../../sharedWithServer/StateGetters/GetterSection";
 import { LabelWithInfo } from "../../../../appWide/LabelWithInfo";
-import { SelectEditorNext } from "../../../../appWide/SelectEditorNext";
+import { SelectEditor } from "../../../../appWide/SelectEditor";
 import { NumObjEntityEditor } from "../../../../inputs/NumObjEntityEditor";
 
 function getProps(getter: GetterSection<"vacancyLossValue">): {
@@ -58,7 +58,8 @@ export function VacancyLossValue({ feId }: { feId: string }) {
   const { editorProps, equalsValue } = getProps(vacancyLoss);
   const valueSourceName = vacancyLoss.valueNext("valueSourceName");
   return (
-    <SelectEditorNext
+    <SelectEditor
+      inputMargins
       {...{
         selectProps: { sx: { minWidth: 140 } },
         feVarbInfo: {

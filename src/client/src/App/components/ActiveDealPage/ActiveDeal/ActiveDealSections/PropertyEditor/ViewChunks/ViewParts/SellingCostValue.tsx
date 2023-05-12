@@ -3,7 +3,7 @@ import { StateValue } from "../../../../../../../sharedWithServer/SectionsMeta/v
 import { useGetterSection } from "../../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { StrictExtract } from "../../../../../../../sharedWithServer/utils/types";
 import { LabelWithInfo } from "../../../../../../appWide/LabelWithInfo";
-import { SelectAndItemizeEditorNext } from "../../../../../../appWide/SelectAndItemizeEditorNext";
+import { SelectAndItemizeEditor } from "../../../../../../appWide/SelectAndItemizeEditor";
 import { NumObjEntityEditor } from "../../../../../../inputs/NumObjEntityEditor";
 import { ListEditorOneTime } from "../../ValueShared/ListEditorOneTime";
 
@@ -36,7 +36,8 @@ export function SellingCostValue({ feId, sx }: Props) {
   const valueSource = sellingCost.valueNext("valueSourceName");
   const equalsVarbName = getEqualsVarbName(valueSource);
   return (
-    <SelectAndItemizeEditorNext
+    <SelectAndItemizeEditor
+      inputMargins
       {...{
         sx,
         label: (

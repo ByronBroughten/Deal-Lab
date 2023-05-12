@@ -4,7 +4,6 @@ import { useGetterSection } from "../../../../../../sharedWithServer/stateClassH
 import { nativeTheme } from "../../../../../../theme/nativeTheme";
 import { FormSectionLabeled } from "../../../../../appWide/FormSectionLabeled";
 import { LabelWithInfo } from "../../../../../appWide/LabelWithInfo";
-import { BasicInfoEditorRow } from "../../../../../appWide/MarginEditorRow";
 import { TogglerBooleanVarb } from "../../../../../appWide/TogglerBooleanVarb";
 import { MuiRow } from "../../../../../general/MuiRow";
 import { NumObjEntityEditor } from "../../../../../inputs/NumObjEntityEditor";
@@ -21,15 +20,17 @@ export function LoanTerms({ feId }: FeIdProp) {
       label={"Loan Terms"}
       className="BasicLoanInfo-otherInfo"
     >
-      <BasicInfoEditorRow>
+      <MuiRow>
         <NumObjEntityEditor
+          inputMargins
           feVarbInfo={loan.varbInfo("interestRatePercentOngoingEditor")}
         />
         <NumObjEntityEditor
+          inputMargins
           feVarbInfo={loan.varbInfo("loanTermSpanEditor")}
           label="Loan term"
         />
-      </BasicInfoEditorRow>
+      </MuiRow>
       <Box sx={{ pb: nativeTheme.s3 }}>
         <TogglerBooleanVarb
           {...{

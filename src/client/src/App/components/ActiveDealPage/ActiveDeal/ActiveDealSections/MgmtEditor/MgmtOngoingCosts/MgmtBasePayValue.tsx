@@ -2,7 +2,7 @@ import { FeVarbInfo } from "../../../../../../sharedWithServer/SectionsMeta/Sect
 import { useGetterSection } from "../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { ValueFixedVarbPathName } from "../../../../../../sharedWithServer/StateEntityGetters/ValueInEntityInfo";
 import { GetterSection } from "../../../../../../sharedWithServer/StateGetters/GetterSection";
-import { SelectEditorNext } from "../../../../../appWide/SelectEditorNext";
+import { SelectEditor } from "../../../../../appWide/SelectEditor";
 import { NumObjEntityEditor } from "../../../../../inputs/NumObjEntityEditor";
 
 function getProps(getter: GetterSection<"mgmtBasePayValue">): {
@@ -58,7 +58,8 @@ export function BasePayValue({ feId }: { feId: string }) {
   const { editorProps, equalsValue } = getProps(basePayValue);
   const valueSourceName = basePayValue.valueNext("valueSourceName");
   return (
-    <SelectEditorNext
+    <SelectEditor
+      inputMargins
       {...{
         unionValueName: "mgmtBasePayValueSource",
         feVarbInfo: {

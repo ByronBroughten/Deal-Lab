@@ -4,8 +4,8 @@ import { nativeTheme } from "../../../../../../theme/nativeTheme";
 import theme from "../../../../../../theme/Theme";
 import { FormSection } from "../../../../../appWide/FormSection";
 import { LabelWithInfo } from "../../../../../appWide/LabelWithInfo";
-import { BasicInfoEditorRow } from "../../../../../appWide/MarginEditorRow";
 import ChunkTitle from "../../../../../general/ChunkTitle";
+import { MuiRow } from "../../../../../general/MuiRow";
 import { NumObjEntityEditor } from "../../../../../inputs/NumObjEntityEditor";
 import { SellingCostValue } from "./ViewParts/SellingCostValue";
 
@@ -16,18 +16,24 @@ export function BasicFixAndFlipInfo({ feId }: Props) {
     <Styled {...{ sectionName: "property" }}>
       <div>
         <ChunkTitle>Basics</ChunkTitle>
-        <BasicInfoEditorRow>
+        <MuiRow>
           <NumObjEntityEditor
+            inputMargins
             {...{
               label: "Purchase price",
               feVarbInfo: property.varbInfo("purchasePrice"),
             }}
           />
           <NumObjEntityEditor
+            inputMargins
             feVarbInfo={property.varbInfo("numUnitsEditor")}
           />
-          <NumObjEntityEditor feVarbInfo={property.varbInfo("sqft")} />
           <NumObjEntityEditor
+            inputMargins
+            feVarbInfo={property.varbInfo("sqft")}
+          />
+          <NumObjEntityEditor
+            inputMargins
             editorType="equation"
             feVarbInfo={property.varbInfo("afterRepairValue")}
             quickViewVarbNames={["purchasePrice", "rehabCost"]}
@@ -50,7 +56,7 @@ export function BasicFixAndFlipInfo({ feId }: Props) {
             }}
           />
           <SellingCostValue feId={property.onlyChildFeId("sellingCostValue")} />
-        </BasicInfoEditorRow>
+        </MuiRow>
       </div>
     </Styled>
   );

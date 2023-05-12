@@ -2,7 +2,7 @@ import { FeIdProp } from "../../../../../../sharedWithServer/SectionsMeta/Sectio
 import { useGetterSection } from "../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { FormSectionLabeled } from "../../../../../appWide/FormSectionLabeled";
 import { LabelWithInfo } from "../../../../../appWide/LabelWithInfo";
-import { BasicInfoEditorRow } from "../../../../../appWide/MarginEditorRow";
+import { MuiRow } from "../../../../../general/MuiRow";
 import { NumObjEntityEditor } from "../../../../../inputs/NumObjEntityEditor";
 import { MiscHoldingCost } from "./ViewParts/MiscHoldingCost";
 import { UtilityValue } from "./ViewParts/UtilityValue";
@@ -12,8 +12,9 @@ export function PropertyHoldingCosts({ feId }: FeIdProp) {
   const property = useGetterSection(feInfo);
   return (
     <FormSectionLabeled label="Holding Costs">
-      <BasicInfoEditorRow>
+      <MuiRow>
         <NumObjEntityEditor
+          inputMargins
           label={
             <LabelWithInfo
               {...{
@@ -26,16 +27,18 @@ export function PropertyHoldingCosts({ feId }: FeIdProp) {
           feVarbInfo={property.varbInfo("holdingPeriodSpanEditor")}
         />
         <NumObjEntityEditor
+          inputMargins
           feVarbInfo={property.varbInfo("taxesOngoingEditor")}
         />
         <NumObjEntityEditor
+          inputMargins
           editorType="equation"
           feVarbInfo={property.varbInfo("homeInsOngoingEditor")}
           quickViewVarbNames={["purchasePrice", "sqft", "numUnits"]}
         />
         <UtilityValue feId={property.onlyChildFeId("utilityValue")} />
         <MiscHoldingCost feId={property.onlyChildFeId("miscHoldingCost")} />
-      </BasicInfoEditorRow>
+      </MuiRow>
     </FormSectionLabeled>
   );
 }

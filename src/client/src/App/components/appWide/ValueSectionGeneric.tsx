@@ -12,7 +12,7 @@ import { BigStringEditor } from "../inputs/BigStringEditor";
 import { NumObjEntityEditor } from "../inputs/NumObjEntityEditor";
 import { RemoveSectionXBtn } from "./RemoveSectionXBtn";
 import { SectionTitle } from "./SectionTitle";
-import { SelectAndItemizeEditor } from "./SelectAndItemizeEditor";
+import { SelectAndItemizeEditorDepric } from "./SelectAndItemizeEditorDeprec";
 
 type ValueSectionName = SectionNameByType<"valueSection">;
 type MakeItemizedListNodeProps = {
@@ -86,7 +86,7 @@ export function ValueSectionGeneric<
             />
           )}
         </div>
-        <SelectAndItemizeEditor
+        <SelectAndItemizeEditorDepric
           {...{
             selectValue: valueSource,
             makeEditor:

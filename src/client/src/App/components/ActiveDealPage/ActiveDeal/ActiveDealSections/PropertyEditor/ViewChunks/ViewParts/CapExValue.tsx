@@ -5,7 +5,7 @@ import {
 import { StateValue } from "../../../../../../../sharedWithServer/SectionsMeta/values/StateValue";
 import { useGetterSection } from "../../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { LabelWithInfo } from "../../../../../../appWide/LabelWithInfo";
-import { SelectAndItemizeEditorNext } from "../../../../../../appWide/SelectAndItemizeEditorNext";
+import { SelectAndItemizeEditor } from "../../../../../../appWide/SelectAndItemizeEditor";
 import { NumObjEntityEditor } from "../../../../../../inputs/NumObjEntityEditor";
 import { CapExValueList } from "../../ValueShared/CapExListEditor";
 
@@ -21,7 +21,8 @@ export function CapExValue({ feId }: { feId: string }) {
     : undefined;
 
   return (
-    <SelectAndItemizeEditorNext
+    <SelectAndItemizeEditor
+      inputMargins
       {...{
         unionValueName: "capExValueSource",
         selectProps: { sx: { minWidth: 170 } },

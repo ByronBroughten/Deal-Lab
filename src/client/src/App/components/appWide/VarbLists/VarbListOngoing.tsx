@@ -44,5 +44,3 @@ export function VarbListOngoing({ feId, ...rest }: Props) {
     />
   );
 }
-// Should I make separate lists for utilities, closing costs, etc?
-// No, just capEx I think.

@@ -1,5 +1,5 @@
 import { useGetterSection } from "../../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
-import { SelectAndItemizeEditorNext } from "../../../../../../appWide/SelectAndItemizeEditorNext";
+import { SelectAndItemizeEditor } from "../../../../../../appWide/SelectAndItemizeEditor";
 import { ListEditorOngoing } from "../../ValueShared/ListEditorOngoing";
 
 export function UtilityValue({ feId }: { feId: string }) {
@@ -9,7 +9,8 @@ export function UtilityValue({ feId }: { feId: string }) {
   const valueVarb = utilityValue.switchVarb("valueDollars", "ongoing");
   const equalsValue = valueSourceName === "zero" ? "$0" : undefined;
   return (
-    <SelectAndItemizeEditorNext
+    <SelectAndItemizeEditor
+      inputMargins
       {...{
         selectProps: { sx: { minWidth: 170 } },
         unionValueName: "utilityValueSource",

@@ -1,7 +1,7 @@
 import { useGetterSection } from "../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { nativeTheme } from "../../../../../../theme/nativeTheme";
 import { LabelWithInfo } from "../../../../../appWide/LabelWithInfo";
-import { SelectAndItemizeEditorNext } from "../../../../../appWide/SelectAndItemizeEditorNext";
+import { SelectAndItemizeEditor } from "../../../../../appWide/SelectAndItemizeEditor";
 import { NumObjEntityEditor } from "../../../../../inputs/NumObjEntityEditor";
 import { ListEditorOneTime } from "../../PropertyEditor/ValueShared/ListEditorOneTime";
 
@@ -16,7 +16,7 @@ export function ClosingCostValue({ feId, fivePercentLoanDisplay }: Props) {
   const equalsValue =
     valueSourceName === "fivePercentLoan" ? fivePercentLoanDisplay : undefined;
   return (
-    <SelectAndItemizeEditorNext
+    <SelectAndItemizeEditor
       {...{
         sx: { pt: nativeTheme.editorMargins.my },
         feVarbInfo: {

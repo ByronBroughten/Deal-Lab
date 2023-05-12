@@ -1,6 +1,6 @@
 import { useGetterSection } from "../../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { nativeTheme } from "../../../../../../../theme/nativeTheme";
-import { SelectAndItemizeEditorNext } from "../../../../../../appWide/SelectAndItemizeEditorNext";
+import { SelectAndItemizeEditor } from "../../../../../../appWide/SelectAndItemizeEditor";
 import { NumObjEntityEditor } from "../../../../../../inputs/NumObjEntityEditor";
 import { ListEditorOngoing } from "../../ValueShared/ListEditorOngoing";
 
@@ -19,7 +19,8 @@ export function MiscHoldingCost({ feId }: { feId: string }) {
   ] as const;
 
   return (
-    <SelectAndItemizeEditorNext
+    <SelectAndItemizeEditor
+      inputMargins
       {...{
         unionValueName: "dollarsOrListOngoing",
         label: "Misc holding costs",

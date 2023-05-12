@@ -1,7 +1,7 @@
 import { StateValue } from "../../../../../../../sharedWithServer/SectionsMeta/values/StateValue";
 import { useGetterSection } from "../../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { LabelWithInfo } from "../../../../../../appWide/LabelWithInfo";
-import { SelectEditorNext } from "../../../../../../appWide/SelectEditorNext";
+import { SelectEditor } from "../../../../../../appWide/SelectEditor";
 import { NumObjEntityEditor } from "../../../../../../inputs/NumObjEntityEditor";
 
 export function MaintenanceValue({ feId }: { feId: string }) {
@@ -31,7 +31,8 @@ export function MaintenanceValue({ feId }: { feId: string }) {
   }
 
   return (
-    <SelectEditorNext
+    <SelectEditor
+      inputMargins
       {...{
         selectProps: {
           sx: { minWidth: 206 },

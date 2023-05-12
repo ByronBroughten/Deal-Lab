@@ -34,6 +34,7 @@ type Props = PropAdornments & {
   bypassNumeric?: boolean;
   editorType?: NumEditorType;
   quickViewVarbNames?: ValueFixedVarbPathName[];
+  inputMargins?: boolean;
 };
 
 const seperator = ".";
@@ -44,6 +45,7 @@ export function NumObjEntityEditor({
   className,
   labeled = true,
   bypassNumeric = false,
+  inputMargins = false,
   quickViewVarbNames,
   label,
   sx,
@@ -60,7 +62,15 @@ export function NumObjEntityEditor({
   return (
     <MemoNumObjEntityEditor
       {...{
-        sx,
+        sx: {
+          ...(inputMargins && {
+            ...nativeTheme.editorMargins,
+            "& .DraftTextField-labeled": {
+              minWidth: 141,
+            },
+          }),
+          ...sx,
+        },
         editorType,
         displayValue: varb.displayValue,
         editorTextStatus: varb.numObj.editorTextStatus,

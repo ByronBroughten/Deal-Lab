@@ -1,43 +1,64 @@
 import { Box } from "@mui/material";
 import React from "react";
-import { unstable_batchedUpdates } from "react-dom";
-import styled from "styled-components";
 import { useToggleView } from "../../modules/customHooks/useToggleView";
+import { SectionName } from "../../sharedWithServer/SectionsMeta/SectionName";
+import { StateValue } from "../../sharedWithServer/SectionsMeta/values/StateValue";
+import { UnionValueName } from "../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
+import { useGetterVarbNext } from "../../sharedWithServer/stateClassHooks/useGetterVarb";
 import { nativeTheme } from "../../theme/nativeTheme";
-import theme from "../../theme/Theme";
+import { arrSx } from "../../utils/mui";
+import { MuiRow } from "../general/MuiRow";
 import { EditSectionBtn } from "./EditSectionBtn";
 import { ModalSection } from "./ModalSection";
-import { SelectEditor, SelectEditorProps } from "./SelectEditor";
+import { SelectEditor, SelectEditorPropsNext } from "./SelectEditor";
 
-export interface SelectAndItemizeEditorProps extends SelectEditorProps {
+export interface SelectAndItemizeEditorProps<
+  UVN extends UnionValueName,
+  SN extends SectionName
+> extends SelectEditorPropsNext<UVN, SN> {
   total: string;
-  itemizeValue: string;
+  itemizeValue: StateValue<UVN>;
   itemsComponent: React.ReactNode;
   itemizedModalTitle: React.ReactNode;
+  inputMargins?: boolean;
 }
 
-export function SelectAndItemizeEditor({
-  className,
+export function SelectAndItemizeEditor<
+  UVN extends UnionValueName,
+  SN extends SectionName
+>({
+  sx,
   total,
   itemsComponent,
-  onChange,
   rightOfControls,
   itemizeValue,
   itemizedModalTitle,
+  batchedWithChange,
+  inputMargins = false,
   ...rest
-}: SelectAndItemizeEditorProps) {
+}: SelectAndItemizeEditorProps<UVN, SN>) {
   const { itemsIsOpen, closeItems, openItems } = useToggleView("items", false);
 
-  const isItemized = rest.selectValue === itemizeValue;
+  const varb = useGetterVarbNext(rest.feVarbInfo);
+  const value = varb.value(rest.unionValueName);
+  const isItemized = value === itemizeValue;
   return (
-    <Styled className={`SelectAndItemizeEditor ${className ?? ""}`}>
+    <MuiRow
+      className="SelectAndItemizeEditor-root"
+      sx={[
+        {
+          flexWrap: "nowrap",
+          ...(inputMargins && nativeTheme.editorMargins),
+        },
+        ...arrSx(sx),
+      ]}
+    >
       <SelectEditor
         {...{
-          onChange: (e, ...args) => {
-            unstable_batchedUpdates(() => {
-              onChange && onChange(e, ...args);
-              e.target.value === itemizeValue && openItems();
-            });
+          className: "SelectAndItemizeEditor-selectEditor",
+          batchedWithChange: (e, ...args) => {
+            batchedWithChange && batchedWithChange(e, ...args);
+            e.target.value === itemizeValue && openItems();
           },
           ...rest,
           rightOfControls,
@@ -48,7 +69,13 @@ export function SelectAndItemizeEditor({
         : isItemized && (
             <Box
               sx={{
-                ml: nativeTheme.s3,
+                ...(rest.label && { height: 55 }),
+                ...(!rest.label && { height: 30 }),
+                ...nativeTheme.subSection.borderLines,
+                borderLeftWidth: 0,
+                borderBottomColor: nativeTheme["gray-600"],
+                borderTopRightRadius: nativeTheme.muiBr0,
+                pl: nativeTheme.s3,
                 display: "flex",
                 flexDirection: "row",
                 alignItems: "center",
@@ -65,15 +92,6 @@ export function SelectAndItemizeEditor({
               </ModalSection>
             </Box>
           )}
-    </Styled>
+    </MuiRow>
   );
 }
-
-const Styled = styled.div`
-  display: flex;
-  .SelectAndItemizeEditor-itemizedTotalDiv {
-    margin-left: ${theme.s3};
-    display: flex;
-    align-items: center;
-  }
-`;

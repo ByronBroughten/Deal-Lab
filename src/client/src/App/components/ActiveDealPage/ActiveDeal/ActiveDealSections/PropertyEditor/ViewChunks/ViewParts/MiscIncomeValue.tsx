@@ -1,6 +1,6 @@
 import { useGetterSection } from "../../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { nativeTheme } from "../../../../../../../theme/nativeTheme";
-import { SelectAndItemizeEditorNext } from "../../../../../../appWide/SelectAndItemizeEditorNext";
+import { SelectAndItemizeEditor } from "../../../../../../appWide/SelectAndItemizeEditor";
 import { NumObjEntityEditor } from "../../../../../../inputs/NumObjEntityEditor";
 import { ListEditorOngoing } from "../../ValueShared/ListEditorOngoing";
 
@@ -12,7 +12,7 @@ export function MiscIncomeValue({ feId }: { feId: string }) {
   const sourceName = incomeValue.valueNext("valueSourceName");
   const menuDisplayNames = ["Laundry", "Parking", "Storage"] as const;
   return (
-    <SelectAndItemizeEditorNext
+    <SelectAndItemizeEditor
       {...{
         unionValueName: "dollarsOrListOngoing",
         label: "Misc income",

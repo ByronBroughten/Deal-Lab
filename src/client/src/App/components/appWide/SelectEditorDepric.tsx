@@ -1,48 +1,52 @@
 import { Box, SxProps } from "@mui/material";
 import React from "react";
-import { SectionName } from "../../sharedWithServer/SectionsMeta/SectionName";
-import { UnionValueName } from "../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
 import { nativeTheme } from "../../theme/nativeTheme";
-import { arrSx } from "../../utils/mui";
-import { MuiSelect, MuiSelectProps } from "./MuiSelect";
+import { arrSx, MuiSelectOnChange } from "../../utils/mui";
+import { MuiSelectStyled } from "./MuiSelectStyled";
 
-type MakeEditor = (props: {
-  sx: SxProps;
-  labeled: boolean;
-  className: string;
-}) => React.ReactNode;
-export interface SelectEditorPropsNext<
-  UVN extends UnionValueName,
-  SN extends SectionName
-> extends MuiSelectProps<UVN, SN> {
+type MakeEditor = (props: { sx: SxProps; labeled: boolean }) => React.ReactNode;
+
+export type SelectEditorProps = {
   className?: string;
+  label?: React.ReactNode;
+  selectValue: string;
+  onChange?: MuiSelectOnChange;
   makeEditor?: MakeEditor;
+  menuItems: [string, string][];
   equalsValue?: string;
   rightOfControls?: React.ReactNode;
-}
-
-export function SelectEditorNext<
-  UVN extends UnionValueName,
-  SN extends SectionName
->({
+  sx?: SxProps;
+};
+export function SelectEditorDepric({
+  className,
+  label,
+  selectValue,
+  onChange,
   makeEditor,
+  menuItems,
   equalsValue,
   rightOfControls,
-  label,
-  className,
   sx,
-  ...rest
-}: SelectEditorPropsNext<UVN, SN>) {
+}: SelectEditorProps) {
   return (
     <Box
       {...{
-        className: `SelectEditor-root ${className ?? ""}`,
-        sx: [{ display: "flex" }, ...arrSx(sx)],
+        className,
+        sx: [
+          {
+            display: "flex",
+            marginTop: nativeTheme.s2,
+          },
+          ...arrSx(sx),
+        ],
       }}
     >
-      <MuiSelect
+      <MuiSelectStyled
         {...{
           label,
+          onChange,
+          items: menuItems,
+          value: selectValue,
           sx: {
             borderTopRightRadius: 0,
             borderRight: "none",
@@ -50,12 +54,10 @@ export function SelectEditorNext<
               borderTopRightRadius: 0,
             },
           },
-          ...rest,
         }}
       />
       {makeEditor &&
         makeEditor({
-          className: "SelectEditor-editor",
           labeled: false,
           sx: {
             "& .NumObjEditor-materialDraftEditor": {
@@ -71,7 +73,7 @@ export function SelectEditorNext<
                   pb: "8px",
                 }),
                 ...(label && {
-                  pt: "26px",
+                  pt: "20px",
                   pb: "4px",
                 }),
               },

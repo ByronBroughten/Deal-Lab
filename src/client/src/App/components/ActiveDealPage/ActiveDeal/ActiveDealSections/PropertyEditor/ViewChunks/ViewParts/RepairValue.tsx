@@ -1,7 +1,7 @@
 import { SxProps } from "@mui/material";
 import { StateValue } from "../../../../../../../sharedWithServer/SectionsMeta/values/StateValue";
 import { useGetterSection } from "../../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
-import { SelectAndItemizeEditorNext } from "../../../../../../appWide/SelectAndItemizeEditorNext";
+import { SelectAndItemizeEditor } from "../../../../../../appWide/SelectAndItemizeEditor";
 import { NumObjEntityEditor } from "../../../../../../inputs/NumObjEntityEditor";
 import { ListEditorOneTime } from "../../ValueShared/ListEditorOneTime";
 
@@ -20,7 +20,7 @@ export function RepairValue({ feId, dealMode, sx }: Props) {
   ];
 
   return (
-    <SelectAndItemizeEditorNext
+    <SelectAndItemizeEditor
       {...{
         sx,
         unionValueName: "repairValueSource",

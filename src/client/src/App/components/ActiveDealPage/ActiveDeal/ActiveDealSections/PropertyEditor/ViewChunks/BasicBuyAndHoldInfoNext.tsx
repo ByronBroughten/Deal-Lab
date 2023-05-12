@@ -1,6 +1,6 @@
 import { useGetterSection } from "../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { FormSectionLabeled } from "../../../../../appWide/FormSectionLabeled";
-import { BasicInfoEditorRow } from "../../../../../appWide/MarginEditorRow";
+import { MuiRow } from "../../../../../general/MuiRow";
 import { NumObjEntityEditor } from "../../../../../inputs/NumObjEntityEditor";
 import { MiscIncomeValue } from "./ViewParts/MiscIncomeValue";
 import { UnitsNext } from "./ViewParts/UnitsNext";
@@ -8,20 +8,20 @@ import { UnitsNext } from "./ViewParts/UnitsNext";
 type Props = { feId: string };
 export function BasicBuyAndHoldInfoNext({ feId }: Props) {
   const property = useGetterSection({ sectionName: "property", feId });
-  const hasUnits = property.childFeIds("unit").length > 0;
-
   return (
     <FormSectionLabeled {...{ label: "Basics" }}>
-      <BasicInfoEditorRow>
+      <MuiRow>
         <NumObjEntityEditor
+          inputMargins
           className={`BasicPropertyInfo-numObjEditor BasicPropertyInfo-marginEditor`}
           feVarbInfo={property.varbInfo("purchasePrice")}
         />
         <NumObjEntityEditor
+          inputMargins
           className={`BasicPropertyInfo-numObjEditor`}
           feVarbInfo={property.varbInfo("sqft")}
         />
-      </BasicInfoEditorRow>
+      </MuiRow>
       <UnitsNext feId={feId} />
       <MiscIncomeValue feId={property.onlyChildFeId("miscRevenueValue")} />
     </FormSectionLabeled>

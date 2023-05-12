@@ -1,7 +1,7 @@
 import { FeIdProp } from "../../../../../../sharedWithServer/SectionsMeta/SectionInfo/NanoIdInfo";
 import { useGetterSection } from "../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { FormSectionLabeled } from "../../../../../appWide/FormSectionLabeled";
-import { BasicInfoEditorRow } from "../../../../../appWide/MarginEditorRow";
+import { MuiRow } from "../../../../../general/MuiRow";
 import { NumObjEntityEditor } from "../../../../../inputs/NumObjEntityEditor";
 import { CapExValue } from "./ViewParts/CapExValue";
 import { MaintenanceValue } from "./ViewParts/MaintenanceValue";
@@ -12,11 +12,13 @@ export function PropertyOngoingCosts({ feId }: FeIdProp) {
   const property = useGetterSection({ sectionName: "property", feId });
   return (
     <FormSectionLabeled label="Ongoing Costs">
-      <BasicInfoEditorRow>
+      <MuiRow>
         <NumObjEntityEditor
+          inputMargins
           feVarbInfo={property.varbInfo("taxesOngoingEditor")}
         />
         <NumObjEntityEditor
+          inputMargins
           editorType="equation"
           feVarbInfo={property.varbInfo("homeInsOngoingEditor")}
           quickViewVarbNames={["purchasePrice", "sqft", "numUnits"]}
@@ -28,7 +30,7 @@ export function PropertyOngoingCosts({ feId }: FeIdProp) {
           feId={property.onlyChildFeId("miscOngoingCost")}
           menuDisplayNames={["HOA Fees", "Landscaping", "Accounting", "Legal"]}
         />
-      </BasicInfoEditorRow>
+      </MuiRow>
     </FormSectionLabeled>
   );
 }

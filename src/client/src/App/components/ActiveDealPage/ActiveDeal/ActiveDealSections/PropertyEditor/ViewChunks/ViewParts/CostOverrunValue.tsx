@@ -1,7 +1,7 @@
 import { SxProps } from "@mui/material";
 import { useGetterSection } from "../../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { LabelWithInfo } from "../../../../../../appWide/LabelWithInfo";
-import { SelectEditorNext } from "../../../../../../appWide/SelectEditorNext";
+import { SelectEditor } from "../../../../../../appWide/SelectEditor";
 import { NumObjEntityEditor } from "../../../../../../inputs/NumObjEntityEditor";
 
 type Props = { feId: string; sx?: SxProps };
@@ -12,7 +12,7 @@ export function CostOverrunValue({ feId, sx }: Props) {
   const equalsVarbName =
     valueSource === "valueDollarsEditor" ? "valuePercent" : "valueDollars";
   return (
-    <SelectEditorNext
+    <SelectEditor
       {...{
         sx,
         selectProps: { sx: { minWidth: 160 } },
