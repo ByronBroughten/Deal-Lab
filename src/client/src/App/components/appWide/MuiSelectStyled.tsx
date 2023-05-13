@@ -10,7 +10,6 @@ import { nativeTheme } from "../../theme/nativeTheme";
 import { arrSx, MuiSelectOnChange } from "../../utils/mui";
 
 export type SelectItemProp = [string, string] | null;
-
 export interface MuiSelectStyledProps {
   className?: string;
   label?: React.ReactNode;
@@ -29,6 +28,7 @@ export function MuiSelectStyled({
   selectProps = {},
   sx,
 }: MuiSelectStyledProps) {
+  const displayItems = getDisplayItems(items, value);
   return (
     <FormControl
       className={`MuiSelectStyled-root ${className ?? ""}`}
@@ -91,38 +91,34 @@ export function MuiSelectStyled({
           ],
         }}
       >
-        {items.map((item) => (
-          <StyledMenuItem
-            {...{
-              item,
-              selectedValue: value,
+        {displayItems.map(([itemValue, itemLabel]) => (
+          <MenuItem
+            sx={{
+              ...(itemLabel === "Choose method" && {
+                color: nativeTheme["gray-600"],
+              }),
             }}
-          />
+            key={itemValue}
+            value={itemValue}
+          >
+            {itemLabel}
+          </MenuItem>
         ))}
       </Select>
     </FormControl>
   );
 }
 
-type MenuItemProps = { item: SelectItemProp; selectedValue: string };
-function StyledMenuItem({ item, selectedValue }: MenuItemProps) {
-  if (item === null) return null;
-  const [itemLabel, itemValue] = item;
-  if (itemLabel === "Choose method" && itemValue !== selectedValue) {
-    return null;
-  } else {
-    return (
-      <MenuItem
-        sx={{
-          ...(itemLabel === "Choose method" && {
-            color: nativeTheme["gray-600"],
-          }),
-        }}
-        key={itemValue}
-        value={itemValue}
-      >
-        {itemLabel}
-      </MenuItem>
-    );
-  }
+function getDisplayItems(
+  itemProps: SelectItemProp[],
+  selectedValue: string
+): [string, string][] {
+  return itemProps.filter((item) => {
+    if (item === null) return false;
+    const [itemValue, itemLabel] = item;
+    if (itemLabel === "Choose method" && itemValue !== selectedValue) {
+      return false;
+    }
+    return true;
+  }) as [string, string][];
 }

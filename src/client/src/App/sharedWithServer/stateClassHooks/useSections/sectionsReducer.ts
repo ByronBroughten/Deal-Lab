@@ -14,7 +14,6 @@ import {
   StoreNameProp,
   StoreSectionName,
 } from "../../SectionsMeta/sectionStores";
-import { StateValue } from "../../SectionsMeta/values/StateValue";
 import { DealMode } from "../../SectionsMeta/values/StateValue/dealMode";
 import { StateSections } from "../../StateSections/StateSections";
 import { EditorUpdaterVarb } from "../../StateSetters/EditorUpdaterVarb";
@@ -43,7 +42,6 @@ const sectionActionNames = [
   "removeStoredDeal",
   "loadUserData",
   "incrementGetUserDataTry",
-  "changeActiveDealMode",
 ] as const;
 export type SectionActionName = (typeof sectionActionNames)[number];
 
@@ -61,7 +59,6 @@ type ExtraActionProps = _CheckSectionActionProps<{
 
   addActiveDeal: { dealMode: DealMode };
   activateDeal: FeIdProp;
-  changeActiveDealMode: { dealMode: StateValue<"dealMode"> };
   removeStoredDeal: FeIdProp;
 
   addChild: AddChildActionProps;
@@ -209,8 +206,6 @@ export const sectionsReducer: React.Reducer<StateSections, SectionsAction> = (
 
     activateDeal: ({ feId }) => solverSections.activateDealAndSolve(feId),
     addActiveDeal: ({ dealMode }) => solverSections.addActiveDeal(dealMode),
-    changeActiveDealMode: ({ dealMode }) =>
-      solverSections.changeActiveDealMode(dealMode),
   };
 
   switch (action.type) {

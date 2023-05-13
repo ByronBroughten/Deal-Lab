@@ -16,9 +16,6 @@ export class SolverActiveDeal extends SolverSectionBase<"deal"> {
   get sections() {
     return new SolverSections(this.solverSectionsProps);
   }
-  setDealMode(dealMode: DealMode): void {
-    this.sections.changeActiveDealMode(dealMode);
-  }
   solverSection<S extends SectionName>(
     feInfo: FeSectionInfo<S>
   ): SolverSection<S> {

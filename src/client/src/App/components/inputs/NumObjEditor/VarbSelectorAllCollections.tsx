@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { mixedInfoS } from "../../../sharedWithServer/SectionsMeta/SectionInfo/MixedSectionInfo";
 import { collectionNamesFixed } from "../../../sharedWithServer/SectionsMeta/SectionInfo/VarbPathNameInfo";
-import { DealModeOrMixed } from "../../../sharedWithServer/SectionsMeta/values/StateValue/dealMode";
+import { DealMode } from "../../../sharedWithServer/SectionsMeta/values/StateValue/dealMode";
 import { useGetterMainOnlyChild } from "../../../sharedWithServer/stateClassHooks/useMain";
 import {
   ValueCustomVarbPathInfo,
@@ -66,7 +66,7 @@ type CollectionProps = {
   rowInfos: ValueInEntityInfo[];
 }[];
 
-function useFixedCollections(dealMode: DealModeOrMixed): CollectionProps {
+function useFixedCollections(dealMode: DealMode<"plusMixed">): CollectionProps {
   const orderedCollectionNames = Arr.extractStrict(collectionNamesFixed, [
     "Property",
     "Financing",

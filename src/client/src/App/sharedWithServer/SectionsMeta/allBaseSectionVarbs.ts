@@ -208,6 +208,7 @@ export function makeAllBaseSectionVarbs() {
         "sqft",
 
         "numBedrooms",
+        "numBedroomsEditor",
         "numUnits",
         "numUnitsEditor",
       ] as const),

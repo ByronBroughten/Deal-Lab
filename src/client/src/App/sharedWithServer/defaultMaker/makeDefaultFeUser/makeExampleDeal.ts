@@ -21,9 +21,6 @@ export function makeExampleDeal(displayName: string) {
   const property = deal.onlyChild("property");
   property.loadSelf(exampleDealBuyAndHoldProperty());
 
-  const fixAndFlip = deal.onlyChild("fixAndFlipProperty");
-  fixAndFlip.loadSelf(exampleDealFixAndFlipProperty());
-
   const financing = deal.onlyChild("financing");
   financing.updateValues({ financingMode: "useLoan" });
 

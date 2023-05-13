@@ -54,6 +54,7 @@ export const allDisplaySectionVarbs = {
     sqft: varb("Square feet"),
     rehabCost: varb("Rehab cost"),
     numUnits: varb("Unit count"),
+    numBedroomsEditor: varb("Bedroom count"),
     ...editorDisplayGroup(
       "monthsYearsInput",
       "holdingPeriod",

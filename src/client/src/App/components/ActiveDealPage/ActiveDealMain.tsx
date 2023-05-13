@@ -1,9 +1,9 @@
 import { View } from "react-native";
+import { isDealMode } from "../../sharedWithServer/SectionsMeta/values/StateValue/dealMode";
 import { BackBtnWrapper } from "../appWide/BackBtnWrapper";
 import { BackgroundContainer } from "../appWide/BackgroundContainter";
 import { PageTitle } from "../appWide/PageTitle";
 import { BigStringEditor } from "../inputs/BigStringEditor";
-import { useAction } from "./../../sharedWithServer/stateClassHooks/useAction";
 import { nativeTheme } from "./../../theme/nativeTheme";
 import { Row } from "./../general/Row";
 import { OutputSection } from "./ActiveDeal/DealOutputs/OutputSection";
@@ -20,7 +20,6 @@ export function ActiveDealMain() {
   const { deal, calcVarbs, feStore } = useActiveDealPage();
   const dealMode = deal.valueNext("dealMode");
   const completionStatus = calcVarbs.value("dealCompletionStatus");
-  const changeDealMode = useAction("changeActiveDealMode");
 
   return (
     <BackBtnWrapper {...{ to: "account", label: "Deal Menu" }}>
@@ -42,7 +41,7 @@ export function ActiveDealMain() {
         <View>
           <DealSubSectionClosed {...dealElementProps} sectionName="property" />
           <DealSubSectionClosed {...dealElementProps} sectionName="financing" />
-          {dealMode !== "fixAndFlip" && (
+          {isDealMode(dealMode, "hasMgmt") && (
             <DealSubSectionClosed {...dealElementProps} sectionName="mgmt" />
           )}
         </View>

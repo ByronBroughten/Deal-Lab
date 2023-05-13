@@ -93,6 +93,7 @@ export const allSectionChildren = checkAllSectionChildren({
     outputItem: sectionChild("outputItem"),
   },
   outputSection: {
+    homeBuyerOutputList: sectionChild("outputList"),
     buyAndHoldOutputList: sectionChild("outputList"),
     fixAndFlipOutputList: sectionChild("outputList"),
     // brrrrOutputList: sectionChild("outputList"),
@@ -117,10 +118,6 @@ export const allSectionChildren = checkAllSectionChildren({
   conditionalRowList: { conditionalRow: sectionChild("conditionalRow") },
   deal: sectionChildren({
     property: "property",
-    buyAndHoldProperty: "property",
-    fixAndFlipProperty: "property",
-    // brrrrProperty: "property",
-
     financing: "financing",
     mgmt: "mgmt",
   }),

@@ -44,12 +44,25 @@ export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
         "dealMode",
         relVarbInfoS.local("propertyMode"),
         {
+          homeBuyer: basicsS.one,
           buyAndHold: basicsS.sumChildren("unit", "one"),
           fixAndFlip: basicsS.loadFromLocal("numUnitsEditor"),
         }
       ),
     }),
-    numBedrooms: updateVarbS.sumChildNums("unit", "numBedrooms"),
+    numBedroomsEditor: updateVarb("numObj"),
+    numBedrooms: updateVarb("numObj", {
+      updateFnName: "throwIfReached",
+      updateOverrides: unionSwitchOverride(
+        "dealMode",
+        relVarbInfoS.local("propertyMode"),
+        {
+          homeBuyer: basicsS.loadFromLocal("numBedroomsEditor"),
+          buyAndHold: basicsS.sumChildren("unit", "numBedrooms"),
+          fixAndFlip: basicsS.notApplicable,
+        }
+      ),
+    }),
     rehabCostBase: updateVarbS.sumNums([
       propS.children("repairValue", "valueDollars"),
       propS.children("miscOnetimeCost", "valueDollars"),
@@ -62,6 +75,10 @@ export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
     ...updateVarbsS.ongoingSumNumsNext("holdingCost", "monthly", {
       updateBasics: { updateFnName: "throwIfReached", updateFnProps: {} },
       updateOverrides: [
+        {
+          switches: [overrideSwitchS.local("propertyMode", "homeBuyer")],
+          updateBasics: basicsS.notApplicable,
+        },
         {
           switches: [overrideSwitchS.local("propertyMode", "buyAndHold")],
           updateBasics: basicsS.notApplicable,
@@ -87,6 +104,10 @@ export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
         "dealMode",
         relVarbInfoS.local("propertyMode"),
         {
+          homeBuyer: updateVarbS.sumNums([
+            propS.local("purchasePrice"),
+            propS.local("rehabCost"),
+          ]),
           buyAndHold: updateVarbS.sumNums([
             propS.local("purchasePrice"),
             propS.local("rehabCost"),

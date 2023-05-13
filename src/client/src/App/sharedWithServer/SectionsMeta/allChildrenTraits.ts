@@ -135,14 +135,6 @@ export const allChildrenTraits = checkAllChildrenTraits({
       sectionContextName: "latentDealSystem",
     }),
   }),
-  deal: childrenTraits("deal", {
-    buyAndHoldProperty: childTraits({
-      sectionContextName: "latentDealSystem",
-    }),
-    fixAndFlipProperty: childTraits({
-      sectionContextName: "latentDealSystem",
-    }),
-  }),
   feStore: childrenTraits("feStore", {
     outputSection: childTraits({
       sectionContextName: "activeDealSystem",

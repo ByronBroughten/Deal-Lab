@@ -26,6 +26,7 @@ const updateFnNames = checkUpdateFnNames({
     "loadNumObj",
     "getNumObjOfSwitch",
     "solvableTextZero",
+    "solvableTextOne",
     "solvableTextPointOne",
     "solvableTextPointZeroFive",
     "solvableTextPointEightFive",
@@ -76,7 +77,7 @@ const editorUpdateNames = [
   "manualUpdateOnly",
 ] as const;
 
-type EditorUpdateName = typeof editorUpdateNames[number];
+type EditorUpdateName = (typeof editorUpdateNames)[number];
 export function isEditorUpdateFnName(value: string): value is EditorUpdateName {
   return editorUpdateNames.includes(value as any);
 }

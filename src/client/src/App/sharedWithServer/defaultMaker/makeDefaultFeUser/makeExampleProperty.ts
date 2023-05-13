@@ -54,6 +54,17 @@ interface SharedSections {
 }
 
 type NeededPropertyVarbs = CheckNeededPropertyVarbs<{
+  homeBuyer: SharedSections & {
+    dealMode: "homeBuyer";
+    property: CommonProperty & { numBedroomsEditor: NumObj };
+    capExValue: {
+      valueSourceName: StateValue<"capExValueSource">;
+      items: [string, number | NumObj, number | NumObj][];
+    };
+    maintenanceValue: {
+      valueSourceName: StateValue<"maintainanceValueSource">;
+    };
+  };
   buyAndHold: SharedSections & {
     dealMode: "buyAndHold";
     property: CommonProperty;
@@ -142,6 +153,33 @@ export function makeExampleProperty<DM extends StateValue<"dealMode">>(
     valueSourceName: "valuePercentEditor",
   });
 
+  switch (props.dealMode) {
+    case "buyAndHold":
+    case "homeBuyer": {
+      const capExValue = property.onlyChild("capExValue");
+      capExValue.updateValues({
+        valueSourceName: props.capExValue.valueSourceName,
+      });
+      const capExList = capExValue.onlyChild("capExList");
+      for (const [displayName, lifeSpan, replacementCost] of props.capExValue
+        .items) {
+        const item = capExList.addAndGetChild("capExItem");
+        item.updateValues({
+          displayNameEditor: displayName,
+          costToReplace: numToObj(replacementCost),
+          lifespanSpanEditor: numToObj(lifeSpan),
+          valueOngoingSwitch: "yearly",
+          lifespanSpanSwitch: "years",
+        });
+      }
+
+      const maintenance = property.onlyChild("maintenanceValue");
+      maintenance.updateValues({
+        valueSourceName: props.maintenanceValue.valueSourceName,
+      });
+    }
+  }
+
   if (props.dealMode === "buyAndHold") {
     for (const { rentMonthly, ...rest } of props.unit) {
       const unit = property.addAndGetChild("unit");
@@ -151,28 +189,6 @@ export function makeExampleProperty<DM extends StateValue<"dealMode">>(
         targetRentOngoingEditor: rentMonthly,
       });
     }
-
-    const capExValue = property.onlyChild("capExValue");
-    capExValue.updateValues({
-      valueSourceName: props.capExValue.valueSourceName,
-    });
-    const capExList = capExValue.onlyChild("capExList");
-    for (const [displayName, lifeSpan, replacementCost] of props.capExValue
-      .items) {
-      const item = capExList.addAndGetChild("capExItem");
-      item.updateValues({
-        displayNameEditor: displayName,
-        costToReplace: numToObj(replacementCost),
-        lifespanSpanEditor: numToObj(lifeSpan),
-        valueOngoingSwitch: "yearly",
-        lifespanSpanSwitch: "years",
-      });
-    }
-
-    const maintenance = property.onlyChild("maintenanceValue");
-    maintenance.updateValues({
-      valueSourceName: props.maintenanceValue.valueSourceName,
-    });
   }
 
   if (props.dealMode === "fixAndFlip") {

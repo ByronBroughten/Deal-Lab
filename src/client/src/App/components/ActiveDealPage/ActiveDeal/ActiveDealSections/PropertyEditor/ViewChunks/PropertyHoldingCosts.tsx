@@ -36,7 +36,10 @@ export function PropertyHoldingCosts({ feId }: FeIdProp) {
           feVarbInfo={property.varbInfo("homeInsOngoingEditor")}
           quickViewVarbNames={["purchasePrice", "sqft", "numUnits"]}
         />
-        <UtilityValue feId={property.onlyChildFeId("utilityValue")} />
+        <UtilityValue
+          propertyMode="fixAndFlip"
+          feId={property.onlyChildFeId("utilityValue")}
+        />
         <MiscHoldingCost feId={property.onlyChildFeId("miscHoldingCost")} />
       </MuiRow>
     </FormSectionLabeled>

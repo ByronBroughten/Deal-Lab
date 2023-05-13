@@ -4,8 +4,8 @@ import {
   VarbPathParams,
 } from "../SectionsMeta/SectionInfo/VarbPathNameInfo";
 import {
-  DealModeOrMixed,
-  dealModesPlusMixed,
+  DealMode,
+  getDealModes,
 } from "../SectionsMeta/values/StateValue/dealMode";
 import {
   fixedVarbPathNames,
@@ -16,7 +16,7 @@ export type VarbPathArrParam<
   VPN extends ValueFixedVarbPathName = ValueFixedVarbPathName
 > = VarbPathParams<VPN> & VarbPathNameProp<VPN>;
 
-export const fixedVarbOptionArrs = dealModesPlusMixed.reduce(
+export const fixedVarbOptionArrs = getDealModes("plusMixed").reduce(
   (obj, dealMode) => {
     obj[dealMode] = fixedVarbPathNames[dealMode].map(
       (varbPathName) =>
@@ -27,5 +27,5 @@ export const fixedVarbOptionArrs = dealModesPlusMixed.reduce(
     );
     return obj;
   },
-  {} as Record<DealModeOrMixed, VarbPathArrParam[]>
+  {} as Record<DealMode<"plusMixed">, VarbPathArrParam[]>
 );

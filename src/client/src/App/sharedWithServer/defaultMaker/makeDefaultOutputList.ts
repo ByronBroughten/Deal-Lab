@@ -11,6 +11,7 @@ type OutputVarbPathNames = Record<
 >;
 
 const outputVarbPathNames: OutputVarbPathNames = {
+  homeBuyer: ["totalInvestment", "pitiMonthly", "dealExpensesYearly"],
   buyAndHold: ["totalInvestment", "cashFlowYearly", "cocRoiYearly"],
   fixAndFlip: [
     "totalInvestment",

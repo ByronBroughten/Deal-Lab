@@ -1,15 +1,15 @@
-import { DealModeOrMixed } from "../../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
+import { DealMode } from "../../../sharedWithServer/SectionsMeta/values/StateValue/dealMode";
 import { makeContextUseContext } from "../../../utils/react";
 
 const [DealModeContext, use] = makeContextUseContext(
   "DealModeContext",
-  "mixed" as DealModeOrMixed
+  "mixed" as DealMode<"plusMixed">
 );
 
 export const useDealModeContext = use;
 
 interface Props {
-  dealMode: DealModeOrMixed;
+  dealMode: DealMode<"plusMixed">;
   children: React.ReactNode;
 }
 export function DealModeProvider({ children, dealMode }: Props) {

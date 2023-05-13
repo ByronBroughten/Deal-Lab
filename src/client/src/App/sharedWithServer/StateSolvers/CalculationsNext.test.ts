@@ -247,6 +247,7 @@ describe("Property calculations", () => {
   it("should calculate upfrontExpenses", () => {
     forEveryDealModeWithProperty((property) => {
       const values = {
+        homeBuyer: 201000,
         buyAndHold: 201000,
         fixAndFlip: 215200,
       } as const;

@@ -7,23 +7,15 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
-// For primary residence, for these selections:
+// For homeBuy, for these selections:
+// - Repair cost should have a "Turnkey" option
+//   - Same for buyAndHold
+//   - "Cost overrun" should maybe be hidden in that case
 // - 20% rent for utilityValue (fixAndFlip, too)
 // - 5% rent for capEx
 // Make them return empty, or "?"
 // Label them as "Choose Method", and inlcude
 // them only if they are selected
-
-// Why are table rows and cells so tall?
-
-// I want the setterCalculations tests to make it easier to figure
-// out what the problem is.
-// I should break them down into smaller tests.
-// One test per subSection
-// And just use SolverSections, not setter
-// Test Calculations
-// Define the numbers used in each test at the top of the test
-// along with the test itself, to be executed in a function
 
 // - Add homeBuyer mode (no income)
 //   - Buy and hold basics

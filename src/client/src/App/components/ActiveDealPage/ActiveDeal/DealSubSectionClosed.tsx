@@ -37,6 +37,13 @@ type SectionProps = {
 
 const propsByDealMode = {
   property: {
+    homeBuyer: {
+      detailVarbNames: [
+        "purchasePrice",
+        "rehabCost",
+        "expensesYearly",
+      ] as const,
+    },
     buyAndHold: {
       detailVarbNames: [
         "purchasePrice",

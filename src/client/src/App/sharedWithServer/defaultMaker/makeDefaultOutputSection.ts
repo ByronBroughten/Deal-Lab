@@ -12,6 +12,7 @@ type DealModeToOutputChildName = Record<
 
 const _checkOutputListNames = <T extends DealModeToOutputChildName>(t: T) => t;
 const dealModeToOutputListName = _checkOutputListNames({
+  homeBuyer: "homeBuyerOutputList",
   buyAndHold: "buyAndHoldOutputList",
   fixAndFlip: "fixAndFlipOutputList",
 });

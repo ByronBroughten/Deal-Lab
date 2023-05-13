@@ -1,14 +1,12 @@
 import { pick } from "lodash";
 import { SolverFeStore } from "../../modules/FeStore/SolverFeStore";
 import { defaultMaker } from "../defaultMaker/defaultMaker";
-import { propertyNameByDealMode } from "../defaultMaker/makeDefaultDeal";
 import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
 import { FeSectionInfo, FeVarbInfo } from "../SectionsMeta/SectionInfo/FeInfo";
 import { VarbInfoMixed } from "../SectionsMeta/SectionInfo/MixedSectionInfo";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { StoreSectionName } from "../SectionsMeta/sectionStores";
-import { StateValue } from "../SectionsMeta/values/StateValue";
 import { DealMode } from "../SectionsMeta/values/StateValue/dealMode";
 import { GetterSections } from "../StateGetters/GetterSections";
 import { GetterVarb } from "../StateGetters/GetterVarb";
@@ -202,41 +200,6 @@ export class SolverSections extends SolverSectionsBase {
     property.basicSolvePrepper.updateValues({ propertyMode: dealMode });
 
     this.activateDealAndSolve(newDeal.get.feId);
-  }
-  changeActiveDealMode(dealMode: StateValue<"dealMode">) {
-    this.cacheActiveDealProperty();
-    const activeDeal = this.getActiveDeal();
-    activeDeal.basicSolvePrepper.updateValues({ dealMode });
-    this.loadActiveDealProperty();
-
-    this.prepperSections.addAppWideMissingOutEntities();
-    this.solve();
-  }
-  private cacheActiveDealProperty() {
-    const activeDeal = this.getActiveDeal();
-    const property = activeDeal.onlyChild("property");
-    const sectionPack = property.packMaker.makeSectionPack();
-    property.basicSolvePrepper.removeSelf();
-
-    const childName = propertyNameByDealMode(activeDeal.value("dealMode"));
-    console.log(childName);
-    activeDeal.basicSolvePrepper.loadChild({
-      childName,
-      sectionPack,
-    });
-  }
-  private loadActiveDealProperty() {
-    const activeDeal = this.getActiveDeal();
-
-    const childName = propertyNameByDealMode(activeDeal.value("dealMode"));
-    const property = activeDeal.onlyChild(childName);
-    const sectionPack = property.packMaker.makeSectionPack();
-    property.basicSolvePrepper.removeSelf();
-
-    activeDeal.basicSolvePrepper.loadChild({
-      childName: "property",
-      sectionPack,
-    });
   }
   get activeDealSystem(): SolverSection<"dealSystem"> {
     const main = this.oneAndOnly("main");

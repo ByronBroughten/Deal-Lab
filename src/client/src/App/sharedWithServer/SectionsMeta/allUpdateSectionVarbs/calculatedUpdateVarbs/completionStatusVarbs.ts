@@ -1,7 +1,5 @@
-import { Arr } from "../../../utils/Arr";
 import { mixedInfoS } from "../../SectionInfo/MixedSectionInfo";
 import { relVarbInfoS } from "../../SectionInfo/RelVarbInfo";
-import { sectionPathNames } from "../../sectionPathContexts/sectionPathNames";
 import { updateVarb, UpdateVarb } from "../../updateSectionVarbs/updateVarb";
 import {
   UpdateFnProp,
@@ -41,6 +39,31 @@ export const dealCompletionStatus = updateVarb("completionStatus", {
   }),
 });
 
+function hasOngoingNoneNones(): UpdateFnProp[] {
+  return [
+    propS.onlyChild("repairValue", "valueSourceName"),
+    propS.onlyChild("utilityValue", "valueSourceName"),
+    propS.onlyChild("maintenanceValue", "valueSourceName"),
+    propS.onlyChild("capExValue", "valueSourceName"),
+  ];
+}
+function hasOngoingValidInputs(): UpdateFnProp[] {
+  return [
+    propS.onlyChild("capExValue", "valueDollarsOngoingEditor", [
+      oSwitch(
+        relVarbInfoS.local("valueSourceName"),
+        "valueDollarsOngoingEditor"
+      ),
+    ]),
+    propS.onlyChild("maintenanceValue", "valueDollarsOngoingEditor", [
+      oSwitch(
+        relVarbInfoS.local("valueSourceName"),
+        "valueDollarsOngoingEditor"
+      ),
+    ]),
+  ];
+}
+
 function propertySharedValidInputs(): UpdateFnProp[] {
   return [
     ...propsS.localArr(
@@ -64,28 +87,19 @@ function propertySharedValidInputs(): UpdateFnProp[] {
 export const propertyCompletionStatus = completionStatusVarb(
   ...dealModeOverrides(
     {
-      buyAndHold: cBasics({
-        nonZeros: [propS.local("numUnits")],
-        nonNone: [
-          propS.onlyChild("repairValue", "valueSourceName"),
-          propS.onlyChild("utilityValue", "valueSourceName"),
-          propS.onlyChild("maintenanceValue", "valueSourceName"),
-          propS.onlyChild("capExValue", "valueSourceName"),
-        ],
+      homeBuyer: cBasics({
+        nonNone: hasOngoingNoneNones(),
         validInputs: [
           ...propertySharedValidInputs(),
-          propS.onlyChild("capExValue", "valueDollarsOngoingEditor", [
-            oSwitch(
-              relVarbInfoS.local("valueSourceName"),
-              "valueDollarsOngoingEditor"
-            ),
-          ]),
-          propS.onlyChild("maintenanceValue", "valueDollarsOngoingEditor", [
-            oSwitch(
-              relVarbInfoS.local("valueSourceName"),
-              "valueDollarsOngoingEditor"
-            ),
-          ]),
+          ...hasOngoingValidInputs(),
+        ],
+      }),
+      buyAndHold: cBasics({
+        nonZeros: [propS.local("numUnits")],
+        nonNone: hasOngoingNoneNones(),
+        validInputs: [
+          ...propertySharedValidInputs(),
+          ...hasOngoingValidInputs(),
         ],
       }),
       fixAndFlip: cBasics({
@@ -100,23 +114,6 @@ export const propertyCompletionStatus = completionStatusVarb(
     relVarbInfoS.local("propertyMode")
   )
 );
-
-const loanPathNames = Arr.extractStrict(sectionPathNames, [
-  "purchaseLoanFocal",
-  "repairLoanFocal",
-  "arvLoanFocal",
-] as const);
-
-type LoanPathName = (typeof loanPathNames)[number];
-
-function noFinancingOverride() {
-  return updateOverride(
-    [switchS.localIsFalse("financingExists")],
-    cBasics({
-      notFalse: [propS.local("financingExists")],
-    })
-  );
-}
 
 export function loanValueCompletionStatus(): UpdateVarb<"completionStatus"> {
   const sourceNames = unionValueArr("percentDollarsSource");
@@ -191,7 +188,7 @@ export const mgmtCompletionStatus = completionStatusVarb(
   ),
   ...dealModeOverrides(
     {
-      fixAndFlip: cBasics({
+      homeBuyer: cBasics({
         notFalse: [propS.local("mgmtExists")],
       }),
       buyAndHold: cBasics({
@@ -225,6 +222,9 @@ export const mgmtCompletionStatus = completionStatusVarb(
             ),
           ]),
         ],
+      }),
+      fixAndFlip: cBasics({
+        notFalse: [propS.local("mgmtExists")],
       }),
     },
     mixedInfoS.varbPathName("dealMode")

@@ -5,19 +5,20 @@ import {
   VarbPathNameInfoMixed,
   varbPathNames,
 } from "../SectionsMeta/SectionInfo/VarbPathNameInfo";
-import { DealModeOrMixed } from "../SectionsMeta/values/StateValue/dealMode";
+import { DealMode } from "../SectionsMeta/values/StateValue/dealMode";
 import { Arr } from "../utils/Arr";
 import { ValidationError } from "../utils/Error";
 import { Obj } from "../utils/Obj";
 import { validateS } from "../validateS";
 
 const checkFixedVarbNames = <
-  T extends Record<DealModeOrMixed, readonly VarbPathName[]>
+  T extends Record<DealMode<"plusMixed">, readonly VarbPathName[]>
 >(
   t: T
 ) => t;
 
-const sharedBasics = ["purchasePrice", "sqft", "numUnits"] as const;
+const sharedBasics = ["purchasePrice", "sqft"] as const;
+const nonHomebuyBasics = ["numUnits"] as const;
 
 const sharedOngoing = [
   "taxesMonthly",
@@ -61,6 +62,7 @@ const fixAndFlipOutputs = [
 ] as const;
 const fixAndFlip = [
   ...sharedBasics,
+  ...nonHomebuyBasics,
   ...fixAndFlipBasics,
   ...sharedOngoing,
   ...sharedUpfront,
@@ -69,6 +71,8 @@ const fixAndFlip = [
   ...fixAndFlipOutputs,
   ...sharedExtras,
 ] as const;
+
+const ongoingOutputs = ["dealExpensesMonthly", "dealExpensesYearly"] as const;
 
 const buyAndHoldBasics = [
   "numBedrooms",
@@ -87,22 +91,38 @@ const buyAndHoldExtras = [
 ] as const;
 const buyAndHold = [
   ...sharedBasics,
+  ...nonHomebuyBasics,
   ...buyAndHoldBasics,
   ...sharedOngoing,
   ...sharedUpfront,
   ...financing,
   ...mgmt,
   ...sharedOutputs,
+  ...ongoingOutputs,
   ...buyAndHoldOutputs,
   ...sharedExtras,
   ...buyAndHoldExtras,
 ] as const;
 
+const homeBuyer = [
+  ...sharedBasics,
+  "numBedrooms",
+  ...sharedOngoing,
+  ...sharedUpfront,
+  ...financing,
+  ...sharedOutputs,
+  ...ongoingOutputs,
+  ...sharedExtras,
+] as const;
+
 export const fixedVarbPathNames = checkFixedVarbNames({
   buyAndHold,
   fixAndFlip,
+  homeBuyer,
   mixed: [
     ...sharedBasics,
+    ...nonHomebuyBasics,
+    "numBedrooms",
     ...buyAndHoldBasics,
     ...fixAndFlipBasics,
     ...sharedOngoing,
@@ -110,15 +130,23 @@ export const fixedVarbPathNames = checkFixedVarbNames({
     ...financing,
     ...mgmt,
     ...sharedOutputs,
+    ...ongoingOutputs,
     ...buyAndHoldOutputs,
     ...fixAndFlipOutputs,
     ...sharedExtras,
     ...buyAndHoldExtras,
   ] as const,
 });
+
+// const allVarbPathNames = [...new Set([
+//   ...fixedVarbPathNames.homeBuyer,
+//   ...fixedVarbPathNames.buyAndHold,
+//   ...fixedVarbPathNames.fixAndFlip
+// ])]
+
 type FixedVarbPathOptions = typeof fixedVarbPathNames;
 export type ValueFixedVarbPathName =
-  FixedVarbPathOptions[DealModeOrMixed][number];
+  FixedVarbPathOptions[DealMode<"plusMixed">][number];
 
 const mixedVarbPathNames: readonly ValueFixedVarbPathName[] =
   fixedVarbPathNames["mixed"];
@@ -162,12 +190,13 @@ export type ValueInEntityInfo =
   | ValueCustomVarbPathInfo;
 
 export function validateInEntityInfo(value: any): ValueInEntityInfo {
-  try {
+  if ((value as ValueInEntityInfo).infoType === "varbPathName") {
     return validateInEntityInfoFixed(value);
-  } catch (err) {
-    if (!(err instanceof ValidationError)) {
-      throw err;
-    }
+  } else if ((value as ValueInEntityInfo).infoType === "varbPathDbId") {
+    return validateInEntityInfoCustom(value);
+  } else {
+    throw new ValidationError(
+      `value infoType "${value.infoType}" is not valid`
+    );
   }
-  return validateInEntityInfoCustom(value);
 }

@@ -39,7 +39,7 @@ export const validateS = {
       return value;
     } else {
       throw new ValidationError(
-        `value "${value}" is does not match literal "${literal}"`
+        `value "${value}" does not match literal "${literal}"`
       );
     }
   },

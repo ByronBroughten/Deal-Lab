@@ -23,7 +23,10 @@ export function PropertyOngoingCosts({ feId }: FeIdProp) {
           feVarbInfo={property.varbInfo("homeInsOngoingEditor")}
           quickViewVarbNames={["purchasePrice", "sqft", "numUnits"]}
         />
-        <UtilityValue feId={property.onlyChildFeId("utilityValue")} />
+        <UtilityValue
+          propertyMode={property.valueNext("propertyMode")}
+          feId={property.onlyChildFeId("utilityValue")}
+        />
         <CapExValue feId={property.onlyChildFeId("capExValue")} />
         <MaintenanceValue feId={property.onlyChildFeId("maintenanceValue")} />
         <MiscOngoingCost

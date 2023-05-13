@@ -8,7 +8,6 @@ import {
   ValueInEntityInfo,
 } from "../../../../StateEntityGetters/ValueInEntityInfo";
 import { Arr } from "../../../../utils/Arr";
-import { ValidationError } from "../../../../utils/Error";
 import { Obj } from "../../../../utils/Obj";
 import { zS } from "../../../../utils/zod";
 import { validateS } from "../../../../validateS";
@@ -68,14 +67,13 @@ function validateCustomValueInEntity(value: any): ValueInEntityCustom {
   };
 }
 function validateValueInEntity(value: any): ValueInEntity {
-  try {
+  if ((value as ValueInEntity).infoType === "varbPathName") {
     return validateFixedValueInEntity(value);
-  } catch (err) {
-    if (!(err instanceof ValidationError)) {
-      throw err;
-    }
+  } else if ((value as ValueInEntity).infoType === "varbPathName") {
+    return validateCustomValueInEntity(value);
+  } else {
+    throw new Error(`value.infoType "${value.infoType}" is not valid.`);
   }
-  return validateCustomValueInEntity(value);
 }
 
 export function validateValueInEntities(value: any): ValueInEntity[] {

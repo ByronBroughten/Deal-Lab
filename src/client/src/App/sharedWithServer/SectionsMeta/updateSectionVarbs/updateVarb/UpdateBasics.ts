@@ -56,6 +56,9 @@ export const updateBasicsS = {
   get zero() {
     return updateBasicsNext("solvableTextZero");
   },
+  get one() {
+    return updateBasicsNext("solvableTextOne");
+  },
   get pointOne() {
     return updateBasicsNext("solvableTextPointOne");
   },

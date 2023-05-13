@@ -7,6 +7,7 @@ import { SiWebcomponentsdotorg } from "react-icons/si";
 import { View } from "react-native";
 import { FeRouteName } from "../Constants/feRoutes";
 import { useToggleView } from "../modules/customHooks/useToggleView";
+import { dealModeLabels } from "../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
 import { useAction } from "../sharedWithServer/stateClassHooks/useAction";
 import { useGetterSectionOnlyOne } from "../sharedWithServer/stateClassHooks/useGetterSection";
 import { nativeTheme } from "../theme/nativeTheme";
@@ -92,8 +93,9 @@ export function AccountPage() {
                 varbName: "dealMode",
               },
               items: [
-                ["buyAndHold", "Rental Property"],
-                ["fixAndFlip", "Fix & Flip"],
+                ["homeBuyer", dealModeLabels.homeBuyer],
+                ["buyAndHold", dealModeLabels.buyAndHold],
+                ["fixAndFlip", dealModeLabels.fixAndFlip],
               ],
             }}
           />

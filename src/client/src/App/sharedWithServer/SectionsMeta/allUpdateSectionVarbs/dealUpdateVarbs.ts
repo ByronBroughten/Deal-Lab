@@ -23,12 +23,10 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
     ...updateVarbsS.displayNameAndEditor,
     dealMode: updateVarb("dealMode", { initValue: "buyAndHold" }),
     preFinanceOneTimeExpenses: dealModeVarb({
-      fixAndFlip: basicsS.sumNums(
+      homeBuyer: basicsS.sumNums(
         propS.onlyChild("property", "purchasePrice"),
         propS.varbPathName("closingCosts"),
-        propS.onlyChild("property", "holdingCostTotal"),
         propS.onlyChild("property", "rehabCost"),
-        propS.onlyChild("property", "sellingCosts"),
         propS.onlyChild("property", "miscOnetimeCosts")
       ),
       buyAndHold: basicsS.sumNums(
@@ -37,6 +35,14 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
         propS.onlyChild("property", "rehabCost"),
         propS.onlyChild("property", "miscOnetimeCosts"),
         propS.onlyChild("mgmt", "miscOnetimeCosts")
+      ),
+      fixAndFlip: basicsS.sumNums(
+        propS.onlyChild("property", "purchasePrice"),
+        propS.varbPathName("closingCosts"),
+        propS.onlyChild("property", "holdingCostTotal"),
+        propS.onlyChild("property", "rehabCost"),
+        propS.onlyChild("property", "sellingCosts"),
+        propS.onlyChild("property", "miscOnetimeCosts")
       ),
     }),
     totalInvestment: updateVarb(
@@ -48,80 +54,95 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
       )
     ),
     expensesMonthly: dealModeVarb({
-      fixAndFlip: notApplicable(),
+      homeBuyer: basicsS.sumNums(
+        propS.pathNameBase("propertyFocal", "expensesMonthly"),
+        propS.varbPathBase("loanExpensesMonthly")
+      ),
       buyAndHold: basicsS.sumNums(
         propS.pathNameBase("propertyFocal", "expensesMonthly"),
         propS.pathNameBase("mgmtFocal", "expensesMonthly"),
         propS.varbPathBase("loanExpensesMonthly")
       ),
+      fixAndFlip: notApplicable(),
     }),
     expensesYearly: dealModeVarb({
-      fixAndFlip: notApplicable(),
+      homeBuyer: basicsS.sumNums(
+        propS.pathNameBase("propertyFocal", "expensesYearly"),
+        propS.varbPathBase("loanExpensesYearly")
+      ),
       buyAndHold: basicsS.sumNums(
         propS.pathNameBase("propertyFocal", "expensesYearly"),
         propS.pathNameBase("mgmtFocal", "expensesYearly"),
         propS.varbPathBase("loanExpensesYearly")
       ),
+      fixAndFlip: notApplicable(),
     }),
     expensesOngoingSwitch: updateVarb("ongoingSwitch", {
       initValue: "monthly",
     }),
     cashFlowMonthly: dealModeVarb({
-      fixAndFlip: notApplicable(),
+      homeBuyer: notApplicable(),
       buyAndHold: updateVarbS.leftRightPropFn(
         "simpleSubtract",
         propS.pathNameBase("propertyFocal", "revenueMonthly"),
         propS.local("expensesMonthly")
       ),
+      fixAndFlip: notApplicable(),
     }),
     cashFlowYearly: dealModeVarb({
-      fixAndFlip: notApplicable(),
+      homeBuyer: notApplicable(),
       buyAndHold: updateVarbS.leftRightPropFn(
         "simpleSubtract",
         propS.pathNameBase("propertyFocal", "revenueYearly"),
         propS.local("expensesYearly")
       ),
+      fixAndFlip: notApplicable(),
     }),
     cashFlowOngoingSwitch: updateVarb("ongoingSwitch", {
       initValue: "yearly",
     }),
     cocRoiDecimalMonthly: dealModeVarb({
-      fixAndFlip: notApplicable(),
+      homeBuyer: notApplicable(),
       buyAndHold: updateVarbS.leftRightPropFn(
         "divide",
         propS.local("cashFlowMonthly"),
         propS.local("totalInvestment")
       ),
+      fixAndFlip: notApplicable(),
     }),
     cocRoiDecimalYearly: dealModeVarb({
-      fixAndFlip: notApplicable(),
+      homeBuyer: notApplicable(),
       buyAndHold: updateVarbS.leftRightPropFn(
         "divide",
         propS.local("cashFlowYearly"),
         propS.local("totalInvestment")
       ),
+      fixAndFlip: notApplicable(),
     }),
     cocRoiDecimalOngoingSwitch: updateVarb("ongoingSwitch", {
       initValue: "yearly",
     }),
     cocRoiMonthly: dealModeVarb({
-      fixAndFlip: notApplicable(),
+      homeBuyer: notApplicable(),
       buyAndHold: updateVarbS.singlePropFn(
         "decimalToPercent",
         propS.local("cocRoiDecimalMonthly")
       ),
+      fixAndFlip: notApplicable(),
     }),
     cocRoiYearly: dealModeVarb({
-      fixAndFlip: notApplicable(),
+      homeBuyer: notApplicable(),
       buyAndHold: updateVarbS.singlePropFn(
         "decimalToPercent",
         propS.local("cocRoiDecimalYearly")
       ),
+      fixAndFlip: notApplicable(),
     }),
     cocRoiOngoingSwitch: updateVarb("ongoingSwitch", {
       initValue: "yearly",
     }),
     cashExpensesPlusLoanRepay: dealModeVarb({
+      homeBuyer: notApplicable(),
       buyAndHold: notApplicable(),
       fixAndFlip: updateVarbS.sumNums([
         propS.local("totalInvestment"),
@@ -129,6 +150,7 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
       ]),
     }),
     totalProfit: dealModeVarb({
+      homeBuyer: notApplicable(),
       buyAndHold: notApplicable(),
       fixAndFlip: basicsS.equationLR(
         "simpleSubtract",
@@ -137,6 +159,7 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
       ),
     }),
     roiPercent: dealModeVarb({
+      homeBuyer: notApplicable(),
       buyAndHold: notApplicable(),
       fixAndFlip: basicsS.equationSimple(
         "decimalToPercent",
@@ -144,6 +167,7 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
       ),
     }),
     roiDecimal: dealModeVarb({
+      homeBuyer: notApplicable(),
       buyAndHold: notApplicable(),
       fixAndFlip: basicsS.equationLR(
         "divide",
@@ -152,6 +176,7 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
       ),
     }),
     roiPercentPerMonth: dealModeVarb({
+      homeBuyer: notApplicable(),
       buyAndHold: notApplicable(),
       fixAndFlip: basicsS.equationLR(
         "divide",
@@ -160,6 +185,7 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
       ),
     }),
     roiPercentAnnualized: dealModeVarb({
+      homeBuyer: notApplicable(),
       buyAndHold: notApplicable(),
       fixAndFlip: basicsS.equationLR(
         "multiply",
