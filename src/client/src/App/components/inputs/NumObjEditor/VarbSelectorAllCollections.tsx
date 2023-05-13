@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { mixedInfoS } from "../../../sharedWithServer/SectionsMeta/SectionInfo/MixedSectionInfo";
 import { collectionNamesFixed } from "../../../sharedWithServer/SectionsMeta/SectionInfo/VarbPathNameInfo";
-import { DealModeOrMixed } from "../../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
+import { DealModeOrMixed } from "../../../sharedWithServer/SectionsMeta/values/StateValue/dealMode";
 import { useGetterMainOnlyChild } from "../../../sharedWithServer/stateClassHooks/useMain";
 import {
   ValueCustomVarbPathInfo,

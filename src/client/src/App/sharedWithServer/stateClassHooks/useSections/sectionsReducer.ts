@@ -15,7 +15,7 @@ import {
   StoreSectionName,
 } from "../../SectionsMeta/sectionStores";
 import { StateValue } from "../../SectionsMeta/values/StateValue";
-import { DealMode } from "../../SectionsMeta/values/StateValue/unionValues";
+import { DealMode } from "../../SectionsMeta/values/StateValue/dealMode";
 import { StateSections } from "../../StateSections/StateSections";
 import { EditorUpdaterVarb } from "../../StateSetters/EditorUpdaterVarb";
 import { SolverSections } from "../../StateSolvers/SolverSections";

@@ -1,8 +1,8 @@
-import { numObj } from "../SectionsMeta/values/StateValue/NumObj";
 import {
   DealMode,
   dealModes,
-} from "../SectionsMeta/values/StateValue/unionValues";
+} from "../SectionsMeta/values/StateValue/dealMode";
+import { numObj } from "../SectionsMeta/values/StateValue/NumObj";
 import { switchKeyToVarbNames } from "./../SectionsMeta/allBaseSectionVarbs/baseSwitchNames";
 import { SolverActiveDeal } from "./SolverActiveDeal";
 import { SolverSection } from "./SolverSection";

@@ -9,12 +9,14 @@ import React from "react";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { arrSx, MuiSelectOnChange } from "../../utils/mui";
 
+export type SelectItemProp = [string, string] | null;
+
 export interface MuiSelectStyledProps {
   className?: string;
   label?: React.ReactNode;
   value: string;
   onChange?: MuiSelectOnChange;
-  items: [string, string][];
+  items: SelectItemProp[];
   selectProps?: { sx?: SxProps };
   sx?: SxProps;
 }
@@ -84,21 +86,43 @@ export function MuiSelectStyled({
               backgroundColor: nativeTheme["gray-150"],
               borderBottomWidth: 0,
               minWidth: 0,
-
-              ...(value === "none" && {
-                color: nativeTheme["gray-600"],
-              }),
             },
             ...arrSx(selectProps?.sx),
           ],
         }}
       >
-        {items.map(([itemValue, itemLabel]) => (
-          <MenuItem key={itemValue} value={itemValue}>
-            {itemLabel}
-          </MenuItem>
+        {items.map((item) => (
+          <StyledMenuItem
+            {...{
+              item,
+              selectedValue: value,
+            }}
+          />
         ))}
       </Select>
     </FormControl>
   );
+}
+
+type MenuItemProps = { item: SelectItemProp; selectedValue: string };
+function StyledMenuItem({ item, selectedValue }: MenuItemProps) {
+  if (item === null) return null;
+  const [itemLabel, itemValue] = item;
+  if (itemLabel === "Choose method" && itemValue !== selectedValue) {
+    return null;
+  } else {
+    return (
+      <MenuItem
+        sx={{
+          ...(itemLabel === "Choose method" && {
+            color: nativeTheme["gray-600"],
+          }),
+        }}
+        key={itemValue}
+        value={itemValue}
+      >
+        {itemLabel}
+      </MenuItem>
+    );
+  }
 }

@@ -1,6 +1,6 @@
 import { FeSectionInfo } from "../SectionsMeta/SectionInfo/FeInfo";
 import { SectionName } from "../SectionsMeta/SectionName";
-import { DealMode } from "../SectionsMeta/values/StateValue/unionValues";
+import { DealMode } from "../SectionsMeta/values/StateValue/dealMode";
 import { GetterSection } from "../StateGetters/GetterSection";
 import { SolverSectionBase } from "./SolverBases/SolverSectionBase";
 import { SolverSection } from "./SolverSection";

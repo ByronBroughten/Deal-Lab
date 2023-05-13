@@ -9,7 +9,7 @@ import { SectionName } from "../SectionsMeta/SectionName";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { StoreSectionName } from "../SectionsMeta/sectionStores";
 import { StateValue } from "../SectionsMeta/values/StateValue";
-import { DealMode } from "../SectionsMeta/values/StateValue/unionValues";
+import { DealMode } from "../SectionsMeta/values/StateValue/dealMode";
 import { GetterSections } from "../StateGetters/GetterSections";
 import { GetterVarb } from "../StateGetters/GetterVarb";
 import { PackBuilderSections } from "../StatePackers/PackBuilderSections";

@@ -5,7 +5,7 @@ import {
   VarbPathNameInfoMixed,
   varbPathNames,
 } from "../SectionsMeta/SectionInfo/VarbPathNameInfo";
-import { DealModeOrMixed } from "../SectionsMeta/values/StateValue/unionValues";
+import { DealModeOrMixed } from "../SectionsMeta/values/StateValue/dealMode";
 import { Arr } from "../utils/Arr";
 import { ValidationError } from "../utils/Error";
 import { Obj } from "../utils/Obj";
@@ -138,7 +138,7 @@ export function validateInEntityInfoFixed(value: any): ValueFixedVarbPathInfo {
 const customVarbOptionNames = Arr.extractStrict(varbPathNames, [
   "userVarbValue",
 ] as const);
-type CustomVarbOptionName = typeof customVarbOptionNames[number];
+type CustomVarbOptionName = (typeof customVarbOptionNames)[number];
 
 export interface ValueCustomVarbPathInfo<
   VPN extends CustomVarbOptionName = CustomVarbOptionName

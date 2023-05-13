@@ -16,7 +16,7 @@ export interface MuiSelectProps<
   SN extends SectionName
 > {
   unionValueName: UVN;
-  items: [StateValue<UVN>, string][];
+  items: ([StateValue<UVN>, string] | null)[];
   feVarbInfo: FeVarbInfoNext<SN>;
   onChangeOverride?: MuiSelectOnChange;
   batchedWithChange?: MuiSelectOnChange;

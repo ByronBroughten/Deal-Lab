@@ -1,17 +1,7 @@
 import { Arr } from "../../../utils/Arr";
 import { ValidationError } from "../../../utils/Error";
 import { Obj } from "../../../utils/Obj";
-
-export const dealModes = [
-  // homeBuyer
-  "buyAndHold",
-  "fixAndFlip",
-  // brrrr
-] as const;
-export type DealMode = (typeof dealModes)[number];
-
-export const dealModesPlusMixed = [...dealModes, "mixed"] as const;
-export type DealModeOrMixed = (typeof dealModesPlusMixed)[number];
+import { dealModes } from "./dealMode";
 
 const valueSources = {
   ongoingSwitch: ["monthly", "yearly"],

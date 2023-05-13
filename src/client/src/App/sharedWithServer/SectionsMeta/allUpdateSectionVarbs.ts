@@ -105,6 +105,9 @@ function makeAllUpdateSections() {
       ...varbsS.group("valueDollars", "ongoing", "monthly", {
         targets: { updateFnName: "throwIfReached" },
         monthly: {
+          // utilityValue needs dealMode, eh?
+          // should it get passed down, or do I cheat
+          // and use focal?
           updateOverrides: [
             updateOverride(
               [switchS.local("valueSourceName", "none")],

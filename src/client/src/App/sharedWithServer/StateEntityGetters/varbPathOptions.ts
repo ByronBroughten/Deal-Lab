@@ -6,7 +6,7 @@ import {
 import {
   DealModeOrMixed,
   dealModesPlusMixed,
-} from "../SectionsMeta/values/StateValue/unionValues";
+} from "../SectionsMeta/values/StateValue/dealMode";
 import {
   fixedVarbPathNames,
   ValueFixedVarbPathName,

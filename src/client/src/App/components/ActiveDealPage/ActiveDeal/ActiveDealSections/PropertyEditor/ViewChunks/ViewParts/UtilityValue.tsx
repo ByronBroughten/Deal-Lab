@@ -1,13 +1,19 @@
+import { DealMode } from "../../../../../../../sharedWithServer/SectionsMeta/values/StateValue/dealMode";
 import { useGetterSection } from "../../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { SelectAndItemizeEditor } from "../../../../../../appWide/SelectAndItemizeEditor";
 import { ListEditorOngoing } from "../../ValueShared/ListEditorOngoing";
 
-export function UtilityValue({ feId }: { feId: string }) {
+type Props = { feId: string; propertyMode: DealMode };
+export function UtilityValue({ feId, propertyMode }: Props) {
   const feInfo = { sectionName: "utilityValue", feId } as const;
   const utilityValue = useGetterSection(feInfo);
   const valueSourceName = utilityValue.valueNext("valueSourceName");
   const valueVarb = utilityValue.switchVarb("valueDollars", "ongoing");
   const equalsValue = valueSourceName === "zero" ? "$0" : undefined;
+
+  const twentyPercentLabel =
+    propertyMode === "buyAndHold" ? "Twenty percent rent" : "Choose method";
+
   return (
     <SelectAndItemizeEditor
       inputMargins
