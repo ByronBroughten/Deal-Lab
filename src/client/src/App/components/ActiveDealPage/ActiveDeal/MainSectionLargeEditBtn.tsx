@@ -10,7 +10,7 @@ export function MainSectionLargeEditBtn({ sx, ...rest }: MuiBtnPropsNext) {
           marginLeft: nativeTheme.s3,
           width: "100%",
           height: 45,
-          fontSize: nativeTheme.fs16,
+          fontSize: nativeTheme.inputEditor.fontSize,
           ...nativeTheme.subSection.borderLines,
           ...sx,
         },

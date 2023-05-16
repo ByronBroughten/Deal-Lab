@@ -7,22 +7,48 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
-// For homeBuy, for these selections:
-// - Repair cost should have a "Turnkey" option
-//   - Same for buyAndHold
-//   - "Cost overrun" should maybe be hidden in that case
-// - 20% rent for utilityValue (fixAndFlip, too)
-// - 5% rent for capEx
-// Make them return empty, or "?"
-// Label them as "Choose Method", and inlcude
-// them only if they are selected
+// Add updateVarbs for these:
+// - utilityHolding
+// - utilityOngoing
+// - purchaseFinancing
+// - refiFinancing
+// Add tests for these:
+// - utilityHolding
+// - utilityOngoing
+// - purchaseFinancing
+// - refiFinancing
 
-// - Add homeBuyer mode (no income)
-//   - Buy and hold basics
-//   - ongoing costs (utilities, capEx, maintenance (this will be low... unless you have kids, misc ongoing costs))
-//   - numBedrooms input
-//   - rehab (misc oneTime costs)
-//   - outputs: totalInvestment (Cash Investment), monthlyExpenses, totalInterestPaid, totalPrincipal paid
+// Make ongoingHomeIns
+// Make holdingHomeIns
+// Make ongoingTaxes
+// Make holdingTaxes
+// Implement info dots when selecting the dealType
+
+// Fix refiFinancing completionStatus
+// - Then fix where it comes from in useActiveDealSection
+// fix makeExampleProperty for utilityHolding and utilityOngoing
+
+// If I do things this way, I don't have to fuck with the
+// controls quite as much, yeah?
+// A bit though, still.
+
+// Add an easy CapEx default for homebuyer mode (1% or 2% purchase price)
+// Re-add an easy CapEx default for buyAndHold and brrrr (20% rent)
+// Taylor the maintenance defaults for homebuyer mode
+// For homebuyer give repairCost "Turnkey"
+// For buyAndHold, give repairCost "Turnkey"
+// Maybe hide costOverrun for "Turnkey"
+// Is there an easy utilities default homeBuyer?
+// Add a pricePerSquareFoot variable
+// Add a totalInterestPaid variable
+
+// Add property tests for homeBuyer and brrrr
+// Add financing tests for the relevant dealModes
+// Add mgmt tests
+// Add deal for the relevant dealModes
+
+// Unify the info dots so as to put them on input labels as
+// well as output labels
 
 // See if Marina and Kate 'O will look at it
 
@@ -62,22 +88,18 @@ AppRegistry.runApplication("App", {
 // - Add customVariables to property
 // - Add public housing data api
 
+// Add the following
+// - Appreciation (property—particularly good for homebuyer)
+// - Income increase (property)
+// - Expense increase/inflation (property maintenance and mgmt)
+// - Optional Selling Costs for buyAndHold
+// - Total interest paid (good for homeBuyer)
+
 // 70% Rule
 // - Implement dealMode outputs lists
 
 // what if each switchVarb was its own section
 // the section would have
-
-// valueSwitch
-// valueDollarsEditor
-// valueDollarsMonthly
-// valueDollarsYearly
-// then property would just have blahblahMonthly, blahblahYearly
-
-// How many completionStatuses would there be? Maybe just one,
-// with overrides
-
-// Add Closing Costs - Custom Percent of base loan
 
 // New Loan situation
 // - rethink completionStatus?

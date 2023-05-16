@@ -45,9 +45,7 @@ const valueSources = {
   ],
   editorValueSource: ["valueEditor"],
   loadedVarbSource: ["loadedVarb"],
-
   customValueSource: ["none", "valueEditor", "listTotal"],
-
   utilityValueSource: ["none", "zero", "listTotal", "twentyPercentRent"],
   repairValueSource: ["none", "zero", "valueDollarsEditor", "listTotal"],
   overrunValueSource: ["valueDollarsEditor", "valuePercentEditor"],
@@ -94,7 +92,8 @@ const unionValueArrs = {
   autoSyncControl: ["autoSyncOff", "autoSyncOn"],
   completionStatus: ["allEmpty", "allValid", "someInvalid"],
   dealMode: dealModes,
-  financingMode: ["cashOnly", "useLoan", ""],
+  financingMode: ["purchase", "refinance"],
+  financingMethod: ["cashOnly", "useLoan", ""],
   userDataStatus: [
     "notLoaded",
     "loading",
@@ -138,5 +137,21 @@ export const dealModeLabels: Record<UnionValue<"dealMode">, string> = {
   homeBuyer: "Home Buyer",
   buyAndHold: "Rental Property",
   fixAndFlip: "Fix & Flip",
-  // brrrr: "BRRRR",
+  brrrr: "BRRRR",
 };
+
+const financingModeLabels: Record<UnionValue<"financingMode">, string> = {
+  purchase: "Purchase Financing",
+  refinance: "Refinance",
+};
+
+export function getFinancingTitle(
+  dealMode: UnionValue<"dealMode">,
+  financingMode: UnionValue<"financingMode">
+): string {
+  if (dealMode !== "brrrr") {
+    return "Financing";
+  } else {
+    return financingModeLabels[financingMode];
+  }
+}

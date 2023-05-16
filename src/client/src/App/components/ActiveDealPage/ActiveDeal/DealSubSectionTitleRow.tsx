@@ -32,7 +32,7 @@ export function DealSubSectionTitleRow({
       <ChunkTitle
         sx={{
           color: nativeTheme.primary.main,
-          minWidth: "110px",
+          minWidth: "200px",
         }}
       >
         {sectionTitle}

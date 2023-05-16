@@ -1,21 +1,23 @@
 import { dealModeLabels } from "../../../../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
-import { BasicHomeBuyerInfo } from "./ViewChunks/BasicHomeBuyerInfo";
+import { BasicBrrrrInfo } from "./ViewChunks/BasicBrrrrInfo";
 import { PropertyEditorBody } from "./ViewChunks/PropertyEditorBody";
+import { PropertyHoldingCosts } from "./ViewChunks/PropertyHoldingCosts";
 import { PropertyOngoingCosts } from "./ViewChunks/PropertyOngoingCosts";
 import { RehabSection } from "./ViewChunks/PropertyRehab";
 
-export function PropertyHomeBuyerView({ feId }: { feId: string }) {
+export function PropertyBrrrrView({ feId }: { feId: string }) {
   return (
     <PropertyEditorBody
       {...{
         feId,
         sectionTitle: "Property",
-        titleAppend: dealModeLabels.homeBuyer,
+        titleAppend: dealModeLabels.brrrr,
       }}
     >
-      <BasicHomeBuyerInfo feId={feId} />
-      <PropertyOngoingCosts feId={feId} />
+      <BasicBrrrrInfo feId={feId} />
+      <PropertyHoldingCosts feId={feId} />
       <RehabSection {...{ feId }} />
+      <PropertyOngoingCosts feId={feId} />
     </PropertyEditorBody>
   );
 }

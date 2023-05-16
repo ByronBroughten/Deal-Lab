@@ -1,4 +1,3 @@
-import { mixedInfoS } from "../../SectionInfo/MixedSectionInfo";
 import { relVarbInfoS } from "../../SectionInfo/RelVarbInfo";
 import { updateVarb, UpdateVarb } from "../../updateSectionVarbs/updateVarb";
 import {
@@ -14,7 +13,6 @@ import {
 } from "../../updateSectionVarbs/updateVarb/UpdateOverrides";
 import {
   completionStatusBasics,
-  completionStatusProps,
   completionStatusVarb,
   dealModeOverrides,
   valueSourceOverrides,
@@ -27,17 +25,37 @@ const cBasics = completionStatusBasics;
 const oSwitch = overrideSwitch;
 const switchS = overrideSwitchS;
 
-export const dealCompletionStatus = updateVarb("completionStatus", {
-  initValue: "allEmpty",
-  updateFnName: "completionStatus",
-  updateFnProps: completionStatusProps({
-    othersValid: [
-      propS.pathName("propertyFocal", "completionStatus"),
-      propS.pathName("calculatedVarbsFocal", "financingCompletionStatus"),
-      propS.pathName("calculatedVarbsFocal", "mgmtCompletionStatus"),
-    ],
-  }),
-});
+export const dealCompletionStatus = completionStatusVarb(
+  ...dealModeOverrides({
+    homeBuyer: cBasics({
+      othersValid: [
+        propS.onlyChild("property", "completionStatus"),
+        propS.onlyChild("purchaseFinancing", "completionStatus"),
+      ],
+    }),
+    buyAndHold: cBasics({
+      othersValid: [
+        propS.onlyChild("property", "completionStatus"),
+        propS.onlyChild("purchaseFinancing", "completionStatus"),
+        propS.onlyChild("mgmt", "completionStatus"),
+      ],
+    }),
+    fixAndFlip: cBasics({
+      othersValid: [
+        propS.onlyChild("property", "completionStatus"),
+        propS.onlyChild("purchaseFinancing", "completionStatus"),
+      ],
+    }),
+    brrrr: cBasics({
+      othersValid: [
+        propS.onlyChild("property", "completionStatus"),
+        propS.onlyChild("purchaseFinancing", "completionStatus"),
+        propS.onlyChild("refiFinancing", "completionStatus"),
+        propS.onlyChild("mgmt", "completionStatus"),
+      ],
+    }),
+  })
+);
 
 function hasOngoingNoneNones(): UpdateFnProp[] {
   return [
@@ -110,6 +128,18 @@ export const propertyCompletionStatus = completionStatusVarb(
           propS.local("numUnitsEditor"),
         ],
       }),
+      brrrr: cBasics({
+        nonZeros: [propS.local("numUnits")],
+        nonNone: [
+          propS.pathName("repairCostFocal", "valueSourceName"),
+          ...hasOngoingNoneNones(),
+        ],
+        validInputs: [
+          ...propertySharedValidInputs(),
+          ...hasOngoingValidInputs(),
+          propS.local("holdingPeriodSpanEditor"),
+        ],
+      }),
     },
     relVarbInfoS.local("propertyMode")
   )
@@ -156,77 +186,58 @@ export function baseLoanCompletionStatus() {
   );
 }
 
+export const loanCompletionStatus = updateVarb(
+  "completionStatus",
+  cBasics({
+    othersValid: [propS.onlyChild("loanBaseValue", "completionStatus")],
+    nonNone: [propS.onlyChild("closingCostValue", "valueSourceName")],
+    validInputs: [
+      propS.local("interestRatePercentOngoingEditor"),
+      propS.local("loanTermSpanEditor"),
+      propS.onlyChild("closingCostValue", "valueDollarsEditor", [
+        switchS.valueSourceIs("valueEditor"),
+      ]),
+    ],
+  })
+);
+
 export const financingCompletionStatus = completionStatusVarb(
   updateOverride(
-    [switchS.varbIsValue("financingMode", "", "cashOnly")],
-    cBasics({
-      validInputs: [propS.varbPathName("financingMode")],
-    })
+    [switchS.local("financingMethod", "", "cashOnly")],
+    cBasics({ validInputs: [propS.varbPathName("financingMethod")] })
   ),
   updateOverride(
-    [switchS.varbIsValue("financingMode", "useLoan")],
-    cBasics({
-      othersValid: [propS.pathName("loanBaseFocal", "completionStatus")],
-      nonNone: [propS.pathName("closingCostFocal", "valueSourceName")],
-      validInputs: [
-        propS.pathName("loanFocal", "interestRatePercentOngoingEditor"),
-        propS.pathName("loanFocal", "loanTermSpanEditor"),
-        propS.pathName("closingCostFocal", "valueDollarsEditor", [
-          switchS.valueSourceIs("valueEditor"),
-        ]),
-      ],
-    })
+    [switchS.local("financingMethod", "useLoan")],
+    cBasics({ othersValid: [propS.children("loan", "completionStatus")] })
   )
 );
 
-export const mgmtCompletionStatus = completionStatusVarb(
-  updateOverride(
-    [switchS.localIsFalse("mgmtExists")],
-    cBasics({
-      notFalse: [propS.local("mgmtExists")],
-    })
-  ),
-  ...dealModeOverrides(
-    {
-      homeBuyer: cBasics({
-        notFalse: [propS.local("mgmtExists")],
-      }),
-      buyAndHold: cBasics({
-        nonNone: [
-          propS.pathName("mgmtBasePayFocal", "valueSourceName"),
-          propS.pathName("vacancyLossFocal", "valueSourceName"),
-        ],
-        validInputs: [
-          propS.pathName("mgmtBasePayFocal", "valueDollarsOngoingEditor", [
-            overrideSwitch(
-              mixedInfoS.pathNameVarb("mgmtBasePayFocal", "valueSourceName"),
-              "dollarsEditor"
-            ),
-          ]),
-          propS.pathName("mgmtBasePayFocal", "valuePercentEditor", [
-            overrideSwitch(
-              mixedInfoS.pathNameVarb("mgmtBasePayFocal", "valueSourceName"),
-              "percentOfRentEditor"
-            ),
-          ]),
-          propS.pathName("vacancyLossFocal", "valueDollarsOngoingEditor", [
-            overrideSwitch(
-              mixedInfoS.pathNameVarb("vacancyLossFocal", "valueSourceName"),
-              "dollarsEditor"
-            ),
-          ]),
-          propS.pathName("vacancyLossFocal", "valuePercentEditor", [
-            overrideSwitch(
-              mixedInfoS.pathNameVarb("vacancyLossFocal", "valueSourceName"),
-              "percentOfRentEditor"
-            ),
-          ]),
-        ],
-      }),
-      fixAndFlip: cBasics({
-        notFalse: [propS.local("mgmtExists")],
-      }),
-    },
-    mixedInfoS.varbPathName("dealMode")
-  )
+export const mgmtCompletionStatus = updateVarb(
+  "completionStatus",
+  cBasics({
+    nonNone: [
+      propS.onlyChild("mgmtBasePayValue", "valueSourceName"),
+      propS.onlyChild("vacancyLossValue", "valueSourceName"),
+    ],
+    validInputs: [
+      propS.onlyChild("mgmtBasePayValue", "valueDollarsOngoingEditor", [
+        overrideSwitch(relVarbInfoS.local("valueSourceName"), "dollarsEditor"),
+      ]),
+      propS.onlyChild("mgmtBasePayValue", "valuePercentEditor", [
+        overrideSwitch(
+          relVarbInfoS.local("valueSourceName"),
+          "percentOfRentEditor"
+        ),
+      ]),
+      propS.onlyChild("vacancyLossValue", "valueDollarsOngoingEditor", [
+        overrideSwitch(relVarbInfoS.local("valueSourceName"), "dollarsEditor"),
+      ]),
+      propS.onlyChild("vacancyLossValue", "valuePercentEditor", [
+        overrideSwitch(
+          relVarbInfoS.local("valueSourceName"),
+          "percentOfRentEditor"
+        ),
+      ]),
+    ],
+  })
 );

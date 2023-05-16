@@ -50,12 +50,9 @@ const mgmt = [
 const sharedOutputs = ["totalInvestment"] as const;
 const sharedExtras = ["onePercentPrice", "twoPercentPrice"] as const;
 
-const fixAndFlipBasics = [
-  "afterRepairValue",
-  "sellingCosts",
-  "holdingPeriodMonths",
-] as const;
-const fixAndFlipOutputs = [
+const hasHoldingBasics = ["afterRepairValue", "holdingPeriodMonths"] as const;
+const fixAndFlipBasics = ["sellingCosts"] as const;
+const hasProfitOutputs = [
   "totalProfit",
   "roiPercent",
   "roiPercentAnnualized",
@@ -63,45 +60,47 @@ const fixAndFlipOutputs = [
 const fixAndFlip = [
   ...sharedBasics,
   ...nonHomebuyBasics,
+  ...hasHoldingBasics,
   ...fixAndFlipBasics,
   ...sharedOngoing,
   ...sharedUpfront,
   ...financing,
   ...sharedOutputs,
-  ...fixAndFlipOutputs,
+  ...hasProfitOutputs,
   ...sharedExtras,
 ] as const;
 
-const ongoingOutputs = ["dealExpensesMonthly", "dealExpensesYearly"] as const;
-
-const buyAndHoldBasics = [
-  "numBedrooms",
-  "targetRentMonthly",
-  "targetRentYearly",
+const hasOngoingOutputs = [
+  "dealExpensesMonthly",
+  "dealExpensesYearly",
 ] as const;
-const buyAndHoldOutputs = [
+
+const hasRentBasics = ["targetRentMonthly", "targetRentYearly"] as const;
+const hasCashflowOutputs = [
   "cashFlowMonthly",
   "cashFlowYearly",
   "cocRoiMonthly",
   "cocRoiYearly",
 ] as const;
-const buyAndHoldExtras = [
+const hasRentExtras = [
   "fivePercentRentMonthly",
   "fivePercentRentYearly",
 ] as const;
 const buyAndHold = [
   ...sharedBasics,
+  "numBedrooms",
   ...nonHomebuyBasics,
-  ...buyAndHoldBasics,
+  ...hasRentBasics,
   ...sharedOngoing,
   ...sharedUpfront,
   ...financing,
   ...mgmt,
   ...sharedOutputs,
-  ...ongoingOutputs,
-  ...buyAndHoldOutputs,
+  ...hasOngoingOutputs,
+  ...hasCashflowOutputs,
+  ...hasProfitOutputs,
   ...sharedExtras,
-  ...buyAndHoldExtras,
+  ...hasRentExtras,
 ] as const;
 
 const homeBuyer = [
@@ -111,30 +110,50 @@ const homeBuyer = [
   ...sharedUpfront,
   ...financing,
   ...sharedOutputs,
-  ...ongoingOutputs,
+  ...hasOngoingOutputs,
   ...sharedExtras,
+] as const;
+
+const brrrr = [
+  ...sharedBasics,
+  "numBedrooms",
+  ...nonHomebuyBasics,
+  ...hasRentBasics,
+  ...hasHoldingBasics,
+  ...sharedOngoing,
+  ...sharedUpfront,
+  ...financing,
+  ...mgmt,
+  ...sharedOutputs,
+  ...hasOngoingOutputs,
+  ...hasCashflowOutputs,
+  ...hasProfitOutputs,
+  ...sharedExtras,
+  ...hasRentExtras,
 ] as const;
 
 export const fixedVarbPathNames = checkFixedVarbNames({
   buyAndHold,
   fixAndFlip,
   homeBuyer,
+  brrrr,
   mixed: [
     ...sharedBasics,
-    ...nonHomebuyBasics,
     "numBedrooms",
-    ...buyAndHoldBasics,
+    ...nonHomebuyBasics,
+    ...hasRentBasics,
+    ...hasHoldingBasics,
     ...fixAndFlipBasics,
     ...sharedOngoing,
     ...sharedUpfront,
     ...financing,
     ...mgmt,
     ...sharedOutputs,
-    ...ongoingOutputs,
-    ...buyAndHoldOutputs,
-    ...fixAndFlipOutputs,
+    ...hasOngoingOutputs,
+    ...hasCashflowOutputs,
+    ...hasProfitOutputs,
     ...sharedExtras,
-    ...buyAndHoldExtras,
+    ...hasRentExtras,
   ] as const,
 });
 

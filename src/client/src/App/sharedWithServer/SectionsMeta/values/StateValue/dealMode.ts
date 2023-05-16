@@ -4,16 +4,18 @@ export const dealModes = [
   "homeBuyer",
   "buyAndHold",
   "fixAndFlip",
-  // brrrr
+  "brrrr",
 ] as const;
 
 const dealModeArrs = {
   all: dealModes,
   plusMixed: [...dealModes, "mixed"],
-  hasMgmt: Arr.extractStrict(dealModes, ["buyAndHold"] as const),
+  hasMgmt: Arr.extractStrict(dealModes, ["buyAndHold", "brrrr"] as const),
+  hasRefi: Arr.extractStrict(dealModes, ["brrrr"]),
   hasOngoing: Arr.extractStrict(dealModes, [
-    "buyAndHold",
     "homeBuyer",
+    "buyAndHold",
+    "brrrr",
   ] as const),
 } as const;
 type DealModeArrs = typeof dealModeArrs;

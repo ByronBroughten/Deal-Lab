@@ -15,7 +15,7 @@ export function PropertyBuyAndHoldView({ feId }: { feId: string }) {
     >
       <BasicBuyAndHoldInfo feId={feId} />
       <PropertyOngoingCosts feId={feId} />
-      <RehabSection {...{ feId, dealMode: "buyAndHold" }} />
+      <RehabSection feId={feId} />
     </PropertyEditorBody>
   );
 }

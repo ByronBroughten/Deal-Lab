@@ -96,6 +96,7 @@ export function AccountPage() {
                 ["homeBuyer", dealModeLabels.homeBuyer],
                 ["buyAndHold", dealModeLabels.buyAndHold],
                 ["fixAndFlip", dealModeLabels.fixAndFlip],
+                ["brrrr", dealModeLabels.brrrr],
               ],
             }}
           />

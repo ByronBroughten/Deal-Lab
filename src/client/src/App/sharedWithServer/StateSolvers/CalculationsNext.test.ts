@@ -250,6 +250,7 @@ describe("Property calculations", () => {
         homeBuyer: 201000,
         buyAndHold: 201000,
         fixAndFlip: 215200,
+        brrrr: 215200,
       } as const;
 
       property.updateValues({

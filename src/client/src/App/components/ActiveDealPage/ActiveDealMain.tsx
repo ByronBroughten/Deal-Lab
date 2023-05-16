@@ -19,8 +19,7 @@ const dealElementProps = {
 export function ActiveDealMain() {
   const { deal, calcVarbs, feStore } = useActiveDealPage();
   const dealMode = deal.valueNext("dealMode");
-  const completionStatus = calcVarbs.value("dealCompletionStatus");
-
+  const completionStatus = deal.valueNext("completionStatus");
   return (
     <BackBtnWrapper {...{ to: "account", label: "Deal Menu" }}>
       <BackgroundContainer>
@@ -39,10 +38,19 @@ export function ActiveDealMain() {
           />
         </Row>
         <View>
-          <DealSubSectionClosed {...dealElementProps} sectionName="property" />
-          <DealSubSectionClosed {...dealElementProps} sectionName="financing" />
+          <DealSubSectionClosed {...dealElementProps} childName="property" />
+          <DealSubSectionClosed
+            {...dealElementProps}
+            childName="purchaseFinancing"
+          />
+          {isDealMode(dealMode, "hasRefi") && (
+            <DealSubSectionClosed
+              {...dealElementProps}
+              childName="refiFinancing"
+            />
+          )}
           {isDealMode(dealMode, "hasMgmt") && (
-            <DealSubSectionClosed {...dealElementProps} sectionName="mgmt" />
+            <DealSubSectionClosed {...dealElementProps} childName="mgmt" />
           )}
         </View>
         <OutputSection

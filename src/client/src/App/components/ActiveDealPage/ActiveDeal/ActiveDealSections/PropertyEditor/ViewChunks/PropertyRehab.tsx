@@ -1,4 +1,4 @@
-import { StateValue } from "../../../../../../sharedWithServer/SectionsMeta/values/StateValue";
+import { FeIdProp } from "../../../../../../sharedWithServer/SectionsMeta/SectionInfo/NanoIdInfo";
 import { useGetterSection } from "../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { nativeTheme } from "../../../../../../theme/nativeTheme";
 import { FormSectionLabeled } from "../../../../../appWide/FormSectionLabeled";
@@ -7,8 +7,7 @@ import { CostOverrunValue } from "./ViewParts/CostOverrunValue";
 import { MiscOnetimeCost } from "./ViewParts/MiscOnetimeCost";
 import { RepairValue } from "./ViewParts/RepairValue";
 
-type Props = { feId: string; dealMode: StateValue<"dealMode"> };
-export function RehabSection({ feId, dealMode }: Props) {
+export function RehabSection({ feId }: FeIdProp) {
   const property = useGetterSection({ sectionName: "property", feId });
   return (
     <FormSectionLabeled label={"Rehab"}>
@@ -16,7 +15,7 @@ export function RehabSection({ feId, dealMode }: Props) {
         <RepairValue
           sx={nativeTheme.editorMargins}
           feId={property.onlyChildFeId("repairValue")}
-          dealMode={dealMode}
+          dealMode={property.valueNext("propertyMode")}
         />
         <MiscOnetimeCost
           feId={property.onlyChildFeId("miscOnetimeCost")}

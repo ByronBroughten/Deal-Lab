@@ -7,6 +7,7 @@ import {
   updateFnPropsS,
 } from "../updateSectionVarbs/updateVarb/UpdateFnProps";
 import { updateVarbsS } from "../updateSectionVarbs/updateVarbs";
+import { mgmtCompletionStatus } from "./calculatedUpdateVarbs/completionStatusVarbs";
 
 const propS = updateFnPropS;
 const basicsS = updateBasicsS;
@@ -14,6 +15,7 @@ export function mgmtRelVarbs(): UpdateSectionVarbs<"mgmt"> {
   return {
     ...updateVarbsS._typeUniformity,
     ...updateVarbsS.savableSection,
+    completionStatus: mgmtCompletionStatus,
     one: updateVarbS.one(),
     ...updateGroupS.group("basePayDollars", "ongoing", "monthly", {
       monthly: basicsS.loadFromChild("mgmtBasePayValue", "valueDollarsMonthly"),

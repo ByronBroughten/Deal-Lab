@@ -16,11 +16,6 @@ import {
   updateOverride,
 } from "../updateSectionVarbs/updateVarb/UpdateOverrides";
 import { updateVarbsS } from "../updateSectionVarbs/updateVarbs";
-import {
-  dealCompletionStatus,
-  financingCompletionStatus,
-  mgmtCompletionStatus,
-} from "./calculatedUpdateVarbs/completionStatusVarbs";
 
 function sumLoanVarb(
   loanVarbName: VarbNameByValueName<"loan", "numObj">
@@ -29,13 +24,13 @@ function sumLoanVarb(
     updateFnName: "throwIfReached",
     updateOverrides: [
       updateOverride(
-        [overrideSwitchS.varbIsValue("financingMode", "useLoan")],
+        [overrideSwitchS.varbIsValue("financingMethod", "useLoan")],
         updateBasicsS.sumNums(
           updateFnPropS.pathNameBase("loanFocal", loanVarbName)
         )
       ),
       updateOverride(
-        [overrideSwitchS.varbIsValue("financingMode", "cashOnly", "")],
+        [overrideSwitchS.varbIsValue("financingMethod", "cashOnly", "")],
         updateBasicsS.zero
       ),
     ],
@@ -50,14 +45,14 @@ function sumOngoingLoanVarb<BN extends string>(
     updateBasics: updateBasicsS.throw,
     updateOverrides: [
       {
-        switches: [overrideSwitchS.varbIsValue("financingMode", "useLoan")],
+        switches: [overrideSwitchS.varbIsValue("financingMethod", "useLoan")],
         updateFnProps: [
           updateFnPropS.pathNameBase("loanFocal", loanBaseVarbName),
         ],
       },
       {
         switches: [
-          overrideSwitchS.varbIsValue("financingMode", "cashOnly", ""),
+          overrideSwitchS.varbIsValue("financingMethod", "cashOnly", ""),
         ],
         updateBasics: updateBasicsS.zero,
       },
@@ -170,8 +165,5 @@ export function calculatedUpdateVarbs(): UpdateSectionVarbs<"calculatedVarbs"> {
       updateFnName: "varbExists",
       updateFnProps: { varbInfo: updateFnPropS.pathName("mgmtFocal", "one") },
     }),
-    dealCompletionStatus,
-    financingCompletionStatus,
-    mgmtCompletionStatus,
   };
 }

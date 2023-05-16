@@ -25,7 +25,7 @@ export function MainSubSectionClosed({
         ...sx,
       }}
     >
-      <div className="MainSubSection-inactiveTitleRow">{titleRow}</div>
+      <div>{titleRow}</div>
       {detailsSection && (
         <View style={{ marginTop: nativeTheme.s25 }}>{detailsSection}</View>
       )}

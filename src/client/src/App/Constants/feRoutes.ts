@@ -33,6 +33,8 @@ export const feRoutes = {
   activeDeal: `${activeDealRoute}`,
   activeProperty: `${activeDealRoute}/property`,
   activeFinancing: `${activeDealRoute}/financing`,
+  activePurchaseFi: `${activeDealRoute}/purchase-financing`,
+  activeRefi: `${activeDealRoute}/refinancing`,
   activeMgmt: `${activeDealRoute}/mgmt`,
 
   components: componentsRoute,

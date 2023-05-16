@@ -277,6 +277,7 @@ export function makeAllBaseSectionVarbs() {
     }),
     loan: varbs({
       ...baseVarbsS.savableSection,
+      completionStatus: baseVarb("completionStatus"),
       loanPurpose: baseVarb("loanPurpose"),
       loanAmountInputMode: baseVarb("loanAmountInputMode"),
       loanPurchasedAssetValue: baseVarb("numObj", dollars),
@@ -284,7 +285,6 @@ export function makeAllBaseSectionVarbs() {
 
       ...varbsS.ongoingPercentInput("interestRatePercent"),
       ...baseVarbsS.ongoingDecimal("interestRateDecimal"),
-
       ...varbsS.monthsYearsInput("loanTerm"),
 
       isInterestOnly: baseVarb("boolean"),
@@ -324,6 +324,7 @@ export function makeAllBaseSectionVarbs() {
 
     mgmt: varbs({
       ...baseVarbsS.savableSection,
+      completionStatus: baseVarb("completionStatus"),
       ...baseVarbsS.ongoingDollars("basePayDollars"),
       ...baseVarbsS.ongoingDollars("vacancyLossDollars"),
       ...baseVarbsS.ongoingDollars("miscCosts"),
@@ -355,6 +356,7 @@ export function makeAllBaseSectionVarbs() {
       dealMode: baseVarb("dealMode"),
       ...baseVarbsS.savableSection,
       ...baseVarbsS.displayNameEditor,
+      completionStatus: baseVarb("completionStatus"),
       isComplete: baseVarb("boolean"),
       displayNameSource: baseVarb("dealDisplayNameSource"),
       ...baseVarbsS.ongoingDollars("expenses"),
@@ -372,6 +374,8 @@ export function makeAllBaseSectionVarbs() {
     }),
     financing: varbs({
       displayName: baseVarb("stringObj"),
+      completionStatus: baseVarb("completionStatus"),
+      financingMethod: baseVarb("financingMethod"),
       financingMode: baseVarb("financingMode"),
       one: baseVarb("number"),
     }),
@@ -415,11 +419,6 @@ export function makeAllBaseSectionVarbs() {
         "propertyExists",
         "financingExists",
         "mgmtExists",
-      ] as const),
-      ...baseVarbs("completionStatus", [
-        "financingCompletionStatus",
-        "mgmtCompletionStatus",
-        "dealCompletionStatus",
       ] as const),
     }),
     feStore: varbs({

@@ -38,6 +38,23 @@ export function makeDefaultDealPack(
     sectionPack: makeDefaultLoanPack(),
   });
 
+  const purchaseFinancing = deal.addAndGetChild("purchaseFinancing", {
+    sectionValues: { financingMode: "purchase" },
+  });
+  purchaseFinancing.loadChild({
+    childName: "loan",
+    sectionPack: makeDefaultLoanPack(),
+  });
+
+  const refiFinancing = deal.addAndGetChild("refiFinancing", {
+    sectionValues: { financingMode: "refinance" },
+  });
+  refiFinancing.loadChild({
+    childName: "loan",
+    sectionPack: makeDefaultLoanPack(),
+  });
+  refiFinancing.updateValues({ financingMethod: "useLoan" });
+
   deal.loadChild({
     childName: "mgmt",
     sectionPack: makeDefaultMgmt(),

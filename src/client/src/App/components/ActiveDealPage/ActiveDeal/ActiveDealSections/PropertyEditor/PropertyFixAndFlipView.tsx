@@ -15,7 +15,7 @@ export function PropertyFixAndFlipView({ feId }: { feId: string }) {
     >
       <BasicFixAndFlipInfo {...{ feId }} />
       <PropertyHoldingCosts {...{ feId }} />
-      <RehabSection {...{ feId, dealMode: "fixAndFlip" }} />
+      <RehabSection {...{ feId }} />
     </PropertyEditorBody>
   );
 }

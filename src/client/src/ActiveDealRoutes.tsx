@@ -1,8 +1,9 @@
 import { Navigate, Route } from "react-router-dom";
 import {
-  ActiveDealFinancing,
   ActiveDealMgmt,
   ActiveDealProperty,
+  ActiveDealPurchaseFi,
+  ActiveDealRefi,
 } from "./App/components/ActiveDealPage/ActiveDeal/ActiveDealSections";
 import { ActiveDealMain } from "./App/components/ActiveDealPage/ActiveDealMain";
 import { DealModeProvider } from "./App/components/appWide/customContexts/dealModeContext";
@@ -15,7 +16,11 @@ export const ActiveDealRoutes = (
   <Route path={feRoutes.activeDeal} element={<ActiveDealController />}>
     <Route index element={<ActiveDealMain />} />
     <Route path={feRoutes.activeProperty} element={<ActiveDealProperty />} />
-    <Route path={feRoutes.activeFinancing} element={<ActiveDealFinancing />} />
+    <Route
+      path={feRoutes.activePurchaseFi}
+      element={<ActiveDealPurchaseFi />}
+    />
+    <Route path={feRoutes.activeRefi} element={<ActiveDealRefi />} />
     <Route path={feRoutes.activeMgmt} element={<ActiveDealMgmt />} />
   </Route>
 );

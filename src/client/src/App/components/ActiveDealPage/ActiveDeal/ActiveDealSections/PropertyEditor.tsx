@@ -2,6 +2,7 @@ import React from "react";
 import { FeIdProp } from "../../../../sharedWithServer/SectionsMeta/SectionInfo/NanoIdInfo";
 import { StateValue } from "../../../../sharedWithServer/SectionsMeta/values/StateValue";
 import { useGetterSection } from "../../../../sharedWithServer/stateClassHooks/useGetterSection";
+import { PropertyBrrrrView } from "./PropertyEditor/PropertyBrrrrView";
 import { PropertyBuyAndHoldView } from "./PropertyEditor/PropertyBuyAndHoldView";
 import { PropertyFixAndFlipView } from "./PropertyEditor/PropertyFixAndFlipView";
 import { PropertyHomeBuyerView } from "./PropertyEditor/PropertyHomeBuyerView";
@@ -10,9 +11,10 @@ const propertiesByType: Record<
   StateValue<"dealMode">,
   (props: FeIdProp) => React.ReactElement
 > = {
+  homeBuyer: (props) => <PropertyHomeBuyerView {...props} />,
   buyAndHold: (props) => <PropertyBuyAndHoldView {...props} />,
   fixAndFlip: (props) => <PropertyFixAndFlipView {...props} />,
-  homeBuyer: (props) => <PropertyHomeBuyerView {...props} />,
+  brrrr: (props) => <PropertyBrrrrView {...props} />,
 };
 
 export function PropertyEditor({ feId }: FeIdProp) {

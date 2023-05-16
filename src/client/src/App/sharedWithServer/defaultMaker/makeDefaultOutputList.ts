@@ -19,6 +19,14 @@ const outputVarbPathNames: OutputVarbPathNames = {
     "roiPercent",
     "roiPercentAnnualized",
   ],
+  brrrr: [
+    "totalInvestment",
+    "totalProfit",
+    "roiPercent",
+    "roiPercentAnnualized",
+    "cashFlowYearly",
+    "cocRoiYearly",
+  ],
 };
 
 export const defaultCompareInfos = defaultOutputInfos("buyAndHold");

@@ -22,7 +22,7 @@ export function makeExampleDeal(displayName: string) {
   property.loadSelf(exampleDealBuyAndHoldProperty());
 
   const financing = deal.onlyChild("financing");
-  financing.updateValues({ financingMode: "useLoan" });
+  financing.updateValues({ financingMethod: "useLoan" });
 
   const loan = financing.onlyChild("loan");
   loan.loadSelf(exampleDealLoan());

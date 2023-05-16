@@ -1,6 +1,7 @@
-import { FinancingEditor } from "./ActiveDealSections/FinancingEditor";
 import { MgmtEditor } from "./ActiveDealSections/MgmtEditor";
 import { PropertyEditor } from "./ActiveDealSections/PropertyEditor";
+import { PurchaseFinancingEditor } from "./ActiveDealSections/PurchaseFinancingEditor";
+import { RefiFinancingEditor } from "./ActiveDealSections/RefiFinancingEditor";
 import { DealSubSectionOpen } from "./DealSubSectionOpen";
 import { useActiveDealSection } from "./useActiveDealSection";
 
@@ -14,11 +15,20 @@ export function ActiveDealProperty() {
   );
 }
 
-export function ActiveDealFinancing() {
-  const { isComplete, ...rest } = useActiveDealSection("financing");
+export function ActiveDealPurchaseFi() {
+  const { isComplete, ...rest } = useActiveDealSection("purchaseFinancing");
   return (
     <DealSubSectionOpen {...{ finishIsAllowed: isComplete }}>
-      <FinancingEditor {...rest} />
+      <PurchaseFinancingEditor {...rest} />
+    </DealSubSectionOpen>
+  );
+}
+
+export function ActiveDealRefi() {
+  const { isComplete, ...rest } = useActiveDealSection("refiFinancing");
+  return (
+    <DealSubSectionOpen {...{ finishIsAllowed: isComplete }}>
+      <RefiFinancingEditor {...rest} />
     </DealSubSectionOpen>
   );
 }

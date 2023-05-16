@@ -1,9 +1,14 @@
 import { FeRouteName } from "../../../Constants/feRoutes";
+import { ChildName } from "../../../sharedWithServer/SectionsMeta/sectionChildrenDerived/ChildName";
 import { StateValue } from "../../../sharedWithServer/SectionsMeta/values/StateValue";
 import { useSetterMain } from "../../../sharedWithServer/stateClassHooks/useMain";
+import { StrictExtract } from "../../../sharedWithServer/utils/types";
 import { useGoToPage } from "../../appWide/customHooks/useGoToPage";
 
-export type ActiveDealSectionName = "property" | "financing" | "mgmt";
+export type ActiveDealChildName = StrictExtract<
+  ChildName<"deal">,
+  "property" | "purchaseFinancing" | "refiFinancing" | "mgmt"
+>;
 export function useActiveDealPage() {
   const main = useSetterMain();
   const feStore = main.get.onlyChild("feStore");
@@ -18,31 +23,21 @@ export function useActiveDealPage() {
   };
 }
 
-const completionStatusNames = {
-  property: "propertyCompletionStatus",
-  financing: "financingCompletionStatus",
-  mgmt: "mgmtCompletionStatus",
-} as const;
-
 export function useActiveDealCompletionStatus(
-  sectionName: ActiveDealSectionName
+  childName: ActiveDealChildName
 ): StateValue<"completionStatus"> {
-  const { calcVarbs, deal } = useActiveDealPage();
-  if (sectionName === "property") {
-    return deal.onlyChild("property").valueNext("completionStatus");
-  } else {
-    return calcVarbs.valueNext(completionStatusNames[sectionName]);
-  }
+  const { deal } = useActiveDealPage();
+  return deal.onlyChild(childName).valueNext("completionStatus");
 }
 
-export const activeDealRouteNames: Record<ActiveDealSectionName, FeRouteName> =
-  {
-    property: "activeProperty",
-    financing: "activeFinancing",
-    mgmt: "activeMgmt",
-  };
+export const activeDealRouteNames: Record<ActiveDealChildName, FeRouteName> = {
+  property: "activeProperty",
+  purchaseFinancing: "activePurchaseFi",
+  refiFinancing: "activeRefi",
+  mgmt: "activeMgmt",
+};
 
-export function useActiveDealSection(sectionName: ActiveDealSectionName) {
+export function useActiveDealSection(sectionName: ActiveDealChildName) {
   const { deal } = useActiveDealPage();
   const completionStatus = useActiveDealCompletionStatus(sectionName);
   const goToIndex = useGoToPage("activeDeal");

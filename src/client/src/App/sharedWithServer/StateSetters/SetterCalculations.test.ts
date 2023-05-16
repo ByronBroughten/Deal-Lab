@@ -43,7 +43,7 @@ describe("SetterCalculations", () => {
     addTestLoan(dealTester);
 
     const financing = dealTester.setter.onlyChild("financing");
-    financing.varb("financingMode").updateValue("useLoan");
+    financing.varb("financingMethod").updateValue("useLoan");
     const loan = financing.addAndGetChild("loan", {
       sectionValues: { loanAmountInputMode: "loanAmount" },
     });
@@ -107,7 +107,7 @@ describe("SetterCalculations", () => {
 
     addTestLoan(dealTester);
     const financing = dealTester.setter.onlyChild("financing");
-    financing.varb("financingMode").updateValue("useLoan");
+    financing.varb("financingMethod").updateValue("useLoan");
     // 1012.6 expense
 
     const mgmt = dealTester.setter.onlyChild("mgmt");
@@ -161,7 +161,7 @@ function addTestLoan(dealTester: SetterTesterSection<"deal">): void {
   property.varb("purchasePrice").updateValue(numObj(200000));
 
   const financing = dealTester.setter.onlyChild("financing");
-  financing.varb("financingMode").updateValue("useLoan");
+  financing.varb("financingMethod").updateValue("useLoan");
 
   const loan = financing.addAndGetChild("loan", {
     sectionValues: {
@@ -198,7 +198,7 @@ function addTestLoan(dealTester: SetterTesterSection<"deal">): void {
 
 function addInterestOnlyLoan(dealTester: SetterTesterSection<"deal">): void {
   const financing = dealTester.setter.onlyChild("financing");
-  financing.varb("financingMode").updateValue("useLoan");
+  financing.varb("financingMethod").updateValue("useLoan");
 
   const loan = financing.addAndGetChild("loan", {
     sectionValues: {

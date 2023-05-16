@@ -29,7 +29,7 @@ export const MainSectionBtn = styled(PlainIconBtn, {
   borderWidth: 1,
   borderStyle: "solid",
   borderColor: nativeTheme.light,
-  fontSize: nativeTheme.fs20,
+  fontSize: nativeTheme.chunkTitleFs,
   color: nativeTheme.primary.main,
   "&:hover": {
     border: `solid 1px ${nativeTheme.primary.main}`,

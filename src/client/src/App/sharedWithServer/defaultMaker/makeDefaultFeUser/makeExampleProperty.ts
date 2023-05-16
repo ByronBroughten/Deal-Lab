@@ -45,6 +45,11 @@ interface CommonProperty {
   homeInsYearly: NumObj;
 }
 
+interface PropertyHoldAndArv {
+  afterRepairValue: NumObj;
+  holdingPeriodMonths: NumObj;
+}
+
 interface SharedSections {
   repairValue: [string, number | NumObj][];
   utilityValue: [string, number | NumObj][];
@@ -53,43 +58,45 @@ interface SharedSections {
   };
 }
 
+interface OngoingSections {
+  capExValue: {
+    valueSourceName: StateValue<"capExValueSource">;
+    items: [string, number | NumObj, number | NumObj][];
+  };
+  maintenanceValue: {
+    valueSourceName: StateValue<"maintainanceValueSource">;
+  };
+}
+
 type NeededPropertyVarbs = CheckNeededPropertyVarbs<{
-  homeBuyer: SharedSections & {
-    dealMode: "homeBuyer";
-    property: CommonProperty & { numBedroomsEditor: NumObj };
-    capExValue: {
-      valueSourceName: StateValue<"capExValueSource">;
-      items: [string, number | NumObj, number | NumObj][];
+  homeBuyer: SharedSections &
+    OngoingSections & {
+      dealMode: "homeBuyer";
+      property: CommonProperty & { numBedroomsEditor: NumObj };
     };
-    maintenanceValue: {
-      valueSourceName: StateValue<"maintainanceValueSource">;
+  buyAndHold: SharedSections &
+    OngoingSections & {
+      dealMode: "buyAndHold";
+      property: CommonProperty;
+      unit: { rentMonthly: NumObj; numBedrooms: NumObj }[];
     };
-  };
-  buyAndHold: SharedSections & {
-    dealMode: "buyAndHold";
-    property: CommonProperty;
-    unit: { rentMonthly: NumObj; numBedrooms: NumObj }[];
-    capExValue: {
-      valueSourceName: StateValue<"capExValueSource">;
-      items: [string, number | NumObj, number | NumObj][];
-    };
-    maintenanceValue: {
-      valueSourceName: StateValue<"maintainanceValueSource">;
-    };
-  };
   fixAndFlip: SharedSections & {
     dealMode: "fixAndFlip";
-    property: CommonProperty & {
-      afterRepairValue: NumObj;
-      holdingPeriodMonths: NumObj;
-      numUnitsEditor: NumObj;
-    };
-
+    property: CommonProperty &
+      PropertyHoldAndArv & {
+        numUnitsEditor: NumObj;
+      };
     sellingCostValue: {
       valueSourceName: StateValue<"sellingCostSource">;
       valuePercent?: NumObj;
     };
   };
+  brrrr: SharedSections &
+    OngoingSections & {
+      dealMode: "brrrr";
+      property: CommonProperty & PropertyHoldAndArv;
+      unit: { rentMonthly: NumObj; numBedrooms: NumObj }[];
+    };
 }>;
 
 type Props<DM extends StateValue<"dealMode">> = NeededPropertyVarbs[DM];
@@ -155,7 +162,8 @@ export function makeExampleProperty<DM extends StateValue<"dealMode">>(
 
   switch (props.dealMode) {
     case "buyAndHold":
-    case "homeBuyer": {
+    case "homeBuyer":
+    case "brrrr": {
       const capExValue = property.onlyChild("capExValue");
       capExValue.updateValues({
         valueSourceName: props.capExValue.valueSourceName,
@@ -180,26 +188,35 @@ export function makeExampleProperty<DM extends StateValue<"dealMode">>(
     }
   }
 
-  if (props.dealMode === "buyAndHold") {
-    for (const { rentMonthly, ...rest } of props.unit) {
-      const unit = property.addAndGetChild("unit");
-      unit.updateValues({
-        ...rest,
-        targetRentOngoingSwitch: "monthly",
-        targetRentOngoingEditor: rentMonthly,
+  switch (props.dealMode) {
+    case "buyAndHold":
+    case "brrrr": {
+      for (const { rentMonthly, ...rest } of props.unit) {
+        const unit = property.addAndGetChild("unit");
+        unit.updateValues({
+          ...rest,
+          targetRentOngoingSwitch: "monthly",
+          targetRentOngoingEditor: rentMonthly,
+        });
+      }
+    }
+  }
+
+  switch (props.dealMode) {
+    case "fixAndFlip":
+    case "brrrr": {
+      const { afterRepairValue, holdingPeriodMonths } = props.property;
+      property.updateValues({
+        afterRepairValue,
+        holdingPeriodSpanEditor: holdingPeriodMonths,
+        holdingPeriodSpanSwitch: "months",
       });
     }
   }
 
   if (props.dealMode === "fixAndFlip") {
-    const { afterRepairValue, holdingPeriodMonths, numUnitsEditor } =
-      props.property;
-    property.updateValues({
-      numUnitsEditor,
-      afterRepairValue,
-      holdingPeriodSpanEditor: holdingPeriodMonths,
-      holdingPeriodSpanSwitch: "months",
-    });
+    const { numUnitsEditor } = props.property;
+    property.updateValues({ numUnitsEditor });
 
     const sellingValue = property.onlyChild("sellingCostValue");
     sellingValue.updateValues({

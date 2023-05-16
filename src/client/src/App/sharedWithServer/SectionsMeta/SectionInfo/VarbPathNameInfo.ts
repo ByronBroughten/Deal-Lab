@@ -22,7 +22,7 @@ type MakeVarbPathParams<
 };
 
 const allVarbPathParams = {
-  ...sectionVarbNameParams("financingFocal", "Financing", ["financingMode"]),
+  ...sectionVarbNameParams("financingFocal", "Financing", ["financingMethod"]),
   ...sectionVarbNameParams("calculatedVarbsFocal", "Property", [
     "two",
     "twelve",

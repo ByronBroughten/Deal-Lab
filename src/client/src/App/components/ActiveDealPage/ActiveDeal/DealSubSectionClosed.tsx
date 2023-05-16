@@ -1,5 +1,6 @@
 import { SxProps } from "@mui/material";
 import { StateValue } from "../../../sharedWithServer/SectionsMeta/values/StateValue";
+import { getFinancingTitle } from "../../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
 import { GetterSection } from "../../../sharedWithServer/StateGetters/GetterSection";
 import { useGoToPage } from "../../appWide/customHooks/useGoToPage";
 import { LabeledVarbProps } from "../../appWide/LabeledVarb";
@@ -7,15 +8,15 @@ import { DealSubSectionDetails } from "./DealSubSectionDetails";
 import { DealSubSectionTitleRow } from "./DealSubSectionTitleRow";
 import { MainSubSectionClosed } from "./MainSubSectionClosed";
 import {
+  ActiveDealChildName,
   activeDealRouteNames,
-  ActiveDealSectionName,
   useActiveDealCompletionStatus,
   useActiveDealPage,
 } from "./useActiveDealSection";
 
-type Props = { sx?: SxProps; sectionName: ActiveDealSectionName };
-export function DealSubSectionClosed({ sectionName, ...rest }: Props) {
-  const props = useProps(sectionName);
+type Props = { sx?: SxProps; childName: ActiveDealChildName };
+export function DealSubSectionClosed({ childName, ...rest }: Props) {
+  const props = useProps(childName);
   const { completionStatus } = props;
   const isComplete = completionStatus === "allValid";
   return (
@@ -60,6 +61,16 @@ const propsByDealMode = {
         // "grossProfit",
       ] as const,
     },
+    brrrr: {
+      detailVarbNames: [
+        "purchasePrice",
+        "rehabCost",
+        "afterRepairValue",
+        "holdingPeriodMonths",
+        "targetRentYearly",
+        "expensesYearly",
+      ],
+    },
   },
 } as const;
 
@@ -75,13 +86,14 @@ function getPropertyProps(property: GetterSection<"property">): SectionProps {
 }
 
 function getFinancingProps(
-  financing: GetterSection<"financing">
+  financing: GetterSection<"financing">,
+  dealMode: StateValue<"dealMode">
 ): SectionProps {
   let displayName = "";
-  const financingMode = financing.valueNext("financingMode");
+  const financingMethod = financing.valueNext("financingMethod");
   const { calculatedFocal } = financing;
 
-  if (financingMode === "cashOnly") {
+  if (financingMethod === "cashOnly") {
     displayName = "Cash Only";
   } else {
     const loans = financing.children("loan");
@@ -91,7 +103,10 @@ function getFinancingProps(
     }
   }
   return {
-    sectionTitle: "Financing",
+    sectionTitle: getFinancingTitle(
+      dealMode,
+      financing.valueNext("financingMode")
+    ),
     displayName,
     detailVarbPropArr: calculatedFocal.varbInfoArr([
       "downPaymentDollars",
@@ -111,19 +126,26 @@ function getMgmtProps(mgmt: GetterSection<"mgmt">): SectionProps {
   };
 }
 
-function useSectionProps(sectionName: ActiveDealSectionName) {
+function useSectionProps(childName: ActiveDealChildName): SectionProps {
   const { deal } = useActiveDealPage();
-  if (sectionName === "property") {
-    const dealMode = deal.valueNext("dealMode");
-    return getPropertyProps(deal.onlyChild("property"));
-  } else if (sectionName === "financing") {
-    return getFinancingProps(deal.onlyChild("financing"));
-  } else if (sectionName === "mgmt") {
-    return getMgmtProps(deal.onlyChild("mgmt"));
-  } else throw new Error(`Invalid sectionName: ${sectionName}`);
+  switch (childName) {
+    case "property": {
+      return getPropertyProps(deal.onlyChild(childName));
+    }
+    case "mgmt": {
+      return getMgmtProps(deal.onlyChild(childName));
+    }
+    case "purchaseFinancing":
+    case "refiFinancing": {
+      return getFinancingProps(
+        deal.onlyChild(childName),
+        deal.valueNext("dealMode")
+      );
+    }
+  }
 }
 
-function useProps(sectionName: ActiveDealSectionName): SectionProps & {
+function useProps(sectionName: ActiveDealChildName): SectionProps & {
   openEditor: () => void;
   completionStatus: StateValue<"completionStatus">;
 } {

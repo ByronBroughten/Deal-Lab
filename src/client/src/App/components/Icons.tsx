@@ -1,7 +1,7 @@
 import { IconBaseProps } from "react-icons";
 import { AiFillEdit, AiOutlinePlusSquare } from "react-icons/ai";
 import { BiCopy, BiHelpCircle, BiHomeHeart } from "react-icons/bi";
-import { BsFillHouseFill } from "react-icons/bs";
+import { BsFillHouseFill, BsSnow2 } from "react-icons/bs";
 import { GiHouseKeys } from "react-icons/gi";
 import { ImCheckmark } from "react-icons/im";
 import { MdDelete, MdOutlineHomeRepairService } from "react-icons/md";
@@ -12,6 +12,7 @@ type IconName =
   | "property"
   | "buyAndHold"
   | "fixAndFlip"
+  | "brrrr"
   | "homeBuyer"
   | "info"
   | "repair"
@@ -29,6 +30,9 @@ export const icons: Record<IconName, (props?: IconProps) => React.ReactNode> = {
   },
   fixAndFlip(props) {
     return <MdOutlineHomeRepairService {...props} />;
+  },
+  brrrr(props) {
+    return <BsSnow2 {...props} />;
   },
   homeBuyer(props) {
     return <BiHomeHeart {...props} />;

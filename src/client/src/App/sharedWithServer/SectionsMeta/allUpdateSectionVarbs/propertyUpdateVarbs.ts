@@ -47,6 +47,7 @@ export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
           homeBuyer: basicsS.one,
           buyAndHold: basicsS.sumChildren("unit", "one"),
           fixAndFlip: basicsS.loadFromLocal("numUnitsEditor"),
+          brrrr: basicsS.sumChildren("unit", "one"),
         }
       ),
     }),
@@ -60,6 +61,7 @@ export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
           homeBuyer: basicsS.loadFromLocal("numBedroomsEditor"),
           buyAndHold: basicsS.sumChildren("unit", "numBedrooms"),
           fixAndFlip: basicsS.notApplicable,
+          brrrr: basicsS.sumChildren("unit", "numBedrooms"),
         }
       ),
     }),
@@ -88,7 +90,16 @@ export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
           updateFnProps: [
             propS.localBaseName("taxes"),
             propS.localBaseName("homeIns"),
-            propS.onlyChildBase("utilityValue", "valueDollars"),
+            propS.onlyChildBase("utilityHolding", "valueDollars"),
+            propS.onlyChildBase("miscHoldingCost", "valueDollars"),
+          ],
+        },
+        {
+          switches: [overrideSwitchS.local("propertyMode", "brrrr")],
+          updateFnProps: [
+            propS.localBaseName("taxes"),
+            propS.localBaseName("homeIns"),
+            propS.onlyChildBase("utilityHolding", "valueDollars"),
             propS.onlyChildBase("miscHoldingCost", "valueDollars"),
           ],
         },
@@ -118,6 +129,12 @@ export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
             propS.local("sellingCosts"),
             propS.local("holdingCostTotal"),
           ]),
+          brrrr: updateVarbS.sumNums([
+            propS.local("purchasePrice"),
+            propS.local("rehabCost"),
+            propS.local("sellingCosts"),
+            propS.local("holdingCostTotal"),
+          ]),
         }
       ),
     }),
@@ -127,7 +144,7 @@ export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
         propS.localBaseName("taxes"),
         propS.localBaseName("homeIns"),
         propS.localBaseName("miscCosts"),
-        propS.onlyChild("utilityValue", "valueDollars"),
+        propS.onlyChild("utilityOngoing", "valueDollars"),
         propS.onlyChild("maintenanceValue", "valueDollars"),
         propS.onlyChild("capExValue", "valueDollars"),
       ],

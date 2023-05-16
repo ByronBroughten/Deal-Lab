@@ -16,7 +16,7 @@ type Props = {
   dealMode: StateValue<"dealMode">;
 };
 
-export function FinancingEditor({ feId }: Props) {
+export function PurchaseFinancingEditor({ feId }: Props) {
   const addChild = useAction("addChild");
   const updateValue = useAction("updateValue");
 
@@ -32,9 +32,9 @@ export function FinancingEditor({ feId }: Props) {
     });
 
   const loanIds = financing.childFeIds("loan");
-  const financingModeVarb = financing.varb("financingMode");
-  const financingMode = financing.value("financingMode");
-  const values: Record<string, StateValue<"financingMode">> = {
+  const financingModeVarb = financing.varb("financingMethod");
+  const financingMethod = financing.value("financingMethod");
+  const values: Record<string, StateValue<"financingMethod">> = {
     cashOnly: "cashOnly",
     useLoan: "useLoan",
   };
@@ -64,7 +64,7 @@ export function FinancingEditor({ feId }: Props) {
               <RadioGroup
                 aria-labelledby="financing-type-radio-buttons-group"
                 name="financing-type-radio-buttons-group"
-                value={financingMode}
+                value={financingMethod}
                 onChange={(e) =>
                   updateValue({
                     ...financingModeVarb.feVarbInfo,
@@ -85,7 +85,7 @@ export function FinancingEditor({ feId }: Props) {
               </RadioGroup>
             </FormControl>
           </div>
-          {financingMode === "useLoan" && (
+          {financingMethod === "useLoan" && (
             <Box
               sx={{
                 display: "flex",

@@ -96,7 +96,7 @@ export const allSectionChildren = checkAllSectionChildren({
     homeBuyerOutputList: sectionChild("outputList"),
     buyAndHoldOutputList: sectionChild("outputList"),
     fixAndFlipOutputList: sectionChild("outputList"),
-    // brrrrOutputList: sectionChild("outputList"),
+    brrrrOutputList: sectionChild("outputList"),
   },
   outputItem: { virtualVarb: sectionChild("virtualVarb") },
   ongoingValue: {
@@ -119,9 +119,15 @@ export const allSectionChildren = checkAllSectionChildren({
   deal: sectionChildren({
     property: "property",
     financing: "financing",
+    purchaseFinancing: "financing",
+    refiFinancing: "financing",
     mgmt: "mgmt",
   }),
-  financing: { loan: sectionChild("loan") },
+  financing: {
+    loan: sectionChild("loan"),
+    purchaseLoan: sectionChild("loan"),
+    refinanceLoan: sectionChild("loan"),
+  },
   loan: sectionChildren({
     loanBaseValue: "loanBaseValue",
     closingCostValue: "closingCostValue",
@@ -140,6 +146,9 @@ export const allSectionChildren = checkAllSectionChildren({
     costOverrunValue: "costOverrunValue",
     sellingCostValue: "sellingCostValue",
     utilityValue: "utilityValue",
+    utilityHolding: "utilityValue",
+    utilityOngoing: "utilityValue",
+
     maintenanceValue: "maintenanceValue",
     capExValue: "capExValue",
 

@@ -16,10 +16,12 @@ import {
 import { updateVarbsS } from "../updateSectionVarbs/updateVarbs";
 import { numObj } from "../values/StateValue/NumObj";
 import { PiCalculationName } from "../values/StateValue/valuesShared/calculations/piCalculations";
+import { loanCompletionStatus } from "./calculatedUpdateVarbs/completionStatusVarbs";
 
 export function loanUpdateVarbs(): UpdateSectionVarbs<"loan"> {
   return {
     ...updateVarbsS._typeUniformity,
+    completionStatus: loanCompletionStatus,
     loanPurpose: updateVarb("loanPurpose", { initValue: "purchasePrice" }),
     loanAmountInputMode: updateVarb("loanAmountInputMode", {
       initValue: "downPayment",

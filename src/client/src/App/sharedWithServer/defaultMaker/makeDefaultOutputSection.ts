@@ -15,6 +15,7 @@ const dealModeToOutputListName = _checkOutputListNames({
   homeBuyer: "homeBuyerOutputList",
   buyAndHold: "buyAndHoldOutputList",
   fixAndFlip: "fixAndFlipOutputList",
+  brrrr: "brrrrOutputList",
 });
 type DealModeToOutputListName = typeof dealModeToOutputListName;
 export function outputListName<DM extends StateValue<"dealMode">>(
