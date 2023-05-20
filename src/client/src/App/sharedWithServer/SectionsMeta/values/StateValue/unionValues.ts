@@ -16,6 +16,7 @@ const valueSources = {
     "amountPercentEditor",
     "amountDollarsEditor",
   ],
+  ongoingPhaseSource: ["sameAsHoldingPhase", "valueDollarsEditor"],
   loanBaseValueSource: [
     "purchaseLoanValue",
     "repairLoanValue",
@@ -46,7 +47,13 @@ const valueSources = {
   editorValueSource: ["valueEditor"],
   loadedVarbSource: ["loadedVarb"],
   customValueSource: ["none", "valueEditor", "listTotal"],
-  utilityValueSource: ["none", "zero", "listTotal", "twentyPercentRent"],
+  utilityValueSource: [
+    "none",
+    "zero",
+    "listTotal",
+    "twentyPercentRent",
+    "sameAsHoldingPhase",
+  ],
   repairValueSource: ["none", "zero", "valueDollarsEditor", "listTotal"],
   overrunValueSource: ["valueDollarsEditor", "valuePercentEditor"],
   dollarsOrList: ["valueDollarsEditor", "listTotal"],

@@ -10,7 +10,6 @@ import { SetterTesterSection } from "./TestUtils/SetterTesterSection";
 // loadSelfSectionPack
 // replaceChildArrs
 // resetToDefault
-
 describe("SetterSection", () => {
   const sectionPathNames = ["loanFocal"] as const;
   type PathName = (typeof sectionPathNames)[number];
@@ -93,10 +92,7 @@ describe("SetterSection", () => {
     > = (props: SectionChildNameProps<SN>) => void;
 
     function runWithNames(fn: SectionChildPropsFn): void {
-      const sectionAndChildNames = [
-        ["financingFocal", ["loan"]],
-        ["propertyFocal", ["unit"]],
-      ] as const;
+      const sectionAndChildNames = [["propertyFocal", ["unit"]]] as const;
       for (const [pathName, childNames] of sectionAndChildNames) {
         for (const childName of childNames) {
           fn({

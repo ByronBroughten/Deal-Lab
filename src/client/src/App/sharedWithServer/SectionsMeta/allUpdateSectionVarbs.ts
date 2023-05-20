@@ -1,8 +1,8 @@
 import { timeS } from "../utils/timeS";
-import { basicOngoingValueVarbs } from "./allUpdateSectionVarbs/basicOngoingValue";
 import { calculatedUpdateVarbs } from "./allUpdateSectionVarbs/calculatedUpdateVarbs";
 import { costOverrunUpdateVarbs } from "./allUpdateSectionVarbs/costOverrunUpdateVarbs";
 import { dealUpdateVarbs } from "./allUpdateSectionVarbs/dealUpdateVarbs";
+import { dollarsOrListUpdateVarbs } from "./allUpdateSectionVarbs/dollarsOrListUpdateVarb";
 import { financingUpdateVarbs } from "./allUpdateSectionVarbs/financingUpdateVarbs";
 import { loanBaseUpdateVarbs } from "./allUpdateSectionVarbs/loanBaseUpdateVarbs";
 import { loanUpdateVarbs } from "./allUpdateSectionVarbs/loanUpdateVarbs";
@@ -13,6 +13,7 @@ import {
   capExItemUpdateVarbs,
   ongoingItemUpdateVarbs,
 } from "./allUpdateSectionVarbs/ongoingItemUpdateVarbs";
+import { ongoingValueUpdateVarb } from "./allUpdateSectionVarbs/ongoingValueUpdateVarb";
 import { propertyUpdateVarbs } from "./allUpdateSectionVarbs/propertyUpdateVarbs";
 import { sellingCostUpdateVarbs } from "./allUpdateSectionVarbs/sellingCostUpdateVarbs";
 import { vacancyLossUpdateVarbs } from "./allUpdateSectionVarbs/vacancyLossUpdateVarbs";
@@ -98,16 +99,21 @@ function makeAllUpdateSections() {
     ...updateSectionProp("unit", {
       one: updateVarbS.one(),
       numBedrooms: updateVarb("numObj"),
-      ...varbsS.ongoingInputNext("targetRent"),
+      ...varbsS.ongoingInput("targetRent"),
     }),
+    ...updateSectionProp(
+      "taxesOngoing",
+      ongoingValueUpdateVarb("taxesHolding")
+    ),
+    ...updateSectionProp(
+      "homeInsOngoing",
+      ongoingValueUpdateVarb("homeInsHolding")
+    ),
     ...updateSectionProp("utilityValue", {
       valueSourceName: updateVarb("utilityValueSource", { initValue: "none" }),
       ...varbsS.group("valueDollars", "ongoing", "monthly", {
         targets: { updateFnName: "throwIfReached" },
         monthly: {
-          // utilityValue needs dealMode, eh?
-          // should it get passed down, or do I cheat
-          // and use focal?
           updateOverrides: [
             updateOverride(
               [switchS.local("valueSourceName", "none")],
@@ -400,7 +406,7 @@ function makeAllUpdateSections() {
       valueSourceName: updateVarb("customValueSource", {
         initValue: "valueEditor",
       }),
-      ...varbsS.ongoingInputNext("value", {
+      ...varbsS.ongoingInput("value", {
         monthly: {
           updateFnName: "throwIfReached",
           updateOverrides: [
@@ -464,9 +470,9 @@ function makeAllUpdateSections() {
         editor: { updateFnName: "calcVarbs" },
       }),
     }),
-    ...updateSectionProp("miscRevenueValue", basicOngoingValueVarbs()),
-    ...updateSectionProp("miscOngoingCost", basicOngoingValueVarbs()),
-    ...updateSectionProp("miscHoldingCost", basicOngoingValueVarbs()),
+    ...updateSectionProp("miscRevenueValue", dollarsOrListUpdateVarbs()),
+    ...updateSectionProp("miscOngoingCost", dollarsOrListUpdateVarbs()),
+    ...updateSectionProp("miscHoldingCost", dollarsOrListUpdateVarbs()),
     ...updateSectionProp("miscOnetimeCost", {
       valueDollars: updateVarb("numObj", {
         updateFnName: "throwIfReached",

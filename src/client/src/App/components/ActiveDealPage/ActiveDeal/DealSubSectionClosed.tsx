@@ -108,7 +108,7 @@ function getFinancingProps(
       financing.valueNext("financingMode")
     ),
     displayName,
-    detailVarbPropArr: calculatedFocal.varbInfoArr([
+    detailVarbPropArr: financing.varbInfoArr([
       "downPaymentDollars",
       "loanTotalDollars",
       "loanPaymentMonthly",

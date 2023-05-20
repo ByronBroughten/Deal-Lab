@@ -17,7 +17,7 @@ const basicOngoingValueNames = [
   "miscRevenueValue",
 ] as const;
 type BasicOngoingValueName = (typeof basicOngoingValueNames)[number];
-export function basicOngoingValueVarbs(): UpdateSectionVarbs<BasicOngoingValueName> {
+export function dollarsOrListUpdateVarbs(): UpdateSectionVarbs<BasicOngoingValueName> {
   return {
     valueSourceName: updateVarb("dollarsOrListOngoing", {
       initValue: "valueDollarsOngoingEditor",

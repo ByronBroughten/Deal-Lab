@@ -3,6 +3,7 @@ import { UpdateSectionVarbs } from "../updateSectionVarbs/updateSectionVarbs";
 import { updateVarb, updateVarbS } from "../updateSectionVarbs/updateVarb";
 import { updateBasicsS } from "../updateSectionVarbs/updateVarb/UpdateBasics";
 import {
+  UpdateFnProp,
   updateFnPropS,
   updateFnPropsS,
 } from "../updateSectionVarbs/updateVarb/UpdateFnProps";
@@ -13,11 +14,21 @@ import { propertyCompletionStatus } from "./calculatedUpdateVarbs/completionStat
 
 const basicsS = updateBasicsS;
 const propS = updateFnPropS;
+const varbsS = updateVarbsS;
+
+function propertyHoldingCosts(): UpdateFnProp[] {
+  return [
+    propS.localBaseName("taxesHolding"),
+    propS.localBaseName("homeInsHolding"),
+    propS.onlyChildBase("utilityHolding", "valueDollars"),
+    propS.onlyChildBase("miscHoldingCost", "valueDollars"),
+  ];
+}
 
 export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
   return {
-    ...updateVarbsS._typeUniformity,
-    ...updateVarbsS.savableSection,
+    ...varbsS._typeUniformity,
+    ...varbsS.savableSection,
     propertyMode: updateVarb("dealMode", {
       initValue: "buyAndHold",
     }),
@@ -27,11 +38,20 @@ export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
     state: updateVarb("string"),
     zipCode: updateVarb("string"),
     one: updateVarbS.one(),
+
+    ...varbsS.ongoingInput("taxesHolding"),
+    ...varbsS.ongoingInput("homeInsHolding"),
+    ...varbsS.group("taxesOngoing", "ongoing", "yearly", {
+      monthly: basicsS.loadFromChild("taxesHolding", "valueDollarsMonthly"),
+      yearly: basicsS.loadFromChild("taxesHolding", "valueDollarsYearly"),
+    }),
+    ...varbsS.group("homeInsOngoing", "ongoing", "monthly", {
+      monthly: basicsS.loadFromChild("taxesHolding", "valueDollarsMonthly"),
+      yearly: basicsS.loadFromChild("taxesHolding", "valueDollarsYearly"),
+    }),
+
     purchasePrice: updateVarb("numObj"),
     sqft: updateVarb("numObj"),
-    ...updateVarbsS.ongoingInputNext("taxes", {
-      switchInit: "yearly",
-    }),
     afterRepairValue: updateVarb("numObj"),
     sellingCosts: updateVarb(
       "numObj",
@@ -74,7 +94,7 @@ export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
       propS.children("miscOnetimeCost", "valueDollars"),
       propS.children("costOverrunValue", "valueDollars"),
     ]),
-    ...updateVarbsS.ongoingSumNumsNext("holdingCost", "monthly", {
+    ...varbsS.ongoingSumNumsNext("holdingCost", "monthly", {
       updateBasics: { updateFnName: "throwIfReached", updateFnProps: {} },
       updateOverrides: [
         {
@@ -87,21 +107,11 @@ export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
         },
         {
           switches: [overrideSwitchS.local("propertyMode", "fixAndFlip")],
-          updateFnProps: [
-            propS.localBaseName("taxes"),
-            propS.localBaseName("homeIns"),
-            propS.onlyChildBase("utilityHolding", "valueDollars"),
-            propS.onlyChildBase("miscHoldingCost", "valueDollars"),
-          ],
+          updateFnProps: propertyHoldingCosts(),
         },
         {
           switches: [overrideSwitchS.local("propertyMode", "brrrr")],
-          updateFnProps: [
-            propS.localBaseName("taxes"),
-            propS.localBaseName("homeIns"),
-            propS.onlyChildBase("utilityHolding", "valueDollars"),
-            propS.onlyChildBase("miscHoldingCost", "valueDollars"),
-          ],
+          updateFnProps: propertyHoldingCosts(),
         },
       ],
     }),
@@ -138,11 +148,11 @@ export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
         }
       ),
     }),
-    ...updateVarbsS.ongoingSumNums(
+    ...varbsS.ongoingSumNums(
       "expenses",
       [
-        propS.localBaseName("taxes"),
-        propS.localBaseName("homeIns"),
+        propS.localBaseName("taxesOngoing"),
+        propS.localBaseName("homeInsOngoing"),
         propS.localBaseName("miscCosts"),
         propS.onlyChild("utilityOngoing", "valueDollars"),
         propS.onlyChild("maintenanceValue", "valueDollars"),
@@ -150,30 +160,26 @@ export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
       ],
       "monthly"
     ),
-    ...updateVarbsS.ongoingInputNext("homeIns", {
-      switchInit: "yearly",
-    }),
-
     miscOnetimeCosts: updateVarb(
       "numObj",
       basicsS.loadFromChild("miscOnetimeCost", "valueDollars")
     ),
 
-    ...updateVarbsS.group("miscCosts", "ongoing", "monthly", {
+    ...varbsS.group("miscCosts", "ongoing", "monthly", {
       monthly: basicsS.loadFromChild("miscOngoingCost", "valueDollarsMonthly"),
       yearly: basicsS.loadFromChild("miscOngoingCost", "valueDollarsYearly"),
     }),
-    ...updateVarbsS.group("miscRevenue", "ongoing", "monthly", {
+    ...varbsS.group("miscRevenue", "ongoing", "monthly", {
       monthly: basicsS.loadFromChild("miscRevenueValue", "valueDollarsMonthly"),
       yearly: basicsS.loadFromChild("miscRevenueValue", "valueDollarsYearly"),
     }),
-    ...updateVarbsS.monthsYearsInput("holdingPeriod", "months"),
-    ...updateVarbsS.ongoingSumNums(
+    ...varbsS.monthsYearsInput("holdingPeriod", "months"),
+    ...varbsS.ongoingSumNums(
       "targetRent",
       [propS.children("unit", "targetRent")],
       "monthly"
     ),
-    ...updateVarbsS.ongoingSumNums(
+    ...varbsS.ongoingSumNums(
       "revenue",
       updateFnPropsS.localBaseNameArr(["targetRent", "miscRevenue"]),
       "monthly"

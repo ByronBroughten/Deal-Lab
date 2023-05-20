@@ -100,7 +100,7 @@ function updateGroup<BN extends string, SN extends SwitchName>(
   }, {} as UpdateGroup<BN, SN>);
 }
 
-export function ongoingInputNext<BN extends string>(
+export function ongoingInput<BN extends string>(
   baseName: BN,
   {
     switchInit = "monthly",
@@ -154,9 +154,8 @@ type OngoingSumNumProps = {
 
 export const updateGroupS = {
   group: updateGroup,
-  ongoingInputNext,
-  monthsYearsInput,
   ongoingInput,
+  monthsYearsInput,
   ongoingSumNumsNext<BN extends string>(
     baseName: BN,
     initSwitch: SwitchTargetKey<"ongoing">,
@@ -349,40 +348,6 @@ export function monthsYearsInput<BN extends string>(
         ),
       ],
       ...options?.years,
-    },
-  });
-}
-
-export function ongoingInput<BN extends string>(
-  baseName: BN,
-  {
-    switchInit = "monthly",
-    ...options
-  }: SwitchOptions<"ongoing"> & { switchInit?: SwitchTargetKey<"ongoing"> } = {}
-): UpdateGroup<BN, "ongoing"> {
-  return updateGroup(baseName, "ongoing", switchInit, {
-    ...options,
-    monthly: {
-      updateFnName: "throwIfReached",
-      updateOverrides: [
-        updateOverrideS.activeYearlyToMonthly(baseName),
-        updateOverride(
-          [overrideSwitchS.monthlyIsActive(baseName)],
-          updateBasics("calcVarbs")
-        ),
-      ],
-      ...options.monthly,
-    },
-    yearly: {
-      updateFnName: "throwIfReached",
-      updateOverrides: [
-        updateOverrideS.activeMonthlyToYearly(baseName),
-        updateOverride(
-          [overrideSwitchS.yearlyIsActive(baseName)],
-          updateBasics("calcVarbs")
-        ),
-      ],
-      ...options.yearly,
     },
   });
 }

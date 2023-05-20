@@ -1,3 +1,4 @@
+import { ValidationError } from "../../utils/Error";
 import { Obj } from "../../utils/Obj";
 import { targetNames } from "../allBaseSectionVarbs/baseSwitchNames";
 import { fullDisplayNameString } from "../allDisplaySectionVarbs";
@@ -22,7 +23,6 @@ type MakeVarbPathParams<
 };
 
 const allVarbPathParams = {
-  ...sectionVarbNameParams("financingFocal", "Financing", ["financingMethod"]),
   ...sectionVarbNameParams("calculatedVarbsFocal", "Property", [
     "two",
     "twelve",
@@ -33,18 +33,6 @@ const allVarbPathParams = {
     ...targetNames("fivePercentRent", "ongoing"),
     ...targetNames("tenPercentRent", "ongoing"),
   ]),
-  ...sectionVarbNameParams("calculatedVarbsFocal", "Financing", [
-    "downPaymentDollars",
-    "downPaymentPercent",
-    "loanBaseDollars",
-    "closingCosts",
-    "loanUpfrontExpenses",
-    "loanTotalDollars",
-    ...targetNames("piti", "ongoing"),
-    ...targetNames("mortgageIns", "ongoing"),
-    ...targetNames("loanPayment", "ongoing"),
-    ...targetNames("loanExpenses", "ongoing"),
-  ]),
   ...sectionVarbNameParams("propertyFocal", "Property", [
     "sellingCosts",
     "holdingPeriodMonths",
@@ -54,8 +42,11 @@ const allVarbPathParams = {
     "sqft",
     "numBedrooms",
     "numUnits",
-    ...targetNames("taxes", "ongoing"),
-    ...targetNames("homeIns", "ongoing"),
+    ...targetNames("taxesHolding", "ongoing"),
+    ...targetNames("homeInsHolding", "ongoing"),
+    ...targetNames("taxesOngoing", "ongoing"),
+    ...targetNames("homeInsOngoing", "ongoing"),
+
     ...targetNames("targetRent", "ongoing"),
   ]),
   ...sectionVarbNameParams("mgmtFocal", "Management", [
@@ -75,6 +66,15 @@ const allVarbPathParams = {
   ...sectionVarbNameParams("utilityCostFocal", "Property", [
     "valueDollarsMonthly",
     "valueDollarsYearly",
+  ]),
+  ...sectionVarbNameParams("dealFocal", "Financing", [
+    ...targetNames("ongoingPiti", "ongoing"),
+    ...targetNames("ongoingLoanPayment", "ongoing"),
+  ]),
+  ...sectionVarbNameParams("dealFocal", "Deal", [
+    "totalInvestment",
+    ...targetNames("cashFlow", "ongoing"),
+    ...targetNames("cocRoi", "ongoing"),
   ]),
   utilitiesMonthly: fixedVarbPathParams(
     "Property",
@@ -118,11 +118,6 @@ const allVarbPathParams = {
     "propertyFocal",
     "revenueYearly"
   ),
-  ...sectionVarbNameParams("dealFocal", "Deal", [
-    "totalInvestment",
-    ...targetNames("cashFlow", "ongoing"),
-    ...targetNames("cocRoi", "ongoing"),
-  ]),
   userVarbValue: varbPathParams("numVarbItemMain", "value"),
   repairCostBase: fixedVarbPathParams(
     "Property",
@@ -148,6 +143,13 @@ const allVarbPathParams = {
 export const varbPathNames = Obj.keys(allVarbPathParams);
 export function isVarbPathName(value: any): value is VarbPathName {
   return varbPathNames.includes(value);
+}
+export function validateVarbPathName(value: any): VarbPathName {
+  if (isVarbPathName(value)) {
+    return value;
+  } else {
+    throw new ValidationError(`value "${value}" is not a varbPathName`);
+  }
 }
 
 type AllVarbPathParams = typeof allVarbPathParams;

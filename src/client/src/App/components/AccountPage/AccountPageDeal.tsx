@@ -85,6 +85,7 @@ export function AccountPageDeal({
   };
 
   const strDisplayName = deal.stringValue("displayName");
+  const isComplete = deal.valueNext("completionStatus") === "allValid";
   return (
     <View
       style={{
@@ -114,7 +115,7 @@ export function AccountPageDeal({
         <Row style={rowStyle}>
           {icons[dealMode](iconProps)}
           <Text {...dealTypeProps}>{dealModeLabels[dealMode]}</Text>
-          {!deal.valueNext("isComplete") && (
+          {!isComplete && (
             <Box
               sx={{
                 color: nativeTheme.notice.dark,

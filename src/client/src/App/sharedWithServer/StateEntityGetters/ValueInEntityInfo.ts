@@ -21,23 +21,19 @@ const sharedBasics = ["purchasePrice", "sqft"] as const;
 const nonHomebuyBasics = ["numUnits"] as const;
 
 const sharedOngoing = [
-  "taxesMonthly",
-  "taxesYearly",
-  "homeInsMonthly",
-  "homeInsYearly",
+  "taxesOngoingMonthly",
+  "taxesOngoingYearly",
+  "homeInsOngoingMonthly",
+  "homeInsOngoingYearly",
   "utilitiesMonthly",
 ] as const;
 
 const sharedUpfront = ["rehabCost", "repairCostBase"] as const;
-
 const financing = [
-  "downPaymentDollars",
-  "downPaymentPercent",
-  "loanTotalDollars",
-  "loanPaymentMonthly",
-  "loanPaymentYearly",
-  "pitiMonthly",
-  "pitiYearly",
+  "ongoingPitiMonthly",
+  "ongoingPitiYearly",
+  "ongoingLoanPaymentMonthly",
+  "ongoingLoanPaymentYearly",
 ] as const;
 
 const mgmt = [

@@ -54,8 +54,15 @@ export const sectionNames = [
   "costOverrunValue",
   "sellingCostValue",
   "utilityValue",
+
   "utilityHolding",
   "utilityOngoing",
+
+  "taxesHolding",
+  "taxesOngoing",
+
+  "homeInsHolding",
+  "homeInsOngoing",
 
   "maintenanceValue",
   "capExValue",

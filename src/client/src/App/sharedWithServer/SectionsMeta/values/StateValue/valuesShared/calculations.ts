@@ -30,8 +30,20 @@ const solvableTextByArgs = {
     multiply: ({ leftSide, rightSide }: LRSides) => {
       return `${leftSide} * ${rightSide}`;
     },
-    simpleSubtract: ({ leftSide, rightSide }: LRSides) => {
+    add: ({ leftSide, rightSide }: LRSides) => {
+      return `${leftSide} + ${rightSide}`;
+    },
+    subtract: ({ leftSide, rightSide }: LRSides) => {
       return `${leftSide} - ${rightSide}`;
+    },
+    subtractOffsetNegative: ({ leftSide, rightSide }: LRSides) => {
+      let baseEquation = `${leftSide} - ${rightSide}`;
+      const subtracted = leftSide - rightSide;
+      if (subtracted !== 0) {
+        const negativeOffset = Math.abs(subtracted);
+        baseEquation += ` + ${negativeOffset}`;
+      }
+      return baseEquation;
     },
     divide: ({ leftSide, rightSide }: LRSides) => {
       return `${leftSide} / ${rightSide}`;

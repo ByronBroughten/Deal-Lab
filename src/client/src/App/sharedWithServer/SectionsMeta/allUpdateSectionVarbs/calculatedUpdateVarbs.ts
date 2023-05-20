@@ -1,139 +1,74 @@
-import { VarbNameByValueName } from "../baseSectionsDerived/baseSectionValues";
-import { UpdateGroup } from "../updateSectionVarbs/switchUpdateVarbs";
 import { UpdateSectionVarbs } from "../updateSectionVarbs/updateSectionVarbs";
-import {
-  UpdateVarb,
-  updateVarb,
-  updateVarbS,
-} from "../updateSectionVarbs/updateVarb";
+import { updateVarb, updateVarbS } from "../updateSectionVarbs/updateVarb";
 import {
   updateBasics,
   updateBasicsS,
 } from "../updateSectionVarbs/updateVarb/UpdateBasics";
 import { updateFnPropS } from "../updateSectionVarbs/updateVarb/UpdateFnProps";
-import {
-  overrideSwitchS,
-  updateOverride,
-} from "../updateSectionVarbs/updateVarb/UpdateOverrides";
 import { updateVarbsS } from "../updateSectionVarbs/updateVarbs";
 
-function sumLoanVarb(
-  loanVarbName: VarbNameByValueName<"loan", "numObj">
-): UpdateVarb<"numObj"> {
-  return updateVarb("numObj", {
-    updateFnName: "throwIfReached",
-    updateOverrides: [
-      updateOverride(
-        [overrideSwitchS.varbIsValue("financingMethod", "useLoan")],
-        updateBasicsS.sumNums(
-          updateFnPropS.pathNameBase("loanFocal", loanVarbName)
-        )
-      ),
-      updateOverride(
-        [overrideSwitchS.varbIsValue("financingMethod", "cashOnly", "")],
-        updateBasicsS.zero
-      ),
-    ],
-  });
-}
-
-function sumOngoingLoanVarb<BN extends string>(
-  financingBaseVarbName: BN,
-  loanBaseVarbName: string
-): UpdateGroup<BN, "ongoing"> {
-  return updateVarbsS.ongoingSumNumsNext(financingBaseVarbName, "monthly", {
-    updateBasics: updateBasicsS.throw,
-    updateOverrides: [
-      {
-        switches: [overrideSwitchS.varbIsValue("financingMethod", "useLoan")],
-        updateFnProps: [
-          updateFnPropS.pathNameBase("loanFocal", loanBaseVarbName),
-        ],
-      },
-      {
-        switches: [
-          overrideSwitchS.varbIsValue("financingMethod", "cashOnly", ""),
-        ],
-        updateBasics: updateBasicsS.zero,
-      },
-    ],
-  });
-}
-
+const propS = updateFnPropS;
+const varbS = updateVarbS;
 export function calculatedUpdateVarbs(): UpdateSectionVarbs<"calculatedVarbs"> {
   return {
     ...updateVarbsS._typeUniformity,
-    downPaymentDollars: updateVarbS.leftRightPropFn(
-      "simpleSubtract",
-      updateFnPropS.varbPathName("purchasePrice"),
-      updateFnPropS.varbPathName("loanBaseDollars")
-    ),
-    downPaymentPercent: updateVarbS.singlePropFn(
-      "decimalToPercent",
-      updateFnPropS.local("downPaymentDecimal")
-    ),
-    downPaymentDecimal: updateVarbS.leftRightPropFn(
+    pricePerUnit: varbS.leftRightPropFn(
       "divide",
-      updateFnPropS.local("downPaymentDollars"),
-      updateFnPropS.varbPathName("purchasePrice")
+      propS.varbPathName("purchasePrice"),
+      propS.varbPathName("numUnits")
     ),
-    ...updateVarbsS.ongoingSumNumsNext("piti", "monthly", {
-      updateFnProps: [
-        updateFnPropS.varbPathBase("loanPayment"),
-        updateFnPropS.varbPathBase("taxes"),
-        updateFnPropS.varbPathBase("homeIns"),
-        updateFnPropS.varbPathBase("mortgageIns"),
-      ],
-    }),
-    loanBaseDollars: sumLoanVarb("loanBaseDollars"),
-    loanTotalDollars: sumLoanVarb("loanTotalDollars"),
-    closingCosts: sumLoanVarb("closingCosts"),
-    mortgageInsUpfront: sumLoanVarb("mortgageInsUpfront"),
-    loanUpfrontExpenses: updateVarbS.sumNums([
-      updateFnPropS.local("closingCosts"),
-      updateFnPropS.local("mortgageInsUpfront"),
-    ]),
-    ...sumOngoingLoanVarb("loanExpenses", "expenses"),
-    ...sumOngoingLoanVarb("mortgageIns", "mortgageIns"),
-    ...sumOngoingLoanVarb("loanPayment", "loanPayment"),
-
+    pricePerSqft: varbS.leftRightPropFn(
+      "divide",
+      propS.varbPathName("purchasePrice"),
+      propS.varbPathName("sqft")
+    ),
+    arvPerSqft: varbS.leftRightPropFn(
+      "divide",
+      propS.varbPathName("afterRepairValue"),
+      propS.varbPathName("sqft")
+    ),
+    rehabPerSqft: varbS.leftRightPropFn(
+      "divide",
+      propS.varbPathName("rehabCost"),
+      propS.varbPathName("sqft")
+    ),
     // Property
     two: updateVarb("numObj", updateBasics("two")),
     twelve: updateVarb("numObj", updateBasics("twelve")),
     onePercentPrice: updateVarb("numObj", {
       ...updateBasicsS.equationSimple(
         "onePercent",
-        updateFnPropS.pathNameBase("propertyFocal", "purchasePrice")
+        propS.pathNameBase("propertyFocal", "purchasePrice")
       ),
     }),
     twoPercentPrice: updateVarb("numObj", {
       ...updateBasicsS.equationSimple(
         "twoPercent",
-        updateFnPropS.pathNameBase("propertyFocal", "purchasePrice")
+        propS.pathNameBase("propertyFocal", "purchasePrice")
       ),
     }),
     fivePercentRentMonthly: updateVarb("numObj", {
       ...updateBasicsS.equationSimple(
         "fivePercent",
-        updateFnPropS.varbPathName("targetRentMonthly")
+        propS.varbPathName("targetRentMonthly")
       ),
     }),
     fivePercentRentYearly: updateVarb("numObj", {
       ...updateBasicsS.equationSimple(
         "fivePercent",
-        updateFnPropS.varbPathName("targetRentYearly")
+        propS.varbPathName("targetRentYearly")
       ),
     }),
     tenPercentRentMonthly: updateVarb("numObj", {
       ...updateBasicsS.equationSimple(
         "tenPercent",
-        updateFnPropS.varbPathName("targetRentMonthly")
+        propS.varbPathName("targetRentMonthly")
       ),
     }),
     tenPercentRentYearly: updateVarb("numObj", {
       ...updateBasicsS.equationSimple(
         "tenPercent",
-        updateFnPropS.varbPathName("targetRentYearly")
+        propS.varbPathName("targetRentYearly")
       ),
     }),
     onePercentPricePlusSqft: updateVarb("numObj", {
@@ -150,20 +85,14 @@ export function calculatedUpdateVarbs(): UpdateSectionVarbs<"calculatedVarbs"> {
       initValue: false,
       updateFnName: "varbExists",
       updateFnProps: {
-        varbInfo: updateFnPropS.pathName("propertyFocal", "one"),
+        varbInfo: propS.pathName("propertyFocal", "one"),
       },
     }),
-    financingExists: updateVarb("boolean", {
-      initValue: false,
-      updateFnName: "varbExists",
-      updateFnProps: {
-        varbInfo: updateFnPropS.pathName("financingFocal", "one"),
-      },
-    }),
+
     mgmtExists: updateVarb("boolean", {
       initValue: false,
       updateFnName: "varbExists",
-      updateFnProps: { varbInfo: updateFnPropS.pathName("mgmtFocal", "one") },
+      updateFnProps: { varbInfo: propS.pathName("mgmtFocal", "one") },
     }),
   };
 }

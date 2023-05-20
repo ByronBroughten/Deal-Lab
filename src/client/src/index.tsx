@@ -6,31 +6,28 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-
-// Add updateVarbs for these:
-// - utilityHolding
-// - utilityOngoing
-// - purchaseFinancing
-// - refiFinancing
 // Add tests for these:
 // - utilityHolding
 // - utilityOngoing
 // - purchaseFinancing
 // - refiFinancing
+// - the outputs for each of the deal modes
 
-// Make ongoingHomeIns
-// Make holdingHomeIns
-// Make ongoingTaxes
-// Make holdingTaxes
-// Implement info dots when selecting the dealType
+// - Yeah, I guess those two should be separate. I could
+//   utilities, taxes, and insurance should have a "same as holding period" option
+//   that means homeInsOngoing and taxesOngoing should possibly be their own values
+
+//
+
+// Make homeInsOngoing
+// Make homeInsHolding
+// Make taxesOngoing(?)
+// Make taxesHolding(?)
+// Implement info dots for selecting the dealType
 
 // Fix refiFinancing completionStatus
 // - Then fix where it comes from in useActiveDealSection
 // fix makeExampleProperty for utilityHolding and utilityOngoing
-
-// If I do things this way, I don't have to fuck with the
-// controls quite as much, yeah?
-// A bit though, still.
 
 // Add an easy CapEx default for homebuyer mode (1% or 2% purchase price)
 // Re-add an easy CapEx default for buyAndHold and brrrr (20% rent)

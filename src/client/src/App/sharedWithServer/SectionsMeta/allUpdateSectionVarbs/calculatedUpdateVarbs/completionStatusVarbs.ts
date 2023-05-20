@@ -204,7 +204,7 @@ export const loanCompletionStatus = updateVarb(
 export const financingCompletionStatus = completionStatusVarb(
   updateOverride(
     [switchS.local("financingMethod", "", "cashOnly")],
-    cBasics({ validInputs: [propS.varbPathName("financingMethod")] })
+    cBasics({ validInputs: [propS.local("financingMethod")] })
   ),
   updateOverride(
     [switchS.local("financingMethod", "useLoan")],

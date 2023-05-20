@@ -40,7 +40,7 @@ export function loanUpdateVarbs(): UpdateSectionVarbs<"loan"> {
       "numObj",
       updateBasicsS.loadFromChild("loanBaseValue", "valueDollars")
     ),
-    ...updateVarbsS.ongoingInputNext("interestRatePercent", {
+    ...updateVarbsS.ongoingInput("interestRatePercent", {
       switchInit: "yearly",
     }),
     ...updateVarbsS.monthsYearsInput("loanTerm", "years", {
@@ -68,7 +68,7 @@ export function loanUpdateVarbs(): UpdateSectionVarbs<"loan"> {
         ),
       ],
     }),
-    ...updateVarbsS.ongoingInputNext("mortgageIns", {
+    ...updateVarbsS.ongoingInput("mortgageIns", {
       switchInit: "yearly",
       editor: { updateFnName: "calcVarbs" },
       monthly: {

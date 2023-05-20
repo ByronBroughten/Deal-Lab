@@ -17,6 +17,28 @@ const notApplicable = () => updateBasics("notApplicable");
 const propS = updateFnPropS;
 const basicsS = updateBasicsS;
 
+const expensesMinusLoanTotal = (
+  financingType: "purchaseFinancing" | "refiFinancing"
+) => {
+  return basicsS.equationLR(
+    "subtract",
+    propS.local("preFinanceOneTimeExpenses"),
+    propS.onlyChild(financingType, "loanTotalDollars")
+  );
+};
+
+function purchasePiti(
+  financingName: "purchaseFinancing" | "refiFinancing",
+  ending: "Monthly" | "Yearly"
+) {
+  return basicsS.sumNums(
+    propS.onlyChild(financingName, `loanPayment${ending}`),
+    propS.onlyChild("property", `taxesOngoing${ending}`),
+    propS.onlyChild("property", `homeInsOngoing${ending}`),
+    propS.onlyChild(financingName, `mortgageIns${ending}`)
+  );
+}
+
 export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
   return {
     ...updateVarbsS._typeUniformity,
@@ -24,109 +46,177 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
     ...updateVarbsS.displayNameAndEditor,
     completionStatus: dealCompletionStatus,
     dealMode: updateVarb("dealMode", { initValue: "buyAndHold" }),
+    ...updateVarbsS.group("ongoingPiti", "ongoing", "monthly", {
+      monthly: dealModeVarb({
+        homeBuyer: purchasePiti("purchaseFinancing", "Monthly"),
+        buyAndHold: purchasePiti("purchaseFinancing", "Monthly"),
+        fixAndFlip: purchasePiti("purchaseFinancing", "Monthly"),
+        brrrr: purchasePiti("refiFinancing", "Monthly"),
+      }),
+      yearly: dealModeVarb({
+        homeBuyer: purchasePiti("purchaseFinancing", "Yearly"),
+        buyAndHold: purchasePiti("purchaseFinancing", "Yearly"),
+        fixAndFlip: purchasePiti("purchaseFinancing", "Yearly"),
+        brrrr: purchasePiti("refiFinancing", "Yearly"),
+      }),
+    }),
+    ...updateVarbsS.group("ongoingLoanPayment", "ongoing", "monthly", {
+      monthly: dealModeVarb({
+        homeBuyer: basicsS.loadFromChild(
+          "purchaseFinancing",
+          "loanPaymentMonthly"
+        ),
+        buyAndHold: basicsS.loadFromChild(
+          "purchaseFinancing",
+          "loanPaymentMonthly"
+        ),
+        fixAndFlip: basicsS.loadFromChild(
+          "purchaseFinancing",
+          "loanPaymentMonthly"
+        ),
+        brrrr: basicsS.loadFromChild("purchaseFinancing", "loanPaymentMonthly"),
+      }),
+      yearly: dealModeVarb({
+        homeBuyer: basicsS.loadFromChild(
+          "purchaseFinancing",
+          "loanPaymentYearly"
+        ),
+        buyAndHold: basicsS.loadFromChild(
+          "purchaseFinancing",
+          "loanPaymentYearly"
+        ),
+        fixAndFlip: basicsS.loadFromChild(
+          "purchaseFinancing",
+          "loanPaymentYearly"
+        ),
+        brrrr: basicsS.loadFromChild("purchaseFinancing", "loanPaymentYearly"),
+      }),
+    }),
+    ...updateVarbsS.group("refiLoanHolding", "monthsYears", "months", {
+      months: basicsS.equationLR(
+        "subtractOffsetNegative",
+        propS.onlyChild("property", "holdingPeriodMonths"),
+        propS.onlyChild("refiFinancing", "timeTillRefinanceMonths")
+      ),
+      years: basicsS.equationLR(
+        "subtractOffsetNegative",
+        propS.onlyChild("property", "holdingPeriodYears"),
+        propS.onlyChild("refiFinancing", "timeTillRefinanceYears")
+      ),
+    }),
+    ...updateVarbsS.group("purchaseLoanHolding", "monthsYears", "months", {
+      months: basicsS.equationLR(
+        "subtract",
+        propS.onlyChild("property", "holdingPeriodMonths"),
+        propS.local("refiLoanHoldingMonths")
+      ),
+      years: basicsS.equationLR(
+        "subtract",
+        propS.onlyChild("property", "holdingPeriodYears"),
+        propS.local("refiLoanHoldingYears")
+      ),
+    }),
+    holdingPurchaseLoanPayment: basicsS.equationLR(
+      "multiply",
+      propS.onlyChild("purchaseFinancing", "loanPaymentMonthly"),
+      propS.local("purchaseLoanHoldingMonths")
+    ),
+    holdingRefiLoanPayment: basicsS.equationLR(
+      "multiply",
+      propS.onlyChild("refiFinancing", "loanPaymentMonthly"),
+      propS.local("refiLoanHoldingMonths")
+    ),
+
+    totalHoldingLoanPayment: dealModeVarb({
+      homeBuyer: basicsS.notApplicable,
+      buyAndHold: basicsS.notApplicable,
+      fixAndFlip: basicsS.loadFromLocal("holdingPurchaseLoanPayment"),
+      brrrr: basicsS.equationLR(
+        "add",
+        propS.local("holdingPurchaseLoanPayment"),
+        propS.local("holdingRefiLoanPayment")
+      ),
+    }),
+    allClosingCosts: dealModeVarb({
+      homeBuyer: basicsS.loadFromChild("purchaseFinancing", "closingCosts"),
+      buyAndHold: basicsS.loadFromChild("purchaseFinancing", "closingCosts"),
+      fixAndFlip: basicsS.loadFromChild("purchaseFinancing", "closingCosts"),
+      brrrr: basicsS.sumNums(
+        propS.onlyChild("purchaseFinancing", "closingCosts"),
+        propS.onlyChild("refiFinancing", "closingCosts")
+      ),
+    }),
     preFinanceOneTimeExpenses: dealModeVarb({
       homeBuyer: basicsS.sumNums(
         propS.onlyChild("property", "purchasePrice"),
-        propS.varbPathName("closingCosts"),
+        propS.local("allClosingCosts"),
         propS.onlyChild("property", "rehabCost"),
         propS.onlyChild("property", "miscOnetimeCosts")
       ),
       buyAndHold: basicsS.sumNums(
         propS.onlyChild("property", "purchasePrice"),
-        propS.varbPathName("closingCosts"),
+        propS.local("allClosingCosts"),
         propS.onlyChild("property", "rehabCost"),
         propS.onlyChild("property", "miscOnetimeCosts"),
         propS.onlyChild("mgmt", "miscOnetimeCosts")
       ),
       fixAndFlip: basicsS.sumNums(
         propS.onlyChild("property", "purchasePrice"),
-        propS.varbPathName("closingCosts"),
         propS.onlyChild("property", "holdingCostTotal"),
         propS.onlyChild("property", "rehabCost"),
         propS.onlyChild("property", "sellingCosts"),
-        propS.onlyChild("property", "miscOnetimeCosts")
+        propS.onlyChild("property", "miscOnetimeCosts"),
+        propS.local("allClosingCosts"),
+        propS.local("totalHoldingLoanPayment")
       ),
       brrrr: basicsS.sumNums(
         propS.onlyChild("property", "purchasePrice"),
-        propS.varbPathName("closingCosts"),
         propS.onlyChild("property", "rehabCost"),
         propS.onlyChild("property", "miscOnetimeCosts"),
         propS.onlyChild("property", "holdingCostTotal"),
-        propS.onlyChild("mgmt", "miscOnetimeCosts")
+        propS.onlyChild("mgmt", "miscOnetimeCosts"),
+        propS.local("allClosingCosts"),
+        propS.local("totalHoldingLoanPayment")
       ),
     }),
-    totalInvestment: updateVarb(
-      "numObj",
-      basicsS.equationLR(
-        "simpleSubtract",
-        propS.local("preFinanceOneTimeExpenses"),
-        propS.varbPathName("loanTotalDollars")
-      )
-    ),
+    totalInvestment: dealModeVarb({
+      homeBuyer: expensesMinusLoanTotal("purchaseFinancing"),
+      buyAndHold: expensesMinusLoanTotal("purchaseFinancing"),
+      fixAndFlip: expensesMinusLoanTotal("purchaseFinancing"),
+      brrrr: expensesMinusLoanTotal("refiFinancing"),
+    }),
     expensesMonthly: dealModeVarb({
       homeBuyer: basicsS.sumNums(
-        propS.pathNameBase("propertyFocal", "expensesMonthly"),
-        propS.varbPathBase("loanExpensesMonthly")
+        propS.onlyChild("property", "expensesMonthly"),
+        propS.onlyChild("purchaseFinancing", "loanExpensesMonthly")
       ),
       buyAndHold: basicsS.sumNums(
-        propS.pathNameBase("propertyFocal", "expensesMonthly"),
-        propS.pathNameBase("mgmtFocal", "expensesMonthly"),
-        propS.varbPathBase("loanExpensesMonthly")
-        // Interesting. It's the refinance loan that's used to calculate
-        // ongoing expenses for brrrr, not the purchase loan.
-        // So for the varbPath, do I need purchaseLoanExpensesMonthly?
-        // And refiLoanExpensesMonthly?
-
-        // No, I can sidestep that whole problem by just using
-        // childVarbs again.
-        // I'll still need some varbPathInfos, though, if people want to select
-        // variables.
-        // Ah, this gets so tricky. In BRRRR mode, PITI refers to the refi loan
-        // But in other cases, it refers to the purchase loan.
-
-        // For brrrr and fixAndFlip
-        // - the purchase loan is for the holding period
-        // - the purchase loan is based on purchasePrice and repairs
-        // For brrrr
-        // - the refi loan is for ongoing
-        // - the refi loan is based on arv
-
-        // for rentalProperty and homeBuyer
-        // - the purchase loan is for ongoing
-        // - the purchase loan is based on purchasePrice and repairs
-
-        // Now, technically, all loans can be capable of being based on
-        // purchasePrice or ARV. I can change the available and active options
-        // based on dealMode
-
-        // Ah, but I can use dealMode switches for PITIongoing and PITIholding, etc.
-        // I think I'll just do it that way, even if it's somewhat painful.
-
-        // So PITIholding and PITIongoing will be a thing
-        // Or maybe just PITIongoing
+        propS.onlyChild("property", "expensesMonthly"),
+        propS.onlyChild("mgmt", "expensesMonthly"),
+        propS.onlyChild("purchaseFinancing", "loanExpensesMonthly")
       ),
       fixAndFlip: notApplicable(),
       brrrr: basicsS.sumNums(
-        propS.pathNameBase("propertyFocal", "expensesMonthly"),
-        propS.pathNameBase("mgmtFocal", "expensesMonthly"),
-        propS.varbPathBase("loanExpensesMonthly")
+        propS.onlyChild("property", "expensesMonthly"),
+        propS.onlyChild("mgmt", "expensesMonthly"),
+        propS.onlyChild("refiFinancing", "loanExpensesMonthly")
       ),
     }),
     expensesYearly: dealModeVarb({
       homeBuyer: basicsS.sumNums(
-        propS.pathNameBase("propertyFocal", "expensesYearly"),
-        propS.varbPathBase("loanExpensesYearly")
+        propS.onlyChild("property", "expensesYearly"),
+        propS.onlyChild("purchaseFinancing", "loanExpensesYearly")
       ),
       buyAndHold: basicsS.sumNums(
-        propS.pathNameBase("propertyFocal", "expensesYearly"),
-        propS.pathNameBase("mgmtFocal", "expensesYearly"),
-        propS.varbPathBase("loanExpensesYearly")
+        propS.onlyChild("property", "expensesYearly"),
+        propS.onlyChild("mgmt", "expensesYearly"),
+        propS.onlyChild("purchaseFinancing", "loanExpensesYearly")
       ),
       fixAndFlip: notApplicable(),
       brrrr: basicsS.sumNums(
-        propS.pathNameBase("propertyFocal", "expensesYearly"),
-        propS.pathNameBase("mgmtFocal", "expensesYearly"),
-        propS.varbPathBase("loanExpensesYearly")
+        propS.onlyChild("property", "expensesYearly"),
+        propS.onlyChild("mgmt", "expensesYearly"),
+        propS.onlyChild("refiFinancing", "loanExpensesYearly")
       ),
     }),
     expensesOngoingSwitch: updateVarb("ongoingSwitch", {
@@ -135,28 +225,28 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
     cashFlowMonthly: dealModeVarb({
       homeBuyer: notApplicable(),
       buyAndHold: updateVarbS.leftRightPropFn(
-        "simpleSubtract",
-        propS.pathNameBase("propertyFocal", "revenueMonthly"),
+        "subtract",
+        propS.onlyChild("property", "revenueMonthly"),
         propS.local("expensesMonthly")
       ),
       fixAndFlip: notApplicable(),
       brrrr: updateVarbS.leftRightPropFn(
-        "simpleSubtract",
-        propS.pathNameBase("propertyFocal", "revenueMonthly"),
+        "subtract",
+        propS.onlyChild("property", "revenueMonthly"),
         propS.local("expensesMonthly")
       ),
     }),
     cashFlowYearly: dealModeVarb({
       homeBuyer: notApplicable(),
       buyAndHold: updateVarbS.leftRightPropFn(
-        "simpleSubtract",
-        propS.pathNameBase("propertyFocal", "revenueYearly"),
+        "subtract",
+        propS.onlyChild("property", "revenueYearly"),
         propS.local("expensesYearly")
       ),
       fixAndFlip: notApplicable(),
       brrrr: updateVarbS.leftRightPropFn(
-        "simpleSubtract",
-        propS.pathNameBase("propertyFocal", "revenueYearly"),
+        "subtract",
+        propS.onlyChild("property", "revenueYearly"),
         propS.local("expensesYearly")
       ),
     }),
@@ -224,25 +314,28 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
     cashExpensesPlusLoanRepay: dealModeVarb({
       homeBuyer: notApplicable(),
       buyAndHold: notApplicable(),
-      fixAndFlip: updateVarbS.sumNums([
+      fixAndFlip: updateVarbS.leftRightPropFn(
+        "add",
         propS.local("totalInvestment"),
-        propS.varbPathName("loanTotalDollars"),
-      ]),
-      brrrr: updateVarbS.sumNums([
+        propS.onlyChild("purchaseFinancing", "loanTotalDollars")
+      ),
+
+      brrrr: updateVarbS.leftRightPropFn(
+        "add",
         propS.local("totalInvestment"),
-        propS.varbPathName("loanTotalDollars"),
-      ]),
+        propS.onlyChild("purchaseFinancing", "loanTotalDollars")
+      ),
     }),
     totalProfit: dealModeVarb({
       homeBuyer: notApplicable(),
       buyAndHold: notApplicable(),
       fixAndFlip: basicsS.equationLR(
-        "simpleSubtract",
+        "subtract",
         propS.onlyChild("property", "afterRepairValue"),
         propS.local("cashExpensesPlusLoanRepay")
       ),
       brrrr: basicsS.equationLR(
-        "simpleSubtract",
+        "subtract",
         propS.onlyChild("property", "afterRepairValue"),
         propS.local("cashExpensesPlusLoanRepay")
       ),
@@ -316,13 +409,6 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
     }),
     displayNameSource: updateVarb("dealDisplayNameSource", {
       initValue: "displayNameEditor",
-    }),
-    isComplete: updateVarb("boolean", {
-      initValue: true,
-      updateFnName: "activeIsComplete",
-      updateFnProps: {
-        completionStatus: updateFnPropS.local("completionStatus"),
-      },
     }),
   } as UpdateSectionVarbs<"deal">;
 }

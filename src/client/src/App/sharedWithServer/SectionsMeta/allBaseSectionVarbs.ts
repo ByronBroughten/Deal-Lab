@@ -178,7 +178,6 @@ export function makeAllBaseSectionVarbs() {
     conditionalRowList: varbs({
       value: baseVarb("numObj"),
     }),
-
     property: varbs({
       ...baseVarbsS.savableSection,
       propertyMode: baseVarb("dealMode"),
@@ -206,14 +205,18 @@ export function makeAllBaseSectionVarbs() {
       ),
       ...baseVarbs("numObj", [
         "sqft",
-
         "numBedrooms",
         "numBedroomsEditor",
         "numUnits",
         "numUnitsEditor",
       ] as const),
-      ...baseVarbsS.ongoingDollarsInput("taxes"),
-      ...baseVarbsS.ongoingDollarsInput("homeIns"),
+
+      ...baseVarbsS.ongoingDollarsInput("taxesHolding"),
+      ...baseVarbsS.ongoingDollars("taxesOngoing"),
+
+      ...baseVarbsS.ongoingDollarsInput("homeInsHolding"),
+      ...baseVarbsS.ongoingDollars("homeInsOngoing"),
+
       ...baseVarbsS.monthsYearsInput("holdingPeriod"),
 
       ...baseVarbsS.ongoingDollars("targetRent"),
@@ -257,6 +260,14 @@ export function makeAllBaseSectionVarbs() {
       valueDollars: baseVarb("numObj", dollars),
       valueSourceName: baseVarb("repairValueSource"),
       valueDollarsEditor: baseVarb("numObj", dollars),
+    }),
+    taxesOngoing: varbs({
+      ...baseVarbsS.ongoingDollarsInput("valueDollars"),
+      valueSourceName: baseVarb("ongoingPhaseSource"),
+    }),
+    homeInsOngoing: varbs({
+      ...baseVarbsS.ongoingDollarsInput("valueDollars"),
+      valueSourceName: baseVarb("ongoingPhaseSource"),
     }),
     utilityValue: varbs({
       ...baseVarbsS.ongoingDollars("valueDollars"),
@@ -357,13 +368,15 @@ export function makeAllBaseSectionVarbs() {
       ...baseVarbsS.savableSection,
       ...baseVarbsS.displayNameEditor,
       completionStatus: baseVarb("completionStatus"),
-      isComplete: baseVarb("boolean"),
       displayNameSource: baseVarb("dealDisplayNameSource"),
+      ...baseVarbsS.ongoingDollars("ongoingPiti"),
+      ...baseVarbsS.ongoingDollars("ongoingLoanPayment"),
       ...baseVarbsS.ongoingDollars("expenses"),
       ...baseVarbsS.ongoingDollars("cashFlow"),
       ...baseVarbsS.ongoingDecimal("cocRoiDecimal"),
       ...baseVarbsS.ongoingPercent("cocRoi"),
       totalInvestment: baseVarb("numObj", dollars),
+      totalHoldingLoanPayment: baseVarb("numObj", dollars),
       preFinanceOneTimeExpenses: baseVarb("numObj", dollars),
       cashExpensesPlusLoanRepay: baseVarb("numObj", dollars),
       totalProfit: baseVarb("numObj", dollars),
@@ -371,34 +384,50 @@ export function makeAllBaseSectionVarbs() {
       roiPercent: baseVarb("numObj", percent),
       roiPercentPerMonth: baseVarb("numObj", percent),
       roiPercentAnnualized: baseVarb("numObj", percent),
+
+      ...baseVarbsS.monthsYears("refiLoanHolding"),
+      ...baseVarbsS.monthsYears("purchaseLoanHolding"),
+
+      holdingRefiLoanPayment: baseVarb("numObj", dollars),
+      holdingPurchaseLoanPayment: baseVarb("numObj", dollars),
+
+      allClosingCosts: baseVarb("numObj", dollars),
+
+      downPaymentDollars: baseVarb("numObj", dollars),
+      downPaymentPercent: baseVarb("numObj", percent),
+      downPaymentDecimal: baseVarb("numObj", decimal),
     }),
     financing: varbs({
       displayName: baseVarb("stringObj"),
       completionStatus: baseVarb("completionStatus"),
       financingMethod: baseVarb("financingMethod"),
       financingMode: baseVarb("financingMode"),
-      one: baseVarb("number"),
-    }),
-    calculatedVarbs: varbs({
       downPaymentDollars: baseVarb("numObj", dollars),
       downPaymentPercent: baseVarb("numObj", percent),
       downPaymentDecimal: baseVarb("numObj", decimal),
+      ...baseVarbsS.ongoingDollars("mortgageIns"),
+      ...baseVarbsS.ongoingDollars("loanExpenses"),
+      ...baseVarbsS.ongoingDollars("loanPayment"),
+      ...baseVarbsS.monthsYearsInput("timeTillRefinance"),
       ...baseVarbs(
         "numObj",
         [
+          "loanBaseDollars",
           "loanTotalDollars",
           "closingCosts",
           "mortgageInsUpfront",
-          "loanBaseDollars",
           "loanUpfrontExpenses",
         ] as const,
         dollars
       ),
-      ...baseVarbsS.ongoingDollars("piti"),
-      ...baseVarbsS.ongoingDollars("loanExpenses"),
-      ...baseVarbsS.ongoingDollars("mortgageIns"),
-      ...baseVarbsS.ongoingDollars("loanPayment"),
-
+      one: baseVarb("number"),
+    }),
+    calculatedVarbs: varbs({
+      ...baseVarbs(
+        "numObj",
+        ["pricePerUnit", "pricePerSqft", "arvPerSqft", "rehabPerSqft"] as const,
+        dollars
+      ),
       ...baseVarbs(
         "numObj",
         [
@@ -415,11 +444,7 @@ export function makeAllBaseSectionVarbs() {
         ] as const,
         percent
       ),
-      ...baseVarbs("boolean", [
-        "propertyExists",
-        "financingExists",
-        "mgmtExists",
-      ] as const),
+      ...baseVarbs("boolean", ["propertyExists", "mgmtExists"] as const),
     }),
     feStore: varbs({
       changesToSave: baseVarb("changesToSave"),

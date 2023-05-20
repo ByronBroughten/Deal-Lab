@@ -67,11 +67,19 @@ export const allDisplaySectionVarbs = {
     numUnitsEditor: varb("Unit count"),
     numBedrooms: varb("Bedrooms"),
     upfrontExpenses: varb("Upfront expenses"),
-    ...editorDisplayGroup("ongoingInput", "taxes", "Taxes", {
+    ...editorDisplayGroup("ongoingInput", "taxesOngoing", "Taxes", {
       monthly: { displayNameWithVariant: "Taxes monthly" },
       yearly: { displayNameWithVariant: "Taxes yearly" },
     }),
-    ...editorDisplayGroup("ongoingInput", "homeIns", "Home insurance", {
+    ...editorDisplayGroup("ongoingInput", "taxesHolding", "Taxes", {
+      monthly: { displayNameWithVariant: "Taxes monthly" },
+      yearly: { displayNameWithVariant: "Taxes yearly" },
+    }),
+    ...editorDisplayGroup("ongoingInput", "homeInsOngoing", "Home insurance", {
+      monthly: { displayNameWithVariant: "Home insurance monthly" },
+      yearly: { displayNameWithVariant: "Home insurance yearly" },
+    }),
+    ...editorDisplayGroup("ongoingInput", "homeInsHolding", "Home insurance", {
       monthly: { displayNameWithVariant: "Home insurance monthly" },
       yearly: { displayNameWithVariant: "Home insurance yearly" },
     }),
@@ -91,29 +99,27 @@ export const allDisplaySectionVarbs = {
     numBedrooms: varb("Bedrooms"),
     ...ongoingInputDollars("targetRent", "Rent"),
   }),
-  ...displaySectionVarbsProp("calculatedVarbs", {
-    ...group("ongoing", "loanPayment", "Loan payments", {
-      monthly: { displayNameWithVariant: "Monthly loan payments" },
-      yearly: { displayNameWithVariant: "Yearly loan payments" },
+  ...displaySectionVarbsProp("financing", {
+    loanUpfrontExpenses: varb("Upfront expenses", {
+      displayNameWithSection: "Upfront loaneExpenses",
     }),
+    loanTotalDollars: varb("Loan total"),
     downPaymentDollars: varb("Down payment", {
       displayNameWithVariant: "Down payment amount",
     }),
     downPaymentPercent: varb("Down payment", {
       displayNameWithVariant: "Down payment percent",
     }),
-    ...group("ongoing", "piti", "PITI", {
-      monthly: { displayNameWithVariant: "PITI monthly" },
-      yearly: { displayNameWithVariant: "PITI yearly" },
+  }),
+  ...displaySectionVarbsProp("calculatedVarbs", {
+    ...group("ongoing", "loanPayment", "Loan payments", {
+      monthly: { displayNameWithVariant: "Monthly loan payments" },
+      yearly: { displayNameWithVariant: "Yearly loan payments" },
     }),
     ...group("ongoing", "loanExpenses", "Ongoing expenses", {
       monthly: { displayNameWithSection: "Ongoing loan expenses" },
       yearly: { displayNameWithSection: "Ongoing loan expenses" },
     }),
-    loanUpfrontExpenses: varb("Upfront expenses", {
-      displayNameWithSection: "Upfront loaneExpenses",
-    }),
-    loanTotalDollars: varb("Loan total"),
     onePercentPrice: varb("1% Purchase price"),
     twoPercentPrice: varb("2% Purchase price"),
     ...group("ongoing", "fivePercentRent", "5% Rent", {
@@ -205,7 +211,7 @@ export const allDisplaySectionVarbs = {
     roiPercent: varb("ROI"),
     roiPercentAnnualized: varb("ROI Annualized"),
     totalInvestment: varb("Total investment"),
-    ...group("ongoing", "piti", "PITI payment", {
+    ...group("ongoing", "ongoingPiti", "PITI payment", {
       monthly: { displayNameWithVariant: "Monthly PITI payment" },
       yearly: { displayNameWithVariant: "Yearly PITI payment" },
     }),

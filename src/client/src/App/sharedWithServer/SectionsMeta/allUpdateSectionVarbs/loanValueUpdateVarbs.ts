@@ -30,7 +30,7 @@ export function loanValueUpdateVarbs(
       updateOverrides: valueSourceOverrides("percentDollarsSource", {
         offDollarsEditor: updateBasicsS.loadFromLocal("offDollarsEditor"),
         amountDollarsEditor: updateBasicsS.equationLR(
-          "simpleSubtract",
+          "subtract",
           updateFnProp(percentOfWhatInfo),
           updateFnPropS.local("amountDollars")
         ),
@@ -51,7 +51,7 @@ export function loanValueUpdateVarbs(
       updateOverrides: valueSourceOverrides("percentDollarsSource", {
         amountDollarsEditor: updateBasicsS.loadFromLocal("amountDollarsEditor"),
         offDollarsEditor: updateBasicsS.equationLR(
-          "simpleSubtract",
+          "subtract",
           updateFnProp(percentOfWhatInfo),
           updateFnPropS.local("offDollars")
         ),
