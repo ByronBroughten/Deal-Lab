@@ -9,18 +9,31 @@ import { SolverSection } from "./SolverSection";
 
 const allDealModes = dealModes;
 
-const add4200YearlyHoldingCosts = (property: SolverSection<"property">) => {
-  property.updateValues({
-    taxesOngoingEditor: numObj(2400),
-    taxesOngoingSwitch: "yearly",
-    homeInsOngoingEditor: numObj(1200),
-    homeInsOngoingSwitch: "yearly",
+function addPeriodicTaxesHomeInsYearly(
+  property: SolverSection<"property">,
+  taxesVal: number,
+  homeInsVal: number
+) {
+  const taxes = property.onlyChild("taxesOngoing");
+  taxes.updateValues({
+    valueDollarsOngoingEditor: numObj(taxesVal),
+    valueDollarsOngoingSwitch: "yearly",
   });
-  const utilityValue = property.onlyChild("utilityValue");
-  utilityValue.updateValues({
+  const homeIns = property.onlyChild("homeInsOngoing");
+  homeIns.updateValues({
+    valueDollarsOngoingEditor: numObj(homeInsVal),
+    valueDollarsOngoingSwitch: "yearly",
+  });
+}
+
+const add4200YearlyHoldingCosts = (property: SolverSection<"property">) => {
+  addPeriodicTaxesHomeInsYearly(property, 2400, 1200);
+
+  const utilityHolding = property.onlyChild("utilityHolding");
+  utilityHolding.updateValues({
     valueSourceName: "listTotal",
   });
-  const ongoingList = utilityValue.onlyChild("ongoingList");
+  const ongoingList = utilityHolding.onlyChild("ongoingList");
   ongoingList.addChildAndSolve("ongoingItem", {
     sectionValues: {
       valueOngoingEditor: numObj(400),
@@ -317,17 +330,13 @@ describe("Property calculations", () => {
   });
   it("should calculate ongoing expenses", () => {
     const property = getProperty("buyAndHold");
-    property.updateValues({
-      taxesOngoingEditor: numObj(2400),
-      taxesOngoingSwitch: "yearly",
-      homeInsOngoingEditor: numObj(1200),
-      homeInsOngoingSwitch: "yearly",
-    });
-    const utilityValue = property.onlyChild("utilityValue");
-    utilityValue.updateValues({
+    addPeriodicTaxesHomeInsYearly(property, 2400, 1200);
+
+    const utilityOngoing = property.onlyChild("utilityOngoing");
+    utilityOngoing.updateValues({
       valueSourceName: "listTotal",
     });
-    const ongoingList = utilityValue.onlyChild("ongoingList");
+    const ongoingList = utilityOngoing.onlyChild("ongoingList");
     ongoingList.addChildAndSolve("ongoingItem", {
       sectionValues: {
         valueOngoingEditor: numObj(600),

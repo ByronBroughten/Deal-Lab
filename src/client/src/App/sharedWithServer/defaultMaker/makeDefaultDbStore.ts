@@ -84,8 +84,6 @@ function makeExampleStoreProperty() {
       displayName: "Example Property",
       purchasePrice: numObj(250000),
       sqft: numObj(2500),
-      taxesYearly: numObj(2800),
-      homeInsYearly: numObj(1800),
       dateTimeFirstSaved: timeS.now(),
     },
     unit: [
@@ -98,9 +96,11 @@ function makeExampleStoreProperty() {
         rentMonthly: numObj(1400),
       },
     ],
+    taxesOngoingYearly: numObj(2800),
+    homeInsOngoingYearly: numObj(1800),
+    utilityOngoing: examplePropertyUtilityProps,
     repairValue: examplePropertyRepairProps,
     costOverrunValue: { valuePercent: numObj(0) },
-    utilityValue: examplePropertyUtilityProps,
     capExValue: {
       valueSourceName: "listTotal",
       items: examplePropertyCapExListProps,

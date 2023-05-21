@@ -9,12 +9,21 @@ export function makeDefaultProperty(
   const property = PackBuilderSection.initAsOmniChild("property");
   property.updateValues({
     propertyMode,
-    taxesOngoingSwitch: "yearly",
-    homeInsOngoingSwitch: "yearly",
+    taxesHoldingOngoingSwitch: "yearly",
+    homeInsHoldingOngoingSwitch: "yearly",
     expensesOngoingSwitch: "yearly",
     targetRentOngoingSwitch: "monthly",
     miscRevenueOngoingSwitch: "monthly",
     revenueOngoingSwitch: "monthly",
+  });
+
+  // property.addChild("taxesHolding");
+  // property.addChild("homeInsHolding");
+  property.addChild("taxesOngoing", {
+    sectionValues: { valueDollarsOngoingSwitch: "yearly" },
+  });
+  property.addChild("homeInsOngoing", {
+    sectionValues: { valueDollarsOngoingSwitch: "yearly" },
   });
 
   const costOverrunPercent = propertyMode === "buyAndHold" ? 0 : 10;
@@ -41,9 +50,6 @@ export function makeDefaultProperty(
 
   const repairValue = property.addAndGetChild("repairValue");
   repairValue.addChild("onetimeList");
-
-  const utilityValue = property.addAndGetChild("utilityValue");
-  utilityValue.addChild("ongoingList");
 
   const utilityHolding = property.addAndGetChild("utilityHolding");
   utilityHolding.addChild("ongoingList");

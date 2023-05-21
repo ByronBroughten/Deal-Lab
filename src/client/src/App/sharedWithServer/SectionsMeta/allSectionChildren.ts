@@ -146,7 +146,6 @@ export const allSectionChildren = checkAllSectionChildren({
     costOverrunValue: "costOverrunValue",
     sellingCostValue: "sellingCostValue",
 
-    utilityValue: "utilityValue",
     utilityHolding: "utilityValue",
     utilityOngoing: "utilityValue",
 

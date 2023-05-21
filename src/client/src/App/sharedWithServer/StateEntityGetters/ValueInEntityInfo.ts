@@ -25,10 +25,10 @@ const sharedOngoing = [
   "taxesOngoingYearly",
   "homeInsOngoingMonthly",
   "homeInsOngoingYearly",
-  "utilitiesMonthly",
+  "utilitiesOngoingMonthly",
 ] as const;
 
-const sharedUpfront = ["rehabCost", "repairCostBase"] as const;
+const sharedUpfront = ["rehabCost", "rehabCostBase"] as const;
 const financing = [
   "ongoingPitiMonthly",
   "ongoingPitiYearly",

@@ -219,6 +219,9 @@ export function makeAllBaseSectionVarbs() {
 
       ...baseVarbsS.monthsYearsInput("holdingPeriod"),
 
+      ...baseVarbsS.ongoingDollars("utilitiesOngoing"),
+      ...baseVarbsS.ongoingDollars("utilitiesHolding"),
+
       ...baseVarbsS.ongoingDollars("targetRent"),
       ...baseVarbsS.ongoingDollars("miscRevenue"),
       ...baseVarbsS.ongoingDollars("miscCosts"),

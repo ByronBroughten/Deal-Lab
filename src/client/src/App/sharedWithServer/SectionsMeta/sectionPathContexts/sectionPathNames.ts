@@ -5,9 +5,7 @@ import { ChildName } from "../sectionChildrenDerived/ChildName";
 import { SectionName } from "../SectionName";
 
 const sectionPathNameToSn = checkPathTypeToSectionName({
-  // if any of these sectionPathNames are to be removed or invalidated
-  // after deploy, then the sectionInfos stored in the db that point
-  // to those sectionPathNames need to be addressed.
+  // if any of these sectionPathNames are to be removed or invalidated after deploy, then the sectionInfos stored in the db that point to those sectionPathNames need to be addressed.
   dealSystemFocal: "dealSystem",
   dealFocal: "deal",
 

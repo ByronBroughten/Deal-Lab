@@ -49,7 +49,14 @@ export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
       monthly: basicsS.loadFromChild("taxesHolding", "valueDollarsMonthly"),
       yearly: basicsS.loadFromChild("taxesHolding", "valueDollarsYearly"),
     }),
-
+    ...varbsS.group("utilitiesOngoing", "ongoing", "monthly", {
+      monthly: basicsS.loadFromChild("utilityOngoing", "valueDollarsMonthly"),
+      yearly: basicsS.loadFromChild("utilityOngoing", "valueDollarsYearly"),
+    }),
+    ...varbsS.group("utilitiesHolding", "ongoing", "monthly", {
+      monthly: basicsS.loadFromChild("utilityHolding", "valueDollarsMonthly"),
+      yearly: basicsS.loadFromChild("utilityHolding", "valueDollarsYearly"),
+    }),
     purchasePrice: updateVarb("numObj"),
     sqft: updateVarb("numObj"),
     afterRepairValue: updateVarb("numObj"),

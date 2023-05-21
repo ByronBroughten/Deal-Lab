@@ -45,8 +45,6 @@ const examplePropertyCommon = {
   displayName: "",
   purchasePrice: numObj(230000),
   sqft: numObj(2500),
-  taxesYearly: numObj(2500),
-  homeInsYearly: numObjNext("1000+(", ["numUnits"], "*200)"),
 } as const;
 
 function exampleDealLoan(): SectionPack<"loan"> {
@@ -75,6 +73,8 @@ function exampleDealBuyAndHoldProperty(): SectionPack<"property"> {
   return makeExampleProperty({
     dealMode: "buyAndHold",
     property: examplePropertyCommon,
+    taxesOngoingYearly: numObj(2500),
+    homeInsOngoingYearly: numObjNext("1000+(", ["numUnits"], "*200)"),
     unit: [
       {
         numBedrooms: numObj(3),
@@ -92,8 +92,9 @@ function exampleDealBuyAndHoldProperty(): SectionPack<"property"> {
       ["New flooring", numObjNext("3*", ["sqft"])],
       ["Replace faucet", 100],
     ],
+
     costOverrunValue: { valuePercent: numObj(0) },
-    utilityValue: [
+    utilityOngoing: [
       ["Water", numObjNext("60*", ["numUnits"])],
       ["Garbage", numObjNext("50*", ["numUnits"])],
     ],
@@ -116,6 +117,8 @@ export function exampleDealFixAndFlipProperty(): SectionPack<"property"> {
       afterRepairValue: numObj(320000),
       holdingPeriodMonths: numObj(4),
     },
+    taxesHoldingYearly: numObj(2500),
+    homeInsHoldingYearly: numObjNext("1000+(", ["numUnits"], "*200)"),
     repairValue: [
       ["Replace toilet", 200],
       ["Replace locks", 150],
@@ -127,7 +130,7 @@ export function exampleDealFixAndFlipProperty(): SectionPack<"property"> {
       ["Add bedroom", 15000],
     ],
     costOverrunValue: { valuePercent: numObj(0) },
-    utilityValue: [
+    utilityHolding: [
       ["Water", 75],
       ["Garbage", numObjNext("50*", ["numUnits"])],
     ],

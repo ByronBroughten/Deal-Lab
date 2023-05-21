@@ -6,13 +6,14 @@ import { PackBuilderSection } from "../../StatePackers/PackBuilderSection";
 import { Arr } from "../../utils/Arr";
 import { makeDefaultProperty } from "../makeDefaultProperty";
 
+type OngoingItemProps = [string, number | NumObj][];
+
 const propertySectionNames = Arr.extractStrict(sectionNames, [
   // these don't need to be sectionNames. They could be
   // childNames or arbitrary labels if need be
   "property",
   "unit",
   "repairValue",
-  "utilityValue",
   "capExValue",
   "maintenanceValue",
   "costOverrunValue",
@@ -41,8 +42,6 @@ interface CommonProperty {
 
   purchasePrice: NumObj;
   sqft: NumObj;
-  taxesYearly: NumObj;
-  homeInsYearly: NumObj;
 }
 
 interface PropertyHoldAndArv {
@@ -51,14 +50,22 @@ interface PropertyHoldAndArv {
 }
 
 interface SharedSections {
-  repairValue: [string, number | NumObj][];
-  utilityValue: [string, number | NumObj][];
+  repairValue: OngoingItemProps;
   costOverrunValue: {
     valuePercent: NumObj;
   };
 }
 
+interface HoldingSections {
+  utilityHolding: OngoingItemProps;
+  taxesHoldingYearly: NumObj;
+  homeInsHoldingYearly: NumObj;
+}
+
 interface OngoingSections {
+  taxesOngoingYearly: NumObj;
+  homeInsOngoingYearly: NumObj;
+  utilityOngoing: OngoingItemProps;
   capExValue: {
     valueSourceName: StateValue<"capExValueSource">;
     items: [string, number | NumObj, number | NumObj][];
@@ -80,18 +87,20 @@ type NeededPropertyVarbs = CheckNeededPropertyVarbs<{
       property: CommonProperty;
       unit: { rentMonthly: NumObj; numBedrooms: NumObj }[];
     };
-  fixAndFlip: SharedSections & {
-    dealMode: "fixAndFlip";
-    property: CommonProperty &
-      PropertyHoldAndArv & {
-        numUnitsEditor: NumObj;
+  fixAndFlip: SharedSections &
+    HoldingSections & {
+      dealMode: "fixAndFlip";
+      property: CommonProperty &
+        PropertyHoldAndArv & {
+          numUnitsEditor: NumObj;
+        };
+      sellingCostValue: {
+        valueSourceName: StateValue<"sellingCostSource">;
+        valuePercent?: NumObj;
       };
-    sellingCostValue: {
-      valueSourceName: StateValue<"sellingCostSource">;
-      valuePercent?: NumObj;
     };
-  };
   brrrr: SharedSections &
+    HoldingSections &
     OngoingSections & {
       dealMode: "brrrr";
       property: CommonProperty & PropertyHoldAndArv;
@@ -99,27 +108,36 @@ type NeededPropertyVarbs = CheckNeededPropertyVarbs<{
     };
 }>;
 
+function addUtilities(
+  property: PackBuilderSection<"property">,
+  utilityChildName: "utilityHolding" | "utilityOngoing",
+  itemProps: OngoingItemProps
+) {
+  const utilityChild = property.onlyChild(utilityChildName);
+  utilityChild.updateValues({ valueSourceName: "listTotal" });
+  const utilityList = utilityChild.onlyChild("ongoingList");
+  for (const [displayName, value] of itemProps) {
+    const utilityItem = utilityList.addAndGetChild("ongoingItem");
+    utilityItem.updateValues({
+      valueSourceName: "valueEditor",
+      valueOngoingSwitch: "monthly",
+      displayNameEditor: displayName,
+      valueOngoingEditor: numToObj(value),
+    });
+  }
+}
+
 type Props<DM extends StateValue<"dealMode">> = NeededPropertyVarbs[DM];
 export function makeExampleProperty<DM extends StateValue<"dealMode">>(
   props: Props<DM>
 ) {
-  const {
-    displayName,
-    taxesYearly,
-    homeInsYearly,
-    dateTimeFirstSaved,
-    ...rest
-  } = props.property;
+  const { displayName, dateTimeFirstSaved, ...rest } = props.property;
   const property = PackBuilderSection.initAsOmniChild("property");
   property.loadSelf(makeDefaultProperty());
   property.updateValues({
     ...rest,
     propertyMode: props.dealMode,
     displayName: stringObj(displayName),
-    taxesOngoingSwitch: "yearly",
-    taxesOngoingEditor: taxesYearly,
-    homeInsOngoingSwitch: "yearly",
-    homeInsOngoingEditor: homeInsYearly,
     ...(dateTimeFirstSaved && {
       dateTimeFirstSaved,
       dateTimeLastSaved: dateTimeFirstSaved,
@@ -141,19 +159,6 @@ export function makeExampleProperty<DM extends StateValue<"dealMode">>(
     });
   }
 
-  const utilityValue = property.onlyChild("utilityValue");
-  utilityValue.updateValues({ valueSourceName: "listTotal" });
-  const utilityList = utilityValue.onlyChild("ongoingList");
-  for (const [displayName, value] of props.utilityValue) {
-    const utilityItem = utilityList.addAndGetChild("ongoingItem");
-    utilityItem.updateValues({
-      valueSourceName: "valueEditor",
-      valueOngoingSwitch: "monthly",
-      displayNameEditor: displayName,
-      valueOngoingEditor: numToObj(value),
-    });
-  }
-
   const costOverrunValue = property.onlyChild("costOverrunValue");
   costOverrunValue.updateValues({
     valuePercentEditor: props.costOverrunValue.valuePercent,
@@ -164,6 +169,18 @@ export function makeExampleProperty<DM extends StateValue<"dealMode">>(
     case "buyAndHold":
     case "homeBuyer":
     case "brrrr": {
+      addUtilities(property, "utilityOngoing", props.utilityOngoing);
+      const taxesOngoing = property.onlyChild("taxesOngoing");
+      taxesOngoing.updateValues({
+        valueDollarsOngoingSwitch: "yearly",
+        valueDollarsOngoingEditor: props.taxesOngoingYearly,
+      });
+      const homeInsOngoing = property.onlyChild("homeInsOngoing");
+      homeInsOngoing.updateValues({
+        valueDollarsOngoingSwitch: "yearly",
+        valueDollarsOngoingEditor: props.homeInsOngoingYearly,
+      });
+
       const capExValue = property.onlyChild("capExValue");
       capExValue.updateValues({
         valueSourceName: props.capExValue.valueSourceName,
@@ -205,6 +222,7 @@ export function makeExampleProperty<DM extends StateValue<"dealMode">>(
   switch (props.dealMode) {
     case "fixAndFlip":
     case "brrrr": {
+      addUtilities(property, "utilityHolding", props.utilityHolding);
       const { afterRepairValue, holdingPeriodMonths } = props.property;
       property.updateValues({
         afterRepairValue,

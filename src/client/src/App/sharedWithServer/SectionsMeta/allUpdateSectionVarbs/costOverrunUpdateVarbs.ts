@@ -32,7 +32,7 @@ export function costOverrunUpdateVarbs(): UpdateSectionVarbs<"costOverrunValue">
         valueDollarsEditor: basics.equationLR(
           "divide",
           fnProp.local("valueDollarsEditor"),
-          fnProp.varbPathName("repairCostBase")
+          fnProp.varbPathName("rehabCostBase")
         ),
         valuePercentEditor: basics.equationSimple(
           "percentToDecimal",

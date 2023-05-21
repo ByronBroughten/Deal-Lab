@@ -10,17 +10,20 @@ import { UtilityValue } from "./ViewParts/UtilityValue";
 
 export function PropertyOngoingCosts({ feId }: FeIdProp) {
   const property = useGetterSection({ sectionName: "property", feId });
+
+  const taxes = property.onlyChild("taxesOngoing");
+  const homeIns = property.onlyChild("homeInsOngoing");
   return (
     <FormSectionLabeled label="Ongoing Costs">
       <MuiRow>
         <NumObjEntityEditor
           inputMargins
-          feVarbInfo={property.varbInfo("taxesOngoingEditor")}
+          feVarbInfo={taxes.varbInfo("valueDollarsOngoingEditor")}
         />
         <NumObjEntityEditor
           inputMargins
           editorType="equation"
-          feVarbInfo={property.varbInfo("homeInsOngoingEditor")}
+          feVarbInfo={homeIns.varbInfo("valueDollarsOngoingEditor")}
           quickViewVarbNames={["purchasePrice", "sqft", "numUnits"]}
         />
         <UtilityValue

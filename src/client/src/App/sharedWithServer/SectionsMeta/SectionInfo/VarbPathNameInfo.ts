@@ -46,6 +46,8 @@ const allVarbPathParams = {
     ...targetNames("homeInsHolding", "ongoing"),
     ...targetNames("taxesOngoing", "ongoing"),
     ...targetNames("homeInsOngoing", "ongoing"),
+    ...targetNames("utilitiesOngoing", "ongoing"),
+    // ...targetNames("utilitiesHolding", "ongoing"),
 
     ...targetNames("targetRent", "ongoing"),
   ]),
@@ -63,10 +65,6 @@ const allVarbPathParams = {
     "mgmtFocal",
     "expensesYearly"
   ),
-  ...sectionVarbNameParams("utilityCostFocal", "Property", [
-    "valueDollarsMonthly",
-    "valueDollarsYearly",
-  ]),
   ...sectionVarbNameParams("dealFocal", "Financing", [
     ...targetNames("ongoingPiti", "ongoing"),
     ...targetNames("ongoingLoanPayment", "ongoing"),
@@ -76,16 +74,6 @@ const allVarbPathParams = {
     ...targetNames("cashFlow", "ongoing"),
     ...targetNames("cocRoi", "ongoing"),
   ]),
-  utilitiesMonthly: fixedVarbPathParams(
-    "Property",
-    "utilityCostFocal",
-    "valueDollarsMonthly"
-  ),
-  utilitiesYearly: fixedVarbPathParams(
-    "Property",
-    "utilityCostFocal",
-    "valueDollarsYearly"
-  ),
   propertyExpensesMonthly: fixedVarbPathParams(
     "Property",
     "propertyFocal",
@@ -119,11 +107,6 @@ const allVarbPathParams = {
     "revenueYearly"
   ),
   userVarbValue: varbPathParams("numVarbItemMain", "value"),
-  repairCostBase: fixedVarbPathParams(
-    "Property",
-    "repairCostFocal",
-    "valueDollars"
-  ),
   rehabCostBase: fixedVarbPathParams(
     "Property",
     "propertyFocal",

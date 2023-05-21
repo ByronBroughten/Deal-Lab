@@ -60,13 +60,15 @@ export const dealCompletionStatus = completionStatusVarb(
 function hasOngoingNoneNones(): UpdateFnProp[] {
   return [
     propS.onlyChild("repairValue", "valueSourceName"),
-    propS.onlyChild("utilityValue", "valueSourceName"),
+    propS.onlyChild("utilityOngoing", "valueSourceName"),
     propS.onlyChild("maintenanceValue", "valueSourceName"),
     propS.onlyChild("capExValue", "valueSourceName"),
   ];
 }
 function hasOngoingValidInputs(): UpdateFnProp[] {
   return [
+    propS.onlyChild("taxesOngoing", "valueDollarsOngoingEditor"),
+    propS.onlyChild("homeInsOngoing", "valueDollarsOngoingEditor"),
     propS.onlyChild("capExValue", "valueDollarsOngoingEditor", [
       oSwitch(
         relVarbInfoS.local("valueSourceName"),
@@ -84,12 +86,7 @@ function hasOngoingValidInputs(): UpdateFnProp[] {
 
 function propertySharedValidInputs(): UpdateFnProp[] {
   return [
-    ...propsS.localArr(
-      "purchasePrice",
-      "sqft",
-      "taxesOngoingEditor",
-      "homeInsOngoingEditor"
-    ),
+    ...propsS.localArr("purchasePrice", "sqft"),
     propS.onlyChild("repairValue", "valueDollarsEditor", [
       oSwitch(relVarbInfoS.local("valueSourceName"), "valueDollarsEditor"),
     ]),
@@ -99,6 +96,16 @@ function propertySharedValidInputs(): UpdateFnProp[] {
     propS.onlyChild("costOverrunValue", "valuePercentEditor", [
       oSwitch(relVarbInfoS.local("valueSourceName"), "valuePercentEditor"),
     ]),
+  ];
+}
+
+function hasHoldingValidInputs(): UpdateFnProp[] {
+  return [
+    ...propS.localArr(
+      "taxesHoldingOngoingEditor",
+      "homeInsHoldingOngoingEditor"
+    ),
+    propS.local("holdingPeriodSpanEditor"),
   ];
 }
 
@@ -121,23 +128,23 @@ export const propertyCompletionStatus = completionStatusVarb(
         ],
       }),
       fixAndFlip: cBasics({
-        nonNone: [propS.pathName("repairCostFocal", "valueSourceName")],
+        nonNone: [propS.onlyChild("repairValue", "valueSourceName")],
         validInputs: [
           ...propertySharedValidInputs(),
-          propS.local("holdingPeriodSpanEditor"),
+          ...hasHoldingValidInputs(),
           propS.local("numUnitsEditor"),
         ],
       }),
       brrrr: cBasics({
         nonZeros: [propS.local("numUnits")],
         nonNone: [
-          propS.pathName("repairCostFocal", "valueSourceName"),
+          propS.onlyChild("repairValue", "valueSourceName"),
           ...hasOngoingNoneNones(),
         ],
         validInputs: [
           ...propertySharedValidInputs(),
           ...hasOngoingValidInputs(),
-          propS.local("holdingPeriodSpanEditor"),
+          ...hasHoldingValidInputs(),
         ],
       }),
     },
