@@ -116,12 +116,13 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
         propS.local("refiLoanHoldingYears")
       ),
     }),
-    holdingPurchaseLoanPayment: basicsS.equationLR(
+    holdingPurchaseLoanPayment: updateVarbS.equationLR(
       "multiply",
       propS.onlyChild("purchaseFinancing", "loanPaymentMonthly"),
       propS.local("purchaseLoanHoldingMonths")
     ),
-    holdingRefiLoanPayment: basicsS.equationLR(
+
+    holdingRefiLoanPayment: updateVarbS.equationLR(
       "multiply",
       propS.onlyChild("refiFinancing", "loanPaymentMonthly"),
       propS.local("refiLoanHoldingMonths")
@@ -224,13 +225,13 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
     }),
     cashFlowMonthly: dealModeVarb({
       homeBuyer: notApplicable(),
-      buyAndHold: updateVarbS.leftRightPropFn(
+      buyAndHold: updateVarbS.equationLR(
         "subtract",
         propS.onlyChild("property", "revenueMonthly"),
         propS.local("expensesMonthly")
       ),
       fixAndFlip: notApplicable(),
-      brrrr: updateVarbS.leftRightPropFn(
+      brrrr: updateVarbS.equationLR(
         "subtract",
         propS.onlyChild("property", "revenueMonthly"),
         propS.local("expensesMonthly")
@@ -238,13 +239,13 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
     }),
     cashFlowYearly: dealModeVarb({
       homeBuyer: notApplicable(),
-      buyAndHold: updateVarbS.leftRightPropFn(
+      buyAndHold: updateVarbS.equationLR(
         "subtract",
         propS.onlyChild("property", "revenueYearly"),
         propS.local("expensesYearly")
       ),
       fixAndFlip: notApplicable(),
-      brrrr: updateVarbS.leftRightPropFn(
+      brrrr: updateVarbS.equationLR(
         "subtract",
         propS.onlyChild("property", "revenueYearly"),
         propS.local("expensesYearly")
@@ -255,13 +256,13 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
     }),
     cocRoiDecimalMonthly: dealModeVarb({
       homeBuyer: notApplicable(),
-      buyAndHold: updateVarbS.leftRightPropFn(
+      buyAndHold: updateVarbS.equationLR(
         "divide",
         propS.local("cashFlowMonthly"),
         propS.local("totalInvestment")
       ),
       fixAndFlip: notApplicable(),
-      brrrr: updateVarbS.leftRightPropFn(
+      brrrr: updateVarbS.equationLR(
         "divide",
         propS.local("cashFlowMonthly"),
         propS.local("totalInvestment")
@@ -269,13 +270,13 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
     }),
     cocRoiDecimalYearly: dealModeVarb({
       homeBuyer: notApplicable(),
-      buyAndHold: updateVarbS.leftRightPropFn(
+      buyAndHold: updateVarbS.equationLR(
         "divide",
         propS.local("cashFlowYearly"),
         propS.local("totalInvestment")
       ),
       fixAndFlip: notApplicable(),
-      brrrr: updateVarbS.leftRightPropFn(
+      brrrr: updateVarbS.equationLR(
         "divide",
         propS.local("cashFlowYearly"),
         propS.local("totalInvestment")
@@ -314,13 +315,13 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
     cashExpensesPlusLoanRepay: dealModeVarb({
       homeBuyer: notApplicable(),
       buyAndHold: notApplicable(),
-      fixAndFlip: updateVarbS.leftRightPropFn(
+      fixAndFlip: updateVarbS.equationLR(
         "add",
         propS.local("totalInvestment"),
         propS.onlyChild("purchaseFinancing", "loanTotalDollars")
       ),
 
-      brrrr: updateVarbS.leftRightPropFn(
+      brrrr: updateVarbS.equationLR(
         "add",
         propS.local("totalInvestment"),
         propS.onlyChild("purchaseFinancing", "loanTotalDollars")

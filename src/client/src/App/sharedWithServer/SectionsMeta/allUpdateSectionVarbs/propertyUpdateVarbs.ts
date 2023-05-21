@@ -42,12 +42,12 @@ export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
     ...varbsS.ongoingInput("taxesHolding"),
     ...varbsS.ongoingInput("homeInsHolding"),
     ...varbsS.group("taxesOngoing", "ongoing", "yearly", {
-      monthly: basicsS.loadFromChild("taxesHolding", "valueDollarsMonthly"),
-      yearly: basicsS.loadFromChild("taxesHolding", "valueDollarsYearly"),
+      monthly: basicsS.loadFromChild("taxesOngoing", "valueDollarsMonthly"),
+      yearly: basicsS.loadFromChild("taxesOngoing", "valueDollarsYearly"),
     }),
     ...varbsS.group("homeInsOngoing", "ongoing", "monthly", {
-      monthly: basicsS.loadFromChild("taxesHolding", "valueDollarsMonthly"),
-      yearly: basicsS.loadFromChild("taxesHolding", "valueDollarsYearly"),
+      monthly: basicsS.loadFromChild("homeInsOngoing", "valueDollarsMonthly"),
+      yearly: basicsS.loadFromChild("homeInsOngoing", "valueDollarsYearly"),
     }),
     ...varbsS.group("utilitiesOngoing", "ongoing", "monthly", {
       monthly: basicsS.loadFromChild("utilityOngoing", "valueDollarsMonthly"),
@@ -122,7 +122,7 @@ export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
         },
       ],
     }),
-    holdingCostTotal: updateVarbS.leftRightPropFn(
+    holdingCostTotal: updateVarbS.equationLR(
       "multiply",
       propS.local("holdingPeriodMonths"),
       propS.local("holdingCostMonthly")

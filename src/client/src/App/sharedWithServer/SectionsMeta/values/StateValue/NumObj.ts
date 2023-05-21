@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { NotANumberError } from "../../../utils/math";
 import { Obj } from "../../../utils/Obj";
 import { StrictPick } from "../../../utils/types";
 import { validateS } from "../../../validateS";
@@ -33,6 +34,21 @@ export const notApplicableString = "N/A";
 export type NumberOrQ = number | "?";
 export type NumObjOutput = NumberOrQ | typeof notApplicableString;
 export type EntitiesAndEditorText = StrictPick<NumObj, "mainText" | "entities">;
+
+export function numberOrQ(val: number) {
+  try {
+    if (`${val}` === "NaN") {
+      throw new Error("no NaN allowed");
+    }
+    return val;
+  } catch (ex) {
+    if (ex instanceof NotANumberError) {
+      return "?";
+    } else {
+      throw ex;
+    }
+  }
+}
 
 const zNumObj = z.object({
   mainText: z.string(),

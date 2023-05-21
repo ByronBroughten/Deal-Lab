@@ -100,6 +100,14 @@ export const allDisplaySectionVarbs = {
     ...ongoingInputDollars("targetRent", "Rent"),
   }),
   ...displaySectionVarbsProp("financing", {
+    ...group("ongoing", "loanPayment", "Loan payments", {
+      monthly: { displayNameWithVariant: "Monthly loan payments" },
+      yearly: { displayNameWithVariant: "Yearly loan payments" },
+    }),
+    ...group("ongoing", "loanExpenses", "Ongoing expenses", {
+      monthly: { displayNameWithSection: "Ongoing loan expenses" },
+      yearly: { displayNameWithSection: "Ongoing loan expenses" },
+    }),
     loanUpfrontExpenses: varb("Upfront expenses", {
       displayNameWithSection: "Upfront loaneExpenses",
     }),
@@ -112,14 +120,6 @@ export const allDisplaySectionVarbs = {
     }),
   }),
   ...displaySectionVarbsProp("calculatedVarbs", {
-    ...group("ongoing", "loanPayment", "Loan payments", {
-      monthly: { displayNameWithVariant: "Monthly loan payments" },
-      yearly: { displayNameWithVariant: "Yearly loan payments" },
-    }),
-    ...group("ongoing", "loanExpenses", "Ongoing expenses", {
-      monthly: { displayNameWithSection: "Ongoing loan expenses" },
-      yearly: { displayNameWithSection: "Ongoing loan expenses" },
-    }),
     onePercentPrice: varb("1% Purchase price"),
     twoPercentPrice: varb("2% Purchase price"),
     ...group("ongoing", "fivePercentRent", "5% Rent", {

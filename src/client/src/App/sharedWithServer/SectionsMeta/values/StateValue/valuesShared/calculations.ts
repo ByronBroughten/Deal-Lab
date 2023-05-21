@@ -40,7 +40,10 @@ const solvableTextByArgs = {
       let baseEquation = `${leftSide} - ${rightSide}`;
       const subtracted = leftSide - rightSide;
       if (subtracted !== 0) {
-        const negativeOffset = Math.abs(subtracted);
+        let negativeOffset: NumberOrQ = Math.abs(subtracted);
+        if (`${negativeOffset}` === "NaN") {
+          negativeOffset = "?";
+        }
         baseEquation += ` + ${negativeOffset}`;
       }
       return baseEquation;

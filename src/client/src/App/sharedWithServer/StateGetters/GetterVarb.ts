@@ -77,7 +77,6 @@ export class GetterVarb<
     }
   }
   get numberValue(): number {
-    // figure out how to make NaN result in an error or questionMark
     const val = this.value("any");
     if (val && typeof val === "object" && "solvableText" in val) {
       const numString = this.numObj.solveTextToNumStringNext();

@@ -12,22 +12,22 @@ const varbS = updateVarbS;
 export function calculatedUpdateVarbs(): UpdateSectionVarbs<"calculatedVarbs"> {
   return {
     ...updateVarbsS._typeUniformity,
-    pricePerUnit: varbS.leftRightPropFn(
+    pricePerUnit: varbS.equationLR(
       "divide",
       propS.varbPathName("purchasePrice"),
       propS.varbPathName("numUnits")
     ),
-    pricePerSqft: varbS.leftRightPropFn(
+    pricePerSqft: varbS.equationLR(
       "divide",
       propS.varbPathName("purchasePrice"),
       propS.varbPathName("sqft")
     ),
-    arvPerSqft: varbS.leftRightPropFn(
+    arvPerSqft: varbS.equationLR(
       "divide",
       propS.varbPathName("afterRepairValue"),
       propS.varbPathName("sqft")
     ),
-    rehabPerSqft: varbS.leftRightPropFn(
+    rehabPerSqft: varbS.equationLR(
       "divide",
       propS.varbPathName("rehabCost"),
       propS.varbPathName("sqft")

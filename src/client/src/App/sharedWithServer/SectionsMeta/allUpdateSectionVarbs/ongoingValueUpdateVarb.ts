@@ -32,21 +32,23 @@ export function ongoingValueUpdateVarb(
           ),
           ...valueSourceOverrides("ongoingPhaseSource", {
             sameAsHoldingPhase: updateBasicsS.loadByVarbPathName(monthlyVpn),
-            valueDollarsEditor:
-              updateBasicsS.loadFromLocal("valueDollarsEditor"),
+            valueDollarsEditor: updateBasicsS.loadFromLocal(
+              "valueDollarsOngoingEditor"
+            ),
           }),
         ],
       },
       yearly: {
         updateOverrides: [
           updateOverride(
-            [overrideSwitchS.yearlyIsActive("valueDollars")],
-            updateBasicsS.yearlyToMonthly("valueDollars")
+            [overrideSwitchS.monthlyIsActive("valueDollars")],
+            updateBasicsS.monthlyToYearly("valueDollars")
           ),
           ...valueSourceOverrides("ongoingPhaseSource", {
             sameAsHoldingPhase: updateBasicsS.loadByVarbPathName(yearlyVpn),
-            valueDollarsEditor:
-              updateBasicsS.loadFromLocal("valueDollarsEditor"),
+            valueDollarsEditor: updateBasicsS.loadFromLocal(
+              "valueDollarsOngoingEditor"
+            ),
           }),
         ],
       },

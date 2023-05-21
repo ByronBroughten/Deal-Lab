@@ -36,7 +36,7 @@ export function financingUpdateVarbs(): UpdateSectionVarbs<"financing"> {
     ...sumOngoingLoanVarb("loanExpenses", "expenses"),
     ...sumOngoingLoanVarb("loanPayment", "loanPayment"),
     completionStatus: financingCompletionStatus,
-    downPaymentDollars: updateVarbS.leftRightPropFn(
+    downPaymentDollars: updateVarbS.equationLR(
       "subtract",
       propS.varbPathName("purchasePrice"),
       propS.local("loanBaseDollars")
@@ -45,7 +45,7 @@ export function financingUpdateVarbs(): UpdateSectionVarbs<"financing"> {
       "decimalToPercent",
       propS.local("downPaymentDecimal")
     ),
-    downPaymentDecimal: updateVarbS.leftRightPropFn(
+    downPaymentDecimal: updateVarbS.equationLR(
       "divide",
       propS.local("downPaymentDollars"),
       propS.varbPathName("purchasePrice")

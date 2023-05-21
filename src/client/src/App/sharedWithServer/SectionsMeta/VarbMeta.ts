@@ -38,6 +38,11 @@ export class VarbMeta<SN extends SectionName> {
     this.sectionName = sectionName;
     this.varbName = varbName;
     const updateVarb = getUpdateVarb(sectionName, varbName as any);
+    if (!Array.isArray(updateVarb.updateOverrides)) {
+      throw new Error(
+        `updateOverrides of ${sectionName}.${varbName} not valid`
+      );
+    }
     this.inSwitchUpdatePacks = updateOverrideToInfos(
       updateVarb.updateOverrides
     );

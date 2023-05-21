@@ -100,7 +100,7 @@ export const updateVarbS = {
       ...options,
     });
   },
-  leftRightPropFn(
+  equationLR(
     updateFnName: LeftRightPropCalcName,
     left: UpdateFnProp,
     right: UpdateFnProp,

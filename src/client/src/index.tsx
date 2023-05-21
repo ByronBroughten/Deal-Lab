@@ -6,23 +6,16 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-// Add tests for these:
-// - utilityHolding
-// - utilityOngoing
-// - purchaseFinancing
-// - refiFinancing
-// - the outputs for each of the deal modes
 
-// - Yeah, I guess those two should be separate. I could
-//   utilities, taxes, and insurance should have a "same as holding period" option
-//   that means homeInsOngoing and taxesOngoing should possibly be their own values
+// Possibly replace "ongoing" with "periodic"
 
-//
+// Fix property tests for buyAndHold and fixAndFlip
+// Make property tests include brrrr and homeBuyer
+// Add tests for purchaseFinancing
+// Add tests for refiFinancing
+// Add tests for mgmt
+// Add tests for deals
 
-// Make homeInsOngoing
-// Make homeInsHolding
-// Make taxesOngoing(?)
-// Make taxesHolding(?)
 // Implement info dots for selecting the dealType
 
 // Fix refiFinancing completionStatus
