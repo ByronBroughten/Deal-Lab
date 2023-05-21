@@ -19,6 +19,7 @@ export function ClosingCostValue({ feId, fivePercentLoanDisplay }: Props) {
     <SelectAndItemizeEditor
       {...{
         sx: { pt: nativeTheme.editorMargins.my },
+        selectProps: { sx: { minWidth: 140 } },
         feVarbInfo: {
           ...feInfo,
           varbName: "valueSourceName",
