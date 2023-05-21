@@ -91,7 +91,6 @@ function getFinancingProps(
 ): SectionProps {
   let displayName = "";
   const financingMethod = financing.valueNext("financingMethod");
-  const { calculatedFocal } = financing;
 
   if (financingMethod === "cashOnly") {
     displayName = "Cash Only";

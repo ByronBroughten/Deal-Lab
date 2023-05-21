@@ -9,6 +9,17 @@ import { makeExampleLoan } from "./makeExampleLoan";
 import { exampleDealMgmt } from "./makeExampleMgmt";
 import { makeExampleProperty } from "./makeExampleProperty";
 
+function addExampleFinancing(
+  deal: PackBuilderSection<"deal">,
+  financingName: "purchaseFinancing" | "refiFinancing"
+) {
+  const financing = deal.onlyChild(financingName);
+  financing.updateValues({ financingMethod: "useLoan" });
+
+  const loan = financing.onlyChild("loan");
+  loan.loadSelf(exampleDealLoan());
+}
+
 export function makeExampleDeal(displayName: string) {
   const deal = PackBuilderSection.initAsOmniChild("deal");
   deal.loadSelf(makeDefaultDealPack("buyAndHold"));
@@ -21,11 +32,8 @@ export function makeExampleDeal(displayName: string) {
   const property = deal.onlyChild("property");
   property.loadSelf(exampleDealBuyAndHoldProperty());
 
-  const financing = deal.onlyChild("financing");
-  financing.updateValues({ financingMethod: "useLoan" });
-
-  const loan = financing.onlyChild("loan");
-  loan.loadSelf(exampleDealLoan());
+  addExampleFinancing(deal, "purchaseFinancing");
+  addExampleFinancing(deal, "refiFinancing");
 
   const mgmt = deal.onlyChild("mgmt");
   mgmt.loadSelf(exampleDealMgmt);

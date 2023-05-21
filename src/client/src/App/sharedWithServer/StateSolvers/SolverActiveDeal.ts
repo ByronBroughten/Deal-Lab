@@ -27,8 +27,11 @@ export class SolverActiveDeal extends SolverSectionBase<"deal"> {
   get units(): SolverSection<"unit">[] {
     return this.property.children("unit");
   }
-  get financing(): SolverSection<"financing"> {
-    return this.solverSection(this.get.onlyChild("financing").feInfo);
+  get purchaseFinancing(): SolverSection<"financing"> {
+    return this.solverSection(this.get.onlyChild("purchaseFinancing").feInfo);
+  }
+  get refiFinancing(): SolverSection<"financing"> {
+    return this.solverSection(this.get.onlyChild("refiFinancing").feInfo);
   }
   static init(dealMode: DealMode) {
     const deal = SolverSections.initDefault().getActiveDeal();

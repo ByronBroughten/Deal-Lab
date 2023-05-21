@@ -6,7 +6,11 @@ import { makeDefaultLoanPack } from "./makeDefaultLoanPack";
 import { makeDefaultMgmt } from "./makeDefaultMgmt";
 import { makeDefaultProperty } from "./makeDefaultProperty";
 
-export const dealSectionNames = ["property", "financing", "mgmt"] as const;
+export const dealSectionNames = [
+  "property",
+  "purchaseFinancing",
+  "mgmt",
+] as const;
 type DealSectionName = (typeof dealSectionNames)[number];
 
 export function makeDefaultDealDisplayName(
@@ -16,7 +20,7 @@ export function makeDefaultDealDisplayName(
     names[sectionName] = deal.onlyChild(sectionName).stringValue("displayName");
     return names;
   }, {} as Record<DealSectionName, string>);
-  return `${names.property} / ${names.financing} / ${names.mgmt}`;
+  return `${names.property} / ${names.purchaseFinancing} / ${names.mgmt}`;
 }
 
 export function makeDefaultDealPack(
@@ -30,12 +34,6 @@ export function makeDefaultDealPack(
   deal.loadChild({
     childName: "property",
     sectionPack: makeDefaultProperty(dealMode),
-  });
-
-  const financing = deal.addAndGetChild("financing");
-  financing.loadChild({
-    childName: "loan",
-    sectionPack: makeDefaultLoanPack(),
   });
 
   const purchaseFinancing = deal.addAndGetChild("purchaseFinancing", {
