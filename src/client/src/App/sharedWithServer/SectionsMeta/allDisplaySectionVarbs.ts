@@ -65,6 +65,7 @@ export const allDisplaySectionVarbs = {
     sellingCosts: varb("Selling costs"),
     sqft: varb("Square feet"),
     rehabCost: varb("Rehab cost"),
+    rehabCostBase: varb("Rehab cost base"),
     numUnits: varb("Unit count"),
     numBedroomsEditor: varb("Bedroom count"),
     ...editorDisplayGroup(
@@ -76,6 +77,7 @@ export const allDisplaySectionVarbs = {
         years: { displayNameWithVariant: "Holding period years" },
       }
     ),
+
     numUnitsEditor: varb("Unit count"),
     numBedrooms: varb("Bedrooms"),
     upfrontExpenses: varb("Upfront expenses"),
@@ -94,6 +96,10 @@ export const allDisplaySectionVarbs = {
     ...editorDisplayGroup("ongoingInput", "homeInsHolding", "Home insurance", {
       monthly: { displayNameWithVariant: "Home insurance monthly" },
       yearly: { displayNameWithVariant: "Home insurance yearly" },
+    }),
+    ...editorDisplayGroup("ongoingInput", "utilitiesOngoing", "Utilities", {
+      monthly: { displayNameWithVariant: "Utilities monthly" },
+      yearly: { displayNameWithVariant: "Utilities yearly" },
     }),
     ...editorDisplayGroup("ongoingInput", "targetRent", "Rental income", {
       monthly: { displayNameWithVariant: "Rental income monthly" },
@@ -174,26 +180,26 @@ export const allDisplaySectionVarbs = {
   }),
   ...displaySectionVarbsProp("mgmt", {
     ...group("ongoing", "basePayDollars", "Base pay", {
-      targets: { displayNameWithSection: "Management base pay" },
+      targets: { displayNameWithSection: "Mgmt base pay" },
       monthly: {
         displayNameWithVariant: "Base pay monthly",
-        displayNameFullContext: "Management base pay monthly",
+        displayNameFullContext: "Mgmt base pay monthly",
       },
       yearly: {
         displayNameWithVariant: "Base pay yearly",
-        displayNameFullContext: "Management base pay yearly",
+        displayNameFullContext: "Mgmt base pay yearly",
       },
     }),
     vacancyLossPercent: varb("Vacancy loss percent of rent"),
     ...group("ongoing", "expenses", "Ongoing expenses", {
-      targets: { displayNameWithSection: "Management expenses" },
+      targets: { displayNameWithSection: "Mgmt expenses" },
       monthly: {
         displayNameWithVariant: "Expenses monthly",
-        displayNameFullContext: "Monthly management expenses",
+        displayNameFullContext: "Monthly mgmt expenses",
       },
       yearly: {
         displayNameWithVariant: "Expenses yearly",
-        displayNameFullContext: "Yearly management expenses",
+        displayNameFullContext: "Yearly mgmt expenses",
       },
     }),
   }),
@@ -226,6 +232,10 @@ export const allDisplaySectionVarbs = {
     ...group("ongoing", "ongoingPiti", "PITI payment", {
       monthly: { displayNameWithVariant: "Monthly PITI payment" },
       yearly: { displayNameWithVariant: "Yearly PITI payment" },
+    }),
+    ...group("ongoing", "ongoingLoanPayment", "Loan payment", {
+      monthly: { displayNameWithVariant: "Monthly loan payment" },
+      yearly: { displayNameWithVariant: "Yearly loan payment" },
     }),
     ...group("ongoing", "cashFlow", "Cash flow", {
       monthly: { displayNameWithVariant: "Cash flow monthly" },
