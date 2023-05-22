@@ -5,8 +5,8 @@ import { StrictExtract } from "../../utils/types";
 import { UnionValue, UnionValueName } from "../values/StateValue/unionValues";
 
 const switchNames = [
-  "ongoing",
-  "ongoingInput",
+  "periodic",
+  "periodicInput",
   "monthsYears",
   "monthsYearsInput",
 ] as const;
@@ -17,8 +17,8 @@ type SwitchValueNamesGeneric = Record<SwitchName, UnionValueName>;
 const checkSwitchValueNames = <T extends SwitchValueNamesGeneric>(t: T) => t;
 
 const switchValueNames = checkSwitchValueNames({
-  ongoing: "ongoingSwitch",
-  ongoingInput: "ongoingSwitch",
+  periodic: "ongoingSwitch",
+  periodicInput: "ongoingSwitch",
   monthsYears: "monthsYearsSwitch",
   monthsYearsInput: "monthsYearsSwitch",
 });
@@ -48,7 +48,7 @@ const checkSwitchVarbNameEndings = <T extends GeneralBaseSwitchSchemas>(t: T) =>
 const ongoingEndings = {
   monthly: "Monthly",
   yearly: "Yearly",
-  switch: "OngoingSwitch",
+  switch: "PeriodicSwitch",
 } as const;
 const spanEndings = {
   months: "Months",
@@ -56,10 +56,10 @@ const spanEndings = {
   switch: "SpanSwitch",
 } as const;
 export const switchVarbNameEndings = checkSwitchVarbNameEndings({
-  ongoing: ongoingEndings,
-  ongoingInput: {
+  periodic: ongoingEndings,
+  periodicInput: {
     ...ongoingEndings,
-    editor: "OngoingEditor",
+    editor: "PeriodicEditor",
   },
   monthsYears: spanEndings,
   monthsYearsInput: {
@@ -79,7 +79,7 @@ export function switchKeys<SN extends SwitchName>(
 
 export type EditorSwitchName = StrictExtract<
   SwitchName,
-  "ongoingInput" | "monthsYearsInput"
+  "periodicInput" | "monthsYearsInput"
 >;
 export type SwitchTargetKey<SW extends SwitchName> = Exclude<
   SwitchKey<SW>,

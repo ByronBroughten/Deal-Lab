@@ -17,7 +17,7 @@ export function mgmtRelVarbs(): UpdateSectionVarbs<"mgmt"> {
     ...updateVarbsS.savableSection,
     completionStatus: mgmtCompletionStatus,
     one: updateVarbS.one(),
-    ...updateGroupS.group("basePayDollars", "ongoing", "monthly", {
+    ...updateGroupS.group("basePayDollars", "periodic", "monthly", {
       monthly: basicsS.loadFromChild("mgmtBasePayValue", "valueDollarsMonthly"),
       yearly: basicsS.loadFromChild("mgmtBasePayValue", "valueDollarsYearly"),
     }),
@@ -25,7 +25,7 @@ export function mgmtRelVarbs(): UpdateSectionVarbs<"mgmt"> {
       "numObj",
       basicsS.loadFromChild("mgmtBasePayValue", "valuePercent")
     ),
-    ...updateGroupS.group("vacancyLossDollars", "ongoing", "monthly", {
+    ...updateGroupS.group("vacancyLossDollars", "periodic", "monthly", {
       monthly: basicsS.loadFromChild("vacancyLossValue", "valueDollarsMonthly"),
       yearly: basicsS.loadFromChild("vacancyLossValue", "valueDollarsYearly"),
     }),
@@ -33,7 +33,7 @@ export function mgmtRelVarbs(): UpdateSectionVarbs<"mgmt"> {
       "numObj",
       basicsS.loadFromChild("vacancyLossValue", "valuePercent")
     ),
-    ...updateVarbsS.group("miscCosts", "ongoing", "monthly", {
+    ...updateVarbsS.group("miscCosts", "periodic", "monthly", {
       monthly: basicsS.loadFromChild("miscOngoingCost", "valueDollarsMonthly"),
       yearly: basicsS.loadFromChild("miscOngoingCost", "valueDollarsYearly"),
     }),

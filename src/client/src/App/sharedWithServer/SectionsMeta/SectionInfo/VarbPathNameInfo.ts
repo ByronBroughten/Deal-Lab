@@ -30,8 +30,8 @@ const allVarbPathParams = {
     "twoPercentPrice",
     "onePercentPricePlusSqft",
     "onePercentPriceSqftAverage",
-    ...targetNames("fivePercentRent", "ongoing"),
-    ...targetNames("tenPercentRent", "ongoing"),
+    ...targetNames("fivePercentRent", "periodic"),
+    ...targetNames("tenPercentRent", "periodic"),
   ]),
   ...sectionVarbNameParams("propertyFocal", "Property", [
     "sellingCosts",
@@ -42,18 +42,18 @@ const allVarbPathParams = {
     "sqft",
     "numBedrooms",
     "numUnits",
-    ...targetNames("taxesHolding", "ongoing"),
-    ...targetNames("homeInsHolding", "ongoing"),
-    ...targetNames("taxesOngoing", "ongoing"),
-    ...targetNames("homeInsOngoing", "ongoing"),
-    ...targetNames("utilitiesOngoing", "ongoing"),
-    // ...targetNames("utilitiesHolding", "ongoing"),
+    ...targetNames("taxesHolding", "periodic"),
+    ...targetNames("homeInsHolding", "periodic"),
+    ...targetNames("taxesOngoing", "periodic"),
+    ...targetNames("homeInsOngoing", "periodic"),
+    ...targetNames("utilitiesOngoing", "periodic"),
+    // ...targetNames("utilitiesHolding", "periodic"),
 
-    ...targetNames("targetRent", "ongoing"),
+    ...targetNames("targetRent", "periodic"),
   ]),
   ...sectionVarbNameParams("mgmtFocal", "Management", [
     "vacancyLossPercent",
-    ...targetNames("basePayDollars", "ongoing"),
+    ...targetNames("basePayDollars", "periodic"),
   ]),
   managementExpensesMonthly: fixedVarbPathParams(
     "Management",
@@ -66,13 +66,13 @@ const allVarbPathParams = {
     "expensesYearly"
   ),
   ...sectionVarbNameParams("dealFocal", "Financing", [
-    ...targetNames("ongoingPiti", "ongoing"),
-    ...targetNames("ongoingLoanPayment", "ongoing"),
+    ...targetNames("ongoingPiti", "periodic"),
+    ...targetNames("ongoingLoanPayment", "periodic"),
   ]),
   ...sectionVarbNameParams("dealFocal", "Deal", [
     "totalInvestment",
-    ...targetNames("cashFlow", "ongoing"),
-    ...targetNames("cocRoi", "ongoing"),
+    ...targetNames("cashFlow", "periodic"),
+    ...targetNames("cocRoi", "periodic"),
   ]),
   propertyExpensesMonthly: fixedVarbPathParams(
     "Property",

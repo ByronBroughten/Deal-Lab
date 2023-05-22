@@ -59,7 +59,7 @@ function exampleDealLoan(): SectionPack<"loan"> {
   return makeExampleLoan({
     loan: {
       displayName: stringObj("Conventional 20% Down"),
-      interestRatePercentOngoingEditor: numObj(6),
+      interestRatePercentPeriodicEditor: numObj(6),
       loanTermSpanEditor: numObj(30),
       hasMortgageIns: false,
       loanAmountInputMode: "loanAmount",

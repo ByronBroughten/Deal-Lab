@@ -16,8 +16,8 @@ export function makeUtilityList(itemPropArr: UtilityItemProp[], dbId?: string) {
     dbId,
     sectionValues: {
       itemValueSource: valueSource,
-      itemOngoingSwitch: "monthly",
-      totalOngoingSwitch: "monthly",
+      itemPeriodicSwitch: "monthly",
+      totalPeriodicSwitch: "monthly",
       displayName: stringObj("Utility Examples"),
     },
   });
@@ -25,9 +25,9 @@ export function makeUtilityList(itemPropArr: UtilityItemProp[], dbId?: string) {
     utilityList.addChild("ongoingItem", {
       sectionValues: {
         displayNameEditor: itemProps[0],
-        valueOngoingSwitch: "monthly",
+        valuePeriodicSwitch: "monthly",
         valueSourceName: valueSource,
-        valueOngoingEditor: numToObj(itemProps[1]),
+        valuePeriodicEditor: numToObj(itemProps[1]),
       },
     });
   }
@@ -63,19 +63,19 @@ export function makeCapExList(
   dbId?: string
 ): SectionPack<"capExList"> {
   const feStore = PackBuilderSection.initAsOmniChild("feStore");
-  const itemOngoingSwitch = "yearly";
+  const itemPeriodicSwitch = "yearly";
   const capExList = feStore.addAndGetChild("capExListMain", {
     dbId,
     sectionValues: {
-      itemOngoingSwitch,
-      totalOngoingSwitch: "yearly",
+      itemPeriodicSwitch,
+      totalPeriodicSwitch: "yearly",
     },
   });
   for (const itemProps of itemPropArr) {
     capExList.addChild("capExItem", {
       sectionValues: {
         displayNameEditor: itemProps[0],
-        valueOngoingSwitch: itemOngoingSwitch,
+        valuePeriodicSwitch: itemPeriodicSwitch,
         lifespanSpanEditor: numToObj(itemProps[1]),
         lifespanSpanSwitch: "years",
         costToReplace: numToObj(itemProps[2]),

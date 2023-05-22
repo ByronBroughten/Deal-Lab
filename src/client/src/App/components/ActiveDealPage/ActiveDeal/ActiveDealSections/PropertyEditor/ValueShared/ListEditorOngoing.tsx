@@ -30,13 +30,13 @@ export function ListEditorOngoing({
     (item) => item.valueNext("displayName").mainText
   );
 
-  const itemOngoingSwitch = ongoingList.value("itemOngoingSwitch");
-  const totalVarb = ongoingList.get.activeSwitchTarget("total", "ongoing");
+  const itemPeriodicSwitch = ongoingList.value("itemPeriodicSwitch");
+  const totalVarb = ongoingList.get.activeSwitchTarget("total", "periodic");
 
   const onChange = (displayName?: string) =>
     ongoingList.addChild("ongoingItem", {
       sectionValues: {
-        valueOngoingSwitch: itemOngoingSwitch,
+        valuePeriodicSwitch: itemPeriodicSwitch,
         ...(displayName && { displayNameEditor: displayName }),
       },
     });

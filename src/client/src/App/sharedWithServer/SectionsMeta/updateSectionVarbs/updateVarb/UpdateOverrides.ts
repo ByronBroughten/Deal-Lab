@@ -120,11 +120,11 @@ export const overrideSwitchS = {
       switchValues,
     };
   },
-  ongoing<K extends SwitchTargetKey<"ongoing">>(
+  periodic<K extends SwitchTargetKey<"periodic">>(
     baseName: string,
     switchKey: K
   ): UpdateOverrideSwitch {
-    const varbName = getSwitchVarbName(baseName, "ongoing", "switch");
+    const varbName = getSwitchVarbName(baseName, "periodic", "switch");
     return this.local(validateAnyVarbName(varbName), switchKey);
   },
   monthsIsActive(baseName: string) {
@@ -134,10 +134,10 @@ export const overrideSwitchS = {
     return this.switchIsActive(baseName, "monthsYears", "years");
   },
   monthlyIsActive(baseVarbName: string): UpdateOverrideSwitch {
-    return this.ongoing(baseVarbName, "monthly");
+    return this.periodic(baseVarbName, "monthly");
   },
   yearlyIsActive(baseVarbName: string): UpdateOverrideSwitch {
-    return this.ongoing(baseVarbName, "yearly");
+    return this.periodic(baseVarbName, "yearly");
   },
   pathHasValue<PN extends SectionPathName, VN extends SectionPathVarbName<PN>>(
     pathName: PN,

@@ -8,7 +8,7 @@ export function MiscHoldingCost({ feId }: { feId: string }) {
   const feInfo = { sectionName: "miscHoldingCost", feId } as const;
   const holdingCost = useGetterSection(feInfo);
 
-  const valueVarb = holdingCost.switchVarb("valueDollars", "ongoing");
+  const valueVarb = holdingCost.switchVarb("valueDollars", "periodic");
   const sourceName = holdingCost.valueNext("valueSourceName");
 
   const menuDisplayNames = [
@@ -26,14 +26,14 @@ export function MiscHoldingCost({ feId }: { feId: string }) {
         label: "Misc holding costs",
         itemizedModalTitle: "Misc holding costs",
         makeEditor:
-          sourceName === "valueDollarsOngoingEditor"
+          sourceName === "valueDollarsPeriodicEditor"
             ? (props) => (
                 <NumObjEntityEditor
                   {...{
                     ...props,
                     feVarbInfo: {
                       ...feInfo,
-                      varbName: "valueDollarsOngoingEditor",
+                      varbName: "valueDollarsPeriodicEditor",
                     },
                   }}
                 />
@@ -46,7 +46,7 @@ export function MiscHoldingCost({ feId }: { feId: string }) {
           varbName: "valueSourceName",
         },
         items: [
-          ["valueDollarsOngoingEditor", "Amount"],
+          ["valueDollarsPeriodicEditor", "Amount"],
           ["listTotal", "Itemize"],
         ],
         itemizeValue: "listTotal",

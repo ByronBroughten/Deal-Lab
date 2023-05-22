@@ -5,7 +5,7 @@ export function makeDefaultOngoingValue() {
   const ongoingValue = PackBuilderSection.initAsOmniChild("ongoingValue");
   ongoingValue.updateValues({
     valueSourceName: "none",
-    valueOngoingSwitch: "monthly",
+    valuePeriodicSwitch: "monthly",
   });
 
   const list = ongoingValue.addAndGetChild("ongoingList");

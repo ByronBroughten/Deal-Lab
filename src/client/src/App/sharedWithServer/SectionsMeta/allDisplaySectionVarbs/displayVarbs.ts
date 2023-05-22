@@ -72,16 +72,16 @@ export const displayVarbsS = {
   ongoingInputDollars<BN extends string>(
     baseName: BN,
     displayName: DisplayName,
-    options: SwitchOptions<"ongoingInput"> = {}
-  ): SwitchDisplayVarbOptions<BN, "ongoingInput"> {
-    return this.editorGroup("ongoingInput", baseName, displayName, options);
+    options: SwitchOptions<"periodicInput"> = {}
+  ): SwitchDisplayVarbOptions<BN, "periodicInput"> {
+    return this.editorGroup("periodicInput", baseName, displayName, options);
   },
   ongoingDollars<BN extends string>(
     baseName: BN,
     displayName: DisplayName,
-    options: SwitchOptions<"ongoing"> = {}
-  ): SwitchDisplayVarbOptions<BN, "ongoing"> {
-    return this.group("ongoing", baseName, displayName, options);
+    options: SwitchOptions<"periodic"> = {}
+  ): SwitchDisplayVarbOptions<BN, "periodic"> {
+    return this.group("periodic", baseName, displayName, options);
   },
   monthsYears<BN extends string>(
     baseName: BN,

@@ -57,7 +57,7 @@ const valueSources = {
   repairValueSource: ["none", "zero", "valueDollarsEditor", "listTotal"],
   overrunValueSource: ["valueDollarsEditor", "valuePercentEditor"],
   dollarsOrList: ["valueDollarsEditor", "listTotal"],
-  dollarsOrListOngoing: ["valueDollarsOngoingEditor", "listTotal"],
+  dollarsOrListOngoing: ["valueDollarsPeriodicEditor", "listTotal"],
   sellingCostSource: [
     "sixPercent",
     "valuePercentEditor",
@@ -69,12 +69,12 @@ const valueSources = {
     "onePercentPrice",
     "sqft",
     "onePercentAndSqft",
-    "valueDollarsOngoingEditor",
+    "valueDollarsPeriodicEditor",
   ],
   capExValueSource: [
     "none",
     "fivePercentRent",
-    "valueDollarsOngoingEditor",
+    "valueDollarsPeriodicEditor",
     "listTotal",
   ],
   closingCostValueSource: [

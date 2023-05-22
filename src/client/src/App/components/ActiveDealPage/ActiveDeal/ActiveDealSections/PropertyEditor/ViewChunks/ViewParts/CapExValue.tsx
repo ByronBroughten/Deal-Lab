@@ -13,7 +13,7 @@ export function CapExValue({ feId }: { feId: string }) {
   const feInfo = { sectionName: "capExValue", feId } as const;
   const capExValue = useGetterSection(feInfo);
   const valueSourceName = capExValue.valueNext("valueSourceName");
-  const valueVarb = capExValue.switchVarb("valueDollars", "ongoing");
+  const valueVarb = capExValue.switchVarb("valueDollars", "periodic");
 
   const showEquals: StateValue<"capExValueSource">[] = ["fivePercentRent"];
   const equalsValue = showEquals.includes(valueSourceName)
@@ -44,7 +44,7 @@ export function CapExValue({ feId }: { feId: string }) {
               valueSourceName === "listTotal" ? "" : " (more accurate)"
             }`,
           ],
-          ["valueDollarsOngoingEditor", "Custom amount"],
+          ["valueDollarsPeriodicEditor", "Custom amount"],
         ],
         label: (
           <LabelWithInfo
@@ -57,7 +57,7 @@ export function CapExValue({ feId }: { feId: string }) {
         ),
         selectValue: valueSourceName,
         makeEditor:
-          valueSourceName === "valueDollarsOngoingEditor"
+          valueSourceName === "valueDollarsPeriodicEditor"
             ? (props) => (
                 <NumObjEntityEditor
                   {...{

@@ -11,7 +11,7 @@ import { financingCompletionStatus } from "./calculatedUpdateVarbs/completionSta
 function sumOngoingLoanVarb<BN extends string>(
   financingBaseVarbName: BN,
   loanBaseVarbName: string
-): UpdateGroup<BN, "ongoing"> {
+): UpdateGroup<BN, "periodic"> {
   return updateVarbsS.ongoingSumNumsNext(financingBaseVarbName, "monthly", {
     updateBasics: updateBasicsS.throw,
     updateOverrides: [

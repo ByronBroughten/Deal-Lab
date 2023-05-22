@@ -80,7 +80,7 @@ export function ListItemCapEx({ feId }: Props) {
   const section = useSetterSection({ sectionName: "capExItem", feId });
   const valueVarbName = section.get.activeSwitchTargetName(
     "value",
-    "ongoing"
+    "periodic"
   ) as "valueMonthly";
   const valueVarb = section.varb(valueVarbName);
   return (

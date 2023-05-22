@@ -42,19 +42,19 @@ const group = displayGroup;
 export const allDisplaySectionVarbs = {
   ...allDefaultDisplaySectionVarbs(),
   ...displaySectionVarbsProp("utilityValue", {
-    ...group("ongoing", "valueDollars", "Utilities", {
+    ...group("periodic", "valueDollars", "Utilities", {
       monthly: { displayNameWithVariant: "Utilities monthly" },
       yearly: { displayNameWithVariant: "Utilities yearly" },
     }),
   }),
   ...displaySectionVarbsProp("taxesOngoing", {
-    ...editorDisplayGroup("ongoingInput", "valueDollars", "Taxes", {
+    ...editorDisplayGroup("periodicInput", "valueDollars", "Taxes", {
       monthly: { displayNameWithVariant: "Taxes monthly" },
       yearly: { displayNameWithVariant: "Taxes yearly" },
     }),
   }),
   ...displaySectionVarbsProp("homeInsOngoing", {
-    ...editorDisplayGroup("ongoingInput", "valueDollars", "Home insurance", {
+    ...editorDisplayGroup("periodicInput", "valueDollars", "Home insurance", {
       monthly: { displayNameWithVariant: "Home insurance monthly" },
       yearly: { displayNameWithVariant: "Home insurance yearly" },
     }),
@@ -81,27 +81,27 @@ export const allDisplaySectionVarbs = {
     numUnitsEditor: varb("Unit count"),
     numBedrooms: varb("Bedrooms"),
     upfrontExpenses: varb("Upfront expenses"),
-    ...editorDisplayGroup("ongoingInput", "taxesOngoing", "Taxes", {
+    ...editorDisplayGroup("periodicInput", "taxesOngoing", "Taxes", {
       monthly: { displayNameWithVariant: "Taxes monthly" },
       yearly: { displayNameWithVariant: "Taxes yearly" },
     }),
-    ...editorDisplayGroup("ongoingInput", "taxesHolding", "Taxes", {
+    ...editorDisplayGroup("periodicInput", "taxesHolding", "Taxes", {
       monthly: { displayNameWithVariant: "Taxes monthly" },
       yearly: { displayNameWithVariant: "Taxes yearly" },
     }),
-    ...editorDisplayGroup("ongoingInput", "homeInsOngoing", "Home insurance", {
+    ...editorDisplayGroup("periodicInput", "homeInsOngoing", "Home insurance", {
       monthly: { displayNameWithVariant: "Home insurance monthly" },
       yearly: { displayNameWithVariant: "Home insurance yearly" },
     }),
-    ...editorDisplayGroup("ongoingInput", "homeInsHolding", "Home insurance", {
+    ...editorDisplayGroup("periodicInput", "homeInsHolding", "Home insurance", {
       monthly: { displayNameWithVariant: "Home insurance monthly" },
       yearly: { displayNameWithVariant: "Home insurance yearly" },
     }),
-    ...editorDisplayGroup("ongoingInput", "utilitiesOngoing", "Utilities", {
+    ...editorDisplayGroup("periodicInput", "utilitiesOngoing", "Utilities", {
       monthly: { displayNameWithVariant: "Utilities monthly" },
       yearly: { displayNameWithVariant: "Utilities yearly" },
     }),
-    ...editorDisplayGroup("ongoingInput", "targetRent", "Rental income", {
+    ...editorDisplayGroup("periodicInput", "targetRent", "Rental income", {
       monthly: { displayNameWithVariant: "Rental income monthly" },
       yearly: { displayNameWithVariant: "Rental income yearly" },
     }),
@@ -118,11 +118,11 @@ export const allDisplaySectionVarbs = {
     ...ongoingInputDollars("targetRent", "Rent"),
   }),
   ...displaySectionVarbsProp("financing", {
-    ...group("ongoing", "loanPayment", "Loan payments", {
+    ...group("periodic", "loanPayment", "Loan payments", {
       monthly: { displayNameWithVariant: "Monthly loan payments" },
       yearly: { displayNameWithVariant: "Yearly loan payments" },
     }),
-    ...group("ongoing", "loanExpenses", "Ongoing expenses", {
+    ...group("periodic", "loanExpenses", "Ongoing expenses", {
       monthly: { displayNameWithSection: "Ongoing loan expenses" },
       yearly: { displayNameWithSection: "Ongoing loan expenses" },
     }),
@@ -140,7 +140,7 @@ export const allDisplaySectionVarbs = {
   ...displaySectionVarbsProp("calculatedVarbs", {
     onePercentPrice: varb("1% Purchase price"),
     twoPercentPrice: varb("2% Purchase price"),
-    ...group("ongoing", "fivePercentRent", "5% Rent", {
+    ...group("periodic", "fivePercentRent", "5% Rent", {
       monthly: { displayNameWithVariant: "5% Rent monthly" },
       yearly: { displayNameWithVariant: "5% Rent yearly" },
     }),
@@ -152,12 +152,12 @@ export const allDisplaySectionVarbs = {
   ...displaySectionVarbsProp("loan", {
     ...editorDisplayGroup("monthsYearsInput", "loanTerm", "Loan term"),
     ...editorDisplayGroup(
-      "ongoingInput",
+      "periodicInput",
       "interestRatePercent",
       "Interest rate"
     ),
-    ...group("ongoing", "interestRateDecimal", "Interest rate decimal"),
-    ...group("ongoing", "piFixedStandard", "Principal and interest"),
+    ...group("periodic", "interestRateDecimal", "Interest rate decimal"),
+    ...group("periodic", "piFixedStandard", "Principal and interest"),
     ...ongoingDollars("interestOnlySimple", "Interest"),
     ...ongoingDollars("expenses", "Expenses"),
     ...ongoingDollars("loanPayment", "Loan payment"),
@@ -168,18 +168,18 @@ export const allDisplaySectionVarbs = {
 
     mortgageInsUpfront: varb("Upfront mortgage insurance"),
     mortgageInsUpfrontEditor: varb("Upfront mortgage insurance"),
-    ...editorDisplayGroup("ongoingInput", "mortgageIns", "Mortgage insurance"),
+    ...editorDisplayGroup("periodicInput", "mortgageIns", "Mortgage insurance"),
   }),
   ...displaySectionVarbsProp("mgmtBasePayValue", {
     valuePercentEditor: varb("Base pay percent of rent"),
-    ...editorDisplayGroup("ongoingInput", "valueDollars", "Base pay"),
+    ...editorDisplayGroup("periodicInput", "valueDollars", "Base pay"),
   }),
   ...displaySectionVarbsProp("vacancyLossValue", {
     valuePercentEditor: varb("Vacancy loss percent of rent"),
-    ...editorDisplayGroup("ongoingInput", "valueDollars", "Vacancy loss"),
+    ...editorDisplayGroup("periodicInput", "valueDollars", "Vacancy loss"),
   }),
   ...displaySectionVarbsProp("mgmt", {
-    ...group("ongoing", "basePayDollars", "Base pay", {
+    ...group("periodic", "basePayDollars", "Base pay", {
       targets: { displayNameWithSection: "Mgmt base pay" },
       monthly: {
         displayNameWithVariant: "Base pay monthly",
@@ -191,7 +191,7 @@ export const allDisplaySectionVarbs = {
       },
     }),
     vacancyLossPercent: varb("Vacancy loss percent of rent"),
-    ...group("ongoing", "expenses", "Ongoing expenses", {
+    ...group("periodic", "expenses", "Ongoing expenses", {
       targets: { displayNameWithSection: "Mgmt expenses" },
       monthly: {
         displayNameWithVariant: "Expenses monthly",
@@ -229,27 +229,27 @@ export const allDisplaySectionVarbs = {
     roiPercent: varb("ROI"),
     roiPercentAnnualized: varb("ROI Annualized"),
     totalInvestment: varb("Total investment"),
-    ...group("ongoing", "ongoingPiti", "PITI payment", {
+    ...group("periodic", "ongoingPiti", "PITI payment", {
       monthly: { displayNameWithVariant: "Monthly PITI payment" },
       yearly: { displayNameWithVariant: "Yearly PITI payment" },
     }),
-    ...group("ongoing", "ongoingLoanPayment", "Loan payment", {
+    ...group("periodic", "ongoingLoanPayment", "Loan payment", {
       monthly: { displayNameWithVariant: "Monthly loan payment" },
       yearly: { displayNameWithVariant: "Yearly loan payment" },
     }),
-    ...group("ongoing", "cashFlow", "Cash flow", {
+    ...group("periodic", "cashFlow", "Cash flow", {
       monthly: { displayNameWithVariant: "Cash flow monthly" },
       yearly: { displayNameWithVariant: "Cash flow yearly" },
     }),
-    ...group("ongoing", "cocRoi", "CoC ROI", {
+    ...group("periodic", "cocRoi", "CoC ROI", {
       monthly: { displayNameWithVariant: "CoC ROI monthly" },
       yearly: { displayNameWithVariant: "CoC ROI yearly" },
     }),
-    ...group("ongoing", "cocRoiDecimal", "CoC ROI as decimal", {
+    ...group("periodic", "cocRoiDecimal", "CoC ROI as decimal", {
       monthly: { displayNameWithVariant: "Monthly CoC ROI as decimal" },
       yearly: { displayNameWithVariant: "Yearly CoC ROI as decimal" },
     }),
-    ...group("ongoing", "expenses", "Expenses", {
+    ...group("periodic", "expenses", "Expenses", {
       targets: { displayNameWithSection: "Deal expenses" },
       monthly: {
         displayNameWithVariant: "Expenses monthly",
@@ -260,7 +260,7 @@ export const allDisplaySectionVarbs = {
         displayNameFullContext: "Yearly deal expenses",
       },
     }),
-    ...group("ongoing", "revenue", "Revenue", {
+    ...group("periodic", "revenue", "Revenue", {
       targets: { displayNameWithSection: "Deal revenue" },
       monthly: {
         displayNameWithVariant: "Revenue monthly",
@@ -282,13 +282,13 @@ export const allDisplaySectionVarbs = {
   ...displaySectionVarbsProp(
     "ongoingValue",
     editorDisplayGroup(
-      "ongoingInput",
+      "periodicInput",
       "value",
       relVarbInfoS.local("displayName")
     )
   ),
   ...displaySectionVarbsProp("ongoingList", {
-    ...group("ongoing", "total", relVarbInfoS.local("displayName")),
+    ...group("periodic", "total", relVarbInfoS.local("displayName")),
   }),
   ...displaySectionVarbsProp("singleTimeItem", {
     value: varb(relVarbInfoS.local("displayName")),
@@ -297,7 +297,7 @@ export const allDisplaySectionVarbs = {
   ...displaySectionVarbsProp(
     "ongoingItem",
     editorDisplayGroup(
-      "ongoingInput",
+      "periodicInput",
       "value",
       relVarbInfoS.local("displayName")
     )

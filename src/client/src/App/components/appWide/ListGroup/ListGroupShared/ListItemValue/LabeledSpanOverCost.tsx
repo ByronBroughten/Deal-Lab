@@ -36,7 +36,7 @@ export function LabeledSpanOverCost({
           <NumObjEntityEditor
             feVarbInfo={{
               ...feInfo,
-              varbName: "lifespanOngoingEditor",
+              varbName: "lifespanPeriodicEditor",
             }}
             className="lifespan"
             labeled={false}

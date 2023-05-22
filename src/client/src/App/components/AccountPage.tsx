@@ -7,34 +7,18 @@ import { SiWebcomponentsdotorg } from "react-icons/si";
 import { View } from "react-native";
 import { FeRouteName } from "../Constants/feRoutes";
 import { useToggleView } from "../modules/customHooks/useToggleView";
-import { dealModeLabels } from "../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
-import { useAction } from "../sharedWithServer/stateClassHooks/useAction";
-import { useGetterSectionOnlyOne } from "../sharedWithServer/stateClassHooks/useGetterSection";
 import { nativeTheme } from "../theme/nativeTheme";
 import { arrSx } from "../utils/mui";
+import { NewDealSelector } from "./AccountPage/NewDealSelector";
 import { AccountPageDeals } from "./AccountPage/SavedDeals";
-import {
-  useGoToPage,
-  useMakeGoToPage,
-} from "./appWide/customHooks/useGoToPage";
+import { useMakeGoToPage } from "./appWide/customHooks/useGoToPage";
 import { HollowBtn } from "./appWide/HollowBtn";
-import { ModalSection } from "./appWide/ModalSection";
-import { MuiSelect } from "./appWide/MuiSelect";
-import ChunkTitle from "./general/ChunkTitle";
 import { MuiRow } from "./general/MuiRow";
 import { Row } from "./general/Row";
 import { MuiBtnPropsNext } from "./general/StandardProps";
 
 const iconSize = 40;
 export function AccountPage() {
-  const newDealMenu = useGetterSectionOnlyOne("newDealMenu");
-  const addActiveDeal = useAction("addActiveDeal");
-  const goToActiveDeal = useGoToPage("activeDeal");
-  const initNewDeal = () =>
-    unstable_batchedUpdates(() => {
-      addActiveDeal({ dealMode: newDealMenu.valueNext("dealMode") });
-      goToActiveDeal();
-    });
   const { addDealIsOpen, openAddDeal, closeAddDeal } = useToggleView("addDeal");
   return (
     <View>
@@ -74,44 +58,12 @@ export function AccountPage() {
         </Row>
       </MuiRow>
       <AccountPageDeals />
-      <ModalSection
+      <NewDealSelector
         {...{
-          title: <ChunkTitle>New Deal</ChunkTitle>,
-          show: addDealIsOpen,
-          closeModal: closeAddDeal,
+          isOpen: addDealIsOpen,
+          close: closeAddDeal,
         }}
-      >
-        <Box>
-          <MuiSelect
-            {...{
-              sx: { width: "100%", mt: nativeTheme.s3 },
-              selectProps: { sx: { width: "100%" } },
-              label: "Select type",
-              unionValueName: "dealMode",
-              feVarbInfo: {
-                ...newDealMenu.feInfo,
-                varbName: "dealMode",
-              },
-              items: [
-                ["homeBuyer", dealModeLabels.homeBuyer],
-                ["buyAndHold", dealModeLabels.buyAndHold],
-                ["fixAndFlip", dealModeLabels.fixAndFlip],
-                ["brrrr", dealModeLabels.brrrr],
-              ],
-            }}
-          />
-          <HollowBtn
-            sx={{
-              mt: nativeTheme.s4,
-              width: "100%",
-              height: "50px",
-              fontSize: nativeTheme.fs20,
-            }}
-            middle={"Create Deal"}
-            onClick={initNewDeal}
-          />
-        </Box>
-      </ModalSection>
+      />
     </View>
   );
 }

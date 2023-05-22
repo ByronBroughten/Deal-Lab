@@ -16,13 +16,13 @@ function addPeriodicTaxesHomeInsYearly(
 ) {
   const taxes = property.onlyChild("taxesOngoing");
   taxes.updateValues({
-    valueDollarsOngoingEditor: numObj(taxesVal),
-    valueDollarsOngoingSwitch: "yearly",
+    valueDollarsPeriodicEditor: numObj(taxesVal),
+    valueDollarsPeriodicSwitch: "yearly",
   });
   const homeIns = property.onlyChild("homeInsOngoing");
   homeIns.updateValues({
-    valueDollarsOngoingEditor: numObj(homeInsVal),
-    valueDollarsOngoingSwitch: "yearly",
+    valueDollarsPeriodicEditor: numObj(homeInsVal),
+    valueDollarsPeriodicSwitch: "yearly",
   });
 }
 
@@ -36,17 +36,17 @@ const add4200YearlyHoldingCosts = (property: SolverSection<"property">) => {
   const ongoingList = utilityHolding.onlyChild("ongoingList");
   ongoingList.addChildAndSolve("ongoingItem", {
     sectionValues: {
-      valueOngoingEditor: numObj(400),
-      valueOngoingSwitch: "yearly",
+      valuePeriodicEditor: numObj(400),
+      valuePeriodicSwitch: "yearly",
       valueSourceName: "valueEditor",
     },
   });
 
   const holdingCost = property.onlyChild("miscHoldingCost");
   holdingCost.updateValues({
-    valueSourceName: "valueDollarsOngoingEditor",
-    valueDollarsOngoingEditor: numObj(200),
-    valueDollarsOngoingSwitch: "yearly",
+    valueSourceName: "valueDollarsPeriodicEditor",
+    valueDollarsPeriodicEditor: numObj(200),
+    valueDollarsPeriodicSwitch: "yearly",
   });
 };
 
@@ -62,9 +62,9 @@ const addOngoing = <SN extends OngoingSectionName>(
   switchVal: "yearly" | "monthly"
 ) => {
   (section as any as SolverSection<OngoingSectionName>).updateValues({
-    valueSourceName: "valueDollarsOngoingEditor",
-    valueDollarsOngoingSwitch: switchVal,
-    valueDollarsOngoingEditor: numObj(amount),
+    valueSourceName: "valueDollarsPeriodicEditor",
+    valueDollarsPeriodicSwitch: switchVal,
+    valueDollarsPeriodicEditor: numObj(amount),
   });
 };
 
@@ -102,8 +102,8 @@ describe("Property calculations", () => {
     for (const rent of unitRents) {
       property.addChildAndSolve("unit", {
         sectionValues: {
-          targetRentOngoingEditor: numObj(rent),
-          targetRentOngoingSwitch: "monthly",
+          targetRentPeriodicEditor: numObj(rent),
+          targetRentPeriodicSwitch: "monthly",
         },
       });
     }
@@ -119,9 +119,9 @@ describe("Property calculations", () => {
       add6400Rent(property);
       const value = property.onlyChild("miscRevenueValue");
       value.updateValues({
-        valueSourceName: "valueDollarsOngoingEditor",
-        valueDollarsOngoingSwitch: "monthly",
-        valueDollarsOngoingEditor: numObj(1200),
+        valueSourceName: "valueDollarsPeriodicEditor",
+        valueDollarsPeriodicSwitch: "monthly",
+        valueDollarsPeriodicEditor: numObj(1200),
       });
       expect(property.numValue("revenueMonthly")).toBe(7600);
       expect(property.numValue("revenueYearly")).toBe(7600 * 12);
@@ -294,7 +294,7 @@ describe("Property calculations", () => {
     childName: "miscRevenueValue" | "miscOngoingCost" | "miscHoldingCost"
   ) => {
     const property = getProperty(dealMode);
-    const varbNames = switchKeyToVarbNames(baseName, "ongoing");
+    const varbNames = switchKeyToVarbNames(baseName, "periodic");
 
     const test = (num: number) => {
       expect(property.numValue(varbNames.monthly)).toBe(num);
@@ -312,23 +312,23 @@ describe("Property calculations", () => {
       list.addAndGetChild("ongoingItem", {
         sectionValues: {
           valueSourceName: "valueEditor",
-          valueOngoingSwitch: "monthly",
-          valueOngoingEditor: numObj(item),
+          valuePeriodicSwitch: "monthly",
+          valuePeriodicEditor: numObj(item),
         },
       });
     }
     test(400);
   };
-  it("should calculate ongoing miscHoldingCosts", () => {
+  it("should calculate periodic miscHoldingCosts", () => {
     testOngoing("fixAndFlip", "holdingCost", "miscHoldingCost");
   });
-  it("should calculate ongoing miscCosts", () => {
+  it("should calculate periodic miscCosts", () => {
     testOngoing("buyAndHold", "miscCosts", "miscOngoingCost");
   });
-  it("should calculate ongoing miscRevenue", () => {
+  it("should calculate periodic miscRevenue", () => {
     testOngoing("buyAndHold", "miscRevenue", "miscRevenueValue");
   });
-  it("should calculate ongoing expenses", () => {
+  it("should calculate periodic expenses", () => {
     const property = getProperty("buyAndHold");
     addPeriodicTaxesHomeInsYearly(property, 2400, 1200);
 
@@ -339,8 +339,8 @@ describe("Property calculations", () => {
     const ongoingList = utilityOngoing.onlyChild("ongoingList");
     ongoingList.addChildAndSolve("ongoingItem", {
       sectionValues: {
-        valueOngoingEditor: numObj(600),
-        valueOngoingSwitch: "yearly",
+        valuePeriodicEditor: numObj(600),
+        valuePeriodicSwitch: "yearly",
         valueSourceName: "valueEditor",
       },
     });
@@ -352,7 +352,7 @@ describe("Property calculations", () => {
     expect(property.numValue("expensesYearly")).toBe(12000);
     expect(property.numValue("expensesMonthly")).toBe(12000 / 12);
   });
-  it("should calculate ongoing holding costs", () => {
+  it("should calculate periodic holding costs", () => {
     const property = getProperty("fixAndFlip");
     const test = (num: number) => {
       expect(property.numValue("holdingCostYearly")).toBe(num);

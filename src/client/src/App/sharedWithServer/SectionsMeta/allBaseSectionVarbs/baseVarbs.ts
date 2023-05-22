@@ -181,38 +181,38 @@ export const baseVarbsS = {
       return varbs;
     }, {} as SimpleBaseSwitchVarbs<BN, SN>);
   },
-  ongoing<BN extends string>(
+  periodic<BN extends string>(
     baseName: BN
-  ): SimpleBaseSwitchVarbs<BN, "ongoing"> {
-    return this.group(baseName, "ongoing");
+  ): SimpleBaseSwitchVarbs<BN, "periodic"> {
+    return this.group(baseName, "periodic");
   },
   ongoingDecimal<BN extends string>(
     baseName: BN
-  ): SimpleBaseSwitchVarbs<BN, "ongoing"> {
-    return this.group(baseName, "ongoing", {
+  ): SimpleBaseSwitchVarbs<BN, "periodic"> {
+    return this.group(baseName, "periodic", {
       targets: { valueUnit: "decimal" },
     });
   },
   ongoingDollars<BN extends string>(
     baseName: BN
-  ): SimpleBaseSwitchVarbs<BN, "ongoing"> {
-    return this.group(baseName, "ongoing", ongoingDollarsOptions);
+  ): SimpleBaseSwitchVarbs<BN, "periodic"> {
+    return this.group(baseName, "periodic", ongoingDollarsOptions);
   },
   ongoingDollarsInput<BN extends string>(
     baseName: BN
-  ): SimpleBaseSwitchVarbs<BN, "ongoingInput"> {
-    return this.group(baseName, "ongoingInput", ongoingDollarsOptions);
+  ): SimpleBaseSwitchVarbs<BN, "periodicInput"> {
+    return this.group(baseName, "periodicInput", ongoingDollarsOptions);
   },
   ongoingPercentInput<BN extends string>(
     baseName: BN
-  ): SimpleBaseSwitchVarbs<BN, "ongoingInput"> {
-    return this.group(baseName, "ongoingInput", ongoingPercentOptions);
+  ): SimpleBaseSwitchVarbs<BN, "periodicInput"> {
+    return this.group(baseName, "periodicInput", ongoingPercentOptions);
   },
 
   ongoingPercent<BN extends string>(
     baseName: BN
-  ): SimpleBaseSwitchVarbs<BN, "ongoing"> {
-    return this.group(baseName, "ongoing", ongoingPercentOptions);
+  ): SimpleBaseSwitchVarbs<BN, "periodic"> {
+    return this.group(baseName, "periodic", ongoingPercentOptions);
   },
   monthsYears<BN extends string>(
     baseName: BN

@@ -8,7 +8,7 @@ export function MiscIncomeValue({ feId }: { feId: string }) {
   const feInfo = { sectionName: "miscRevenueValue", feId } as const;
   const incomeValue = useGetterSection(feInfo);
 
-  const valueVarb = incomeValue.switchVarb("valueDollars", "ongoing");
+  const valueVarb = incomeValue.switchVarb("valueDollars", "periodic");
   const sourceName = incomeValue.valueNext("valueSourceName");
   const menuDisplayNames = ["Laundry", "Parking", "Storage"] as const;
   return (
@@ -18,14 +18,14 @@ export function MiscIncomeValue({ feId }: { feId: string }) {
         label: "Misc income",
         itemizedModalTitle: "Misc Income",
         makeEditor:
-          sourceName === "valueDollarsOngoingEditor"
+          sourceName === "valueDollarsPeriodicEditor"
             ? (props) => (
                 <NumObjEntityEditor
                   {...{
                     ...props,
                     feVarbInfo: {
                       ...feInfo,
-                      varbName: "valueDollarsOngoingEditor",
+                      varbName: "valueDollarsPeriodicEditor",
                     },
                   }}
                 />
@@ -38,7 +38,7 @@ export function MiscIncomeValue({ feId }: { feId: string }) {
           varbName: "valueSourceName",
         },
         items: [
-          ["valueDollarsOngoingEditor", "Amount"],
+          ["valueDollarsPeriodicEditor", "Amount"],
           ["listTotal", "Itemize"],
         ],
         itemizeValue: "listTotal",

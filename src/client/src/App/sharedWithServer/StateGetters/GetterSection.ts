@@ -738,6 +738,12 @@ export class GetterSection<
     const varbName = this.activeSwitchTargetName(varbNameBase, switchEnding);
     return this.varb(varbName);
   }
+  activePeriodicTargetName<BN extends string>(
+    varbNameBase: BN
+  ): SwitchTargetName<BN, "periodic"> {
+    const switchValue = this.switchValue(varbNameBase, "periodic");
+    return getSwitchVarbName(varbNameBase, "periodic", switchValue);
+  }
   activeSwitchTargetName<BN extends string, SN extends SwitchName>(
     varbNameBase: BN,
     switchEnding: SN

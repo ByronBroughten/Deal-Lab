@@ -157,7 +157,7 @@ export const updateBasicsS = {
   yearlyToMonthly<Base extends string>(
     baseVarbName: Base
   ): UpdateBasics<"numObj"> {
-    const varbNames = switchKeyToVarbNames(baseVarbName, "ongoing");
+    const varbNames = switchKeyToVarbNames(baseVarbName, "periodic");
     return updateBasicsNext("yearlyToMonthly", {
       num: updateFnPropS.local(validateAnyVarbName(varbNames.yearly)),
       switch: updateFnPropS.local(validateAnyVarbName(varbNames.switch)),
@@ -166,7 +166,7 @@ export const updateBasicsS = {
   monthlyToYearly<Base extends string>(
     baseVarbName: Base
   ): UpdateBasics<"numObj"> {
-    const varbNames = switchKeyToVarbNames(baseVarbName, "ongoing");
+    const varbNames = switchKeyToVarbNames(baseVarbName, "periodic");
     return updateBasicsNext("monthlyToYearly", {
       num: updateFnPropS.local(validateAnyVarbName(varbNames.monthly)),
     });

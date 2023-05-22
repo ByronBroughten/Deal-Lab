@@ -100,17 +100,17 @@ function updateGroup<BN extends string, SN extends SwitchName>(
   }, {} as UpdateGroup<BN, SN>);
 }
 
-export function ongoingInput<BN extends string>(
+export function periodicInput<BN extends string>(
   baseName: BN,
   {
     switchInit = "monthly",
     ...options
-  }: SwitchOptions<"ongoingInput"> & {
-    switchInit?: StateValue<SwitchValueName<"ongoingInput">>;
+  }: SwitchOptions<"periodicInput"> & {
+    switchInit?: StateValue<SwitchValueName<"periodicInput">>;
   } = {}
-): UpdateGroup<BN, "ongoingInput"> {
-  const names = switchKeyToVarbNames(baseName, "ongoingInput");
-  return updateGroup(baseName, "ongoingInput", switchInit, {
+): UpdateGroup<BN, "periodicInput"> {
+  const names = switchKeyToVarbNames(baseName, "periodicInput");
+  return updateGroup(baseName, "periodicInput", switchInit, {
     ...options,
     editor: { updateFnName: "calcVarbs", ...options.editor },
     monthly: {
@@ -154,23 +154,23 @@ type OngoingSumNumProps = {
 
 export const updateGroupS = {
   group: updateGroup,
-  ongoingInput,
+  periodicInput,
   monthsYearsInput,
   ongoingSumNumsNext<BN extends string>(
     baseName: BN,
-    initSwitch: SwitchTargetKey<"ongoing">,
+    initSwitch: SwitchTargetKey<"periodic">,
     {
       updateBasics: updateFnBasics,
       updateFnProps = [],
       updateOverrides = [],
     }: OngoingSumNumProps
-  ): UpdateGroup<BN, "ongoing"> {
-    const targetKeys = switchTargetKeys("ongoing");
+  ): UpdateGroup<BN, "periodic"> {
+    const targetKeys = switchTargetKeys("periodic");
     const options = targetKeys.reduce((options, key) => {
       options[key] = {
         updateFnName: "sumNums",
         updateFnProps: {
-          nums: updatePropsPlusGroupEnding(updateFnProps, "ongoing", key),
+          nums: updatePropsPlusGroupEnding(updateFnProps, "periodic", key),
         },
         ...updateFnBasics,
         updateOverrides: [
@@ -181,7 +181,7 @@ export const updateGroupS = {
                 updateBasics("sumNums", {
                   nums: updatePropsPlusGroupEnding(
                     override.updateFnProps ?? [],
-                    "ongoing",
+                    "periodic",
                     key
                   ),
                 })
@@ -190,17 +190,17 @@ export const updateGroupS = {
         ],
       };
       return options;
-    }, {} as SwitchOptions<"ongoing">);
-    return updateGroup(baseName, "ongoing", initSwitch, options);
+    }, {} as SwitchOptions<"periodic">);
+    return updateGroup(baseName, "periodic", initSwitch, options);
   },
 };
 
 export function ongoingSumNums<Base extends string>(
   varbNameBase: Base,
   updateFnArrProp: UpdateFnProp[],
-  switchInit: SwitchTargetKey<"ongoing"> = "monthly"
-): UpdateGroup<Base, "ongoing"> {
-  const props = getSwitchUpdateFnProps({ nums: updateFnArrProp }, "ongoing");
+  switchInit: SwitchTargetKey<"periodic"> = "monthly"
+): UpdateGroup<Base, "periodic"> {
+  const props = getSwitchUpdateFnProps({ nums: updateFnArrProp }, "periodic");
   return updateVarbsS.ongoingPureCalc(
     varbNameBase,
     {
@@ -356,8 +356,8 @@ export function ongoingPureCalc<Base extends string>(
   baseName: Base,
   updatePacks: OngoingUpdatePacks,
   switchInit?: string
-): UpdateGroup<Base, "ongoing"> {
-  const varbNames = switchKeyToVarbNames(baseName, "ongoing");
+): UpdateGroup<Base, "periodic"> {
+  const varbNames = switchKeyToVarbNames(baseName, "periodic");
   return {
     [varbNames.monthly]: updateVarb("numObj", updatePacks.monthly),
     [varbNames.yearly]: updateVarb("numObj", updatePacks.yearly),
@@ -366,5 +366,5 @@ export function ongoingPureCalc<Base extends string>(
         initValue: switchInit,
       }),
     }),
-  } as UpdateGroup<Base, "ongoing">;
+  } as UpdateGroup<Base, "periodic">;
 }

@@ -8,7 +8,7 @@ export function MaintenanceValue({ feId }: { feId: string }) {
   const feInfo = { sectionName: "maintenanceValue", feId } as const;
   const maintenanceValue = useGetterSection(feInfo);
   const valueSourceName = maintenanceValue.valueNext("valueSourceName");
-  const valueVarb = maintenanceValue.switchVarb("valueDollars", "ongoing");
+  const valueVarb = maintenanceValue.switchVarb("valueDollars", "periodic");
   const showEquals: StateValue<"maintainanceValueSource">[] = [
     "onePercentAndSqft",
     "onePercentPrice",
@@ -23,7 +23,7 @@ export function MaintenanceValue({ feId }: { feId: string }) {
     ["onePercentPrice", "1% purchase price"],
     ["sqft", "$1 per sqft"],
     ["onePercentAndSqft", "1% purchase price and $1 sqft, average"],
-    ["valueDollarsOngoingEditor", "Custom amount"],
+    ["valueDollarsPeriodicEditor", "Custom amount"],
   ];
 
   if (valueSourceName === "none") {
@@ -55,13 +55,13 @@ export function MaintenanceValue({ feId }: { feId: string }) {
           />
         ),
         makeEditor:
-          valueSourceName === "valueDollarsOngoingEditor"
+          valueSourceName === "valueDollarsPeriodicEditor"
             ? (props) => (
                 <NumObjEntityEditor
                   {...{
                     ...props,
                     feVarbInfo: maintenanceValue.varbInfo(
-                      "valueDollarsOngoingEditor"
+                      "valueDollarsPeriodicEditor"
                     ),
                     quickViewVarbNames: ["sqft", "numUnits", "numBedrooms"],
                   }}

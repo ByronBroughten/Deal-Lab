@@ -18,7 +18,7 @@ export function UnitItem({ feId, unitNumber }: Props) {
         </div>
         <NumObjEntityEditor feVarbInfo={unit.varbInfo("numBedrooms")} />
         <NumObjEntityEditor
-          feVarbInfo={unit.varbInfo("targetRentOngoingEditor")}
+          feVarbInfo={unit.varbInfo("targetRentPeriodicEditor")}
         />
       </div>
     </Styled>

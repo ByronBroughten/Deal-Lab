@@ -40,7 +40,7 @@ export function loanUpdateVarbs(): UpdateSectionVarbs<"loan"> {
       "numObj",
       updateBasicsS.loadFromChild("loanBaseValue", "valueDollars")
     ),
-    ...updateVarbsS.ongoingInput("interestRatePercent", {
+    ...updateVarbsS.periodicInput("interestRatePercent", {
       switchInit: "yearly",
     }),
     ...updateVarbsS.monthsYearsInput("loanTerm", "years", {
@@ -68,7 +68,7 @@ export function loanUpdateVarbs(): UpdateSectionVarbs<"loan"> {
         ),
       ],
     }),
-    ...updateVarbsS.ongoingInput("mortgageIns", {
+    ...updateVarbsS.periodicInput("mortgageIns", {
       switchInit: "yearly",
       editor: { updateFnName: "calcVarbs" },
       monthly: {
@@ -83,7 +83,7 @@ export function loanUpdateVarbs(): UpdateSectionVarbs<"loan"> {
               overrideSwitchS.monthlyIsActive("mortgageIns"),
             ],
             updateBasicsS.loadFromLocal(
-              "mortgageInsOngoingEditor"
+              "mortgageInsPeriodicEditor"
             ) as UpdateBasics<"numObj">
           ),
           updateOverride(
@@ -107,7 +107,7 @@ export function loanUpdateVarbs(): UpdateSectionVarbs<"loan"> {
               overrideSwitchS.yearlyIsActive("mortgageIns"),
             ],
             updateBasicsS.loadFromLocal(
-              "mortgageInsOngoingEditor"
+              "mortgageInsPeriodicEditor"
             ) as UpdateBasics<"numObj">
           ),
           updateOverride(

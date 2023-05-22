@@ -120,9 +120,9 @@ function addUtilities(
     const utilityItem = utilityList.addAndGetChild("ongoingItem");
     utilityItem.updateValues({
       valueSourceName: "valueEditor",
-      valueOngoingSwitch: "monthly",
+      valuePeriodicSwitch: "monthly",
       displayNameEditor: displayName,
-      valueOngoingEditor: numToObj(value),
+      valuePeriodicEditor: numToObj(value),
     });
   }
 }
@@ -172,13 +172,13 @@ export function makeExampleProperty<DM extends StateValue<"dealMode">>(
       addUtilities(property, "utilityOngoing", props.utilityOngoing);
       const taxesOngoing = property.onlyChild("taxesOngoing");
       taxesOngoing.updateValues({
-        valueDollarsOngoingSwitch: "yearly",
-        valueDollarsOngoingEditor: props.taxesOngoingYearly,
+        valueDollarsPeriodicSwitch: "yearly",
+        valueDollarsPeriodicEditor: props.taxesOngoingYearly,
       });
       const homeInsOngoing = property.onlyChild("homeInsOngoing");
       homeInsOngoing.updateValues({
-        valueDollarsOngoingSwitch: "yearly",
-        valueDollarsOngoingEditor: props.homeInsOngoingYearly,
+        valueDollarsPeriodicSwitch: "yearly",
+        valueDollarsPeriodicEditor: props.homeInsOngoingYearly,
       });
 
       const capExValue = property.onlyChild("capExValue");
@@ -193,7 +193,7 @@ export function makeExampleProperty<DM extends StateValue<"dealMode">>(
           displayNameEditor: displayName,
           costToReplace: numToObj(replacementCost),
           lifespanSpanEditor: numToObj(lifeSpan),
-          valueOngoingSwitch: "yearly",
+          valuePeriodicSwitch: "yearly",
           lifespanSpanSwitch: "years",
         });
       }
@@ -212,8 +212,8 @@ export function makeExampleProperty<DM extends StateValue<"dealMode">>(
         const unit = property.addAndGetChild("unit");
         unit.updateValues({
           ...rest,
-          targetRentOngoingSwitch: "monthly",
-          targetRentOngoingEditor: rentMonthly,
+          targetRentPeriodicSwitch: "monthly",
+          targetRentPeriodicEditor: rentMonthly,
         });
       }
     }

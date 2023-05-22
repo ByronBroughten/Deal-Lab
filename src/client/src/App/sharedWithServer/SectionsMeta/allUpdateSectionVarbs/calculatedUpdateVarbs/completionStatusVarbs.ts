@@ -67,18 +67,18 @@ function hasOngoingNoneNones(): UpdateFnProp[] {
 }
 function hasOngoingValidInputs(): UpdateFnProp[] {
   return [
-    propS.onlyChild("taxesOngoing", "valueDollarsOngoingEditor"),
-    propS.onlyChild("homeInsOngoing", "valueDollarsOngoingEditor"),
-    propS.onlyChild("capExValue", "valueDollarsOngoingEditor", [
+    propS.onlyChild("taxesOngoing", "valueDollarsPeriodicEditor"),
+    propS.onlyChild("homeInsOngoing", "valueDollarsPeriodicEditor"),
+    propS.onlyChild("capExValue", "valueDollarsPeriodicEditor", [
       oSwitch(
         relVarbInfoS.local("valueSourceName"),
-        "valueDollarsOngoingEditor"
+        "valueDollarsPeriodicEditor"
       ),
     ]),
-    propS.onlyChild("maintenanceValue", "valueDollarsOngoingEditor", [
+    propS.onlyChild("maintenanceValue", "valueDollarsPeriodicEditor", [
       oSwitch(
         relVarbInfoS.local("valueSourceName"),
-        "valueDollarsOngoingEditor"
+        "valueDollarsPeriodicEditor"
       ),
     ]),
   ];
@@ -102,8 +102,8 @@ function propertySharedValidInputs(): UpdateFnProp[] {
 function hasHoldingValidInputs(): UpdateFnProp[] {
   return [
     ...propS.localArr(
-      "taxesHoldingOngoingEditor",
-      "homeInsHoldingOngoingEditor"
+      "taxesHoldingPeriodicEditor",
+      "homeInsHoldingPeriodicEditor"
     ),
     propS.local("holdingPeriodSpanEditor"),
   ];
@@ -199,7 +199,7 @@ export const loanCompletionStatus = updateVarb(
     othersValid: [propS.onlyChild("loanBaseValue", "completionStatus")],
     nonNone: [propS.onlyChild("closingCostValue", "valueSourceName")],
     validInputs: [
-      propS.local("interestRatePercentOngoingEditor"),
+      propS.local("interestRatePercentPeriodicEditor"),
       propS.local("loanTermSpanEditor"),
       propS.onlyChild("closingCostValue", "valueDollarsEditor", [
         switchS.valueSourceIs("valueEditor"),
@@ -227,7 +227,7 @@ export const mgmtCompletionStatus = updateVarb(
       propS.onlyChild("vacancyLossValue", "valueSourceName"),
     ],
     validInputs: [
-      propS.onlyChild("mgmtBasePayValue", "valueDollarsOngoingEditor", [
+      propS.onlyChild("mgmtBasePayValue", "valueDollarsPeriodicEditor", [
         overrideSwitch(relVarbInfoS.local("valueSourceName"), "dollarsEditor"),
       ]),
       propS.onlyChild("mgmtBasePayValue", "valuePercentEditor", [
@@ -236,7 +236,7 @@ export const mgmtCompletionStatus = updateVarb(
           "percentOfRentEditor"
         ),
       ]),
-      propS.onlyChild("vacancyLossValue", "valueDollarsOngoingEditor", [
+      propS.onlyChild("vacancyLossValue", "valueDollarsPeriodicEditor", [
         overrideSwitch(relVarbInfoS.local("valueSourceName"), "dollarsEditor"),
       ]),
       propS.onlyChild("vacancyLossValue", "valuePercentEditor", [

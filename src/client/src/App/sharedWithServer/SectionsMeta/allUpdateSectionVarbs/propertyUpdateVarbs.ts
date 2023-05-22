@@ -39,21 +39,21 @@ export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
     zipCode: updateVarb("string"),
     one: updateVarbS.one(),
 
-    ...varbsS.ongoingInput("taxesHolding"),
-    ...varbsS.ongoingInput("homeInsHolding"),
-    ...varbsS.group("taxesOngoing", "ongoing", "yearly", {
+    ...varbsS.periodicInput("taxesHolding"),
+    ...varbsS.periodicInput("homeInsHolding"),
+    ...varbsS.group("taxesOngoing", "periodic", "yearly", {
       monthly: basicsS.loadFromChild("taxesOngoing", "valueDollarsMonthly"),
       yearly: basicsS.loadFromChild("taxesOngoing", "valueDollarsYearly"),
     }),
-    ...varbsS.group("homeInsOngoing", "ongoing", "monthly", {
+    ...varbsS.group("homeInsOngoing", "periodic", "monthly", {
       monthly: basicsS.loadFromChild("homeInsOngoing", "valueDollarsMonthly"),
       yearly: basicsS.loadFromChild("homeInsOngoing", "valueDollarsYearly"),
     }),
-    ...varbsS.group("utilitiesOngoing", "ongoing", "monthly", {
+    ...varbsS.group("utilitiesOngoing", "periodic", "monthly", {
       monthly: basicsS.loadFromChild("utilityOngoing", "valueDollarsMonthly"),
       yearly: basicsS.loadFromChild("utilityOngoing", "valueDollarsYearly"),
     }),
-    ...varbsS.group("utilitiesHolding", "ongoing", "monthly", {
+    ...varbsS.group("utilitiesHolding", "periodic", "monthly", {
       monthly: basicsS.loadFromChild("utilityHolding", "valueDollarsMonthly"),
       yearly: basicsS.loadFromChild("utilityHolding", "valueDollarsYearly"),
     }),
@@ -172,11 +172,11 @@ export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
       basicsS.loadFromChild("miscOnetimeCost", "valueDollars")
     ),
 
-    ...varbsS.group("miscCosts", "ongoing", "monthly", {
+    ...varbsS.group("miscCosts", "periodic", "monthly", {
       monthly: basicsS.loadFromChild("miscOngoingCost", "valueDollarsMonthly"),
       yearly: basicsS.loadFromChild("miscOngoingCost", "valueDollarsYearly"),
     }),
-    ...varbsS.group("miscRevenue", "ongoing", "monthly", {
+    ...varbsS.group("miscRevenue", "periodic", "monthly", {
       monthly: basicsS.loadFromChild("miscRevenueValue", "valueDollarsMonthly"),
       yearly: basicsS.loadFromChild("miscRevenueValue", "valueDollarsYearly"),
     }),

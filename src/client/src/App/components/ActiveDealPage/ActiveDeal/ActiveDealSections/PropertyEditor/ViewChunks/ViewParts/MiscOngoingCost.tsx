@@ -12,7 +12,7 @@ export function MiscOngoingCost({ feId, menuDisplayNames }: Props) {
   const feInfo = { sectionName: "miscOngoingCost", feId } as const;
   const ongoingCost = useGetterSection(feInfo);
 
-  const valueVarb = ongoingCost.switchVarb("valueDollars", "ongoing");
+  const valueVarb = ongoingCost.switchVarb("valueDollars", "periodic");
   const sourceName = ongoingCost.valueNext("valueSourceName");
   return (
     <SelectAndItemizeEditor
@@ -22,14 +22,14 @@ export function MiscOngoingCost({ feId, menuDisplayNames }: Props) {
         label: "Misc ongoing costs",
         itemizedModalTitle: "Misc ongoing costs",
         makeEditor:
-          sourceName === "valueDollarsOngoingEditor"
+          sourceName === "valueDollarsPeriodicEditor"
             ? (props) => (
                 <NumObjEntityEditor
                   {...{
                     ...props,
                     feVarbInfo: {
                       ...feInfo,
-                      varbName: "valueDollarsOngoingEditor",
+                      varbName: "valueDollarsPeriodicEditor",
                     },
                   }}
                 />
@@ -42,7 +42,7 @@ export function MiscOngoingCost({ feId, menuDisplayNames }: Props) {
           varbName: "valueSourceName",
         },
         items: [
-          ["valueDollarsOngoingEditor", "Amount"],
+          ["valueDollarsPeriodicEditor", "Amount"],
           ["listTotal", "Itemize"],
         ],
         itemizeValue: "listTotal",

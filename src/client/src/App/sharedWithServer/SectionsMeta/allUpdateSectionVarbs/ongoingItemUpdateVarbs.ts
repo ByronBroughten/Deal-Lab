@@ -17,13 +17,13 @@ export function ongoingItemUpdateVarbs(): UpdateSectionVarbs<"ongoingItem"> {
     valueSourceName: updateVarb("editorValueSource", {
       initValue: "valueEditor",
     }),
-    ...updateVarbsS.group("value", "ongoingInput", "monthly", {
+    ...updateVarbsS.group("value", "periodicInput", "monthly", {
       monthly: updateVarb("numObj", {
         updateFnName: "throwIfReached",
         updateOverrides: [
           updateOverride(
             [overrideSwitchS.monthlyIsActive("value")],
-            updateBasicsS.loadFromLocal("valueOngoingEditor")
+            updateBasicsS.loadFromLocal("valuePeriodicEditor")
           ),
           updateOverrideS.activeYearlyToMonthly(valueNameBase),
         ],
@@ -33,7 +33,7 @@ export function ongoingItemUpdateVarbs(): UpdateSectionVarbs<"ongoingItem"> {
         updateOverrides: [
           updateOverride(
             [overrideSwitchS.yearlyIsActive("value")],
-            updateBasicsS.loadFromLocal("valueOngoingEditor")
+            updateBasicsS.loadFromLocal("valuePeriodicEditor")
           ),
           updateOverrideS.activeMonthlyToYearly(valueNameBase),
         ],
@@ -46,7 +46,7 @@ export function capExItemUpdateVarbs(): UpdateSectionVarbs<"capExItem"> {
   return {
     ...updateVarbsS._typeUniformity,
     ...updateVarbsS.displayNameAndEditor,
-    ...updateVarbsS.group("value", "ongoing", "monthly", {
+    ...updateVarbsS.group("value", "periodic", "monthly", {
       yearly: updateBasicsS.equationLR(
         "divide",
         updateFnPropS.local("costToReplace"),

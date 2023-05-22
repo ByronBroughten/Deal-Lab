@@ -46,7 +46,7 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
     ...updateVarbsS.displayNameAndEditor,
     completionStatus: dealCompletionStatus,
     dealMode: updateVarb("dealMode", { initValue: "buyAndHold" }),
-    ...updateVarbsS.group("ongoingPiti", "ongoing", "monthly", {
+    ...updateVarbsS.group("ongoingPiti", "periodic", "monthly", {
       monthly: dealModeVarb({
         homeBuyer: purchasePiti("purchaseFinancing", "Monthly"),
         buyAndHold: purchasePiti("purchaseFinancing", "Monthly"),
@@ -60,7 +60,7 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
         brrrr: purchasePiti("refiFinancing", "Yearly"),
       }),
     }),
-    ...updateVarbsS.group("ongoingLoanPayment", "ongoing", "monthly", {
+    ...updateVarbsS.group("ongoingLoanPayment", "periodic", "monthly", {
       monthly: dealModeVarb({
         homeBuyer: basicsS.loadFromChild(
           "purchaseFinancing",
@@ -220,7 +220,7 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
         propS.onlyChild("refiFinancing", "loanExpensesYearly")
       ),
     }),
-    expensesOngoingSwitch: updateVarb("ongoingSwitch", {
+    expensesPeriodicSwitch: updateVarb("ongoingSwitch", {
       initValue: "monthly",
     }),
     cashFlowMonthly: dealModeVarb({
@@ -251,7 +251,7 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
         propS.local("expensesYearly")
       ),
     }),
-    cashFlowOngoingSwitch: updateVarb("ongoingSwitch", {
+    cashFlowPeriodicSwitch: updateVarb("ongoingSwitch", {
       initValue: "yearly",
     }),
     cocRoiDecimalMonthly: dealModeVarb({
@@ -282,7 +282,7 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
         propS.local("totalInvestment")
       ),
     }),
-    cocRoiDecimalOngoingSwitch: updateVarb("ongoingSwitch", {
+    cocRoiDecimalPeriodicSwitch: updateVarb("ongoingSwitch", {
       initValue: "yearly",
     }),
     cocRoiMonthly: dealModeVarb({
@@ -309,7 +309,7 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
         propS.local("cocRoiDecimalYearly")
       ),
     }),
-    cocRoiOngoingSwitch: updateVarb("ongoingSwitch", {
+    cocRoiPeriodicSwitch: updateVarb("ongoingSwitch", {
       initValue: "yearly",
     }),
     cashExpensesPlusLoanRepay: dealModeVarb({

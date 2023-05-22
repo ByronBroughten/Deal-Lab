@@ -34,13 +34,13 @@ export function CapExValueList({ feId, menuType }: Props) {
     (item) => item.valueNext("displayName").mainText
   );
 
-  const itemOngoingSwitch = capExList.value("itemOngoingSwitch");
-  const totalVarb = capExList.get.activeSwitchTarget("total", "ongoing");
+  const itemPeriodicSwitch = capExList.value("itemPeriodicSwitch");
+  const totalVarb = capExList.get.activeSwitchTarget("total", "periodic");
 
   const onChange = (displayName?: string) =>
     capExList.addChild("capExItem", {
       sectionValues: {
-        valueOngoingSwitch: itemOngoingSwitch,
+        valuePeriodicSwitch: itemPeriodicSwitch,
         ...(displayName && { displayNameEditor: displayName }),
       },
     });

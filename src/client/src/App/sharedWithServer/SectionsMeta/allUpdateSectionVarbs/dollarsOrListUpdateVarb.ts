@@ -20,10 +20,10 @@ type BasicOngoingValueName = (typeof basicOngoingValueNames)[number];
 export function dollarsOrListUpdateVarbs(): UpdateSectionVarbs<BasicOngoingValueName> {
   return {
     valueSourceName: updateVarb("dollarsOrListOngoing", {
-      initValue: "valueDollarsOngoingEditor",
+      initValue: "valueDollarsPeriodicEditor",
     }),
     ...updateVarbsS._typeUniformity,
-    ...updateVarbsS.group("valueDollars", "ongoingInput", "monthly", {
+    ...updateVarbsS.group("valueDollars", "periodicInput", "monthly", {
       editor: { initValue: numObj(0) },
       monthly: {
         updateFnName: "throwIfReached",
@@ -33,11 +33,11 @@ export function dollarsOrListUpdateVarbs(): UpdateSectionVarbs<BasicOngoingValue
             basicsS.loadFromChild("ongoingList", "totalMonthly")
           ),
           updateOverride(
-            [switchS.local("valueDollarsOngoingSwitch", "monthly")],
-            basicsS.loadFromLocal("valueDollarsOngoingEditor")
+            [switchS.local("valueDollarsPeriodicSwitch", "monthly")],
+            basicsS.loadFromLocal("valueDollarsPeriodicEditor")
           ),
           updateOverride(
-            [switchS.local("valueDollarsOngoingSwitch", "yearly")],
+            [switchS.local("valueDollarsPeriodicSwitch", "yearly")],
             basicsS.yearlyToMonthly("valueDollars")
           ),
         ],
@@ -49,11 +49,11 @@ export function dollarsOrListUpdateVarbs(): UpdateSectionVarbs<BasicOngoingValue
             basicsS.loadFromChild("ongoingList", "totalYearly")
           ),
           updateOverride(
-            [switchS.local("valueDollarsOngoingSwitch", "yearly")],
-            basicsS.loadFromLocal("valueDollarsOngoingEditor")
+            [switchS.local("valueDollarsPeriodicSwitch", "yearly")],
+            basicsS.loadFromLocal("valueDollarsPeriodicEditor")
           ),
           updateOverride(
-            [switchS.local("valueDollarsOngoingSwitch", "monthly")],
+            [switchS.local("valueDollarsPeriodicSwitch", "monthly")],
             basicsS.monthlyToYearly("valueDollars")
           ),
         ],

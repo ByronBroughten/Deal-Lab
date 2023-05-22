@@ -80,17 +80,17 @@
 //     for (const amount of rents) {
 //       property.addChild("unit", {
 //         sectionValues: {
-//           targetRentOngoingSwitch: "monthly",
-//           targetRentOngoingEditor: numObj(amount),
+//           targetRentPeriodicSwitch: "monthly",
+//           targetRentPeriodicEditor: numObj(amount),
 //         },
 //       });
 //     }
 
-//     property.varb("taxesOngoingSwitch").updateValue("yearly");
-//     property.varb("taxesOngoingEditor").updateValue(numObj(1200));
+//     property.varb("taxesPeriodicSwitch").updateValue("yearly");
+//     property.varb("taxesPeriodicEditor").updateValue(numObj(1200));
 
-//     property.varb("homeInsOngoingSwitch").updateValue("yearly");
-//     property.varb("homeInsOngoingEditor").updateValue(numObj(1200));
+//     property.varb("homeInsPeriodicSwitch").updateValue("yearly");
+//     property.varb("homeInsPeriodicEditor").updateValue(numObj(1200));
 
 //     const ongoingCost = property.onlyChild("miscOngoingCost");
 //     ongoingCost.updateValues({ valueSourceName: "listTotal" });
@@ -100,9 +100,9 @@
 //     for (const amount of propertyCosts) {
 //       propertyCostList.addChild("ongoingItem", {
 //         sectionValues: {
-//           valueOngoingSwitch: "monthly",
+//           valuePeriodicSwitch: "monthly",
 //           valueSourceName: "valueEditor",
-//           valueOngoingEditor: numObj(amount),
+//           valuePeriodicEditor: numObj(amount),
 //         },
 //       });
 //     }
@@ -130,9 +130,9 @@
 //     for (const amount of mgmtCosts) {
 //       mgmtCostList.addChild("ongoingItem", {
 //         sectionValues: {
-//           valueOngoingSwitch: "monthly",
+//           valuePeriodicSwitch: "monthly",
 //           valueSourceName: "valueEditor",
-//           valueOngoingEditor: numObj(amount),
+//           valuePeriodicEditor: numObj(amount),
 //         },
 //       });
 //     }
@@ -168,8 +168,8 @@
 //   const loan = financing.addAndGetChild("loan", {
 //     sectionValues: {
 //       loanAmountInputMode: "loanAmount",
-//       interestRatePercentOngoingSwitch: "yearly",
-//       interestRatePercentOngoingEditor: numObj(5),
+//       interestRatePercentPeriodicSwitch: "yearly",
+//       interestRatePercentPeriodicEditor: numObj(5),
 //       loanTermSpanSwitch: "years",
 //       loanTermSpanEditor: numObj(30),
 //     },
@@ -184,7 +184,7 @@
 //   });
 
 //   loan.varb("hasMortgageIns").updateValue(true);
-//   loan.varb("mortgageInsOngoingEditor").updateValue(numObj(1200));
+//   loan.varb("mortgageInsPeriodicEditor").updateValue(numObj(1200));
 
 //   const wrappedValue = loan.addAndGetChild("wrappedInLoanValue", {
 //     sectionValues: { valueSourceName: "listTotal" },
@@ -204,8 +204,8 @@
 
 //   const loan = financing.addAndGetChild("loan", {
 //     sectionValues: {
-//       interestRatePercentOngoingSwitch: "yearly",
-//       interestRatePercentOngoingEditor: numObj(6),
+//       interestRatePercentPeriodicSwitch: "yearly",
+//       interestRatePercentPeriodicEditor: numObj(6),
 //       isInterestOnly: true,
 //     },
 //   });

@@ -7,8 +7,6 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
-// Possibly replace "ongoing" with "periodic"
-
 // Fix property tests for buyAndHold and fixAndFlip
 // Make property tests include brrrr and homeBuyer
 // Add tests for purchaseFinancing
@@ -16,11 +14,7 @@ AppRegistry.runApplication("App", {
 // Add tests for mgmt
 // Add tests for deals
 
-// Implement info dots for selecting the dealType
-
-// Fix refiFinancing completionStatus
-// - Then fix where it comes from in useActiveDealSection
-// fix makeExampleProperty for utilityHolding and utilityOngoing
+// Add an example HomeBuyer deal
 
 // Add an easy CapEx default for homebuyer mode (1% or 2% purchase price)
 // Re-add an easy CapEx default for buyAndHold and brrrr (20% rent)

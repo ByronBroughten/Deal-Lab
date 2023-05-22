@@ -28,12 +28,12 @@ export function PropertyHoldingCosts({ feId }: FeIdProp) {
         />
         <NumObjEntityEditor
           inputMargins
-          feVarbInfo={property.varbInfo("taxesHoldingOngoingEditor")}
+          feVarbInfo={property.varbInfo("taxesHoldingPeriodicEditor")}
         />
         <NumObjEntityEditor
           inputMargins
           editorType="equation"
-          feVarbInfo={property.varbInfo("homeInsHoldingOngoingEditor")}
+          feVarbInfo={property.varbInfo("homeInsHoldingPeriodicEditor")}
           quickViewVarbNames={["purchasePrice", "sqft", "numUnits"]}
         />
         <UtilityValue

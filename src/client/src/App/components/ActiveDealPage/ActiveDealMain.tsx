@@ -17,7 +17,7 @@ const dealElementProps = {
 };
 
 export function ActiveDealMain() {
-  const { deal, calcVarbs, feStore } = useActiveDealPage();
+  const { deal, feStore } = useActiveDealPage();
   const dealMode = deal.valueNext("dealMode");
   const completionStatus = deal.valueNext("completionStatus");
   return (

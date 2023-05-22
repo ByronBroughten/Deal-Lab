@@ -15,7 +15,7 @@ export function UnitList({ feId, className }: Props) {
     sectionName: "property",
     feId,
   });
-  const totalVarb = unitParent.switchVarb("targetRent", "ongoing");
+  const totalVarb = unitParent.switchVarb("targetRent", "periodic");
 
   let unitIds = [...unitParent.childFeIds("unit")];
   const { isAtLeastOne, areMultiple, areNone, isOne, isEven } =

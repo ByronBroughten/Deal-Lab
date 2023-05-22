@@ -13,14 +13,14 @@ export function ValueSectionOngoing({ feId, ...rest }: Props) {
     sectionName: "ongoingValue",
     feId,
   });
-  const valueName = section.get.activeSwitchTargetName("value", "ongoing");
+  const valueName = section.get.activeSwitchTargetName("value", "periodic");
   return (
     <ValueSectionGeneric
       {...{
         ...rest,
         sectionName: "ongoingValue",
         valueName,
-        valueEditorName: "valueOngoingEditor",
+        valueEditorName: "valuePeriodicEditor",
         feId,
         makeItemizedListNode: (props) => (
           <ListEditorOngoing

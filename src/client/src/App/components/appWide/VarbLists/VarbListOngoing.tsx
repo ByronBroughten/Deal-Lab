@@ -12,9 +12,9 @@ type Props = {
 };
 export function VarbListOngoing({ feId, ...rest }: Props) {
   const list = useSetterSection({ sectionName: "ongoingList", feId });
-  const totalVarbName = list.get.activeSwitchTargetName("total", "ongoing");
-  const itemOngoingSwitch = list
-    .varb("itemOngoingSwitch")
+  const totalVarbName = list.get.activeSwitchTargetName("total", "periodic");
+  const itemPeriodicSwitch = list
+    .varb("itemPeriodicSwitch")
     .value("ongoingSwitch");
 
   const itemName = list.meta.varbListItem;
@@ -23,7 +23,7 @@ export function VarbListOngoing({ feId, ...rest }: Props) {
     list.addChild(itemName, {
       sectionValues: {
         valueSourceName: itemValueSource,
-        valueOngoingSwitch: itemOngoingSwitch,
+        valuePeriodicSwitch: itemPeriodicSwitch,
       },
     });
   };

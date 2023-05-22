@@ -14,8 +14,8 @@ function getProps(getter: GetterSection<"vacancyLossValue">): {
   };
 } {
   const valueSourceName = getter.valueNext("valueSourceName");
-  const dollarsVarb = getter.activeSwitchTarget("valueDollars", "ongoing");
-  const dollarsSwitch = getter.switchValue("valueDollars", "ongoing");
+  const dollarsVarb = getter.activeSwitchTarget("valueDollars", "periodic");
+  const dollarsSwitch = getter.switchValue("valueDollars", "periodic");
 
   const commonQuickAccess = ["sqft", "numUnits"] as const;
   const dollarsQuickAccess = {
@@ -41,7 +41,7 @@ function getProps(getter: GetterSection<"vacancyLossValue">): {
       return {
         equalsValue: `${getter.displayVarb("valuePercent")} of rent`,
         editorProps: {
-          feVarbInfo: getter.varbNext("valueDollarsOngoingEditor").feVarbInfo,
+          feVarbInfo: getter.varbNext("valueDollarsPeriodicEditor").feVarbInfo,
           quickViewVarbNames: [
             dollarsQuickAccess[dollarsSwitch],
             ...commonQuickAccess,

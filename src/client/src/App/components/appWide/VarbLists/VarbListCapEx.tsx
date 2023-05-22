@@ -12,14 +12,14 @@ type Props = {
 };
 export function VarbListCapEx({ feId, ...rest }: Props) {
   const list = useSetterSection({ sectionName: "capExList", feId });
-  const totalVarbName = list.get.activeSwitchTargetName("total", "ongoing");
-  const itemOngoingSwitch = list
-    .varb("itemOngoingSwitch")
+  const totalVarbName = list.get.activeSwitchTargetName("total", "periodic");
+  const itemPeriodicSwitch = list
+    .varb("itemPeriodicSwitch")
     .value("ongoingSwitch");
   const itemName = list.meta.varbListItem;
   const addItem = () => {
     list.addChild(itemName, {
-      sectionValues: { valueOngoingSwitch: itemOngoingSwitch },
+      sectionValues: { valuePeriodicSwitch: itemPeriodicSwitch },
     });
   };
   return (

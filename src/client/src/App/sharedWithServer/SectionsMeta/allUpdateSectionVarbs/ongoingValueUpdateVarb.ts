@@ -21,8 +21,8 @@ export function ongoingValueUpdateVarb(
     valueSourceName: updateVarb("ongoingPhaseSource", {
       initValue: "sameAsHoldingPhase",
     }),
-    valueDollarsOngoingEditor: updateVarb("numObj"),
-    ...varbsS.group("valueDollars", "ongoing", "monthly", {
+    valueDollarsPeriodicEditor: updateVarb("numObj"),
+    ...varbsS.group("valueDollars", "periodic", "monthly", {
       targets: { updateFnName: "throwIfReached" },
       monthly: {
         updateOverrides: [
@@ -33,7 +33,7 @@ export function ongoingValueUpdateVarb(
           ...valueSourceOverrides("ongoingPhaseSource", {
             sameAsHoldingPhase: updateBasicsS.loadByVarbPathName(monthlyVpn),
             valueDollarsEditor: updateBasicsS.loadFromLocal(
-              "valueDollarsOngoingEditor"
+              "valueDollarsPeriodicEditor"
             ),
           }),
         ],
@@ -47,7 +47,7 @@ export function ongoingValueUpdateVarb(
           ...valueSourceOverrides("ongoingPhaseSource", {
             sameAsHoldingPhase: updateBasicsS.loadByVarbPathName(yearlyVpn),
             valueDollarsEditor: updateBasicsS.loadFromLocal(
-              "valueDollarsOngoingEditor"
+              "valueDollarsPeriodicEditor"
             ),
           }),
         ],

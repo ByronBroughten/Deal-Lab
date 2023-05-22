@@ -4,9 +4,9 @@ import { PackBuilderSection } from "../StatePackers/PackBuilderSection";
 export function makeDefaultLoanPack(): SectionPack<"loan"> {
   const loan = PackBuilderSection.initAsOmniChild("loan", {
     sectionValues: {
-      interestRatePercentOngoingSwitch: "yearly",
+      interestRatePercentPeriodicSwitch: "yearly",
       loanTermSpanSwitch: "years",
-      mortgageInsOngoingSwitch: "yearly",
+      mortgageInsPeriodicSwitch: "yearly",
       loanAmountInputMode: "loanAmount",
     },
   });

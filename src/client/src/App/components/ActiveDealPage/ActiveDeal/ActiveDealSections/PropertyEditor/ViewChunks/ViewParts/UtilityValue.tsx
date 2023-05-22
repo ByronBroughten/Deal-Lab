@@ -8,7 +8,7 @@ export function UtilityValue({ feId, propertyMode }: Props) {
   const feInfo = { sectionName: "utilityValue", feId } as const;
   const utilityValue = useGetterSection(feInfo);
   const valueSourceName = utilityValue.valueNext("valueSourceName");
-  const valueVarb = utilityValue.switchVarb("valueDollars", "ongoing");
+  const valueVarb = utilityValue.switchVarb("valueDollars", "periodic");
   const equalsValue = valueSourceName === "zero" ? "$0" : undefined;
 
   const twentyPercentLabel =

@@ -11,7 +11,7 @@ type ExampleLoanProps = {
   loan: StrictPick<
     SectionValues<"loan">,
     | "displayName"
-    | "interestRatePercentOngoingEditor"
+    | "interestRatePercentPeriodicEditor"
     | "loanTermSpanEditor"
     | "hasMortgageIns"
     | "loanAmountInputMode"
@@ -41,7 +41,7 @@ export function makeExampleLoan(props: ExampleLoanProps) {
   loan.loadSelf(makeDefaultLoanPack());
   loan.updateValues({
     ...props.loan,
-    interestRatePercentOngoingSwitch: "yearly",
+    interestRatePercentPeriodicSwitch: "yearly",
     loanTermSpanSwitch: "years",
   });
   const loanBaseValue = loan.onlyChild("loanBaseValue");

@@ -61,28 +61,28 @@ export function mgmtBasePayValueVarbs(): UpdateSectionVarbs<"mgmtBasePayValue"> 
         updateOverride(
           [
             overrideSwitchS.valueSourceIs("dollarsEditor"),
-            overrideSwitchS.ongoing("valueDollars", "monthly"),
+            overrideSwitchS.periodic("valueDollars", "monthly"),
           ],
           updateBasicsS.equationLR(
             "divide",
-            updateFnPropS.local("valueDollarsOngoingEditor"),
+            updateFnPropS.local("valueDollarsPeriodicEditor"),
             updateFnPropS.pathNameBase("propertyFocal", "targetRentMonthly")
           )
         ),
         updateOverride(
           [
             overrideSwitchS.valueSourceIs("dollarsEditor"),
-            overrideSwitchS.ongoing("valueDollars", "yearly"),
+            overrideSwitchS.periodic("valueDollars", "yearly"),
           ],
           updateBasicsS.equationLR(
             "divide",
-            updateFnPropS.local("valueDollarsOngoingEditor"),
+            updateFnPropS.local("valueDollarsPeriodicEditor"),
             updateFnPropS.pathNameBase("propertyFocal", "targetRentYearly")
           )
         ),
       ],
     }),
-    ...updateGroupS.group("valueDollars", "ongoingInput", "monthly", {
+    ...updateGroupS.group("valueDollars", "periodicInput", "monthly", {
       monthly: {
         updateFnName: "throwIfReached",
         updateOverrides: [
@@ -105,7 +105,7 @@ export function mgmtBasePayValueVarbs(): UpdateSectionVarbs<"mgmtBasePayValue"> 
               overrideSwitchS.valueSourceIs("dollarsEditor"),
               overrideSwitchS.monthlyIsActive("valueDollars"),
             ],
-            updateBasicsS.loadFromLocal("valueDollarsOngoingEditor")
+            updateBasicsS.loadFromLocal("valueDollarsPeriodicEditor")
           ),
           updateOverride(
             [
@@ -145,7 +145,7 @@ export function mgmtBasePayValueVarbs(): UpdateSectionVarbs<"mgmtBasePayValue"> 
               overrideSwitchS.valueSourceIs("dollarsEditor"),
               overrideSwitchS.yearlyIsActive("valueDollars"),
             ],
-            updateBasicsS.loadFromLocal("valueDollarsOngoingEditor")
+            updateBasicsS.loadFromLocal("valueDollarsPeriodicEditor")
           ),
         ],
       },

@@ -18,12 +18,12 @@ export function PropertyOngoingCosts({ feId }: FeIdProp) {
       <MuiRow>
         <NumObjEntityEditor
           inputMargins
-          feVarbInfo={taxes.varbInfo("valueDollarsOngoingEditor")}
+          feVarbInfo={taxes.varbInfo("valueDollarsPeriodicEditor")}
         />
         <NumObjEntityEditor
           inputMargins
           editorType="equation"
-          feVarbInfo={homeIns.varbInfo("valueDollarsOngoingEditor")}
+          feVarbInfo={homeIns.varbInfo("valueDollarsPeriodicEditor")}
           quickViewVarbNames={["purchasePrice", "sqft", "numUnits"]}
         />
         <UtilityValue
