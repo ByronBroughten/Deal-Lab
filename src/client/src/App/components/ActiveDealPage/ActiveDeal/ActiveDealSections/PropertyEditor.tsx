@@ -5,13 +5,13 @@ import { useGetterSection } from "../../../../sharedWithServer/stateClassHooks/u
 import { PropertyBrrrrView } from "./PropertyEditor/PropertyBrrrrView";
 import { PropertyBuyAndHoldView } from "./PropertyEditor/PropertyBuyAndHoldView";
 import { PropertyFixAndFlipView } from "./PropertyEditor/PropertyFixAndFlipView";
-import { PropertyHomeBuyerView } from "./PropertyEditor/PropertyHomeBuyerView";
+import { PropertyHomebuyerView } from "./PropertyEditor/PropertyHomeBuyerView";
 
 const propertiesByType: Record<
   StateValue<"dealMode">,
   (props: FeIdProp) => React.ReactElement
 > = {
-  homeBuyer: (props) => <PropertyHomeBuyerView {...props} />,
+  homeBuyer: (props) => <PropertyHomebuyerView {...props} />,
   buyAndHold: (props) => <PropertyBuyAndHoldView {...props} />,
   fixAndFlip: (props) => <PropertyFixAndFlipView {...props} />,
   brrrr: (props) => <PropertyBrrrrView {...props} />,

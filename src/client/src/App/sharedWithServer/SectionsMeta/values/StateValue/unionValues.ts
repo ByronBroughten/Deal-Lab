@@ -141,7 +141,7 @@ export const switchValueNames = Arr.extractStrict(unionValueNames, [
 ] as const);
 
 export const dealModeLabels: Record<UnionValue<"dealMode">, string> = {
-  homeBuyer: "Home Buyer",
+  homeBuyer: "Homebuyer",
   buyAndHold: "Rental Property",
   fixAndFlip: "Fix & Flip",
   brrrr: "BRRRR",

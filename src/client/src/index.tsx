@@ -14,7 +14,7 @@ AppRegistry.runApplication("App", {
 // Add tests for mgmt
 // Add tests for deals
 
-// Add an example HomeBuyer deal
+// Add an example Homebuyer deal
 
 // Add an easy CapEx default for homebuyer mode (1% or 2% purchase price)
 // Re-add an easy CapEx default for buyAndHold and brrrr (20% rent)

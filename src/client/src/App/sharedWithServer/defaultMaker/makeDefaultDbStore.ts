@@ -2,7 +2,8 @@ import { dbStoreNames } from "../SectionsMeta/sectionChildrenDerived/DbStoreName
 import { numObj } from "../SectionsMeta/values/StateValue/NumObj";
 import { PackBuilderSection } from "../StatePackers/PackBuilderSection";
 import { timeS } from "../utils/timeS";
-import { makeExampleDeal } from "./makeDefaultFeUser/makeExampleDeal";
+import { exampleDealBuyAndHold } from "./makeDefaultFeUser/exampleDealBuyAndHold";
+import { exampleDealHomebuyer } from "./makeDefaultFeUser/exampleDealHomebuyer";
 import {
   examplePropertyCapExListProps,
   examplePropertyRepairProps,
@@ -64,8 +65,12 @@ export function makeDefaultDbStoreArrs({
   });
   dbStore.loadChildren({
     childName: "dealMain",
-    sectionPacks: [makeExampleDeal("Example Deal")],
+    sectionPacks: [
+      exampleDealHomebuyer("Homebuyer Deal Example"),
+      exampleDealBuyAndHold("Rental Deal Example"),
+    ],
   });
+
   dbStore.loadChildren({
     childName: "propertyMain",
     sectionPacks: [makeExampleStoreProperty()],

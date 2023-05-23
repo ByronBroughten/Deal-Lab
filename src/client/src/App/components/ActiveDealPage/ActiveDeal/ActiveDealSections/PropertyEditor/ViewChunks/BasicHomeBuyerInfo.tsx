@@ -4,7 +4,7 @@ import { MuiRow } from "../../../../../general/MuiRow";
 import { NumObjEntityEditor } from "../../../../../inputs/NumObjEntityEditor";
 
 type Props = { feId: string };
-export function BasicHomeBuyerInfo({ feId }: Props) {
+export function BasicHomebuyerInfo({ feId }: Props) {
   const property = useGetterSection({ sectionName: "property", feId });
   return (
     <FormSectionLabeled {...{ label: "Basics" }}>

@@ -1,10 +1,10 @@
 import { dealModeLabels } from "../../../../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
-import { BasicHomeBuyerInfo } from "./ViewChunks/BasicHomeBuyerInfo";
+import { BasicHomebuyerInfo } from "./ViewChunks/BasicHomebuyerInfo";
 import { PropertyEditorBody } from "./ViewChunks/PropertyEditorBody";
 import { PropertyOngoingCosts } from "./ViewChunks/PropertyOngoingCosts";
 import { RehabSection } from "./ViewChunks/PropertyRehab";
 
-export function PropertyHomeBuyerView({ feId }: { feId: string }) {
+export function PropertyHomebuyerView({ feId }: { feId: string }) {
   return (
     <PropertyEditorBody
       {...{
@@ -13,7 +13,7 @@ export function PropertyHomeBuyerView({ feId }: { feId: string }) {
         titleAppend: dealModeLabels.homeBuyer,
       }}
     >
-      <BasicHomeBuyerInfo feId={feId} />
+      <BasicHomebuyerInfo feId={feId} />
       <PropertyOngoingCosts feId={feId} />
       <RehabSection {...{ feId }} />
     </PropertyEditorBody>
