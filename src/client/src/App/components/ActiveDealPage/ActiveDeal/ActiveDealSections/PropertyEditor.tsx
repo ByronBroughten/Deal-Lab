@@ -5,7 +5,7 @@ import { useGetterSection } from "../../../../sharedWithServer/stateClassHooks/u
 import { PropertyBrrrrView } from "./PropertyEditor/PropertyBrrrrView";
 import { PropertyBuyAndHoldView } from "./PropertyEditor/PropertyBuyAndHoldView";
 import { PropertyFixAndFlipView } from "./PropertyEditor/PropertyFixAndFlipView";
-import { PropertyHomebuyerView } from "./PropertyEditor/PropertyHomeBuyerView";
+import { PropertyHomebuyerView } from "./PropertyEditor/PropertyHomebuyerView";
 
 const propertiesByType: Record<
   StateValue<"dealMode">,
