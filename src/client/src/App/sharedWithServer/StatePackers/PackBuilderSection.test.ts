@@ -1,5 +1,6 @@
 import { pick } from "lodash";
 import { isSectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
+import { SectionValues } from "../SectionsMeta/values/StateValue";
 import { numObj } from "../SectionsMeta/values/StateValue/NumObj";
 import { stringObj } from "../SectionsMeta/values/StateValue/StringObj";
 import { Obj } from "../utils/Obj";
@@ -12,11 +13,11 @@ describe("PackBuilderSection", () => {
       numBedrooms: numObj(5),
     },
   } as const;
-  const propertyVarbs = {
+  const propertyVarbs: Partial<SectionValues<"property">> = {
     displayName: stringObj("Some string"),
     purchasePrice: numObj(200000),
-    taxesPeriodicSwitch: "yearly",
-  } as const;
+    expensesPeriodicSwitch: "yearly",
+  };
 
   it("should make a sectionPack with the added values and children", () => {
     const property = PackBuilderSection.initAsOmniChild("property", {

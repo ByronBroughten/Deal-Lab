@@ -32,7 +32,7 @@ export function ongoingValueUpdateVarb(
           ),
           ...valueSourceOverrides("ongoingPhaseSource", {
             sameAsHoldingPhase: updateBasicsS.loadByVarbPathName(monthlyVpn),
-            valueDollarsEditor: updateBasicsS.loadFromLocal(
+            valueDollarsPeriodicEditor: updateBasicsS.loadFromLocal(
               "valueDollarsPeriodicEditor"
             ),
           }),
@@ -46,7 +46,7 @@ export function ongoingValueUpdateVarb(
           ),
           ...valueSourceOverrides("ongoingPhaseSource", {
             sameAsHoldingPhase: updateBasicsS.loadByVarbPathName(yearlyVpn),
-            valueDollarsEditor: updateBasicsS.loadFromLocal(
+            valueDollarsPeriodicEditor: updateBasicsS.loadFromLocal(
               "valueDollarsPeriodicEditor"
             ),
           }),

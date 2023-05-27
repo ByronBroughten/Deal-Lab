@@ -30,7 +30,7 @@ export function example20PercentDownLoan(): SectionPack<"loan"> {
       offPercentEditor: numObj(20),
     },
     closingCosts: {
-      valueSourceName: "valueEditor",
+      valueSourceName: "valueDollarsEditor",
       valueDollarsEditor: numObj(6000),
     },
   });

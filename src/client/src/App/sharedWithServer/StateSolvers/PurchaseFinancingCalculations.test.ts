@@ -6,7 +6,11 @@ import {
 import { Arr } from "./../utils/Arr";
 import { SolverActiveDeal } from "./SolverActiveDeal";
 import { SolverSection } from "./SolverSection";
-import { setOnetimeEditor, setOnetimeList } from "./testUtils";
+import {
+  setFirstLoanFor912p6Monthly,
+  setOnetimeEditor,
+  setOnetimeList,
+} from "./testUtils";
 
 const singleSourceNames = Arr.extractStrict(
   unionValueArr("loanBaseValueSource"),
@@ -226,7 +230,7 @@ describe("Purchase financing calculations", () => {
     expect(financing.numValue("closingCosts")).toBe(1200);
   });
   it("should calculate loan payments", () => {
-    setFirstLoan(financing, property);
+    setFirstLoanFor912p6Monthly(financing, property);
     addInterestOnlyLoan(financing);
     const paymentAmount = 912.6 + 50;
     expect(financing.numValue("loanPaymentMonthly")).toBe(paymentAmount);
@@ -245,42 +249,6 @@ describe("Purchase financing calculations", () => {
     );
   });
 });
-
-function setFirstLoan(
-  financing: SolverSection<"financing">,
-  property: SolverSection<"property">
-): void {
-  property.updateValues({ purchasePrice: numObj(200000) });
-  financing.updateValues({ financingMethod: "useLoan" });
-
-  const loan = financing.onlyChild("loan");
-  loan.updateValues({
-    interestRatePercentPeriodicSwitch: "yearly",
-    interestRatePercentPeriodicEditor: numObj(5),
-    loanTermSpanSwitch: "years",
-    loanTermSpanEditor: numObj(30),
-  });
-
-  const baseValue = loan.onlyChild("loanBaseValue");
-  baseValue.updateValues({ valueSourceName: "purchaseLoanValue" });
-  const purchaseValue = baseValue.onlyChild("purchaseLoanValue");
-  purchaseValue.updateValues({
-    valueSourceName: "amountPercentEditor",
-    amountPercentEditor: numObj(75),
-  });
-
-  const wrappedValue = loan.addAndGetChild("wrappedInLoanValue", {
-    sectionValues: { valueSourceName: "listTotal" },
-  });
-  const wrapped = wrappedValue.onlyChild("onetimeList");
-  const amounts = [6000, 14000];
-
-  for (const amount of amounts) {
-    wrapped.addChildAndSolve("singleTimeItem", {
-      sectionValues: { valueEditor: numObj(amount) },
-    });
-  }
-}
 
 function addInterestOnlyLoan(financing: SolverSection<"financing">): void {
   const loan = financing.addAndGetChild("loan", {

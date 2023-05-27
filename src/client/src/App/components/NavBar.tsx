@@ -1,7 +1,8 @@
 import { AppBar, Toolbar } from "@mui/material";
 import { rem } from "polished";
-import { BsHouse } from "react-icons/bs";
 import styled from "styled-components";
+// @ts-ignore
+import mainLogo from "../../../public/logo500.png";
 import { nativeTheme } from "../theme/nativeTheme";
 import theme from "../theme/Theme";
 import { useGoToPage } from "./appWide/customHooks/useGoToPage";
@@ -26,8 +27,9 @@ export function NavBar({ showMenu = true, ...props }: Props) {
             <div className="NavBar-menuPlaceholder"></div>
           )}
           <NavBtn
+            // <BsHouse className="NavBar-brandIcon" />
             className="NavBar-brandBtn"
-            icon={<BsHouse className="NavBar-brandIcon" />}
+            icon={<img src={mainLogo} />}
             text={<span className="NavBar-brandName">Deal Lab</span>}
             onClick={goToMain}
           />

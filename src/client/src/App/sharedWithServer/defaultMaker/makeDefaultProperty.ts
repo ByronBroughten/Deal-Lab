@@ -21,13 +21,13 @@ export function makeDefaultProperty(
   // property.addChild("homeInsHolding");
   property.addChild("taxesOngoing", {
     sectionValues: {
-      valueSourceName: "valueDollarsEditor",
+      valueSourceName: "valueDollarsPeriodicEditor",
       valueDollarsPeriodicSwitch: "yearly",
     },
   });
   property.addChild("homeInsOngoing", {
     sectionValues: {
-      valueSourceName: "valueDollarsEditor",
+      valueSourceName: "valueDollarsPeriodicEditor",
       valueDollarsPeriodicSwitch: "yearly",
     },
   });

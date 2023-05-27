@@ -151,8 +151,7 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
       homeBuyer: basicsS.sumNums(
         propS.onlyChild("property", "purchasePrice"),
         propS.local("allClosingCosts"),
-        propS.onlyChild("property", "rehabCost"),
-        propS.onlyChild("property", "miscOnetimeCosts")
+        propS.onlyChild("property", "rehabCost")
       ),
       buyAndHold: basicsS.sumNums(
         propS.onlyChild("property", "purchasePrice"),

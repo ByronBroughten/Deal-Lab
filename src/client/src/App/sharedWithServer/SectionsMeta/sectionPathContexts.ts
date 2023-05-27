@@ -15,7 +15,7 @@ import {
 const abs = absolutePathInfo;
 function makeDealFocals(dealPath: ChildName[]) {
   const propertyPath: ChildName[] = [...dealPath, "property"];
-  const financingPath: ChildName[] = [...dealPath, "financing"];
+  const financingPath: ChildName[] = [...dealPath, "purchaseFinancing"];
   const loanPath: ChildName[] = [...financingPath, "loan"];
   const loanBasePath: ChildName[] = [...loanPath, "loanBaseValue"];
   const mgmtPath: ChildName[] = [...dealPath, "mgmt"];
@@ -33,7 +33,7 @@ function makeDealFocals(dealPath: ChildName[]) {
       return abs("repairValue", [...propertyPath, "repairValue"]);
     },
     get utilityCostFocal() {
-      return abs("utilityValue", [...propertyPath, "utilityValue"]);
+      return abs("utilityValue", [...propertyPath, "utilityOngoing"]);
     },
     get capExCostFocal() {
       return abs("capExValue", [...propertyPath, "capExValue"]);

@@ -108,7 +108,9 @@ type OngoingSectionName =
   | "miscRevenueValue"
   | "miscHoldingCost"
   | "maintenanceValue"
-  | "capExValue";
+  | "capExValue"
+  | "taxesOngoing"
+  | "homeInsOngoing";
 
 export const setPeriodicEditor = <SN extends OngoingSectionName>(
   section: SolverSection<SN>,
@@ -184,4 +186,40 @@ export function setRehabCostBase(
   setOnetimeEditor(property.onlyChild("repairValue"), repairNum);
   setOnetimeEditor(property.onlyChild("miscOnetimeCost"), miscNum);
   return repairNum + miscNum;
+}
+
+export function setFirstLoanFor912p6Monthly(
+  financing: SolverSection<"financing">,
+  property: SolverSection<"property">
+): void {
+  property.updateValues({ purchasePrice: numObj(200000) });
+  financing.updateValues({ financingMethod: "useLoan" });
+
+  const loan = financing.onlyChild("loan");
+  loan.updateValues({
+    interestRatePercentPeriodicSwitch: "yearly",
+    interestRatePercentPeriodicEditor: numObj(5),
+    loanTermSpanSwitch: "years",
+    loanTermSpanEditor: numObj(30),
+  });
+
+  const baseValue = loan.onlyChild("loanBaseValue");
+  baseValue.updateValues({ valueSourceName: "purchaseLoanValue" });
+  const purchaseValue = baseValue.onlyChild("purchaseLoanValue");
+  purchaseValue.updateValues({
+    valueSourceName: "amountPercentEditor",
+    amountPercentEditor: numObj(75),
+  });
+
+  const wrappedValue = loan.addAndGetChild("wrappedInLoanValue", {
+    sectionValues: { valueSourceName: "listTotal" },
+  });
+  const wrapped = wrappedValue.onlyChild("onetimeList");
+  const amounts = [6000, 14000];
+
+  for (const amount of amounts) {
+    wrapped.addChildAndSolve("singleTimeItem", {
+      sectionValues: { valueEditor: numObj(amount) },
+    });
+  }
 }
