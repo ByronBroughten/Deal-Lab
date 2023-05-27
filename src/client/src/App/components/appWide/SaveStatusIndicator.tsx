@@ -55,6 +55,7 @@ export function SaveStatusIndicator({ className }: Props) {
 }
 
 const Styled = styled(ListMenuBtn)<{ $color: string }>`
+  height: ${`${nativeTheme.navBar.height}px`};
   background: transparent;
   white-space: nowrap;
   font-size: 16px;

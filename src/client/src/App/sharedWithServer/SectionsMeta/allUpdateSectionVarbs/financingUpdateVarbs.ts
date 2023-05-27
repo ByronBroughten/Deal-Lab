@@ -18,7 +18,7 @@ import { financingCompletionStatus } from "./calculatedUpdateVarbs/completionSta
 
 const basicsS = updateBasicsS;
 
-function useLoanOrZero(onUseLoan: UpdateBasics): UpdateVarb<"numObj"> {
+function doLoanOrZero(onUseLoan: UpdateBasics): UpdateVarb<"numObj"> {
   return updateVarb("numObj", {
     updateFnName: "throwIfReached",
     updateOverrides: financingMethodOverrides({
@@ -68,17 +68,17 @@ export function financingUpdateVarbs(): UpdateSectionVarbs<"financing"> {
         loanNames: [updateFnPropS.children("loan", "displayName")],
       },
     }),
-    loanBaseDollars: useLoanOrZero(
+    loanBaseDollars: doLoanOrZero(
       basicsS.sumChildren("loan", "loanBaseDollars")
     ),
-    loanTotalDollars: useLoanOrZero(
+    loanTotalDollars: doLoanOrZero(
       basicsS.sumChildren("loan", "loanTotalDollars")
     ),
-    closingCosts: useLoanOrZero(basicsS.sumChildren("loan", "closingCosts")),
-    mortgageInsUpfront: useLoanOrZero(
+    closingCosts: doLoanOrZero(basicsS.sumChildren("loan", "closingCosts")),
+    mortgageInsUpfront: doLoanOrZero(
       basicsS.sumChildren("loan", "mortgageInsUpfront")
     ),
-    loanUpfrontExpenses: useLoanOrZero(
+    loanUpfrontExpenses: doLoanOrZero(
       basicsS.sumNums(
         updateFnPropS.local("closingCosts"),
         updateFnPropS.local("mortgageInsUpfront")

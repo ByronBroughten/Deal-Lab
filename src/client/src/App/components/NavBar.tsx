@@ -1,24 +1,35 @@
-import { AppBar, Toolbar } from "@mui/material";
+import { AppBar, Box, Toolbar } from "@mui/material";
 import { rem } from "polished";
 import styled from "styled-components";
 // @ts-ignore
-import mainLogo from "../../../public/logo500.png";
+import mainLogo from "../../icons/logo500.png";
 import { nativeTheme } from "../theme/nativeTheme";
 import theme from "../theme/Theme";
 import { useGoToPage } from "./appWide/customHooks/useGoToPage";
 import { SaveStatusIndicator } from "./appWide/SaveStatusIndicator";
+import { PlainIconBtn } from "./general/PlainIconBtn";
 import { AppMenuProps } from "./NavBar/AppMenuDropdown";
 import { NavAppMenu } from "./NavBar/NavAppMenu";
 import { NavBarBtns } from "./NavBar/NavBarBtns";
-import { NavBtn } from "./NavBar/NavBtn";
 
 interface Props extends AppMenuProps {
   showMenu?: boolean;
 }
+
 export function NavBar({ showMenu = true, ...props }: Props) {
   const goToMain = useGoToPage("mainPage");
   return (
-    <Styled className="NavBar-root">
+    <Styled
+      sx={{
+        height: nativeTheme.navBar.height,
+        backgroundColor: nativeTheme.light,
+        color: nativeTheme.primary.main,
+        boxShadow: "none",
+        zIndex: 5,
+        borderBottom: theme.borderStyle,
+      }}
+      className="NavBar-root"
+    >
       <Toolbar disableGutters={true}>
         <div className="NavBar-leftSide">
           {showMenu ? (
@@ -26,11 +37,27 @@ export function NavBar({ showMenu = true, ...props }: Props) {
           ) : (
             <div className="NavBar-menuPlaceholder"></div>
           )}
-          <NavBtn
-            // <BsHouse className="NavBar-brandIcon" />
-            className="NavBar-brandBtn"
-            icon={<img src={mainLogo} />}
-            text={<span className="NavBar-brandName">Deal Lab</span>}
+          <PlainIconBtn
+            sx={{ height: nativeTheme.navBar.height }}
+            left={
+              <Box
+                sx={{
+                  height: 60,
+                  width: 60,
+                }}
+                component="img"
+                src={mainLogo}
+              />
+            }
+            middle={
+              <Box
+                sx={{
+                  fontSize: nativeTheme.chunkTitleFs,
+                }}
+              >
+                Deal Lab
+              </Box>
+            }
             onClick={goToMain}
           />
           <SaveStatusIndicator />
@@ -42,13 +69,6 @@ export function NavBar({ showMenu = true, ...props }: Props) {
 }
 
 const Styled = styled(AppBar)`
-  height: 50px;
-  background-color: ${theme.light};
-  color: ${theme.primaryNext};
-  box-shadow: none;
-  z-index: 5;
-  border-bottom: ${theme.borderStyle};
-
   .NavBar-leftSide {
     display: flex;
   }
@@ -69,37 +89,18 @@ const Styled = styled(AppBar)`
   }
 
   .NavBar-brandBtn {
-    font-size: ${theme.siteTitleSize};
-    :hover {
-      .NavBar-brandIcon {
-        color: ${theme.light};
-      }
-    }
+    font-size: ${nativeTheme.pageTitleFs};
   }
   .NavBar-navBtnLink {
     color: inherit;
-  }
-
-  .NavBar-brandIcon {
-    font-size: 27px;
-    font-weight: 700;
-  }
-  .NavBar-brandName {
-    margin-left: 4px;
-    font-size: ${"22px"};
-    font-weight: 500;
-    .NavBar-brandNameBold {
-    }
-    .NavBar-brandNameRegular {
-      margin-left: ${theme.s25};
-    }
   }
 
   .NavBar-demoBtnIcon {
     font-size: ${rem("24px")};
   }
 
-  .NavBar-signInUpBtn {
+  .NavDropDown-navBtn {
+    min-height: 69px;
   }
   .NavBar-upgradeToProDropdown {
     .NavDropDown-navBtn {

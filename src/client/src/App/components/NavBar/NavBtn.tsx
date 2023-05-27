@@ -31,7 +31,7 @@ const Styled = styled(PlainBtn)<{ $isactive?: boolean }>`
   color: inherit;
   font-size: ${rem("16px")};
   padding: 0 ${theme.s3};
-  height: 100%;
+  height: 65px;
   flex: 1;
   white-space: nowrap;
   .NavBtn-text {

@@ -45,7 +45,7 @@ export const nativeTheme = {
     padding: unitSizes.s35,
   },
   navBar: view({
-    height: 50,
+    height: 70,
     activeBtn: themeColors["gray-200"],
   }),
   formSection: view({

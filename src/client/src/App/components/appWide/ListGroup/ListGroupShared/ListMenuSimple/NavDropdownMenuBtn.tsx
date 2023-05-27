@@ -39,7 +39,7 @@ const Styled = styled(Button)<{ $themeName?: ThemeName }>`
   background-color: ${theme["gray-200"]};
   border: 1px solid ${theme["gray-500"]};
   color: ${theme.dark};
-  height: ${rem("30px")};
+  height: ${rem("50px")};
 
   width: 100%;
   border-radius: 0;
