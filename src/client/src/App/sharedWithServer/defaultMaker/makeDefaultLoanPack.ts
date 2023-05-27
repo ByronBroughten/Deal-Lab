@@ -7,7 +7,6 @@ export function makeDefaultLoanPack(): SectionPack<"loan"> {
       interestRatePercentPeriodicSwitch: "yearly",
       loanTermSpanSwitch: "years",
       mortgageInsPeriodicSwitch: "yearly",
-      loanAmountInputMode: "loanAmount",
     },
   });
   const baseValue = loan.addAndGetChild("loanBaseValue");

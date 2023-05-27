@@ -73,7 +73,7 @@ export function loanValueUpdateVarbs(
         amountPercentEditor: updateBasicsS.loadFromLocal("amountPercentEditor"),
         offPercentEditor: updateBasicsS.equationSimple(
           "oneHundredMinus",
-          updateFnPropS.local("offPercent")
+          updateFnPropS.local("offPercentEditor")
         ),
         amountDollarsEditor: updateBasicsS.equationSimple(
           "decimalToPercent",

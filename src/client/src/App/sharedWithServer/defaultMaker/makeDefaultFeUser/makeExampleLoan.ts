@@ -14,7 +14,6 @@ type ExampleLoanProps = {
     | "interestRatePercentPeriodicEditor"
     | "loanTermSpanEditor"
     | "hasMortgageIns"
-    | "loanAmountInputMode"
   >;
   purchaseLoanValue?: StrictPick<
     SectionValues<"purchaseLoanValue">,

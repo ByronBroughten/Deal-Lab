@@ -8,8 +8,6 @@ const valueSources = {
   monthsYearsSwitch: ["months", "years"],
 
   dealDisplayNameSource: ["displayNameEditor", "defaultDisplayName"],
-  loanPurpose: ["purchasePrice", "upfrontRepairs", "purchasePriceAndRepairs"],
-  loanAmountInputMode: ["downPayment", "loanAmount"],
   percentDollarsSource: [
     "offPercentEditor",
     "offDollarsEditor",
@@ -80,7 +78,7 @@ const valueSources = {
   closingCostValueSource: [
     "none",
     "fivePercentLoan",
-    "valueEditor",
+    "valueDollarsEditor",
     "listTotal",
   ],
 } as const;

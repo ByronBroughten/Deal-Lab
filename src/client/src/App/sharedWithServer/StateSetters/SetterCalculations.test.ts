@@ -46,9 +46,7 @@
 
 //     const financing = dealTester.setter.onlyChild("financing");
 //     financing.varb("financingMethod").updateValue("useLoan");
-//     const loan = financing.addAndGetChild("loan", {
-//       sectionValues: { loanAmountInputMode: "loanAmount" },
-//     });
+
 //     const baseValue = loan.onlyChild("loanBaseValue");
 //     baseValue.updateValues({
 //       valueSourceName: "customAmountEditor",
@@ -167,7 +165,6 @@
 
 //   const loan = financing.addAndGetChild("loan", {
 //     sectionValues: {
-//       loanAmountInputMode: "loanAmount",
 //       interestRatePercentPeriodicSwitch: "yearly",
 //       interestRatePercentPeriodicEditor: numObj(5),
 //       loanTermSpanSwitch: "years",

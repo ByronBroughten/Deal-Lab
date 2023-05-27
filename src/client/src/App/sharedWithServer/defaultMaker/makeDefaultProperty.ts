@@ -20,10 +20,16 @@ export function makeDefaultProperty(
   // property.addChild("taxesHolding");
   // property.addChild("homeInsHolding");
   property.addChild("taxesOngoing", {
-    sectionValues: { valueDollarsPeriodicSwitch: "yearly" },
+    sectionValues: {
+      valueSourceName: "valueDollarsEditor",
+      valueDollarsPeriodicSwitch: "yearly",
+    },
   });
   property.addChild("homeInsOngoing", {
-    sectionValues: { valueDollarsPeriodicSwitch: "yearly" },
+    sectionValues: {
+      valueSourceName: "valueDollarsEditor",
+      valueDollarsPeriodicSwitch: "yearly",
+    },
   });
 
   const costOverrunPercent = propertyMode === "buyAndHold" ? 0 : 10;

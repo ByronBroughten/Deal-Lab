@@ -22,7 +22,6 @@ export function example20PercentDownLoan(): SectionPack<"loan"> {
       interestRatePercentPeriodicEditor: numObj(6),
       loanTermSpanEditor: numObj(30),
       hasMortgageIns: false,
-      loanAmountInputMode: "loanAmount",
     },
     baseLoan: {
       valueSourceName: "purchaseLoanValue",

@@ -22,19 +22,7 @@ export function loanUpdateVarbs(): UpdateSectionVarbs<"loan"> {
   return {
     ...updateVarbsS._typeUniformity,
     completionStatus: loanCompletionStatus,
-    loanPurpose: updateVarb("loanPurpose", { initValue: "purchasePrice" }),
-    loanAmountInputMode: updateVarb("loanAmountInputMode", {
-      initValue: "downPayment",
-    }),
-    loanPurchasedAssetValue: updateVarb("numObj", {
-      updateFnName: "throwIfReached",
-      updateOverrides: [
-        updateOverride(
-          [overrideSwitchS.local("loanPurpose", "purchasePrice")],
-          updateBasicsS.loadByVarbPathName("purchasePrice")
-        ),
-      ],
-    }),
+
     ...updateVarbsS.savableSection,
     loanBaseDollars: updateVarb(
       "numObj",

@@ -38,6 +38,7 @@ export function loanBaseUpdateVarbs(): UpdateSectionVarbs<"loanBaseValue"> {
         "repairLoanValue",
         "amountDollars"
       ),
+      // what gives with these two? They're both working independently
       customAmountEditor: updateBasicsS.loadFromLocal("valueDollarsEditor"),
       priceAndRepairValues: updateBasicsS.sumNums(
         updateFnPropS.onlyChild("purchaseLoanValue", "amountDollars"),

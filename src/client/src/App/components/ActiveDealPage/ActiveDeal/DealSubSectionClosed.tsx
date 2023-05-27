@@ -108,7 +108,6 @@ function getFinancingProps(
     ),
     displayName,
     detailVarbPropArr: financing.varbInfoArr([
-      "downPaymentDollars",
       "loanTotalDollars",
       "loanPaymentMonthly",
       "loanUpfrontExpenses",

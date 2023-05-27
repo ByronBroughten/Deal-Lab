@@ -34,7 +34,7 @@ export function ClosingCostValue({ feId, fivePercentLoanDisplay }: Props) {
           />
         ),
         makeEditor:
-          valueSourceName === "valueEditor"
+          valueSourceName === "valueDollarsEditor"
             ? (props) => (
                 <NumObjEntityEditor
                   {...{
@@ -47,7 +47,7 @@ export function ClosingCostValue({ feId, fivePercentLoanDisplay }: Props) {
             : undefined,
         items: [
           ["fivePercentLoan", "5% of Base Loan"],
-          ["valueEditor", "Enter lump sum"],
+          ["valueDollarsEditor", "Enter lump sum"],
           ["listTotal", "Itemize"],
         ],
         equalsValue,

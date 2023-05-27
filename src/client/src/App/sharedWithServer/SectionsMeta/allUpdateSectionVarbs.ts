@@ -352,24 +352,13 @@ function makeAllUpdateSections() {
       valueDollarsEditor: updateVarb("numObj"),
       value: updateVarb("numObj", {
         updateFnName: "throwIfReached",
-        updateOverrides: [
-          updateOverride(
-            [switchS.valueSourceIs("none")],
-            updateBasics("emptyNumObj")
-          ),
-          updateOverride(
-            [switchS.valueSourceIs("fivePercentLoan")],
-            updateBasics("emptyNumObj")
-          ),
-          updateOverride(
-            [switchS.valueSourceIs("listTotal")],
-            updateBasicsS.loadFromChild("onetimeList", "total")
-          ),
-          updateOverride(
-            [switchS.valueSourceIs("valueEditor")],
-            updateBasicsS.loadSolvableTextByVarbInfo("valueDollarsEditor")
-          ),
-        ],
+        updateOverrides: valueSourceOverrides("closingCostValueSource", {
+          none: updateBasics("emptyNumObj"),
+          fivePercentLoan: updateBasics("emptyNumObj"),
+          listTotal: updateBasicsS.loadFromChild("onetimeList", "total"),
+          valueDollarsEditor:
+            updateBasicsS.loadSolvableTextByVarbInfo("valueDollarsEditor"),
+        }),
       }),
     }),
     ...updateSectionProp("singleTimeValue", {

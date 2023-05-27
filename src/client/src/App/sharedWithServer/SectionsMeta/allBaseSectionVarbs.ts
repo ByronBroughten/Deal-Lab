@@ -292,9 +292,6 @@ export function makeAllBaseSectionVarbs() {
     loan: varbs({
       ...baseVarbsS.savableSection,
       completionStatus: baseVarb("completionStatus"),
-      loanPurpose: baseVarb("loanPurpose"),
-      loanAmountInputMode: baseVarb("loanAmountInputMode"),
-      loanPurchasedAssetValue: baseVarb("numObj", dollars),
       loanBaseDollars: baseVarb("numObj", dollars),
 
       ...varbsS.ongoingPercentInput("interestRatePercent"),
@@ -393,21 +390,13 @@ export function makeAllBaseSectionVarbs() {
 
       holdingRefiLoanPayment: baseVarb("numObj", dollars),
       holdingPurchaseLoanPayment: baseVarb("numObj", dollars),
-
       allClosingCosts: baseVarb("numObj", dollars),
-
-      downPaymentDollars: baseVarb("numObj", dollars),
-      downPaymentPercent: baseVarb("numObj", percent),
-      downPaymentDecimal: baseVarb("numObj", decimal),
     }),
     financing: varbs({
       displayName: baseVarb("stringObj"),
       completionStatus: baseVarb("completionStatus"),
       financingMethod: baseVarb("financingMethod"),
       financingMode: baseVarb("financingMode"),
-      downPaymentDollars: baseVarb("numObj", dollars),
-      downPaymentPercent: baseVarb("numObj", percent),
-      downPaymentDecimal: baseVarb("numObj", decimal),
       ...baseVarbsS.ongoingDollars("mortgageIns"),
       ...baseVarbsS.ongoingDollars("loanExpenses"),
       ...baseVarbsS.ongoingDollars("loanPayment"),

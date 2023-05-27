@@ -76,6 +76,17 @@ export function dealModeOverrides(
   );
 }
 
+export function financingMethodOverrides(
+  overrideMap: Record<StateValue<"financingMethod">, UpdateBasics>,
+  switchInfo?: UpdateOverrideSwitchInfo
+): UpdateOverrides {
+  return unionSwitchOverride(
+    "financingMethod",
+    switchInfo ?? relVarbInfoS.local("financingMethod"),
+    overrideMap
+  );
+}
+
 export function valueSourceOverrides<VT extends ValueSourceType>(
   _valueSourceType: VT,
   updateBasics: Record<ValueSource<VT>, UpdateBasics>,

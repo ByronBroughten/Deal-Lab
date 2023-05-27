@@ -130,12 +130,6 @@ export const allDisplaySectionVarbs = {
       displayNameWithSection: "Upfront loaneExpenses",
     }),
     loanTotalDollars: varb("Loan total"),
-    downPaymentDollars: varb("Down payment", {
-      displayNameWithVariant: "Down payment amount",
-    }),
-    downPaymentPercent: varb("Down payment", {
-      displayNameWithVariant: "Down payment percent",
-    }),
   }),
   ...displaySectionVarbsProp("calculatedVarbs", {
     onePercentPrice: varb("1% Purchase price"),
