@@ -42,8 +42,8 @@ export function NavBar({ showMenu = true, ...props }: Props) {
             left={
               <Box
                 sx={{
-                  height: 60,
-                  width: 60,
+                  height: 50,
+                  width: 50,
                 }}
                 component="img"
                 src={mainLogo}
