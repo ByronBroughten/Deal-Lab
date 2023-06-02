@@ -2,9 +2,9 @@ import React from "react";
 import { IoChevronBack } from "react-icons/io5";
 import { Text, View } from "react-native";
 import { nativeTheme } from "../../theme/nativeTheme";
+import { GoToPageValue, useGoToPage } from "../customHooks/useGoToPage";
 import { PlainIconBtn } from "../general/PlainIconBtn";
 import { Row } from "../general/Row";
-import { GoToPageValue, useGoToPage } from "./customHooks/useGoToPage";
 
 interface Props {
   children: React.ReactNode;

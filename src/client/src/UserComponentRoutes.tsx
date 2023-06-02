@@ -1,6 +1,6 @@
 import { Route } from "react-router-dom";
-import { ShowEqualsProvider } from "./App/components/appWide/customContexts/showEquals";
 import { UserDataNeededPage } from "./App/components/AuthProtectedPage";
+import { ShowEqualsProvider } from "./App/components/customContexts/showEquals";
 import { ListGroupEditor } from "./App/components/UserListEditorPage/ListGroupEditor";
 import { UserComponents } from "./App/components/UserListEditorPage/UserComponents";
 import { feRoutes } from "./App/Constants/feRoutes";

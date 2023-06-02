@@ -10,7 +10,7 @@ import { useGetterFeStore } from "../../sharedWithServer/stateClassHooks/useFeSt
 import { useGetterSection } from "../../sharedWithServer/stateClassHooks/useGetterSection";
 import ccs from "../../theme/cssChunks";
 import theme, { ThemeName, themeSectionNameOrDefault } from "../../theme/Theme";
-import useHowMany from "./customHooks/useHowMany";
+import useHowMany from "../customHooks/useHowMany";
 import { RowIndexListRow, StyledRowIndexRow } from "./RowIndexListRow";
 
 type Props<SN extends SectionNameByType<"hasIndexStore">> = {

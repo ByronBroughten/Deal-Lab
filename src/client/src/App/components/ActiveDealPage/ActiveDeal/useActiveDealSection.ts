@@ -3,7 +3,7 @@ import { ChildName } from "../../../sharedWithServer/SectionsMeta/sectionChildre
 import { StateValue } from "../../../sharedWithServer/SectionsMeta/values/StateValue";
 import { useSetterMain } from "../../../sharedWithServer/stateClassHooks/useMain";
 import { StrictExtract } from "../../../sharedWithServer/utils/types";
-import { useGoToPage } from "../../appWide/customHooks/useGoToPage";
+import { useGoToPage } from "../../customHooks/useGoToPage";
 
 export type ActiveDealChildName = StrictExtract<
   ChildName<"deal">,

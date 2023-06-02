@@ -1,5 +1,5 @@
 import { unstable_batchedUpdates } from "react-dom";
-import { useGoToPage } from "../../components/appWide/customHooks/useGoToPage";
+import { useGoToPage } from "../../components/customHooks/useGoToPage";
 import { QuerierSections } from "../../modules/SectionActors/QuerierSections";
 import { useLogout } from "../../modules/SectionActors/UserDataActor";
 import { userTokenS } from "../../modules/services/userTokenS";

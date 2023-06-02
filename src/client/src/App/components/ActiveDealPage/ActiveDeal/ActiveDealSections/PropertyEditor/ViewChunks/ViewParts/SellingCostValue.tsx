@@ -2,8 +2,8 @@ import { SxProps } from "@mui/material";
 import { StateValue } from "../../../../../../../sharedWithServer/SectionsMeta/values/StateValue";
 import { useGetterSection } from "../../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { StrictExtract } from "../../../../../../../sharedWithServer/utils/types";
-import { LabelWithInfo } from "../../../../../../appWide/LabelWithInfo";
 import { SelectAndItemizeEditor } from "../../../../../../appWide/SelectAndItemizeEditor";
+import { VarbLabel } from "../../../../../../appWide/VarbLabel";
 import { NumObjEntityEditor } from "../../../../../../inputs/NumObjEntityEditor";
 import { ListEditorOneTime } from "../../ValueShared/ListEditorOneTime";
 
@@ -35,21 +35,14 @@ export function SellingCostValue({ feId, sx }: Props) {
   const sellingCost = useGetterSection(feInfo);
   const valueSource = sellingCost.valueNext("valueSourceName");
   const equalsVarbName = getEqualsVarbName(valueSource);
+  const feVarbInfo = { ...feInfo, varbName: "valueSourceName" } as const;
   return (
     <SelectAndItemizeEditor
       inputMargins
       {...{
         sx,
-        label: (
-          <LabelWithInfo
-            {...{
-              label: "Selling costs",
-              infoTitle: "Selling Costs",
-              infoText:
-                "Selling costs are the costs associated with selling a property, to pay for things things real estate agents, title fees, broker companies, etc.\n\nThese costs commonly add up to around 5-6% of the price that the property is being sold at.",
-            }}
-          />
-        ),
+        feVarbInfo,
+        label: <VarbLabel names={feVarbInfo} />,
         selectProps: { sx: { minWidth: 160 } },
         itemizedModalTitle: "Selling costs",
         unionValueName: "sellingCostSource",
@@ -60,10 +53,6 @@ export function SellingCostValue({ feId, sx }: Props) {
           ["valuePercentEditor", "Percent of ARV"],
           ["itemize", "Itemize"],
         ],
-        feVarbInfo: {
-          ...feInfo,
-          varbName: "valueSourceName",
-        },
         equalsValue: equalsVarbName
           ? sellingCost.displayVarb(equalsVarbName)
           : undefined,

@@ -1,5 +1,5 @@
 import { NavigateFunction, useNavigate } from "react-router-dom";
-import { FeRouteName, feRoutes } from "../../../Constants/feRoutes";
+import { FeRouteName, feRoutes } from "../../Constants/feRoutes";
 
 export type GoToPageValue = FeRouteName | number;
 export function useGoToPage(value: GoToPageValue): () => void {

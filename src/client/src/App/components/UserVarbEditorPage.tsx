@@ -1,5 +1,5 @@
 import { BackBtnWrapper } from "./appWide/BackBtnWrapper";
-import { ShowEqualsProvider } from "./appWide/customContexts/showEquals";
+import { ShowEqualsProvider } from "./customContexts/showEquals";
 import { UserVarbEditor } from "./UserVarbEditorPage/UserVarbEditor";
 
 export function UserVarbEditorPage() {

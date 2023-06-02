@@ -6,7 +6,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Normalize } from "styled-normalize";
 import { SuperTokensWrapper } from "supertokens-auth-react";
-import { ShowEqualsProvider } from "./App/components/appWide/customContexts/showEquals";
+import { ShowEqualsProvider } from "./App/components/customContexts/showEquals";
 import { ConfirmationDialogueProvider } from "./App/components/general/ConfirmationDialogueProvider";
 import { InfoModalProvider } from "./App/components/general/InfoModalProvider";
 import { initSupertokens } from "./App/modules/initSupertokens";

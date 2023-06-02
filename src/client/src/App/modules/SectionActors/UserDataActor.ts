@@ -1,6 +1,6 @@
 import React from "react";
 import { unstable_batchedUpdates } from "react-dom";
-import { useGoToPage } from "../../components/appWide/customHooks/useGoToPage";
+import { useGoToPage } from "../../components/customHooks/useGoToPage";
 import { QueryRes } from "../../sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import { makeReq } from "../../sharedWithServer/apiQueriesShared/makeReqAndRes";
 import { StateValue } from "../../sharedWithServer/SectionsMeta/values/StateValue";

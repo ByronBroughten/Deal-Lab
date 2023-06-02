@@ -3,7 +3,7 @@ import { FeRouteName } from "../../Constants/feRoutes";
 import { listChildrenNames } from "../../sharedWithServer/SectionsMeta/sectionStores";
 import { Arr } from "../../sharedWithServer/utils/Arr";
 import { MainSubSectionClosed } from "../ActiveDealPage/ActiveDeal/MainSubSectionClosed";
-import { useMakeGoToPage } from "../appWide/customHooks/useGoToPage";
+import { useMakeGoToPage } from "../customHooks/useGoToPage";
 import { componentProps } from "../props/userComponentPropGroups";
 import { ComponentClosedTitleRow } from "./ComponentsSubSectionTitleRow";
 

@@ -2,8 +2,8 @@ import { FeVarbInfo } from "../../../../../sharedWithServer/SectionsMeta/Section
 import { useGetterSection } from "../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { ValueFixedVarbPathName } from "../../../../../sharedWithServer/StateEntityGetters/ValueInEntityInfo";
 import { GetterSection } from "../../../../../sharedWithServer/StateGetters/GetterSection";
-import { LabelWithInfo } from "../../../../appWide/LabelWithInfo";
 import { SelectEditor } from "../../../../appWide/SelectEditor";
+import { VarbLabel } from "../../../../appWide/VarbLabel";
 import { NumObjEntityEditor } from "../../../../inputs/NumObjEntityEditor";
 
 function getProps(getter: GetterSection<"vacancyLossValue">): {
@@ -57,15 +57,13 @@ export function VacancyLossValue({ feId }: { feId: string }) {
   const vacancyLoss = useGetterSection(feInfo);
   const { editorProps, equalsValue } = getProps(vacancyLoss);
   const valueSourceName = vacancyLoss.valueNext("valueSourceName");
+  const feVarbInfo = { ...feInfo, varbName: "valueSourceName" } as const;
   return (
     <SelectEditor
       inputMargins
       {...{
         selectProps: { sx: { minWidth: 140 } },
-        feVarbInfo: {
-          ...feInfo,
-          varbName: "valueSourceName",
-        },
+        feVarbInfo,
         unionValueName: "vacancyLossValueSource",
         items: [
           [
@@ -87,15 +85,7 @@ export function VacancyLossValue({ feId }: { feId: string }) {
           ["percentOfRentEditor", "Custom percent of rent"],
           ["dollarsEditor", "Custom dollar amount"],
         ],
-        label: (
-          <LabelWithInfo
-            {...{
-              label: "Vacancy Loss",
-              infoTitle: "Vacancy Loss",
-              infoText: `No property will be fully occupied 100% of the time. When tenants move out, it can sometimes take days or weeks to prepare their unit for another renter. To account for this, assume you will miss out on a certain portion of the property's rent.\n\nIf you're owner-managing the property and you're determined to keep vacancy low, a common method is to asume you will miss out on 5% of the rent; and if you're using a property manager or management company (who probably won't be quite as motivated as you), something like 10% is common to assume.`,
-            }}
-          />
-        ),
+        label: <VarbLabel names={feVarbInfo} />,
         equalsValue,
         makeEditor: editorProps
           ? (props) => (

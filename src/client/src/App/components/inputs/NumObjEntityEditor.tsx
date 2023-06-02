@@ -12,7 +12,7 @@ import { GetterVarb } from "../../sharedWithServer/StateGetters/GetterVarb";
 import { EditorTextStatus } from "../../sharedWithServer/StateGetters/GetterVarbNumObj";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { arrSx } from "../../utils/mui";
-import { useShowEqualsContext } from "../appWide/customContexts/showEquals";
+import { useShowEqualsContext } from "../customContexts/showEquals";
 import { MaterialDraftEditor } from "./MaterialDraftEditor";
 import { NumObjVarbSelector } from "./NumObjEditor/NumObjVarbSelector";
 import {

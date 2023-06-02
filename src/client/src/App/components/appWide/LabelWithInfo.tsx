@@ -7,8 +7,8 @@ import { InfoIcon } from "./InfoIcon";
 type Props = {
   label: React.ReactNode;
   infoTitle?: React.ReactNode;
+  infoText?: string;
   iconProps?: IconProps;
-  infoText: string;
   className?: string;
 };
 export function LabelWithInfo({
@@ -27,13 +27,15 @@ export function LabelWithInfo({
       }}
     >
       <Box>{label}</Box>
-      <InfoIcon
-        {...{
-          iconProps,
-          title: infoTitle,
-          infoText,
-        }}
-      />
+      {infoTitle && infoText && (
+        <InfoIcon
+          {...{
+            iconProps,
+            title: infoTitle,
+            infoText,
+          }}
+        />
+      )}
     </MuiRow>
   );
 }

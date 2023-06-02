@@ -67,7 +67,7 @@ export function makeDefaultDbStoreArrs({
     childName: "dealMain",
     sectionPacks: [
       exampleDealHomebuyer("Homebuyer Deal Example"),
-      exampleDealBuyAndHold("Rental Deal Example"),
+      exampleDealBuyAndHold("Rental Property Deal Example"),
     ],
   });
 

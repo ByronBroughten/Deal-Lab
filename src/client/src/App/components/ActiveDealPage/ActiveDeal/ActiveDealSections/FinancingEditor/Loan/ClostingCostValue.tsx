@@ -1,7 +1,7 @@
 import { useGetterSection } from "../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { nativeTheme } from "../../../../../../theme/nativeTheme";
-import { LabelWithInfo } from "../../../../../appWide/LabelWithInfo";
 import { SelectAndItemizeEditor } from "../../../../../appWide/SelectAndItemizeEditor";
+import { VarbLabel } from "../../../../../appWide/VarbLabel";
 import { NumObjEntityEditor } from "../../../../../inputs/NumObjEntityEditor";
 import { ListEditorOneTime } from "../../PropertyEditor/ValueShared/ListEditorOneTime";
 
@@ -15,24 +15,15 @@ export function ClosingCostValue({ feId, fivePercentLoanDisplay }: Props) {
   const valueSourceName = closingCostValue.valueNext("valueSourceName");
   const equalsValue =
     valueSourceName === "fivePercentLoan" ? fivePercentLoanDisplay : undefined;
+  const feVarbInfo = { ...feInfo, varbName: "valueSourceName" } as const;
   return (
     <SelectAndItemizeEditor
       {...{
         sx: { pt: nativeTheme.editorMargins.my },
         selectProps: { sx: { minWidth: 140 } },
-        feVarbInfo: {
-          ...feInfo,
-          varbName: "valueSourceName",
-        },
+        feVarbInfo,
         unionValueName: "closingCostValueSource",
-        label: (
-          <LabelWithInfo
-            {...{
-              label: "Closing costs",
-              infoText: `Most loans require that the borrower pay a number of one-time fees—appraisal fees, title fees, government fees. Collectively, these fees are called closing costs.\n\nNote that closing costs don't include prepaid or escrow costs, such as prepaid home insurance or taxes.`,
-            }}
-          />
-        ),
+        label: <VarbLabel names={feVarbInfo} />,
         makeEditor:
           valueSourceName === "valueDollarsEditor"
             ? (props) => (

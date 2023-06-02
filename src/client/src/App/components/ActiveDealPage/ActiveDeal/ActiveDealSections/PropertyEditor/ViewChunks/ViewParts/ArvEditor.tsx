@@ -1,25 +1,18 @@
 import { useGetterSection } from "../../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
-import { LabelWithInfo } from "../../../../../../appWide/LabelWithInfo";
+import { VarbLabel } from "../../../../../../appWide/VarbLabel";
 import { NumObjEntityEditor } from "../../../../../../inputs/NumObjEntityEditor";
 
 type Props = { feId: string };
 export function ArvEditor({ feId }: Props) {
   const property = useGetterSection({ sectionName: "property", feId });
+  const arvInfo = property.varbInfoNext("afterRepairValue");
   return (
     <NumObjEntityEditor
       inputMargins
       editorType="equation"
-      feVarbInfo={property.varbInfo("afterRepairValue")}
+      feVarbInfo={arvInfo}
       quickViewVarbNames={["purchasePrice", "rehabCost"]}
-      label={
-        <LabelWithInfo
-          {...{
-            label: "After repair value",
-            infoTitle: "After Repair Value",
-            infoText: `This is the price that a property is sold at after repairs are made.`,
-          }}
-        />
-      }
+      label={<VarbLabel names={arvInfo} />}
       sx={{
         "& .DraftEditor-root": {
           minWidth: 145,

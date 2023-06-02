@@ -1,11 +1,9 @@
-import {
-  capExDescription,
-  capExItemizeDescription,
-} from "../../../../../../../Constants/descriptions";
+import { capExItemizeDescription } from "../../../../../../../Constants/descriptions";
 import { StateValue } from "../../../../../../../sharedWithServer/SectionsMeta/values/StateValue";
 import { useGetterSection } from "../../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { LabelWithInfo } from "../../../../../../appWide/LabelWithInfo";
 import { SelectAndItemizeEditor } from "../../../../../../appWide/SelectAndItemizeEditor";
+import { VarbLabel } from "../../../../../../appWide/VarbLabel";
 import { NumObjEntityEditor } from "../../../../../../inputs/NumObjEntityEditor";
 import { CapExValueList } from "../../ValueShared/CapExListEditor";
 
@@ -19,17 +17,14 @@ export function CapExValue({ feId }: { feId: string }) {
   const equalsValue = showEquals.includes(valueSourceName)
     ? valueVarb.displayVarb()
     : undefined;
-
+  const feVarbInfo = { ...feInfo, varbName: "valueSourceName" } as const;
   return (
     <SelectAndItemizeEditor
       inputMargins
       {...{
         unionValueName: "capExValueSource",
         selectProps: { sx: { minWidth: 170 } },
-        feVarbInfo: {
-          ...feInfo,
-          varbName: "valueSourceName",
-        },
+        feVarbInfo,
         total: valueVarb.displayVarb(),
         items: [
           [
@@ -46,15 +41,7 @@ export function CapExValue({ feId }: { feId: string }) {
           ],
           ["valueDollarsPeriodicEditor", "Custom amount"],
         ],
-        label: (
-          <LabelWithInfo
-            {...{
-              label: "Capital Expenses",
-              infoTitle: "Capital Expenses",
-              infoText: capExDescription,
-            }}
-          />
-        ),
+        label: <VarbLabel names={feVarbInfo} />,
         selectValue: valueSourceName,
         makeEditor:
           valueSourceName === "valueDollarsPeriodicEditor"

@@ -11,6 +11,7 @@ import {
   SectionNameType,
 } from "../SectionNameByType";
 import { StateValue } from "../values/StateValue";
+import { SectionNameProp } from "./SectionNameProp";
 import { VarbProp, VarbPropNext } from "./VarbInfoBase";
 
 export interface FeInfoByType<T extends SectionNameType = "all"> {
@@ -22,8 +23,8 @@ export type DbInfoByType<ST extends SectionNameType = "all"> = {
   dbId: string;
 };
 
-export interface FeSectionInfo<SN extends SectionName = SectionName> {
-  sectionName: SN;
+export interface FeSectionInfo<SN extends SectionName = SectionName>
+  extends SectionNameProp<SN> {
   feId: string;
 }
 export interface SectionArrInfo<SN extends SectionNameByType> {
@@ -44,6 +45,12 @@ export interface FeVarbInfo<
   SN extends SectionNameByType = SectionNameByType<"hasVarb">
 > extends FeSectionInfo<SN>,
     VarbProp {}
+
+export interface SectionVarbNames<
+  SN extends SectionName = SectionName,
+  VN extends VarbName<SN> = VarbName<SN>
+> extends SectionNameProp<SN>,
+    VarbPropNext<SN, VN> {}
 
 export interface FeVarbInfoNext<
   SN extends SectionName = SectionName,

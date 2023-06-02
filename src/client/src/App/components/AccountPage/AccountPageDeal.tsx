@@ -5,8 +5,8 @@ import { dealModeLabels } from "../../sharedWithServer/SectionsMeta/values/State
 import { useActionWithProps } from "../../sharedWithServer/stateClassHooks/useAction";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { reactNativeS } from "../../utils/reactNative";
-import { useGoToPage } from "../appWide/customHooks/useGoToPage";
 import { StyledActionBtn } from "../appWide/GeneralSection/MainSection/StyledActionBtn";
+import { useGoToPage } from "../customHooks/useGoToPage";
 import { useConfirmation } from "../general/ConfirmationDialogueProvider";
 import { useGetterSection } from "./../../sharedWithServer/stateClassHooks/useGetterSection";
 import { Row } from "./../general/Row";
@@ -32,7 +32,7 @@ const iconProps = {
   style: {
     color: nativeTheme.primary.main,
   },
-  size: 20,
+  size: 25,
 };
 
 const rowStyle = reactNativeS.view({

@@ -6,8 +6,8 @@ import {
   ActiveDealRefi,
 } from "./App/components/ActiveDealPage/ActiveDeal/ActiveDealSections";
 import { ActiveDealMain } from "./App/components/ActiveDealPage/ActiveDealMain";
-import { DealModeProvider } from "./App/components/appWide/customContexts/dealModeContext";
 import { UserDataNeededPage } from "./App/components/AuthProtectedPage";
+import { DealModeProvider } from "./App/components/customContexts/dealModeContext";
 import { feRoutes } from "./App/Constants/feRoutes";
 import { useGetterSections } from "./App/sharedWithServer/stateClassHooks/useGetterSections";
 import { IdOfSectionToSaveProvider } from "./App/sharedWithServer/stateClassHooks/useIdOfSectionToSave";

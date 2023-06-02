@@ -12,7 +12,7 @@ import { GetterSection } from "../../../sharedWithServer/StateGetters/GetterSect
 import { Arr } from "../../../sharedWithServer/utils/Arr";
 import ccs from "../../../theme/cssChunks";
 import theme from "../../../theme/Theme";
-import { useDealModeContext } from "../../appWide/customContexts/dealModeContext";
+import { useDealModeContext } from "../../customContexts/dealModeContext";
 import {
   OnVarbSelect,
   VarbSelectorCollection,
