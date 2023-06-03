@@ -56,6 +56,7 @@ export function ActiveDealMain() {
         <OutputSection
           {...{
             ...dealElementProps,
+            dealIsComplete: completionStatus === "allValid",
             feId: feStore.onlyChildFeId("outputSection"),
             disableOpenOutputs: completionStatus !== "allValid",
             dealMode,

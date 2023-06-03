@@ -5,7 +5,7 @@ import { StateValue } from "../../../sharedWithServer/SectionsMeta/values/StateV
 import { nativeTheme } from "../../../theme/nativeTheme";
 import { CheckMarkCircle } from "../../appWide/checkMarkCircle";
 import { EditSectionBtn } from "../../appWide/EditSectionBtn";
-import ChunkTitle from "../../general/ChunkTitle";
+import { DealSubSectionTitle } from "./DealSubSectionTitle";
 import { MainSectionLargeEditBtn } from "./MainSectionLargeEditBtn";
 
 type Props = {
@@ -25,18 +25,11 @@ export function DealSubSectionTitleRow({
     <Styled>
       <CheckMarkCircle
         {...{
+          sx: { marginRight: nativeTheme.s3 },
           checked: isCompleted,
-          className: "DealSubSectionTitleRow-checkmarkCircle",
         }}
       />
-      <ChunkTitle
-        sx={{
-          color: nativeTheme.primary.main,
-          minWidth: "200px",
-        }}
-      >
-        {sectionTitle}
-      </ChunkTitle>
+      <DealSubSectionTitle title={sectionTitle} />
       {!isCompleted && (
         <MainSectionLargeEditBtn
           {...{
@@ -64,10 +57,6 @@ const Styled = styled.div`
   display: flex;
   flex: 1;
   align-items: center;
-
-  .DealSubSectionTitleRow-checkmarkCircle {
-    margin-right: ${nativeTheme.s3};
-  }
 
   .DealSubSectionTitleRow-startIcon {
     margin-left: ${nativeTheme.s15};

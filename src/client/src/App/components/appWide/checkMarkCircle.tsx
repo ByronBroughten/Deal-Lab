@@ -1,31 +1,37 @@
+import { Box, SxProps } from "@mui/material";
 import { BsCircle } from "react-icons/bs";
 import { IoMdCheckmarkCircle } from "react-icons/io";
-import styled from "styled-components";
 import theme from "../../theme/Theme";
+import { arrSx } from "../../utils/mui";
+import { nativeTheme } from "./../../theme/nativeTheme";
 
-type Props = { checked: boolean; className?: string };
-export function CheckMarkCircle({ checked, className }: Props) {
+type Props = { checked?: boolean; sx?: SxProps; className?: string };
+export function CheckMarkCircle({ checked = false, sx, className }: Props) {
   return (
-    <Styled className={`CheckMarkCircle-root ${className ?? ""}`}>
+    <Box
+      className={className}
+      sx={[
+        {
+          display: "flex",
+          alignItems: "center",
+          position: "relative",
+          marginRight: nativeTheme.s25,
+        },
+        ...arrSx(sx),
+      ]}
+    >
       <BsCircle size={21} color={theme.primaryNext} />
       {checked && (
-        <div className="CheckMarkCircle-markWrapper">
+        <Box
+          sx={{
+            position: "absolute",
+            top: 1,
+            left: 1,
+          }}
+        >
           <IoMdCheckmarkCircle size={19} color={theme.secondary} />
-        </div>
+        </Box>
       )}
-    </Styled>
+    </Box>
   );
 }
-
-const Styled = styled.span`
-  display: flex;
-  align-items: center;
-  position: relative;
-  margin-right: ${theme.s25};
-
-  .CheckMarkCircle-markWrapper {
-    position: absolute;
-    top: 1px;
-    left: 1px;
-  }
-`;

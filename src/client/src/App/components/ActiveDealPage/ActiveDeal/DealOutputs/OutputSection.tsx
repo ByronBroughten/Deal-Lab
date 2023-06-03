@@ -1,4 +1,4 @@
-import { SxProps } from "@mui/material";
+import { Box, SxProps } from "@mui/material";
 import { CgDetailsLess, CgDetailsMore } from "react-icons/cg";
 import { toast } from "react-toastify";
 import styled from "styled-components";
@@ -6,31 +6,29 @@ import { useToggleView } from "../../../../modules/customHooks/useToggleView";
 import { outputListName } from "../../../../sharedWithServer/defaultMaker/makeDefaultOutputSection";
 import { StateValue } from "../../../../sharedWithServer/SectionsMeta/values/StateValue";
 import { useSetterSection } from "../../../../sharedWithServer/stateClassHooks/useSetterSection";
+import { nativeTheme } from "../../../../theme/nativeTheme";
 import theme from "../../../../theme/Theme";
-import { arrSx } from "../../../../utils/mui";
-import {
-  MainSection,
-  MainSectionBtn,
-} from "../../../appWide/GeneralSection/MainSection";
+import { CheckMarkCircle } from "../../../appWide/checkMarkCircle";
+import { EditSectionBtn } from "../../../appWide/EditSectionBtn";
+import { MainSection } from "../../../appWide/GeneralSection/MainSection";
 import MainSectionBody from "../../../appWide/GeneralSection/MainSection/MainSectionBody";
-import { SectionTitle } from "../../../appWide/SectionTitle";
-import { StyledIconBtn } from "../../../appWide/StyledIconBtn";
-import { DealOutputDetails } from "./OutputSection/DealOutputDetails";
-import { DealOutputList } from "./OutputSection/DealOutputList";
+import { StyledActionBtn } from "../../../appWide/GeneralSection/MainSection/StyledActionBtn";
+import { DealSubSectionTitle } from "../DealSubSectionTitle";
+import { DealOutputListOrDetails } from "./OutputSection/DealOutputListOrDetails";
 
 const warnNeedComplete = () =>
   toast.info("To calculate outputs, first complete each section.");
 
 export function OutputSection({
   feId,
-  disableOpenOutputs,
   dealMode,
+  dealIsComplete,
   ...rest
 }: {
   sx?: SxProps;
   feId: string;
+  dealIsComplete: boolean;
   dealMode: StateValue<"dealMode">;
-  disableOpenOutputs: boolean;
 }) {
   const outputSection = useSetterSection({
     sectionName: "outputSection",
@@ -45,50 +43,62 @@ export function OutputSection({
   };
 
   const listId = outputSection.oneChildFeId(outputListName(dealMode));
-  return !outputsIsOpen ? (
-    <MainSectionBtn
-      {...{
-        sx: [{ width: "100%" }, ...arrSx(rest.sx)],
-        middle: "View Outputs",
-        styleDisabled: disableOpenOutputs,
-        tooltipText: "",
-        onClick: disableOpenOutputs ? warnNeedComplete : openOutputs,
-      }}
-    />
-  ) : (
+  return (
     <Styled {...rest}>
       <div className="OutputSection-titleRow">
-        <SectionTitle text="Outputs" />
-        <StyledIconBtn
-          className="OutputSection-detailsBtn"
-          left={
-            detailsIsOpen ? (
-              <CgDetailsLess size={20} />
-            ) : (
-              <CgDetailsMore size={20} />
-            )
-          }
-          middle="Details"
-          onClick={toggleDetails}
+        <CheckMarkCircle
+          {...{
+            sx: {
+              visibility: "hidden",
+              marginRight: nativeTheme.s3,
+            },
+          }}
         />
-      </div>
-      <MainSectionBody>
-        {!detailsIsOpen && (
-          <div className="ListGroup-root">
-            <div className="OutputSection-viewable viewable">
-              <DealOutputList feId={listId} />
-            </div>
-          </div>
+        <DealSubSectionTitle title="Outputs" />
+        <EditSectionBtn {...{}} />
+        {dealIsComplete && (
+          <StyledActionBtn
+            className="OutputSection-detailsBtn"
+            left={
+              detailsIsOpen ? (
+                <CgDetailsLess size={20} />
+              ) : (
+                <CgDetailsMore size={20} />
+              )
+            }
+            middle={`${detailsIsOpen ? "Hide" : "Show"} Details`}
+            onClick={toggleDetails}
+          />
         )}
-        {detailsIsOpen && <DealOutputDetails {...{ feId: listId }} />}
-      </MainSectionBody>
+      </div>
+      {dealIsComplete && (
+        <DealOutputListOrDetails
+          {...{
+            detailsIsOpen,
+            feId: listId,
+          }}
+        />
+      )}
+      {!dealIsComplete && (
+        <MainSectionBody>
+          <Box
+            sx={{
+              paddingY: nativeTheme.s4,
+              display: "flex",
+              justifyContent: "center",
+              fontSize: nativeTheme.fs22,
+              color: nativeTheme.darkBlue.main,
+            }}
+          >
+            Complete all deal sections to see outputs
+          </Box>
+        </MainSectionBody>
+      )}
     </Styled>
   );
 }
+
 const Styled = styled(MainSection)`
-  .DealOutputList-root {
-    margin-left: -${theme.s2};
-  }
   .DealOutputDetails-root {
     margin-top: ${theme.s3};
   }

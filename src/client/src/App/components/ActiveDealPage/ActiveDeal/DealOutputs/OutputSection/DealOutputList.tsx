@@ -1,9 +1,8 @@
-import styled from "styled-components";
+import { Box, SxProps } from "@mui/material";
 import { InEntityValue } from "../../../../../sharedWithServer/SectionsMeta/values/StateValue/InEntityValue";
 import { useGetterSection } from "../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { useSetterSection } from "../../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import { VarbPathArrParam } from "../../../../../sharedWithServer/StateEntityGetters/varbPathOptions";
-import theme from "../../../../../theme/Theme";
 import { LabeledVarbProps } from "../../../../appWide/LabeledVarb";
 import { LabeledVarbRow } from "../../../../appWide/LabeledVarbRow";
 
@@ -20,7 +19,7 @@ function useLoadedOutputRowProps(feId: string): LabeledVarbProps[] {
   });
 }
 
-export function DealOutputList({ feId }: { feId: string }) {
+export function DealOutputList({ feId, sx }: { feId: string; sx?: SxProps }) {
   const outPutList = useSetterSection({
     sectionName: "outputList",
     feId,
@@ -39,20 +38,8 @@ export function DealOutputList({ feId }: { feId: string }) {
 
   const propArr = useLoadedOutputRowProps(feId);
   return (
-    <Styled className="DealOutputList-root">
+    <Box sx={sx}>
       <LabeledVarbRow {...{ varbPropArr: propArr }} />
-    </Styled>
+    </Box>
   );
 }
-
-const Styled = styled.div`
-  .BasicAnalysis-addOutput {
-    font-size: 2rem;
-    height: 100%;
-    width: 2rem;
-
-    box-shadow: ${theme.boxShadow1};
-    border-radius: ${theme.br0};
-    padding: ${theme.s2};
-  }
-`;
