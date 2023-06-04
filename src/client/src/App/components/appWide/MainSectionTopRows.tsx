@@ -8,6 +8,7 @@ import { MuiRow } from "../general/MuiRow";
 import { StoreSectionActions } from "./GeneralSection/MainSection/StoreSectionActions";
 import { PageTitle } from "./PageTitle";
 import { RemoveSectionXBtn } from "./RemoveSectionXBtn";
+import { TitleAppend } from "./titleAppend";
 
 type Props = {
   className?: string;
@@ -42,16 +43,7 @@ export function MainSectionTopRows({
       <div className="MainSectionTopRows-topRow">
         <MuiRow>
           <PageTitle sx={{ mr: nativeTheme.s3 }} text={sectionTitle} />
-          {titleAppend && (
-            <Box
-              sx={{
-                fontSize: nativeTheme.fs17,
-                color: nativeTheme["gray-700"],
-              }}
-            >
-              {titleAppend}
-            </Box>
-          )}
+          {titleAppend && <TitleAppend children={titleAppend} />}
           {topLeft}
         </MuiRow>
         <div className="MainSectionTopRows-topRight">

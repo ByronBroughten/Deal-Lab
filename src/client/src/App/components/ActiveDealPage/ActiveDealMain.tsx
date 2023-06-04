@@ -1,5 +1,6 @@
 import { View } from "react-native";
 import { isDealMode } from "../../sharedWithServer/SectionsMeta/values/StateValue/dealMode";
+import { dealModeLabels } from "../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
 import { BackBtnWrapper } from "../appWide/BackBtnWrapper";
 import { BackgroundContainer } from "../appWide/BackgroundContainter";
 import { PageTitle } from "../appWide/PageTitle";
@@ -23,7 +24,10 @@ export function ActiveDealMain() {
   return (
     <BackBtnWrapper {...{ to: "account", label: "Deal Menu" }}>
       <BackgroundContainer>
-        <PageTitle sx={{ marginTop: nativeTheme.s35 }} text="Deal" />
+        <PageTitle
+          sx={{ marginTop: nativeTheme.s35 }}
+          text={`${dealModeLabels[dealMode]} Deal`}
+        />
         <Row
           style={{
             alignItems: "flex-end",

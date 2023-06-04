@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { useToggleView } from "../../../../modules/customHooks/useToggleView";
 import { outputListName } from "../../../../sharedWithServer/defaultMaker/makeDefaultOutputSection";
 import { StateValue } from "../../../../sharedWithServer/SectionsMeta/values/StateValue";
+import { dealModeLabels } from "../../../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
 import { useSetterSection } from "../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import { nativeTheme } from "../../../../theme/nativeTheme";
 import { CheckMarkCircle } from "../../../appWide/checkMarkCircle";
@@ -12,6 +13,7 @@ import { MainSection } from "../../../appWide/GeneralSection/MainSection";
 import MainSectionBody from "../../../appWide/GeneralSection/MainSection/MainSectionBody";
 import { StyledActionBtn } from "../../../appWide/GeneralSection/MainSection/StyledActionBtn";
 import { ModalSection } from "../../../appWide/ModalSection";
+import { TitleAppend } from "../../../appWide/titleAppend";
 import { LoadedVarbList } from "../../../appWide/VarbLists/LoadedVarbList";
 import { MuiRow } from "../../../general/MuiRow";
 import { DealSubSectionTitle } from "../DealSubSectionTitle";
@@ -99,7 +101,15 @@ export function OutputSection({
       </MainSection>
       <ModalSection
         {...{
-          title: "Outputs",
+          title: (
+            <MuiRow>
+              <Box>Outputs</Box>
+              <TitleAppend
+                sx={{ marginLeft: nativeTheme.s25 }}
+                children={`(${dealModeLabels[dealMode]})`}
+              />
+            </MuiRow>
+          ),
           show: editIsOpen,
           closeModal: closeEdit,
         }}
