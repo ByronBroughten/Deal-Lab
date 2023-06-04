@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import React, { ReactNode } from "react";
 import { ChildName } from "../../../../sharedWithServer/SectionsMeta/sectionChildrenDerived/ChildName";
 import { FeSectionInfo } from "../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { SectionNameByType } from "../../../../sharedWithServer/SectionsMeta/SectionNameByType";
@@ -11,7 +11,7 @@ type VarbListAllowed = SectionNameByType<"varbListAllowed">;
 type Props<SN extends VarbListAllowed> = {
   feInfo: FeSectionInfo<SN>;
   makeItemNode: (props: { feId: string }) => ReactNode;
-  contentTitle: string;
+  headers: React.ReactElement;
   totalVarbName?: string;
   className?: string;
   menuType?: VarbListGenericMenuType;
@@ -21,8 +21,8 @@ type Props<SN extends VarbListAllowed> = {
 export type VarbListGenericMenuType = "value" | "editorPage";
 export function VarbListGeneric<SN extends VarbListAllowed>({
   feInfo,
+  headers,
   makeItemNode,
-  contentTitle,
   totalVarbName,
   className,
   menuType = "value",
@@ -46,7 +46,7 @@ export function VarbListGeneric<SN extends VarbListAllowed>({
         }}
       />
       <VarbListTableSectionGeneric
-        {...{ contentTitle, addItem, varbListTotal: total }}
+        {...{ addItem, varbListTotal: total, headers }}
       >
         {items.map((item) => makeItemNode(item))}
       </VarbListTableSectionGeneric>

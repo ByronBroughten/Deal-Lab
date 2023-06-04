@@ -1,4 +1,5 @@
 import { FeSectionInfo } from "../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
+import { MuiRow } from "../../../general/MuiRow";
 import { RemoveSectionXBtn } from "../../RemoveSectionXBtn";
 
 interface Props extends FeSectionInfo {
@@ -7,7 +8,9 @@ interface Props extends FeSectionInfo {
 export function XBtnCell({ className, ...rest }: Props) {
   return (
     <td className={`XBtnCell-root ${className ?? ""}`}>
-      <RemoveSectionXBtn {...rest} />
+      <MuiRow sx={{ justifyContent: "right" }}>
+        <RemoveSectionXBtn {...rest} />
+      </MuiRow>
     </td>
   );
 }

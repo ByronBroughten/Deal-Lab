@@ -1,8 +1,7 @@
 import { AppBar, Box, Toolbar } from "@mui/material";
 import { rem } from "polished";
 import styled from "styled-components";
-// @ts-ignore
-import mainLogo from "../../icons/logo500.png";
+import logoAndName from "../../icons/logoAndName.png";
 import { nativeTheme } from "../theme/nativeTheme";
 import theme from "../theme/Theme";
 import { SaveStatusIndicator } from "./appWide/SaveStatusIndicator";
@@ -39,24 +38,8 @@ export function NavBar({ showMenu = true, ...props }: Props) {
           )}
           <PlainIconBtn
             sx={{ height: nativeTheme.navBar.height }}
-            left={
-              <Box
-                sx={{
-                  height: 50,
-                  width: 50,
-                }}
-                component="img"
-                src={mainLogo}
-              />
-            }
             middle={
-              <Box
-                sx={{
-                  fontSize: nativeTheme.chunkTitleFs,
-                }}
-              >
-                Deal Lab
-              </Box>
+              <Box sx={{ height: 50 }} component="img" src={logoAndName} />
             }
             onClick={goToMain}
           />

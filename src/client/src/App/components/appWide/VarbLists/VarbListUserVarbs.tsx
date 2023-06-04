@@ -1,4 +1,5 @@
 import { VarbListGeneric } from "../ListGroup/ListGroupShared/VarbListGeneric";
+import { VarbListStandardHeaders } from "../ListGroup/ListGroupShared/VarbListGeneric/VarbListStandardHeaders";
 import { UserVarbItem } from "./VarbListUserVarbs/UserVarbItem";
 
 type Props = {
@@ -12,9 +13,9 @@ export function VarbListUserVarbs({ feId, ...rest }: Props) {
     <VarbListGeneric
       {...{
         ...rest,
+        headers: <VarbListStandardHeaders contentTitle={"Value"} />,
         menuType: "editorPage",
         feInfo,
-        contentTitle: "Value",
         makeItemNode: ({ feId }) => <UserVarbItem {...{ feId, key: feId }} />,
       }}
     />

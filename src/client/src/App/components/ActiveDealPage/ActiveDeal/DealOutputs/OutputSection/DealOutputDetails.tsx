@@ -1,12 +1,19 @@
-import styled from "styled-components";
+import { Box, SxProps } from "@mui/material";
 import { useGetterSection } from "../../../../../sharedWithServer/stateClassHooks/useGetterSection";
-import theme from "../../../../../theme/Theme";
+import { nativeTheme } from "../../../../../theme/nativeTheme";
+import { arrSx } from "../../../../../utils/mui";
 import {
   DealDetailRowVarbFound,
   DealDetailRowVarbNotFoundTopLevel,
 } from "./DealOutputDetails/DealDetailRow";
 
-export function DealOutputDetails({ feId }: { feId: string }) {
+export function DealOutputDetails({
+  feId,
+  sx,
+}: {
+  feId: string;
+  sx?: SxProps;
+}) {
   const outputList = useGetterSection({
     sectionName: "outputList",
     feId,
@@ -14,7 +21,16 @@ export function DealOutputDetails({ feId }: { feId: string }) {
   const outputs = outputList.children("outputItem");
   const level = 0;
   return (
-    <Styled className="DealOutputDetails-root">
+    <Box
+      sx={[
+        {
+          border: `solid 1px ${nativeTheme.primary.main}`,
+          borderRadius: nativeTheme.muiBr0,
+          padding: `${nativeTheme.s1} 0`,
+        },
+        ...arrSx(sx),
+      ]}
+    >
       {outputs.map((output, idx) => {
         const mixedInfo = output.valueEntityInfo();
         const key = mixedInfo.entityId + `${idx}`;
@@ -27,12 +43,6 @@ export function DealOutputDetails({ feId }: { feId: string }) {
           return <DealDetailRowVarbNotFoundTopLevel key={key} />;
         }
       })}
-    </Styled>
+    </Box>
   );
 }
-
-const Styled = styled.div`
-  border: solid 1px ${theme.primaryNext};
-  border-radius: ${theme.br0};
-  padding: ${theme.s1} 0;
-`;

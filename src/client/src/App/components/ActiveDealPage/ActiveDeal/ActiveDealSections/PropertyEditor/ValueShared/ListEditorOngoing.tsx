@@ -1,5 +1,6 @@
 import { useSetterSection } from "../../../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import { VarbListGenericMenuType } from "../../../../../appWide/ListGroup/ListGroupShared/VarbListGeneric";
+import { VarbListStandardHeaders } from "../../../../../appWide/ListGroup/ListGroupShared/VarbListGeneric/VarbListStandardHeaders";
 import { VarbListTableSectionGeneric } from "../../../../../appWide/ListGroup/ListGroupShared/VarbListGeneric/VarbListTableSectionGeneric";
 import { ListItemOngoing } from "../../../../../appWide/VarbLists/VarbListOngoing/ListItemOngoing";
 import { ListRouteName } from "../../../../../UserListEditorPage/UserComponentClosed";
@@ -53,8 +54,8 @@ export function ListEditorOngoing({
         table: (
           <VarbListTableSectionGeneric
             {...{
+              headers: <VarbListStandardHeaders contentTitle={"Cost"} />,
               varbListTotal: totalVarb.displayVarb(),
-              contentTitle: "Cost",
               addItem: () => onChange(),
             }}
           >

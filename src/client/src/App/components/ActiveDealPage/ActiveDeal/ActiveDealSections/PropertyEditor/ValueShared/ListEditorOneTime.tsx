@@ -1,6 +1,7 @@
 import { useSetterSection } from "../../../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import { ListItemOneTime } from "../../../../../appWide/ListGroup/ListGroupOneTime/VarbListOneTime/ListItemOneTime";
 import { VarbListGenericMenuType } from "../../../../../appWide/ListGroup/ListGroupShared/VarbListGeneric";
+import { VarbListStandardHeaders } from "../../../../../appWide/ListGroup/ListGroupShared/VarbListGeneric/VarbListStandardHeaders";
 import { VarbListTableSectionGeneric } from "../../../../../appWide/ListGroup/ListGroupShared/VarbListGeneric/VarbListTableSectionGeneric";
 import { ListRouteName } from "../../../../../UserListEditorPage/UserComponentClosed";
 import { ValueListGeneral } from "./ValueListGeneral";
@@ -52,8 +53,8 @@ export function ListEditorOneTime({
         table: (
           <VarbListTableSectionGeneric
             {...{
+              headers: <VarbListStandardHeaders contentTitle={"Cost"} />,
               varbListTotal: totalVarb.displayVarb(),
-              contentTitle: "Cost",
               addItem: () => onChange(),
             }}
           >

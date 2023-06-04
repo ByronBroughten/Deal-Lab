@@ -3,6 +3,7 @@ import {
   VarbListGeneric,
   VarbListGenericMenuType,
 } from "../ListGroup/ListGroupShared/VarbListGeneric";
+import { VarbListStandardHeaders } from "../ListGroup/ListGroupShared/VarbListGeneric/VarbListStandardHeaders";
 import { ListItemCapEx } from "./VarbListOngoing/ListItemCapEx";
 
 type Props = {
@@ -27,9 +28,9 @@ export function VarbListCapEx({ feId, ...rest }: Props) {
       {...{
         ...rest,
         feInfo: list.feInfo,
+        headers: <VarbListStandardHeaders contentTitle={"Cost"} />,
         itemName: "capExItem",
         totalVarbName,
-        contentTitle: "Cost",
         addItem,
         makeItemNode: ({ feId }) => <ListItemCapEx {...{ feId, key: feId }} />,
       }}

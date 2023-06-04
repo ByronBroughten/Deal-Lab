@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { nativeTheme } from "../../../../../../theme/nativeTheme";
 import theme from "../../../../../../theme/Theme";
 
 interface Props {
@@ -28,8 +29,7 @@ const Styled = styled.table`
     text-align: left;
     vertical-align: bottom;
     font-weight: 400;
-    line-height: 1rem;
-    font-size: 1rem;
+    font-size: ${nativeTheme.fs20};
     color: ${theme.primaryNext};
   }
 

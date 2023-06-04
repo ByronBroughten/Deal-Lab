@@ -1,12 +1,13 @@
-import { AiOutlineArrowRight } from "react-icons/ai";
 import { View } from "react-native";
 import styled from "styled-components";
 import { FeSectionInfo } from "../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { useGetterSectionOnlyOne } from "../../../sharedWithServer/stateClassHooks/useGetterSection";
+import { nativeTheme } from "../../../theme/nativeTheme";
 import theme from "../../../theme/Theme";
 import { StyledActionBtn } from "../../appWide/GeneralSection/MainSection/StyledActionBtn";
 import { ModalSection } from "../../appWide/ModalSection";
 import { useGoToPage } from "../../customHooks/useGoToPage";
+import { icons } from "../../Icons";
 import { MaterialStringEditor } from "../MaterialStringEditor";
 import { OnVarbSelect } from "./NumObjVarbSelector/VarbSelectorCollection";
 import { VarbSelectorAllCollections } from "./VarbSelectorAllCollections";
@@ -54,14 +55,10 @@ export function AllVarbsModal({
           }}
         />
         <StyledActionBtn
+          sx={{ border: `solid 1px ${nativeTheme["gray-300"]}` }}
           className="AllVarbsModal-goToVariablesBtn"
-          middle={"Variables"}
-          right={
-            <AiOutlineArrowRight
-              className="AllVarbsModal-goToVariablesArrow"
-              size={21}
-            />
-          }
+          middle={"Your Variables"}
+          left={icons.variable({ size: 21 })}
           onClick={goToVariables}
         />
       </View>

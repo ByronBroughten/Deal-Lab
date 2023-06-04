@@ -3,6 +3,7 @@ import {
   VarbListGeneric,
   VarbListGenericMenuType,
 } from "../ListGroup/ListGroupShared/VarbListGeneric";
+import { VarbListStandardHeaders } from "../ListGroup/ListGroupShared/VarbListGeneric/VarbListStandardHeaders";
 import { ListItemOngoing } from "./VarbListOngoing/ListItemOngoing";
 
 type Props = {
@@ -33,9 +34,9 @@ export function VarbListOngoing({ feId, ...rest }: Props) {
       {...{
         ...rest,
         feInfo: list.feInfo,
+        headers: <VarbListStandardHeaders contentTitle={"Cost"} />,
         itemName: "ongoingItem",
         totalVarbName,
-        contentTitle: "Cost",
         addItem,
         makeItemNode: ({ feId }) => (
           <ListItemOngoing {...{ feId, key: feId }} />

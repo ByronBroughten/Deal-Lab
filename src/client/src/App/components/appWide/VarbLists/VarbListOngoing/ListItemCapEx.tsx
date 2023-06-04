@@ -4,7 +4,7 @@ import { useGetterSection } from "../../../../sharedWithServer/stateClassHooks/u
 import { useSetterSection } from "../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import theme from "../../../../theme/Theme";
 import { NumObjEntityEditor } from "../../../inputs/NumObjEntityEditor";
-import { DisplayNameCell } from "../../ListGroup/ListGroupShared/DisplayNameCell";
+import { NameEditorCell } from "../../ListGroup/ListGroupShared/NameEditorCell";
 import { VarbListItemStyledNext } from "../../ListGroup/ListGroupShared/VarbListItemStyled";
 import { XBtnCell } from "../../ListGroup/ListGroupShared/XBtnCell";
 
@@ -23,7 +23,7 @@ const ListItemOngoingMemo = React.memo(function ListItemOngoingMemo({
   const costToReplace = capExItem.valueNext("costToReplace").mainText;
   return (
     <Styled {...{ className: "ListItemCapEx-root" }}>
-      <DisplayNameCell {...{ displayName, ...feInfo }} />
+      <NameEditorCell {...{ displayName, ...feInfo }} />
       <td className="VarbListTable-firstContentCell">
         <NumObjEntityEditor
           className="ListItemCapEx-costToReplace"

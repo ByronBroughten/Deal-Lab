@@ -1,4 +1,3 @@
-import styled from "styled-components";
 import { FeSectionInfo } from "../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { NumObjEntityEditor } from "../../../inputs/NumObjEntityEditor";
 
@@ -30,5 +29,3 @@ export function FirstValueEditorCell({
     </td>
   );
 }
-
-const Styled = styled.td``;

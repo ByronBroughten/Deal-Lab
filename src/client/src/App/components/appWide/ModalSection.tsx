@@ -3,11 +3,11 @@ import React from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { arrSx } from "../../utils/mui";
+import ChunkTitle from "../general/ChunkTitle";
 import { ModalWrapper, ModalWrapperProps } from "../general/ModalWrapper";
 import { PlainIconBtn } from "../general/PlainIconBtn";
 import { MainSection } from "./GeneralSection/MainSection";
 import { SectionTitleRow } from "./GeneralSection/MainSection/SectionTitleRow";
-import { SectionTitle } from "./SectionTitle";
 
 export interface ModalSectionProps extends ModalWrapperProps {
   closeModal: () => void;
@@ -65,7 +65,7 @@ export function ModalSection({
             }}
           >
             <SectionTitleRow
-              leftSide={<SectionTitle text={title} />}
+              leftSide={<ChunkTitle children={title} />}
               rightSide={
                 <PlainIconBtn
                   sx={{ ml: nativeTheme.s3 }}

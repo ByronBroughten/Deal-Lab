@@ -13,7 +13,9 @@ export function DealOutputListOrDetails({ detailsIsOpen, feId }: Props) {
       {!detailsIsOpen && (
         <DealOutputList sx={{ marginLeft: -nativeTheme.s2 }} feId={feId} />
       )}
-      {detailsIsOpen && <DealOutputDetails {...{ feId }} />}
+      {detailsIsOpen && (
+        <DealOutputDetails {...{ feId, sx: { marginTop: nativeTheme.s3 } }} />
+      )}
     </MainSectionBody>
   );
 }

@@ -3,6 +3,7 @@ import { AiFillEdit, AiOutlinePlusSquare } from "react-icons/ai";
 import { BiCopy, BiHelpCircle, BiHomeHeart } from "react-icons/bi";
 import { BsFillHouseFill, BsSnow2 } from "react-icons/bs";
 import { GiHouseKeys } from "react-icons/gi";
+import { HiOutlineVariable } from "react-icons/hi";
 import { ImCheckmark } from "react-icons/im";
 import { MdDelete, MdOutlineHomeRepairService } from "react-icons/md";
 
@@ -20,8 +21,12 @@ type IconName =
   | "edit"
   | "copy"
   | "addUnit"
-  | "finish";
+  | "finish"
+  | "variable";
 export const icons: Record<IconName, (props?: IconProps) => React.ReactNode> = {
+  variable(props) {
+    return <HiOutlineVariable {...props} />;
+  },
   property(props) {
     return <BsFillHouseFill {...props} />;
   },

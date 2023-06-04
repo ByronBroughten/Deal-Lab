@@ -2,7 +2,6 @@ import { Box } from "@mui/material";
 import React from "react";
 import { unstable_batchedUpdates } from "react-dom";
 import { BsFillHouseAddFill, BsFillHousesFill } from "react-icons/bs";
-import { HiOutlineVariable } from "react-icons/hi";
 import { SiWebcomponentsdotorg } from "react-icons/si";
 import { View } from "react-native";
 import { FeRouteName } from "../Constants/feRoutes";
@@ -16,6 +15,7 @@ import { useMakeGoToPage } from "./customHooks/useGoToPage";
 import { MuiRow } from "./general/MuiRow";
 import { Row } from "./general/Row";
 import { MuiBtnPropsNext } from "./general/StandardProps";
+import { icons } from "./Icons";
 
 const iconSize = 40;
 export function AccountPage() {
@@ -53,7 +53,7 @@ export function AccountPage() {
           <AccountBtn
             feRouteName="userVariables"
             text={<div>Input Variables</div>}
-            icon={<HiOutlineVariable size={iconSize} />}
+            icon={icons.variable({ size: iconSize })}
           />
         </Row>
       </MuiRow>

@@ -42,10 +42,6 @@ const Styled = styled.tr`
     align-items: flex-end;
   }
 
-  .XBtnCell-root {
-    text-align: right;
-  }
-
   .XBtn {
     visibility: hidden;
   }

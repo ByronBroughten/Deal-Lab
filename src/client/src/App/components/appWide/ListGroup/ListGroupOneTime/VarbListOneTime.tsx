@@ -1,7 +1,8 @@
 import {
   VarbListGeneric,
-  VarbListGenericMenuType
+  VarbListGenericMenuType,
 } from "../ListGroupShared/VarbListGeneric";
+import { VarbListStandardHeaders } from "../ListGroupShared/VarbListGeneric/VarbListStandardHeaders";
 import { ListItemOneTime } from "./VarbListOneTime/ListItemOneTime";
 
 type Props = {
@@ -17,7 +18,7 @@ export function VarbListOneTime({ feId, ...rest }: Props) {
       {...{
         ...rest,
         feInfo,
-        contentTitle: "Cost",
+        headers: <VarbListStandardHeaders contentTitle={"Cost"} />,
         totalVarbName: "total",
         makeItemNode: ({ feId }) => (
           <ListItemOneTime {...{ feId, key: feId }} />
