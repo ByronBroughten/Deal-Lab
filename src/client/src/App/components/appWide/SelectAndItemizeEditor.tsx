@@ -81,8 +81,10 @@ export function SelectAndItemizeEditor<
                 alignItems: "center",
               }}
             >
-              <Box sx={{ fontSize: "18px" }}>{`Total = ${total}`}</Box>
-              <EditSectionBtn sx={{ ml: nativeTheme.s2 }} onClick={openItems} />
+              <EditSectionBtn onClick={openItems} />
+              <Box
+                sx={{ fontSize: "18px", ml: nativeTheme.s2 }}
+              >{`Total = ${total}`}</Box>
               <ModalSection
                 title={itemizedModalTitle}
                 closeModal={closeItems}

@@ -68,6 +68,7 @@ export function BasePayValue({ feId }: { feId: string }) {
         },
         label: "Base Pay",
         items: [
+          ["none", "Choose method"],
           ["zero", "Owner managed (no pay)"],
           [
             "tenPercentRent",

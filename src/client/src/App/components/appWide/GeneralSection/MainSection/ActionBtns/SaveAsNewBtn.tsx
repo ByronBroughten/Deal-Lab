@@ -33,7 +33,7 @@ export function ActionSaveAsNewBtn({ btnProps, ...feInfo }: Props) {
       {...{
         renderDropdownBtn: (toggleDropdown, dropdownIsOpen) => (
           <StyledActionBtn
-            middle={"Save as component"}
+            middle={"Save as"}
             left={<AiOutlineSave size={23} />}
             onClick={toggleDropdown}
             isActive={dropdownIsOpen}
@@ -52,7 +52,7 @@ export function ActionSaveAsNewBtn({ btnProps, ...feInfo }: Props) {
             <MaterialStringEditor
               {...{
                 ...displayNameVarb.feVarbInfo,
-                sx: { minWidth: 130 },
+                sx: { "& .DraftEditor-root": { minWidth: 130 } },
                 label: "Title",
               }}
             />
@@ -66,7 +66,7 @@ export function ActionSaveAsNewBtn({ btnProps, ...feInfo }: Props) {
                   color: nativeTheme.dark,
                   "&:hover": {
                     borderTopWidth: 0,
-                    backgroundColor: nativeTheme.secondary.main,
+                    backgroundColor: nativeTheme.darkBlue.main,
                   },
                 },
                 middle: "Save",
