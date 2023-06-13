@@ -81,7 +81,7 @@ function initializeAnalyzerSections(prePopulatedSections?: StateSections) {
       return SectionsStore.getStoredSections();
     } catch (err) {
       if (err instanceof StateMissingFromStorageError) {
-        return SolverSections.initSectionsFromDefaultMain();
+        return SolverSections.initSectionsFromEmptyMain().stateSections;
       } else throw err;
     }
 }

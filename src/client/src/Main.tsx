@@ -17,6 +17,7 @@ import { useSubscriptions } from "./App/modules/customHooks/useSubscriptions";
 import { useControlUserData } from "./App/modules/SectionActors/UserDataActor";
 import { useAutoSave } from "./App/sharedWithServer/stateClassHooks/useAutoSaveSections";
 import { nativeTheme } from "./App/theme/nativeTheme";
+import { LoginSuccess } from "./LoginSuccess";
 import { PrivacyPolicyPage } from "./PrivacyPolicyPage";
 import { UserComponentRoutes } from "./UserComponentRoutes";
 
@@ -33,7 +34,7 @@ export function Main() {
         <Route path={feRoutes.auth} element={<NavBarOutletPage />}>
           {getSuperTokensRoutesForReactRouterDom(reactRouterDom)}
         </Route>
-        <Route path={feRoutes.authSuccess} element={<Navigate to={"/"} />} />
+        <Route path={feRoutes.authSuccess} element={<LoginSuccess />} />
         <Route
           path={feRoutes.subscribeSuccess}
           element={<Navigate to={"/"} />}

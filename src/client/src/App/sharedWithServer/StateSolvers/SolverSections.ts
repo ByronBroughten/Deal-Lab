@@ -1,6 +1,7 @@
 import { pick } from "lodash";
 import { SolverFeStore } from "../../modules/FeStore/SolverFeStore";
 import { defaultMaker } from "../defaultMaker/defaultMaker";
+import { makeEmptyMain } from "../defaultMaker/makeEmptyState";
 import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
 import { FeSectionInfo, FeVarbInfo } from "../SectionsMeta/SectionInfo/FeInfo";
 import { VarbInfoMixed } from "../SectionsMeta/SectionInfo/MixedSectionInfo";
@@ -146,7 +147,11 @@ export class SolverSections extends SolverSectionsBase {
       ...props,
     });
   }
-  static initSectionsFromEmptyMain() {}
+  static initSectionsFromEmptyMain() {
+    const mainPack = makeEmptyMain();
+    const solver = this.initSolverFromMainPack(mainPack);
+    return solver.solverSections;
+  }
   static initSectionsFromDefaultMain(): StateSections {
     return this.initDefault().stateSections;
   }

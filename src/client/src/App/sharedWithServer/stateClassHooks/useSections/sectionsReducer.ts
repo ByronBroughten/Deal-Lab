@@ -1,6 +1,7 @@
 import { ContentState } from "draft-js";
 import { AddToStoreProps } from "../../../modules/FeStore/SolverFeStore";
 import { UserData } from "../../apiQueriesShared/validateUserData";
+import { defaultMaker } from "../../defaultMaker/defaultMaker";
 import { ChildName } from "../../SectionsMeta/sectionChildrenDerived/ChildName";
 import {
   FeSectionInfo,
@@ -42,6 +43,7 @@ const sectionActionNames = [
   "removeStoredDeal",
   "loadUserData",
   "incrementGetUserDataTry",
+  "makeDefaultMain",
 ] as const;
 export type SectionActionName = (typeof sectionActionNames)[number];
 
@@ -148,7 +150,10 @@ export const sectionsReducer: React.Reducer<StateSections, SectionsAction> = (
     setState: () => {
       throw new Error("State should already be returned.");
     },
-
+    makeDefaultMain: () => {
+      const main = solverSections.oneAndOnly("main");
+      main.loadSelfAndSolve(defaultMaker.makeSectionPack("main"));
+    },
     loadUserData: ({ userData }) =>
       solverSections.feStore.loadUserData(userData),
     incrementGetUserDataTry: () =>
