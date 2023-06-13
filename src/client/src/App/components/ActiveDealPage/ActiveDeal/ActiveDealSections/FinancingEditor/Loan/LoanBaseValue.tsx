@@ -35,10 +35,10 @@ export function LoanBaseValue({ feId }: { feId: string }) {
         <MuiSelect
           {...{
             label: "Loan for what",
-            sx: {
-              minWidth: "110px",
-              mr: nativeTheme.s35,
+            selectProps: {
+              sx: { minWidth: 120 },
             },
+            sx: { mr: nativeTheme.s35 },
             feVarbInfo: {
               ...feInfo,
               varbName: "valueSourceName",

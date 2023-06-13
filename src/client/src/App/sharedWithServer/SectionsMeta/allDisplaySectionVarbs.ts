@@ -79,7 +79,7 @@ export const allDisplaySectionVarbs = {
     ),
 
     numUnitsEditor: varb("Unit count"),
-    numBedrooms: varb("Bedrooms"),
+    numBedrooms: varb("Bedroom count"),
     upfrontExpenses: varb("Upfront expenses"),
     ...editorDisplayGroup("periodicInput", "taxesOngoing", "Taxes", {
       monthly: { displayNameWithVariant: "Taxes monthly" },

@@ -37,6 +37,7 @@ export function UnitsNext({ feId }: FeIdProp) {
               {...{
                 varbPropArr: property.varbInfoArr([
                   "numUnits",
+                  "numBedrooms",
                   "targetRentYearly",
                 ] as const),
               }}
