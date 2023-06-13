@@ -1,5 +1,6 @@
 import { SxProps } from "@mui/material";
 import { StateValue } from "../../../../../../../sharedWithServer/SectionsMeta/values/StateValue";
+import { dealModes } from "../../../../../../../sharedWithServer/SectionsMeta/values/StateValue/dealMode";
 import { useGetterSection } from "../../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { SelectAndItemizeEditor } from "../../../../../../appWide/SelectAndItemizeEditor";
 import { NumObjEntityEditor } from "../../../../../../inputs/NumObjEntityEditor";
@@ -19,6 +20,10 @@ export function RepairValue({ feId, dealMode, sx }: Props) {
     ["listTotal", "Itemize"],
   ];
 
+  const hasZeroMode = dealModes.filter(
+    (mode) => mode === "buyAndHold" || mode === "homeBuyer"
+  );
+
   return (
     <SelectAndItemizeEditor
       {...{
@@ -29,9 +34,7 @@ export function RepairValue({ feId, dealMode, sx }: Props) {
           varbName: "valueSourceName",
         },
         label: "Repair cost",
-        items: items.filter(
-          (item) => dealMode === "buyAndHold" || item[0] !== "zero"
-        ),
+        items: items.filter((item) => hasZeroMode || item[0] !== "zero"),
         selectProps: { sx: { minWidth: 160 } },
         makeEditor:
           valueSourceName === "valueDollarsEditor"

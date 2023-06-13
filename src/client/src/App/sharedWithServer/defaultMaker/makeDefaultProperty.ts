@@ -1,5 +1,6 @@
 import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
 import { StateValue } from "../SectionsMeta/values/StateValue";
+import { getDealModes } from "../SectionsMeta/values/StateValue/dealMode";
 import { PackBuilderSection } from "../StatePackers/PackBuilderSection";
 import { numObj } from "./../SectionsMeta/values/StateValue/NumObj";
 
@@ -32,10 +33,12 @@ export function makeDefaultProperty(
     },
   });
 
-  const costOverrunPercent = propertyMode === "buyAndHold" ? 0 : 10;
+  const costOverrunPercent = getDealModes("maybeNoRehab").includes(propertyMode)
+    ? 0
+    : 10;
   const overrun = property.addAndGetChild("costOverrunValue");
   overrun.updateValues({
-    valuePercent: numObj(costOverrunPercent),
+    valuePercentEditor: numObj(costOverrunPercent),
     valueSourceName: "valuePercentEditor",
   });
 

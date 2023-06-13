@@ -6,41 +6,30 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-// Summing with a negative number doesn't work.
-
-// Show BR count in Unit details
-// Speed up initial load time for unlogged in state (don't use default main)
+// Speed up initial load time for unlogged-in state (don't use default main)
+// Implement archive and make it skip loading archived deals
+// unless "show archived" is activated
 
 // Make the deal compare metrics mirror the selected
-// metrics for outputs of each deal type (?)
+// metrics for the outputs of each deal type (?)
 
 // Maybe give Rental Property an (optional?) ARV value
+
+// - Need easy way to wrap closing costs or other things in loans.
+//   a value for "extra upfront expenses wrapped in loan"
 
 // Add homebuyer variables
 // - likeability metric
 // - investment per likability
 // - ongoing cost per likability
-// - Need easy way to wrap closing costs or other things in loans.
 
-// Quality of life
-// - Increase minimum width for "Loan for what"
-// - VariableModal only shows variables for the correct dealType
 // - One VariableModal app-wide
+// - VariableModal only shows variables for the correct dealType
 // - Editable titles on deal account page
-// - A couple key metrics on deal account page (BRs, Key Metric (ROI/CoC ROI...)
+// - A key metric or two on deal account page (BRs, Key Metric (ROI/CoC ROI...)
 // - Maybe a "Finish" button at the bottom of the deal page
 
-// See if Marina and maybe Kate 'O will look at it
-
-// Unify the info dot stuff so as you may put them on both input and output labels
-
-// Make the Wordpress site
-// Which advantages do I want to list on WP?
-// - Compare deals side by side
-// - Use custom variables
-// - Break deals down into reusable parts
-// - Modes for home buyers, landlords, fix and flippers, and more
-// - Gain confidence that you're getting the best deal you can
+// Put info dot stuff on output labels
 
 // - Add dealMode to dealCompare, to change:
 //   - deals that show up the search

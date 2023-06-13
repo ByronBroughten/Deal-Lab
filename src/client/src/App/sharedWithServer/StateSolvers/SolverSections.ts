@@ -146,9 +146,11 @@ export class SolverSections extends SolverSectionsBase {
       ...props,
     });
   }
+  static initSectionsFromEmptyMain() {}
   static initSectionsFromDefaultMain(): StateSections {
     return this.initDefault().stateSections;
   }
+
   static initDefault(): SolverSections {
     const defaultMainPack = defaultMaker.makeSectionPack("main");
     const solver = this.initSolverFromMainPack(defaultMainPack);

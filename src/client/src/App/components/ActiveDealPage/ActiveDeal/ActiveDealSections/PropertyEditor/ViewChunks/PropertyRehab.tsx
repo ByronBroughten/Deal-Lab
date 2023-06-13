@@ -9,12 +9,15 @@ import { RepairValue } from "./ViewParts/RepairValue";
 
 export function RehabSection({ feId }: FeIdProp) {
   const property = useGetterSection({ sectionName: "property", feId });
+
+  const repair = property.onlyChild("repairValue");
+  const repairSource = repair.valueNext("valueSourceName");
   return (
     <FormSectionLabeled label={"Rehab"}>
       <MuiRow>
         <RepairValue
           sx={nativeTheme.editorMargins}
-          feId={property.onlyChildFeId("repairValue")}
+          feId={repair.feId}
           dealMode={property.valueNext("propertyMode")}
         />
         <MiscOnetimeCost
