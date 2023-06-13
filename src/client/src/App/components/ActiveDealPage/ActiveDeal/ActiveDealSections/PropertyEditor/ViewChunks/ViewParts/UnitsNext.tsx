@@ -19,20 +19,26 @@ export function UnitsNext({ feId }: FeIdProp) {
       <MuiRow>
         {hasUnits && (
           <>
+            <StyledActionBtn
+              {...{
+                onClick: openUnits,
+                middle: "Edit Units",
+                left: icons.edit(),
+                sx: {
+                  fontSize: nativeTheme.inputLabel.fontSize,
+                  marginRight: nativeTheme.s35,
+                  border: `solid 1px ${nativeTheme["gray-300"]}`,
+                  height: "60px",
+                  borderRadius: nativeTheme.muiBr0,
+                },
+              }}
+            />
             <LabeledVarbRow
               {...{
                 varbPropArr: property.varbInfoArr([
                   "numUnits",
                   "targetRentYearly",
                 ] as const),
-              }}
-            />
-            <StyledActionBtn
-              {...{
-                onClick: openUnits,
-                middle: "Edit Units",
-                left: icons.edit(),
-                sx: { fontSize: nativeTheme.inputLabel.fontSize },
               }}
             />
           </>

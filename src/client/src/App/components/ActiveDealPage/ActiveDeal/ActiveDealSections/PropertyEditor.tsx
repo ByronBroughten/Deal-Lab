@@ -17,8 +17,11 @@ const propertiesByType: Record<
   brrrr: (props) => <PropertyBrrrrView {...props} />,
 };
 
-export function PropertyEditor({ feId }: FeIdProp) {
+interface Props extends FeIdProp {
+  propertyMode?: StateValue<"dealMode">;
+}
+export function PropertyEditor({ feId, propertyMode }: Props) {
   const property = useGetterSection({ sectionName: "property", feId });
-  const mode = property.valueNext("propertyMode");
+  const mode = propertyMode ?? property.valueNext("propertyMode");
   return propertiesByType[mode]({ feId });
 }

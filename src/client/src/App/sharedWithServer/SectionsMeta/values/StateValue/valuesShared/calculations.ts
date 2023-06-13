@@ -61,8 +61,11 @@ const solvableTextByArgs = {
       let solvableText = "";
       for (let num of nums) {
         if (num === "?") continue;
-        if (solvableText === "") solvableText = `${num}`;
-        else solvableText = solvableText + `+${num}`;
+        if (solvableText === "") {
+          solvableText = `${num}`;
+        } else {
+          solvableText = solvableText + `+${num}`;
+        }
       }
       if (!solvableText) solvableText = "0";
       return solvableText;

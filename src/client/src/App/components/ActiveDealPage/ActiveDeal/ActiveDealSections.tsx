@@ -10,7 +10,12 @@ export function ActiveDealProperty() {
 
   return (
     <DealSubSectionOpen {...{ finishIsAllowed: isComplete }}>
-      <PropertyEditor {...rest} />
+      <PropertyEditor
+        {...{
+          ...rest,
+          propertyMode: rest.dealMode,
+        }}
+      />
     </DealSubSectionOpen>
   );
 }

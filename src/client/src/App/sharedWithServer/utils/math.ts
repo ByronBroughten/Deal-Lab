@@ -12,8 +12,12 @@ const subtract = (a: number, b: number) => a - b;
 const multiply = (a: number, b: number) => a * b;
 const divide = (a: number, b: number) => a / b;
 const pow = (a: number, b: number) => a ** b;
+const unaryMinus = (a: number) => -a;
 
-mathjs.import({ add, subtract, multiply, divide, pow }, { override: true });
+mathjs.import(
+  { unaryMinus, add, subtract, multiply, divide, pow },
+  { override: true }
+);
 export const evaluate = (numText: string) => {
   return mathjs.evaluate(numText);
 };

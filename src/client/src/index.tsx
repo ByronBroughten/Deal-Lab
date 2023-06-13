@@ -6,56 +6,33 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
+// Summing with a negative number doesn't work.
 
-// Fix property tests for buyAndHold and fixAndFlip
-// Make property tests include brrrr and homeBuyer
-// Add tests for purchaseFinancing
-// Add tests for refiFinancing
-// Add tests for mgmt
-// Add tests for deals
+// Show BR count in Unit details
+// Speed up initial load time for unlogged in state (don't use default main)
 
-// Add an example Homebuyer deal
+// Make the deal compare metrics mirror the selected
+// metrics for outputs of each deal type (?)
 
-// Add an easy CapEx default for homebuyer mode (1% or 2% purchase price)
-// Re-add an easy CapEx default for buyAndHold and brrrr (20% rent)
-// Taylor the maintenance defaults for homebuyer mode
-// For homebuyer give repairCost "Turnkey"
-// For buyAndHold, give repairCost "Turnkey"
-// Maybe hide costOverrun for "Turnkey"
-// Is there an easy utilities default homeBuyer?
-// Add a pricePerSquareFoot variable
-// Add a totalInterestPaid variable
+// Maybe give Rental Property an (optional?) ARV value
 
-// Add property tests for homeBuyer and brrrr
-// Add financing tests for the relevant dealModes
-// Add mgmt tests
-// Add deal for the relevant dealModes
+// Add homebuyer variables
+// - likeability metric
+// - investment per likability
+// - ongoing cost per likability
+// - Need easy way to wrap closing costs or other things in loans.
 
-// Unify the info dots so as to put them on input labels as
-// well as output labels
+// Quality of life
+// - Increase minimum width for "Loan for what"
+// - VariableModal only shows variables for the correct dealType
+// - One VariableModal app-wide
+// - Editable titles on deal account page
+// - A couple key metrics on deal account page (BRs, Key Metric (ROI/CoC ROI...)
+// - Maybe a "Finish" button at the bottom of the deal page
 
-// See if Marina and Kate 'O will look at it
+// See if Marina and maybe Kate 'O will look at it
 
-// - Add dealMode to dealCompare, to change:
-//   - deals that show up the search
-//   - variables that show up in column select
-//   - the set of columns that is activated
-//     - Mixed will have (totalInvestment, annualizedRoi, and CoCROI)
-
-// - Add Brrrr
-//   - Mostly the same inputs and outputs as b&h + f&f
-//   - I'll have to differentiate between a buy loan and a refi loan
-
-// - Add tests for each dealMode
-
-// - allow customizing the output list
-// - give access to outputListMain
-// - allow loading output lists
-// - add pass or fail variables
-// - integrate pass or fail into the outputList
-
-// - just put completionStatus on the sections
-// - make SolverSections test suite to test the reducer actions
+// Unify the info dot stuff so as you may put them on both input and output labels
 
 // Make the Wordpress site
 // Which advantages do I want to list on WP?
@@ -64,6 +41,33 @@ AppRegistry.runApplication("App", {
 // - Break deals down into reusable parts
 // - Modes for home buyers, landlords, fix and flippers, and more
 // - Gain confidence that you're getting the best deal you can
+
+// - Add dealMode to dealCompare, to change:
+//   - deals that show up the search
+//   - variables that show up in column select
+//   - the set of columns that is activated
+//     - Mixed will have (totalInvestment, annualizedRoi, and CoCROI)
+
+// Make property tests include brrrr and homeBuyer
+// Add tests for refiFinancing
+// Add tests for mgmt
+
+// Add an easy CapEx default for homebuyer mode (1% or 2% purchase price)
+// Re-add an easy CapEx default for buyAndHold and brrrr (20% rent)
+// Taylor the maintenance defaults for homebuyer mode
+// For homebuyer give repairCost "Turnkey"
+// For buyAndHold, give repairCost "Turnkey"
+// Maybe hide costOverrun for "Turnkey"
+// Is there an easy utilities default homeBuyer?
+// Add a totalInterestPaid variable
+
+// - allow customizing the output lists
+// - give access to outputListMain
+// - allow loading output lists
+// - add pass or fail variables
+// - integrate pass or fail into the outputList
+
+// - make SolverSections test suite to test the reducer actions
 
 // Launch
 // - restrict editing to only the n most recent deals

@@ -21,12 +21,12 @@ const userVarbCapExNames = {
 
 const names = userVarbCapExNames;
 export const userVarbLifespans = {
-  roof: [names.roof, numObj(12)],
+  roof: [names.roof, numObj(20)],
   waterHeater: [names.waterHeater, numObj(12)],
   hvac: ["HVAC", numObj(20)],
   interiorPaint: ["Interior paint", numObj(10)],
   windows: ["Windows", numObj(50)],
-  siding: ["Siding", numObj(9000)],
+  siding: ["Siding", numObj(50)],
   appliances: ["Appliances", numObj(10)],
   plumbing: ["Plumbing", numObj(50)],
   driveway: ["Driveway", numObj(50)],
