@@ -364,6 +364,7 @@ export function makeAllBaseSectionVarbs() {
       showOutputs: baseVarb("boolean"),
     }),
     deal: varbs({
+      archived: baseVarb("boolean"),
       dealMode: baseVarb("dealMode"),
       ...baseVarbsS.savableSection,
       ...baseVarbsS.displayNameEditor,

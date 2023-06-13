@@ -70,6 +70,17 @@ export const nativeTheme = {
     mr: unitSizes.s45,
     ml: 0,
   },
+  dropdown: {
+    scrollbarNext: sxProps({
+      scrollbarWidth: 8,
+      msScrollbarTrackColor: themeColors["gray-300"],
+      // ::-webkit-scrollbar-thumb {
+      //   background-color: ${theme["gray-500"]};
+      //   border: 1px solid ${theme["gray-300"]};
+      // }
+    }),
+  },
+
   sectionTitle: sxProps({
     fontSize: unitSizes.fs24,
   }),

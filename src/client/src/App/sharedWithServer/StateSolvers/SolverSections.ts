@@ -220,10 +220,21 @@ export class SolverSections extends SolverSectionsBase {
       sectionPack: section.makeSectionPack(),
     });
   }
-  removeStoredDeal(feId: string) {
+  deactivateDealIfActive(feId: string) {
     if (this.getterSections.isActiveDeal(feId)) {
       this.prepperSections.deactivateDealAndDealSystem();
     }
+  }
+  archiveDeal(feId: string) {
+    this.deactivateDealIfActive(feId);
+    const deal = this.solverSection({
+      sectionName: "deal",
+      feId,
+    });
+    deal.updateValues({ archived: true });
+  }
+  removeStoredDeal(feId: string) {
+    this.deactivateDealIfActive(feId);
     this.feStore.removeFromStore({ storeName: "dealMain", feId });
   }
   activateDealAndSolve(feId: string): void {

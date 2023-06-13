@@ -13,18 +13,24 @@ function useFilteredDeals() {
   const main = useGetterSectionOnlyOne("main");
   const feStore = main.onlyChild("feStore");
   const dealMenu = main.onlyChild("mainDealMenu");
+
+  const showArchived = dealMenu.valueNext("showArchived");
   const dealNameFilter = dealMenu.valueNext("dealNameFilter");
   const deals = feStore.children("dealMain");
-  return deals.filter((deal) =>
-    deal.stringValue("displayName").includes(dealNameFilter)
-  );
+  return deals.filter((deal) => {
+    if (!showArchived && deal.valueNext("archived")) {
+      return false;
+    } else {
+      return deal.stringValue("displayName").includes(dealNameFilter);
+    }
+  });
 }
 
 function useFilteredSortedDeals() {
   const deals = useFilteredDeals();
   return deals.sort(
     (a, b) =>
-      b.valueNext("dateTimeFirstSaved") - a.valueNext("dateTimeFirstSaved")
+      b.valueNext("dateTimeLastSaved") - a.valueNext("dateTimeLastSaved")
   );
 }
 
