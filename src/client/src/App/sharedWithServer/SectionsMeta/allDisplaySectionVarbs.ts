@@ -67,7 +67,7 @@ export const allDisplaySectionVarbs = {
     rehabCost: varb("Rehab cost"),
     rehabCostBase: varb("Rehab cost base"),
     numUnits: varb("Unit count"),
-    numBedroomsEditor: varb("Bedroom count"),
+    numBedroomsEditor: varb("BR count"),
     ...editorDisplayGroup(
       "monthsYearsInput",
       "holdingPeriod",
@@ -79,7 +79,7 @@ export const allDisplaySectionVarbs = {
     ),
 
     numUnitsEditor: varb("Unit count"),
-    numBedrooms: varb("Bedroom count"),
+    numBedrooms: varb("BR count"),
     upfrontExpenses: varb("Upfront expenses"),
     ...editorDisplayGroup("periodicInput", "taxesOngoing", "Taxes", {
       monthly: { displayNameWithVariant: "Taxes monthly" },
