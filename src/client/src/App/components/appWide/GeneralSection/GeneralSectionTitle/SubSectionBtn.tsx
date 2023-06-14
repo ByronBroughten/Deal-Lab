@@ -6,7 +6,7 @@ export const SubSectionBtn = styled(MainSectionBtn)({
   ...nativeTheme.subSection.borderLines,
   fontSize: nativeTheme.inputLabel.fontSize,
   boxShadow: "none",
-  "& :hover": {
+  "&:hover": {
     backgroundColor: nativeTheme.secondary,
     color: nativeTheme.light,
     boxShadow: "none",

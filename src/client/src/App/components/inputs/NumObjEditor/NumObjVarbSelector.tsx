@@ -11,8 +11,8 @@ import theme from "../../../theme/Theme";
 import { HollowBtn } from "../../appWide/HollowBtn";
 import { DropdownContainer } from "../../general/DropdownContainer";
 import { InfoModal } from "../../general/InfoModal";
+import { useDealModeContextVarbSelect } from "../../general/VarbSelectModalProvider";
 import { icons } from "../../Icons";
-import { AllVarbsModal } from "./AllVarbsModal";
 import { insertVarbEntity } from "./NumObjVarbSelector/insertVarbEntity";
 import {
   OnVarbSelect,
@@ -40,8 +40,6 @@ export const NumObjVarbSelector = React.memo(
     ) => {
       const { toggleVarbs, varbsIsOpen, closeVarbs } = useToggleView("varbs");
       const { openInfo, infoIsOpen, closeInfo } = useToggleView("info");
-      const { openAllVarbs, allVarbsIsOpen, closeAllVarbs } =
-        useToggleView("allVarbs");
 
       const focalSection = useGetterSection(feInfo);
       const onVarbSelect: OnVarbSelect = (varbInfo) => {
@@ -52,6 +50,8 @@ export const NumObjVarbSelector = React.memo(
           varbInfo,
         });
       };
+
+      const openVarbSelect = useDealModeContextVarbSelect(onVarbSelect);
       return (
         <Styled ref={ref} className="NumObjVarbSelector-root">
           <div className="NumObjVarbSelector-absolute">
@@ -104,20 +104,12 @@ export const NumObjVarbSelector = React.memo(
                     />
                     <ViewAllRow
                       {...{
-                        onClick: openAllVarbs,
+                        onClick: openVarbSelect,
                         displayName: "View All",
                         className: "NumObjVarbSelector-viewAll",
                       }}
                     />
                   </VarbSelectorShell>
-                  <AllVarbsModal
-                    {...{
-                      focalInfo: feInfo,
-                      onVarbSelect,
-                      closeAllVarbs,
-                      allVarbsIsOpen,
-                    }}
-                  />
                 </DropdownContainer>
               )}
             </div>

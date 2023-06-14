@@ -6,25 +6,32 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-// Speed up initial load time for unlogged-in state (don't use default main)
+
+// - Put varbSelect modal inside SectionModal
+// - Make untitled deals say "untitled" when selecting for comparison
+
 // Implement archive and make it skip loading archived deals
-// unless "show archived" is activated
+// - Create a new route for fetching archived deals...?
+//   Pain.
+// - Add the archive button
+// - Add the unarchive button
+
+// - One VariableModal app-wide
+// - It takes parameters such as dealMode and onSelect
 
 // Make the deal compare metrics mirror the selected
 // metrics for the outputs of each deal type (?)
 
-// Maybe give Rental Property an (optional?) ARV value
-
-// - Need easy way to wrap closing costs or other things in loans.
-//   a value for "extra upfront expenses wrapped in loan"
+// Create a value called "extraLoanCosts"
+// You could use a similar value for the "custom"
+// loan cost editor
+// - simple, enter amount or itemize
 
 // Add homebuyer variables
-// - likeability metric
+// - likeability metric (is the necessary?)
 // - investment per likability
-// - ongoing cost per likability
+// - ongoing payment per likability
 
-// - One VariableModal app-wide
-// - VariableModal only shows variables for the correct dealType
 // - Editable titles on deal account page
 // - A key metric or two on deal account page (BRs, Key Metric (ROI/CoC ROI...)
 // - Maybe a "Finish" button at the bottom of the deal page
@@ -44,21 +51,16 @@ AppRegistry.runApplication("App", {
 // Add an easy CapEx default for homebuyer mode (1% or 2% purchase price)
 // Re-add an easy CapEx default for buyAndHold and brrrr (20% rent)
 // Taylor the maintenance defaults for homebuyer mode
-// For homebuyer give repairCost "Turnkey"
-// For buyAndHold, give repairCost "Turnkey"
-// Maybe hide costOverrun for "Turnkey"
 // Is there an easy utilities default homeBuyer?
-// Add a totalInterestPaid variable
 
-// - allow customizing the output lists
 // - give access to outputListMain
-// - allow loading output lists
 // - add pass or fail variables
 // - integrate pass or fail into the outputList
 
 // - make SolverSections test suite to test the reducer actions
 
 // Launch
+
 // - restrict editing to only the n most recent deals
 // - Make output lists customizable
 // - Add passFail outputs

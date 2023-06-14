@@ -1,33 +1,23 @@
-import styled from "styled-components";
+import { SxProps } from "@mui/material";
 import { mixedInfoS } from "../../../sharedWithServer/SectionsMeta/SectionInfo/MixedSectionInfo";
 import { collectionNamesFixed } from "../../../sharedWithServer/SectionsMeta/SectionInfo/VarbPathNameInfo";
 import { DealMode } from "../../../sharedWithServer/SectionsMeta/values/StateValue/dealMode";
 import { useGetterMainOnlyChild } from "../../../sharedWithServer/stateClassHooks/useMain";
-import {
-  ValueCustomVarbPathInfo,
-  ValueInEntityInfo,
-} from "../../../sharedWithServer/StateEntityGetters/ValueInEntityInfo";
+import { ValueCustomVarbPathInfo } from "../../../sharedWithServer/StateEntityGetters/ValueInEntityInfo";
 import { fixedVarbOptionArrs } from "../../../sharedWithServer/StateEntityGetters/varbPathOptions";
 import { GetterSection } from "../../../sharedWithServer/StateGetters/GetterSection";
 import { Arr } from "../../../sharedWithServer/utils/Arr";
-import ccs from "../../../theme/cssChunks";
-import theme from "../../../theme/Theme";
-import { useDealModeContext } from "../../customContexts/dealModeContext";
-import {
-  OnVarbSelect,
-  VarbSelectorCollection,
-} from "./NumObjVarbSelector/VarbSelectorCollection";
+import { OnVarbSelect } from "./NumObjVarbSelector/VarbSelectorCollection";
+import { CollectionProps, VarbSelector } from "./VarbSelector";
 
 type Props = {
+  sx?: SxProps;
   nameFilter: string;
   onVarbSelect: OnVarbSelect;
+  dealMode: DealMode<"plusMixed">;
 };
 
-export function VarbSelectorAllCollections({
-  onVarbSelect,
-  nameFilter,
-}: Props) {
-  const dealMode = useDealModeContext();
+export function VarbSelectorByDealMode({ dealMode, ...rest }: Props) {
   const latent = useGetterMainOnlyChild("latentDealSystem");
   const collectionProps: CollectionProps = [];
 
@@ -37,34 +27,14 @@ export function VarbSelectorAllCollections({
   const userVarbCollections = useUserVarbCollections(latent);
   collectionProps.push(...userVarbCollections);
   return (
-    <Styled className="VarbSelectorAllCollections-root">
-      {collectionProps.map(({ rowInfos, collectionId, ...rest }) => {
-        const rowInfosNext = rowInfos.filter((info) => {
-          const { displayNameFull } = latent.varbByFocalMixed(info);
-          return displayNameFull
-            .toLowerCase()
-            .includes(nameFilter.toLowerCase());
-        });
-        return rowInfosNext.length > 0 ? (
-          <VarbSelectorCollection
-            {...{
-              key: collectionId,
-              onVarbSelect,
-              rowInfos: rowInfosNext,
-              ...rest,
-            }}
-          />
-        ) : null;
-      })}
-    </Styled>
+    <VarbSelector
+      {...{
+        ...rest,
+        collectionProps,
+      }}
+    />
   );
 }
-
-type CollectionProps = {
-  collectionId: string;
-  collectionName: string;
-  rowInfos: ValueInEntityInfo[];
-}[];
 
 function useFixedCollections(dealMode: DealMode<"plusMixed">): CollectionProps {
   const orderedCollectionNames = Arr.extractStrict(collectionNamesFixed, [
@@ -106,14 +76,3 @@ function useUserVarbCollections(focal: GetterSection<any>): CollectionProps {
     return { collectionName, rowInfos, collectionId: list.feId };
   });
 }
-
-const Styled = styled.div`
-  ${ccs.dropdown.scrollbar};
-  border: 1px solid ${theme.primary.light};
-  border-radius: ${theme.br0};
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-  max-height: 300px;
-  overflow-y: auto;
-  overflow-x: hidden;
-`;

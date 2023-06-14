@@ -43,7 +43,7 @@ export function Loan({
           "& .MainSectionTopRows-xBtn": {
             visibility: "hidden",
           },
-          "& :hover": {
+          "&:hover": {
             "& .MainSectionTopRows-xBtn": {
               visibility: "visible",
             },
