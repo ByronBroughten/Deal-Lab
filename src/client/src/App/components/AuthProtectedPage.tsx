@@ -3,7 +3,10 @@ import { SessionAuth } from "supertokens-auth-react/recipe/session";
 import { feRoutes } from "../Constants/feRoutes";
 import { useUserDataStatus } from "../modules/SectionActors/UserDataActor";
 import { OuterSectionNext } from "./appWide/GeneralSection/OuterSectionNext";
+import { DealModeProvider } from "./customContexts/dealModeContext";
 import { PageMain } from "./general/PageMain";
+import { ModalProviders } from "./ModalProviders";
+import { Modals } from "./Modals";
 import { NavBar } from "./NavBar";
 
 export function UserDataNeededPage() {
@@ -18,12 +21,17 @@ export function UserDataNeededPage() {
 export function AuthProtectedPage() {
   return (
     <LoginToAccess>
-      <PageMain>
-        <NavBar />
-        <OuterSectionNext>
-          <Outlet />
-        </OuterSectionNext>
-      </PageMain>
+      <DealModeProvider dealMode="mixed">
+        <ModalProviders>
+          <Modals />
+          <PageMain>
+            <NavBar />
+            <OuterSectionNext>
+              <Outlet />
+            </OuterSectionNext>
+          </PageMain>
+        </ModalProviders>
+      </DealModeProvider>
     </LoginToAccess>
   );
 }

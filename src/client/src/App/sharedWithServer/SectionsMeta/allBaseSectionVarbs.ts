@@ -50,7 +50,11 @@ export function makeAllBaseSectionVarbs() {
       dealSort: baseVarb("dealSort"),
       showArchived: baseVarb("boolean"),
     }),
-    compareSection: varbs({
+    dealCompareDealMenu: varbs({
+      dealNameFilter: baseVarb("string"),
+      dealMode: baseVarb("dealMode"),
+    }),
+    dealCompareMenu: varbs({
       dealNameFilter: baseVarb("string"),
       valueNameFilter: baseVarb("string"),
     }),

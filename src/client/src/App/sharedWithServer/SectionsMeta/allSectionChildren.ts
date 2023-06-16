@@ -51,7 +51,7 @@ export const allSectionChildren = checkAllSectionChildren({
 
     // I would like to save this at some point
     // in some fashion
-    dealCompare: "compareSection",
+    dealCompare: "dealCompareMenu",
 
     // these will be eliminated
     userVarbEditor: "userVarbEditor",
@@ -78,7 +78,7 @@ export const allSectionChildren = checkAllSectionChildren({
     numVarbListMain: "numVarbList",
   }),
   userListEditor: sectionChildren(listChildren),
-  compareSection: sectionChildren({
+  dealCompareMenu: sectionChildren({
     comparedDealSystem: "dealSystem",
     compareValue: "compareValue",
   }),

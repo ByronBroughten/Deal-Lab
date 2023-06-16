@@ -13,8 +13,8 @@ function useGetFilteredDeals(): GetterSection<"deal">[] {
   const feStore = main.onlyChild("feStore");
   const deals = feStore.children("dealMain");
 
-  const compareSection = main.onlyChild("dealCompare");
-  const nameFilter = compareSection.valueNext("dealNameFilter");
+  const dealCompareMenu = main.onlyChild("dealCompare");
+  const nameFilter = dealCompareMenu.valueNext("dealNameFilter");
   const nameFilteredDeals = deals.filter((deal) =>
     deal
       .valueNext("displayName")
@@ -22,7 +22,7 @@ function useGetFilteredDeals(): GetterSection<"deal">[] {
       .includes(nameFilter.toLowerCase())
   );
 
-  const dealSystems = compareSection.children("comparedDealSystem");
+  const dealSystems = dealCompareMenu.children("comparedDealSystem");
   const comparedSystems = dealSystems.map((page) => page.onlyChild("deal"));
   const comparedDbIds = comparedSystems.map(({ dbId }) => dbId);
   return nameFilteredDeals.filter((deal) => !comparedDbIds.includes(deal.dbId));
@@ -30,8 +30,8 @@ function useGetFilteredDeals(): GetterSection<"deal">[] {
 
 type Props = { closeMenu: () => void };
 export function DealCompareDealMenu({ closeMenu }: Props) {
-  const compareSection = useSetterSectionOnlyOne("compareSection");
-  const nameFilterVarb = compareSection.varb("dealNameFilter");
+  const dealCompareMenu = useSetterSectionOnlyOne("dealCompareMenu");
+  const nameFilterVarb = dealCompareMenu.varb("dealNameFilter");
   const filteredDeals = useGetFilteredDeals();
   return (
     <View>
@@ -89,7 +89,7 @@ export function DealCompareDealMenu({ closeMenu }: Props) {
                 onClick={() => {
                   unstable_batchedUpdates(() => {
                     const dealSystem =
-                      compareSection.addAndGetChild("comparedDealSystem");
+                      dealCompareMenu.addAndGetChild("comparedDealSystem");
                     const dealToCompare = dealSystem.onlyChild("deal");
                     dealToCompare.loadSelfSectionPack(
                       deal.packMaker.makeSectionPack()

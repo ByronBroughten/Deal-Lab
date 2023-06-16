@@ -1,7 +1,7 @@
 import { pick } from "lodash";
 import { SolverFeStore } from "../../modules/FeStore/SolverFeStore";
 import { defaultMaker } from "../defaultMaker/defaultMaker";
-import { makeEmptyMain } from "../defaultMaker/makeEmptyState";
+import { makeEmptyMain } from "../defaultMaker/makeEmptyMain";
 import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
 import { FeSectionInfo, FeVarbInfo } from "../SectionsMeta/SectionInfo/FeInfo";
 import { VarbInfoMixed } from "../SectionsMeta/SectionInfo/MixedSectionInfo";

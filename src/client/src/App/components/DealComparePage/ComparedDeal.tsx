@@ -8,13 +8,13 @@ type Props = {
   style?: ViewStyle;
 };
 export function ComparedDeal({ feId, style }: Props) {
-  const compareSection = useGetterSectionOnlyOne("compareSection");
-  const dealSystem = compareSection.child({
+  const dealCompareMenu = useGetterSectionOnlyOne("dealCompareMenu");
+  const dealSystem = dealCompareMenu.child({
     childName: "comparedDealSystem",
     feId,
   });
 
-  const compareValues = compareSection.children("compareValue");
+  const compareValues = dealCompareMenu.children("compareValue");
   const deal = dealSystem.onlyChild("deal");
   return (
     <View

@@ -28,7 +28,7 @@ export const sectionNames = [
   "outputList",
   "outputSection",
 
-  "compareSection",
+  "dealCompareMenu",
   "compareOption",
   "compareValue",
 

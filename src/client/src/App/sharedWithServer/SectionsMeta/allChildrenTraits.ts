@@ -105,7 +105,7 @@ export const allChildrenTraits = checkAllChildrenTraits({
     onetimeListMain: childTraits(storeName("onetimeListMain")),
     ongoingListMain: childTraits(storeName("ongoingListMain")),
   }),
-  compareSection: childrenTraits("compareSection", {
+  dealCompareMenu: childrenTraits("dealCompareMenu", {
     comparedDealSystem: childTraits({
       sectionContextSpecifier: indexesForSpecifiers.dealSystem,
     }),
