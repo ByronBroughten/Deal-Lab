@@ -10,9 +10,9 @@ import { nativeTheme } from "../../../theme/nativeTheme";
 import theme from "../../../theme/Theme";
 import { HollowBtn } from "../../appWide/HollowBtn";
 import { DropdownContainer } from "../../general/DropdownContainer";
-import { InfoModal } from "../../general/InfoModal";
-import { useDealModeContextVarbSelect } from "../../general/VarbSelectModalProvider";
 import { icons } from "../../Icons";
+import { useInfoModal } from "../../Modals/InfoModalProvider";
+import { useDealModeContextVarbSelect } from "../../Modals/VarbSelectModalProvider";
 import { insertVarbEntity } from "./NumObjVarbSelector/insertVarbEntity";
 import {
   OnVarbSelect,
@@ -39,7 +39,6 @@ export const NumObjVarbSelector = React.memo(
       ref: PopperRef
     ) => {
       const { toggleVarbs, varbsIsOpen, closeVarbs } = useToggleView("varbs");
-      const { openInfo, infoIsOpen, closeInfo } = useToggleView("info");
 
       const focalSection = useGetterSection(feInfo);
       const onVarbSelect: OnVarbSelect = (varbInfo) => {
@@ -52,6 +51,14 @@ export const NumObjVarbSelector = React.memo(
       };
 
       const openVarbSelect = useDealModeContextVarbSelect(onVarbSelect);
+
+      const { setModal } = useInfoModal();
+      const openModal = () =>
+        setModal({
+          title: "Equation Editor and Variables",
+          infoText: `This input is a Variable Editor. Like all the other numeric editors, it lets you enter numbers as well as symbols, to add, subtract, multiply, and divide (+,-,*,/).\n\nAdditionally, you may enter variables. This lets you plug in the values of other inputs, much like excel spreadsheet formulas.\n\nTo add a variable, simply click the "+ Variables" button and choose one from the dropdown.`,
+        });
+
       return (
         <Styled ref={ref} className="NumObjVarbSelector-root">
           <div className="NumObjVarbSelector-absolute">
@@ -63,7 +70,7 @@ export const NumObjVarbSelector = React.memo(
                 <HollowBtn
                   className="NumObjVarbSelector-infoBtn"
                   middle={icons.info({ size: 21 })}
-                  onClick={openInfo}
+                  onClick={openModal}
                   sx={{
                     borderRadius: 0,
                     border: "none",
@@ -74,14 +81,6 @@ export const NumObjVarbSelector = React.memo(
                     "&:hover": {
                       backgroundColor: nativeTheme.darkBlue.light,
                     },
-                  }}
-                />
-                <InfoModal
-                  {...{
-                    showModal: infoIsOpen,
-                    closeModal: closeInfo,
-                    title: "Equation Editor and Variables",
-                    infoText: `This input is a Variable Editor. Like all the other numeric editors, it lets you enter numbers as well as symbols, to add, subtract, multiply, and divide (+,-,*,/).\n\nAdditionally, you may also enter variables. This lets the input respond to other inputs, much like excel spreadsheet formulas.\n\nTo add a variable, simply click the "+ Variables" button and choose one from the dropdown that appears.`,
                   }}
                 />
               </div>

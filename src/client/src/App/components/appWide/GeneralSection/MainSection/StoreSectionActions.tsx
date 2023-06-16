@@ -5,7 +5,7 @@ import { SectionNameByType } from "../../../../sharedWithServer/SectionsMeta/Sec
 import { useActionWithProps } from "../../../../sharedWithServer/stateClassHooks/useAction";
 import theme from "../../../../theme/Theme";
 import { useMakeGoToPage } from "../../../customHooks/useGoToPage";
-import { useConfirmation } from "../../../general/ConfirmationDialogueProvider";
+import { useConfirmationModal } from "../../../Modals/ConfirmationDialogueProvider";
 import { ListRouteName } from "../../../UserListEditorPage/UserComponentClosed";
 import { ActionLoadBtn } from "./ActionBtns/ActionLoadBtn";
 import { ActionMenuProps } from "./ActionBtns/ActionMenuTypes";
@@ -30,9 +30,9 @@ export function StoreSectionActions<
   const feInfo = { sectionName, feId } as const;
   const resetSelfToDefault = useActionWithProps("resetSelfToDefault", feInfo);
   const makeGoToPage = useMakeGoToPage();
-  const confirm = useConfirmation();
+  const { setModal } = useConfirmationModal();
   const warnThenReset = () =>
-    confirm({
+    setModal({
       title: "Are you sure you want to reset this section to default?",
       description: "If yes, you will lose all the changes made to it.",
       variant: "danger",

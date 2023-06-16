@@ -6,7 +6,9 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Normalize } from "styled-normalize";
 import { SuperTokensWrapper } from "supertokens-auth-react";
+import { DealModeProvider } from "./App/components/customContexts/dealModeContext";
 import { ShowEqualsProvider } from "./App/components/customContexts/showEquals";
+import { ModalProviders } from "./App/components/ModalProviders";
 import { Modals } from "./App/components/Modals";
 import { initSupertokens } from "./App/modules/initSupertokens";
 import { IdOfSectionToSaveProvider } from "./App/sharedWithServer/stateClassHooks/useIdOfSectionToSave";
@@ -49,9 +51,12 @@ const App: React.FC = () => {
                         {muiGlobalStyles}
                         {styledComponentsGlobalFonts}
                         {styledComponentsGlobalStyle}
-                        <Modals>
-                          <Main />
-                        </Modals>
+                        <DealModeProvider dealMode="mixed">
+                          <ModalProviders>
+                            <Modals />
+                            <Main />
+                          </ModalProviders>
+                        </DealModeProvider>
                         <ToastContainer />
                       </ShowEqualsProvider>
                     </IdOfSectionToSaveProvider>

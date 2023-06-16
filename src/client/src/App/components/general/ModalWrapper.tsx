@@ -1,23 +1,50 @@
+import { Box, SxProps } from "@mui/material";
 import styled, { css } from "styled-components";
 import { StandardProps } from "./StandardProps";
 
 export interface ModalWrapperProps extends StandardProps {
   show: boolean;
+  sx?: SxProps;
 }
-export function ModalWrapper({ children, className, show }: ModalWrapperProps) {
+export function ModalWrapper({
+  children,
+  className,
+  show,
+  sx,
+}: ModalWrapperProps) {
   return (
     <Styled
       $show={show}
-      className={`ModalWrapper-root ${show ? "ModalWrapper-show" : ""} ${
-        className ?? ""
-      }`}
+      sx={sx}
+      // position: "fixed",
+      // top: 0,
+      // bottom: 0,
+      // left: 0,i
+      // right: 0,
+      // display: "flex",
+      // backgroundColor: "rgba(0, 0, 0, 0.5)",
+      // alignItems: "center",
+      // justifyContent: "center",
+      // zIndex: 10,
+      // opacity: 0,
+      // transition: "all 0.3s ease-in-out",
+      // pointerEvents: "none",
+      // ...(show && { opacity: 1, pointerEvents: "visible" }),
+      className={className}
     >
-      <div className="ModalWrapper-content">{children}</div>
+      <Box
+        sx={{
+          transform: show ? "translateY(0)" : "translateY(-200px)",
+          transition: "all 0.3s ease-in-out",
+        }}
+      >
+        {children}
+      </Box>
     </Styled>
   );
 }
 
-const Styled = styled.div<{ $show: boolean }>`
+const Styled = styled(Box)<{ $show: boolean }>`
   position: fixed;
   left: 0;
   top: 0;
@@ -32,18 +59,10 @@ const Styled = styled.div<{ $show: boolean }>`
   transition: all 0.3s ease-in-out;
   pointer-events: none;
 
-  .ModalWrapper-content {
-    transform: translateY(-200px);
-    transition: all 0.3s ease-in-out;
-  }
-
   ${({ $show }) =>
     $show &&
     css`
       opacity: 1;
       pointer-events: visible;
-      .ModalWrapper-content {
-        transform: translateY(0);
-      }
     `}
 `;

@@ -3,24 +3,24 @@ import { inEntityValueInfo } from "../../sharedWithServer/SectionsMeta/values/St
 import { useSetterMain } from "../../sharedWithServer/stateClassHooks/useMain";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { HollowBtn } from "../appWide/HollowBtn";
+import { OnVarbSelect } from "../inputs/NumObjEditor/NumObjVarbSelector/VarbSelectorCollection";
 import {
   useDealModeContextVarbSelect,
   useVarbSelectModal,
-} from "../general/VarbSelectModalProvider";
-import { OnVarbSelect } from "../inputs/NumObjEditor/NumObjVarbSelector/VarbSelectorCollection";
+} from "../Modals/VarbSelectModalProvider";
 
 export function DealCompareValueMenu() {
   const main = useSetterMain();
   const dealCompare = main.onlyChild("dealCompare");
 
-  const setVarbSelectModal = useVarbSelectModal();
+  const { setModal } = useVarbSelectModal();
   const onVarbSelect: OnVarbSelect = (varbInfo) => {
     unstable_batchedUpdates(() => {
       dealCompare.addChild("compareValue", {
         sectionValues: { valueEntityInfo: inEntityValueInfo(varbInfo) },
       });
     });
-    setVarbSelectModal(null);
+    setModal(null);
   };
 
   const openVarbSelect = useDealModeContextVarbSelect(onVarbSelect);

@@ -3,16 +3,13 @@ import styled from "styled-components";
 import { VarbName } from "../../sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
 import { ChildName } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/ChildName";
 import { SectionNameByType } from "../../sharedWithServer/SectionsMeta/SectionNameByType";
-import { StateValue } from "../../sharedWithServer/SectionsMeta/values/StateValue";
-import { validateStateValue } from "../../sharedWithServer/SectionsMeta/values/valueMetas";
-import { useAction } from "../../sharedWithServer/stateClassHooks/useAction";
 import { useGetterSection } from "../../sharedWithServer/stateClassHooks/useGetterSection";
 import theme from "../../theme/Theme";
 import { BigStringEditor } from "../inputs/BigStringEditor";
 import { NumObjEntityEditor } from "../inputs/NumObjEntityEditor";
 import { RemoveSectionXBtn } from "./RemoveSectionXBtn";
 import { SectionTitle } from "./SectionTitle";
-import { SelectAndItemizeEditorDepric } from "./SelectAndItemizeEditorDeprec";
+import { SelectAndItemizeEditor } from "./SelectAndItemizeEditor";
 
 type ValueSectionName = SectionNameByType<"valueSection">;
 type MakeItemizedListNodeProps = {
@@ -49,17 +46,10 @@ export function ValueSectionGeneric<
   showXBtn = true,
 }: Props<SN>) {
   const feInfo = { sectionName, feId } as const;
-  const updateValue = useAction("updateValue");
   const section = useGetterSection(feInfo);
   const listChildName = getChildName(sectionName);
   const valueSource = section.valueNext("valueSourceName");
   const displayNameValue = section.valueNext("displayName").mainText;
-
-  const menuItems: [StateValue<"customValueSource">, string][] = [
-    ["valueEditor", "Enter amount"],
-    ["listTotal", "Itemize"],
-  ];
-
   return (
     <Styled className={`ValueSection-root ${className ?? ""}`}>
       <div className={"ValueSection-viewable"}>
@@ -86,9 +76,24 @@ export function ValueSectionGeneric<
             />
           )}
         </div>
-        <SelectAndItemizeEditorDepric
+        <SelectAndItemizeEditor
           {...{
-            selectValue: valueSource,
+            itemizedModalTitle: displayNameValue,
+            unionValueName: "customValueSource",
+            feVarbInfo: {
+              ...feInfo,
+              varbName: "valueSourceName",
+            },
+            items: [
+              ["valueEditor", "Enter amount"],
+              ["listTotal", "Itemize"],
+            ],
+            itemizeValue: "listTotal",
+            itemsComponent: makeItemizedListNode({
+              feId: section.onlyChild(listChildName).feId,
+            }),
+
+            total: section.varbNext(valueName).displayVarb(),
             makeEditor:
               valueSource === "valueEditor"
                 ? (props) => (
@@ -105,20 +110,6 @@ export function ValueSectionGeneric<
                     />
                   )
                 : undefined,
-            menuItems,
-            onChange: (e) => {
-              updateValue({
-                ...feInfo,
-                varbName: "valueSourceName",
-                value: validateStateValue(e.target.value, "customValueSource"),
-              });
-            },
-            total: section.varbNext(valueName).displayVarb(),
-            itemizeValue: "listTotal",
-            itemizedModalTitle: displayNameValue,
-            itemsComponent: makeItemizedListNode({
-              feId: section.onlyChild(listChildName).feId,
-            }),
           }}
         />
       </div>

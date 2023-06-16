@@ -1,6 +1,5 @@
 import { Box } from "@mui/material";
 import React from "react";
-import { useToggleView } from "../../modules/customHooks/useToggleView";
 import { SectionName } from "../../sharedWithServer/SectionsMeta/SectionName";
 import { StateValue } from "../../sharedWithServer/SectionsMeta/values/StateValue";
 import { UnionValueName } from "../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
@@ -8,8 +7,8 @@ import { useGetterVarbNext } from "../../sharedWithServer/stateClassHooks/useGet
 import { nativeTheme } from "../../theme/nativeTheme";
 import { arrSx } from "../../utils/mui";
 import { MuiRow } from "../general/MuiRow";
+import { useDealModeContextInputModal } from "../Modals/InputModalProvider";
 import { EditSectionBtn } from "./EditSectionBtn";
-import { ModalSection } from "./ModalSection";
 import { SelectEditor, SelectEditorPropsNext } from "./SelectEditor";
 
 export interface SelectAndItemizeEditorProps<
@@ -37,11 +36,17 @@ export function SelectAndItemizeEditor<
   inputMargins = false,
   ...rest
 }: SelectAndItemizeEditorProps<UVN, SN>) {
-  const { itemsIsOpen, closeItems, openItems } = useToggleView("items", false);
-
   const varb = useGetterVarbNext(rest.feVarbInfo);
   const value = varb.value(rest.unionValueName);
   const isItemized = value === itemizeValue;
+
+  const { setModal } = useDealModeContextInputModal();
+  const openItems = () =>
+    setModal({
+      title: itemizedModalTitle,
+      children: itemsComponent,
+    });
+
   return (
     <MuiRow
       className="SelectAndItemizeEditor-root"
@@ -89,13 +94,6 @@ export function SelectAndItemizeEditor<
                   mr: nativeTheme.s25,
                 }}
               >{`Total = ${total}`}</Box>
-              <ModalSection
-                title={itemizedModalTitle}
-                closeModal={closeItems}
-                show={itemsIsOpen}
-              >
-                {itemsComponent}
-              </ModalSection>
             </Box>
           )}
     </MuiRow>

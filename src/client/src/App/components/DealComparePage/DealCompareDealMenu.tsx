@@ -5,6 +5,7 @@ import { useSetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/
 import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { PlainIconBtn } from "../general/PlainIconBtn";
+import { icons } from "../Icons";
 import { MaterialStringEditor } from "../inputs/MaterialStringEditor";
 
 function useGetFilteredDeals(): GetterSection<"deal">[] {
@@ -38,7 +39,11 @@ export function DealCompareDealMenu({ closeMenu }: Props) {
         {...{
           ...nameFilterVarb.feVarbInfo,
           placeholder: "Filter",
-          sx: { "& .DraftEditor-root": { minWidth: 120 } },
+          sx: {
+            "& .DraftEditor-root": {
+              minWidth: 120,
+            },
+          },
         }}
       />
       <View
@@ -63,9 +68,13 @@ export function DealCompareDealMenu({ closeMenu }: Props) {
               }}
             >
               <PlainIconBtn
-                middle={displayName}
+                left={icons[deal.valueNext("dealMode")]()}
+                middle={displayName || "Untitled"}
                 sx={{
+                  color: nativeTheme.primary.main,
+                  ...(!displayName && { fontStyle: "italic" }),
                   display: "flex",
+                  fontSize: 16,
                   flex: 1,
                   justifyContent: "flex-start",
                   alignItems: "center",

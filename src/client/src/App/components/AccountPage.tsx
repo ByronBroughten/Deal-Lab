@@ -5,21 +5,27 @@ import { BsFillHouseAddFill, BsFillHousesFill } from "react-icons/bs";
 import { SiWebcomponentsdotorg } from "react-icons/si";
 import { View } from "react-native";
 import { FeRouteName } from "../Constants/feRoutes";
-import { useToggleView } from "../modules/customHooks/useToggleView";
 import { nativeTheme } from "../theme/nativeTheme";
 import { arrSx } from "../utils/mui";
 import { NewDealSelector } from "./AccountPage/NewDealSelector";
 import { AccountPageDeals } from "./AccountPage/SavedDeals";
 import { HollowBtn } from "./appWide/HollowBtn";
 import { useMakeGoToPage } from "./customHooks/useGoToPage";
+import ChunkTitle from "./general/ChunkTitle";
 import { MuiRow } from "./general/MuiRow";
 import { Row } from "./general/Row";
 import { MuiBtnPropsNext } from "./general/StandardProps";
 import { icons } from "./Icons";
+import { useDealModeContextInputModal } from "./Modals/InputModalProvider";
 
 const iconSize = 40;
 export function AccountPage() {
-  const { addDealIsOpen, openAddDeal, closeAddDeal } = useToggleView("addDeal");
+  const { setModal } = useDealModeContextInputModal();
+  const openAddDeal = () =>
+    setModal({
+      title: <ChunkTitle>New Deal</ChunkTitle>,
+      children: <NewDealSelector />,
+    });
   return (
     <View>
       <MuiRow sx={{ justifyContent: "center" }}>
@@ -58,12 +64,6 @@ export function AccountPage() {
         </Row>
       </MuiRow>
       <AccountPageDeals />
-      <NewDealSelector
-        {...{
-          isOpen: addDealIsOpen,
-          close: closeAddDeal,
-        }}
-      />
     </View>
   );
 }

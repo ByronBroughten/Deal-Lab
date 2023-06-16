@@ -35,7 +35,7 @@ export function CapExValue({ feId }: { feId: string }) {
           ],
           [
             "listTotal",
-            `Itemize lifespan over cost${
+            `Itemize${
               valueSourceName === "listTotal" ? "" : " (more accurate)"
             }`,
           ],
@@ -59,7 +59,7 @@ export function CapExValue({ feId }: { feId: string }) {
           <LabelWithInfo
             {...{
               label: "Itemized CapEx Budget",
-              infoTitle: "How to Itemize CapEx Expenses",
+              infoTitle: "How to Itemize CapEx",
               infoText: capExItemizeDescription,
             }}
           />

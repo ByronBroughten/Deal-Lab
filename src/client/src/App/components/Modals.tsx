@@ -1,14 +1,34 @@
-import { ConfirmationDialogueProvider } from "./general/ConfirmationDialogueProvider";
-import { InfoModalProvider } from "./general/InfoModalProvider";
-import { VarbSelectModalProvider } from "./general/VarbSelectModalProvider";
+import { nativeTheme } from "../theme/nativeTheme";
+import { ConfirmationDialog } from "./Modals/ConfirmationDialogue";
+import { InfoModal } from "./Modals/InfoModal";
+import { InputModal } from "./Modals/InputModal";
+import { useInputModal } from "./Modals/InputModalProvider";
+import { VarbSelectorModal } from "./Modals/VarbSelectorModal";
 
-type Props = { children: React.ReactNode };
-export function Modals({ children }: Props) {
+export function Modals() {
+  const { modalState } = useInputModal();
   return (
-    <VarbSelectModalProvider>
-      <InfoModalProvider>
-        <ConfirmationDialogueProvider>{children}</ConfirmationDialogueProvider>
-      </InfoModalProvider>
-    </VarbSelectModalProvider>
+    <>
+      <InputModal extraChildren={modalState && <OtherModals doBr={true} />} />
+      {!modalState && <OtherModals doBr={false} />}
+    </>
+  );
+}
+
+type Props = { doBr: boolean };
+function OtherModals({ doBr }: Props) {
+  const options = {
+    true: { modalWrapperProps: { sx: { borderRadius: nativeTheme.br0 } } },
+    false: {},
+  };
+
+  const props = doBr ? options.true : options.false;
+
+  return (
+    <>
+      <InfoModal {...props} />
+      <VarbSelectorModal {...props} />
+      <ConfirmationDialog {...props} />
+    </>
   );
 }

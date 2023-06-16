@@ -1,14 +1,21 @@
+import { SxProps } from "@mui/material";
 import { DealMode } from "../../sharedWithServer/SectionsMeta/values/StateValue/dealMode";
 import { useGetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useGetterSection";
+import { timeS } from "../../sharedWithServer/utils/timeS";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { StyledActionBtn } from "../appWide/GeneralSection/MainSection/StyledActionBtn";
-import { ModalSection } from "../appWide/ModalSection";
 import { useGoToPage } from "../customHooks/useGoToPage";
+import { MuiRow } from "../general/MuiRow";
 import { icons } from "../Icons";
 import { MaterialStringEditor } from "../inputs/MaterialStringEditor";
 import { OnVarbSelect } from "../inputs/NumObjEditor/NumObjVarbSelector/VarbSelectorCollection";
 import { VarbSelectorByDealMode } from "../inputs/NumObjEditor/VarbSelectorByDealMode";
-import { MuiRow } from "./MuiRow";
+import { ModalSection } from "./ModalSection";
+import {
+  useVarbSelectModal,
+  VarbSelectModalOptions,
+  VarbSelectModalState,
+} from "./VarbSelectModalProvider";
 
 export interface VarbSelectModalProps {
   modalIsOpen: boolean;
@@ -17,20 +24,38 @@ export interface VarbSelectModalProps {
   onVarbSelect: OnVarbSelect;
 }
 
-export function VarbSelectorModal({
-  modalIsOpen,
-  closeModal,
-  dealMode,
-  onVarbSelect,
-}: VarbSelectModalProps) {
+function getVarbSelectModalOptions(
+  modalState: VarbSelectModalState
+): VarbSelectModalOptions {
+  return {
+    onVarbSelect: () => {},
+    dealMode: "mixed",
+    timeSet: 0,
+    ...modalState,
+  };
+}
+
+interface Props {
+  modalWrapperProps?: { sx?: SxProps };
+}
+export function VarbSelectorModal(props: Props) {
   const goToVariables = useGoToPage("userVariables");
   const menu = useGetterSectionOnlyOne("variablesMenu");
+
+  const { modalState, setModal } = useVarbSelectModal();
+  const { timeSet, onVarbSelect, dealMode } =
+    getVarbSelectModalOptions(modalState);
   return (
     <ModalSection
       {...{
+        ...props,
         title: "Variable Select",
-        show: modalIsOpen,
-        closeModal,
+        show: Boolean(modalState),
+        closeModal: () => {
+          if (timeSet && timeSet < timeS.now() - 200) {
+            setModal(null);
+          }
+        },
       }}
     >
       <MuiRow sx={{ justifyContent: "space-between" }}>

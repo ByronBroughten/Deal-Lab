@@ -1,16 +1,12 @@
-import { useToggleView } from "../../modules/customHooks/useToggleView";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { HollowBtn } from "../appWide/HollowBtn";
-import { ModalSection } from "../appWide/ModalSection";
+import { useDealModeContextInputModal } from "../Modals/InputModalProvider";
 import { DealCompareDealMenu } from "./DealCompareDealMenu";
 
 interface Props {
   dealCount: number;
 }
 export function DealCompareDealModal({ dealCount }: Props) {
-  const { dealMenuIsOpen, openDealMenu, closeDealMenu } =
-    useToggleView("dealMenu");
-
   const width = dealCount === 0 ? "100%" : nativeTheme.comparedDeal.width;
 
   const areNone = dealCount === 0;
@@ -24,32 +20,26 @@ export function DealCompareDealModal({ dealCount }: Props) {
         borderBottomRightRadius: nativeTheme.subSection.borderRadius,
       };
 
+  const { setModal } = useDealModeContextInputModal();
+  const openDealMenu = () =>
+    setModal({
+      title: "Select a deal to compare",
+      children: <DealCompareDealMenu closeMenu={() => setModal(null)} />,
+    });
   return (
-    // A fragment is used to reign in the zIndex of the button
-    <>
-      <HollowBtn
-        {...{
-          middle: text,
-          onClick: openDealMenu,
-          sx: {
-            ...extraSx,
-            ...nativeTheme.subSection.borderLines,
-            fontSize: nativeTheme.fs24,
-            width,
-            minHeight: 300,
-            zIndex: -1,
-          },
-        }}
-      />
-      <ModalSection
-        {...{
-          title: "Select a deal to compare",
-          closeModal: closeDealMenu,
-          show: dealMenuIsOpen,
-        }}
-      >
-        <DealCompareDealMenu closeMenu={closeDealMenu} />
-      </ModalSection>
-    </>
+    <HollowBtn
+      {...{
+        middle: text,
+        onClick: openDealMenu,
+        sx: {
+          ...extraSx,
+          ...nativeTheme.subSection.borderLines,
+          fontSize: nativeTheme.fs24,
+          width,
+          minHeight: 300,
+          zIndex: -1,
+        },
+      }}
+    />
   );
 }

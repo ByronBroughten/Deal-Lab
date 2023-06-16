@@ -5,13 +5,15 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  SxProps,
 } from "@mui/material";
 import * as React from "react";
 import { nativeTheme } from "../../theme/nativeTheme";
-
-// Tonight, I can transform this app.
-// I can implement the input info dots.
-// I can finish the Fix and Flip section.
+import {
+  ConfirmationModalOptions,
+  ConfirmationModalState,
+  useConfirmationModal,
+} from "./ConfirmationDialogueProvider";
 
 export interface ConfirmationOptions {
   catchOnCancel?: boolean;
@@ -26,17 +28,35 @@ interface ConfirmationDialogProps extends ConfirmationOptions {
   onClose: () => void;
 }
 
-export const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({
-  open,
-  title,
-  variant,
-  description,
-  onSubmit,
-  onClose,
-}) => {
+function getInfoModalOptions(
+  modalState: ConfirmationModalState
+): ConfirmationModalOptions {
+  return {
+    title: "",
+    description: "",
+    variant: "danger",
+    handleClose: () => {},
+    handleSubmit: () => {},
+    ...modalState,
+  };
+}
+
+interface Props {
+  modalWrapperProps?: { sx?: SxProps };
+}
+
+export const ConfirmationDialog: React.FC<Props> = (props) => {
+  const { modalState } = useConfirmationModal();
+  const { title, description, variant, handleSubmit, handleClose } =
+    getInfoModalOptions(modalState);
+
+  const open = Boolean(modalState);
   return (
     <Dialog
       {...{
+        sx: {
+          ...props.modalWrapperProps?.sx,
+        },
         PaperProps: {
           sx: {
             borderColor: nativeTheme.notice.dark,
@@ -68,7 +88,7 @@ export const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({
               sx={{ fontSize: nativeTheme.fs22 }}
               size="large"
               color="primary"
-              onClick={onSubmit}
+              onClick={handleSubmit}
             >
               Yes
             </Button>
@@ -76,7 +96,7 @@ export const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({
               sx={{ fontSize: nativeTheme.fs22 }}
               size="large"
               color="primary"
-              onClick={onClose}
+              onClick={handleClose}
               autoFocus
             >
               Cancel
@@ -84,7 +104,7 @@ export const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({
           </>
         )}
         {variant === "info" && (
-          <Button color="primary" onClick={onSubmit}>
+          <Button color="primary" onClick={handleSubmit}>
             OK
           </Button>
         )}

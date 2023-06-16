@@ -3,22 +3,18 @@ import React from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { arrSx } from "../../utils/mui";
+import { MainSection } from "../appWide/GeneralSection/MainSection";
+import { SectionTitleRow } from "../appWide/GeneralSection/MainSection/SectionTitleRow";
 import ChunkTitle from "../general/ChunkTitle";
 import { ModalWrapper, ModalWrapperProps } from "../general/ModalWrapper";
 import { PlainIconBtn } from "../general/PlainIconBtn";
-import { MainSection } from "./GeneralSection/MainSection";
-import { SectionTitleRow } from "./GeneralSection/MainSection/SectionTitleRow";
 
 export interface ModalSectionProps extends ModalWrapperProps {
   closeModal: () => void;
   title: React.ReactNode;
+  modalWrapperProps?: { sx?: SxProps };
   modalSectionProps?: { sx?: SxProps };
 }
-
-type ShowProps = {
-  lastShow: boolean;
-  timeOfLastShowTrue: number;
-};
 
 export function ModalSection({
   children,
@@ -26,35 +22,11 @@ export function ModalSection({
   closeModal,
   title,
   show,
+  modalWrapperProps,
   modalSectionProps,
 }: ModalSectionProps) {
-  // const showRef = React.useRef<ShowProps>({
-  //   lastShow: show,
-  //   timeOfLastShowTrue:
-  //     show === true ? timeS.now() : timeS.hundredsOfYearsFromNow,
-  // });
-
-  // if (showRef.current.lastShow !== show) {
-  //   showRef.current.lastShow = show;
-  //   if (show) {
-  //     showRef.current.timeOfLastShowTrue = timeS.now();
-  //   }
-  // }
-
-  // const safeClose = () => {
-  //   const now = timeS.now();
-  //   if (showRef.current.timeOfLastShowTrue + 200 < timeS.now()) {
-  //     console.log(
-  //       `Closing with now: ${now} and timeOfLastShowTrue: ${showRef.current.timeOfLastShowTrue}`
-  //     );
-  //     closeModal();
-  //   }
-  // };
   return (
-    <ModalWrapper
-      {...{ show }}
-      className={`ModalSection-root ${className ?? ""}`}
-    >
+    <ModalWrapper {...{ show, ...modalWrapperProps }} className={className}>
       <ClickAwayListener mouseEvent="onMouseDown" onClickAway={closeModal}>
         <div>
           <MainSection

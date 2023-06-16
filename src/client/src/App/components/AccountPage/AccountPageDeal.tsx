@@ -7,7 +7,7 @@ import { nativeTheme } from "../../theme/nativeTheme";
 import { reactNativeS } from "../../utils/reactNative";
 import { StyledActionBtn } from "../appWide/GeneralSection/MainSection/StyledActionBtn";
 import { useGoToPage } from "../customHooks/useGoToPage";
-import { useConfirmation } from "../general/ConfirmationDialogueProvider";
+import { useConfirmationModal } from "../Modals/ConfirmationDialogueProvider";
 import { useGetterSection } from "./../../sharedWithServer/stateClassHooks/useGetterSection";
 import { Row } from "./../general/Row";
 import { icons } from "./../Icons";
@@ -55,10 +55,10 @@ export function AccountPageDeal({
   const activateDeal = useActionWithProps("activateDeal", { feId });
 
   const deleteDeal = useActionWithProps("removeStoredDeal", { feId });
-  const confirm = useConfirmation();
+  const { setModal } = useConfirmationModal();
 
   const warnAndDelete = async () =>
-    confirm({
+    setModal({
       title: "Are you sure you want to delete this deal?",
       description: "It will be deleted permanently.",
       variant: "danger",

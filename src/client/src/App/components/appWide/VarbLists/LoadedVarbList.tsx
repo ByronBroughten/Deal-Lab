@@ -1,7 +1,7 @@
 import { inEntityValueInfo } from "../../../sharedWithServer/SectionsMeta/values/StateValue/InEntityValue";
 import { useAction } from "../../../sharedWithServer/stateClassHooks/useAction";
 import { AddChildOptions } from "../../../sharedWithServer/StateUpdaters/UpdaterSection";
-import { useDealModeContextVarbSelect } from "../../general/VarbSelectModalProvider";
+import { useDealModeContextVarbSelect } from "../../Modals/VarbSelectModalProvider";
 import {
   VarbListGeneric,
   VarbListGenericMenuType,

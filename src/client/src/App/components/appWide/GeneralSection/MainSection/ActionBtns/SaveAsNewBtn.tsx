@@ -6,9 +6,9 @@ import { useAction } from "../../../../../sharedWithServer/stateClassHooks/useAc
 import { useGetterFeStore } from "../../../../../sharedWithServer/stateClassHooks/useFeStore";
 import { useGetterSection } from "../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { nativeTheme } from "../../../../../theme/nativeTheme";
-import { useConfirmation } from "../../../../general/ConfirmationDialogueProvider";
 import { DropdownBtnWrapper } from "../../../../general/DropdownBtnWrapper";
 import { MaterialStringEditor } from "../../../../inputs/MaterialStringEditor";
+import { useConfirmationModal } from "../../../../Modals/ConfirmationDialogueProvider";
 import { SectionBtn } from "../../../SectionBtn";
 import { StyledActionBtn } from "../StyledActionBtn";
 
@@ -25,7 +25,7 @@ export function ActionSaveAsNewBtn({ btnProps, ...feInfo }: Props) {
   );
 
   const saveAndOverwrite = useAction("saveAndOverwriteToStore");
-  const confirm = useConfirmation();
+  const { setModal } = useConfirmationModal();
   const doSave = () => saveAndOverwrite({ feInfo });
 
   return (
@@ -86,7 +86,7 @@ export function ActionSaveAsNewBtn({ btnProps, ...feInfo }: Props) {
                             description:
                               "Would you like to overwrite ALL of them?",
                           };
-                    confirm({
+                    setModal({
                       variant: "danger",
                       catchOnCancel: true,
                       ...options,
