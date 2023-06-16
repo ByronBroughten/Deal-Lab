@@ -50,13 +50,12 @@ export function makeAllBaseSectionVarbs() {
       dealSort: baseVarb("dealSort"),
       showArchived: baseVarb("boolean"),
     }),
-    dealCompareDealMenu: varbs({
+    dealCompareDealSelectMenu: varbs({
       dealNameFilter: baseVarb("string"),
-      dealMode: baseVarb("dealMode"),
     }),
-    dealCompareMenu: varbs({
+    dealCompareMainMenu: varbs({
       dealNameFilter: baseVarb("string"),
-      valueNameFilter: baseVarb("string"),
+      dealMode: baseVarb("dealModePlusMixed"),
     }),
     compareOption: varbs({
       dbId: baseVarb("string"),
@@ -69,13 +68,6 @@ export function makeAllBaseSectionVarbs() {
     }),
     proxyStoreItem: varbs({
       dbId: baseVarb("string"),
-    }),
-    compareTable: varbs({
-      titleFilter: baseVarb("string"),
-    } as const),
-    tableRow: varbs({
-      displayName: baseVarb("string"),
-      compareToggle: baseVarb("boolean"),
     }),
     column: varbs({
       varbInfo: baseVarb("inEntityValue"),

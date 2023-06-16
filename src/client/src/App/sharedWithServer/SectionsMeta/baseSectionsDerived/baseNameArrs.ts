@@ -16,6 +16,10 @@ function makeBaseNameArrs() {
     ...makeSingleSectionNameArrs(),
     all: sectionNames as readonly SectionName[],
     hasVarb: sectionNames,
+    hasDealMode: Arr.extractStrict(sectionNames, [
+      "deal",
+      "dealCompareMainMenu",
+    ] as const),
     mainDealSection: Arr.extractStrict(sectionNames, [
       "deal",
       "property",

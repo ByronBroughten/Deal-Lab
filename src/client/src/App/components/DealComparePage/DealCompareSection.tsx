@@ -1,19 +1,26 @@
 import { View } from "react-native";
+import { outputListName } from "../../sharedWithServer/defaultMaker/makeDefaultOutputSection";
 import { useGetterMain } from "../../sharedWithServer/stateClassHooks/useMain";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { SubSectionOpen } from "../ActiveDealPage/ActiveDeal/SubSectionOpen";
 import { BackBtnWrapper } from "../appWide/BackBtnWrapper";
 import { PageTitle } from "../appWide/PageTitle";
 import { DealModeProvider } from "../customContexts/dealModeContext";
+import { MuiRow } from "../general/MuiRow";
+import { AddCompareDealBtn } from "./AddCompareDealBtn";
 import { ComparedDeal } from "./ComparedDeal";
 import { ComparedDealXBtns } from "./ComparedDealXBtns";
-import { DealCompareDealModal } from "./DealCompareDealModal";
+import { CompareDealModeSelector } from "./CompareDealModeSelector";
 import { DealCompareValueMenu } from "./DealCompareValueMenu";
 
 export function DealCompareSection() {
   const main = useGetterMain();
   const dealCompare = main.onlyChild("dealCompare");
-  const compareValueFeIds = dealCompare.childFeIds("compareValue");
+  const dealMode = dealCompare.valueNext("dealMode");
+  const listName = outputListName(dealMode);
+  const outputList = dealCompare.onlyChild(listName);
+
+  const compareValueFeIds = outputList.childFeIds("outputItem");
   const comparedFeIds = dealCompare.childFeIds("comparedDealSystem");
 
   const areCompareDeals = comparedFeIds.length > 0;
@@ -33,6 +40,9 @@ export function DealCompareSection() {
               // />
             }
           />
+          <MuiRow sx={{ pt: nativeTheme.s2, pl: "20px" }}>
+            {areCompareDeals && <CompareDealModeSelector />}
+          </MuiRow>
           <View
             style={{
               flexWrap: "nowrap",
@@ -62,7 +72,7 @@ export function DealCompareSection() {
               </View>
               {areCompareDeals && <DealCompareValueMenu />}
             </View>
-            <DealCompareDealModal {...{ dealCount: comparedFeIds.length }} />
+            <AddCompareDealBtn {...{ dealCount: comparedFeIds.length }} />
           </View>
         </SubSectionOpen>
       </DealModeProvider>

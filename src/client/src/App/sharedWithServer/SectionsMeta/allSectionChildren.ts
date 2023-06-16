@@ -51,7 +51,7 @@ export const allSectionChildren = checkAllSectionChildren({
 
     // I would like to save this at some point
     // in some fashion
-    dealCompare: "dealCompareMenu",
+    dealCompare: "dealCompareMainMenu",
 
     // these will be eliminated
     userVarbEditor: "userVarbEditor",
@@ -78,26 +78,24 @@ export const allSectionChildren = checkAllSectionChildren({
     numVarbListMain: "numVarbList",
   }),
   userListEditor: sectionChildren(listChildren),
-  dealCompareMenu: sectionChildren({
+  dealCompareMainMenu: sectionChildren({
     comparedDealSystem: "dealSystem",
     compareValue: "compareValue",
+    homeBuyerOutputList: "outputList",
+    buyAndHoldOutputList: "outputList",
+    fixAndFlipOutputList: "outputList",
+    brrrrOutputList: "outputList",
+    mixedOutputList: "outputList",
   }),
-  compareTable: sectionChildren({
-    column: "column",
-    tableRow: "tableRow",
-    compareRow: "proxyStoreItem",
-  }),
-  tableRow: { cell: sectionChild("cell") },
-
   outputList: {
     outputItem: sectionChild("outputItem"),
   },
-  outputSection: {
-    homeBuyerOutputList: sectionChild("outputList"),
-    buyAndHoldOutputList: sectionChild("outputList"),
-    fixAndFlipOutputList: sectionChild("outputList"),
-    brrrrOutputList: sectionChild("outputList"),
-  },
+  outputSection: sectionChildren({
+    homeBuyerOutputList: "outputList",
+    buyAndHoldOutputList: "outputList",
+    fixAndFlipOutputList: "outputList",
+    brrrrOutputList: "outputList",
+  }),
   outputItem: { virtualVarb: sectionChild("virtualVarb") },
   ongoingValue: {
     ongoingList: sectionChild("ongoingList"),

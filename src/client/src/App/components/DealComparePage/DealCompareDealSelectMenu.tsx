@@ -1,5 +1,6 @@
 import { unstable_batchedUpdates } from "react-dom";
 import { View } from "react-native";
+import { useAction } from "../../sharedWithServer/stateClassHooks/useAction";
 import { useGetterMain } from "../../sharedWithServer/stateClassHooks/useMain";
 import { useSetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useSetterSection";
 import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection";
@@ -13,8 +14,8 @@ function useGetFilteredDeals(): GetterSection<"deal">[] {
   const feStore = main.onlyChild("feStore");
   const deals = feStore.children("dealMain");
 
-  const dealCompareMenu = main.onlyChild("dealCompare");
-  const nameFilter = dealCompareMenu.valueNext("dealNameFilter");
+  const dealCompareMainMenu = main.onlyChild("dealCompare");
+  const nameFilter = dealCompareMainMenu.valueNext("dealNameFilter");
   const nameFilteredDeals = deals.filter((deal) =>
     deal
       .valueNext("displayName")
@@ -22,16 +23,18 @@ function useGetFilteredDeals(): GetterSection<"deal">[] {
       .includes(nameFilter.toLowerCase())
   );
 
-  const dealSystems = dealCompareMenu.children("comparedDealSystem");
+  const dealSystems = dealCompareMainMenu.children("comparedDealSystem");
   const comparedSystems = dealSystems.map((page) => page.onlyChild("deal"));
   const comparedDbIds = comparedSystems.map(({ dbId }) => dbId);
   return nameFilteredDeals.filter((deal) => !comparedDbIds.includes(deal.dbId));
 }
 
 type Props = { closeMenu: () => void };
-export function DealCompareDealMenu({ closeMenu }: Props) {
-  const dealCompareMenu = useSetterSectionOnlyOne("dealCompareMenu");
-  const nameFilterVarb = dealCompareMenu.varb("dealNameFilter");
+export function DealCompareDealSelectMenu({ closeMenu }: Props) {
+  const addDealToCompare = useAction("addDealToCompare");
+
+  const menu = useSetterSectionOnlyOne("dealCompareMainMenu");
+  const nameFilterVarb = menu.varb("dealNameFilter");
   const filteredDeals = useGetFilteredDeals();
   return (
     <View>
@@ -88,12 +91,7 @@ export function DealCompareDealMenu({ closeMenu }: Props) {
                 }}
                 onClick={() => {
                   unstable_batchedUpdates(() => {
-                    const dealSystem =
-                      dealCompareMenu.addAndGetChild("comparedDealSystem");
-                    const dealToCompare = dealSystem.onlyChild("deal");
-                    dealToCompare.loadSelfSectionPack(
-                      deal.packMaker.makeSectionPack()
-                    );
+                    addDealToCompare({ feId: deal.feId });
                     closeMenu();
                   });
                 }}

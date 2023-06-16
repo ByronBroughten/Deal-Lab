@@ -29,7 +29,7 @@ export function DealCompareValueMenu() {
       <HollowBtn
         {...{
           onClick: openVarbSelect,
-          middle: "+ Comparison Value",
+          middle: "+ Value",
           sx: {
             height: 50,
             fontSize: nativeTheme.fs18,

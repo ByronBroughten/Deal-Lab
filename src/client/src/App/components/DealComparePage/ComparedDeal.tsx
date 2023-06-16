@@ -1,6 +1,8 @@
 import { Text, View, ViewStyle } from "react-native";
+import { outputListName } from "../../sharedWithServer/defaultMaker/makeDefaultOutputSection";
 import { useGetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useGetterSection";
 import { nativeTheme } from "../../theme/nativeTheme";
+import { icons } from "../Icons";
 import { CompareDealRmBtn } from "./CompareDealRmBtn";
 
 type Props = {
@@ -8,14 +10,18 @@ type Props = {
   style?: ViewStyle;
 };
 export function ComparedDeal({ feId, style }: Props) {
-  const dealCompareMenu = useGetterSectionOnlyOne("dealCompareMenu");
-  const dealSystem = dealCompareMenu.child({
+  const menu = useGetterSectionOnlyOne("dealCompareMainMenu");
+  const dealSystem = menu.child({
     childName: "comparedDealSystem",
     feId,
   });
 
-  const compareValues = dealCompareMenu.children("compareValue");
+  const dealMode = menu.valueNext("dealMode");
+  const listName = outputListName(dealMode);
+  const outputList = menu.onlyChild(listName);
+  const compareValues = outputList.children("outputItem");
   const deal = dealSystem.onlyChild("deal");
+  const displayName = deal.valueNext("displayName").mainText;
   return (
     <View
       style={{
@@ -41,14 +47,18 @@ export function ComparedDeal({ feId, style }: Props) {
           }}
         >
           <Text
-            numberOfLines={4}
+            numberOfLines={3}
             style={{
               lineHeight: nativeTheme.fs20,
               fontSize: nativeTheme.fs18,
               color: nativeTheme.primary.main,
+              ...(!displayName && {
+                fontStyle: "italic",
+                paddingRight: nativeTheme.s2,
+              }),
             }}
           >
-            {deal.valueNext("displayName").mainText}
+            {icons[deal.valueNext("dealMode")]()} {displayName || "Untitled"}
           </Text>
         </View>
       </View>

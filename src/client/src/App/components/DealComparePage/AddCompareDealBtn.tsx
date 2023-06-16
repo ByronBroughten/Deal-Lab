@@ -1,12 +1,12 @@
 import { nativeTheme } from "../../theme/nativeTheme";
 import { HollowBtn } from "../appWide/HollowBtn";
 import { useDealModeContextInputModal } from "../Modals/InputModalProvider";
-import { DealCompareDealMenu } from "./DealCompareDealMenu";
+import { DealCompareDealSelectMenu } from "./DealCompareDealSelectMenu";
 
 interface Props {
   dealCount: number;
 }
-export function DealCompareDealModal({ dealCount }: Props) {
+export function AddCompareDealBtn({ dealCount }: Props) {
   const width = dealCount === 0 ? "100%" : nativeTheme.comparedDeal.width;
 
   const areNone = dealCount === 0;
@@ -24,7 +24,12 @@ export function DealCompareDealModal({ dealCount }: Props) {
   const openDealMenu = () =>
     setModal({
       title: "Select a deal to compare",
-      children: <DealCompareDealMenu closeMenu={() => setModal(null)} />,
+      children: (
+        <DealCompareDealSelectMenu
+          noneCompared={false}
+          closeMenu={() => setModal(null)}
+        />
+      ),
     });
   return (
     <HollowBtn

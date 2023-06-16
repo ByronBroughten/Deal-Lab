@@ -7,59 +7,57 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
-// - Put varbSelect modal inside SectionModal
-// - Make untitled deals say "untitled" when selecting for comparison
-
-// Implement archive and make it skip loading archived deals
-// - Create a new route for fetching archived deals...?
-//   Pain.
-// - Add the archive button
-// - Add the unarchive button
-
-// - One VariableModal app-wide
-// - It takes parameters such as dealMode and onSelect
-
-// Make the deal compare metrics mirror the selected
-// metrics for the outputs of each deal type (?)
-
-// Create a value called "extraLoanCosts"
-// You could use a similar value for the "custom"
-// loan cost editor
-// - simple, enter amount or itemize
-
-// Add homebuyer variables
-// - likeability metric (is the necessary?)
-// - investment per likability
-// - ongoing payment per likability
-
-// - Editable titles on deal account page
-// - A key metric or two on deal account page (BRs, Key Metric (ROI/CoC ROI...)
-// - Maybe a "Finish" button at the bottom of the deal page
-
-// Put info dot stuff on output labels
-
 // - Add dealMode to dealCompare, to change:
+// (dealCompare doesn't really make much sense without this)
 //   - deals that show up the search
 //   - variables that show up in column select
 //   - the set of columns that is activated
 //     - Mixed will have (totalInvestment, annualizedRoi, and CoCROI)
 
+// (These aren't necessary, but would add a lot of convenience)
+// - Editable titles on deal account page
+// - A key metric or two on deal account page (BRs, Key Metric (ROI/CoC ROI...)
+
+// Implement archive and make it skip loading archived deals
+// (this is needed for increasing speed)
+// - Create a route for fetching archived deals
+// - Add the archive button
+// - Add the unarchive button
+
+// Let deal compare metrics load from outputLists
+
+// Create a value called "extraLoanCosts"
+// (this is kind of needed, you have found)
+// You could use a similar value for the "custom"
+// loan cost editor
+// - simple, enter amount or itemize
+
+// Add homebuyer variables
+// (not necessary, but easy)
+// - likeability
+// - purchase price per likability
+// - upfrontInvestment
+// - monthlyHousingBudget
+
+// - Maybe add a "Finish" button at the bottom of the deal page
+
+// - Put info dot stuff on output labels
+
+// - Allow for multiple output labels in one output box
+
+// (you really do need these tests to uncover any numerical errors)
 // Make property tests include brrrr and homeBuyer
 // Add tests for refiFinancing
 // Add tests for mgmt
+
+// - make SolverSections test suite to test the reducer actions
+
+// Launch
 
 // Add an easy CapEx default for homebuyer mode (1% or 2% purchase price)
 // Re-add an easy CapEx default for buyAndHold and brrrr (20% rent)
 // Taylor the maintenance defaults for homebuyer mode
 // Is there an easy utilities default homeBuyer?
-
-// - give access to outputListMain
-// - add pass or fail variables
-// - integrate pass or fail into the outputList
-
-// - make SolverSections test suite to test the reducer actions
-
-// Launch
 
 // - restrict editing to only the n most recent deals
 // - Make output lists customizable
@@ -73,6 +71,9 @@ AppRegistry.runApplication("App", {
 // - Expense increase/inflation (property maintenance and mgmt)
 // - Optional Selling Costs for buyAndHold
 // - Total interest paid (good for homeBuyer)
+
+// - add pass or fail variables
+// - integrate pass or fail into the outputList
 
 // 70% Rule
 // - Implement dealMode outputs lists
@@ -212,96 +213,12 @@ AppRegistry.runApplication("App", {
 // - Display outputs depending on dealmode
 // - Add outputs Component section
 
-// Need Emily
-// - Logo
-
 // Add more examples
 // - Example mgmt
 // - Example loan
 
-// Wordpress
-// - Landing page/description
-// - Contact us
-// - About us?
-// - Extended blog pieces?
-// - Pricing?
-
 // Consult branding, logo, and pro wordpress people
 // https://bstro.com/
-
-// Fix and flip notes:
-// - Loans can be used to pay not only for the property
-//   purchase price, but for the rehab costs, too.
-//   That is, they can be a percentage of the rehab costs.
-
-// - Closing costs are called purchase costs with fix and flip
-//   - Or you could say, "purchase closing costs"
-
-// - Cost overrun is a property variable—
-//   add a certain percent to the rehab costs cause we always underestimate
-//   It's kind of like the CapEx and maintenance budget
-
-// BRRRR will involve both holding costs and ongoing costs
-// - There can still be one purchase price, in
-//   One Time Costs
-
-// - Property taxes will play into both
-// - Insurance will also play into both.
-// - But it could be for two separate rates—one for holding costs, and one
-//   for ongoing.
-
-// - Ongoing costs
-
-// - Holding costs has its own category, which is basically
-//   "ongoing costs". Ongoing costs could be called holding costs.
-//   Many of the property's basic information would be considered
-//   holding costs
-//   You would just change the title of Ongoing Costs to Holding Costs
-//   Or you would add both and keep them separate
-
-// - One-Time costs would include both Purchase Costs (Loan closing costs)
-// and Selling Costs (6% ARV, on the property).
-
-// 4.
-// -Give property the necessary vabs for buyAndHold and fixAndFlip
-// -Give deal the necessary varbs for buyAndHold and fixAndFlip
-// -Give deal an outputSection per mode
-//  outputBuyAndHold
-//  outputFixAndFlip
-//  the varbs in those sections are things like, "showCocRoi", "showPitiPayments", etc.
-//  They also have childSection virtualVarbs called "customOutputs"
-
-// -make the example property and deal work with all modes
-// -add other modes: buyHoldSell, brrrr, and wholesale
-
-// -Add the mode switch next to Deal
-// -Make a property Component for each mode
-// -Make an output component for each mode,
-//  or make one that can be generalizable.
-
-// 4. Make repairs, utilities, etc, be able to be singular values
-//    that can switch to being itemizable.
-//    When they are in itemize mode, a modal is summoned with a full,
-//    spacious menu for editing the list and list items.
-
-// 5. Make compareTable columns editable
-// 6. Add info hover-ey thingies next to outputs and maybe some inputs
-
-// If I'm going to make tables faster and increase functionality, here's how:
-// I want the tables to reflect those
-// - When creating the default user, initialize the tables
-// - When creating a user, send the tables to the db
-// - When logging in, load the saved table (and check it)
-//   - remove extra rows
-//   - add missing rows (to the front)
-//   - update row information
-// - When adding, updating, or deleting a section, adjust
-//   the front-end table accordingly in real-time
-
-// Extra stuff
-// - In the load menu, highlight the one that is loaded with green or purple
-// - Load rows according to whether autoSync is On
-// - Implement column features
 
 // Get beta users:
 // 1. Post it on facebook/insta, asking for testers

@@ -14,8 +14,6 @@ export const sectionNames = [
   "dbStore",
   "proxyStoreItem",
   "omniParent",
-  "compareTable",
-  "tableRow",
   "column",
   "cell",
   "conditionalRow",
@@ -28,7 +26,8 @@ export const sectionNames = [
   "outputList",
   "outputSection",
 
-  "dealCompareMenu",
+  "dealCompareMainMenu",
+  "dealCompareDealSelectMenu",
   "compareOption",
   "compareValue",
 

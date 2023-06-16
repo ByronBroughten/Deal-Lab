@@ -16,10 +16,10 @@ type ParentNameOrNever<SN extends SectionName> = keyof SubType<
   SN
 >;
 function _testParentNameOrNever() {
-  type CellParent = ParentNameOrNever<"cell">;
-  const _case1: CellParent = "tableRow";
+  type Parent = ParentNameOrNever<"loan">;
+  const _case1: Parent = "financing";
   //@ts-expect-error
-  const _case3: CellParent = "property";
+  const _case3: Parent = "property";
 }
 
 type SectionToParentOrNever = {

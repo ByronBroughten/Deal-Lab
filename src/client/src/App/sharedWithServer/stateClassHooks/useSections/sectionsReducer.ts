@@ -45,6 +45,7 @@ const sectionActionNames = [
   "loadUserData",
   "incrementGetUserDataTry",
   "makeDefaultMain",
+  "addDealToCompare",
 ] as const;
 export type SectionActionName = (typeof sectionActionNames)[number];
 
@@ -77,6 +78,8 @@ type ExtraActionProps = _CheckSectionActionProps<{
   copyInStore: FeStoreInfo;
   removeFromStore: RemoveFromStoreProps;
   removeFromStoreByDbId: RemoveFromStoreDbIdProps;
+
+  addDealToCompare: FeIdProp;
 }>;
 
 export type ActionPropsMap = _CheckSectionActionProps<
@@ -220,6 +223,35 @@ export const sectionsReducer: React.Reducer<StateSections, SectionsAction> = (
     removeStoredDeal: ({ feId }) => solverSections.removeStoredDeal(feId),
     activateDeal: ({ feId }) => solverSections.activateDealAndSolve(feId),
     addActiveDeal: ({ dealMode }) => solverSections.addActiveDeal(dealMode),
+    addDealToCompare: ({ feId }) => {
+      const feStore = solverSections.oneAndOnly("feStore");
+      const deal = feStore.get.child({
+        childName: "dealMain",
+        feId,
+      });
+
+      const menu = solverSections.oneAndOnly("dealCompareMainMenu");
+      const dealSystem = menu.addAndGetChild("comparedDealSystem");
+
+      const dealToCompare = dealSystem.onlyChild("deal");
+      dealToCompare.loadSelfAndSolve(deal.packMaker.makeSectionPack());
+
+      const dealSystems = menu.children("comparedDealSystem");
+      const dealCount = dealSystems.length;
+      if (dealCount === 1) {
+        menu.updateValues({ dealMode: dealToCompare.value("dealMode") });
+      } else if (dealCount > 1) {
+        const dealMode = menu.value("dealMode");
+        if (dealMode !== "mixed") {
+          const deals = dealSystems.map((system) => system.onlyChild("deal"));
+          for (const deal of deals) {
+            if (deal.value("dealMode") !== dealToCompare.value("dealMode")) {
+              menu.updateValues({ dealMode: "mixed" });
+            }
+          }
+        }
+      }
+    },
   };
 
   switch (action.type) {
