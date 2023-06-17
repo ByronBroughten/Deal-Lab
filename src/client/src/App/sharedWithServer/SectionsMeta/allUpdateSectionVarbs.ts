@@ -86,7 +86,7 @@ function makeAllUpdateSections() {
     ...prop("loanBaseValue", loanBaseUpdateVarbs()),
     ...prop("loanBaseExtra", {
       hasLoanExtra: varb("boolean", { initValue: false }),
-      valueSourceName: varb("dollarsListOrZero", {
+      valueSourceName: varb("dollarsOrList", {
         initValue: "valueDollarsEditor",
       }),
       valueDollarsEditor: varb("numObj"),
@@ -94,8 +94,7 @@ function makeAllUpdateSections() {
         updateFnName: "throwIfReached",
         updateOverrides: [
           updateOverride([switchS.localIsFalse("hasLoanExtra")], basics.zero),
-          ...valueSourceOverrides("dollarsListOrZero", {
-            zero: basics.zero,
+          ...valueSourceOverrides("dollarsOrList", {
             valueDollarsEditor: basics.loadFromLocal("valueDollarsEditor"),
             listTotal: basics.loadFromChild("onetimeList", "total"),
           }),

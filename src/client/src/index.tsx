@@ -6,13 +6,8 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-// Put info dots on output labels
 
-// Create a value called "extraLoanCosts"
-// (this is kind of needed, you have found)
-// You could use a similar value for the "custom"
-// loan cost editor
-// - simple, enter amount or itemize
+// Replace all labeled outputs with the next version
 
 // Add homebuyer variables
 // (not necessary, but easy)

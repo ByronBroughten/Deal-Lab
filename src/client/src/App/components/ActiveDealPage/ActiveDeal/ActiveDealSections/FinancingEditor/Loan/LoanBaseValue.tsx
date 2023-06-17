@@ -41,13 +41,13 @@ export function LoanBaseValue({ feId }: { feId: string }) {
           {...{ feId, sx: { marginTop: nativeTheme.s3 } }}
         />
       </Box>
-      {sectionNameS.is(valueSource, "loanBaseSubValue") ||
-        (valueSource === "priceAndRepairValues" && (
-          <LoanBaseExtra
-            sx={{ marginTop: nativeTheme.s2 }}
-            feId={baseValue.onlyChildFeId("loanBaseExtra")}
-          />
-        ))}
+      {(sectionNameS.is(valueSource, "loanBaseSubValue") ||
+        valueSource === "priceAndRepairValues") && (
+        <LoanBaseExtra
+          sx={{ marginTop: nativeTheme.s2 }}
+          feId={baseValue.onlyChildFeId("loanBaseExtra")}
+        />
+      )}
       {sectionNameS.is(valueSource, "loanBaseSubValue") && (
         <ValueNumbers
           {...{

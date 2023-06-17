@@ -34,9 +34,7 @@ export function LoanBaseExtra({ feId, sx }: Props) {
                 />
               ),
             }),
-            ...(valueSourceName === "zero" && { equalsValue: "$0" }),
             items: [
-              // ["zero", "None"],
               ["valueDollarsEditor", "Amount"],
               ["listTotal", "Itemize"],
             ],
