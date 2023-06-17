@@ -8,7 +8,7 @@ import { SubSectionOpen } from "./SubSectionOpen";
 
 type Props = {
   children: React.ReactNode;
-  finishIsAllowed: boolean;
+  finishIsAllowed?: boolean;
 };
 
 export function DealSubSectionOpen({ children, finishIsAllowed }: Props) {
@@ -20,10 +20,7 @@ export function DealSubSectionOpen({ children, finishIsAllowed }: Props) {
         <FormSection>
           <FinishBtn
             onClick={() => navigate(constants.feRoutes.activeDeal)}
-            styleDisabled={!finishIsAllowed}
-            className="MainSubSection-finishBtn"
             btnText="Finish"
-            warningText="Please fill in all the required fields"
           />
         </FormSection>
       </SubSectionOpen>

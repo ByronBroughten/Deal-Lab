@@ -7,8 +7,8 @@ import { MuiBtnPropsNext } from "../../general/StandardProps";
 import { icons } from "../../Icons";
 
 interface Props extends MuiBtnPropsNext {
-  styleDisabled: boolean;
-  warningText: string;
+  styleDisabled?: boolean;
+  warningText?: string;
   btnText: string;
 }
 
@@ -30,13 +30,18 @@ export function FinishBtn({
         className,
         left: icons.finish(),
         middle: <Box sx={{ ml: nativeTheme.s2 }}>{btnText}</Box>,
-        onClick: styleDisabled ? () => disabledWarning(warningText) : onClick,
+        onClick:
+          styleDisabled && warningText
+            ? () => disabledWarning(warningText)
+            : onClick,
         sx: [
           {
-            borderColor: nativeTheme.secondary.main,
+            boxShadow: nativeTheme.oldShadow1,
+            borderRadius: nativeTheme.br0,
+            border: "none",
             height: "50px",
             width: "100%",
-            mt: nativeTheme.s3,
+            marginTop: nativeTheme.s3,
             fontSize: nativeTheme.fs22,
             ...(styleDisabled && nativeTheme.disabledBtn),
           },

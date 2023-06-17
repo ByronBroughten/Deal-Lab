@@ -4,11 +4,13 @@ import { dealModeLabels } from "../../sharedWithServer/SectionsMeta/values/State
 import { BackBtnWrapper } from "../appWide/BackBtnWrapper";
 import { BackgroundContainer } from "../appWide/BackgroundContainter";
 import { PageTitle } from "../appWide/PageTitle";
+import { useGoToPage } from "../customHooks/useGoToPage";
 import { BigStringEditor } from "../inputs/BigStringEditor";
 import { nativeTheme } from "./../../theme/nativeTheme";
 import { Row } from "./../general/Row";
 import { OutputSection } from "./ActiveDeal/DealOutputs/OutputSection";
 import { DealSubSectionClosed } from "./ActiveDeal/DealSubSectionClosed";
+import { FinishBtn } from "./ActiveDeal/FinishBtn";
 import { useActiveDealPage } from "./ActiveDeal/useActiveDealSection";
 
 const dealElementProps = {
@@ -18,6 +20,7 @@ const dealElementProps = {
 };
 
 export function ActiveDealMain() {
+  const goToAccountPage = useGoToPage("account");
   const { deal, feStore } = useActiveDealPage();
   const dealMode = deal.valueNext("dealMode");
   const completionStatus = deal.valueNext("completionStatus");
@@ -64,6 +67,16 @@ export function ActiveDealMain() {
             feId: feStore.onlyChildFeId("outputSection"),
             disableOpenOutputs: completionStatus !== "allValid",
             dealMode,
+          }}
+        />
+        <FinishBtn
+          {...{
+            sx: {
+              ...dealElementProps.sx,
+              marginBottom: dealElementProps.sx.marginTop,
+            },
+            btnText: "Finish",
+            onClick: goToAccountPage,
           }}
         />
       </BackgroundContainer>
