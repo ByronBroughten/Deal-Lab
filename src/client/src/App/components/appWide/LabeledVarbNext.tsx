@@ -1,4 +1,5 @@
 import { Box, SxProps } from "@mui/material";
+import React from "react";
 import {
   FeSectionInfo,
   FeVarbInfo,
@@ -9,6 +10,9 @@ import { useGetterSections } from "../../sharedWithServer/stateClassHooks/useGet
 import { nativeTheme } from "../../theme/nativeTheme";
 import { arrSx } from "../../utils/mui";
 import { useVarbInfoText } from "../customHooks/useVarbInfoText";
+import { MuiRow } from "../general/MuiRow";
+import { useInfoModal } from "./../Modals/InfoModalProvider";
+import { InfoIcon } from "./InfoIcon";
 
 export interface LabeledVarbProps extends LabeledVarbNotFoundProps {
   finder: FeVarbInfo | FeVarbInfo[];
@@ -23,7 +27,11 @@ export function LabeledVarbNext({ finder, ...rest }: LabeledVarbProps) {
     throw new Error("finder is empty");
   }
 
-  const { inputLabel } = useVarbInfoText(finder[0] as FeVarbInfoNext);
+  const { inputLabel, info, title } = useVarbInfoText(
+    finder[0] as FeVarbInfoNext
+  );
+
+  const { setModal } = useInfoModal();
 
   let toDisplay = "";
   const sections = useGetterSections();
@@ -38,7 +46,19 @@ export function LabeledVarbNext({ finder, ...rest }: LabeledVarbProps) {
   return (
     <StyledLabeledVarb
       {...{
-        labelText: inputLabel,
+        labelText: (
+          <MuiRow>
+            {inputLabel}
+            {info && title && (
+              <InfoIcon
+                {...{
+                  infoText: info,
+                  title,
+                }}
+              />
+            )}
+          </MuiRow>
+        ),
         displayVarb: toDisplay,
         labelId: inputLabel,
         ...rest,
@@ -84,7 +104,7 @@ export function LoadedVarb({ feInfo, ...rest }: LoadedVarbProps) {
 }
 
 interface StyledLabeledVarbProps extends LabeledVarbNotFoundProps {
-  labelText: string;
+  labelText: React.ReactNode;
   displayVarb: string;
   labelId: string;
   sx?: SxProps;

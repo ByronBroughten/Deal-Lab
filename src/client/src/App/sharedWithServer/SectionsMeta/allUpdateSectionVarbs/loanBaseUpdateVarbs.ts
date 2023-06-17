@@ -17,6 +17,9 @@ function sourceOverrides(
   });
 }
 
+const basics = updateBasicsS;
+const prop = updateFnPropS;
+
 export function loanBaseUpdateVarbs(): UpdateSectionVarbs<"loanBaseValue"> {
   return {
     ...updateVarbsS._typeUniformity,
@@ -26,23 +29,30 @@ export function loanBaseUpdateVarbs(): UpdateSectionVarbs<"loanBaseValue"> {
     }),
     valueDollarsEditor: updateVarb("numObj"),
     valueDollars: sourceOverrides({
-      purchaseLoanValue: updateBasicsS.loadFromChild(
-        "purchaseLoanValue",
-        "amountDollars"
+      purchaseLoanValue: basics.equationLR(
+        "add",
+        prop.onlyChild("purchaseLoanValue", "amountDollars"),
+        prop.onlyChild("loanBaseExtra", "valueDollars")
       ),
-      repairLoanValue: updateBasicsS.loadFromChild(
-        "repairLoanValue",
-        "amountDollars"
+      repairLoanValue: basics.equationLR(
+        "add",
+        prop.onlyChild("repairLoanValue", "amountDollars"),
+        prop.onlyChild("loanBaseExtra", "valueDollars")
       ),
-      arvLoanValue: updateBasicsS.loadFromChild(
-        "repairLoanValue",
-        "amountDollars"
+
+      arvLoanValue: basics.equationLR(
+        "add",
+        prop.onlyChild("arvLoanValue", "amountDollars"),
+        prop.onlyChild("loanBaseExtra", "valueDollars")
       ),
-      // what gives with these two? They're both working independently
-      customAmountEditor: updateBasicsS.loadFromLocal("valueDollarsEditor"),
-      priceAndRepairValues: updateBasicsS.sumNums(
+      customAmountEditor: basics.loadFromChild(
+        "customLoanBase",
+        "valueDollars"
+      ),
+      priceAndRepairValues: basics.sumNums(
         updateFnPropS.onlyChild("purchaseLoanValue", "amountDollars"),
-        updateFnPropS.onlyChild("repairLoanValue", "amountDollars")
+        updateFnPropS.onlyChild("repairLoanValue", "amountDollars"),
+        prop.onlyChild("loanBaseExtra", "valueDollars")
       ),
     }),
   };

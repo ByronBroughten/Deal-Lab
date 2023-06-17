@@ -40,7 +40,10 @@ import {
   updateOverride,
   updateOverrideS,
 } from "./updateSectionVarbs/updateVarb/UpdateOverrides";
-import { valueSourceOverrides } from "./updateSectionVarbs/updateVarb/updateVarbUtils";
+import {
+  valueSourceNumObj,
+  valueSourceOverrides,
+} from "./updateSectionVarbs/updateVarb/updateVarbUtils";
 import { updateVarbsS } from "./updateSectionVarbs/updateVarbs";
 import { numObj } from "./values/StateValue/NumObj";
 
@@ -48,6 +51,8 @@ const propS = updateFnPropS;
 const propsS = updateFnPropsS;
 const varbsS = updateVarbsS;
 const switchS = overrideSwitchS;
+const basics = updateBasicsS;
+const varb = updateVarb;
 
 type GenericAllUpdateSections = {
   [SN in SectionName]: UpdateSectionVarbs<SN>;
@@ -71,45 +76,70 @@ function makeAllDefaultUpdateSections() {
     return defaultUpdateSections;
   }, {} as DefaultRelSectionsVarbs);
 }
+
+const prop = updateSectionProp;
+
 function makeAllUpdateSections() {
   return checkAllUpdateSections({
     ...makeAllDefaultUpdateSections(),
-    ...updateSectionProp("loan", loanUpdateVarbs()),
-    ...updateSectionProp("loanBaseValue", loanBaseUpdateVarbs()),
-    ...updateSectionProp(
+    ...prop("loan", loanUpdateVarbs()),
+    ...prop("loanBaseValue", loanBaseUpdateVarbs()),
+    ...prop("loanBaseExtra", {
+      hasLoanExtra: varb("boolean", { initValue: false }),
+      valueSourceName: varb("dollarsListOrZero", {
+        initValue: "valueDollarsEditor",
+      }),
+      valueDollarsEditor: varb("numObj"),
+      valueDollars: varb("numObj", {
+        updateFnName: "throwIfReached",
+        updateOverrides: [
+          updateOverride([switchS.localIsFalse("hasLoanExtra")], basics.zero),
+          ...valueSourceOverrides("dollarsListOrZero", {
+            zero: basics.zero,
+            valueDollarsEditor: basics.loadFromLocal("valueDollarsEditor"),
+            listTotal: basics.loadFromChild("onetimeList", "total"),
+          }),
+        ],
+      }),
+    }),
+    ...prop("customLoanBase", {
+      valueSourceName: varb("dollarsOrList", {
+        initValue: "valueDollarsEditor",
+      }),
+      valueDollars: valueSourceNumObj("dollarsOrList", {
+        valueDollarsEditor: basics.loadFromLocal("valueDollarsEditor"),
+        listTotal: basics.loadFromChild("onetimeList", "total"),
+      }),
+      valueDollarsEditor: varb("numObj"),
+    }),
+    ...prop(
       "purchaseLoanValue",
       loanValueUpdateVarbs(mixedInfoS.varbPathName("purchasePrice"))
     ),
-    ...updateSectionProp(
+    ...prop(
       "repairLoanValue",
       loanValueUpdateVarbs(mixedInfoS.varbPathName("rehabCost"))
     ),
-    ...updateSectionProp(
+    ...prop(
       "arvLoanValue",
       loanValueUpdateVarbs(mixedInfoS.varbPathName("afterRepairValue"))
     ),
-    ...updateSectionProp("sellingCostValue", sellingCostUpdateVarbs()),
-    ...updateSectionProp("mgmt", mgmtRelVarbs()),
-    ...updateSectionProp("vacancyLossValue", vacancyLossUpdateVarbs()),
-    ...updateSectionProp("mgmtBasePayValue", mgmtBasePayValueVarbs()),
-    ...updateSectionProp("deal", dealUpdateVarbs()),
-    ...updateSectionProp("financing", financingUpdateVarbs()),
-    ...updateSectionProp("property", propertyUpdateVarbs()),
-    ...updateSectionProp("costOverrunValue", costOverrunUpdateVarbs()),
-    ...updateSectionProp("unit", {
+    ...prop("sellingCostValue", sellingCostUpdateVarbs()),
+    ...prop("mgmt", mgmtRelVarbs()),
+    ...prop("vacancyLossValue", vacancyLossUpdateVarbs()),
+    ...prop("mgmtBasePayValue", mgmtBasePayValueVarbs()),
+    ...prop("deal", dealUpdateVarbs()),
+    ...prop("financing", financingUpdateVarbs()),
+    ...prop("property", propertyUpdateVarbs()),
+    ...prop("costOverrunValue", costOverrunUpdateVarbs()),
+    ...prop("unit", {
       one: updateVarbS.one(),
       numBedrooms: updateVarb("numObj"),
       ...varbsS.periodicInput("targetRent"),
     }),
-    ...updateSectionProp(
-      "taxesOngoing",
-      ongoingValueUpdateVarb("taxesHolding")
-    ),
-    ...updateSectionProp(
-      "homeInsOngoing",
-      ongoingValueUpdateVarb("homeInsHolding")
-    ),
-    ...updateSectionProp("utilityValue", {
+    ...prop("taxesOngoing", ongoingValueUpdateVarb("taxesHolding")),
+    ...prop("homeInsOngoing", ongoingValueUpdateVarb("homeInsHolding")),
+    ...prop("utilityValue", {
       valueSourceName: updateVarb("utilityValueSource", { initValue: "none" }),
       ...varbsS.group("valueDollars", "periodic", "monthly", {
         targets: { updateFnName: "throwIfReached" },
@@ -147,7 +177,7 @@ function makeAllUpdateSections() {
         },
       }),
     }),
-    ...updateSectionProp("capExValue", {
+    ...prop("capExValue", {
       valueSourceName: updateVarb("capExValueSource", { initValue: "none" }),
       ...varbsS.group("valueDollars", "periodic", "monthly", {
         targets: { updateFnName: "throwIfReached" },
@@ -213,7 +243,7 @@ function makeAllUpdateSections() {
         },
       }),
     }),
-    ...updateSectionProp("capExList", {
+    ...prop("capExList", {
       ...varbsS.savableSection,
       ...varbsS.group("total", "periodic", "monthly", {
         monthly: updateBasicsS.sumChildren("capExItem", "valueMonthly"),
@@ -221,8 +251,8 @@ function makeAllUpdateSections() {
       }),
       itemPeriodicSwitch: updateVarb("ongoingSwitch", { initValue: "monthly" }),
     }),
-    ...updateSectionProp("capExItem", capExItemUpdateVarbs()),
-    ...updateSectionProp("maintenanceValue", {
+    ...prop("capExItem", capExItemUpdateVarbs()),
+    ...prop("maintenanceValue", {
       valueSourceName: updateVarb("maintainanceValueSource", {
         initValue: "none",
       }),
@@ -295,7 +325,7 @@ function makeAllUpdateSections() {
         },
       }),
     }),
-    ...updateSectionProp("repairValue", {
+    ...prop("repairValue", {
       valueSourceName: updateVarb("repairValueSource", { initValue: "none" }),
       valueDollars: updateVarb("numObj", {
         updateFnName: "throwIfReached",
@@ -319,7 +349,7 @@ function makeAllUpdateSections() {
         ],
       }),
     }),
-    ...updateSectionProp("feStore", {
+    ...prop("feStore", {
       authStatus: updateVarb("authStatus", { initValue: "guest" }),
       labSubscription: updateVarb("labSubscription", {
         initValue: "basicPlan",
@@ -331,21 +361,21 @@ function makeAllUpdateSections() {
         initValue: "notLoaded",
       }),
     }),
-    ...updateSectionProp("userInfoPrivate", {
+    ...prop("userInfoPrivate", {
       guestSectionsAreLoaded: updateVarb("boolean", { initValue: false }),
     }),
-    ...updateSectionProp("outputList", {
+    ...prop("outputList", {
       itemValueSource: updateVarb("loadedVarbSource", {
         initValue: "loadedVarb",
       } as const),
     }),
-    ...updateSectionProp("onetimeList", {
+    ...prop("onetimeList", {
       total: updateVarbS.sumNums([propS.children("singleTimeItem", "value")]),
       itemValueSource: updateVarb("editorValueSource", {
         initValue: "valueEditor",
       }),
     }),
-    ...updateSectionProp("closingCostValue", {
+    ...prop("closingCostValue", {
       valueSourceName: updateVarb("closingCostValueSource", {
         initValue: "none",
       }),
@@ -361,7 +391,7 @@ function makeAllUpdateSections() {
         }),
       }),
     }),
-    ...updateSectionProp("singleTimeValue", {
+    ...prop("singleTimeValue", {
       ...varbsS.displayNameAndEditor,
       value: updateVarb("numObj", {
         updateFnName: "throwIfReached",
@@ -390,7 +420,7 @@ function makeAllUpdateSections() {
         initValue: "valueEditor",
       }),
     }),
-    ...updateSectionProp("ongoingValue", {
+    ...prop("ongoingValue", {
       ...varbsS.displayNameAndEditor,
       valueSourceName: updateVarb("customValueSource", {
         initValue: "valueEditor",
@@ -459,10 +489,10 @@ function makeAllUpdateSections() {
         editor: { updateFnName: "calcVarbs" },
       }),
     }),
-    ...updateSectionProp("miscRevenueValue", dollarsOrListUpdateVarbs()),
-    ...updateSectionProp("miscOngoingCost", dollarsOrListUpdateVarbs()),
-    ...updateSectionProp("miscHoldingCost", dollarsOrListUpdateVarbs()),
-    ...updateSectionProp("miscOnetimeCost", {
+    ...prop("miscRevenueValue", dollarsOrListUpdateVarbs()),
+    ...prop("miscOngoingCost", dollarsOrListUpdateVarbs()),
+    ...prop("miscHoldingCost", dollarsOrListUpdateVarbs()),
+    ...prop("miscOnetimeCost", {
       valueDollars: updateVarb("numObj", {
         updateFnName: "throwIfReached",
         updateOverrides: valueSourceOverrides("dollarsOrList", {
@@ -474,13 +504,14 @@ function makeAllUpdateSections() {
         initValue: numObj(0),
       }),
     }),
-    ...updateSectionProp("calculatedVarbs", calculatedUpdateVarbs()),
-    ...updateSectionProp("outputSection", {
+    ...prop("calculatedVarbs", calculatedUpdateVarbs()),
+    ...prop("outputSection", {
       showOutputs: updateVarb("boolean", {
         initValue: false,
       }),
     }),
-    ...updateSectionProp("ongoingList", {
+
+    ...prop("ongoingList", {
       ...varbsS.ongoingSumNums(
         "total",
         [propS.children("ongoingItem", "value")],
@@ -493,15 +524,15 @@ function makeAllUpdateSections() {
         initValue: "monthly",
       }),
     }),
-    ...updateSectionProp("numVarbList", {
+    ...prop("numVarbList", {
       itemValueSource: updateVarb("editorValueSource", {
         initValue: "valueEditor",
       } as const),
     }),
-    ...updateSectionProp("outputItem", {
+    ...prop("outputItem", {
       valueEntityInfo: updateVarb("inEntityValue"),
     }),
-    ...updateSectionProp("virtualVarb", {
+    ...prop("virtualVarb", {
       valueEntityInfo: updateVarb("inEntityValue"),
       value: updateVarb("numObj", {
         updateFnName: "virtualNumObj",
@@ -522,7 +553,7 @@ function makeAllUpdateSections() {
         updateOverrides: [updateOverrideS.loadedVarbProp("loadEndAdornment")],
       }),
     }),
-    ...updateSectionProp("singleTimeItem", {
+    ...prop("singleTimeItem", {
       ...varbsS._typeUniformity,
       ...varbsS.displayNameAndEditor,
       value: updateVarb("numObj", {
@@ -539,8 +570,8 @@ function makeAllUpdateSections() {
       }),
       valueEditor: updateVarb("numObj"),
     }),
-    ...updateSectionProp("ongoingItem", ongoingItemUpdateVarbs()),
-    ...updateSectionProp("numVarbItem", {
+    ...prop("ongoingItem", ongoingItemUpdateVarbs()),
+    ...prop("numVarbItem", {
       ...varbsS.displayNameAndEditor,
       value: updateVarb("numObj", {
         initValue: numObj(0),
@@ -554,7 +585,7 @@ function makeAllUpdateSections() {
         initValue: "valueEditor",
       }),
     }),
-    ...updateSectionProp("conditionalRowList", {
+    ...prop("conditionalRowList", {
       value: updateVarb("numObj", {
         updateFnProps: propsS.namedChildren("conditionalRow", {
           rowLevel: "level",
@@ -567,7 +598,7 @@ function makeAllUpdateSections() {
         }),
       }),
     }),
-    ...updateSectionProp("conditionalRow", {
+    ...prop("conditionalRow", {
       type: updateVarb("string", { initValue: "if" }),
       operator: updateVarb("string", { initValue: "===" }),
     }),

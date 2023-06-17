@@ -9,6 +9,11 @@ import {
 import { dealModeLabels } from "./App/sharedWithServer/SectionsMeta/values/StateValue/unionValues";
 
 const multis = {
+  loanExtras: {
+    inputLabel: "Loan extras",
+    title: "Loan extras",
+    info: "This is for any additional costs that you intend to wrap into this loan, such as a portion of closing costs, for example.",
+  },
   dealMode: {
     inputLabel: "Select type",
     title: "Deal Types",
@@ -68,13 +73,13 @@ export const varbInfoDotConfig = checkSectionInfoTexts({
     },
     roiPercent: {
       inputLabel: "ROI",
-      title: "",
-      info: "",
+      title: "Return on Investment",
+      info: "The amount that an investment's value increases, as a percent of the cash that was initially invested",
     },
     cocRoiYearly: {
       inputLabel: "CoC ROI",
-      title: "",
-      info: "",
+      title: "Annual Cash on Cash ROI",
+      info: "The profit an investment earns per year, as a percent of the cash that was initially invested",
     },
   }),
   ...prop("property", {
@@ -92,6 +97,9 @@ export const varbInfoDotConfig = checkSectionInfoTexts({
   }),
   ...prop("closingCostValue", {
     valueSourceName: multis.closingCosts,
+  }),
+  ...prop("loanBaseExtra", {
+    hasLoanExtra: multis.loanExtras,
   }),
   ...prop("loan", {
     closingCosts: multis.closingCosts,
@@ -112,6 +120,18 @@ export interface VarbInfoTextProps {
   info: string;
 }
 
+function textProps({
+  inputLabel = "",
+  title = "",
+  info = "",
+}: Partial<VarbInfoTextProps>) {
+  return {
+    inputLabel,
+    title,
+    info,
+  };
+}
+
 export type VarbInfoText = VarbInfoTextProps | null;
 
 type SectionInfoText<SN extends SectionName> = Record<
@@ -119,9 +139,6 @@ type SectionInfoText<SN extends SectionName> = Record<
   VarbInfoText
 >;
 
-function makeInfoText<SN extends SectionName>(
-  partial: Partial<VarbInfoTextProps>
-) {}
 function emptySctionInfoText<SN extends SectionName>(
   sectionName: SN
 ): SectionInfoText<SN> {

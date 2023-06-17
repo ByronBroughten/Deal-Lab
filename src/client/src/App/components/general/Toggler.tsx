@@ -17,14 +17,16 @@ export const Toggler = styled(TogglerBase)({
     margin: 0,
     padding: 0,
   },
+
+  // "& .MuiFormControlLabel-label": {
+  //   width: 180,
+  // },
+
   "& .MuiSwitch-colorPrimary": {
     color: nativeTheme["gray-500"],
   },
   "& .MuiSwitch-colorPrimary.Mui-checked": {
     color: nativeTheme.secondary.main,
-  },
-  "& .MuiFormControlLabel-label": {
-    width: 180,
   },
   "& .MuiFormControlLabel-label.MuiTypography-root": {
     lineHeight: 1.2,
@@ -53,6 +55,7 @@ function TogglerBase({ label, className, ...rest }: Props) {
                 ...rest,
                 size: "small",
                 color: "primary",
+                sx: { marginLeft: nativeTheme.s2 },
               }}
             />
           }

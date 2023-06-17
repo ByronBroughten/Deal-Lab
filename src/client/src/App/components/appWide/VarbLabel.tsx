@@ -6,7 +6,8 @@ import { useVarbInfoText } from "../customHooks/useVarbInfoText";
 import { IconProps } from "../Icons";
 import { LabelWithInfo } from "./LabelWithInfo";
 
-interface Props<SN extends SectionName> extends Partial<VarbInfoTextProps> {
+export interface Props<SN extends SectionName>
+  extends Partial<VarbInfoTextProps> {
   names: SectionVarbNames<SN>;
   iconProps?: IconProps;
 }

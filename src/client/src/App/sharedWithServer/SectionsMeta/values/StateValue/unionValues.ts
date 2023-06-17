@@ -55,6 +55,7 @@ const valueSources = {
   repairValueSource: ["none", "zero", "valueDollarsEditor", "listTotal"],
   overrunValueSource: ["valueDollarsEditor", "valuePercentEditor"],
   dollarsOrList: ["valueDollarsEditor", "listTotal"],
+  dollarsListOrZero: ["zero", "valueDollarsEditor", "listTotal"],
   dollarsOrListOngoing: ["valueDollarsPeriodicEditor", "listTotal"],
   sellingCostSource: [
     "sixPercent",

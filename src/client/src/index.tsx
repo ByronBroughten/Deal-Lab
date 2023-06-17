@@ -6,25 +6,7 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-
-// - Add dealMode to dealCompare, to change:
-// (dealCompare doesn't really make much sense without this)
-//   - deals that show up the search
-//   - variables that show up in column select
-//   - the set of columns that is activated
-//     - Mixed will have (totalInvestment, annualizedRoi, and CoCROI)
-
-// (These aren't necessary, but would add a lot of convenience)
-// - Editable titles on deal account page
-// - A key metric or two on deal account page (BRs, Key Metric (ROI/CoC ROI...)
-
-// Implement archive and make it skip loading archived deals
-// (this is needed for increasing speed)
-// - Create a route for fetching archived deals
-// - Add the archive button
-// - Add the unarchive button
-
-// Let deal compare metrics load from outputLists
+// Put info dots on output labels
 
 // Create a value called "extraLoanCosts"
 // (this is kind of needed, you have found)
@@ -39,25 +21,31 @@ AppRegistry.runApplication("App", {
 // - upfrontInvestment
 // - monthlyHousingBudget
 
-// - Maybe add a "Finish" button at the bottom of the deal page
-
-// - Put info dot stuff on output labels
-
-// - Allow for multiple output labels in one output box
+// Implement archive and make it skip loading archived deals
+// (this is needed for increasing speed)
+// - Create a route for fetching archived deals
+// - Add the archive button
+// - Add the unarchive button
 
 // (you really do need these tests to uncover any numerical errors)
 // Make property tests include brrrr and homeBuyer
 // Add tests for refiFinancing
 // Add tests for mgmt
 
+// Launch
+
 // - make SolverSections test suite to test the reducer actions
 
-// Launch
+// Let deal compare metrics load from outputLists
 
 // Add an easy CapEx default for homebuyer mode (1% or 2% purchase price)
 // Re-add an easy CapEx default for buyAndHold and brrrr (20% rent)
 // Taylor the maintenance defaults for homebuyer mode
 // Is there an easy utilities default homeBuyer?
+
+// Other deal compare features
+// - save outputList
+// - load outputList
 
 // - restrict editing to only the n most recent deals
 // - Make output lists customizable
@@ -119,9 +107,6 @@ AppRegistry.runApplication("App", {
 // downPayment % or loanAmount %
 
 // purchasePriceLoanAmount
-
-// Refinance Loan
-// * percentOf ARV
 
 // - Probably factor repairs into loans
 // - Also factor in downPayments

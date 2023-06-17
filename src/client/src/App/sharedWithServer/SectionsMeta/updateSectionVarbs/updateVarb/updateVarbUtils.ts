@@ -87,6 +87,16 @@ export function financingMethodOverrides(
   );
 }
 
+export function valueSourceNumObj<VT extends ValueSourceType>(
+  _valueSourceType: VT,
+  overrideMap: Record<ValueSource<VT>, UpdateBasics>
+): UpdateVarb<"numObj"> {
+  return updateVarb("numObj", {
+    updateFnName: "throwIfReached",
+    updateOverrides: valueSourceOverrides(_valueSourceType, overrideMap),
+  });
+}
+
 export function valueSourceOverrides<VT extends ValueSourceType>(
   _valueSourceType: VT,
   updateBasics: Record<ValueSource<VT>, UpdateBasics>,

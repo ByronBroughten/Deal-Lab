@@ -120,10 +120,14 @@ export const allSectionChildren = checkAllSectionChildren({
     customVarb: "customVarb",
   }),
   loanBaseValue: sectionChildren({
+    customLoanBase: "customLoanBase",
+    loanBaseExtra: "loanBaseExtra",
     purchaseLoanValue: "purchaseLoanValue",
     repairLoanValue: "repairLoanValue",
     arvLoanValue: "arvLoanValue",
   }),
+  loanBaseExtra: sectionChildren({ onetimeList: "onetimeList" }),
+  customLoanBase: sectionChildren({ onetimeList: "onetimeList" }),
   closingCostValue: { onetimeList: sectionChild("onetimeList") },
   property: sectionChildren({
     unit: "unit",

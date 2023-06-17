@@ -317,6 +317,17 @@ export function makeAllBaseSectionVarbs() {
       valueDollars: baseVarb("numObj", dollars),
       valueDollarsEditor: baseVarb("numObj", dollars),
     }),
+    loanBaseExtra: varbs({
+      hasLoanExtra: baseVarb("boolean"),
+      valueSourceName: baseVarb("dollarsListOrZero"),
+      valueDollars: baseVarb("numObj", dollars),
+      valueDollarsEditor: baseVarb("numObj", dollars),
+    }),
+    customLoanBase: varbs({
+      valueSourceName: baseVarb("dollarsOrList"),
+      valueDollars: baseVarb("numObj", dollars),
+      valueDollarsEditor: baseVarb("numObj", dollars),
+    }),
     purchaseLoanValue: baseVarbsS.loanValue,
     repairLoanValue: baseVarbsS.loanValue,
     arvLoanValue: baseVarbsS.loanValue,

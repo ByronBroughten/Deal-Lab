@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, SxProps } from "@mui/material";
 import { VarbName } from "../../../../../../sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
 import { FeSectionInfo } from "../../../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import {
@@ -11,7 +11,8 @@ import { nativeTheme } from "../../../../../../theme/nativeTheme";
 import { FormSectionLabeled } from "../../../../../appWide/FormSectionLabeled";
 import { LabeledVarbRow } from "../../../../../appWide/LabeledVarbRow";
 import { MuiSelect } from "../../../../../appWide/MuiSelect";
-import { NumObjEntityEditor } from "../../../../../inputs/NumObjEntityEditor";
+import { LoanBaseCustom } from "./LoanBaseCustom";
+import { LoanBaseExtra } from "./LoanBaseExtra";
 import { LoanBaseSubValue } from "./LoanBaseSubValue";
 
 export function LoanBaseValue({ feId }: { feId: string }) {
@@ -25,42 +26,34 @@ export function LoanBaseValue({ feId }: { feId: string }) {
       }}
     >
       <Box
-        sx={{
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "flex-end",
-          mt: nativeTheme.editorMargins.my,
-        }}
+        sx={[
+          {
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "flex-end",
+            flexWrap: "wrap",
+            mt: nativeTheme.editorMargins.my,
+          },
+        ]}
       >
-        <MuiSelect
-          {...{
-            label: "Loan for what",
-            selectProps: {
-              sx: { minWidth: 120 },
-            },
-            sx: { mr: nativeTheme.s35 },
-            feVarbInfo: {
-              ...feInfo,
-              varbName: "valueSourceName",
-            },
-            unionValueName: "loanBaseValueSource",
-            items: [
-              ["purchaseLoanValue", "Property purchase"],
-              ["repairLoanValue", "Upfront repairs"],
-              ["priceAndRepairValues", "Purchase and repairs"],
-              ["customAmountEditor", "Custom"],
-            ],
-          }}
+        <LoanForWhatSelect feId={feId} sx={{ marginRight: nativeTheme.s3 }} />
+        <LoanBaseValueEditorArea
+          {...{ feId, sx: { marginTop: nativeTheme.s3 } }}
         />
-        <Box sx={{ ml: nativeTheme.s3 }}>
-          <LoanBaseValueEditorArea {...{ feId }} />
-        </Box>
       </Box>
+      {sectionNameS.is(valueSource, "loanBaseSubValue") ||
+        (valueSource === "priceAndRepairValues" && (
+          <LoanBaseExtra
+            sx={{ marginTop: nativeTheme.s2 }}
+            feId={baseValue.onlyChildFeId("loanBaseExtra")}
+          />
+        ))}
       {sectionNameS.is(valueSource, "loanBaseSubValue") && (
         <ValueNumbers
           {...{
             sectionName: valueSource,
             feId: baseValue.onlyChildFeId(valueSource),
+            sx: { mt: nativeTheme.s4 },
           }}
         />
       )}
@@ -69,10 +62,13 @@ export function LoanBaseValue({ feId }: { feId: string }) {
 }
 
 interface ValueNumbersProps<SN extends SectionNameByType<"loanBaseSubValue">>
-  extends FeSectionInfo<SN> {}
+  extends FeSectionInfo<SN> {
+  sx?: SxProps;
+}
 function ValueNumbers<SN extends SectionNameByType<"loanBaseSubValue">>({
   sectionName,
   feId,
+  sx,
 }: ValueNumbersProps<SN>) {
   const subValue = useGetterSection({
     sectionName,
@@ -97,14 +93,51 @@ function ValueNumbers<SN extends SectionNameByType<"loanBaseSubValue">>({
   return editorText ? (
     <LabeledVarbRow
       {...{
-        sx: { pt: nativeTheme.s35 },
+        sx,
         varbPropArr: subValue.varbInfoArr(varbNames),
       }}
     />
   ) : null;
 }
 
-function LoanBaseValueEditorArea({ feId }: { feId: string }) {
+function LoanForWhatSelect({ feId, sx }: { feId: string; sx?: SxProps }) {
+  const feInfo = { sectionName: "loanBaseValue", feId } as const;
+  return (
+    <MuiSelect
+      {...{
+        sx,
+        label: "Loan for what",
+        selectProps: {
+          sx: [{ minWidth: 130 }],
+        },
+        feVarbInfo: {
+          ...feInfo,
+          varbName: "valueSourceName",
+        },
+        unionValueName: "loanBaseValueSource",
+        items: [
+          ["purchaseLoanValue", "Property purchase"],
+          ["repairLoanValue", "Upfront repairs"],
+          ["priceAndRepairValues", "Purchase and repairs"],
+          ["customAmountEditor", "Custom"],
+        ],
+      }}
+    />
+  );
+}
+
+function LoanBaseValueEditorArea({ feId, sx }: { feId: string; sx?: SxProps }) {
+  const baseValue = useGetterSection({ sectionName: "loanBaseValue", feId });
+  const valueSource = baseValue.valueNext("valueSourceName");
+
+  return (
+    <Box sx={sx}>
+      <LoanBaseEditorAreaContent {...{ feId }} />
+    </Box>
+  );
+}
+
+function LoanBaseEditorAreaContent({ feId }: { feId: string }) {
   const baseValue = useGetterSection({ sectionName: "loanBaseValue", feId });
   const valueSource = baseValue.valueNext("valueSourceName");
   switch (valueSource) {
@@ -131,18 +164,10 @@ function LoanBaseValueEditorArea({ feId }: { feId: string }) {
     }
     case "customAmountEditor": {
       return (
-        <NumObjEntityEditor
+        <LoanBaseCustom
           {...{
-            feVarbInfo: baseValue.varbInfo("valueDollarsEditor"),
-            labeled: false,
-            sx: {
-              "& .MaterialDraftEditor-wrapper": {},
-              "& .MuiInputBase-root": {
-                minWidth: 80,
-                pt: "8px",
-                pb: "4px",
-              },
-            },
+            feId: baseValue.onlyChildFeId("customLoanBase"),
+            sx: { marginLeft: nativeTheme.s3 },
           }}
         />
       );
