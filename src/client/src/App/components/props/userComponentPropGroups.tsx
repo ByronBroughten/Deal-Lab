@@ -62,4 +62,9 @@ export const componentProps: ComponentProps = {
   )),
 
   outputSection: props("Output sections", "output sections", () => ""),
+  dealCompareMainMenu: props(
+    "Deal compare menus",
+    "deal compare menus",
+    () => ""
+  ),
 };

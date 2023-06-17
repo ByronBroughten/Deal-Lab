@@ -94,17 +94,6 @@ function checkAllChildrenTraits<RCS extends GenericAllChildrenTraits>(
 
 export const allChildrenTraits = checkAllChildrenTraits({
   ...makeDefaultAllChildrenTraits(),
-  userListEditor: childrenTraits("userListEditor", {
-    repairsListMain: childTraits(storeName("repairsListMain")),
-    utilitiesListMain: childTraits(storeName("utilitiesListMain")),
-    capExListMain: childTraits(storeName("capExListMain")),
-    holdingCostsListMain: childTraits(storeName("holdingCostsListMain")),
-    closingCostsListMain: childTraits(storeName("closingCostsListMain")),
-    outputListMain: childTraits(storeName("outputListMain")),
-    numVarbListMain: childTraits(storeName("numVarbListMain")),
-    onetimeListMain: childTraits(storeName("onetimeListMain")),
-    ongoingListMain: childTraits(storeName("ongoingListMain")),
-  }),
   dealCompareMainMenu: childrenTraits("dealCompareMainMenu", {
     comparedDealSystem: childTraits({
       sectionContextSpecifier: indexesForSpecifiers.dealSystem,
@@ -125,19 +114,13 @@ export const allChildrenTraits = checkAllChildrenTraits({
     latentDealSystem: childTraits({
       sectionContextName: "latentDealSystem",
     }),
-    dealCompare: childTraits({
-      sectionContextName: "comparedDealSystem",
-    }),
-    userVarbEditor: childTraits({
-      sectionContextName: "latentDealSystem",
-    }),
-    userListEditor: childTraits({
-      sectionContextName: "latentDealSystem",
-    }),
   }),
   feStore: childrenTraits("feStore", {
     outputSection: childTraits({
       sectionContextName: "activeDealSystem",
+    }),
+    dealCompareMainMenu: childTraits({
+      sectionContextName: "comparedDealSystem",
     }),
     dealMain: childTraits({
       sectionContextSpecifier: indexesForSpecifiers.deal,

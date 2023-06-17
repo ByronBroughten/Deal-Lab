@@ -14,8 +14,10 @@ function useGetFilteredDeals(): GetterSection<"deal">[] {
   const feStore = main.onlyChild("feStore");
   const deals = feStore.children("dealMain");
 
-  const dealCompareMainMenu = main.onlyChild("dealCompare");
-  const nameFilter = dealCompareMainMenu.valueNext("dealNameFilter");
+  const mainMenu = feStore.onlyChild("dealCompareMainMenu");
+
+  const selectMenu = main.onlyChild("dealCompareDealSelectMenu");
+  const nameFilter = selectMenu.valueNext("dealNameFilter");
   const nameFilteredDeals = deals.filter((deal) =>
     deal
       .valueNext("displayName")
@@ -23,7 +25,7 @@ function useGetFilteredDeals(): GetterSection<"deal">[] {
       .includes(nameFilter.toLowerCase())
   );
 
-  const dealSystems = dealCompareMainMenu.children("comparedDealSystem");
+  const dealSystems = mainMenu.children("comparedDealSystem");
   const comparedSystems = dealSystems.map((page) => page.onlyChild("deal"));
   const comparedDbIds = comparedSystems.map(({ dbId }) => dbId);
   return nameFilteredDeals.filter((deal) => !comparedDbIds.includes(deal.dbId));
@@ -33,7 +35,7 @@ type Props = { closeMenu: () => void };
 export function DealCompareDealSelectMenu({ closeMenu }: Props) {
   const addDealToCompare = useAction("addDealToCompare");
 
-  const menu = useSetterSectionOnlyOne("dealCompareMainMenu");
+  const menu = useSetterSectionOnlyOne("dealCompareDealSelectMenu");
   const nameFilterVarb = menu.varb("dealNameFilter");
   const filteredDeals = useGetFilteredDeals();
   return (

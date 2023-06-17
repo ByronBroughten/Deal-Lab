@@ -28,8 +28,6 @@ export const sectionNames = [
 
   "dealCompareMainMenu",
   "dealCompareDealSelectMenu",
-  "compareOption",
-  "compareValue",
 
   "outputItem",
   "virtualVarb",
@@ -92,9 +90,6 @@ export const sectionNames = [
   "userInfo",
   "userInfoPrivate",
   "authInfoPrivate",
-
-  "userListEditor",
-  "userVarbEditor",
 ] as const;
 
 export function validateSectionName(value: any): SectionName {

@@ -1,7 +1,6 @@
 import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
 import { PackBuilderSection } from "../StatePackers/PackBuilderSection";
 import { makeDefaultDealPack } from "./makeDefaultDeal";
-import { makeDefaultDealCompareMenu } from "./makeDefaultDealCompareMenu";
 import { makeDefaultFeUserPack } from "./makeDefaultFeStore";
 
 export function makeDefaultMain(): SectionPack<"main"> {
@@ -10,14 +9,10 @@ export function makeDefaultMain(): SectionPack<"main"> {
   main.addChild("newDealMenu");
   main.addChild("mainDealMenu");
   main.addChild("variablesMenu");
+  main.addChild("dealCompareDealSelectMenu");
   main.loadChild({
     childName: "feStore",
     sectionPack: makeDefaultFeUserPack(),
-  });
-
-  main.loadChild({
-    childName: "dealCompare",
-    sectionPack: makeDefaultDealCompareMenu(),
   });
 
   const latent = main.addAndGetChild("latentDealSystem");

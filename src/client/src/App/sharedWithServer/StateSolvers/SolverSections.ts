@@ -11,6 +11,7 @@ import { StoreSectionName } from "../SectionsMeta/sectionStores";
 import { DealMode } from "../SectionsMeta/values/StateValue/dealMode";
 import { GetterSections } from "../StateGetters/GetterSections";
 import { GetterVarb } from "../StateGetters/GetterVarb";
+import { StoreId } from "../StateGetters/StoreId";
 import { PackBuilderSections } from "../StatePackers/PackBuilderSections";
 import { StateSections } from "../StateSections/StateSections";
 import { Arr } from "../utils/Arr";
@@ -235,7 +236,64 @@ export class SolverSections extends SolverSectionsBase {
   }
   removeStoredDeal(feId: string) {
     this.deactivateDealIfActive(feId);
+
+    const deal = this.solverSection({ sectionName: "deal", feId });
+    const compareMenu = this.oneAndOnly("dealCompareMainMenu");
+    if (
+      compareMenu.get.hasChildByDbInfo({
+        childName: "comparedDealSystem",
+        dbId: deal.get.dbId,
+      })
+    ) {
+      this.removeDealFromDealCompare(feId);
+    }
     this.feStore.removeFromStore({ storeName: "dealMain", feId });
+  }
+  addDealToCompare(feId: string) {
+    const { feStore } = this;
+    const menu = this.oneAndOnly("dealCompareMainMenu");
+
+    const storeId = StoreId.make("dealCompareMainMenu", menu.get.feId);
+    feStore.addChangeToSave(storeId, { changeName: "update" });
+
+    const deal = feStore.get.child({
+      childName: "dealMain",
+      feId,
+    });
+    const dealSystem = menu.addAndGetChild("comparedDealSystem", {
+      dbId: deal.dbId,
+    });
+
+    const dealToCompare = dealSystem.onlyChild("deal");
+    dealToCompare.loadSelfAndSolve(deal.packMaker.makeSectionPack());
+
+    const dealSystems = menu.children("comparedDealSystem");
+    const dealCount = dealSystems.length;
+    if (dealCount === 1) {
+      menu.updateValues({ dealMode: dealToCompare.value("dealMode") });
+    } else if (dealCount > 1) {
+      const dealMode = menu.value("dealMode");
+      if (dealMode !== "mixed") {
+        const deals = dealSystems.map((system) => system.onlyChild("deal"));
+        for (const deal of deals) {
+          if (deal.value("dealMode") !== dealToCompare.value("dealMode")) {
+            menu.updateValues({ dealMode: "mixed" });
+          }
+        }
+      }
+    }
+  }
+  removeDealFromDealCompare(feId: string) {
+    const { dbId } = this.solverSection({ sectionName: "deal", feId }).get;
+    const compareMenu = this.oneAndOnly("dealCompareMainMenu");
+    const dealSystem = compareMenu.childByDbId({
+      childName: "comparedDealSystem",
+      dbId,
+    });
+
+    dealSystem.removeSelfAndSolve();
+    const storeId = StoreId.make("dealCompareMainMenu", compareMenu.get.feId);
+    this.feStore.addChangeToSave(storeId, { changeName: "update" });
   }
   activateDealAndSolve(feId: string): void {
     this.prepperSections.activateDeal(feId);

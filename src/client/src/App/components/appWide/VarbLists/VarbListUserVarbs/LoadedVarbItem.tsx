@@ -6,8 +6,8 @@ import {
 import { VarbListItemStyledNext } from "../../ListGroup/ListGroupShared/VarbListItemStyled";
 import { XBtnCell } from "../../ListGroup/ListGroupShared/XBtnCell";
 
-type Props = { feId: string };
-export function LoadedVarbItem({ feId }: Props) {
+type Props = { feId: string; storeId?: string };
+export function LoadedVarbItem({ feId, storeId }: Props) {
   const feInfo = { sectionName: "outputItem", feId } as const;
 
   const outputItem = useGetterSection(feInfo);
@@ -25,7 +25,7 @@ export function LoadedVarbItem({ feId }: Props) {
       ) : (
         <DisplayNameNotFoundCell />
       )}
-      <XBtnCell {...feInfo} />
+      <XBtnCell {...{ ...feInfo, storeId }} />
     </VarbListItemStyledNext>
   );
 }

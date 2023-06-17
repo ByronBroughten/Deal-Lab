@@ -3,7 +3,8 @@ import { Obj } from "../utils/Obj";
 import { FeIdProp } from "./SectionInfo/NanoIdInfo";
 
 export const sectionStores = {
-  outputSection: "outputSection", // hmmm...
+  outputSection: "outputSection",
+  dealCompareMainMenu: "dealCompareMainMenu",
 
   dealMain: "deal",
   propertyMain: "property",

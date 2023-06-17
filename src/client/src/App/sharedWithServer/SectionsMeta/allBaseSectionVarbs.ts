@@ -54,14 +54,8 @@ export function makeAllBaseSectionVarbs() {
       dealNameFilter: baseVarb("string"),
     }),
     dealCompareMainMenu: varbs({
-      dealNameFilter: baseVarb("string"),
+      ...baseVarbsS.savableSection,
       dealMode: baseVarb("dealModePlusMixed"),
-    }),
-    compareOption: varbs({
-      dbId: baseVarb("string"),
-    }),
-    compareValue: varbs({
-      valueEntityInfo: baseVarb("inEntityValue"),
     }),
     variablesMenu: varbs({
       nameFilter: baseVarb("string"),

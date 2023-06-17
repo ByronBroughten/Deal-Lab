@@ -1,6 +1,6 @@
 import { unstable_batchedUpdates } from "react-dom";
 import { inEntityValueInfo } from "../../sharedWithServer/SectionsMeta/values/StateValue/InEntityValue";
-import { useSetterMain } from "../../sharedWithServer/stateClassHooks/useMain";
+import { AddChildOptions } from "../../sharedWithServer/StateUpdaters/UpdaterSection";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { HollowBtn } from "../appWide/HollowBtn";
 import { OnVarbSelect } from "../inputs/NumObjEditor/NumObjVarbSelector/VarbSelectorCollection";
@@ -8,19 +8,34 @@ import {
   useDealModeContextVarbSelect,
   useVarbSelectModal,
 } from "../Modals/VarbSelectModalProvider";
+import { outputListName } from "./../../sharedWithServer/defaultMaker/makeDefaultOutputSection";
+import { useAction } from "./../../sharedWithServer/stateClassHooks/useAction";
+import { useGetterFeStore } from "./../../sharedWithServer/stateClassHooks/useFeStore";
 
 export function DealCompareValueMenu() {
-  const main = useSetterMain();
-  const dealCompare = main.onlyChild("dealCompare");
+  const addChild = useAction("addChild");
+  const feStore = useGetterFeStore();
+
+  const menu = feStore.get.onlyChild("dealCompareMainMenu");
+  const dealMode = menu.valueNext("dealMode");
+  const listName = outputListName(dealMode);
+  const list = menu.onlyChild(listName);
 
   const { setModal } = useVarbSelectModal();
   const onVarbSelect: OnVarbSelect = (varbInfo) => {
+    const options: AddChildOptions<"outputList", "outputItem"> = {
+      sectionValues: { valueEntityInfo: inEntityValueInfo(varbInfo) },
+    };
+
     unstable_batchedUpdates(() => {
-      dealCompare.addChild("compareValue", {
-        sectionValues: { valueEntityInfo: inEntityValueInfo(varbInfo) },
+      addChild({
+        feInfo: list.feInfo,
+        childName: "outputItem",
+        idOfSectionToSave: menu.mainStoreId,
+        options,
       });
+      setModal(null);
     });
-    setModal(null);
   };
 
   const openVarbSelect = useDealModeContextVarbSelect(onVarbSelect);

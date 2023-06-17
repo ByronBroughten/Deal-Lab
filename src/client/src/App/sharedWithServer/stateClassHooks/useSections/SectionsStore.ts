@@ -17,6 +17,7 @@ const storeChildNames = [
   "mainDealMenu",
   "variablesMenu",
   "editorControls",
+  "dealCompareDealSelectMenu",
 ] as const;
 type StoredChildName = (typeof storeChildNames)[number];
 

@@ -17,6 +17,7 @@ type Props = {
 export function LoadedVarbList({ feId, ...rest }: Props) {
   const feInfo = { sectionName: "outputList", feId } as const;
   const addChild = useAction("addChild");
+
   const openVarbSelect = useDealModeContextVarbSelect((varbInfo) => {
     const options: AddChildOptions<"outputList", "outputItem"> = {
       sectionValues: { valueEntityInfo: inEntityValueInfo(varbInfo) },

@@ -31,6 +31,12 @@ const checkAllSectionTraits = <AST extends GenericAllSectionTraits>(
 export type AllSectionTraits = typeof allSectionTraits;
 export const allSectionTraits = checkAllSectionTraits({
   ...defaultSectionTraits,
+  outputSection: sectionTraits({
+    defaultStoreName: "outputSection",
+  }),
+  dealCompareMainMenu: sectionTraits({
+    defaultStoreName: "dealCompareMainMenu",
+  }),
   deal: sectionTraits({
     displayName: "Deal",
     defaultStoreName: "dealMain",

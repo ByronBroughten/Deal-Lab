@@ -2,6 +2,7 @@ import { dbStoreNames } from "../SectionsMeta/sectionChildrenDerived/DbStoreName
 import { numObj } from "../SectionsMeta/values/StateValue/NumObj";
 import { PackBuilderSection } from "../StatePackers/PackBuilderSection";
 import { timeS } from "../utils/timeS";
+import { makeDefaultDealCompareMenu } from "./makeDefaultDealCompareMenu";
 import { exampleDealBuyAndHold } from "./makeDefaultFeUser/exampleDealBuyAndHold";
 import { exampleDealHomebuyer } from "./makeDefaultFeUser/exampleDealHomebuyer";
 import {
@@ -45,6 +46,11 @@ export function makeDefaultDbStoreArrs({
 
   const stripeInfoPrivate = dbStore.addAndGetChild("stripeInfoPrivate");
   stripeInfoPrivate.updateValues({ customerId: "" });
+
+  dbStore.loadChild({
+    childName: "dealCompareMainMenu",
+    sectionPack: makeDefaultDealCompareMenu(),
+  });
 
   dbStore.loadChild({
     childName: "outputSection",

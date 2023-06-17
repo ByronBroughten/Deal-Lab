@@ -8,7 +8,7 @@ import {
   sectionChildren,
 } from "./allSectionChildren/sectionChildren";
 import { SectionName, sectionNames } from "./SectionName";
-import { listChildren, sectionStores } from "./sectionStores";
+import { sectionStores } from "./sectionStores";
 
 type Defaults = {
   [SN in SectionName]: {};
@@ -44,18 +44,11 @@ export const allSectionChildren = checkAllSectionChildren({
     mainDealMenu: "mainDealMenu",
     variablesMenu: "variablesMenu",
     editorControls: "editorControls",
+    dealCompareDealSelectMenu: "dealCompareDealSelectMenu",
 
     // These are not saved
     latentDealSystem: "dealSystem",
     activeDealSystem: "dealSystem",
-
-    // I would like to save this at some point
-    // in some fashion
-    dealCompare: "dealCompareMainMenu",
-
-    // these will be eliminated
-    userVarbEditor: "userVarbEditor",
-    userListEditor: "userListEditor",
   }),
   feStore: sectionChildren(sectionStores),
   dbStore: sectionChildren({
@@ -74,13 +67,8 @@ export const allSectionChildren = checkAllSectionChildren({
     numVarbList: "numVarbList",
     boolVarbList: "boolVarbList",
   }),
-  userVarbEditor: sectionChildren({
-    numVarbListMain: "numVarbList",
-  }),
-  userListEditor: sectionChildren(listChildren),
   dealCompareMainMenu: sectionChildren({
     comparedDealSystem: "dealSystem",
-    compareValue: "compareValue",
     homeBuyerOutputList: "outputList",
     buyAndHoldOutputList: "outputList",
     fixAndFlipOutputList: "outputList",

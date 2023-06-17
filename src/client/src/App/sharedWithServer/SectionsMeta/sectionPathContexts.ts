@@ -122,17 +122,13 @@ const activeDealSystem = {
 
 const comparedDealSystemPath: ChildName[] = [
   "main",
-  "dealCompare",
+  "feStore",
+  "dealCompareMainMenu",
   "comparedDealSystem",
 ];
 const comparedDealSystem = makeDealSystemFocals(comparedDealSystemPath);
 const comparedDealSystemIdx = comparedDealSystemPath.length - 1;
 const comparedDealPathIdx = comparedDealSystemIdx + 1;
-const editorVarbListPath: ChildName[] = [
-  "main",
-  "userVarbEditor",
-  "numVarbListMain",
-];
 
 type ValueToCheck = Record<
   string,
@@ -142,12 +138,6 @@ const typeCheckContexts = <V extends ValueToCheck>(v: V) => v;
 export const sectionPathContexts = typeCheckContexts({
   default: sectionPathContext(activeDealSystem),
   activeDealSystem: sectionPathContext(activeDealSystem),
-  userListEditorPage: sectionPathContext(activeDealSystem),
-  userVarbEditorPage: sectionPathContext({
-    ...activeDealSystem,
-    numVarbListMain: abs("numVarbList", editorVarbListPath),
-    numVarbItemMain: abs("numVarbItem", [...editorVarbListPath, "numVarbItem"]),
-  }),
   latentDealSystem: sectionPathContext(latentDealSystem),
   comparedDealSystem: sectionPathContext(comparedDealSystem),
 });
@@ -186,16 +176,12 @@ export const indexesForSpecifiers = checkIdxSpecifiers({
     default: activeDealPathIdx + 2,
     activeDealSystem: activeDealPathIdx + 2,
     latentDealSystem: activeDealPathIdx + 2,
-    userListEditorPage: activeDealPathIdx + 2,
-    userVarbEditorPage: activeDealPathIdx + 2,
     comparedDealSystem: comparedDealPathIdx + 2,
   },
   deal: {
     default: activeDealPathIdx,
     activeDealSystem: activeDealPathIdx,
     // latentDealSystem: activeDealPathIdx, // this is probably not needed
-    userListEditorPage: activeDealPathIdx,
-    userVarbEditorPage: activeDealPathIdx,
     comparedDealSystem: comparedDealPathIdx,
   },
   dealSystem: {

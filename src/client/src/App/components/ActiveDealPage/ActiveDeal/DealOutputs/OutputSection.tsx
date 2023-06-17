@@ -4,7 +4,8 @@ import { useToggleView } from "../../../../modules/customHooks/useToggleView";
 import { outputListName } from "../../../../sharedWithServer/defaultMaker/makeDefaultOutputSection";
 import { StateValue } from "../../../../sharedWithServer/SectionsMeta/values/StateValue";
 import { dealModeLabels } from "../../../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
-import { useSetterSection } from "../../../../sharedWithServer/stateClassHooks/useSetterSection";
+import { useGetterSection } from "../../../../sharedWithServer/stateClassHooks/useGetterSection";
+import { IdOfSectionToSaveProvider } from "../../../../sharedWithServer/stateClassHooks/useIdOfSectionToSave";
 import { nativeTheme } from "../../../../theme/nativeTheme";
 import { CheckMarkCircle } from "../../../appWide/checkMarkCircle";
 import { EditSectionBtn } from "../../../appWide/EditSectionBtn";
@@ -29,7 +30,7 @@ export function OutputSection({
   dealIsComplete: boolean;
   dealMode: StateValue<"dealMode">;
 }) {
-  const outputSection = useSetterSection({
+  const outputSection = useGetterSection({
     sectionName: "outputSection",
     feId,
   });
@@ -48,7 +49,16 @@ export function OutputSection({
           />
         </MuiRow>
       ),
-      children: <LoadedVarbList {...{ feId: listId, menuType: "value" }} />,
+      children: (
+        <IdOfSectionToSaveProvider {...{ storeId: outputSection.mainStoreId }}>
+          <LoadedVarbList
+            {...{
+              feId: listId,
+              menuType: "value",
+            }}
+          />
+        </IdOfSectionToSaveProvider>
+      ),
     });
 
   return (

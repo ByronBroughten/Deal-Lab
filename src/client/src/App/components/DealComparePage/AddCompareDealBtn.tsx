@@ -24,12 +24,7 @@ export function AddCompareDealBtn({ dealCount }: Props) {
   const openDealMenu = () =>
     setModal({
       title: "Select a deal to compare",
-      children: (
-        <DealCompareDealSelectMenu
-          noneCompared={false}
-          closeMenu={() => setModal(null)}
-        />
-      ),
+      children: <DealCompareDealSelectMenu closeMenu={() => setModal(null)} />,
     });
   return (
     <HollowBtn
