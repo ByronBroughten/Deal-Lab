@@ -2,7 +2,10 @@ import { SxProps } from "@mui/material";
 import React from "react";
 import { StyleSheet, Text } from "react-native";
 import { timeS } from "../../sharedWithServer/utils/timeS";
+import { nativeTheme } from "../../theme/nativeTheme";
 import theme from "../../theme/Theme";
+import { MuiRow } from "../general/MuiRow";
+import { icons } from "../Icons";
 import {
   InfoModalOptions,
   InfoModalState,
@@ -35,7 +38,17 @@ export function InfoModal({ modalWrapperProps }: Props) {
   return (
     <ModalSection
       {...{
-        title,
+        title: (
+          <MuiRow>
+            {title}
+            {icons.info({
+              style: {
+                color: nativeTheme.complementary.main,
+                marginLeft: nativeTheme.s2,
+              },
+            })}
+          </MuiRow>
+        ),
         infoText,
         show: Boolean(modalState),
         closeModal: () => {
