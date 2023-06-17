@@ -1,13 +1,17 @@
 import { Box } from "@mui/system";
 import { unstable_batchedUpdates } from "react-dom";
 import { Text, View, ViewStyle } from "react-native";
+import { VarbName } from "../../sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
+import { DealMode } from "../../sharedWithServer/SectionsMeta/values/StateValue/dealMode";
 import { dealModeLabels } from "../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
 import { useActionWithProps } from "../../sharedWithServer/stateClassHooks/useAction";
 import { IdOfSectionToSaveProvider } from "../../sharedWithServer/stateClassHooks/useIdOfSectionToSave";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { reactNativeS } from "../../utils/reactNative";
 import { StyledActionBtn } from "../appWide/GeneralSection/MainSection/StyledActionBtn";
+import { LabeledVarbNext } from "../appWide/LabeledVarbNext";
 import { useGoToPage } from "../customHooks/useGoToPage";
+import { MuiRow } from "../general/MuiRow";
 import { BareStringEditor } from "../inputs/BareStringEditor";
 import { useConfirmationModal } from "../Modals/ConfirmationDialogueProvider";
 import { useGetterSection } from "./../../sharedWithServer/stateClassHooks/useGetterSection";
@@ -90,6 +94,14 @@ export function AccountPageDeal({
 
   const strDisplayName = deal.stringValue("displayName");
   const isComplete = deal.valueNext("completionStatus") === "allValid";
+
+  const outputPerDeal: Record<DealMode, VarbName<"deal">> = {
+    homeBuyer: "ongoingPitiMonthly",
+    buyAndHold: "cocRoiYearly",
+    fixAndFlip: "roiPercent",
+    brrrr: "roiPercent",
+  };
+
   return (
     <View
       style={{
@@ -139,6 +151,22 @@ export function AccountPageDeal({
               </Box>
             )}
           </Row>
+          {isComplete && (
+            <MuiRow
+              sx={{
+                justifyContent: "flex-end",
+                flex: 1,
+                paddingRight: nativeTheme.s45,
+              }}
+            >
+              <LabeledVarbNext
+                {...{
+                  finder: deal.varbInfo(outputPerDeal[dealMode]),
+                  sx: { border: "none" },
+                }}
+              />
+            </MuiRow>
+          )}
           <Row>
             <StyledActionBtn
               {...{

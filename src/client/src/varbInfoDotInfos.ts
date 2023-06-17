@@ -60,6 +60,23 @@ export const varbInfoDotConfig = checkSectionInfoTexts({
       info: `Cost overrun is the sum of costs over the entirety of a project that were not anticipated upfront. Cost overrun is common, especially for larger projects.\n\nFor sizable rehab projects, it's common to factor in an extra 10-15% of the base rehab estimate for cost overrun. That may not be necessary for turnkey properties or light rehab.`,
     },
   }),
+  ...prop("deal", {
+    ongoingPitiMonthly: {
+      inputLabel: "PITI payments",
+      title: "PITI",
+      info: `"PITI" stands for "principal and interest, taxes, and insurance". Often, these are the things included in the payments that homebuyers send to the bank every month.`,
+    },
+    roiPercent: {
+      inputLabel: "ROI",
+      title: "",
+      info: "",
+    },
+    cocRoiYearly: {
+      inputLabel: "CoC ROI",
+      title: "",
+      info: "",
+    },
+  }),
   ...prop("property", {
     propertyMode: multis.dealMode,
     afterRepairValue: {

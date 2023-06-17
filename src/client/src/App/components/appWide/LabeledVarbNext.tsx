@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import { Box, SxProps } from "@mui/material";
 import {
   FeSectionInfo,
   FeVarbInfo,
@@ -7,11 +7,12 @@ import {
 import { useGetterSection } from "../../sharedWithServer/stateClassHooks/useGetterSection";
 import { useGetterSections } from "../../sharedWithServer/stateClassHooks/useGetterSections";
 import { nativeTheme } from "../../theme/nativeTheme";
-import theme, { ThemeName } from "../../theme/Theme";
+import { arrSx } from "../../utils/mui";
 import { useVarbInfoText } from "../customHooks/useVarbInfoText";
 
 export interface LabeledVarbProps extends LabeledVarbNotFoundProps {
   finder: FeVarbInfo | FeVarbInfo[];
+  sx?: SxProps;
 }
 export function LabeledVarbNext({ finder, ...rest }: LabeledVarbProps) {
   if (!Array.isArray(finder)) {
@@ -86,63 +87,55 @@ interface StyledLabeledVarbProps extends LabeledVarbNotFoundProps {
   labelText: string;
   displayVarb: string;
   labelId: string;
-  themeName?: ThemeName;
+  sx?: SxProps;
 }
 export function StyledLabeledVarb({
   labelId,
   className,
   labelText,
   displayVarb,
-  themeName = "deal",
+  sx,
 }: StyledLabeledVarbProps) {
   return (
-    <Styled
+    <Box
       {...{
-        $themeName: themeName,
         className: `LabeledVarb-root ${className ?? ""}`,
+        sx: [
+          {
+            position: "relative",
+            zIndex: 0,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            background: "transparent",
+            border: `solid 1px ${nativeTheme["gray-300"]}`,
+            boxShadow: "none",
+            borderRadius: nativeTheme.muiBr0,
+            padding: nativeTheme.s3,
+          },
+          ...arrSx(sx),
+        ],
       }}
     >
-      <div className="LabeledVarb-labelPositioner">
-        <label htmlFor={labelId} className="LabeledVarb-label">
+      <div>
+        <Box
+          component="label"
+          sx={{ whiteSpace: "nowrap", color: nativeTheme.darkBlue.main }}
+          htmlFor={labelId}
+        >
           {labelText}
-        </label>
+        </Box>
         {/* {onXBtnClick && (
           <PlainBtn className="LabeledVarb-xBtn" onClick={onXBtnClick}>
             <AiOutlineCloseCircle className="icon" />
           </PlainBtn>
         )} */}
       </div>
-      <output
+      <Box
+        component="output"
         id={labelId}
-        className="LabeledVarb-output"
-      >{`${displayVarb}`}</output>
-    </Styled>
+        sx={{ marginTop: nativeTheme.s2, color: nativeTheme.dark }}
+      >{`${displayVarb}`}</Box>
+    </Box>
   );
 }
-
-const Styled = styled.div`
-  position: relative;
-  z-index: 0;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  box-shadow: ${theme.boxShadow1};
-  background: transparent;
-
-  border: solid 1px ${nativeTheme["gray-300"]};
-  box-shadow: none;
-
-  border-radius: ${theme.br0};
-  padding: ${theme.s3};
-
-  .LabeledVarb-label {
-    white-space: nowrap;
-    color: ${nativeTheme.darkBlue.main};
-  }
-  .LabeledVarb-output {
-    margin-top: ${theme.s2};
-    color: ${theme.dark};
-  }
-`;
