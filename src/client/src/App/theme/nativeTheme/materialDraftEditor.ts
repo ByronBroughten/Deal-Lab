@@ -45,11 +45,11 @@ export const materialDraftEditor = (label?: React.ReactNode) =>
       display: "inline-block",
       fontSize,
       minWidth: 7,
+      color: themeColors.dark,
     },
     "& .public-DraftEditor-content": {
       display: "inline-block",
       whiteSpace: "nowrap",
-      color: themeColors.dark,
     },
     "& .public-DraftStyleDefault-block": {
       display: "flex",

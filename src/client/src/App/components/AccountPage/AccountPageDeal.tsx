@@ -3,10 +3,12 @@ import { unstable_batchedUpdates } from "react-dom";
 import { Text, View, ViewStyle } from "react-native";
 import { dealModeLabels } from "../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
 import { useActionWithProps } from "../../sharedWithServer/stateClassHooks/useAction";
+import { IdOfSectionToSaveProvider } from "../../sharedWithServer/stateClassHooks/useIdOfSectionToSave";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { reactNativeS } from "../../utils/reactNative";
 import { StyledActionBtn } from "../appWide/GeneralSection/MainSection/StyledActionBtn";
 import { useGoToPage } from "../customHooks/useGoToPage";
+import { BareStringEditor } from "../inputs/BareStringEditor";
 import { useConfirmationModal } from "../Modals/ConfirmationDialogueProvider";
 import { useGetterSection } from "./../../sharedWithServer/stateClassHooks/useGetterSection";
 import { Row } from "./../general/Row";
@@ -14,10 +16,12 @@ import { icons } from "./../Icons";
 
 const titleProps = (displayName: string) => ({
   sx: {
-    color: nativeTheme.primary.main,
-    fontSize: nativeTheme.fs18,
-    maxWidth: 800,
-    ...(!displayName && { fontStyle: "italic" }),
+    "& .DraftEditor-root": {
+      color: nativeTheme.primary.main,
+      fontSize: nativeTheme.fs18,
+      maxWidth: 800,
+      ...(!displayName && { fontStyle: "italic" }),
+    },
   },
 });
 
@@ -97,75 +101,84 @@ export function AccountPageDeal({
         ...nativeTheme.formSection,
       }}
     >
-      <Row style={{ justifyContent: "space-between" }}>
-        <Box {...titleProps(strDisplayName)}>
-          {strDisplayName || "Untitled"}
-        </Box>
-        <Row
-          style={{
-            ...rowStyle,
-            paddingLeft: nativeTheme.s4,
-          }}
-        >
-          <Text>Created </Text>
-          <Text>{dateCreated}</Text>
-        </Row>
-      </Row>
-      <Row style={{ justifyContent: "space-between" }}>
-        <Row style={rowStyle}>
-          {icons[dealMode](iconProps)}
-          <Text {...dealTypeProps}>{dealModeLabels[dealMode]}</Text>
-          {!isComplete && (
-            <Box
-              sx={{
-                color: nativeTheme.notice.dark,
-                ml: nativeTheme.s3,
-                fontStyle: "italic",
+      <IdOfSectionToSaveProvider storeId={deal.mainStoreId}>
+        <Row style={{ justifyContent: "space-between" }}>
+          <Box {...titleProps(strDisplayName)}>
+            <BareStringEditor
+              {...{
+                ...titleProps(strDisplayName),
+                feVarbInfo: deal.varbInfoNext("displayNameEditor"),
+                placeholder: "Untitled",
               }}
-            >
-              {"Incomplete"}
-            </Box>
-          )}
+            />
+            {/* {strDisplayName || "Untitled"} */}
+          </Box>
+          <Row
+            style={{
+              ...rowStyle,
+              paddingLeft: nativeTheme.s4,
+            }}
+          >
+            <Text>Created </Text>
+            <Text>{dateCreated}</Text>
+          </Row>
         </Row>
-        <Row>
-          <StyledActionBtn
-            {...{
-              sx: {
-                margin: nativeTheme.s15,
-                marginTop: nativeTheme.s25,
-                marginRight: nativeTheme.s2,
-              },
-              left: icons.edit({ size: 20 }),
-              middle: "Edit",
-              onClick: editDeal,
-            }}
-          />
-          <StyledActionBtn
-            {...{
-              onClick: copyDeal,
-              sx: {
-                margin: nativeTheme.s1,
-                marginTop: nativeTheme.s25,
-                marginRight: nativeTheme.s15,
-              },
-              left: icons.copy({ size: 20 }),
-              middle: "Copy",
-            }}
-          />
-          <StyledActionBtn
-            {...{
-              isDangerous: true,
-              onClick: warnAndDelete,
-              sx: {
-                margin: nativeTheme.s1,
-                marginTop: nativeTheme.s25,
-              },
-              left: icons.delete({ size: 20 }),
-              middle: "Delete",
-            }}
-          />
+        <Row style={{ justifyContent: "space-between" }}>
+          <Row style={rowStyle}>
+            {icons[dealMode](iconProps)}
+            <Text {...dealTypeProps}>{dealModeLabels[dealMode]}</Text>
+            {!isComplete && (
+              <Box
+                sx={{
+                  color: nativeTheme.notice.dark,
+                  ml: nativeTheme.s3,
+                  fontStyle: "italic",
+                }}
+              >
+                {"Incomplete"}
+              </Box>
+            )}
+          </Row>
+          <Row>
+            <StyledActionBtn
+              {...{
+                sx: {
+                  margin: nativeTheme.s15,
+                  marginTop: nativeTheme.s25,
+                  marginRight: nativeTheme.s2,
+                },
+                left: icons.edit({ size: 20 }),
+                middle: "Edit",
+                onClick: editDeal,
+              }}
+            />
+            <StyledActionBtn
+              {...{
+                onClick: copyDeal,
+                sx: {
+                  margin: nativeTheme.s1,
+                  marginTop: nativeTheme.s25,
+                  marginRight: nativeTheme.s15,
+                },
+                left: icons.copy({ size: 20 }),
+                middle: "Copy",
+              }}
+            />
+            <StyledActionBtn
+              {...{
+                isDangerous: true,
+                onClick: warnAndDelete,
+                sx: {
+                  margin: nativeTheme.s1,
+                  marginTop: nativeTheme.s25,
+                },
+                left: icons.delete({ size: 20 }),
+                middle: "Delete",
+              }}
+            />
+          </Row>
         </Row>
-      </Row>
+      </IdOfSectionToSaveProvider>
     </View>
   );
 }

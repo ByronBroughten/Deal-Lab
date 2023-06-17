@@ -14,10 +14,8 @@ export const MaterialDraftField = React.forwardRef(function MaterialDraftField(
   ref
 ) {
   const { component: DraftEditor, editorRef, handleOnChange, ...rest } = props;
-  // DraftEditor is the straight draft-js editor component being used
 
   const focusEditor = useFocusEditor(editorRef);
-
   React.useImperativeHandle(ref, () => ({
     focus: () => {
       focusEditor();
