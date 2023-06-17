@@ -13,7 +13,7 @@ export function OuterSectionNext({ children, style }: OuterSectionNextProps) {
     <View
       style={{
         alignItems: "center",
-        overflow: "scroll",
+        overflow: "hidden",
         minHeight: dimensions.height - nativeTheme.navBar.height,
         paddingTop: nativeTheme.s4,
         paddingLeft: paddingLR,
