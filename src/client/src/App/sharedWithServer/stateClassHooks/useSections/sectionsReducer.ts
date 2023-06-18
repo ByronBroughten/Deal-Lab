@@ -29,7 +29,7 @@ const sectionActionNames = [
   "addToStore",
   "saveAndOverwriteToStore",
   "archiveDeal",
-  "loadArchivedDeals",
+  "loadAndShowArchivedDeals",
   "activateDeal",
   "addActiveDeal",
   "copyInStore",
@@ -66,7 +66,7 @@ type ExtraActionProps = _CheckSectionActionProps<{
 
   addActiveDeal: { dealMode: DealMode };
   archiveDeal: FeIdProp;
-  loadArchivedDeals: { archivedDeals: SectionPack<"deal">[] };
+  loadAndShowArchivedDeals: { archivedDeals: SectionPack<"deal">[] };
   activateDeal: FeIdProp;
   removeStoredDeal: FeIdProp;
 
@@ -225,8 +225,8 @@ export const sectionsReducer: React.Reducer<StateSections, SectionsAction> = (
       solverSections.saveAndOverwriteToStore(feInfo),
     copyInStore: (props) => solverSections.feStore.copyInStore(props),
     archiveDeal: ({ feId }) => solverSections.archiveDeal(feId),
-    loadArchivedDeals: ({ archivedDeals }) =>
-      solverSections.loadArchivedDeals(archivedDeals),
+    loadAndShowArchivedDeals: ({ archivedDeals }) =>
+      solverSections.loadAndShowArchivedDeals(archivedDeals),
     removeStoredDeal: ({ feId }) => solverSections.removeStoredDeal(feId),
     activateDeal: ({ feId }) => solverSections.activateDealAndSolve(feId),
     addActiveDeal: ({ dealMode }) => solverSections.addActiveDeal(dealMode),

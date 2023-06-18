@@ -45,13 +45,13 @@ export function makeAllBaseSectionVarbs() {
     }),
     sessionVarbs: varbs({
       archivedAreLoaded: baseVarb("boolean"),
+      showArchivedDeals: baseVarb("boolean"),
     }),
     newDealMenu: varbs({ dealMode: baseVarb("dealMode") }),
     mainDealMenu: varbs({
       dealNameFilter: baseVarb("string"),
       dealModeFilter: baseVarb("dealMode"),
       dealSort: baseVarb("dealSort"),
-      showArchived: baseVarb("boolean"),
     }),
     dealCompareDealSelectMenu: varbs({
       dealNameFilter: baseVarb("string"),

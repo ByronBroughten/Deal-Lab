@@ -20,8 +20,9 @@ function useFilteredDeals() {
   const main = useGetterSectionOnlyOne("main");
   const feStore = main.onlyChild("feStore");
   const dealMenu = main.onlyChild("mainDealMenu");
+  const session = main.onlyChild("sessionVarbs");
 
-  const showArchived = dealMenu.valueNext("showArchived");
+  const showArchived = session.valueNext("showArchivedDeals");
   const dealNameFilter = dealMenu.valueNext("dealNameFilter");
   const deals = feStore.children("dealMain");
   return deals.filter((deal) => {
@@ -44,19 +45,17 @@ function useFilteredSortedDeals() {
 export const accountPageElementMargin = nativeTheme.s3;
 export function AccountPageDeals() {
   const main = useGetterSectionOnlyOne("main");
+  const session = main.onlyChild("sessionVarbs");
   const dealMenu = main.onlyChild("mainDealMenu");
-  const showArchived = dealMenu.valueNext("showArchived");
+  const showArchived = session.valueNext("showArchivedDeals");
 
   const deals = useFilteredSortedDeals();
 
   const queryAction = useQueryAction();
-  const showArchivedDeals = () =>
-    queryAction({
-      type: "showArchivedDeals",
-    });
+  const showArchivedDeals = () => queryAction({ type: "showArchivedDeals" });
 
   const hideArchivedDeals = useActionWithProps("updateValue", {
-    ...dealMenu.varbInfo("showArchived"),
+    ...session.varbInfo("showArchivedDeals"),
     value: false,
   });
 
@@ -139,10 +138,10 @@ export function AccountPageDeals() {
               {deals.map(({ feId }, idx) => (
                 <IdOfSectionToSaveProvider
                   storeId={StoreId.make("dealMain", feId)}
+                  key={feId}
                 >
                   <AccountPageDeal
                     {...{
-                      key: feId,
                       feId,
                       ...(idx === deals.length - 1 && {
                         style: { borderBottomWidth: 1 },

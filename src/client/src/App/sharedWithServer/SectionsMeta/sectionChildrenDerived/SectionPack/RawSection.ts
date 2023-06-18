@@ -65,6 +65,7 @@ export type OneRawSection<SN extends SectionName = SectionName> = {
 };
 function validateRawSection(value: any): OneRawSection<any> {
   const obj = Obj.validateObjToAny(value) as OneRawSection<any>;
+
   return {
     spNum: validateS.number(obj.spNum),
     dbId: Id.validate(obj.dbId),

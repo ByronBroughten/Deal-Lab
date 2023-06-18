@@ -41,7 +41,6 @@ const updateFnNames = checkUpdateFnNames({
     "loadMainTextByVarbInfo",
     "manualUpdateOnly",
     "loadDisplayName",
-    "loadDisplayNameEnd",
     "loadStartAdornment",
     "loadEndAdornment",
     "emptyStringObj",

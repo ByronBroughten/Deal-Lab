@@ -82,6 +82,14 @@ const prop = updateSectionProp;
 function makeAllUpdateSections() {
   return checkAllUpdateSections({
     ...makeAllDefaultUpdateSections(),
+    ...prop("sessionVarbs", {
+      archivedAreLoaded: varb("boolean", {
+        initValue: false,
+      }),
+      showArchivedDeals: varb("boolean", {
+        initValue: false,
+      }),
+    }),
     ...prop("loan", loanUpdateVarbs()),
     ...prop("loanBaseValue", loanBaseUpdateVarbs()),
     ...prop("loanBaseExtra", {

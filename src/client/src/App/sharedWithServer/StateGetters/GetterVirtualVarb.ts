@@ -18,11 +18,8 @@ export class GetterVirtualVarb<
   get displayName(): string {
     return this.values.displayName.mainText;
   }
-  get displayNameEnd(): string {
-    return this.values.displayNameEnd.mainText;
-  }
   get displayNameFull(): string {
-    return this.displayName + this.displayNameEnd;
+    return this.displayName;
   }
   get startAdornment(): string {
     return this.values.startAdornment.mainText;

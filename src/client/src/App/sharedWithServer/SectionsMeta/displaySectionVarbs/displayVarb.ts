@@ -18,8 +18,6 @@ export type DisplayVarb = {
   displayNameWithVariant: DisplayName;
   displayNameFullContext: DisplayName;
 
-  displayNameStart: string;
-  displayNameEnd: string;
   startAdornment: string;
   endAdornment: string;
   displayRound: number;
@@ -35,8 +33,6 @@ export function defaultDisplayVarb(displayName: DisplayName) {
     displayNameWithSection: displayName,
     displayNameWithVariant: displayName,
     displayNameFullContext: displayName,
-    displayNameStart: "",
-    displayNameEnd: "",
     startAdornment: "",
     endAdornment: "",
     displayRound: 0,

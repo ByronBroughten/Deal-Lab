@@ -8,6 +8,5 @@ export function makeEmptyMain(): SectionPack<"main"> {
     childName: "feStore",
     sectionPack: makeDefaultFeUserPack(),
   });
-  main.addChild("variablesMenu");
   return main.makeSectionPack();
 }

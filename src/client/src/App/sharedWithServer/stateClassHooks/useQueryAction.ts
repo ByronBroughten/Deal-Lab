@@ -92,19 +92,17 @@ export function useQueryAction() {
       }
       case "showArchivedDeals": {
         const { main } = getterSections;
-        const sessionVarbs = main.onlyChild("sessionVarbs");
-        if (sessionVarbs.valueNext("archivedAreLoaded")) {
-          const menu = main.onlyChild("mainDealMenu");
+        const session = main.onlyChild("sessionVarbs");
+        if (session.valueNext("archivedAreLoaded")) {
           dispatch({
             type: "updateValue",
-            ...menu.feInfo,
-            varbName: "showArchived",
+            ...session.varbInfo("showArchivedDeals"),
             value: true,
           });
         } else {
           const res = await apiQueries.getArchivedDeals(makeReq({}));
           dispatch({
-            type: "loadArchivedDeals",
+            type: "loadAndShowArchivedDeals",
             archivedDeals: res.data,
           });
         }

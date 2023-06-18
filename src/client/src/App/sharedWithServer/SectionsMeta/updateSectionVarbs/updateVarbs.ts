@@ -32,12 +32,6 @@ export const updateVarbsS = {
           varbInfo: updateFnPropS.local("valueEntityInfo"),
         },
       }),
-      displayNameEnd: updateVarb("stringObj", {
-        updateFnName: "loadDisplayNameEnd",
-        updateFnProps: {
-          varbInfo: updateFnPropS.local("valueEntityInfo"),
-        },
-      }),
       startAdornment: updateVarb("stringObj", {
         updateFnName: "loadStartAdornment",
         updateFnProps: {

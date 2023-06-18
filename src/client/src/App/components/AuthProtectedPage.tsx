@@ -1,7 +1,9 @@
+import React from "react";
 import { Navigate, Outlet, useNavigate } from "react-router-dom";
 import { SessionAuth } from "supertokens-auth-react/recipe/session";
 import { feRoutes } from "../Constants/feRoutes";
 import { useUserDataStatus } from "../modules/SectionActors/UserDataActor";
+import { useGetterSectionOnlyOne } from "../sharedWithServer/stateClassHooks/useGetterSection";
 import { OuterSectionNext } from "./appWide/GeneralSection/OuterSectionNext";
 import { DealModeProvider } from "./customContexts/dealModeContext";
 import { PageMain } from "./general/PageMain";
@@ -14,13 +16,27 @@ export function UserDataNeededPage() {
   return userDataStatus === "loaded" ? (
     <Outlet />
   ) : (
-    <Navigate to={feRoutes.account} />
+    <Navigate to={feRoutes.auth} />
   );
+}
+
+export function DefaultMainNeededPage({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const main = useGetterSectionOnlyOne("main");
+  if (!main.hasOnlyChild("mainDealMenu")) {
+    return <div>{children}</div>;
+  } else {
+    return <Navigate to={feRoutes.auth} />;
+  }
 }
 
 export function AuthProtectedPage() {
   return (
     <LoginToAccess>
+      {/* <DefaultMainNeededPage> */}
       <DealModeProvider dealMode="mixed">
         <ModalProviders>
           <Modals />
@@ -32,6 +48,7 @@ export function AuthProtectedPage() {
           </PageMain>
         </ModalProviders>
       </DealModeProvider>
+      {/* </DefaultMainNeededPage> */}
     </LoginToAccess>
   );
 }

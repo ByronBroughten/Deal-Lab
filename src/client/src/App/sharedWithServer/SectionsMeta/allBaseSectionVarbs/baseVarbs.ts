@@ -251,7 +251,6 @@ export const baseVarbsS = {
   get virtualVarb() {
     return baseVarbs("stringObj", [
       "displayName",
-      "displayNameEnd",
       "startAdornment",
       "endAdornment",
     ] as const);

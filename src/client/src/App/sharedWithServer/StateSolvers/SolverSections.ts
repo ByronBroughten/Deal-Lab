@@ -237,10 +237,11 @@ export class SolverSections extends SolverSectionsBase {
       changeName: "update",
     });
   }
-  loadArchivedDeals(archivedDeals: SectionPack<"deal">[]) {
+  loadAndShowArchivedDeals(archivedDeals: SectionPack<"deal">[]) {
     this.feStore.loadChildrenNoDuplicates("dealMain", archivedDeals);
     const sessionVarbs = this.oneAndOnly("sessionVarbs");
     sessionVarbs.basicSolvePrepper.updateValues({
+      showArchivedDeals: true,
       archivedAreLoaded: true,
     });
   }

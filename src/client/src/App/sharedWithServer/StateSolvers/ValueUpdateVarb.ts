@@ -378,9 +378,6 @@ export class SolveValueVarb<
     loadDisplayName: (): StringObj => {
       return this.valueEntityVarbProp("displayName", "Variable not found");
     },
-    loadDisplayNameEnd: (): StringObj => {
-      return this.valueEntityVarbProp("displayNameEnd", "");
-    },
     loadStartAdornment: (): StringObj => {
       return this.valueEntityVarbProp("startAdornment", "");
     },
