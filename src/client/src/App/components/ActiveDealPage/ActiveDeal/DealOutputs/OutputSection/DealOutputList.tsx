@@ -1,12 +1,9 @@
 import { Box, SxProps } from "@mui/material";
-import { InEntityValue } from "../../../../../sharedWithServer/SectionsMeta/values/StateValue/InEntityValue";
 import { useGetterSection } from "../../../../../sharedWithServer/stateClassHooks/useGetterSection";
-import { useSetterSection } from "../../../../../sharedWithServer/stateClassHooks/useSetterSection";
-import { VarbPathArrParam } from "../../../../../sharedWithServer/StateEntityGetters/varbPathOptions";
-import { LabeledVarbProps } from "../../../../appWide/LabeledVarb";
+import { LabeledVarbFinder } from "../../../../appWide/LabeledVarbNext";
 import { LabeledVarbRow } from "../../../../appWide/LabeledVarbRow";
 
-function useLoadedOutputRowProps(feId: string): LabeledVarbProps[] {
+function useLoadedOutputRowProps(feId: string): LabeledVarbFinder[] {
   const outputList = useGetterSection({
     sectionName: "outputList",
     feId,
@@ -20,22 +17,6 @@ function useLoadedOutputRowProps(feId: string): LabeledVarbProps[] {
 }
 
 export function DealOutputList({ feId, sx }: { feId: string; sx?: SxProps }) {
-  const outPutList = useSetterSection({
-    sectionName: "outputList",
-    feId,
-  });
-
-  const onSelectNext = (param: VarbPathArrParam) => {
-    outPutList.addChild("outputItem", {
-      sectionValues: {
-        valueEntityInfo: {
-          infoType: "varbPathName",
-          varbPathName: param.varbPathName,
-        } as InEntityValue,
-      },
-    });
-  };
-
   const propArr = useLoadedOutputRowProps(feId);
   return (
     <Box sx={sx}>

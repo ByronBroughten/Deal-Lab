@@ -691,7 +691,7 @@ export class GetterSection<
   varbInfoNext<VN extends VarbName<SN>>(varbName: VN): FeVarbInfoNext<SN, VN> {
     return this.varb(varbName).feVarbInfo as FeVarbInfoNext<SN, VN>;
   }
-  varbInfoArr(varbNames: readonly VarbName<SN>[]): FeVarbInfo<SN>[] {
+  varbInfoArr(...varbNames: VarbName<SN>[]): FeVarbInfo<SN>[] {
     return varbNames.map((varbName) => this.varbInfo(varbName));
   }
   get allValues(): SectionValues<SN> {

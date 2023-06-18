@@ -258,16 +258,6 @@ export class GetterVarb<
   get displayMeta(): VarbMeta<any> {
     return this.displaySource.meta;
   }
-  get displayInfo() {
-    const { displayMeta } = this;
-    return {
-      displayName: displayMeta.displayName as string,
-      displayNameEnd: displayMeta.displayNameEnd,
-      displayNameStart: displayMeta.displayNameStart,
-      startAdornment: displayMeta.startAdornment,
-      endAdornment: displayMeta.endAdornment,
-    };
-  }
   get displayName(): string {
     const { displayName } = this.displayMeta;
     if (typeof displayName === "string") {
@@ -287,14 +277,8 @@ export class GetterVarb<
         .value("stringObj").mainText;
     }
   }
-  get displayNameStart(): string {
-    return this.displayMeta.displayNameStart;
-  }
   get sectionDotVarbName() {
     return `${this.sectionName}.${this.varbName}`;
-  }
-  get displayNameEnd(): string {
-    return this.displayMeta.displayNameEnd;
   }
   get startAdornment(): string {
     return this.displayMeta.startAdornment;

@@ -7,6 +7,7 @@ import {
 } from "../../../../../../sharedWithServer/SectionsMeta/SectionNameByType";
 import { StateValue } from "../../../../../../sharedWithServer/SectionsMeta/values/StateValue";
 import { useGetterSection } from "../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
+import { Arr } from "../../../../../../sharedWithServer/utils/Arr";
 import { nativeTheme } from "../../../../../../theme/nativeTheme";
 import { FormSectionLabeled } from "../../../../../appWide/FormSectionLabeled";
 import { LabeledVarbRow } from "../../../../../appWide/LabeledVarbRow";
@@ -94,7 +95,14 @@ function ValueNumbers<SN extends SectionNameByType<"loanBaseSubValue">>({
     <LabeledVarbRow
       {...{
         sx,
-        varbPropArr: subValue.varbInfoArr(varbNames),
+        varbPropArr: [
+          subValue.varbInfoArr(
+            ...Arr.extract(varbNames, ["offPercent", "offDollars"])
+          ),
+          subValue.varbInfoArr(
+            ...Arr.extract(varbNames, ["amountDollars", "amountPercent"])
+          ),
+        ],
       }}
     />
   ) : null;

@@ -1,7 +1,7 @@
+import { variableLabel } from "../../../../varbLabels";
 import { ValidationError } from "../../utils/Error";
 import { Obj } from "../../utils/Obj";
 import { targetNames } from "../allBaseSectionVarbs/baseSwitchNames";
-import { fullDisplayNameString } from "../allDisplaySectionVarbs";
 import { VarbName } from "../baseSectionsDerived/baseSectionsVarbsTypes";
 import {
   pathSectionName,
@@ -177,7 +177,7 @@ export function getVarbPathExtras<VPN extends VarbPathName>(
   return {
     ...params,
     sectionName,
-    displayName: fullDisplayNameString(sectionName, varbName as any),
+    displayName: variableLabel(sectionName, varbName as any),
     varbInfo: varbPathInfo(varbPathName),
   } as VarbPathExtras<VPN>;
 }

@@ -7,8 +7,6 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
-// Replace all labeled outputs with the next version
-
 // Add homebuyer variables
 // (not necessary, but easy)
 // - likeability

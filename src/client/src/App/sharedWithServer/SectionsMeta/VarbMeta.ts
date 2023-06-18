@@ -93,15 +93,6 @@ export class VarbMeta<SN extends SectionName> {
   get displayNameFullContext() {
     return this.displayVarb.displayNameFullContext;
   }
-  get displayNameStart(): string {
-    return this.displayVarb.displayNameStart;
-  }
-  get displayNameEnd(): string {
-    return this.displayVarb.displayNameEnd;
-  }
-  get displayNameFull(): string {
-    return this.displayNameStart + this.displayName + this.displayNameEnd;
-  }
   get initValue() {
     return cloneDeep(this.updateVarb.initValue);
   }

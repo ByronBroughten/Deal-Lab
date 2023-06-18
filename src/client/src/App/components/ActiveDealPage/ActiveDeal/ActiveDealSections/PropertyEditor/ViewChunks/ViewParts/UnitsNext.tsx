@@ -39,11 +39,11 @@ export function UnitsNext({ feId }: FeIdProp) {
             />
             <LabeledVarbRow
               {...{
-                varbPropArr: property.varbInfoArr([
+                varbPropArr: property.varbInfoArr(
                   "numUnits",
                   "numBedrooms",
-                  "targetRentYearly",
-                ] as const),
+                  "targetRentYearly"
+                ),
               }}
             />
           </>

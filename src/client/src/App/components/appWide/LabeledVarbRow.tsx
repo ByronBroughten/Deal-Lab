@@ -2,10 +2,10 @@ import { Box, SxProps } from "@mui/material";
 import styled from "styled-components";
 import theme from "../../theme/Theme";
 import { arrSx } from "../../utils/mui";
-import { LabeledVarb, LabeledVarbProps } from "./LabeledVarb";
+import { LabeledVarbFinder, LabeledVarbNext } from "./LabeledVarbNext";
 
 type Props = {
-  varbPropArr: LabeledVarbProps[];
+  varbPropArr: LabeledVarbFinder[];
   className?: string;
   sx?: SxProps;
 };
@@ -22,14 +22,18 @@ export function LabeledVarbRow({ varbPropArr, className, sx }: Props) {
       ]}
       className={className}
     >
-      {varbPropArr.map((props) => (
-        <LabeledVarb
-          {...{
-            ...props,
-            key: props.feId + props.varbName,
-          }}
-        />
-      ))}
+      {varbPropArr.map((finder) => {
+        const arr = Array.isArray(finder) ? finder : [finder];
+        const info = arr[0];
+        return (
+          <LabeledVarbNext
+            {...{
+              finder,
+              key: info.feId + info.varbName,
+            }}
+          />
+        );
+      })}
     </StyledLabeledVarbRow>
   );
 }

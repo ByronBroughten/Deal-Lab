@@ -1,4 +1,4 @@
-import { capExItemizeDescription } from "../../../../../../../../varbInfoDotInfos";
+import { capExItemizeDescription } from "../../../../../../../../varbLabels";
 import { StateValue } from "../../../../../../../sharedWithServer/SectionsMeta/values/StateValue";
 import { useGetterSection } from "../../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { LabelWithInfo } from "../../../../../../appWide/LabelWithInfo";

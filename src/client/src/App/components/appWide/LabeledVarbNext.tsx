@@ -14,6 +14,8 @@ import { MuiRow } from "../general/MuiRow";
 import { useInfoModal } from "./../Modals/InfoModalProvider";
 import { InfoIcon } from "./InfoIcon";
 
+export type LabeledVarbFinder = FeVarbInfo | FeVarbInfo<any>[];
+
 export interface LabeledVarbProps extends LabeledVarbNotFoundProps {
   finder: FeVarbInfo | FeVarbInfo[];
   sx?: SxProps;

@@ -58,7 +58,6 @@ const fixAndFlip = [
   ...nonHomebuyBasics,
   ...hasHoldingBasics,
   ...fixAndFlipBasics,
-  ...sharedOngoing,
   ...sharedUpfront,
   ...financing,
   ...sharedOutputs,

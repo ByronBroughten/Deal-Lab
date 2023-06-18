@@ -1,5 +1,5 @@
+import { variableLabel } from "../../../../../varbLabels";
 import { ValueFixedVarbPathName } from "../../../StateEntityGetters/ValueInEntityInfo";
-import { fullDisplayNameString } from "../../allDisplaySectionVarbs";
 import { Id } from "../../IdS";
 import {
   getVarbPathParams,
@@ -26,20 +26,16 @@ export function numObjNext(...propArr: EntityNumObjPropArr): NumObj {
       const { pathName, varbName } = getVarbPathParams(varbPathName);
       const sectionName = pathSectionName(pathName);
 
-      const fullDisplayName = fullDisplayNameString(
-        sectionName,
-        varbName as any
-      );
+      const varbLabel = variableLabel(sectionName, varbName as any);
 
-      const text = fullDisplayName;
       entities.push({
         ...entityInfo,
         entityId: Id.make(),
-        length: text.length,
+        length: varbLabel.length,
         offset: mainText.length,
         entitySource: "editor",
       });
-      mainText += text;
+      mainText += varbLabel;
       solvableText += "?";
     }
   }

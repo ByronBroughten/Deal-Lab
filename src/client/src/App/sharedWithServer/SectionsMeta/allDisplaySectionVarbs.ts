@@ -197,24 +197,6 @@ export const allDisplaySectionVarbs = {
       },
     }),
   }),
-  ...displaySectionVarbsProp("purchaseLoanValue", {
-    offPercent: varb("Down payment"),
-    offDollars: varb("Down payment"),
-    amountPercent: varb("Loan to value ratio"),
-    amountDollars: varb("Loan amount"),
-  }),
-  ...displaySectionVarbsProp("repairLoanValue", {
-    offPercent: varb("Down payment"),
-    offDollars: varb("Down payment"),
-    amountPercent: varb("Loan to value ratio"),
-    amountDollars: varb("Loan amount"),
-  }),
-  ...displaySectionVarbsProp("arvLoanValue", {
-    offPercent: varb("Down payment"),
-    offDollars: varb("Down payment"),
-    amountPercent: varb("Loan to value ratio"),
-    amountDollars: varb("Loan amount"),
-  }),
   ...displaySectionVarbsProp("numVarbItem", {
     value: varb(relVarbInfoS.local("displayName")),
   }),
@@ -304,19 +286,4 @@ export function getDisplayVarb<SN extends SectionName, VN extends VarbName<SN>>(
 ): DisplayVarb {
   const sectionVarbs = allDisplaySectionVarbs[sectionName];
   return (sectionVarbs as any)[varbName] as DisplayVarb;
-}
-
-export function fullDisplayNameString<
-  SN extends SectionName,
-  VN extends VarbName<SN>
->(sectionName: SN, varbName: VN): string {
-  const { displayNameFullContext } = getDisplayVarb(sectionName, varbName);
-
-  if (typeof displayNameFullContext === "string") {
-    return displayNameFullContext;
-  } else {
-    throw new Error(
-      "Varbs that can be used here should have a string displayName"
-    );
-  }
 }

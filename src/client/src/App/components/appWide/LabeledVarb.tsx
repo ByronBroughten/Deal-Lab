@@ -6,11 +6,10 @@ import {
 import { useGetterSection } from "../../sharedWithServer/stateClassHooks/useGetterSection";
 import { useGetterVarb } from "../../sharedWithServer/stateClassHooks/useGetterVarb";
 import { nativeTheme } from "../../theme/nativeTheme";
-import theme, { ThemeName } from "../../theme/Theme";
+import theme from "../../theme/Theme";
 
 interface LabeledVarbNotFoundProps {
   className?: string;
-  onXBtnClick?: () => void;
 }
 export function LabeledVarbNotFound({ ...rest }: LabeledVarbNotFoundProps) {
   return (
@@ -70,19 +69,16 @@ interface StyledLabeledVarbProps extends LabeledVarbNotFoundProps {
   labelText: string;
   displayVarb: string;
   labelId: string;
-  themeName?: ThemeName;
 }
 export function StyledLabeledVarb({
   labelId,
   className,
   labelText,
   displayVarb,
-  themeName = "deal",
 }: StyledLabeledVarbProps) {
   return (
     <Styled
       {...{
-        $themeName: themeName,
         className: `LabeledVarb-root ${className ?? ""}`,
       }}
     >
@@ -90,11 +86,6 @@ export function StyledLabeledVarb({
         <label htmlFor={labelId} className="LabeledVarb-label">
           {labelText}
         </label>
-        {/* {onXBtnClick && (
-          <PlainBtn className="LabeledVarb-xBtn" onClick={onXBtnClick}>
-            <AiOutlineCloseCircle className="icon" />
-          </PlainBtn>
-        )} */}
       </div>
       <output
         id={labelId}

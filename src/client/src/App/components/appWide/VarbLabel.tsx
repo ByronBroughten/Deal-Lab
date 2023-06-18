@@ -1,5 +1,5 @@
 import React from "react";
-import { VarbInfoTextProps } from "../../../varbInfoDotInfos";
+import { VarbInfoTextProps } from "../../../varbLabels";
 import { SectionVarbNames } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { SectionName } from "../../sharedWithServer/SectionsMeta/SectionName";
 import { useVarbInfoText } from "../customHooks/useVarbInfoText";

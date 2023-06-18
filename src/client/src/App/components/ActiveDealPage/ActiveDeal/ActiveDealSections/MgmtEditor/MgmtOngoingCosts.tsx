@@ -17,11 +17,11 @@ export function BasicMgmtInfo({ feId }: Props) {
         <VacancyLossValue
           {...{ feId: mgmt.onlyChildFeId("vacancyLossValue") }}
         />
+        <MiscOnetimeCost feId={mgmt.onlyChildFeId("miscOnetimeCost")} />
         <MiscOngoingCost
           feId={mgmt.onlyChildFeId("miscOngoingCost")}
           menuDisplayNames={["Advertising", "Unit turnover", "Maintenance"]}
         />
-        <MiscOnetimeCost feId={mgmt.onlyChildFeId("miscOnetimeCost")} />
       </MuiRow>
     </FormSectionLabeled>
   );
