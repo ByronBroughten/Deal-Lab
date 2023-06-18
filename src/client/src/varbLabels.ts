@@ -103,6 +103,7 @@ export const varbLabels = checkSectionInfoTexts({
     sqft: input("Square feet"),
     numUnits: input("Unit count"),
     numBedrooms: input("BR count"),
+    likability: input("Likability"),
     sellingCosts: text({
       inputLabel: "Selling costs",
       title: "Selling Costs",

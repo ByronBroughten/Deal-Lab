@@ -18,6 +18,7 @@ import {
 } from "./apiQueriesShared/makeReqAndRes";
 import { UserData } from "./apiQueriesShared/validateUserData";
 import { SectionQueryName } from "./SectionsMeta/sectionChildrenDerived/DbStoreName";
+import { SectionPack } from "./SectionsMeta/sectionChildrenDerived/SectionPack";
 
 export type ApiQueries = {
   addSection: QueryAddSection;
@@ -28,7 +29,7 @@ export type ApiQueries = {
 
   replaceSectionArrs: ReplaceSectionArrQuery;
   getProPaymentUrl: (req: UpgradeUserToProReq) => Promise<UrlRes>;
-  getCustomerPortalUrl: (req: { body: {} }) => Promise<UrlRes>;
+  getCustomerPortalUrl: (req: MakeReq<{}>) => Promise<UrlRes>;
   getUserData: (req: MakeReq<{}>) => Promise<{
     data: UserData;
     headers: UserInfoTokenProp;
@@ -37,6 +38,9 @@ export type ApiQueries = {
     req: MakeReq<{}>
   ) => Promise<{ data: AnalyzerPlanValues; headers: UserInfoTokenProp }>;
   makeSession: (req: MakeReq<{ authId: string }>) => Promise<{ data: {} }>;
+  getArchivedDeals: (
+    req: MakeReq<{}>
+  ) => Promise<MakeRes<SectionPack<"deal">[]>>;
 };
 
 type ApiQueriesTest<
@@ -102,7 +106,7 @@ function makeApiPaths() {
   return config.apiQueryNames.reduce((endpoints, queryName) => {
     endpoints[queryName] = bitRouteAndPath(`/${queryName}`);
     return endpoints;
-  }, {} as { [QN in typeof config.apiQueryNames[number]]: BitRouteAndPath });
+  }, {} as { [QN in (typeof config.apiQueryNames)[number]]: BitRouteAndPath });
 }
 type BitRouteAndPath = { bit: string; route: string; full: string };
 function bitRouteAndPath(pathBit: string): BitRouteAndPath {

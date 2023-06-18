@@ -44,7 +44,7 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
     ...updateVarbsS._typeUniformity,
     ...updateVarbsS.savableSection,
     ...updateVarbsS.displayNameAndEditor,
-    archived: updateVarb("boolean", { initValue: false }),
+    isArchived: updateVarb("boolean", { initValue: false }),
     completionStatus: dealCompletionStatus,
     dealMode: updateVarb("dealMode", { initValue: "buyAndHold" }),
     ...updateVarbsS.group("ongoingPiti", "periodic", "monthly", {

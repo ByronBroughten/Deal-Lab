@@ -12,6 +12,8 @@ export function useActionWithProps<T extends SectionActionName>(
   type: T,
   props: SectionActionProps<T>
 ) {
+  // for some reason, this doesn't work with collecting storeIds
+  // of sections to save
   const dispatch = useDispatchAndSave();
   return () =>
     dispatch({

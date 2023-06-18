@@ -69,6 +69,25 @@ export class SolverFeStore extends SolverSectionBase<"feStore"> {
   get basicSolvePrepper(): SolverAdderPrepSection<"feStore"> {
     return new SolverAdderPrepSection(this.solverSectionProps);
   }
+  loadChildrenNoDuplicates<SN extends StoreName>(
+    storeName: SN,
+    allPacks: SectionPack<StoreSectionName<SN>>[]
+  ) {
+    const filteredPacks = allPacks.filter(
+      (pack) =>
+        !this.get.hasChildByDbInfo({
+          childName: storeName,
+          dbId: pack.dbId,
+        })
+    );
+
+    this.basicSolvePrepper.loadChildren({
+      childName: storeName,
+      sectionPacks: filteredPacks as SectionPack<any>[],
+    });
+    this.appWideSolvePrepper.addAppWideMissingOutEntities();
+    this.solve();
+  }
   solve() {
     this.solver.solve();
   }

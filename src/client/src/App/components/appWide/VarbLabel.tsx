@@ -10,18 +10,20 @@ export interface Props<SN extends SectionName>
   extends Partial<VarbInfoTextProps> {
   names: SectionVarbNames<SN>;
   iconProps?: IconProps;
+  label?: React.ReactNode;
 }
 
 export function VarbLabel<SN extends SectionName>({
   names,
   iconProps,
+  label,
 }: Props<SN>) {
   const value = useVarbInfoText(names);
   return (
     <LabelWithInfo
       {...{
         iconProps,
-        label: value.inputLabel,
+        label: label || value.inputLabel,
         infoTitle: value.title,
         infoText: value.info,
       }}

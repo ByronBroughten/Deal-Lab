@@ -232,7 +232,17 @@ export class SolverSections extends SolverSectionsBase {
       sectionName: "deal",
       feId,
     });
-    deal.updateValues({ archived: true });
+    deal.updateValues({ isArchived: true });
+    this.feStore.addChangeToSave(deal.get.mainStoreId, {
+      changeName: "update",
+    });
+  }
+  loadArchivedDeals(archivedDeals: SectionPack<"deal">[]) {
+    this.feStore.loadChildrenNoDuplicates("dealMain", archivedDeals);
+    const sessionVarbs = this.oneAndOnly("sessionVarbs");
+    sessionVarbs.basicSolvePrepper.updateValues({
+      archivedAreLoaded: true,
+    });
   }
   removeStoredDeal(feId: string) {
     this.deactivateDealIfActive(feId);

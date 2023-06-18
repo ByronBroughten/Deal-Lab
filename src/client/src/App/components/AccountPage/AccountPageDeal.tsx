@@ -4,8 +4,10 @@ import { Text, View, ViewStyle } from "react-native";
 import { VarbName } from "../../sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
 import { DealMode } from "../../sharedWithServer/SectionsMeta/values/StateValue/dealMode";
 import { dealModeLabels } from "../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
-import { useActionWithProps } from "../../sharedWithServer/stateClassHooks/useAction";
-import { IdOfSectionToSaveProvider } from "../../sharedWithServer/stateClassHooks/useIdOfSectionToSave";
+import {
+  useAction,
+  useActionWithProps,
+} from "../../sharedWithServer/stateClassHooks/useAction";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { reactNativeS } from "../../utils/reactNative";
 import { StyledActionBtn } from "../appWide/GeneralSection/MainSection/StyledActionBtn";
@@ -62,6 +64,17 @@ export function AccountPageDeal({
   const copyDeal = useActionWithProps("copyInStore", { storeName, feId });
   const activateDeal = useActionWithProps("activateDeal", { feId });
 
+  const archiveDeal = useActionWithProps("archiveDeal", { feId });
+
+  const updateValue = useAction("updateValue");
+  const unArchiveDeal = () =>
+    updateValue({
+      ...deal.varbInfo("isArchived"),
+      value: false,
+    });
+
+  const isArchived = deal.valueNext("isArchived");
+
   const deleteDeal = useActionWithProps("removeStoredDeal", { feId });
   const { setModal } = useConfirmationModal();
 
@@ -113,61 +126,61 @@ export function AccountPageDeal({
         ...nativeTheme.formSection,
       }}
     >
-      <IdOfSectionToSaveProvider storeId={deal.mainStoreId}>
-        <Row style={{ justifyContent: "space-between" }}>
-          <Box {...titleProps(strDisplayName)}>
-            <BareStringEditor
-              {...{
-                ...titleProps(strDisplayName),
-                feVarbInfo: deal.varbInfoNext("displayNameEditor"),
-                placeholder: "Untitled",
-              }}
-            />
-            {/* {strDisplayName || "Untitled"} */}
-          </Box>
-          <Row
-            style={{
-              ...rowStyle,
-              paddingLeft: nativeTheme.s4,
+      <Row style={{ justifyContent: "space-between" }}>
+        <Box {...titleProps(strDisplayName)}>
+          <BareStringEditor
+            {...{
+              ...titleProps(strDisplayName),
+              feVarbInfo: deal.varbInfoNext("displayNameEditor"),
+              placeholder: "Untitled",
             }}
-          >
-            <Text>Created </Text>
-            <Text>{dateCreated}</Text>
-          </Row>
+          />
+          {/* {strDisplayName || "Untitled"} */}
+        </Box>
+        <Row
+          style={{
+            ...rowStyle,
+            paddingLeft: nativeTheme.s4,
+          }}
+        >
+          <Text>Created </Text>
+          <Text>{dateCreated}</Text>
         </Row>
-        <Row style={{ justifyContent: "space-between" }}>
-          <Row style={rowStyle}>
-            {icons[dealMode](iconProps)}
-            <Text {...dealTypeProps}>{dealModeLabels[dealMode]}</Text>
-            {!isComplete && (
-              <Box
-                sx={{
-                  color: nativeTheme.notice.dark,
-                  ml: nativeTheme.s3,
-                  fontStyle: "italic",
-                }}
-              >
-                {"Incomplete"}
-              </Box>
-            )}
-          </Row>
-          {isComplete && (
-            <MuiRow
+      </Row>
+      <Row style={{ justifyContent: "space-between" }}>
+        <Row style={rowStyle}>
+          {icons[dealMode](iconProps)}
+          <Text {...dealTypeProps}>{dealModeLabels[dealMode]}</Text>
+          {!isComplete && (
+            <Box
               sx={{
-                justifyContent: "flex-end",
-                flex: 1,
-                paddingRight: nativeTheme.s45,
+                color: nativeTheme.notice.dark,
+                ml: nativeTheme.s3,
+                fontStyle: "italic",
               }}
             >
-              <LabeledVarbNext
-                {...{
-                  finder: deal.varbInfo(outputPerDeal[dealMode]),
-                  sx: { border: "none", fontSize: 17 },
-                }}
-              />
-            </MuiRow>
+              {"Incomplete"}
+            </Box>
           )}
-          <Row>
+        </Row>
+        {isComplete && (
+          <MuiRow
+            sx={{
+              justifyContent: "flex-end",
+              flex: 1,
+              paddingRight: nativeTheme.s45,
+            }}
+          >
+            <LabeledVarbNext
+              {...{
+                finder: deal.varbInfo(outputPerDeal[dealMode]),
+                sx: { border: "none", fontSize: 17 },
+              }}
+            />
+          </MuiRow>
+        )}
+        <Row>
+          {isArchived && (
             <StyledActionBtn
               {...{
                 sx: {
@@ -175,38 +188,64 @@ export function AccountPageDeal({
                   marginTop: nativeTheme.s25,
                   marginRight: nativeTheme.s2,
                 },
-                left: icons.edit({ size: 20 }),
-                middle: "Edit",
-                onClick: editDeal,
+                left: icons.unArchive({ size: 20 }),
+                middle: "Un-Archive",
+                onClick: unArchiveDeal,
               }}
             />
+          )}
+          {!isArchived && (
             <StyledActionBtn
               {...{
-                onClick: copyDeal,
                 sx: {
-                  margin: nativeTheme.s1,
+                  margin: nativeTheme.s15,
                   marginTop: nativeTheme.s25,
-                  marginRight: nativeTheme.s15,
+                  marginRight: nativeTheme.s2,
                 },
-                left: icons.copy({ size: 20 }),
-                middle: "Copy",
+                left: icons.doArchive({ size: 20 }),
+                middle: "Archive",
+                onClick: archiveDeal,
               }}
             />
-            <StyledActionBtn
-              {...{
-                isDangerous: true,
-                onClick: warnAndDelete,
-                sx: {
-                  margin: nativeTheme.s1,
-                  marginTop: nativeTheme.s25,
-                },
-                left: icons.delete({ size: 20 }),
-                middle: "Delete",
-              }}
-            />
-          </Row>
+          )}
+          <StyledActionBtn
+            {...{
+              sx: {
+                margin: nativeTheme.s15,
+                marginTop: nativeTheme.s25,
+                marginRight: nativeTheme.s2,
+              },
+              left: icons.edit({ size: 20 }),
+              middle: "Edit",
+              onClick: editDeal,
+            }}
+          />
+          <StyledActionBtn
+            {...{
+              onClick: copyDeal,
+              sx: {
+                margin: nativeTheme.s1,
+                marginTop: nativeTheme.s25,
+                marginRight: nativeTheme.s15,
+              },
+              left: icons.copy({ size: 20 }),
+              middle: "Copy",
+            }}
+          />
+          <StyledActionBtn
+            {...{
+              isDangerous: true,
+              onClick: warnAndDelete,
+              sx: {
+                margin: nativeTheme.s1,
+                marginTop: nativeTheme.s25,
+              },
+              left: icons.delete({ size: 20 }),
+              middle: "Delete",
+            }}
+          />
         </Row>
-      </IdOfSectionToSaveProvider>
+      </Row>
     </View>
   );
 }

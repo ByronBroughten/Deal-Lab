@@ -2,10 +2,17 @@ import { Box } from "@mui/material";
 import { View } from "react-native";
 import { MoonLoader } from "react-spinners";
 import { useUserDataStatus } from "../../modules/SectionActors/UserDataActor";
+import { useActionWithProps } from "../../sharedWithServer/stateClassHooks/useAction";
 import { useGetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useGetterSection";
+import { IdOfSectionToSaveProvider } from "../../sharedWithServer/stateClassHooks/useIdOfSectionToSave";
+import { useQueryAction } from "../../sharedWithServer/stateClassHooks/useQueryAction";
+import { StoreId } from "../../sharedWithServer/StateGetters/StoreId";
 import { nativeTheme } from "../../theme/nativeTheme";
+import { StyledActionBtn } from "../appWide/GeneralSection/MainSection/StyledActionBtn";
 import ChunkTitle from "../general/ChunkTitle";
+import { MuiRow } from "../general/MuiRow";
 import { Row } from "../general/Row";
+import { icons } from "../Icons";
 import { BigStringEditor } from "../inputs/BigStringEditor";
 import { AccountPageDeal } from "./AccountPageDeal";
 
@@ -18,7 +25,7 @@ function useFilteredDeals() {
   const dealNameFilter = dealMenu.valueNext("dealNameFilter");
   const deals = feStore.children("dealMain");
   return deals.filter((deal) => {
-    if (!showArchived && deal.valueNext("archived")) {
+    if (!showArchived && deal.valueNext("isArchived")) {
       return false;
     } else {
       return deal.stringValue("displayName").includes(dealNameFilter);
@@ -38,7 +45,20 @@ export const accountPageElementMargin = nativeTheme.s3;
 export function AccountPageDeals() {
   const main = useGetterSectionOnlyOne("main");
   const dealMenu = main.onlyChild("mainDealMenu");
+  const showArchived = dealMenu.valueNext("showArchived");
+
   const deals = useFilteredSortedDeals();
+
+  const queryAction = useQueryAction();
+  const showArchivedDeals = () =>
+    queryAction({
+      type: "showArchivedDeals",
+    });
+
+  const hideArchivedDeals = useActionWithProps("updateValue", {
+    ...dealMenu.varbInfo("showArchived"),
+    value: false,
+  });
 
   const dataStatus = useUserDataStatus();
   const loading = dataStatus === "loading";
@@ -76,7 +96,7 @@ export function AccountPageDeals() {
         )}
         {!loading && (
           <>
-            <Box
+            <MuiRow
               sx={{
                 mt: nativeTheme.s3,
                 width: "100%",
@@ -89,7 +109,27 @@ export function AccountPageDeals() {
                   feVarbInfo: dealMenu.varbInfo("dealNameFilter"),
                 }}
               />
-            </Box>
+              {showArchived && (
+                <StyledActionBtn
+                  {...{
+                    sx: { marginLeft: nativeTheme.s2 },
+                    onClick: hideArchivedDeals,
+                    left: icons.unArchive({ size: 25 }),
+                    middle: "Hide Archived",
+                  }}
+                />
+              )}
+              {!showArchived && (
+                <StyledActionBtn
+                  {...{
+                    sx: { marginLeft: nativeTheme.s2 },
+                    onClick: showArchivedDeals,
+                    left: icons.doArchive({ size: 25 }),
+                    middle: "Show Archived",
+                  }}
+                />
+              )}
+            </MuiRow>
             <Box
               sx={{
                 mt: nativeTheme.s35,
@@ -97,15 +137,19 @@ export function AccountPageDeals() {
               }}
             >
               {deals.map(({ feId }, idx) => (
-                <AccountPageDeal
-                  {...{
-                    key: feId,
-                    feId,
-                    ...(idx === deals.length - 1 && {
-                      style: { borderBottomWidth: 1 },
-                    }),
-                  }}
-                />
+                <IdOfSectionToSaveProvider
+                  storeId={StoreId.make("dealMain", feId)}
+                >
+                  <AccountPageDeal
+                    {...{
+                      key: feId,
+                      feId,
+                      ...(idx === deals.length - 1 && {
+                        style: { borderBottomWidth: 1 },
+                      }),
+                    }}
+                  />
+                </IdOfSectionToSaveProvider>
               ))}
             </Box>
           </>

@@ -10,8 +10,10 @@ import {
   QueryRes,
 } from "../sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import { validateUserData } from "../sharedWithServer/apiQueriesShared/validateUserData";
+import { validateSectionPackArrByType } from "../sharedWithServer/SectionsMeta/SectionNameByType";
 import { Obj } from "../sharedWithServer/utils/Obj";
 import { StrictOmit } from "../sharedWithServer/utils/types";
+import { SectionPack } from "./../sharedWithServer/SectionsMeta/sectionChildrenDerived/SectionPack";
 import {
   validateAxiosRes,
   validateDbIdData,
@@ -30,6 +32,17 @@ function makeApiQueries(): ApiQueries {
       doingWhat: "making a session",
       validateRes(res: AxiosResponse<unknown>): QueryRes<"makeSession"> {
         throw new Error("makeSession.validateRes is not yet properly set up");
+      },
+    },
+    getArchivedDeals: {
+      doingWhat: "retrieving archived deals",
+      validateRes(res: AxiosResponse<unknown>): QueryRes<"getArchivedDeals"> {
+        return {
+          data: validateSectionPackArrByType({
+            value: res.data,
+            sectionType: "deal",
+          }) as SectionPack<"deal">[],
+        };
       },
     },
     getUserData: {

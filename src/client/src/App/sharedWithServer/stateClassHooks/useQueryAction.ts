@@ -5,18 +5,23 @@ import { useLogout } from "../../modules/SectionActors/UserDataActor";
 import { userTokenS } from "../../modules/services/userTokenS";
 import { makeReq } from "../apiQueriesShared/makeReqAndRes";
 import { useDispatchAndSave } from "./useAction";
-import { useSectionsContext } from "./useSections";
+import { useGetterSections } from "./useGetterSections";
 import { SectionsAction } from "./useSections/sectionsReducer";
 
-interface LoadUserData {
-  type: "loadUserData";
-}
+const queryActionNames = [
+  "loadUserData",
+  "trySave",
+  "showArchivedDeals",
+] as const;
 
-interface TrySaveAttempt {
-  type: "trySave";
-}
-type QueryAction = TrySaveAttempt | LoadUserData;
-type QueryActionName = QueryAction["type"];
+type QueryActionName = (typeof queryActionNames)[number];
+type DefaultActionMap = {
+  [AN in QueryActionName]: {
+    type: AN;
+  };
+};
+
+type QueryAction = DefaultActionMap[QueryActionName];
 
 type QueryActionsMap = {
   [ST in QueryActionName]: Extract<SectionsAction, { type: ST }>;
@@ -27,7 +32,9 @@ type ActionPropsMap = {
 export type ActionProps<T extends QueryActionName> = ActionPropsMap[T];
 
 export function useQueryAction() {
-  const { sections } = useSectionsContext();
+  const getterSections = useGetterSections();
+  const sections = getterSections.stateSections;
+
   const dispatch = useDispatchAndSave();
   const logout = useLogout();
   const goToAccountPage = useGoToPage("account");
@@ -82,6 +89,25 @@ export function useQueryAction() {
           throw error;
         }
         break;
+      }
+      case "showArchivedDeals": {
+        const { main } = getterSections;
+        const sessionVarbs = main.onlyChild("sessionVarbs");
+        if (sessionVarbs.valueNext("archivedAreLoaded")) {
+          const menu = main.onlyChild("mainDealMenu");
+          dispatch({
+            type: "updateValue",
+            ...menu.feInfo,
+            varbName: "showArchived",
+            value: true,
+          });
+        } else {
+          const res = await apiQueries.getArchivedDeals(makeReq({}));
+          dispatch({
+            type: "loadArchivedDeals",
+            archivedDeals: res.data,
+          });
+        }
       }
     }
   };

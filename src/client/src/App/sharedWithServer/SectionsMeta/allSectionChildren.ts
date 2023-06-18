@@ -47,6 +47,7 @@ export const allSectionChildren = checkAllSectionChildren({
     dealCompareDealSelectMenu: "dealCompareDealSelectMenu",
 
     // These are not saved
+    sessionVarbs: "sessionVarbs",
     latentDealSystem: "dealSystem",
     activeDealSystem: "dealSystem",
   }),

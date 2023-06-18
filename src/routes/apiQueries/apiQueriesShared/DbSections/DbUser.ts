@@ -236,7 +236,7 @@ export class DbUser extends DbSectionsQuerierBase {
       ) as SectionPack<"deal">[];
       return sectionPacks.filter((pack) => {
         const deal = PackBuilderSection.loadAsOmniChild(pack);
-        return !deal.get.valueNext("archived");
+        return !deal.get.valueNext("isArchived");
       }) as SectionPack<DbSectionName<CN>>[];
     } else {
       return dbSections.sectionPackArr(childName);

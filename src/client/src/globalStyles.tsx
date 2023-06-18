@@ -48,6 +48,9 @@ export const muiGlobalStyles = (
         minWidth: "auto",
         textTransform: "none",
       },
+      "& .CustomRating-icon": {
+        maxWidth: "none !important",
+      },
     }}
   />
 );

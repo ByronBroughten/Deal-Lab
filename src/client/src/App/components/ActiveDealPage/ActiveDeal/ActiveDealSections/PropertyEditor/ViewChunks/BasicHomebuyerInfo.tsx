@@ -1,5 +1,6 @@
 import { useGetterSection } from "../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { FormSectionLabeled } from "../../../../../appWide/FormSectionLabeled";
+import { MuiFavoriteRating } from "../../../../../general/MuiFavoriteRating";
 import { MuiRow } from "../../../../../general/MuiRow";
 import { NumObjEntityEditor } from "../../../../../inputs/NumObjEntityEditor";
 
@@ -22,6 +23,7 @@ export function BasicHomebuyerInfo({ feId }: Props) {
           feVarbInfo={property.varbInfo("numBedroomsEditor")}
         />
       </MuiRow>
+      <MuiFavoriteRating {...property.varbInfo("likability")} />
     </FormSectionLabeled>
   );
 }

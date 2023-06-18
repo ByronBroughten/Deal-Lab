@@ -43,6 +43,9 @@ export function makeAllBaseSectionVarbs() {
     editorControls: varbs({
       editedDealDbId: baseVarb("string"),
     }),
+    sessionVarbs: varbs({
+      archivedAreLoaded: baseVarb("boolean"),
+    }),
     newDealMenu: varbs({ dealMode: baseVarb("dealMode") }),
     mainDealMenu: varbs({
       dealNameFilter: baseVarb("string"),
@@ -170,6 +173,7 @@ export function makeAllBaseSectionVarbs() {
     }),
     property: varbs({
       ...baseVarbsS.savableSection,
+      likability: baseVarb("numObj"),
       propertyMode: baseVarb("dealMode"),
       completionStatus: baseVarb("completionStatus"),
       streetAddress: baseVarb("string"),
@@ -365,7 +369,7 @@ export function makeAllBaseSectionVarbs() {
       showOutputs: baseVarb("boolean"),
     }),
     deal: varbs({
-      archived: baseVarb("boolean"),
+      isArchived: baseVarb("boolean"),
       dealMode: baseVarb("dealMode"),
       ...baseVarbsS.savableSection,
       ...baseVarbsS.displayNameEditor,

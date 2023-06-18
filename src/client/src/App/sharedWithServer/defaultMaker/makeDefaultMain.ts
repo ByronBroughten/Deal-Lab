@@ -6,6 +6,7 @@ import { makeDefaultFeUserPack } from "./makeDefaultFeStore";
 export function makeDefaultMain(): SectionPack<"main"> {
   const main = PackBuilderSection.initAsOmniChild("main");
 
+  main.addChild("sessionVarbs");
   main.addChild("newDealMenu");
   main.addChild("mainDealMenu");
   main.addChild("variablesMenu");

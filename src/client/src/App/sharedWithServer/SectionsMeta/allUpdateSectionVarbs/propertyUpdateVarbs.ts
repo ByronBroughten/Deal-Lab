@@ -10,6 +10,7 @@ import {
 import { overrideSwitchS } from "../updateSectionVarbs/updateVarb/UpdateOverrides";
 import { unionSwitchOverride } from "../updateSectionVarbs/updateVarb/updateVarbUtils";
 import { updateVarbsS } from "../updateSectionVarbs/updateVarbs";
+import { numObj } from "../values/StateValue/NumObj";
 import { propertyCompletionStatus } from "./calculatedUpdateVarbs/completionStatusVarbs";
 
 const basicsS = updateBasicsS;
@@ -31,6 +32,9 @@ export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
     ...varbsS.savableSection,
     propertyMode: updateVarb("dealMode", {
       initValue: "buyAndHold",
+    }),
+    likability: updateVarb("numObj", {
+      initValue: numObj(2.5),
     }),
     completionStatus: propertyCompletionStatus,
     streetAddress: updateVarb("string"),

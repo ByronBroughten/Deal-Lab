@@ -75,6 +75,7 @@ export const config = {
   },
   basicStorageLimit: 5,
   apiQueryNames: [
+    "getArchivedDeals",
     "addSection",
     "updateSection",
     "updateSections",

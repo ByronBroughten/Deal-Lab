@@ -1,6 +1,12 @@
 import { IconBaseProps } from "react-icons";
 import { AiFillEdit, AiOutlinePlusSquare } from "react-icons/ai";
-import { BiCopy, BiHelpCircle, BiHomeHeart } from "react-icons/bi";
+import {
+  BiArchiveIn,
+  BiArchiveOut,
+  BiCopy,
+  BiHelpCircle,
+  BiHomeHeart,
+} from "react-icons/bi";
 import { BsFillHouseFill, BsSnow2 } from "react-icons/bs";
 import { GiHouseKeys } from "react-icons/gi";
 import { HiOutlineVariable } from "react-icons/hi";
@@ -22,8 +28,16 @@ type IconName =
   | "copy"
   | "addUnit"
   | "finish"
-  | "variable";
+  | "variable"
+  | "unArchive"
+  | "doArchive";
 export const icons: Record<IconName, (props?: IconProps) => React.ReactNode> = {
+  unArchive(props) {
+    return <BiArchiveOut {...props} />;
+  },
+  doArchive(props) {
+    return <BiArchiveIn {...props} />;
+  },
   variable(props) {
     return <HiOutlineVariable {...props} />;
   },
