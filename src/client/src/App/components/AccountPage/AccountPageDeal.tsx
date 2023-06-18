@@ -162,7 +162,7 @@ export function AccountPageDeal({
               <LabeledVarbNext
                 {...{
                   finder: deal.varbInfo(outputPerDeal[dealMode]),
-                  sx: { border: "none" },
+                  sx: { border: "none", fontSize: 17 },
                 }}
               />
             </MuiRow>

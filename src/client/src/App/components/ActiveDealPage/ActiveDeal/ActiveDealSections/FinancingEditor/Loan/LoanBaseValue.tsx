@@ -97,10 +97,10 @@ function ValueNumbers<SN extends SectionNameByType<"loanBaseSubValue">>({
         sx,
         varbPropArr: [
           subValue.varbInfoArr(
-            ...Arr.extract(varbNames, ["offPercent", "offDollars"])
+            ...Arr.extractOrder(varbNames, ["offPercent", "offDollars"])
           ),
           subValue.varbInfoArr(
-            ...Arr.extract(varbNames, ["amountDollars", "amountPercent"])
+            ...Arr.extractOrder(varbNames, ["amountDollars", "amountPercent"])
           ),
         ],
       }}

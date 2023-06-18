@@ -11,7 +11,6 @@ import { nativeTheme } from "../../theme/nativeTheme";
 import { arrSx } from "../../utils/mui";
 import { useVarbInfoText } from "../customHooks/useVarbInfoText";
 import { MuiRow } from "../general/MuiRow";
-import { useInfoModal } from "./../Modals/InfoModalProvider";
 import { InfoIcon } from "./InfoIcon";
 
 export type LabeledVarbFinder = FeVarbInfo | FeVarbInfo<any>[];
@@ -32,8 +31,6 @@ export function LabeledVarbNext({ finder, ...rest }: LabeledVarbProps) {
   const { inputLabel, info, title } = useVarbInfoText(
     finder[0] as FeVarbInfoNext
   );
-
-  const { setModal } = useInfoModal();
 
   let toDisplay = "";
   const sections = useGetterSections();
@@ -134,6 +131,7 @@ export function StyledLabeledVarb({
             boxShadow: "none",
             borderRadius: nativeTheme.muiBr0,
             padding: nativeTheme.s3,
+            fontSize: nativeTheme.inputLabel.fontSize,
           },
           ...arrSx(sx),
         ],
