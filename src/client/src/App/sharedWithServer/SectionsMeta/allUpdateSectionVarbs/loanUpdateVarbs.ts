@@ -24,6 +24,7 @@ export function loanUpdateVarbs(): UpdateSectionVarbs<"loan"> {
     completionStatus: loanCompletionStatus,
 
     ...updateVarbsS.savableSection,
+    financingMode: updateVarb("financingMode"),
     loanBaseDollars: updateVarb(
       "numObj",
       updateBasicsS.loadFromChild("loanBaseValue", "valueDollars")

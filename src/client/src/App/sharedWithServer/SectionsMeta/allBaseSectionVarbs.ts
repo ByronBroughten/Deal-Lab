@@ -286,8 +286,8 @@ export function makeAllBaseSectionVarbs() {
     loan: varbs({
       ...baseVarbsS.savableSection,
       completionStatus: baseVarb("completionStatus"),
+      financingMode: baseVarb("financingMode"),
       loanBaseDollars: baseVarb("numObj", dollars),
-
       ...varbsS.ongoingPercentInput("interestRatePercent"),
       ...baseVarbsS.ongoingDecimal("interestRateDecimal"),
       ...varbsS.monthsYearsInput("loanTerm"),
