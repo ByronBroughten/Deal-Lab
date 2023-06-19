@@ -141,7 +141,6 @@ export const allDisplaySectionVarbs = {
   }),
   ...displaySectionVarbsProp("loanBaseValue", {
     valueDollars: varb("Base loan amount"),
-    valueDollarsEditor: varb("Base loan amount"),
   }),
   ...displaySectionVarbsProp("loan", {
     ...editorDisplayGroup("monthsYearsInput", "loanTerm", "Loan term"),

@@ -20,10 +20,7 @@ type ExampleLoanProps = {
     "offPercentEditor"
   >;
   baseLoan?: Partial<
-    StrictPick<
-      SectionValues<"loanBaseValue">,
-      "valueSourceName" | "valueDollarsEditor"
-    >
+    StrictPick<SectionValues<"loanBaseValue">, "valueSourceName">
   >;
   closingCosts: {
     valueSourceName: StateValue<"closingCostValueSource">;

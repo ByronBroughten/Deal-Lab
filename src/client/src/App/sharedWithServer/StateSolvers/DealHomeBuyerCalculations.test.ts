@@ -33,8 +33,11 @@ describe("homeBuyer output calculations", () => {
     setOnetimeEditor(property.onlyChild("miscOnetimeCost"), 3000);
     setOnetimeEditor(property.onlyChild("costOverrunValue"), 2000);
     const baseValue = firstLoan.onlyChild("loanBaseValue");
-    baseValue.updateValues({
-      valueSourceName: "customAmountEditor",
+
+    baseValue.updateValues({ valueSourceName: "customAmountEditor" });
+    const custom = baseValue.onlyChild("customLoanBase");
+    custom.updateValues({
+      valueSourceName: "valueDollarsEditor",
       valueDollarsEditor: numObj(180000),
     });
 

@@ -188,7 +188,7 @@ export function baseLoanCompletionStatus() {
         ],
       }),
       customAmountEditor: cBasics({
-        validInputs: [propS.local("valueDollarsEditor")],
+        validInputs: [propS.onlyChild("customLoanBase", "valueDollarsEditor")],
       }),
     })
   );

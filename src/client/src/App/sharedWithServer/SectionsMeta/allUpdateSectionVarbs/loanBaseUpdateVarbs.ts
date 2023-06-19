@@ -27,7 +27,6 @@ export function loanBaseUpdateVarbs(): UpdateSectionVarbs<"loanBaseValue"> {
     valueSourceName: updateVarb("loanBaseValueSource", {
       initValue: "purchaseLoanValue",
     }),
-    valueDollarsEditor: updateVarb("numObj"),
     valueDollars: sourceOverrides({
       purchaseLoanValue: basics.equationLR(
         "add",

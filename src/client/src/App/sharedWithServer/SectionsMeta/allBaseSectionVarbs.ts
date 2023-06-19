@@ -319,7 +319,6 @@ export function makeAllBaseSectionVarbs() {
       completionStatus: baseVarb("completionStatus"),
       valueSourceName: baseVarb("loanBaseValueSource"),
       valueDollars: baseVarb("numObj", dollars),
-      valueDollarsEditor: baseVarb("numObj", dollars),
     }),
     loanBaseExtra: varbs({
       hasLoanExtra: baseVarb("boolean"),

@@ -46,15 +46,23 @@ describe("Purchase financing calculations", () => {
       expect(financing.numValue("closingCosts")).toBe(0);
     }
   });
-  it("should calculate loanBaseDollars based on the editor", () => {
+  it("should calculate loanBaseDollars based on a custom amount", () => {
     const amount = 180000;
-    firstBaseValue.updateValues({
-      valueSourceName: "customAmountEditor",
+    firstBaseValue.updateValues({ valueSourceName: "customAmountEditor" });
+    const custom = firstBaseValue.onlyChild("customLoanBase");
+    custom.updateValues({
+      valueSourceName: "valueDollarsEditor",
       valueDollarsEditor: numObj(amount),
     });
     expect(firstBaseValue.numValue("valueDollars")).toBe(amount);
     expect(firstLoan.numValue("loanBaseDollars")).toBe(amount);
     expect(financing.numValue("loanBaseDollars")).toBe(amount);
+
+    custom.updateValues({ valueSourceName: "listTotal" });
+    const nextAmount = setOnetimeList(custom, [100000, 20000]);
+    expect(firstBaseValue.numValue("valueDollars")).toBe(nextAmount);
+    expect(firstLoan.numValue("loanBaseDollars")).toBe(nextAmount);
+    expect(financing.numValue("loanBaseDollars")).toBe(nextAmount);
   });
 
   const prepRepairAndProperty = (
@@ -68,7 +76,31 @@ describe("Purchase financing calculations", () => {
     });
     property.updateValues({ purchasePrice: numObj(propertyAmount) });
   };
+  it("should calculate loanBaseExtra correctly", () => {
+    const test = (num: number) =>
+      expect(firstBaseValue.numValue("valueDollars")).toBe(num);
 
+    const loanAmount = 10000;
+    firstBaseValue.updateValues({ valueSourceName: "purchaseLoanValue" });
+    const purchaseValue = firstBaseValue.onlyChild("purchaseLoanValue");
+    purchaseValue.updateValues({
+      valueSourceName: "amountDollarsEditor",
+      amountDollarsEditor: numObj(loanAmount),
+    });
+
+    let extraAmount = 12;
+    const loanBaseExtra = firstBaseValue.onlyChild("loanBaseExtra");
+    loanBaseExtra.updateValues({
+      hasLoanExtra: true,
+      valueSourceName: "valueDollarsEditor",
+      valueDollarsEditor: numObj(extraAmount),
+    });
+    test(loanAmount + extraAmount);
+
+    loanBaseExtra.updateValues({ valueSourceName: "listTotal" });
+    extraAmount = setOnetimeList(loanBaseExtra, [12, 100, 1200]);
+    test(loanAmount + extraAmount);
+  });
   it("should calculate loanBaseDollars based on other single values", () => {
     const coefs: Record<SingleSourceName, number> = {
       repairLoanValue: 1,
@@ -217,10 +249,14 @@ describe("Purchase financing calculations", () => {
   it("should calculate closing costs", () => {
     const closingCosts = firstLoan.onlyChild("closingCostValue");
     closingCosts.updateValues({ valueSourceName: "fivePercentLoan" });
-    firstBaseValue.updateValues({
-      valueSourceName: "customAmountEditor",
+
+    firstBaseValue.updateValues({ valueSourceName: "customAmountEditor" });
+    const custom = firstBaseValue.onlyChild("customLoanBase");
+    custom.updateValues({
+      valueSourceName: "valueDollarsEditor",
       valueDollarsEditor: numObj(100000),
     });
+
     expect(financing.numValue("closingCosts")).toBe(5000);
 
     setOnetimeEditor(closingCosts, 500);
@@ -260,8 +296,10 @@ function addInterestOnlyLoan(financing: SolverSection<"financing">): void {
     },
   });
   const baseValue = loan.onlyChild("loanBaseValue");
-  baseValue.updateValues({
-    valueSourceName: "customAmountEditor",
+  baseValue.updateValues({ valueSourceName: "customAmountEditor" });
+  const custom = baseValue.onlyChild("customLoanBase");
+  custom.updateValues({
+    valueSourceName: "valueDollarsEditor",
     valueDollarsEditor: numObj(10000),
   });
 }

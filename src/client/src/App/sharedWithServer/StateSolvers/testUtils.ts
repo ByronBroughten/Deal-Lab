@@ -69,6 +69,8 @@ type OnetimeCostSN = StrictExtract<
   | "costOverrunValue"
   | "sellingCostValue"
   | "closingCostValue"
+  | "loanBaseExtra"
+  | "customLoanBase"
 >;
 
 export function setOnetimeEditor<SN extends OnetimeCostSN>(
