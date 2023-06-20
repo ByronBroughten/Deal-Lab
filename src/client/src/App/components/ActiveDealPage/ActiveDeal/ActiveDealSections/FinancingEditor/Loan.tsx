@@ -1,6 +1,7 @@
 import { SxProps } from "@mui/material";
 import React from "react";
 import { useWindowDimensions } from "react-native";
+import { StateValue } from "../../../../../sharedWithServer/SectionsMeta/values/StateValue";
 import { useGetterSection } from "../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { nativeTheme } from "../../../../../theme/nativeTheme";
 import { arrSx } from "../../../../../utils/mui";
@@ -15,11 +16,13 @@ export function Loan({
   className,
   showXBtn,
   sx,
+  showTitleAppend,
 }: {
   sx?: SxProps;
   feId: string;
   className?: string;
   showXBtn: boolean;
+  showTitleAppend?: boolean;
 }) {
   const feInfo = {
     sectionName: "loan",
@@ -27,6 +30,11 @@ export function Loan({
   } as const;
 
   const loan = useGetterSection(feInfo);
+  const financingMode = loan.valueNext("financingMode");
+  const titleAppends: Record<StateValue<"financingMode">, string> = {
+    purchase: "Purchase",
+    refinance: "Refinance",
+  };
 
   const dimensions = useWindowDimensions();
   const { mediaPhone, s5, s15 } = nativeTheme;
@@ -56,6 +64,7 @@ export function Loan({
         {...{
           ...feInfo,
           sectionTitle: "Loan",
+          titleAppend: showTitleAppend && titleAppends[financingMode],
           showXBtn,
         }}
       />

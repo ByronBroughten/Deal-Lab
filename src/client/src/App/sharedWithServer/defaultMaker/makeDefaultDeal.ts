@@ -41,7 +41,7 @@ export function makeDefaultDealPack(
   });
   purchaseFinancing.loadChild({
     childName: "loan",
-    sectionPack: makeDefaultLoanPack(),
+    sectionPack: makeDefaultLoanPack("purchase"),
   });
 
   const refiFinancing = deal.addAndGetChild("refiFinancing", {
@@ -49,7 +49,7 @@ export function makeDefaultDealPack(
   });
   refiFinancing.loadChild({
     childName: "loan",
-    sectionPack: makeDefaultLoanPack(),
+    sectionPack: makeDefaultLoanPack("refinance"),
   });
   refiFinancing.updateValues({ financingMethod: "useLoan" });
 

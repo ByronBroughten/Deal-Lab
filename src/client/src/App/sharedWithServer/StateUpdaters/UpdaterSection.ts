@@ -126,7 +126,6 @@ export class UpdaterSection<
     const childList = this.updaterList.updaterList(sectionName);
     childList.push(section);
     this.addChildFeId({ childName, feId: props.feId, idx });
-    childList.last.finishNewSection();
   }
   isOfSectionName<S extends SectionName>(
     sectionName: S
@@ -147,6 +146,8 @@ export class UpdaterSection<
       if (parent.isOfSectionName("financing")) {
         const financingMode = parent.valueNext("financingMode");
         section.updateValues({ financingMode });
+        const base = section.onlyChild("loanBaseValue");
+        base.updateValues({ financingMode });
       }
     }
   }

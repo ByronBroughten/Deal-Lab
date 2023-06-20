@@ -13,7 +13,6 @@ import { StateValue } from "../SectionsMeta/values/StateValue";
 import { InEntityValueInfo } from "../SectionsMeta/values/StateValue/InEntityValue";
 import {
   notApplicableString,
-  numObj,
   NumObj,
 } from "../SectionsMeta/values/StateValue/NumObj";
 import {
@@ -273,7 +272,15 @@ export class SolveValueVarb<
       };
     },
     emptyNumObj: (): NumObj => {
-      return numObj("");
+      const numObj = this.getterVarb.value("numObj");
+      const entities = numObj.entities.filter(
+        (entity) => entity.entitySource !== "editor"
+      );
+      return {
+        mainText: "",
+        solvableText: "",
+        entities,
+      };
     },
     getNumObjOfSwitch: (): NumObj => {
       const { updateFnProps } = this.inEntityVarb;

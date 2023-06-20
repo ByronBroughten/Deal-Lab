@@ -24,7 +24,7 @@ export function FinancingEditorBody({ children, feId, dealMode }: Props) {
           )}
         />
       </div>
-      <FormSection>
+      <FormSection sx={{ borderTopWidth: 0 }}>
         <Box
           sx={{
             display: "flex",
@@ -65,7 +65,6 @@ const Styled = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-bottom: ${theme.s3};
   }
   .Financing-loans {
     margin-top: ${theme.s4};

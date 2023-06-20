@@ -11,7 +11,7 @@ import { Arr } from "../../../../../../sharedWithServer/utils/Arr";
 import { nativeTheme } from "../../../../../../theme/nativeTheme";
 import { FormSectionLabeled } from "../../../../../appWide/FormSectionLabeled";
 import { LabeledVarbRow } from "../../../../../appWide/LabeledVarbRow";
-import { MuiSelect } from "../../../../../appWide/MuiSelect";
+import { MuiSelect, MuiSelectItems } from "../../../../../appWide/MuiSelect";
 import { LoanBaseCustom } from "./LoanBaseCustom";
 import { LoanBaseExtra } from "./LoanBaseExtra";
 import { LoanBaseSubValue } from "./LoanBaseSubValue";
@@ -37,7 +37,13 @@ export function LoanBaseValue({ feId }: { feId: string }) {
           },
         ]}
       >
-        <LoanForWhatSelect feId={feId} sx={{ marginRight: nativeTheme.s3 }} />
+        <LoanForWhatSelect
+          {...{
+            financingMode: baseValue.valueNext("financingMode"),
+            feId,
+            sx: { marginRight: nativeTheme.s3 },
+          }}
+        />
         <LoanBaseValueEditorArea
           {...{ feId, sx: { marginTop: nativeTheme.s3 } }}
         />
@@ -108,7 +114,31 @@ function ValueNumbers<SN extends SectionNameByType<"loanBaseSubValue">>({
   ) : null;
 }
 
-function LoanForWhatSelect({ feId, sx }: { feId: string; sx?: SxProps }) {
+function LoanForWhatSelect({
+  feId,
+  sx,
+  financingMode,
+}: {
+  feId: string;
+  sx?: SxProps;
+  financingMode: StateValue<"financingMode">;
+}) {
+  const items: Record<
+    StateValue<"financingMode">,
+    MuiSelectItems<"loanBaseValueSource">
+  > = {
+    purchase: [
+      ["purchaseLoanValue", "Property purchase"],
+      ["repairLoanValue", "Upfront repairs"],
+      ["priceAndRepairValues", "Purchase and repairs"],
+      ["customAmountEditor", "Custom"],
+    ],
+    refinance: [
+      ["arvLoanValue", "After repair value"],
+      ["customAmountEditor", "Custom"],
+    ],
+  };
+
   const feInfo = { sectionName: "loanBaseValue", feId } as const;
   return (
     <MuiSelect
@@ -123,12 +153,7 @@ function LoanForWhatSelect({ feId, sx }: { feId: string; sx?: SxProps }) {
           varbName: "valueSourceName",
         },
         unionValueName: "loanBaseValueSource",
-        items: [
-          ["purchaseLoanValue", "Property purchase"],
-          ["repairLoanValue", "Upfront repairs"],
-          ["priceAndRepairValues", "Purchase and repairs"],
-          ["customAmountEditor", "Custom"],
-        ],
+        items: items[financingMode],
       }}
     />
   );

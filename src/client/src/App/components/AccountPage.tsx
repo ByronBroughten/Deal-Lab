@@ -24,7 +24,7 @@ export function AccountPage() {
   const openAddDeal = () =>
     setModal({
       title: <ChunkTitle>New Deal</ChunkTitle>,
-      children: <NewDealSelector />,
+      children: <NewDealSelector closeSelector={() => setModal(null)} />,
     });
   return (
     <View>

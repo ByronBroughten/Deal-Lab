@@ -9,7 +9,8 @@ import { MuiSelect } from "../appWide/MuiSelect";
 import { VarbLabel } from "../appWide/VarbLabel";
 import { useGoToPage } from "../customHooks/useGoToPage";
 
-export function NewDealSelector() {
+type Props = { closeSelector: () => void };
+export function NewDealSelector({ closeSelector }: Props) {
   const newDealMenu = useGetterSectionOnlyOne("newDealMenu");
   const addActiveDeal = useAction("addActiveDeal");
   const goToActiveDeal = useGoToPage("activeDeal");
@@ -17,6 +18,7 @@ export function NewDealSelector() {
     unstable_batchedUpdates(() => {
       addActiveDeal({ dealMode: newDealMenu.valueNext("dealMode") });
       goToActiveDeal();
+      closeSelector();
     });
 
   return (

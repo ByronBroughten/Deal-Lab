@@ -1,16 +1,28 @@
 import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
+import { FinancingMode } from "../SectionsMeta/values/StateValue/financingMode";
 import { PackBuilderSection } from "../StatePackers/PackBuilderSection";
 
-export function makeDefaultLoanPack(): SectionPack<"loan"> {
+export function makeDefaultLoanPack(
+  financingMode?: FinancingMode
+): SectionPack<"loan"> {
   const loan = PackBuilderSection.initAsOmniChild("loan", {
     sectionValues: {
       interestRatePercentPeriodicSwitch: "yearly",
       loanTermSpanSwitch: "years",
       mortgageInsPeriodicSwitch: "yearly",
+      ...(financingMode && { financingMode }),
     },
   });
 
-  const baseValue = loan.addAndGetChild("loanBaseValue");
+  financingMode = loan.get.valueNext("financingMode");
+
+  const baseValue = loan.addAndGetChild("loanBaseValue", {
+    sectionValues: {
+      financingMode,
+      valueSourceName:
+        financingMode === "purchase" ? "purchaseLoanValue" : "arvLoanValue",
+    },
+  });
   baseValue.addChild("purchaseLoanValue");
   baseValue.addChild("repairLoanValue");
   baseValue.addChild("arvLoanValue");

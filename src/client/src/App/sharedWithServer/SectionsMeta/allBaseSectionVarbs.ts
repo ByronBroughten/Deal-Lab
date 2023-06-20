@@ -316,6 +316,7 @@ export function makeAllBaseSectionVarbs() {
       ),
     } as const),
     loanBaseValue: varbs({
+      financingMode: baseVarb("financingMode"),
       completionStatus: baseVarb("completionStatus"),
       valueSourceName: baseVarb("loanBaseValueSource"),
       valueDollars: baseVarb("numObj", dollars),

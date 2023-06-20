@@ -33,7 +33,7 @@ export class DefaultFamilyAdder<
     const { sectionName, feInfo } = this.get.child(childInfo);
 
     if (hasDefaultChild(this.sectionName, childName)) {
-      sectionPack = makeDefaultChildPack(this.sectionName, childName);
+      sectionPack = makeDefaultChildPack(this.updater, childName);
     } else if (defaultMaker.has(sectionName)) {
       sectionPack = defaultMaker.makeSectionPack(sectionName);
     }

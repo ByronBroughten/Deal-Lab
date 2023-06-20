@@ -35,6 +35,7 @@ export function FinancingLoans({ feId }: FeIdProp) {
             feId={feId}
             sx={idx !== 0 ? { mt: nativeTheme.s4 } : undefined}
             showXBtn={loanIds.length > 1}
+            titleAppend={false}
           />
         ))}
       </div>

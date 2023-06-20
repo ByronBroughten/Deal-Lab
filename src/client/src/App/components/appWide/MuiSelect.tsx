@@ -11,12 +11,17 @@ import { useGetterVarbNext } from "../../sharedWithServer/stateClassHooks/useGet
 import { MuiSelectOnChange } from "../../utils/mui";
 import { MuiSelectStyled } from "./MuiSelectStyled";
 
+export type MuiSelectItems<UVN extends UnionValueName> = (
+  | [StateValue<UVN>, string]
+  | null
+)[];
+
 export interface MuiSelectProps<
   UVN extends UnionValueName,
   SN extends SectionName
 > {
   unionValueName: UVN;
-  items: ([StateValue<UVN>, string] | null)[];
+  items: MuiSelectItems<UVN>;
   feVarbInfo: FeVarbInfoNext<SN>;
   onChangeOverride?: MuiSelectOnChange;
   batchedWithChange?: MuiSelectOnChange;
