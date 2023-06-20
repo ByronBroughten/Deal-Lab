@@ -1,8 +1,6 @@
 import { Box } from "@mui/material";
 import React from "react";
 import { unstable_batchedUpdates } from "react-dom";
-import { BsFillHouseAddFill, BsFillHousesFill } from "react-icons/bs";
-import { SiWebcomponentsdotorg } from "react-icons/si";
 import { View } from "react-native";
 import { FeRouteName } from "../Constants/feRoutes";
 import { nativeTheme } from "../theme/nativeTheme";
@@ -33,12 +31,12 @@ export function AccountPage() {
           <AccountBtn
             onClick={openAddDeal}
             text={<Box>New Deal</Box>}
-            icon={<BsFillHouseAddFill size={iconSize} />}
+            icon={icons.addDeal({ size: iconSize })}
           />
           <AccountBtn
             feRouteName="compare"
             text={<Box>Compare Deals</Box>}
-            icon={<BsFillHousesFill size={iconSize} />}
+            icon={icons.compareDeals({ size: iconSize })}
           />
         </Row>
         <Row
@@ -54,7 +52,7 @@ export function AccountPage() {
                 {"Deal\nComponents"}
               </div>
             }
-            icon={<SiWebcomponentsdotorg size={iconSize} />}
+            icon={icons.dealComponents({ size: iconSize })}
           />
           <AccountBtn
             feRouteName="userVariables"

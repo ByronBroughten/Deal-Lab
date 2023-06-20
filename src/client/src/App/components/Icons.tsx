@@ -7,7 +7,13 @@ import {
   BiHelpCircle,
   BiHomeHeart,
 } from "react-icons/bi";
-import { BsFillHouseFill, BsSnow2 } from "react-icons/bs";
+import {
+  BsFillHouseAddFill,
+  BsFillHouseFill,
+  BsFillHousesFill,
+  BsNutFill,
+  BsSnow2,
+} from "react-icons/bs";
 import { GiHouseKeys } from "react-icons/gi";
 import { HiOutlineVariable } from "react-icons/hi";
 import { ImCheckmark } from "react-icons/im";
@@ -16,6 +22,8 @@ import { MdDelete, MdOutlineHomeRepairService } from "react-icons/md";
 export interface IconProps extends IconBaseProps {}
 
 type IconName =
+  | "compareDeals"
+  | "addDeal"
   | "property"
   | "buyAndHold"
   | "fixAndFlip"
@@ -30,8 +38,18 @@ type IconName =
   | "finish"
   | "variable"
   | "unArchive"
-  | "doArchive";
+  | "doArchive"
+  | "dealComponents";
 export const icons: Record<IconName, (props?: IconProps) => React.ReactNode> = {
+  compareDeals(props) {
+    return <BsFillHousesFill {...props} />;
+  },
+  addDeal(props) {
+    return <BsFillHouseAddFill {...props} />;
+  },
+  dealComponents(props) {
+    return <BsNutFill {...props} />;
+  },
   unArchive(props) {
     return <BiArchiveOut {...props} />;
   },

@@ -29,7 +29,7 @@ const basicColors = {
 const baseThemeColors = {
   primary: "#00684A",
   secondary: "#00A35C",
-  lightBackground: "#e8f7ff",
+  lightBackground: "#ecf7fd",
   darkBlue: "#3c7c9c",
   notice: "#ff9868",
   danger: "#ff3527",

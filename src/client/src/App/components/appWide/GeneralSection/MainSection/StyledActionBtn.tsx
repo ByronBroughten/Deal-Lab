@@ -19,6 +19,7 @@ export function StyledActionBtn({
       {...{
         sx: [
           {
+            height: 28,
             borderWidth: 1,
             borderStyle: "solid",
             borderColor: "transparent",

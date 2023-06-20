@@ -179,7 +179,7 @@ export function AccountPageDeal({
             />
           </MuiRow>
         )}
-        <Row>
+        <MuiRow>
           <StyledActionBtn
             {...{
               sx: {
@@ -244,7 +244,7 @@ export function AccountPageDeal({
               middle: "Delete",
             }}
           />
-        </Row>
+        </MuiRow>
       </Row>
     </View>
   );
