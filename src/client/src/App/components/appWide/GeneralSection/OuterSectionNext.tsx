@@ -18,7 +18,8 @@ export function OuterSectionNext({ children, style }: OuterSectionNextProps) {
         paddingTop: nativeTheme.s4,
         paddingLeft: paddingLR,
         paddingRight: paddingLR,
-        backgroundColor: nativeTheme["gray-100"],
+        // backgroundColor: nativeTheme["gray-100"],
+        backgroundColor: nativeTheme.lightBackground,
         ...style,
       }}
     >

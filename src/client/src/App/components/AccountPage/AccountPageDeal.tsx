@@ -180,6 +180,30 @@ export function AccountPageDeal({
           </MuiRow>
         )}
         <Row>
+          <StyledActionBtn
+            {...{
+              sx: {
+                margin: nativeTheme.s15,
+                marginTop: nativeTheme.s25,
+                marginRight: nativeTheme.s2,
+              },
+              left: icons.edit({ size: 20 }),
+              middle: "Edit",
+              onClick: editDeal,
+            }}
+          />
+          <StyledActionBtn
+            {...{
+              onClick: copyDeal,
+              sx: {
+                margin: nativeTheme.s1,
+                marginTop: nativeTheme.s25,
+                marginRight: nativeTheme.s15,
+              },
+              left: icons.copy({ size: 20 }),
+              middle: "Copy",
+            }}
+          />
           {isArchived && (
             <StyledActionBtn
               {...{
@@ -208,30 +232,6 @@ export function AccountPageDeal({
               }}
             />
           )}
-          <StyledActionBtn
-            {...{
-              sx: {
-                margin: nativeTheme.s15,
-                marginTop: nativeTheme.s25,
-                marginRight: nativeTheme.s2,
-              },
-              left: icons.edit({ size: 20 }),
-              middle: "Edit",
-              onClick: editDeal,
-            }}
-          />
-          <StyledActionBtn
-            {...{
-              onClick: copyDeal,
-              sx: {
-                margin: nativeTheme.s1,
-                marginTop: nativeTheme.s25,
-                marginRight: nativeTheme.s15,
-              },
-              left: icons.copy({ size: 20 }),
-              middle: "Copy",
-            }}
-          />
           <StyledActionBtn
             {...{
               isDangerous: true,

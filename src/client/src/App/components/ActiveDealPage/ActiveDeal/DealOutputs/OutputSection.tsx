@@ -106,13 +106,14 @@ export function OutputSection({
           <Box
             sx={{
               paddingY: nativeTheme.s4,
+              paddingX: nativeTheme.s5,
               display: "flex",
               justifyContent: "center",
               fontSize: nativeTheme.fs22,
               color: nativeTheme.darkBlue.main,
             }}
           >
-            Complete all deal sections to see outputs
+            To view outputs, complete all deal sections.
           </Box>
         </MainSectionBody>
       )}

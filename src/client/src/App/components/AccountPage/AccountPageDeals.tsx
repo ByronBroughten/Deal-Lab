@@ -11,7 +11,6 @@ import { nativeTheme } from "../../theme/nativeTheme";
 import { StyledActionBtn } from "../appWide/GeneralSection/MainSection/StyledActionBtn";
 import ChunkTitle from "../general/ChunkTitle";
 import { MuiRow } from "../general/MuiRow";
-import { Row } from "../general/Row";
 import { icons } from "../Icons";
 import { BigStringEditor } from "../inputs/BigStringEditor";
 import { AccountPageDeal } from "./AccountPageDeal";
@@ -62,8 +61,8 @@ export function AccountPageDeals() {
   const dataStatus = useUserDataStatus();
   const loading = dataStatus === "loading";
   return (
-    <Row
-      style={{
+    <MuiRow
+      sx={{
         // ...nativeTheme.mainSection,
         flex: 1,
         height: "100%",
@@ -73,11 +72,12 @@ export function AccountPageDeals() {
         paddingRight: nativeTheme.s45,
         paddingBottom: nativeTheme.s5,
         paddingTop: nativeTheme.s4,
-        borderColor: nativeTheme.primary.main,
-        borderWidth: 1,
-        borderStyle: "solid",
+        // borderColor: nativeTheme.primary.main,
+        // borderWidth: 1,
+        // borderStyle: "solid",
         borderRadius: nativeTheme.br0,
         backgroundColor: nativeTheme.light,
+        boxShadow: nativeTheme.oldShadow4,
       }}
     >
       <View style={{ alignItems: "center", flex: 1 }}>
@@ -154,6 +154,6 @@ export function AccountPageDeals() {
           </>
         )}
       </View>
-    </Row>
+    </MuiRow>
   );
 }

@@ -18,7 +18,7 @@ export function DealSubSectionOpen({ children, finishIsAllowed }: Props) {
     <BackBtnWrapper {...{ to: -1, label: "Back" }}>
       <SubSectionOpen>
         {children}
-        <FormSection>
+        <FormSection sx={{ border: "none" }}>
           <FinishBtn
             sx={{
               boxShadow: "none",

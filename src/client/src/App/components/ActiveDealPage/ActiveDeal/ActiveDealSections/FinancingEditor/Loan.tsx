@@ -64,8 +64,8 @@ export function Loan({
         {...{
           ...feInfo,
           sectionTitle: "Loan",
-          titleAppend: showTitleAppend && titleAppends[financingMode],
           showXBtn,
+          ...(showTitleAppend && { titleAppend: titleAppends[financingMode] }),
         }}
       />
       <MainSectionBody themeName="loan">

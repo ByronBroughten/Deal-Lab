@@ -87,6 +87,25 @@ function AccountBtn({
   return (
     <HollowBtn
       {...{
+        sx: [
+          {
+            borderRadius: nativeTheme.br0,
+            margin: nativeTheme.dealMenuElement.margin,
+            fontSize: nativeTheme.fs22,
+            height: size,
+            width: size,
+            whiteSpace: "normal",
+
+            borderColor: nativeTheme.primary.main,
+            color: nativeTheme.primary.main,
+            "&:hover": {
+              color: nativeTheme.light,
+              backgroundColor: nativeTheme.secondary.main,
+              borderColor: nativeTheme.secondary.main,
+            },
+          },
+          ...arrSx(sx),
+        ],
         onClick: () => {
           unstable_batchedUpdates(() => {
             onClick && onClick();
@@ -109,24 +128,6 @@ function AccountBtn({
             {text}
           </Box>
         ),
-        sx: [
-          {
-            margin: nativeTheme.dealMenuElement.margin,
-            fontSize: nativeTheme.fs22,
-            height: size,
-            width: size,
-            whiteSpace: "normal",
-
-            borderColor: nativeTheme.primary.main,
-            color: nativeTheme.primary.main,
-            "&:hover": {
-              color: nativeTheme.light,
-              backgroundColor: nativeTheme.secondary.main,
-              borderColor: nativeTheme.secondary.main,
-            },
-          },
-          ...arrSx(sx),
-        ],
         ...rest,
       }}
     />

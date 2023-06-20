@@ -15,4 +15,29 @@ describe("Refi financing calculations", () => {
     firstBaseValue = firstLoan.onlyChild("loanBaseValue");
     financing.updateValues({ financingMethod: "useLoan" });
   });
+  it("has the right financingModes", () => {
+    const test = () => {
+      financing.value("financingMode") === "refinance";
+      const loans = financing.children("loan");
+      for (const loan of loans) {
+        loan.value("financingMode") === "refinance";
+        const base = loan.onlyChild("loanBaseValue");
+        base.value("financingMode") === "refinance";
+      }
+    };
+    test();
+
+    financing.addChildAndSolve("loan");
+    test();
+
+    const purchaseLoan = deal.purchaseFinancing.onlyChild("loan");
+    firstLoan.loadSelfAndSolve(purchaseLoan.packMaker.makeSectionPack());
+    test();
+  });
+  // it("calculates baseValue correctly", () => {
+  //   firstBaseValue.updateValues({
+  //     "valueSourceName": "arvLoanValue"
+  //   });
+
+  // })
 });

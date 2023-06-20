@@ -15,7 +15,6 @@ export function makeDefaultLoanPack(
   });
 
   financingMode = loan.get.valueNext("financingMode");
-
   const baseValue = loan.addAndGetChild("loanBaseValue", {
     sectionValues: {
       financingMode,
@@ -23,6 +22,7 @@ export function makeDefaultLoanPack(
         financingMode === "purchase" ? "purchaseLoanValue" : "arvLoanValue",
     },
   });
+
   baseValue.addChild("purchaseLoanValue");
   baseValue.addChild("repairLoanValue");
   baseValue.addChild("arvLoanValue");
