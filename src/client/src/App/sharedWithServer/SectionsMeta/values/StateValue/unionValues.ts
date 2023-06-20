@@ -2,7 +2,7 @@ import { Arr } from "../../../utils/Arr";
 import { ValidationError } from "../../../utils/Error";
 import { Obj } from "../../../utils/Obj";
 import { dealModes, getDealModes } from "./dealMode";
-import { financingMode } from "./financingMode";
+import { financingModes } from "./financingMode";
 
 const valueSources = {
   ongoingSwitch: ["monthly", "yearly"],
@@ -100,7 +100,7 @@ const unionValueArrs = {
   completionStatus: ["allEmpty", "allValid", "someInvalid"],
   dealMode: dealModes,
   dealModePlusMixed: getDealModes("plusMixed"),
-  financingMode: financingMode,
+  financingMode: financingModes,
   financingMethod: ["cashOnly", "useLoan", ""],
   userDataStatus: [
     "notLoaded",

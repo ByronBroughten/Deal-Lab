@@ -1,14 +1,15 @@
 import { UpdateSectionVarbs } from "../updateSectionVarbs/updateSectionVarbs";
 import { updateVarb } from "../updateSectionVarbs/updateVarb";
-import { updateBasicsS } from "../updateSectionVarbs/updateVarb/UpdateBasics";
+import {
+  updateBasics,
+  updateBasicsS,
+} from "../updateSectionVarbs/updateVarb/UpdateBasics";
 import { updateFnPropS } from "../updateSectionVarbs/updateVarb/UpdateFnProps";
-import { valueSourceOverrides } from "../updateSectionVarbs/updateVarb/updateVarbUtils";
 import { updateVarbsS } from "../updateSectionVarbs/updateVarbs";
 import { StateValue } from "../values/StateValue";
+import { financingModes } from "../values/StateValue/financingMode";
 import { Obj } from "./../../utils/Obj";
-import { UpdateBasics } from "./../updateSectionVarbs/updateVarb/UpdateBasics";
 import {
-  overrideSwitch,
   overrideSwitchS,
   UpdateOverride,
   updateOverride,
@@ -16,19 +17,9 @@ import {
 import { baseLoanCompletionStatus } from "./calculatedUpdateVarbs/completionStatusVarbs";
 
 const oRide = updateOverride;
-const oSwitch = overrideSwitch;
 const switchS = overrideSwitchS;
 const basics = updateBasicsS;
 const prop = updateFnPropS;
-
-function sourceOverrides(
-  overrideMap: Record<StateValue<"loanBaseValueSource">, UpdateBasics>
-) {
-  return updateVarb("numObj", {
-    updateFnName: "throwIfReached",
-    updateOverrides: valueSourceOverrides("loanBaseValueSource", overrideMap),
-  });
-}
 
 type Overrides = Record<StateValue<"loanBaseValueSource">, UpdateOverride>;
 const overrideMap: Overrides = {
@@ -68,7 +59,7 @@ const overrideMap: Overrides = {
   arvLoanValue: oRide(
     [
       switchS.local("financingMode", "refinance"),
-      switchS.valueSourceIs("repairLoanValue"),
+      switchS.valueSourceIs("arvLoanValue"),
     ],
     basics.equationLR(
       "add",
@@ -93,8 +84,14 @@ export function loanBaseUpdateVarbs(): UpdateSectionVarbs<"loanBaseValue"> {
     }),
     financingMode: updateVarb("financingMode"),
     valueDollars: updateVarb("numObj", {
-      updateFnName: "emptyNumObj",
-      updateOverrides: overrides,
+      updateFnName: "throwIfReached",
+      updateOverrides: [
+        ...overrides,
+        oRide(
+          [switchS.local("financingMode", ...financingModes)],
+          updateBasics("emptyNumObj")
+        ),
+      ],
     }),
   };
 }

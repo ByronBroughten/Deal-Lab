@@ -60,6 +60,11 @@ export function makeAllBaseSectionVarbs() {
       ...baseVarbsS.savableSection,
       dealMode: baseVarb("dealModePlusMixed"),
     }),
+    dealCompareCache: varbs({
+      ...baseVarbsS.savableSection,
+      dealMode: baseVarb("dealModePlusMixed"),
+      dbIds: baseVarb("stringArray"),
+    }),
     variablesMenu: varbs({
       nameFilter: baseVarb("string"),
     }),

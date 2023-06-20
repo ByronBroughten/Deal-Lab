@@ -28,7 +28,10 @@ function useGetFilteredDeals(): GetterSection<"deal">[] {
   const dealSystems = mainMenu.children("comparedDealSystem");
   const comparedSystems = dealSystems.map((page) => page.onlyChild("deal"));
   const comparedDbIds = comparedSystems.map(({ dbId }) => dbId);
-  return nameFilteredDeals.filter((deal) => !comparedDbIds.includes(deal.dbId));
+  return nameFilteredDeals.filter(
+    (deal) =>
+      !comparedDbIds.includes(deal.dbId) && !deal.valueNext("isArchived")
+  );
 }
 
 type Props = { closeMenu: () => void };

@@ -68,6 +68,13 @@ export const allSectionChildren = checkAllSectionChildren({
     numVarbList: "numVarbList",
     boolVarbList: "boolVarbList",
   }),
+  dealCompareCache: sectionChildren({
+    homeBuyerOutputList: "outputList",
+    buyAndHoldOutputList: "outputList",
+    fixAndFlipOutputList: "outputList",
+    brrrrOutputList: "outputList",
+    mixedOutputList: "outputList",
+  }),
   dealCompareMainMenu: sectionChildren({
     comparedDealSystem: "dealSystem",
     homeBuyerOutputList: "outputList",

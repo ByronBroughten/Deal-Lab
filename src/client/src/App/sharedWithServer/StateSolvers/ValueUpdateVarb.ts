@@ -42,7 +42,7 @@ function calculatedNumObj(solvableText: string): NumObj {
     solvableText,
     mainText: "",
     entities: [],
-    // for calculations to load correctly, there must be no entities
+    // for calculations to load correctly, there must be no entities.
   };
 }
 

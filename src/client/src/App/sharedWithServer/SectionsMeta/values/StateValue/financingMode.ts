@@ -1,3 +1,3 @@
-export const financingMode = ["purchase", "refinance"] as const;
+export const financingModes = ["purchase", "refinance"] as const;
 
-export type FinancingMode = (typeof financingMode)[number];
+export type FinancingMode = (typeof financingModes)[number];

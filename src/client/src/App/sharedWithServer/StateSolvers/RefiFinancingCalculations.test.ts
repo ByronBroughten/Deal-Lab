@@ -45,9 +45,9 @@ describe("Refi financing calculations", () => {
       financing.value("financingMode") === "refinance";
       const loans = financing.children("loan");
       for (const loan of loans) {
-        loan.value("financingMode") === "refinance";
         const base = loan.onlyChild("loanBaseValue");
-        base.value("financingMode") === "refinance";
+        expect(loan.value("financingMode")).toBe("refinance");
+        expect(base.value("financingMode")).toBe("refinance");
       }
     };
     test();
@@ -81,6 +81,7 @@ describe("Refi financing calculations", () => {
     const extraAmount = 1000;
     const extra = firstBaseValue.onlyChild("loanBaseExtra");
     extra.updateValues({
+      hasLoanExtra: true,
       valueSourceName: "valueDollarsEditor",
       valueDollarsEditor: numObj(extraAmount),
     });
@@ -89,6 +90,7 @@ describe("Refi financing calculations", () => {
       expect(firstBaseValue.numValue("valueDollars")).toBe(num + extraAmount);
     };
     const assetAmount = 100000;
+    property.updateValues({ afterRepairValue: numObj(100000) });
 
     firstBaseValue.updateValues({ valueSourceName: "arvLoanValue" });
     const valueSection = firstBaseValue.onlyChild("arvLoanValue");
@@ -133,11 +135,13 @@ describe("Refi financing calculations", () => {
     prepRepairAndProperty(100000, 200000);
 
     const test = () => {
-      expect(firstBaseValue.value("valueDollars").solvableText).toBe("");
-      expect(firstBaseValue.value("valueDollars").mainText).toBe("");
+      // expect(firstBaseValue.value("valueDollars").mainText).toBe("");
+      // expect(firstBaseValue.value("valueDollars").solvableText).toBe("");
+      expect(firstBaseValue.varb("valueDollars").get.numberOrQuestionMark).toBe(
+        "?"
+      );
     };
 
-    firstBaseValue.onlyChild("purchaseLoanValue");
     for (const sourceName of emptySourceNames) {
       firstBaseValue.updateValues({
         valueSourceName: sourceName,
@@ -149,9 +153,7 @@ describe("Refi financing calculations", () => {
       });
       test();
     }
-    firstBaseValue.updateValues({
-      valueSourceName: "priceAndRepairValues",
-    });
+    firstBaseValue.updateValues({ valueSourceName: "priceAndRepairValues" });
     test();
   });
 });
