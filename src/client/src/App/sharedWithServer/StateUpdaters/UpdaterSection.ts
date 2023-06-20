@@ -126,6 +126,29 @@ export class UpdaterSection<
     const childList = this.updaterList.updaterList(sectionName);
     childList.push(section);
     this.addChildFeId({ childName, feId: props.feId, idx });
+    childList.last.finishNewSection();
+  }
+  isOfSectionName<S extends SectionName>(
+    sectionName: S
+  ): this is UpdaterSection<S> {
+    return this.get.isOfSectionName(sectionName);
+  }
+  finishNewSection() {
+    const section = this;
+    if (section.isOfSectionName("property")) {
+      const { parent } = section.get;
+      if (parent.isOfSectionName("deal")) {
+        const dealMode = parent.valueNext("dealMode");
+        section.updateValues({ propertyMode: dealMode });
+      }
+    }
+    if (section.isOfSectionName("loan")) {
+      const { parent } = section.get;
+      if (parent.isOfSectionName("financing")) {
+        const financingMode = parent.valueNext("financingMode");
+        section.updateValues({ financingMode });
+      }
+    }
   }
   private getChildProps<CN extends ChildName<SN>>({
     childName,

@@ -33,8 +33,6 @@ export class ChildPackLoader<
 > extends GetterSectionBase<SN> {
   sectionPack: SectionPack;
   spChildInfo: SpChildInfo<SN, CN> & LoadChildSectionPackOptions;
-  updaterSection: UpdaterSection<SN>;
-  get: GetterSection<SN>;
   constructor({
     sectionPack,
     spChildInfo,
@@ -43,8 +41,12 @@ export class ChildPackLoader<
     super(props);
     this.sectionPack = sectionPack;
     this.spChildInfo = spChildInfo;
-    this.updaterSection = new UpdaterSection(props);
-    this.get = new GetterSection(props);
+  }
+  get get() {
+    return new GetterSection(this.getterSectionProps);
+  }
+  get updaterSection() {
+    return new UpdaterSection(this.getterSectionProps);
   }
   get childName(): CN {
     return this.spChildInfo.childName;

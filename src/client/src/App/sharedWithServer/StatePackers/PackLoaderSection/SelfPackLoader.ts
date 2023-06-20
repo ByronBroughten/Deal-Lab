@@ -44,6 +44,7 @@ export class SelfPackLoader<
     this.updaterSection.resetVarbs(sectionValues as Partial<SectionValues<SN>>);
     this.updaterSection.removeAllChildren();
     this.addSectionPackChildren();
+    this.updaterSection.finishNewSection();
   }
   thisHasChildren(): this is SelfPackLoader<SectionNameByType<"hasChild">> {
     return sectionNameS.is(this.sectionName, "hasChild");

@@ -193,14 +193,6 @@ export const sectionsReducer: React.Reducer<StateSections, SectionsAction> = (
       });
       section.loadSelfAndSolve(stored.makeSectionPack());
       section.updater.newDbId();
-
-      if (section.isOfSectionName("property")) {
-        const { parent } = section.get;
-        if (parent.isOfSectionName("deal")) {
-          const dealMode = parent.valueNext("dealMode");
-          section.updateValues({ propertyMode: dealMode });
-        }
-      }
     },
     updateValue: (props) => {
       const varb = solverSections.solverVarb(props);
