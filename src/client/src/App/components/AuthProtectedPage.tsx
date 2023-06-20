@@ -26,7 +26,7 @@ export function DefaultMainNeededPage({
   children: React.ReactNode;
 }) {
   const main = useGetterSectionOnlyOne("main");
-  if (!main.hasOnlyChild("mainDealMenu")) {
+  if (main.hasOnlyChild("mainDealMenu")) {
     return <div>{children}</div>;
   } else {
     return <Navigate to={feRoutes.auth} />;
@@ -36,19 +36,19 @@ export function DefaultMainNeededPage({
 export function AuthProtectedPage() {
   return (
     <LoginToAccess>
-      {/* <DefaultMainNeededPage> */}
-      <DealModeProvider dealMode="mixed">
-        <ModalProviders>
-          <Modals />
-          <PageMain>
-            <NavBar />
-            <OuterSectionNext>
-              <Outlet />
-            </OuterSectionNext>
-          </PageMain>
-        </ModalProviders>
-      </DealModeProvider>
-      {/* </DefaultMainNeededPage> */}
+      <DefaultMainNeededPage>
+        <DealModeProvider dealMode="mixed">
+          <ModalProviders>
+            <Modals />
+            <PageMain>
+              <NavBar />
+              <OuterSectionNext>
+                <Outlet />
+              </OuterSectionNext>
+            </PageMain>
+          </ModalProviders>
+        </DealModeProvider>
+      </DefaultMainNeededPage>
     </LoginToAccess>
   );
 }
