@@ -40,13 +40,14 @@ export function InfoModal({ modalWrapperProps }: Props) {
       {...{
         title: (
           <MuiRow>
-            {title}
             {icons.info({
+              size: 30,
               style: {
                 color: nativeTheme.complementary.main,
-                marginLeft: nativeTheme.s2,
+                marginRight: nativeTheme.s2,
               },
             })}
+            {title}
           </MuiRow>
         ),
         infoText,

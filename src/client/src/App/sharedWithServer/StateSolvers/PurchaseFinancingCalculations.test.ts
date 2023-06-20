@@ -12,19 +12,31 @@ import {
   setOnetimeList,
 } from "./testUtils";
 
-const singleSourceNames = Arr.extractStrict(
-  unionValueArr("loanBaseValueSource"),
-  ["repairLoanValue", "purchaseLoanValue"] as const
-);
-
-type SingleSourceName = (typeof singleSourceNames)[number];
-
 describe("Purchase financing calculations", () => {
   let deal: SolverActiveDeal;
   let property: SolverSection<"property">;
   let financing: SolverSection<"financing">;
   let firstLoan: SolverSection<"loan">;
   let firstBaseValue: SolverSection<"loanBaseValue">;
+
+  const singleSourceNames = Arr.extractStrict(
+    unionValueArr("loanBaseValueSource"),
+    ["repairLoanValue", "purchaseLoanValue"] as const
+  );
+  type SingleSourceName = (typeof singleSourceNames)[number];
+
+  const prepRepairAndProperty = (
+    repairAmount: number,
+    propertyAmount: number
+  ) => {
+    const repairValue = property.onlyChild("repairValue");
+    repairValue.updateValues({
+      valueSourceName: "valueDollarsEditor",
+      valueDollarsEditor: numObj(repairAmount),
+    });
+    property.updateValues({ purchasePrice: numObj(propertyAmount) });
+  };
+
   beforeEach(() => {
     deal = SolverActiveDeal.init("buyAndHold");
     property = deal.property;
@@ -65,17 +77,6 @@ describe("Purchase financing calculations", () => {
     expect(financing.numValue("loanBaseDollars")).toBe(nextAmount);
   });
 
-  const prepRepairAndProperty = (
-    repairAmount: number,
-    propertyAmount: number
-  ) => {
-    const repairValue = property.onlyChild("repairValue");
-    repairValue.updateValues({
-      valueSourceName: "valueDollarsEditor",
-      valueDollarsEditor: numObj(repairAmount),
-    });
-    property.updateValues({ purchasePrice: numObj(propertyAmount) });
-  };
   it("should calculate loanBaseExtra correctly", () => {
     const test = (num: number) =>
       expect(firstBaseValue.numValue("valueDollars")).toBe(num);
@@ -100,6 +101,11 @@ describe("Purchase financing calculations", () => {
     loanBaseExtra.updateValues({ valueSourceName: "listTotal" });
     extraAmount = setOnetimeList(loanBaseExtra, [12, 100, 1200]);
     test(loanAmount + extraAmount);
+
+    loanBaseExtra.updateValues({
+      hasLoanExtra: false,
+    });
+    test(loanAmount);
   });
   it("should calculate loanBaseDollars based on other single values", () => {
     const coefs: Record<SingleSourceName, number> = {
