@@ -5,28 +5,6 @@ import { nativeTheme } from "../theme/nativeTheme";
 import { DealLabIconBtn } from "./DealLabIcon";
 import { MuiRow } from "./general/MuiRow";
 
-function FooterLink({
-  href,
-  children,
-}: {
-  href: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <Link
-      sx={{
-        fontStyle: "normal",
-        textDecoration: "none",
-        color: nativeTheme.primary.dark,
-        paddingRight: nativeTheme.s45,
-      }}
-      href={href}
-    >
-      {children}
-    </Link>
-  );
-}
-
 export function FooterNext() {
   return (
     <Grid
@@ -62,5 +40,27 @@ export function FooterNext() {
         </MuiRow>
       </Grid>
     </Grid>
+  );
+}
+
+function FooterLink({
+  href,
+  children,
+}: {
+  href: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <Link
+      sx={{
+        fontStyle: "normal",
+        textDecoration: "none",
+        color: nativeTheme.primary.dark,
+        paddingRight: nativeTheme.s45,
+      }}
+      href={href}
+    >
+      {children}
+    </Link>
   );
 }
