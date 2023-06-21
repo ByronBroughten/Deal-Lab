@@ -3,6 +3,9 @@ export const timeS = {
     // seconds is standard
     return Math.floor(mils / 1000);
   },
+  currentYear() {
+    return new Date().getFullYear();
+  },
   now() {
     return Date.now();
   },

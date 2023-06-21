@@ -9,6 +9,7 @@ import {
   UserDataNeededPage,
 } from "./App/components/AuthProtectedPage";
 import { DealCompareSection } from "./App/components/DealComparePage/DealCompareSection";
+import { FooterNext } from "./App/components/Footer";
 import NotFound from "./App/components/general/NotFound";
 import { NavBarOutletPage } from "./App/components/NavBarOutletPage";
 import { UserVarbEditorPage } from "./App/components/UserVarbEditorPage";
@@ -53,6 +54,7 @@ export function Main() {
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>
+      <FooterNext />
     </Styled>
   );
 }

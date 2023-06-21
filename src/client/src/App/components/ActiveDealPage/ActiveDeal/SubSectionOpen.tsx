@@ -14,6 +14,7 @@ export function SubSectionOpen({ children }: Props) {
         paddingTop: nativeTheme.s5,
         paddingLeft: nativeTheme.s6,
         paddingRight: nativeTheme.s6,
+        marginBottom: nativeTheme.s4,
       }}
     >
       {children}
