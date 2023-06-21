@@ -450,6 +450,7 @@ export function makeAllBaseSectionVarbs() {
       ...baseVarbs("boolean", ["propertyExists", "mgmtExists"] as const),
     }),
     feStore: varbs({
+      dealCountOnLogin: baseVarb("number"),
       changesToSave: baseVarb("changesToSave"),
       changesSaving: baseVarb("changesSaving"),
 

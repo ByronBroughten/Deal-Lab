@@ -1,6 +1,8 @@
 import { NumObj, numObj } from "../../SectionsMeta/values/StateValue/NumObj";
 import { numObjNext } from "../../SectionsMeta/values/StateValue/numObjNext";
 
+export type ExampleCapExProps = [string, number | NumObj, number | NumObj][];
+
 const userVarbCapExNames = {
   roof: "Roof",
   waterHeater: "Water heater",
@@ -62,7 +64,7 @@ export const examplePropertyCapExListProps: [
 ][] = [
   [...spans.roof, numObj(8000)],
   [...spans.waterHeater, numObjNext("1200*", ["numUnits"])],
-  [...spans.hvac, numObjNext("3500*", ["numUnits"])],
+  [...spans.hvac, numObjNext("5000*", ["numUnits"])],
   [...spans.interiorPaint, numObjNext(["sqft"], "*3")],
   [...spans.windows, numObjNext("(5+2*", ["numBedrooms"], ")*500")],
   [...spans.siding, numObjNext(["sqft"], "*4")],
@@ -74,11 +76,25 @@ export const examplePropertyCapExListProps: [
   [...spans.landscaping, numObjNext(1000)],
 ];
 
-export const exampleUserCapExProps: [
-  string,
-  number | NumObj,
-  number | NumObj
-][] = [
+export const exampleSimpleCapExProps: ExampleCapExProps = [
+  [...spans.roof, numObj(8000)],
+  [...spans.waterHeater, numObjNext(1200)],
+  [...spans.hvac, numObjNext(5000)],
+  [...spans.interiorPaint, numObjNext(["sqft"], "*3")],
+  [...spans.windows, numObjNext(6000)],
+  [...spans.siding, numObjNext(["sqft"], "*4")],
+  [...spans.appliances, numObjNext(1200)],
+  [...spans.plumbing, numObjNext(5000)],
+  [...spans.flooring, numObjNext(["sqft"], "*3")],
+  [...spans.structure, numObjNext(10000)],
+  [...spans.cabinetsCounters, numObjNext(4000)],
+  [...spans.landscaping, numObjNext(1000)],
+  [...userVarbLifespans.laundry, numObjNext(1200)],
+  [...userVarbLifespans.driveway, numObjNext(5000)],
+  [...userVarbLifespans.garageDoor, numObjNext(1000)],
+];
+
+export const exampleAdvancedCapExProps: ExampleCapExProps = [
   ...examplePropertyCapExListProps,
   [...userVarbLifespans.laundry, numObjNext(1200)],
   [...userVarbLifespans.driveway, numObjNext(5000)],

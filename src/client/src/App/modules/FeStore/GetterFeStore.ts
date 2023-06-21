@@ -42,6 +42,9 @@ export class GetterFeStore extends GetterSectionBase<"feStore"> {
     const { labSubscription } = this;
     return constants.plans[labSubscription].sectionSaveLimit;
   }
+  get dealCount() {
+    return this.get.children("dealMain").length;
+  }
   get timeOfLastChange(): number {
     return this.get.valueNext("timeOfLastChange");
   }

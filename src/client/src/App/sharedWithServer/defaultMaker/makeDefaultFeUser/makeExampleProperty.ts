@@ -5,6 +5,7 @@ import { stringObj } from "../../SectionsMeta/values/StateValue/StringObj";
 import { PackBuilderSection } from "../../StatePackers/PackBuilderSection";
 import { Arr } from "../../utils/Arr";
 import { makeDefaultProperty } from "../makeDefaultProperty";
+import { makeExampleCapExList } from "./makeExampleCapEx";
 
 type OngoingItemProps = [string, number | NumObj][];
 
@@ -186,17 +187,9 @@ export function makeExampleProperty<DM extends StateValue<"dealMode">>(
         valueSourceName: props.capExValue.valueSourceName,
       });
       const capExList = capExValue.onlyChild("capExList");
-      for (const [displayName, lifeSpan, replacementCost] of props.capExValue
-        .items) {
-        const item = capExList.addAndGetChild("capExItem");
-        item.updateValues({
-          displayNameEditor: displayName,
-          costToReplace: numToObj(replacementCost),
-          lifespanSpanEditor: numToObj(lifeSpan),
-          valuePeriodicSwitch: "yearly",
-          lifespanSpanSwitch: "years",
-        });
-      }
+      capExList.loadSelf(
+        makeExampleCapExList("Example CapEx", props.capExValue.items)
+      );
 
       const maintenance = property.onlyChild("maintenanceValue");
       maintenance.updateValues({

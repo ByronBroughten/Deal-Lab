@@ -5,16 +5,15 @@ import { timeS } from "../utils/timeS";
 import { makeDefaultDealCompareMenu } from "./makeDefaultDealCompareMenu";
 import { exampleDealBuyAndHold } from "./makeDefaultFeUser/exampleDealBuyAndHold";
 import { exampleDealHomebuyer } from "./makeDefaultFeUser/exampleDealHomebuyer";
+import { makeExampleCapExList } from "./makeDefaultFeUser/makeExampleCapEx";
 import {
+  exampleAdvancedCapExProps,
   examplePropertyCapExListProps,
   examplePropertyRepairProps,
   examplePropertyUtilityProps,
+  exampleSimpleCapExProps,
 } from "./makeDefaultFeUser/makeExampleOngoingListsProps";
 import { makeExampleProperty } from "./makeDefaultFeUser/makeExampleProperty";
-import {
-  makeExampleUserOneTimeLists,
-  makeExampleUserOngoingLists,
-} from "./makeDefaultFeUser/makeExampleUserOngoingLists";
 import { makeExampleUserVarbLists } from "./makeDefaultFeUser/makeExampleUserVarbLists";
 import { makeDefaultOutputSection } from "./makeDefaultOutputSection";
 
@@ -61,19 +60,34 @@ export function makeDefaultDbStoreArrs({
     childName: "numVarbListMain",
     sectionPacks: makeExampleUserVarbLists(),
   });
-  dbStore.loadChildren({
-    childName: "onetimeListMain",
-    sectionPacks: makeExampleUserOneTimeLists(),
-  });
-  dbStore.loadChildren({
-    childName: "ongoingListMain",
-    sectionPacks: makeExampleUserOngoingLists(),
-  });
+  // dbStore.loadChildren({
+  //   childName: "onetimeListMain",
+  //   sectionPacks: makeExampleUserOneTimeLists(),
+  // });
+  // dbStore.loadChildren({
+  //   childName: "ongoingListMain",
+  //   sectionPacks: makeExampleUserOngoingLists(),
+  // });
   dbStore.loadChildren({
     childName: "dealMain",
     sectionPacks: [
       exampleDealHomebuyer("Homebuyer Deal Example"),
       exampleDealBuyAndHold("Rental Property Deal Example"),
+    ],
+  });
+  dbStore.loadChildren({
+    childName: "capExListMain",
+    sectionPacks: [
+      makeExampleCapExList(
+        "Simple CapEx Example",
+        exampleSimpleCapExProps,
+        timeS.now()
+      ),
+      makeExampleCapExList(
+        "Advanced CapEx Example",
+        exampleAdvancedCapExProps,
+        timeS.now()
+      ),
     ],
   });
 

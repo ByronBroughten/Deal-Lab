@@ -2,6 +2,7 @@ import { Box } from "@mui/material";
 import { unstable_batchedUpdates } from "react-dom";
 import { dealModeLabels } from "../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
 import { useAction } from "../../sharedWithServer/stateClassHooks/useAction";
+import { useGetterFeStore } from "../../sharedWithServer/stateClassHooks/useFeStore";
 import { useGetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useGetterSection";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { HollowBtn } from "../appWide/HollowBtn";
@@ -10,7 +11,12 @@ import { VarbLabel } from "../appWide/VarbLabel";
 import { useGoToPage } from "../customHooks/useGoToPage";
 
 type Props = { closeSelector: () => void };
-export function NewDealSelector({ closeSelector }: Props) {
+export function NewDealSelector(props: Props) {
+  const { labSubscription } = useGetterFeStore();
+  return <NewDealSelectorAddDeal {...props} />;
+}
+
+function NewDealSelectorAddDeal({ closeSelector }: Props) {
   const newDealMenu = useGetterSectionOnlyOne("newDealMenu");
   const addActiveDeal = useAction("addActiveDeal");
   const goToActiveDeal = useGoToPage("activeDeal");
@@ -20,7 +26,6 @@ export function NewDealSelector({ closeSelector }: Props) {
       goToActiveDeal();
       closeSelector();
     });
-
   return (
     <Box>
       <MuiSelect
@@ -58,3 +63,5 @@ export function NewDealSelector({ closeSelector }: Props) {
     </Box>
   );
 }
+
+function NewDealSelectorUpgradeToPro() {}
