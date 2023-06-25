@@ -147,9 +147,9 @@ export const allSectionChildren = checkAllSectionChildren({
     utilityOngoing: "utilityValue",
 
     homeInsHolding: "homeInsHolding",
-    homeInsOngoing: "homeInsOngoing",
-
     taxesHolding: "taxesHolding",
+
+    homeInsOngoing: "homeInsOngoing",
     taxesOngoing: "taxesOngoing",
 
     maintenanceValue: "maintenanceValue",

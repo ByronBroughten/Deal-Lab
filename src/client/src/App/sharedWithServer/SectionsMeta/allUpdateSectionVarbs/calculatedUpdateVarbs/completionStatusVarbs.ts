@@ -101,10 +101,8 @@ function propertySharedValidInputs(): UpdateFnProp[] {
 
 function hasHoldingValidInputs(): UpdateFnProp[] {
   return [
-    ...propS.localArr(
-      "taxesHoldingPeriodicEditor",
-      "homeInsHoldingPeriodicEditor"
-    ),
+    propS.onlyChild("taxesHolding", "valueDollarsPeriodicEditor"),
+    propS.onlyChild("homeInsHolding", "valueDollarsPeriodicEditor"),
     propS.local("holdingPeriodSpanEditor"),
   ];
 }

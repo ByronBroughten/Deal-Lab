@@ -30,7 +30,7 @@ function makeApiQueries(): ApiQueries {
   const apiQueryProps: AllApiQueryProps = {
     makeSession: {
       doingWhat: "making a session",
-      validateRes(res: AxiosResponse<unknown>): QueryRes<"makeSession"> {
+      validateRes(_: AxiosResponse<unknown>): QueryRes<"makeSession"> {
         throw new Error("makeSession.validateRes is not yet properly set up");
       },
     },

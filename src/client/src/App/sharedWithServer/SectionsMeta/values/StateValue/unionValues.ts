@@ -16,6 +16,7 @@ const valueSources = {
     "amountDollarsEditor",
   ],
   ongoingPhaseSource: ["sameAsHoldingPhase", "valueDollarsPeriodicEditor"],
+  valueDollarsPeriodicEditor: ["valueDollarsPeriodicEditor"],
   loanBaseValueSource: [
     "purchaseLoanValue",
     "repairLoanValue",

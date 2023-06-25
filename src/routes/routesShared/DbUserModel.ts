@@ -28,6 +28,7 @@ export type DbSectionsModelCore = RawDbUser & { _id: mongoose.Types.ObjectId };
 type UniqueValues = {
   authId: string;
   email: string;
+  childDbIds: Record<DbStoreName, string[]>;
 };
 type RawDbUserStores = {
   [CN in DbStoreName]: DbSectionPack<CN>[];
@@ -40,7 +41,7 @@ export const DbUserModel = mongoose.model<DbSectionsModelCore>(
   makeMongooseUserSchema()
 );
 
-function makeMongooseUserSchema(): Schema<Record<DbStoreName, any>> {
+function makeMongooseUserSchema(): Schema<Record<SchemaKeys, any>> {
   const schemaFrame = dbStoreNames.reduce(
     (frame, storeName) => {
       const sectionName = dbStoreSectionName(storeName);
@@ -50,11 +51,20 @@ function makeMongooseUserSchema(): Schema<Record<DbStoreName, any>> {
     {
       authId: monSchemas.reqString,
       email: monSchemas.reqString,
+      childDbIds: makeMongooseChildDbIds(),
     } as Record<SchemaKeys, any>
   );
-
   return new Schema(schemaFrame);
 }
+
+function makeMongooseChildDbIds(): Schema<Record<DbStoreName, any>> {
+  const schemaFrame = dbStoreNames.reduce((frame, storeName) => {
+    frame[storeName] = monSchemas.reqStringArr;
+    return frame;
+  }, {} as Record<DbStoreName, any>);
+  return new Schema(schemaFrame);
+}
+
 function monSectionPack<SN extends DbSectionName>(sectionName: SN) {
   const schemaFrame: Record<keyof SectionPack, any> = {
     dbId: monSchemas.reqId,

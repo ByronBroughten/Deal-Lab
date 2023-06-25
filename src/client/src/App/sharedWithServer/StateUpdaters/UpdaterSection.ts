@@ -38,7 +38,7 @@ type UpdateableRawFeSection<SN extends SectionNameByType> = StrictOmit<
 export class UpdaterSection<
   SN extends SectionNameByType
 > extends UpdaterSectionBase<SN> {
-  private get parent(): UpdaterSection<ParentNameSafe<SN>> {
+  get parent(): UpdaterSection<ParentNameSafe<SN>> {
     const { parentInfoSafe } = this.get;
     return this.updaterSection(parentInfoSafe);
   }

@@ -13,7 +13,10 @@ import {
   capExItemUpdateVarbs,
   ongoingItemUpdateVarbs,
 } from "./allUpdateSectionVarbs/ongoingItemUpdateVarbs";
-import { ongoingValueUpdateVarb } from "./allUpdateSectionVarbs/ongoingValueUpdateVarb";
+import {
+  holdingValueUpdateVarb,
+  ongoingValueUpdateVarb,
+} from "./allUpdateSectionVarbs/ongoingValueUpdateVarb";
 import { propertyUpdateVarbs } from "./allUpdateSectionVarbs/propertyUpdateVarbs";
 import { sellingCostUpdateVarbs } from "./allUpdateSectionVarbs/sellingCostUpdateVarbs";
 import { vacancyLossUpdateVarbs } from "./allUpdateSectionVarbs/vacancyLossUpdateVarbs";
@@ -144,6 +147,8 @@ function makeAllUpdateSections() {
       numBedrooms: updateVarb("numObj"),
       ...varbsS.periodicInput("targetRent"),
     }),
+    ...prop("taxesHolding", holdingValueUpdateVarb()),
+    ...prop("homeInsHolding", holdingValueUpdateVarb()),
     ...prop("taxesOngoing", ongoingValueUpdateVarb("taxesHolding")),
     ...prop("homeInsOngoing", ongoingValueUpdateVarb("homeInsHolding")),
     ...prop("utilityValue", {

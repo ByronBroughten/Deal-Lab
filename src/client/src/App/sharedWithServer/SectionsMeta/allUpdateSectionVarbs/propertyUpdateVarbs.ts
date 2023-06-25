@@ -43,16 +43,24 @@ export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
     zipCode: updateVarb("string"),
     one: updateVarbS.one(),
 
-    ...varbsS.periodicInput("taxesHolding"),
-    ...varbsS.periodicInput("homeInsHolding"),
+    ...varbsS.group("taxesHolding", "periodic", "yearly", {
+      monthly: basicsS.loadFromChild("taxesHolding", "valueDollarsMonthly"),
+      yearly: basicsS.loadFromChild("taxesHolding", "valueDollarsYearly"),
+    }),
+    ...varbsS.group("homeInsHolding", "periodic", "yearly", {
+      monthly: basicsS.loadFromChild("homeInsHolding", "valueDollarsMonthly"),
+      yearly: basicsS.loadFromChild("homeInsHolding", "valueDollarsYearly"),
+    }),
+
     ...varbsS.group("taxesOngoing", "periodic", "yearly", {
       monthly: basicsS.loadFromChild("taxesOngoing", "valueDollarsMonthly"),
       yearly: basicsS.loadFromChild("taxesOngoing", "valueDollarsYearly"),
     }),
-    ...varbsS.group("homeInsOngoing", "periodic", "monthly", {
+    ...varbsS.group("homeInsOngoing", "periodic", "yearly", {
       monthly: basicsS.loadFromChild("homeInsOngoing", "valueDollarsMonthly"),
       yearly: basicsS.loadFromChild("homeInsOngoing", "valueDollarsYearly"),
     }),
+
     ...varbsS.group("utilitiesOngoing", "periodic", "monthly", {
       monthly: basicsS.loadFromChild("utilityOngoing", "valueDollarsMonthly"),
       yearly: basicsS.loadFromChild("utilityOngoing", "valueDollarsYearly"),

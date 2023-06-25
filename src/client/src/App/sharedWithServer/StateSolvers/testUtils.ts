@@ -18,13 +18,18 @@ export function addHoldingTaxesHomeInsYearly(
   taxesVal: number,
   homeInsVal: number
 ): number {
-  property.updateValues({
-    taxesHoldingPeriodicEditor: numObj(taxesVal),
-    taxesHoldingPeriodicSwitch: "yearly",
-    homeInsHoldingPeriodicEditor: numObj(homeInsVal),
-    homeInsHoldingPeriodicSwitch: "yearly",
+  const taxes = property.onlyChild("taxesHolding");
+  taxes.updateValues({
+    valueDollarsPeriodicEditor: numObj(taxesVal),
+    valueDollarsPeriodicSwitch: "yearly",
+    valueSourceName: "valueDollarsPeriodicEditor",
   });
-
+  const homeIns = property.onlyChild("homeInsHolding");
+  homeIns.updateValues({
+    valueDollarsPeriodicEditor: numObj(homeInsVal),
+    valueDollarsPeriodicSwitch: "yearly",
+    valueSourceName: "valueDollarsPeriodicEditor",
+  });
   return taxesVal + homeInsVal;
 }
 

@@ -16,11 +16,10 @@ async function getArchivedDeals(req: Request, res: Response) {
   const archivedPacks = dbPacks.reduce((packArr, pack) => {
     const deal = PackBuilderSection.hydratePackAsOmniChild(pack).get;
     if (deal.valueNext("isArchived")) {
-      packArr.push(deal.makeSectionPack());
+      packArr.push(pack);
     }
     return packArr;
   }, [] as SectionPack<"deal">[]);
-
   sendSuccess(res, "getArchivedDeals", {
     data: archivedPacks,
   });

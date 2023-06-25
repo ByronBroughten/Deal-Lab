@@ -7,7 +7,7 @@ import {
   UrlRes,
 } from "../../sharedWithServer/apiQueriesShared/makeReqAndRes";
 import { Id } from "../../sharedWithServer/SectionsMeta/IdS";
-import { validateSectionPack } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/SectionPack";
+import { validateSectionPackDuck } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/validateSectionPackDuck";
 import { Obj } from "../../sharedWithServer/utils/Obj";
 import { Str } from "../../sharedWithServer/utils/Str";
 
@@ -45,6 +45,6 @@ export function validateDbSectionPackRes(
   res = Obj.validateObjToAny(res);
   const data = Obj.validateObjToAny(res.data);
   return makeRes({
-    sectionPack: validateSectionPack(data.sectionPack),
+    sectionPack: validateSectionPackDuck(data.sectionPack),
   });
 }

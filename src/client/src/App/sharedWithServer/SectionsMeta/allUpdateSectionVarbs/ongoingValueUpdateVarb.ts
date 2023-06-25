@@ -55,3 +55,38 @@ export function ongoingValueUpdateVarb(
     }),
   };
 }
+
+export function holdingValueUpdateVarb(): UpdateSectionVarbs<"taxesHolding"> {
+  return {
+    ...varbsS._typeUniformity,
+    valueSourceName: updateVarb("valueDollarsPeriodicEditor"),
+    valueDollarsPeriodicEditor: updateVarb("numObj"),
+    ...varbsS.group("valueDollars", "periodic", "monthly", {
+      targets: { updateFnName: "throwIfReached" },
+      monthly: {
+        updateOverrides: [
+          updateOverride(
+            [overrideSwitchS.yearlyIsActive("valueDollars")],
+            updateBasicsS.yearlyToMonthly("valueDollars")
+          ),
+          updateOverride(
+            [overrideSwitchS.monthlyIsActive("valueDollars")],
+            updateBasicsS.loadFromLocal("valueDollarsPeriodicEditor")
+          ),
+        ],
+      },
+      yearly: {
+        updateOverrides: [
+          updateOverride(
+            [overrideSwitchS.monthlyIsActive("valueDollars")],
+            updateBasicsS.monthlyToYearly("valueDollars")
+          ),
+          updateOverride(
+            [overrideSwitchS.yearlyIsActive("valueDollars")],
+            updateBasicsS.loadFromLocal("valueDollarsPeriodicEditor")
+          ),
+        ],
+      },
+    }),
+  };
+}

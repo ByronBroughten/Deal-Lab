@@ -59,6 +59,19 @@ export const allDisplaySectionVarbs = {
       yearly: { displayNameWithVariant: "Home insurance yearly" },
     }),
   }),
+  ...displaySectionVarbsProp("taxesHolding", {
+    ...editorDisplayGroup("periodicInput", "valueDollars", "Taxes", {
+      monthly: { displayNameWithVariant: "Taxes monthly" },
+      yearly: { displayNameWithVariant: "Taxes yearly" },
+    }),
+  }),
+  ...displaySectionVarbsProp("homeInsHolding", {
+    ...editorDisplayGroup("periodicInput", "valueDollars", "Home insurance", {
+      monthly: { displayNameWithVariant: "Home insurance monthly" },
+      yearly: { displayNameWithVariant: "Home insurance yearly" },
+    }),
+  }),
+
   ...displaySectionVarbsProp("property", {
     purchasePrice: varb("Purchase price"),
     afterRepairValue: varb("After repair value"),

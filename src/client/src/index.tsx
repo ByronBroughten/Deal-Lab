@@ -6,28 +6,27 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-// The specifier for the deal has the wrong feId.
-// The deal's feId must have changed
 
-// - Make values for ongoing taxes and insurance, to align them with holding
+// So what's happeneing is, the sectionPack has an invalid (depreciated) varbName.
+// I don't necessarily want it to fail for that reason.
+// I think the front-end should be allowed to accept sectionPacks that have old
+// data, lack new data, and allow for db artifacts like _id.
+
+// I could do a much looser validation. It's the front-end after all.
+// Allowing for _id might be too loose, though. I basically wouldn't be validating it at all.
+// Maybe I shouldn't validate them.
+// Or I should only validate what will be used from them. Functional validation.k
 
 // Maybe update homebuyer mode to get people's opinions on it
-
-// Add empty dbChildIds to DbStore, to control the orders of components
-//  - They'll likely be pretty easy to update, later.
-
 // Make sure examples in defaultDbStore have dateTimeSaved
 
-// Restrict editing to only the n most recently updated deals (to prevent abuse)
+// Restrict editing to only the n most recently created deals
 // - Maintain a session section that has dbId and timeCreated for each deal
 // - It gets sent on login with userData
 // - It's synced with add deal and remove deal
 
 // Restrict adding more than n deals
-// - If the user isn't pro, make the "New Deal"
-// - maintain a session variable that tracks how many deals there are
-//   - an initial count must be sent with feStore
-//   - update it on add and remove deal
+// - use the session section to see how many total deals there are
 
 // Implement dealCompare cache
 // - add the cache section

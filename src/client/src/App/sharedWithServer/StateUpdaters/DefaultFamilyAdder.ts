@@ -1,36 +1,32 @@
 import {
-  hasDefaultChild,
-  makeDefaultChildPack,
-} from "../defaultMaker/defaultChildMakers";
-import { defaultMaker } from "../defaultMaker/defaultMaker";
-import {
   ChildName,
   FeChildInfo,
 } from "../SectionsMeta/sectionChildrenDerived/ChildName";
 import { ChildSectionName } from "../SectionsMeta/sectionChildrenDerived/ChildSectionName";
-import { ParentNameSafe } from "../SectionsMeta/sectionChildrenDerived/ParentName";
 import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
 import { FeSectionInfo } from "../SectionsMeta/SectionInfo/FeInfo";
+import { SectionName } from "../SectionsMeta/SectionName";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { AddChildWithPackOptions } from "../StatePackers/PackBuilderSection";
-import { SelfPackLoader } from "./../StatePackers/PackLoaderSection/SelfPackLoader";
+import { DefaultSelfPackLoader } from "../StatePackers/PackLoaderSection/DefaultSelfPackLoader";
+import { DefaultStateLoader } from "../StatePackers/PackLoaderSection/DefaultStateLoader";
 import { UpdaterSectionBase } from "./bases/updaterSectionBase";
 import { UpdaterSection } from "./UpdaterSection";
 
 export class DefaultFamilyAdder<
-  SN extends SectionNameByType
+  SN extends SectionName
 > extends UpdaterSectionBase<SN> {
   get updater(): UpdaterSection<SN> {
     return new UpdaterSection(this.getterSectionProps);
   }
-  selfPackLoader(sectionPack: SectionPack<SN>): SelfPackLoader<SN> {
-    return new SelfPackLoader({
+  get defaultStateLoader(): DefaultStateLoader<SN> {
+    return new DefaultStateLoader(this.getterSectionProps);
+  }
+  defaultPackLoader(sectionPack: SectionPack<SN>): DefaultSelfPackLoader<SN> {
+    return new DefaultSelfPackLoader({
       ...this.getterSectionProps,
       sectionPack,
     });
-  }
-  get selfChildName() {
-    return this.get.selfChildName;
   }
   youngestChild<CN extends ChildName<SN>>(childName: CN) {
     return this.newAdder(this.get.youngestChild(childName).feInfo);
@@ -45,10 +41,11 @@ export class DefaultFamilyAdder<
   ): void {
     this.updater.addChild(childName, rest);
     const child = this.youngestChild(childName);
-    child.loadSelfDefaultState();
 
     if (sectionPack) {
-      child.selfPackLoader(sectionPack).integrateSectionPack();
+      child.defaultPackLoader(sectionPack).integrateSectionPack();
+    } else {
+      child.defaultStateLoader.loadSelfDefaultState();
     }
     if (sectionValues) {
       child.updater.updateValues(sectionValues);
@@ -71,37 +68,14 @@ export class DefaultFamilyAdder<
     return adder;
   }
   loadSelfSectionPack(sectionPack: SectionPack<SN>) {
-    this.loadSelfDefaultState();
-    this.selfPackLoader(sectionPack).integrateSectionPack();
-  }
-  private loadSelfDefaultState() {
-    const parentUpdater = this.parent.updater;
-    const parentSectionName = parentUpdater.sectionName;
-
-    const { sectionName, selfChildName } = this;
-
-    let sectionPack: SectionPack<SN> | undefined;
-    if (hasDefaultChild(parentSectionName, selfChildName)) {
-      sectionPack = makeDefaultChildPack(
-        parentUpdater,
-        selfChildName
-      ) as SectionPack<SN>;
-    } else if (defaultMaker.has(sectionName)) {
-      sectionPack = defaultMaker.makeSectionPack(sectionName);
-    }
-    if (sectionPack) {
-      this.selfPackLoader(sectionPack).overwriteSelfWithPack();
-    }
+    this.defaultPackLoader(sectionPack).integrateSectionPack();
   }
   child<CN extends ChildName<SN>>(
     info: FeChildInfo<SN, CN>
   ): DefaultFamilyAdder<ChildSectionName<SN, CN>> {
     return this.newAdder(this.get.child(info).feInfo);
   }
-  private get parent(): DefaultFamilyAdder<ParentNameSafe<SN>> {
-    const { parentInfoSafe } = this.get;
-    return this.newAdder(parentInfoSafe);
-  }
+
   newAdder<SN extends SectionNameByType>(
     feInfo: FeSectionInfo<SN>
   ): DefaultFamilyAdder<SN> {

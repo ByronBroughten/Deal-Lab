@@ -1,30 +1,31 @@
 import { SectionPack } from "../../SectionsMeta/sectionChildrenDerived/SectionPack";
 import { OneRawSection } from "../../SectionsMeta/sectionChildrenDerived/SectionPack/RawSection";
+import { FeSectionInfo } from "../../SectionsMeta/SectionInfo/FeInfo";
+import { SectionName } from "../../SectionsMeta/SectionName";
 import { SectionNameByType } from "../../SectionsMeta/SectionNameByType";
-import {
-  GetterSectionBase,
-  GetterSectionProps,
-} from "../../StateGetters/Bases/GetterSectionBase";
+import { GetterSectionProps } from "../../StateGetters/Bases/GetterSectionBase";
 import { GetterSection } from "../../StateGetters/GetterSection";
+import { UpdaterSectionBase } from "../../StateUpdaters/bases/updaterSectionBase";
 import { UpdaterSection } from "../../StateUpdaters/UpdaterSection";
-import { FeSectionInfo } from "./../../SectionsMeta/SectionInfo/FeInfo";
-import { SectionName } from "./../../SectionsMeta/SectionName";
+import { DefaultStateLoader } from "./DefaultStateLoader";
+import { SelfPackLoader } from "./SelfPackLoader";
 
 interface SelfPackLoaderSectionProps<SN extends SectionNameByType>
   extends GetterSectionProps<SN> {
-  sectionPack: SectionPack<SN>;
+  sectionPack: SectionPack<any>;
 }
 
-interface Focal<SN extends SectionName = SectionName>
+interface FocalNext<SN extends SectionName = SectionName>
   extends FeSectionInfo<SN> {
+  makeDefault: boolean;
   rawSectionName: string;
   spNum: number;
 }
 
-export class SelfPackLoader<
+export class DefaultSelfPackLoader<
   SN extends SectionName
-> extends GetterSectionBase<SN> {
-  sectionPack: SectionPack<SN>;
+> extends UpdaterSectionBase<SN> {
+  private sectionPack: SectionPack<SN>;
   constructor({ sectionPack, ...props }: SelfPackLoaderSectionProps<SN>) {
     super(props);
     this.sectionPack = sectionPack;
@@ -35,44 +36,65 @@ export class SelfPackLoader<
   get updater() {
     return new UpdaterSection(this.getterSectionProps);
   }
-  get headRawSection(): OneRawSection<SN> {
-    return this.sectionPack.rawSections[this.sectionName][0];
+  getUpdater<S extends SectionName>(
+    feInfo: FeSectionInfo<S>
+  ): UpdaterSection<S> {
+    return new UpdaterSection({
+      ...this.getterSectionsProps,
+      ...feInfo,
+    });
   }
-  overwriteSelfWithPack(): void {
-    this.updater.resetVarbs();
-    this.updater.removeAllChildren();
-    this.integrateSectionPack();
+  defaultStateLoader<S extends SectionName>(
+    feInfo: FeSectionInfo<S>
+  ): DefaultStateLoader<S> {
+    return new DefaultStateLoader({
+      ...this.getterSectionsProps,
+      ...feInfo,
+    });
+  }
+  selfPackLoader(sectionPack: SectionPack<SN>): SelfPackLoader<SN> {
+    return new SelfPackLoader({
+      ...this.getterSectionProps,
+      sectionPack,
+    });
+  }
+  private get headRawSection(): OneRawSection<SN> {
+    return this.sectionPack.rawSections[this.sectionName][0];
   }
   integrateSectionPack(): void {
     const { spNum } = this.headRawSection;
-    let focals: Focal<any>[] = [
+    let focals: FocalNext<any>[] = [
       {
         ...this.feInfo,
         rawSectionName: this.sectionName,
+        makeDefault: true,
         spNum,
       },
     ];
+
     while (focals.length > 0) {
-      const nextFocals: Focal<any>[] = [];
+      const nextFocals: FocalNext<any>[] = [];
       for (const focal of focals) {
-        const section = this.updater.updaterSection(focal);
+        if (focal.makeDefault) {
+          const defaultStateLoader = this.defaultStateLoader(focal);
+          defaultStateLoader.loadSelfDefaultState();
+        }
+        const updater = this.getUpdater(focal);
         const raw = this.rawSection({
           name: focal.sectionName,
           spNum: focal.spNum,
         });
-        section.loadRawSection(raw);
-        const { childNames } = section.get;
+        updater.loadRawSection(raw);
+        const { childNames } = updater.get;
         const { childSpNums } = raw;
         for (const childName of childNames) {
           if (childSpNums[childName]) {
             const spNums = childSpNums[childName];
-            const children = section.children(childName);
+            const children = updater.children(childName);
             for (let i = 0; i < spNums.length; i++) {
               const spNum = spNums[i];
-              const { feInfo } =
-                children[i] || section.addAndGetChild(childName);
               nextFocals.push({
-                ...feInfo,
+                ...getNextFocal(updater, childName, children[i]),
                 rawSectionName: childName,
                 spNum,
               });
@@ -108,5 +130,24 @@ export class SelfPackLoader<
         `No rawSection found with childName ${name} and spNum ${spNum}`
       );
     }
+  }
+}
+
+function getNextFocal(
+  current: UpdaterSection<any>,
+  childName: any,
+  next?: UpdaterSection<any>
+): FeSectionInfo<any> & { makeDefault: boolean } {
+  if (next) {
+    return {
+      ...next.feInfo,
+      makeDefault: false,
+    };
+  } else {
+    const child = current.addAndGetChild(childName);
+    return {
+      ...child.feInfo,
+      makeDefault: true,
+    };
   }
 }

@@ -18,20 +18,18 @@ export function makeDefaultProperty(
     revenuePeriodicSwitch: "monthly",
   });
 
-  // property.addChild("taxesHolding");
-  // property.addChild("homeInsHolding");
-  property.addChild("taxesOngoing", {
+  const taxesHomeInsOptions = {
     sectionValues: {
       valueSourceName: "valueDollarsPeriodicEditor",
       valueDollarsPeriodicSwitch: "yearly",
     },
-  });
-  property.addChild("homeInsOngoing", {
-    sectionValues: {
-      valueSourceName: "valueDollarsPeriodicEditor",
-      valueDollarsPeriodicSwitch: "yearly",
-    },
-  });
+  } as const;
+
+  property.addChild("taxesHolding", taxesHomeInsOptions);
+  property.addChild("homeInsHolding", taxesHomeInsOptions);
+
+  property.addChild("taxesOngoing", taxesHomeInsOptions);
+  property.addChild("homeInsOngoing", taxesHomeInsOptions);
 
   const costOverrunPercent = getDealModes("maybeNoRehab").includes(propertyMode)
     ? 0

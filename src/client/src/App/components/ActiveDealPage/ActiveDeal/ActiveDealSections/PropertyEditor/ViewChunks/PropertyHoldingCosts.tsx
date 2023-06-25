@@ -10,6 +10,8 @@ import { UtilityValue } from "./ViewParts/UtilityValue";
 export function PropertyHoldingCosts({ feId }: FeIdProp) {
   const feInfo = { sectionName: "property", feId } as const;
   const property = useGetterSection(feInfo);
+  const taxes = property.onlyChild("taxesHolding");
+  const homeIns = property.onlyChild("homeInsHolding");
   const holdingPeriodInfo = property.varbInfoNext("holdingPeriodSpanEditor");
   return (
     <FormSectionLabeled label="Holding Costs">
@@ -21,12 +23,12 @@ export function PropertyHoldingCosts({ feId }: FeIdProp) {
         />
         <NumObjEntityEditor
           inputMargins
-          feVarbInfo={property.varbInfo("taxesHoldingPeriodicEditor")}
+          feVarbInfo={taxes.varbInfo("valueDollarsPeriodicEditor")}
         />
         <NumObjEntityEditor
           inputMargins
           editorType="equation"
-          feVarbInfo={property.varbInfo("homeInsHoldingPeriodicEditor")}
+          feVarbInfo={homeIns.varbInfo("valueDollarsPeriodicEditor")}
           quickViewVarbNames={["purchasePrice", "sqft", "numUnits"]}
         />
         <UtilityValue
