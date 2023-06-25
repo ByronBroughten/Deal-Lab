@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { useSetterSection } from "../../../../../../../sharedWithServer/stateClassHooks/useSetterSection";
+import { useAction } from "../../../../../../../sharedWithServer/stateClassHooks/useAction";
+import { useGetterSection } from "../../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { Arr } from "../../../../../../../sharedWithServer/utils/Arr";
 import ccs from "../../../../../../../theme/cssChunks";
 import theme from "../../../../../../../theme/Theme";
@@ -10,12 +11,12 @@ import { UnitItem } from "./UnitList/UnitItem";
 
 type Props = { feId: string; className?: string };
 export function UnitList({ feId, className }: Props) {
+  const addChild = useAction("addChild");
   const numUnitsPerRow = 2;
-  const unitParent = useSetterSection({
+  const unitParent = useGetterSection({
     sectionName: "property",
     feId,
   });
-  const totalVarb = unitParent.switchVarb("targetRent", "periodic");
 
   let unitIds = [...unitParent.childFeIds("unit")];
   const { isAtLeastOne, areMultiple, areNone, isOne, isEven } =
@@ -23,7 +24,8 @@ export function UnitList({ feId, className }: Props) {
   unitIds = [...unitIds, "addUnitBtn"];
 
   const unitIdRows = Arr.upOneDimension(unitIds, numUnitsPerRow);
-  const addUnit = () => unitParent.addChild("unit");
+  const addUnit = () =>
+    addChild({ feInfo: unitParent.feInfo, childName: "unit" });
   return (
     <Styled
       className={`UnitList-root ${className ?? ""}`}

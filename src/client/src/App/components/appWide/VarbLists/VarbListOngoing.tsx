@@ -1,4 +1,6 @@
-import { useSetterSection } from "../../../sharedWithServer/stateClassHooks/useSetterSection";
+import { SectionValues } from "../../../sharedWithServer/SectionsMeta/values/StateValue";
+import { useAction } from "../../../sharedWithServer/stateClassHooks/useAction";
+import { useGetterSection } from "../../../sharedWithServer/stateClassHooks/useGetterSection";
 import {
   VarbListGeneric,
   VarbListGenericMenuType,
@@ -12,20 +14,23 @@ type Props = {
   menuType?: VarbListGenericMenuType;
 };
 export function VarbListOngoing({ feId, ...rest }: Props) {
-  const list = useSetterSection({ sectionName: "ongoingList", feId });
-  const totalVarbName = list.get.activeSwitchTargetName("total", "periodic");
+  const addChild = useAction("addChild");
+  const list = useGetterSection({ sectionName: "ongoingList", feId });
+  const totalVarbName = list.activeSwitchTargetName("total", "periodic");
   const itemPeriodicSwitch = list
     .varb("itemPeriodicSwitch")
     .value("ongoingSwitch");
 
-  const itemName = list.meta.varbListItem;
   const addItem = () => {
-    const itemValueSource = list.value("itemValueSource");
-    list.addChild(itemName, {
-      sectionValues: {
-        valueSourceName: itemValueSource,
-        valuePeriodicSwitch: itemPeriodicSwitch,
-      },
+    const itemValueSource = list.valueNext("itemValueSource");
+    const sectionValues: Partial<SectionValues<"ongoingItem">> = {
+      valueSourceName: itemValueSource,
+      valuePeriodicSwitch: itemPeriodicSwitch,
+    };
+    addChild({
+      feInfo: list.feInfo,
+      childName: "ongoingItem",
+      options: { sectionValues },
     });
   };
 

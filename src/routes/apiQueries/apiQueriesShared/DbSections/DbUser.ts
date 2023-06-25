@@ -235,7 +235,7 @@ export class DbUser extends DbSectionsQuerierBase {
         childName
       ) as SectionPack<"deal">[];
       return sectionPacks.filter((pack) => {
-        const deal = PackBuilderSection.loadAsOmniChild(pack);
+        const deal = PackBuilderSection.hydratePackAsOmniChild(pack);
         return !deal.get.valueNext("isArchived");
       }) as SectionPack<DbSectionName<CN>>[];
     } else {
@@ -336,7 +336,7 @@ export class DbUser extends DbSectionsQuerierBase {
   async syncSectionPack<SN extends ChildSectionName<"omniParent">>(
     sectionPack: SectionPack<SN>
   ) {
-    const headSection = PackBuilderSection.loadAsOmniChild(sectionPack);
+    const headSection = PackBuilderSection.hydratePackAsOmniChild(sectionPack);
     const { sections } = headSection;
     let sectionInfos: FeSectionInfo[] = [headSection.feInfo];
     while (sectionInfos.length > 0) {
@@ -357,7 +357,7 @@ export class DbUser extends DbSectionsQuerierBase {
                 const childDbInfo = { dbStoreName, dbId };
                 if (await this.hasSectionPack(childDbInfo)) {
                   const childPack = await this.getSectionPack(childDbInfo);
-                  child.loadSelf(childPack as any as SectionPack<any>);
+                  child.overwriteSelf(childPack as any as SectionPack<any>);
                 } else {
                   const syncValue: StateValue<"autoSyncControl"> =
                     "autoSyncOff";

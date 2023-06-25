@@ -10,7 +10,7 @@ import { makeExampleProperty } from "./makeExampleProperty";
 
 export function exampleDealBuyAndHold(displayName: string) {
   const deal = PackBuilderSection.initAsOmniChild("deal");
-  deal.loadSelf(makeDefaultDealPack("buyAndHold"));
+  deal.overwriteSelf(makeDefaultDealPack("buyAndHold"));
   const now = timeS.now();
   deal.updateValues({
     dateTimeFirstSaved: now,
@@ -18,12 +18,12 @@ export function exampleDealBuyAndHold(displayName: string) {
   });
 
   const property = deal.onlyChild("property");
-  property.loadSelf(exampleDealBuyAndHoldProperty());
+  property.overwriteSelf(exampleDealBuyAndHoldProperty());
 
   example20PercentDownFinancing(deal, "purchaseFinancing");
 
   const mgmt = deal.onlyChild("mgmt");
-  mgmt.loadSelf(exampleDealMgmt);
+  mgmt.overwriteSelf(exampleDealMgmt);
 
   deal.updateValues({
     displayNameEditor: displayName,

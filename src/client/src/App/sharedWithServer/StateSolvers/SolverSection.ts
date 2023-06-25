@@ -13,18 +13,18 @@ import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { SectionValues, VarbValue } from "../SectionsMeta/values/StateValue";
 import { GetterSectionProps } from "../StateGetters/Bases/GetterSectionBase";
 import { GetterSection } from "../StateGetters/GetterSection";
-import { PackBuilderSection } from "../StatePackers/PackBuilderSection";
 import {
   ChildPackInfo,
   ChildSectionPackArrs,
-} from "../StatePackers/PackLoaderSection";
-import { LoadChildSectionPackOptions } from "../StatePackers/PackLoaderSection/ChildPackLoader";
+} from "../StatePackers/ChildPackProps";
+import {
+  AddChildWithPackOptions,
+  PackBuilderSection,
+} from "../StatePackers/PackBuilderSection";
 import { PackMakerSection } from "../StatePackers/PackMakerSection";
 import { StateSections } from "../StateSections/StateSections";
-import {
-  AddChildOptions,
-  UpdaterSection,
-} from "../StateUpdaters/UpdaterSection";
+import { DefaultFamilyAdder } from "../StateUpdaters/DefaultFamilyAdder";
+import { UpdaterSection } from "../StateUpdaters/UpdaterSection";
 import { SolverAdderPrepSection } from "./SolverAdderPrepSection";
 import { SolverSectionBase } from "./SolverBases/SolverSectionBase";
 import {
@@ -59,8 +59,8 @@ export class SolverSection<
   static initFromPackAsOmniChild<SN extends ChildName<"omniParent">>(
     sectionPack: SectionPack<SN>
   ): SolverSection<SN> {
-    const builder = PackBuilderSection.loadAsOmniChild(sectionPack);
-    return SolverSection.init(builder.getterSectionProps);
+    const adder = DefaultFamilyAdder.loadAsOmniChild(sectionPack);
+    return SolverSection.init(adder.getterSectionProps);
   }
   static initDefaultMain(): SolverSection<"main"> {
     const sections = SolverSections.initSectionsFromDefaultMain();
@@ -190,20 +190,20 @@ export class SolverSection<
   }
   addChildAndSolve<CN extends ChildName<SN>>(
     childName: CN,
-    options?: AddChildOptions<SN, CN>
+    options?: AddChildWithPackOptions<SN, CN>
   ): void {
     this.appWideSolvePrepper.addChild(childName, options);
     this.solve();
   }
   addAndGetChild<CN extends ChildName<SN>>(
     childName: CN,
-    options?: AddChildOptions<SN, CN>
+    options?: AddChildWithPackOptions<SN, CN>
   ): SolverSection<ChildSectionName<SN, CN>> {
     this.addChildAndSolve(childName, options);
     return this.solverSection(this.get.youngestChild(childName).feInfo);
   }
   loadChildAndSolve<CN extends ChildName<SN>>(
-    childPackInfo: ChildPackInfo<SN, CN> & LoadChildSectionPackOptions
+    childPackInfo: { childName: CN } & AddChildWithPackOptions<SN, CN>
   ): void {
     this.appWideSolvePrepper.loadChild(childPackInfo);
     this.solve();

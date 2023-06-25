@@ -22,13 +22,11 @@ import { GetterVarb } from "../StateGetters/GetterVarb";
 import {
   ChildPackInfo,
   ChildSectionPackArrs,
-} from "../StatePackers/PackLoaderSection";
+} from "../StatePackers/ChildPackProps";
+import { AddChildWithPackOptions } from "../StatePackers/PackBuilderSection";
 import { PackMakerSection } from "../StatePackers/PackMakerSection";
 import { SolverSection } from "../StateSolvers/SolverSection";
-import {
-  AddChildOptions,
-  UpdaterSection,
-} from "../StateUpdaters/UpdaterSection";
+import { UpdaterSection } from "../StateUpdaters/UpdaterSection";
 import { StrictOmit } from "../utils/types";
 import {
   SetterSectionBase,
@@ -140,14 +138,14 @@ export class SetterSection<
   }
   addChild<CN extends ChildName<SN>>(
     childName: CN,
-    options?: AddChildOptions<SN, CN>
+    options?: AddChildWithPackOptions<SN, CN>
   ): void {
     this.solver.addChildAndSolve(childName, options);
     this.setSections();
   }
   addAndGetChild<CN extends ChildName<SN>>(
     childName: CN,
-    options?: AddChildOptions<SN, CN>
+    options?: AddChildWithPackOptions<SN, CN>
   ): SetterSection<ChildSectionName<SN, CN>> {
     this.addChild(childName, options);
     const { feInfo } = this.get.youngestChild(childName);

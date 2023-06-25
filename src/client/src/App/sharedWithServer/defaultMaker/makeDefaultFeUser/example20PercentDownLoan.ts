@@ -12,7 +12,7 @@ export function example20PercentDownFinancing(
   financing.updateValues({ financingMethod: "useLoan" });
 
   const loan = financing.onlyChild("loan");
-  loan.loadSelf(example20PercentDownLoan());
+  loan.overwriteSelf(example20PercentDownLoan());
 }
 
 export function example20PercentDownLoan(): SectionPack<"loan"> {

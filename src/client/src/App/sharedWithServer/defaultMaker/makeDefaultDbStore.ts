@@ -46,16 +46,13 @@ export function makeDefaultDbStoreArrs({
   const stripeInfoPrivate = dbStore.addAndGetChild("stripeInfoPrivate");
   stripeInfoPrivate.updateValues({ customerId: "" });
 
-  dbStore.loadChild({
-    childName: "dealCompareMainMenu",
+  dbStore.addChild("dealCompareMainMenu", {
     sectionPack: makeDefaultDealCompareMenu(),
   });
 
-  dbStore.loadChild({
-    childName: "outputSection",
+  dbStore.addChild("outputSection", {
     sectionPack: makeDefaultOutputSection(),
   });
-
   dbStore.loadChildren({
     childName: "numVarbListMain",
     sectionPacks: makeExampleUserVarbLists(),

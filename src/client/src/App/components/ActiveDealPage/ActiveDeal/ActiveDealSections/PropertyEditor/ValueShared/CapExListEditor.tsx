@@ -1,4 +1,6 @@
-import { useSetterSection } from "../../../../../../sharedWithServer/stateClassHooks/useSetterSection";
+import { SectionValues } from "../../../../../../sharedWithServer/SectionsMeta/values/StateValue";
+import { useAction } from "../../../../../../sharedWithServer/stateClassHooks/useAction";
+import { useGetterSection } from "../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { VarbListGenericMenuType } from "../../../../../appWide/ListGroup/ListGroupShared/VarbListGeneric";
 import { VarbListTableCapEx } from "../../../../../appWide/ListGroup/ListGroupShared/VarbListGeneric/VarbListTableCapEx";
 import { ListItemCapEx } from "../../../../../appWide/VarbLists/VarbListOngoing/ListItemCapEx";
@@ -24,27 +26,26 @@ const capExDisplayNames = [
 
 type Props = { feId: string; menuType: VarbListGenericMenuType };
 export function CapExValueList({ feId, menuType }: Props) {
-  const capExList = useSetterSection({
-    sectionName: "capExList",
-    feId,
-  });
+  const addChild = useAction("addChild");
 
-  const capExItems = capExList.get.children("capExItem");
+  const feInfo = { sectionName: "capExList", feId } as const;
+  const capExList = useGetterSection(feInfo);
+
+  const capExItems = capExList.children("capExItem");
   const itemDisplayNames = capExItems.map(
     (item) => item.valueNext("displayName").mainText
   );
 
-  const itemPeriodicSwitch = capExList.value("itemPeriodicSwitch");
-  const totalVarb = capExList.get.activeSwitchTarget("total", "periodic");
+  const itemPeriodicSwitch = capExList.valueNext("itemPeriodicSwitch");
+  const totalVarb = capExList.activeSwitchTarget("total", "periodic");
 
-  const onChange = (displayName?: string) =>
-    capExList.addChild("capExItem", {
-      sectionValues: {
-        valuePeriodicSwitch: itemPeriodicSwitch,
-        ...(displayName && { displayNameEditor: displayName }),
-      },
-    });
-
+  const onChange = (displayName?: string) => {
+    const sectionValues: Partial<SectionValues<"capExItem">> = {
+      valuePeriodicSwitch: itemPeriodicSwitch,
+      ...(displayName && { displayNameEditor: displayName }),
+    };
+    addChild({ feInfo, childName: "capExItem", options: { sectionValues } });
+  };
   return (
     <ValueListGeneral
       {...{

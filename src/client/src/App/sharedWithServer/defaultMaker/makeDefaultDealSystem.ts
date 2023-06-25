@@ -5,8 +5,7 @@ export function makeDefaultDealSystem() {
   const dealSystem = PackBuilderSection.initAsOmniChild("dealSystem");
   dealSystem.addChild("calculatedVarbs");
 
-  dealSystem.loadChild({
-    childName: "deal",
+  dealSystem.addChild("deal", {
     sectionPack: makeDefaultDealPack(),
   });
   return dealSystem.makeSectionPack();

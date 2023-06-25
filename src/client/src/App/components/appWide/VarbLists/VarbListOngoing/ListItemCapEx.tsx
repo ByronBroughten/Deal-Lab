@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import { useGetterSection } from "../../../../sharedWithServer/stateClassHooks/useGetterSection";
-import { useSetterSection } from "../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import theme from "../../../../theme/Theme";
 import { NumObjEntityEditor } from "../../../inputs/NumObjEntityEditor";
 import { NameEditorCell } from "../../ListGroup/ListGroupShared/NameEditorCell";
@@ -77,8 +76,8 @@ const Styled = styled(VarbListItemStyledNext)`
 
 type Props = { feId: string };
 export function ListItemCapEx({ feId }: Props) {
-  const section = useSetterSection({ sectionName: "capExItem", feId });
-  const valueVarbName = section.get.activeSwitchTargetName(
+  const section = useGetterSection({ sectionName: "capExItem", feId });
+  const valueVarbName = section.activeSwitchTargetName(
     "value",
     "periodic"
   ) as "valueMonthly";
@@ -87,7 +86,7 @@ export function ListItemCapEx({ feId }: Props) {
     <ListItemOngoingMemo
       {...{
         ...section.feInfo,
-        displayValueVarb: valueVarb.get.displayVarb(),
+        displayValueVarb: valueVarb.displayVarb(),
       }}
     />
   );

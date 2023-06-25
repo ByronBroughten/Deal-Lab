@@ -25,14 +25,19 @@ import {
   AddChildOptions,
   UpdaterSection,
 } from "../StateUpdaters/UpdaterSection";
+import { Obj } from "../utils/Obj";
+import { ChildSectionPackArrs } from "./ChildPackProps";
 import { PackBuilderSections } from "./PackBuilderSections";
-import {
-  ChildPackInfo,
-  ChildSectionPackArrs,
-  PackLoaderSection,
-} from "./PackLoaderSection";
-import { LoadChildSectionPackOptions } from "./PackLoaderSection/ChildPackLoader";
+import { SelfPackLoader } from "./PackLoaderSection/SelfPackLoader";
 import { PackMakerSection, SectionPackArrs } from "./PackMakerSection";
+
+export interface AddChildWithPackOptions<
+  SN extends SectionName,
+  CN extends ChildName<SN> = ChildName<SN>,
+  CSN extends ChildSectionName<SN, CN> = ChildSectionName<SN, CN>
+> extends AddChildOptions<SN, CN, CSN> {
+  sectionPack?: SectionPack<CSN>;
+}
 
 export class PackBuilderSection<
   SN extends SectionName
@@ -51,13 +56,13 @@ export class PackBuilderSection<
   static initAsOmniParent() {
     return new PackBuilderSection(UpdaterSection.initOmniParentProps());
   }
-  static loadAsOmniChild<SN extends ChildSectionName<"omniParent">>(
+  static hydratePackAsOmniChild<SN extends ChildSectionName<"omniParent">>(
     sectionPack: SectionPack<SN>
   ): PackBuilderSection<SN> {
     const builder = this.initAsOmniChild(
       sectionPack.sectionName
     ) as PackBuilderSection<SN>;
-    builder.loadSelf(sectionPack);
+    builder.overwriteSelf(sectionPack);
     return builder;
   }
   static initAsOmniChild<CN extends ChildName<"omniParent">>(
@@ -80,8 +85,11 @@ export class PackBuilderSection<
   get updater(): UpdaterSection<SN> {
     return new UpdaterSection(this.getterSectionProps);
   }
-  get loader(): PackLoaderSection<SN> {
-    return new PackLoaderSection(this.getterSectionProps);
+  selfPackLoader(sectionPack: SectionPack<SN>): SelfPackLoader<SN> {
+    return new SelfPackLoader({
+      ...this.getterSectionProps,
+      sectionPack,
+    });
   }
   get maker(): PackMakerSection<SN> {
     return new PackMakerSection(this.getterSectionProps);
@@ -129,16 +137,28 @@ export class PackBuilderSection<
   }
   addAndGetChild<CN extends ChildName<SN>>(
     childName: CN,
-    options?: AddChildOptions<SN, CN>
+    options?: AddChildWithPackOptions<SN, CN>
   ): PackBuilderSection<ChildSectionName<SN, CN>> {
     this.addChild(childName, options);
     return this.youngestChild(childName);
   }
   addChild<CN extends ChildName<SN>>(
     childName: CN,
-    options?: AddChildOptions<SN, CN>
+    {
+      sectionValues,
+      sectionPack,
+      ...rest
+    }: AddChildWithPackOptions<SN, CN> = {}
   ): void {
-    this.updater.addChild(childName, options);
+    const child = this.updater.addAndGetChild(childName, rest);
+
+    if (sectionPack) {
+      const childBuilder = this.packBuilderSection(child.feInfo);
+      childBuilder.overwriteSelf(sectionPack);
+    }
+    if (sectionValues) {
+      child.updateValues(sectionValues);
+    }
   }
   childByDbId<CN extends ChildName<SN>>(dbInfo: DbChildInfo<SN, CN>) {
     const { childName } = dbInfo;
@@ -158,24 +178,12 @@ export class PackBuilderSection<
   removeChildrenArrs<CN extends ChildName<SN>>(childNames: CN[]): void {
     this.updater.removeAllChildrenInArrs(childNames);
   }
-  loadAndGetChild<CN extends ChildName<SN>>(
-    childPackInfo: ChildPackInfo<SN, CN>
-  ): PackBuilderSection<ChildSectionName<SN, CN>> {
-    this.loadChild(childPackInfo);
-    return this.youngestChild(childPackInfo.childName);
-  }
-  loadChild<CN extends ChildName<SN>>(
-    childPackInfo: ChildPackInfo<SN, CN> & LoadChildSectionPackOptions
-  ): void {
-    this.loader.loadChildSectionPack(childPackInfo);
-  }
   loadChildren<CN extends ChildName<SN>>({
     childName,
     sectionPacks,
   }: ChildArrPack<SN, CN>) {
     for (const sectionPack of sectionPacks) {
-      this.loadChild({
-        childName,
+      this.addChild(childName, {
         sectionPack,
       });
     }
@@ -186,38 +194,34 @@ export class PackBuilderSection<
   }: ChildArrPack<SN, CN>): PackBuilderSection<ChildSectionName<SN, CN>>[] {
     const children: PackBuilderSection<ChildSectionName<SN, CN>>[] = [];
     for (const sectionPack of sectionPacks) {
-      const child = this.loadAndGetChild({
-        childName,
+      const child = this.addAndGetChild(childName, {
         sectionPack,
       });
       children.push(child);
     }
     return children;
   }
-  makeSiblingCopy() {
-    const sectionPack = this.makeSectionPack();
-    const child = this.parent.loadAndGetChild({
-      childName: this.get.selfChildName,
-      sectionPack: sectionPack as SectionPack<any>,
-    });
-    child.updater.newDbId();
-  }
-  makeAndGetSiblingCopy(): PackBuilderSection<SN> {
-    this.makeSiblingCopy();
-    return this.packBuilderSection(this.get.list.last.feInfo);
-  }
   replaceChildArrs(childPackArrs: Partial<ChildSectionPackArrs<SN>>): void {
-    this.loader.replaceChildArrs(childPackArrs);
+    for (const childName of Obj.keys(childPackArrs)) {
+      this.replaceChildren({
+        childName,
+        sectionPacks: childPackArrs[
+          childName
+        ] as ChildSectionPackArrs<SN>[typeof childName],
+      });
+    }
   }
   replaceChildren<
     CN extends ChildName<SN>,
     CT extends ChildSectionName<SN, CN>
-  >(childArrPack: ChildArrPack<SN, CN, CT>) {
-    this.loader.replaceChildren(childArrPack);
+  >({ childName, sectionPacks }: ChildArrPack<SN, CN, CT>): void {
+    this.updater.removeChildren(childName);
+    for (const sectionPack of sectionPacks) {
+      this.addChild(childName, { sectionPack });
+    }
   }
-
-  loadSelf(sectionPack: SectionPack<SN>) {
-    this.loader.loadSelfSectionPack(sectionPack);
+  overwriteSelf(sectionPack: SectionPack<SN>): void {
+    this.selfPackLoader(sectionPack).overwriteSelfWithPack();
   }
   removeSelf() {
     this.updater.removeSelf();
@@ -238,23 +242,5 @@ export class PackBuilderSection<
     CT extends ChildSectionName<SN, CN> = ChildSectionName<SN, CN>
   >(childName: CN): PackBuilderSection<CT> {
     return this.packBuilderSection(this.get.youngestChild(childName));
-  }
-}
-
-export async function loopChildren<SN extends ChildSectionName<"omniParent">>(
-  sectionPack: SectionPack<SN>
-) {
-  const headSection = PackBuilderSection.loadAsOmniChild(sectionPack);
-  let sectionInfos: FeSectionInfo[] = [headSection.feInfo];
-  while (sectionInfos.length > 0) {
-    const nextInfos: FeSectionInfo[] = [];
-    for (const info of sectionInfos) {
-      const section = headSection.sections.section(info);
-      for (const childName of section.get.childNames) {
-        for (const child of section.children(childName)) {
-        }
-      }
-    }
-    sectionInfos = nextInfos;
   }
 }

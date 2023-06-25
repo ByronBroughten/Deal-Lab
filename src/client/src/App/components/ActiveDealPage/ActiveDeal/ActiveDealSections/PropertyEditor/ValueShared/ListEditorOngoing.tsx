@@ -1,4 +1,6 @@
-import { useSetterSection } from "../../../../../../sharedWithServer/stateClassHooks/useSetterSection";
+import { SectionValues } from "../../../../../../sharedWithServer/SectionsMeta/values/StateValue";
+import { useAction } from "../../../../../../sharedWithServer/stateClassHooks/useAction";
+import { useGetterSection } from "../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { VarbListGenericMenuType } from "../../../../../appWide/ListGroup/ListGroupShared/VarbListGeneric";
 import { VarbListStandardHeaders } from "../../../../../appWide/ListGroup/ListGroupShared/VarbListGeneric/VarbListStandardHeaders";
 import { VarbListTableSectionGeneric } from "../../../../../appWide/ListGroup/ListGroupShared/VarbListGeneric/VarbListTableSectionGeneric";
@@ -21,26 +23,29 @@ export function ListEditorOngoing({
   menuDisplayNames,
   ...rest
 }: Props) {
-  const ongoingList = useSetterSection({
-    sectionName: "ongoingList",
-    feId,
-  });
+  const addChild = useAction("addChild");
+  const feInfo = { sectionName: "ongoingList", feId } as const;
+  const ongoingList = useGetterSection(feInfo);
 
-  const ongoingItems = ongoingList.get.children("ongoingItem");
+  const ongoingItems = ongoingList.children("ongoingItem");
   const itemDisplayNames = ongoingItems.map(
     (item) => item.valueNext("displayName").mainText
   );
 
-  const itemPeriodicSwitch = ongoingList.value("itemPeriodicSwitch");
-  const totalVarb = ongoingList.get.activeSwitchTarget("total", "periodic");
+  const itemPeriodicSwitch = ongoingList.valueNext("itemPeriodicSwitch");
+  const totalVarb = ongoingList.activeSwitchTarget("total", "periodic");
 
-  const onChange = (displayName?: string) =>
-    ongoingList.addChild("ongoingItem", {
-      sectionValues: {
-        valuePeriodicSwitch: itemPeriodicSwitch,
-        ...(displayName && { displayNameEditor: displayName }),
-      },
+  const onChange = (displayName?: string) => {
+    const sectionValues: Partial<SectionValues<"ongoingItem">> = {
+      valuePeriodicSwitch: itemPeriodicSwitch,
+      ...(displayName && { displayNameEditor: displayName }),
+    };
+    addChild({
+      feInfo,
+      childName: "ongoingItem",
+      options: { sectionValues },
     });
+  };
 
   return (
     <ValueListGeneral

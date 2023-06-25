@@ -16,7 +16,7 @@ export function RepairValue({ feId, dealMode, sx }: Props) {
   const items: [StateValue<"repairValueSource">, string][] = [
     ["none", "Choose method"],
     ["zero", "Turnkey (no repairs)"],
-    ["valueDollarsEditor", "Enter lump sum"],
+    ["valueDollarsEditor", "Enter Amount"],
     ["listTotal", "Itemize"],
   ];
 

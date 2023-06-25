@@ -16,7 +16,7 @@ import { UserVarbEditorPage } from "./App/components/UserVarbEditorPage";
 import { feRoutes } from "./App/Constants/feRoutes";
 import { useSubscriptions } from "./App/modules/customHooks/useSubscriptions";
 import { useControlUserData } from "./App/modules/SectionActors/UserDataActor";
-import { useAutoSave } from "./App/sharedWithServer/stateClassHooks/useAutoSaveSections";
+import { useAutoSave } from "./App/sharedWithServer/stateClassHooks/useAutoSave";
 import { nativeTheme } from "./App/theme/nativeTheme";
 import { LoginSuccess } from "./LoginSuccess";
 import { PrivacyPolicyPage } from "./PrivacyPolicyPage";

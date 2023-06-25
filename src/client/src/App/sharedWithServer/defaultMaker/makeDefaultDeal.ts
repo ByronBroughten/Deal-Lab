@@ -31,30 +31,26 @@ export function makeDefaultDealPack(
     dealMode,
     displayNameSource: "displayNameEditor",
   });
-  deal.loadChild({
-    childName: "property",
+  deal.addChild("property", {
     sectionPack: makeDefaultProperty(dealMode),
   });
 
   const purchaseFinancing = deal.addAndGetChild("purchaseFinancing", {
     sectionValues: { financingMode: "purchase" },
   });
-  purchaseFinancing.loadChild({
-    childName: "loan",
+  purchaseFinancing.addChild("loan", {
     sectionPack: makeDefaultLoanPack("purchase"),
   });
 
   const refiFinancing = deal.addAndGetChild("refiFinancing", {
     sectionValues: { financingMode: "refinance" },
   });
-  refiFinancing.loadChild({
-    childName: "loan",
+  refiFinancing.addChild("loan", {
     sectionPack: makeDefaultLoanPack("refinance"),
   });
   refiFinancing.updateValues({ financingMethod: "useLoan" });
 
-  deal.loadChild({
-    childName: "mgmt",
+  deal.addChild("mgmt", {
     sectionPack: makeDefaultMgmt(),
   });
 

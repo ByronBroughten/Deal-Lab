@@ -15,13 +15,13 @@ import {
 import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection";
 import { GetterSections } from "../../sharedWithServer/StateGetters/GetterSections";
 import { StoreId } from "../../sharedWithServer/StateGetters/StoreId";
+import { AddChildWithPackOptions } from "../../sharedWithServer/StatePackers/PackBuilderSection";
 import { SolverAdderPrepSection } from "../../sharedWithServer/StateSolvers/SolverAdderPrepSection";
 import { SolverSectionBase } from "../../sharedWithServer/StateSolvers/SolverBases/SolverSectionBase";
 import { SolverSectionsProps } from "../../sharedWithServer/StateSolvers/SolverBases/SolverSectionsBase";
 import { SolverPrepSection } from "../../sharedWithServer/StateSolvers/SolverPrepSection";
 import { SolverPrepSections } from "../../sharedWithServer/StateSolvers/SolverPrepSections";
 import { SolverSection } from "../../sharedWithServer/StateSolvers/SolverSection";
-import { AddChildOptions } from "../../sharedWithServer/StateUpdaters/UpdaterSection";
 import { Obj } from "../../sharedWithServer/utils/Obj";
 import { timeS } from "../../sharedWithServer/utils/timeS";
 import { toastNotice } from "./../../components/appWide/toast";
@@ -29,7 +29,7 @@ import { GetterFeStore } from "./GetterFeStore";
 
 export interface AddToStoreProps<CN extends StoreName = StoreName>
   extends StoreNameProp<CN> {
-  options?: AddChildOptions<"feStore", CN>;
+  options?: AddChildWithPackOptions<"feStore", CN>;
 }
 
 export interface SaveAsToStoreProps<CN extends StoreName = StoreName>

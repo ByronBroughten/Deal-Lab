@@ -3,8 +3,7 @@ import { makeDefaultConditionalList } from "./makeDefaultConditionalList";
 
 export function makeDefaultUserVarbItem() {
   const numVarbItem = PackBuilderSection.initAsOmniChild("numVarbItem");
-  numVarbItem.loadChild({
-    childName: "conditionalRowList",
+  numVarbItem.addChild("conditionalRowList", {
     sectionPack: makeDefaultConditionalList(),
   });
   return numVarbItem.makeSectionPack();

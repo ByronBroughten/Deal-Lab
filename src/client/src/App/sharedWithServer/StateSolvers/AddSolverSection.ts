@@ -7,13 +7,9 @@ import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { GetterSection } from "../StateGetters/GetterSection";
 import { GetterSections } from "../StateGetters/GetterSections";
 import { InEntityGetterSection } from "../StateGetters/InEntityGetterSection";
-import {
-  ChildPackInfo,
-  ChildSectionPackArrs,
-  PackLoaderSection,
-} from "../StatePackers/PackLoaderSection";
+import { ChildSectionPackArrs } from "../StatePackers/ChildPackProps";
+import { AddChildWithPackOptions } from "../StatePackers/PackBuilderSection";
 import { DefaultFamilyAdder } from "../StateUpdaters/DefaultFamilyAdder";
-import { AddChildOptions } from "../StateUpdaters/UpdaterSection";
 import { Obj } from "../utils/Obj";
 import { SolverAdderPrepSections } from "./SolverAdderPrepSections";
 import {
@@ -46,9 +42,6 @@ export class AddSolverSection<
   }
   get getterSections(): GetterSections {
     return new GetterSections(this.getterSectionProps);
-  }
-  private get loader() {
-    return new PackLoaderSection(this.getterSectionProps);
   }
   static init<S extends SectionNameByType>(
     props: SolverSectionProps<S>
@@ -91,28 +84,17 @@ export class AddSolverSection<
   }
   addChildAndFinalizeAllAdds<CN extends ChildName<SN>>(
     childName: CN,
-    options?: AddChildOptions<SN, CN>
+    options?: AddChildWithPackOptions<SN, CN>
   ): void {
     this.addChild(childName, options);
     this.finalizeAllAdds();
   }
   addChild<CN extends ChildName<SN>>(
     childName: CN,
-    options?: AddChildOptions<SN, CN>
+    options?: AddChildWithPackOptions<SN, CN>
   ): void {
     this.defaultAdder.addChild(childName, options);
     const child = this.youngestChild(childName);
-    child.finalizeAddedThis();
-  }
-  loadChildAndFinalize<CN extends ChildName<SN>>(
-    packInfo: ChildPackInfo<SN, CN>
-  ): void {
-    this.loadChild(packInfo);
-    this.finalizeAllAdds();
-  }
-  loadChild<CN extends ChildName<SN>>(packInfo: ChildPackInfo<SN, CN>): void {
-    this.loader.loadChildSectionPack(packInfo);
-    const child = this.youngestChild(packInfo.childName);
     child.finalizeAddedThis();
   }
   loadChildrenAndFinalize<CN extends ChildName<SN>>(
@@ -126,10 +108,7 @@ export class AddSolverSection<
     sectionPacks,
   }: ChildArrPack<SN, CN>): void {
     for (const sectionPack of sectionPacks) {
-      this.loadChild({
-        childName,
-        sectionPack,
-      });
+      this.addChild(childName, { sectionPack });
     }
   }
   loadChildArrsAndFinalize<CN extends ChildName<SN>>(

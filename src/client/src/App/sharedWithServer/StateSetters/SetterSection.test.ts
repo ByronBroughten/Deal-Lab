@@ -56,7 +56,7 @@ describe("SetterSection", () => {
       displayName: stringObj("New Title"),
     } as const;
 
-    const packBuilder = PackBuilderSection.loadAsOmniChild(
+    const packBuilder = PackBuilderSection.hydratePackAsOmniChild(
       makeDefaultProperty()
     );
     packBuilder.updateValues(packVarbs);

@@ -11,17 +11,11 @@ export function makeDefaultMain(): SectionPack<"main"> {
   main.addChild("mainDealMenu");
   main.addChild("variablesMenu");
   main.addChild("dealCompareDealSelectMenu");
-  main.loadChild({
-    childName: "feStore",
-    sectionPack: makeDefaultFeUserPack(),
-  });
+  main.addChild("feStore", { sectionPack: makeDefaultFeUserPack() });
 
   const latent = main.addAndGetChild("latentDealSystem");
   latent.addChild("calculatedVarbs");
-  latent.loadChild({
-    childName: "deal",
-    sectionPack: makeDefaultDealPack(),
-  });
+  latent.addChild("deal", { sectionPack: makeDefaultDealPack() });
 
   return main.makeSectionPack();
 }

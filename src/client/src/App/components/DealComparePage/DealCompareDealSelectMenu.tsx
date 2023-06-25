@@ -1,8 +1,8 @@
 import { unstable_batchedUpdates } from "react-dom";
 import { View } from "react-native";
 import { useAction } from "../../sharedWithServer/stateClassHooks/useAction";
+import { useGetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useGetterSection";
 import { useGetterMain } from "../../sharedWithServer/stateClassHooks/useMain";
-import { useSetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useSetterSection";
 import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { PlainIconBtn } from "../general/PlainIconBtn";
@@ -38,8 +38,8 @@ type Props = { closeMenu: () => void };
 export function DealCompareDealSelectMenu({ closeMenu }: Props) {
   const addDealToCompare = useAction("addDealToCompare");
 
-  const menu = useSetterSectionOnlyOne("dealCompareDealSelectMenu");
-  const nameFilterVarb = menu.varb("dealNameFilter");
+  const menu = useGetterSectionOnlyOne("dealCompareDealSelectMenu");
+  const nameFilterVarb = menu.varbNext("dealNameFilter");
   const filteredDeals = useGetFilteredDeals();
   return (
     <View>

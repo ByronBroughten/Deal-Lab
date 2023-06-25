@@ -31,8 +31,7 @@ export function outputListName<DM extends StateValue<"dealModePlusMixed">>(
 export function makeDefaultOutputSection(): SectionPack<"outputSection"> {
   const outputSection = PackBuilderSection.initAsOmniChild("outputSection");
   for (const dealMode of getDealModes("all")) {
-    outputSection.loadChild({
-      childName: dealModeToOutputListName[dealMode],
+    outputSection.addChild(dealModeToOutputListName[dealMode], {
       sectionPack: makeDefaultOutputList(dealMode),
     });
   }

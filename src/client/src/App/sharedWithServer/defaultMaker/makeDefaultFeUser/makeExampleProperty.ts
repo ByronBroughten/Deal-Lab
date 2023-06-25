@@ -134,7 +134,7 @@ export function makeExampleProperty<DM extends StateValue<"dealMode">>(
 ) {
   const { displayName, dateTimeFirstSaved, ...rest } = props.property;
   const property = PackBuilderSection.initAsOmniChild("property");
-  property.loadSelf(makeDefaultProperty());
+  property.overwriteSelf(makeDefaultProperty());
   property.updateValues({
     ...rest,
     propertyMode: props.dealMode,
@@ -187,7 +187,7 @@ export function makeExampleProperty<DM extends StateValue<"dealMode">>(
         valueSourceName: props.capExValue.valueSourceName,
       });
       const capExList = capExValue.onlyChild("capExList");
-      capExList.loadSelf(
+      capExList.overwriteSelf(
         makeExampleCapExList("Example CapEx", props.capExValue.items)
       );
 

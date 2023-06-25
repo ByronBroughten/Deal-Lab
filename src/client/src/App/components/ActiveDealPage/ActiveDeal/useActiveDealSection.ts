@@ -1,7 +1,7 @@
 import { FeRouteName } from "../../../Constants/feRoutes";
 import { ChildName } from "../../../sharedWithServer/SectionsMeta/sectionChildrenDerived/ChildName";
 import { StateValue } from "../../../sharedWithServer/SectionsMeta/values/StateValue";
-import { useSetterMain } from "../../../sharedWithServer/stateClassHooks/useMain";
+import { useGetterSectionOnlyOne } from "../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { StrictExtract } from "../../../sharedWithServer/utils/types";
 import { useGoToPage } from "../../customHooks/useGoToPage";
 
@@ -10,11 +10,11 @@ export type ActiveDealChildName = StrictExtract<
   "property" | "purchaseFinancing" | "refiFinancing" | "mgmt"
 >;
 export function useActiveDealPage() {
-  const main = useSetterMain();
-  const feStore = main.get.onlyChild("feStore");
+  const main = useGetterSectionOnlyOne("main");
+  const feStore = main.onlyChild("feStore");
 
-  const deal = main.sections.getActiveDeal().get;
-  const system = main.get.onlyChild("activeDealSystem");
+  const deal = main.sections.getActiveDeal();
+  const system = main.onlyChild("activeDealSystem");
   const calcVarbs = system.onlyChild("calculatedVarbs");
   return {
     deal,

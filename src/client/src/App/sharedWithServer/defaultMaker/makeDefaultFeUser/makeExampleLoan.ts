@@ -34,7 +34,7 @@ type ExampleLoanProps = {
 
 export function makeExampleLoan(props: ExampleLoanProps) {
   const loan = PackBuilderSection.initAsOmniChild("loan");
-  loan.loadSelf(makeDefaultLoanPack());
+  loan.overwriteSelf(makeDefaultLoanPack());
   loan.updateValues({
     ...props.loan,
     interestRatePercentPeriodicSwitch: "yearly",

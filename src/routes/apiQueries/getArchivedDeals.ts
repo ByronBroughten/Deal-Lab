@@ -14,7 +14,7 @@ async function getArchivedDeals(req: Request, res: Response) {
   const dbUser = await DbUser.initBy("authId", auth.id);
   const dbPacks = await dbUser.getSectionPackArr("dealMain");
   const archivedPacks = dbPacks.reduce((packArr, pack) => {
-    const deal = PackBuilderSection.loadAsOmniChild(pack).get;
+    const deal = PackBuilderSection.hydratePackAsOmniChild(pack).get;
     if (deal.valueNext("isArchived")) {
       packArr.push(deal.makeSectionPack());
     }

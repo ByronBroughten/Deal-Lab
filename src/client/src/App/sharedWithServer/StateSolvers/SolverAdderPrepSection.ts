@@ -8,16 +8,10 @@ import { FeSectionInfo } from "../SectionsMeta/SectionInfo/FeInfo";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { SectionValues } from "../SectionsMeta/values/StateValue";
 import { GetterSection } from "../StateGetters/GetterSection";
-import {
-  ChildSectionPackArrs,
-  LoadChildProps,
-  PackLoaderSection,
-} from "../StatePackers/PackLoaderSection";
+import { ChildSectionPackArrs } from "../StatePackers/ChildPackProps";
+import { AddChildWithPackOptions } from "../StatePackers/PackBuilderSection";
 import { DefaultFamilyAdder } from "../StateUpdaters/DefaultFamilyAdder";
-import {
-  AddChildOptions,
-  UpdaterSection,
-} from "../StateUpdaters/UpdaterSection";
+import { UpdaterSection } from "../StateUpdaters/UpdaterSection";
 import { Obj } from "../utils/Obj";
 import { SolverAdderPrepSections } from "./SolverAdderPrepSections";
 import { SolverSectionBase } from "./SolverBases/SolverSectionBase";
@@ -31,9 +25,6 @@ export class SolverAdderPrepSection<
   }
   private get defaultAdder() {
     return new DefaultFamilyAdder(this.getterSectionProps);
-  }
-  private get loader() {
-    return new PackLoaderSection(this.getterSectionProps);
   }
   private get updater() {
     return new UpdaterSection(this.getterSectionProps);
@@ -64,31 +55,24 @@ export class SolverAdderPrepSection<
   }
   addChild<CN extends ChildName<SN>>(
     childName: CN,
-    options?: AddChildOptions<SN, CN>
+    options?: AddChildWithPackOptions<SN, CN>
   ) {
     this.defaultAdder.addChild(childName, options);
     this.finalizeNewChild(childName);
   }
   addAndGetChild<CN extends ChildName<SN>>(
     childName: CN,
-    options?: AddChildOptions<SN, CN>
+    options?: AddChildWithPackOptions<SN, CN>
   ) {
     this.addChild(childName, options);
     return this.youngestChild(childName);
-  }
-  loadChild<CN extends ChildName<SN>>(packInfo: LoadChildProps<SN, CN>): void {
-    this.loader.loadChildSectionPack(packInfo);
-    this.finalizeNewChild(packInfo.childName);
   }
   loadChildren<CN extends ChildName<SN>>({
     childName,
     sectionPacks,
   }: ChildArrPack<SN, CN>): void {
     for (const sectionPack of sectionPacks) {
-      this.loadChild({
-        childName,
-        sectionPack,
-      });
+      this.addChild(childName, { sectionPack });
     }
   }
   loadChildArrs<CN extends ChildName<SN>>(
@@ -118,7 +102,7 @@ export class SolverAdderPrepSection<
   }
   loadSelfSectionPack(sectionPack: SectionPack<SN>): void {
     this.removePrepper.prepForRemoveSelf();
-    this.loader.loadSelfSectionPack(sectionPack);
+    this.defaultAdder.loadSelfSectionPack(sectionPack);
     this.finalizeAddedThis();
   }
   removeSelf(): void {

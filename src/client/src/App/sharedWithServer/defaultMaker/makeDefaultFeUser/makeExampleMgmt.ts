@@ -19,7 +19,7 @@ type ExampleMgmtProps = {
 
 function exampleMgmt(props: ExampleMgmtProps) {
   const mgmt = PackBuilderSection.initAsOmniChild("mgmt");
-  mgmt.loadSelf(makeDefaultMgmt());
+  mgmt.overwriteSelf(makeDefaultMgmt());
   mgmt.updateValues(props.mgmt);
 
   const vacancyLoss = mgmt.onlyChild("vacancyLossValue");

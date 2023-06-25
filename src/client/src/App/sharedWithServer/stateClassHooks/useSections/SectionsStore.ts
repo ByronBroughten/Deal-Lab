@@ -73,7 +73,7 @@ export class SectionsStore {
     storedState: StoredSectionsState
   ): SolverSection<"main"> {
     const main = PackBuilderSection.initAsOmniChild("main");
-    main.loadSelf(makeDefaultMain());
+    main.overwriteSelf(makeDefaultMain());
     main.replaceChildArrs(storedState);
     const solver = SolverSections.initRoot();
     return solver.loadAndGetChild({

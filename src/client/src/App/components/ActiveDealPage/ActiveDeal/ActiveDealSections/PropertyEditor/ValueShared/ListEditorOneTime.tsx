@@ -1,4 +1,6 @@
-import { useSetterSection } from "../../../../../../sharedWithServer/stateClassHooks/useSetterSection";
+import { SectionValues } from "../../../../../../sharedWithServer/SectionsMeta/values/StateValue";
+import { useAction } from "../../../../../../sharedWithServer/stateClassHooks/useAction";
+import { useGetterSection } from "../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { ListItemOneTime } from "../../../../../appWide/ListGroup/ListGroupOneTime/VarbListOneTime/ListItemOneTime";
 import { VarbListGenericMenuType } from "../../../../../appWide/ListGroup/ListGroupShared/VarbListGeneric";
 import { VarbListStandardHeaders } from "../../../../../appWide/ListGroup/ListGroupShared/VarbListGeneric/VarbListStandardHeaders";
@@ -21,25 +23,27 @@ export function ListEditorOneTime({
   menuDisplayNames,
   ...rest
 }: Props) {
-  const onetimeList = useSetterSection({
-    sectionName: "onetimeList",
-    feId,
-  });
+  const addChild = useAction("addChild");
+  const feInfo = { sectionName: "onetimeList", feId } as const;
 
-  const onetimeItems = onetimeList.get.children("singleTimeItem");
+  const onetimeList = useGetterSection(feInfo);
+  const onetimeItems = onetimeList.children("singleTimeItem");
 
   const itemDisplayNames = onetimeItems.map(
     (item) => item.valueNext("displayName").mainText
   );
 
-  const totalVarb = onetimeList.get.varbNext("total");
-
-  const onChange = (displayName?: string) =>
-    onetimeList.addChild("singleTimeItem", {
-      sectionValues: {
-        ...(displayName && { displayNameEditor: displayName }),
-      },
+  const totalVarb = onetimeList.varbNext("total");
+  const onChange = (displayName?: string) => {
+    const sectionValues: Partial<SectionValues<"singleTimeItem">> = {
+      ...(displayName && { displayNameEditor: displayName }),
+    };
+    addChild({
+      feInfo,
+      childName: "singleTimeItem",
+      options: { sectionValues },
     });
+  };
 
   return (
     <ValueListGeneral

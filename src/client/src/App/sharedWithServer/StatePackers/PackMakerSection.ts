@@ -122,11 +122,11 @@ export class PackMakerSection<
   makeSiblingSectionPackArr(): SectionPack<SN>[] {
     const { siblingFeInfos } = this.get;
     return siblingFeInfos.map((feInfo) => {
-      const siblingMaker = this.sectionPackMaker(feInfo);
+      const siblingMaker = this.packMakerSection(feInfo);
       return siblingMaker.makeSectionPack();
     });
   }
-  sectionPackMaker<S extends SectionNameByType>(
+  packMakerSection<S extends SectionNameByType>(
     feInfo: FeSectionInfo<S>
   ): PackMakerSection<S> {
     return new PackMakerSection({
@@ -138,14 +138,14 @@ export class PackMakerSection<
     childInfo: FeChildInfo<SN, CN>
   ): SectionPack<ChildSectionName<SN, CN>> {
     const feInfo = this.get.childToFeInfo(childInfo);
-    const childPackMaker = this.sectionPackMaker(feInfo);
+    const childPackMaker = this.packMakerSection(feInfo);
     return childPackMaker.makeSectionPack();
   }
   makeOnlyChildSectionPack<CN extends ChildName<SN>>(
     childName: CN
   ): ChildSectionPack<SN, CN> {
     const { feInfo } = this.get.onlyChild(childName);
-    const childPackMaker = this.sectionPackMaker(feInfo);
+    const childPackMaker = this.packMakerSection(feInfo);
     return childPackMaker.makeSectionPack();
   }
   private rawDescendantSections(): RawSections {

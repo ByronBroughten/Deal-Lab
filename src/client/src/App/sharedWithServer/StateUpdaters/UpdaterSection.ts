@@ -15,6 +15,7 @@ import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { SectionPathContextName } from "../SectionsMeta/sectionPathContexts";
 import { SectionValues, StateValue } from "../SectionsMeta/values/StateValue";
 import { GetterSectionProps } from "../StateGetters/Bases/GetterSectionBase";
+import { NotAVarbNameError } from "../StateGetters/Bases/GetterVarbBase";
 import { InitRawFeSectionProps } from "../StateSections/initRawSection";
 import { StateSections } from "../StateSections/StateSections";
 import {
@@ -52,6 +53,17 @@ export class UpdaterSection<
       ...this.getterSectionProps,
       varbName,
     });
+  }
+  loadRawSection({
+    dbId,
+    sectionValues,
+  }: {
+    dbId: string;
+    sectionValues: Partial<SectionValues<SN>>;
+  }) {
+    this.updateDbId(dbId);
+    // RawSections (from sectionPacks) are assumed as potentially stale and imperfect
+    this.updateSusValues(sectionValues);
   }
   varbNext(varbName: VarbName<SN>): UpdaterVarb<SN> {
     return this.varb(varbName as string);
@@ -108,7 +120,17 @@ export class UpdaterSection<
     const feInfo = this.get.childInfoToFe(childInfo);
     return this.updaterSection(feInfo);
   }
-
+  children<CN extends ChildName<SN>>(
+    childName: CN
+  ): UpdaterSection<ChildSectionName<SN, CN>>[] {
+    const feIds = this.get.childFeIds(childName);
+    return feIds.map((feId) =>
+      this.child({
+        feId,
+        childName,
+      })
+    );
+  }
   addChild<CN extends ChildName<SN>>(
     childName: CN,
     { idx, ...rest }: AddChildOptions<SN, CN> = {}
@@ -227,11 +249,25 @@ export class UpdaterSection<
   }
   updateValues(values: Partial<SectionValues<SN>>): void {
     for (const varbName of Obj.keys(values)) {
-      const varb = this.varb(varbName as string);
+      const varb = this.varbNext(varbName);
       varb.updateValue(values[varbName] as StateValue);
     }
   }
-  resetVarbs(sectionValues: Partial<SectionValues<SN>>): void {
+  updateSusValues(values: Partial<SectionValues<SN>>): void {
+    for (const varbName of Obj.keys(values)) {
+      try {
+        const varb = this.varbNext(varbName);
+        varb.updateValue(values[varbName] as StateValue);
+      } catch (err) {
+        if (err instanceof NotAVarbNameError) {
+          continue;
+        } else {
+          throw err;
+        }
+      }
+    }
+  }
+  resetVarbs(sectionValues: Partial<SectionValues<SN>> = {}): void {
     this.updateProps({
       varbs: StateSections.initRawVarbs({
         sectionValues,
@@ -323,9 +359,9 @@ interface AddSectionProps<SN extends SectionName = SectionName>
 }
 
 export interface AddChildOptions<
-  SN extends SectionNameByType,
+  SN extends SectionName,
   CN extends ChildName<SN> = ChildName<SN>,
-  CT extends ChildSectionName<SN, CN> = ChildSectionName<SN, CN>
-> extends StrictOmit<AddSectionProps<CT>, OmitProps> {}
+  CSN extends ChildSectionName<SN, CN> = ChildSectionName<SN, CN>
+> extends StrictOmit<AddSectionProps<CSN>, OmitProps> {}
 
 type OmitProps = "sectionName" | "childFeIds";

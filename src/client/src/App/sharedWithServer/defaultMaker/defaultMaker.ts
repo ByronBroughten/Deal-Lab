@@ -31,6 +31,8 @@ class DefaultSectionPackMaker<SN extends SectionName> {
   }
 }
 
+// The only children these default sections should have are children that are
+// necessary for the section to function and display correctly.
 export const defaultMaker = new DefaultSectionPackMaker({
   numVarbItem: makeDefaultUserVarbItem,
   property: makeDefaultProperty,

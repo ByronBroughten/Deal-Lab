@@ -151,6 +151,8 @@ export const varbLabels = checkSectionInfoTexts({
     }),
   }),
   ...prop("loan", {
+    ...simpleOngoing("loanPayment", "Loan payment"),
+    ...simpleOngoing("expenses", "Total loan expenses"),
     closingCosts: multis.closingCosts,
     hasMortgageIns: text({
       inputLabel: "Mortgage insurance",

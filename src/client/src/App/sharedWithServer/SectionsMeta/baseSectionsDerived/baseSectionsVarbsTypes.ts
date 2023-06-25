@@ -30,6 +30,13 @@ export function validateAnyVarbName(value: any): VarbNameWide {
     throw new Error(`value "${value}" is not a varbName`);
   }
 }
+export function validateAnyVarbNames(value: any): VarbNameWide[] {
+  if (Array.isArray(value) && value.every((vn) => isVarbName(vn))) {
+    return value;
+  } else {
+    throw new Error(`value "${value}" is not a varbName`);
+  }
+}
 
 export type VarbNameWide<SN extends SectionName = SectionName> =
   SectionVarbNames[SN];

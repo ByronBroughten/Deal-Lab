@@ -1,28 +1,36 @@
-import { ChildName } from "../../SectionsMeta/sectionChildrenDerived/ChildName";
 import { SectionPack } from "../../SectionsMeta/sectionChildrenDerived/SectionPack";
 import {
+  ChildSpNums,
   OneRawSection,
-  SpChildInfo,
 } from "../../SectionsMeta/sectionChildrenDerived/SectionPack/RawSection";
-import {
-  SectionNameByType,
-  sectionNameS,
-} from "../../SectionsMeta/SectionNameByType";
-import { SectionValues } from "../../SectionsMeta/values/StateValue";
+import { SectionNameByType } from "../../SectionsMeta/SectionNameByType";
 import {
   GetterSectionBase,
   GetterSectionProps,
 } from "../../StateGetters/Bases/GetterSectionBase";
 import { GetterSection } from "../../StateGetters/GetterSection";
 import { UpdaterSection } from "../../StateUpdaters/UpdaterSection";
-import { ChildPackLoader } from "./ChildPackLoader";
+import { FeSectionInfo } from "./../../SectionsMeta/SectionInfo/FeInfo";
+import { SectionName } from "./../../SectionsMeta/SectionName";
 
 interface SelfPackLoaderSectionProps<SN extends SectionNameByType>
   extends GetterSectionProps<SN> {
   sectionPack: SectionPack<SN>;
 }
+
+interface Focal<SN extends SectionName = SectionName>
+  extends FeSectionInfo<SN> {
+  childSpNums: ChildSpNums<SN>;
+}
+
+interface FocalNext<SN extends SectionName = SectionName>
+  extends FeSectionInfo<SN> {
+  rawSectionName: string;
+  spNum: number;
+}
+
 export class SelfPackLoader<
-  SN extends SectionNameByType
+  SN extends SectionName
 > extends GetterSectionBase<SN> {
   sectionPack: SectionPack<SN>;
   constructor({ sectionPack, ...props }: SelfPackLoaderSectionProps<SN>) {
@@ -32,46 +40,81 @@ export class SelfPackLoader<
   get get() {
     return new GetterSection(this.getterSectionProps);
   }
-  get updaterSection() {
+  get updater() {
     return new UpdaterSection(this.getterSectionProps);
   }
   get headRawSection(): OneRawSection<SN> {
     return this.sectionPack.rawSections[this.sectionName][0];
   }
-  loadSelfSectionPack(): void {
-    const { dbId, sectionValues } = this.headRawSection;
-    this.updaterSection.updateDbId(dbId);
-    this.updaterSection.resetVarbs(sectionValues as Partial<SectionValues<SN>>);
-    this.updaterSection.removeAllChildren();
-    this.addSectionPackChildren();
-    this.updaterSection.finishNewSection();
+  overwriteSelfWithPack(): void {
+    this.updater.resetVarbs();
+    this.updater.removeAllChildren();
+    this.integrateSectionPack();
   }
-  thisHasChildren(): this is SelfPackLoader<SectionNameByType<"hasChild">> {
-    return sectionNameS.is(this.sectionName, "hasChild");
-  }
-  addSectionPackChildren() {
-    if (this.thisHasChildren()) {
-      const { childNames } = this.get;
-      let { childSpNums } = this.headRawSection;
-      for (const childName of childNames) {
-        if (childSpNums[childName] === undefined) childSpNums[childName] = [];
-        for (const spNum of childSpNums[childName]) {
-          const childPackLoader = this.childPackLoader({
-            childName,
-            spNum,
-          });
-          childPackLoader.loadChild();
+  integrateSectionPack(): void {
+    const { spNum } = this.headRawSection;
+    let focals: FocalNext<any>[] = [
+      {
+        ...this.feInfo,
+        rawSectionName: this.sectionName,
+        spNum,
+      },
+    ];
+    while (focals.length > 0) {
+      const nextFocals: FocalNext<any>[] = [];
+      for (const focal of focals) {
+        const section = this.updater.updaterSection(focal);
+        const raw = this.rawSection({
+          name: focal.sectionName,
+          spNum: focal.spNum,
+        });
+        section.loadRawSection(raw);
+        const { childNames } = section.get;
+        const { childSpNums } = raw;
+        for (const childName of childNames) {
+          if (childSpNums[childName]) {
+            const spNums = childSpNums[childName];
+            const children = section.children(childName);
+            for (let i = 0; i < spNums.length; i++) {
+              const spNum = spNums[i];
+              const { feInfo } =
+                children[i] ?? section.addAndGetChild(childName);
+              nextFocals.push({
+                ...feInfo,
+                rawSectionName: childName,
+                spNum,
+              });
+            }
+          }
         }
       }
+      focals = nextFocals;
     }
+    this.updater.finishNewSection();
   }
-  childPackLoader<CN extends ChildName<SN>>(
-    spChildInfo: SpChildInfo<SN, CN>
-  ): ChildPackLoader<SN, CN> {
-    return new ChildPackLoader({
-      ...this.getterSectionProps,
-      sectionPack: this.sectionPack as SectionPack<any>,
-      spChildInfo,
-    });
+  private rawSection({
+    spNum,
+    name,
+  }: {
+    spNum: number;
+    name: string;
+  }): OneRawSection<any> {
+    const rawSections = this.sectionPack.rawSections[name];
+    if (!rawSections) {
+      throw new Error(
+        `No raw sections of name ${name} in sectionPack ${
+          this.sectionPack.sectionName
+        }. ${Object.keys(this.sectionPack.rawSections).join(",")}`
+      );
+    }
+
+    const rawSection = rawSections.find((raw) => raw.spNum === spNum);
+    if (rawSection) {
+      return rawSection;
+    } else {
+      throw new Error(
+        `No rawSection found with childName ${name} and spNum ${spNum}`
+      );
+    }
   }
 }

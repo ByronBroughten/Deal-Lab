@@ -1,4 +1,6 @@
-import { useSetterSection } from "../../../sharedWithServer/stateClassHooks/useSetterSection";
+import { SectionValues } from "../../../sharedWithServer/SectionsMeta/values/StateValue";
+import { useAction } from "../../../sharedWithServer/stateClassHooks/useAction";
+import { useGetterSection } from "../../../sharedWithServer/stateClassHooks/useGetterSection";
 import {
   VarbListGeneric,
   VarbListGenericMenuType,
@@ -12,15 +14,24 @@ type Props = {
   menuType?: VarbListGenericMenuType;
 };
 export function VarbListCapEx({ feId, ...rest }: Props) {
-  const list = useSetterSection({ sectionName: "capExList", feId });
-  const totalVarbName = list.get.activeSwitchTargetName("total", "periodic");
+  const addChild = useAction("addChild");
+
+  const feInfo = { sectionName: "capExList", feId } as const;
+  const list = useGetterSection(feInfo);
+  const totalVarbName = list.activeSwitchTargetName("total", "periodic");
   const itemPeriodicSwitch = list
     .varb("itemPeriodicSwitch")
     .value("ongoingSwitch");
-  const itemName = list.meta.varbListItem;
+
+  const sectionValues: Partial<SectionValues<"capExItem">> = {
+    valuePeriodicSwitch: itemPeriodicSwitch,
+  };
+
   const addItem = () => {
-    list.addChild(itemName, {
-      sectionValues: { valuePeriodicSwitch: itemPeriodicSwitch },
+    addChild({
+      feInfo,
+      childName: "capExItem",
+      options: { sectionValues },
     });
   };
   return (

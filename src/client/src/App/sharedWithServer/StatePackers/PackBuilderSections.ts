@@ -36,10 +36,7 @@ export class PackBuilderSections extends GetterSectionsBase {
       ...pick(rootSection, ["sectionName", "feId"]),
       sections,
     });
-    builder.loadChild({
-      childName: "main",
-      sectionPack,
-    });
+    builder.addChild("main", { sectionPack });
     return builder.onlyChild("main");
   }
   static initSectionsFromMainPack(
@@ -50,7 +47,7 @@ export class PackBuilderSections extends GetterSectionsBase {
   }
   static initFeStore(): PackBuilderSection<"feStore"> {
     const feStore = PackBuilderSection.initAsOmniChild("feStore");
-    feStore.loadSelf(defaultMaker.makeSectionPack("feStore"));
+    feStore.overwriteSelf(defaultMaker.makeSectionPack("feStore"));
     return feStore;
   }
 }

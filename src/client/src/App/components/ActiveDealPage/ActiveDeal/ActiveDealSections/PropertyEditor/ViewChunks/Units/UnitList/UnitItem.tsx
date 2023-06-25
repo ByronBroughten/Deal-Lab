@@ -1,6 +1,6 @@
 import { rem } from "polished";
 import styled from "styled-components";
-import { useSetterSection } from "../../../../../../../../sharedWithServer/stateClassHooks/useSetterSection";
+import { useGetterSection } from "../../../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import theme from "../../../../../../../../theme/Theme";
 import { RemoveSectionXBtn } from "../../../../../../../appWide/RemoveSectionXBtn";
 import { NumObjEntityEditor } from "../../../../../../../inputs/NumObjEntityEditor";
@@ -8,7 +8,7 @@ import { NumObjEntityEditor } from "../../../../../../../inputs/NumObjEntityEdit
 type Props = { feId: string; unitNumber: number };
 export function UnitItem({ feId, unitNumber }: Props) {
   const feInfo = { sectionName: "unit", feId } as const;
-  const unit = useSetterSection(feInfo);
+  const unit = useGetterSection(feInfo);
   return (
     <Styled className="UnitItem-root" key={feId}>
       <div className="UnitItem-viewable">

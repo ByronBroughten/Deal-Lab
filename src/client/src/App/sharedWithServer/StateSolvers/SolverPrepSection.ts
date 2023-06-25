@@ -9,11 +9,8 @@ import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack"
 import { SectionName } from "../SectionsMeta/SectionName";
 import { SectionValues } from "../SectionsMeta/values/StateValue";
 import { GetterSection } from "../StateGetters/GetterSection";
-import {
-  ChildSectionPackArrs,
-  LoadChildProps,
-} from "../StatePackers/PackLoaderSection";
-import { AddChildOptions } from "../StateUpdaters/UpdaterSection";
+import { ChildSectionPackArrs } from "../StatePackers/ChildPackProps";
+import { AddChildWithPackOptions } from "../StatePackers/PackBuilderSection";
 import { Obj } from "../utils/Obj";
 import {
   FeSectionInfo,
@@ -101,20 +98,23 @@ export class SolverPrepSection<
   }
   addChild<CN extends ChildName<SN>>(
     childName: CN,
-    options?: AddChildOptions<SN, CN>
+    options?: AddChildWithPackOptions<SN, CN>
   ) {
     this.basicSolvePrepper.addChild(childName, options);
     this.addAppWideMissingOutEntities();
   }
   addAndGetChild<CN extends ChildName<SN>>(
     childName: CN,
-    options?: AddChildOptions<SN, CN>
+    options?: AddChildWithPackOptions<SN, CN>
   ) {
     this.addChild(childName, options);
     return this.youngestChild(childName);
   }
-  loadChild<CN extends ChildName<SN>>(packInfo: LoadChildProps<SN, CN>): void {
-    this.basicSolvePrepper.loadChild(packInfo);
+  loadChild<CN extends ChildName<SN>>({
+    childName,
+    ...rest
+  }: { childName: CN } & AddChildWithPackOptions<SN, CN>): void {
+    this.basicSolvePrepper.addChild(childName, rest);
     this.addAppWideMissingOutEntities();
   }
   loadChildArrs<CN extends ChildName<SN>>(

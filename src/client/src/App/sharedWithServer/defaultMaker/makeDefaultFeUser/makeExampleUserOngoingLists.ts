@@ -11,8 +11,7 @@ import {
 
 export function makeExampleUserOngoingLists(): SectionPack<"ongoingList">[] {
   const feStore = PackBuilderSection.initAsOmniChild("feStore");
-  feStore.loadChild({
-    childName: "ongoingListMain",
+  feStore.addChild("ongoingListMain", {
     sectionPack: makeUtilityList(exampleUserUtilityProps, "exampleUtil1"),
   });
   return feStore.makeChildPackArr("ongoingListMain");
@@ -20,8 +19,7 @@ export function makeExampleUserOngoingLists(): SectionPack<"ongoingList">[] {
 
 export function makeExampleUserOneTimeLists() {
   const feStore = PackBuilderSection.initAsOmniChild("feStore");
-  feStore.loadChild({
-    childName: "onetimeListMain",
+  feStore.addChild("onetimeListMain", {
     sectionPack: makeExampleOneTimeList(
       "Misc upfront cost examples",
       userRepairVarbProps

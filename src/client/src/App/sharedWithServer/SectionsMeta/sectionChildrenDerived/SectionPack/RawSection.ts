@@ -55,7 +55,7 @@ export type GeneralRawSection = {
   childSpNums: GeneralChildNumArrs;
 };
 export type GeneralRawSections = {
-  [key: string]: GeneralRawSection[];
+  [sectionName: string]: GeneralRawSection[];
 };
 export type OneRawSection<SN extends SectionName = SectionName> = {
   spNum: number;

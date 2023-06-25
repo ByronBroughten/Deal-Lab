@@ -14,12 +14,10 @@ export function makeDefaultFeUserPack(): SectionPack<"feStore"> {
     authStatus: "guest",
     userDataStatus: "notLoaded",
   });
-  feStore.loadChild({
-    childName: "outputSection",
+  feStore.addChild("outputSection", {
     sectionPack: makeDefaultOutputSection(),
   });
-  feStore.loadChild({
-    childName: "dealMain",
+  feStore.addChild("dealMain", {
     sectionPack: makeDefaultDealPack(),
   });
   return feStore.makeSectionPack();

@@ -3,6 +3,8 @@ import { SectionName } from "../../SectionsMeta/SectionName";
 import { VarbMeta } from "../../SectionsMeta/VarbMeta";
 import { GetterSectionBase, GetterSectionProps } from "./GetterSectionBase";
 
+export class NotAVarbNameError extends Error {}
+
 export interface GetterVarbProps<SN extends SectionName>
   extends GetterSectionProps<SN> {
   varbName: string;
@@ -16,7 +18,9 @@ export class GetterVarbBase<
     this.varbName = varbName;
     const { sectionName } = props;
     if (!isValidVarbNames({ sectionName, varbName })) {
-      throw new Error(`"${varbName}" is not a varbName of "${sectionName}"`);
+      throw new NotAVarbNameError(
+        `"${varbName}" is not a varbName of "${sectionName}"`
+      );
     }
   }
   get meta(): VarbMeta<SN> {

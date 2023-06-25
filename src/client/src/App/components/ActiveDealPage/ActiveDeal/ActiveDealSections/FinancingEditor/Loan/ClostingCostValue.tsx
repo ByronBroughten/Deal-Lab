@@ -38,7 +38,7 @@ export function ClosingCostValue({ feId, fivePercentLoanDisplay }: Props) {
             : undefined,
         items: [
           ["fivePercentLoan", "5% of Base Loan"],
-          ["valueDollarsEditor", "Enter lump sum"],
+          ["valueDollarsEditor", "Enter amount"],
           ["listTotal", "Itemize"],
         ],
         equalsValue,
