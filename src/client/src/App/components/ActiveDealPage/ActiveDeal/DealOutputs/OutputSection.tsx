@@ -1,5 +1,4 @@
 import { Box, SxProps } from "@mui/material";
-import { CgDetailsLess, CgDetailsMore } from "react-icons/cg";
 import { useToggleView } from "../../../../modules/customHooks/useToggleView";
 import { outputListName } from "../../../../sharedWithServer/defaultMaker/makeDefaultOutputSection";
 import { StateValue } from "../../../../sharedWithServer/SectionsMeta/values/StateValue";
@@ -11,7 +10,6 @@ import { CheckMarkCircle } from "../../../appWide/checkMarkCircle";
 import { EditSectionBtn } from "../../../appWide/EditSectionBtn";
 import { MainSection } from "../../../appWide/GeneralSection/MainSection";
 import MainSectionBody from "../../../appWide/GeneralSection/MainSection/MainSectionBody";
-import { StyledActionBtn } from "../../../appWide/GeneralSection/MainSection/StyledActionBtn";
 import { TitleAppend } from "../../../appWide/titleAppend";
 import { LoadedVarbList } from "../../../appWide/VarbLists/LoadedVarbList";
 import { MuiRow } from "../../../general/MuiRow";
@@ -74,7 +72,7 @@ export function OutputSection({
         />
         <DealSubSectionTitle title="Outputs" />
         <EditSectionBtn {...{ onClick: openEdit }} />
-        {dealIsComplete && (
+        {/* {dealIsComplete && (
           <StyledActionBtn
             sx={{
               marginLeft: nativeTheme.s4,
@@ -91,7 +89,7 @@ export function OutputSection({
             middle={`${detailsIsOpen ? "Hide" : "Show"} Details`}
             onClick={toggleDetails}
           />
-        )}
+        )} */}
       </MuiRow>
       {dealIsComplete && (
         <DealOutputListOrDetails
