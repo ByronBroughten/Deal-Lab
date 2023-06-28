@@ -47,9 +47,13 @@ export const allSectionChildren = checkAllSectionChildren({
     dealCompareDealSelectMenu: "dealCompareDealSelectMenu",
 
     // These are not saved
-    sessionVarbs: "sessionVarbs",
+    sessionStore: "sessionStore",
+
     latentDealSystem: "dealSystem",
     activeDealSystem: "dealSystem",
+  }),
+  sessionStore: sectionChildren({
+    dealMain: "sessionDeal",
   }),
   feStore: sectionChildren(sectionStores),
   dbStore: sectionChildren({
@@ -62,6 +66,7 @@ export const allSectionChildren = checkAllSectionChildren({
     stripeInfoPrivate: "stripeInfoPrivate",
     stripeSubscription: "stripeSubscription",
   }),
+
   dealSystem: sectionChildren({
     deal: "deal",
     calculatedVarbs: "calculatedVarbs",

@@ -1,11 +1,15 @@
 import { dbStoreNames } from "../SectionsMeta/sectionChildrenDerived/DbStoreName";
+import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
 import { numObj } from "../SectionsMeta/values/StateValue/NumObj";
+import { stringObj } from "../SectionsMeta/values/StateValue/StringObj";
 import { PackBuilderSection } from "../StatePackers/PackBuilderSection";
 import { timeS } from "../utils/timeS";
 import { makeDefaultDealCompareMenu } from "./makeDefaultDealCompareMenu";
 import { exampleDealBuyAndHold } from "./makeDefaultFeUser/exampleDealBuyAndHold";
 import { exampleDealHomebuyer } from "./makeDefaultFeUser/exampleDealHomebuyer";
 import { makeExampleCapExList } from "./makeDefaultFeUser/makeExampleCapEx";
+import { makeExampleLoan } from "./makeDefaultFeUser/makeExampleLoan";
+import { makeExampleMgmt } from "./makeDefaultFeUser/makeExampleMgmt";
 import {
   exampleAdvancedCapExProps,
   examplePropertyCapExListProps,
@@ -57,14 +61,6 @@ export function makeDefaultDbStoreArrs({
     childName: "numVarbListMain",
     sectionPacks: makeExampleUserVarbLists(),
   });
-  // dbStore.loadChildren({
-  //   childName: "onetimeListMain",
-  //   sectionPacks: makeExampleUserOneTimeLists(),
-  // });
-  // dbStore.loadChildren({
-  //   childName: "ongoingListMain",
-  //   sectionPacks: makeExampleUserOngoingLists(),
-  // });
   dbStore.loadChildren({
     childName: "dealMain",
     sectionPacks: [
@@ -87,15 +83,36 @@ export function makeDefaultDbStoreArrs({
       ),
     ],
   });
+  dbStore.addChild("propertyMain", { sectionPack: makeExampleStoreProperty() });
+  dbStore.addChild("loanMain", { sectionPack: makeExampleStoreLoan() });
+  dbStore.addChild("mgmtMain", { sectionPack: makeExampleStoreMgmt() });
 
-  dbStore.loadChildren({
-    childName: "propertyMain",
-    sectionPacks: [makeExampleStoreProperty()],
-  });
   return dbStore.makeChildPackArrs(...dbStoreNames);
 }
 
-function makeExampleStoreProperty() {
+function makeExampleStoreMgmt() {
+  return makeExampleMgmt({
+    mgmt: { displayName: stringObj("Owner managed") },
+    basePay: { valueSourceName: "none" },
+    vacancyLoss: { valueSourceName: "fivePercentRent" },
+  });
+}
+
+function makeExampleStoreLoan(): SectionPack<"loan"> {
+  return makeExampleLoan({
+    loan: {
+      displayName: stringObj("30Y Fifteen Percent Down"),
+      interestRatePercentPeriodicEditor: numObj(6),
+      loanTermSpanEditor: numObj(30),
+      hasMortgageIns: false,
+    },
+    baseLoan: { valueSourceName: "purchaseLoanValue" },
+    closingCosts: { valueSourceName: "fivePercentLoan" },
+    purchaseLoanValue: { offPercentEditor: numObj(15) },
+  });
+}
+
+function makeExampleStoreProperty(): SectionPack<"property"> {
   return makeExampleProperty({
     dealMode: "buyAndHold",
     property: {

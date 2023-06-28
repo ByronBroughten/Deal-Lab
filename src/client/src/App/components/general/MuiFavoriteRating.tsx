@@ -1,4 +1,4 @@
-import { InputLabel, Rating } from "@mui/material";
+import { Box, InputLabel, Rating } from "@mui/material";
 import { MdFavorite, MdFavoriteBorder } from "react-icons/md";
 import styled from "styled-components";
 import {
@@ -16,7 +16,14 @@ export function MuiFavoriteRating(feVarbInfo: Props) {
   const updateValue = useAction("updateValue");
   const varb = useGetterVarb(feVarbInfo);
   return (
-    <Styled>
+    <Styled
+      sx={{
+        ...nativeTheme.subSection.border,
+        paddingX: nativeTheme.s3,
+        paddingY: nativeTheme.s2,
+        width: "275px",
+      }}
+    >
       <VarbLabel
         {...{
           names: feVarbInfo as FeVarbInfoNext,
@@ -62,7 +69,7 @@ export function MuiFavoriteRating(feVarbInfo: Props) {
   );
 }
 
-const Styled = styled.div`
+const Styled = styled(Box)`
   .MuiRating-icon {
     max-width: none !important;
   }

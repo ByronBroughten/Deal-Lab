@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import { constants } from "../../../../client/src/App/Constants";
 import { AnalyzerPlanValues } from "../../../../client/src/App/sharedWithServer/apiQueriesShared/AnalyzerPlanValues";
 import { UserData } from "../../../../client/src/App/sharedWithServer/apiQueriesShared/validateUserData";
+import { SectionPack } from "../../../../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/SectionPack";
 import { storeNames } from "../../../../client/src/App/sharedWithServer/SectionsMeta/sectionStores";
 import {
   GetterSectionBase,
@@ -122,6 +123,12 @@ export class LoadedDbUser extends GetterSectionBase<"dbStore"> {
     return this.get.onlyChild("userInfoPrivate");
   }
   collectUserData(): UserData {
+    const sessionStore = PackBuilderSection.initAsOmniChild("sessionStore");
+    sessionStore.updateValues({
+      archivedAreLoaded: false,
+      showArchivedDeals: false,
+    });
+
     const feStore = PackBuilderSections.initFeStore();
     feStore.updateValues({
       ...pick(this.userInfo, ["email", "userName"]),
@@ -129,14 +136,38 @@ export class LoadedDbUser extends GetterSectionBase<"dbStore"> {
       authStatus: "user",
       userDataStatus: "loaded",
     });
+
     for (const storeName of storeNames) {
-      feStore.replaceChildren({
-        childName: storeName,
-        sectionPacks: this.dbSections.sectionPackArr(storeName),
-      });
+      if (storeName === "dealMain") {
+        const packs = this.dbSections.sectionPackArr(
+          storeName
+        ) as SectionPack<"deal">[];
+        const feStorePacks: SectionPack<"deal">[] = [];
+        for (const pack of packs) {
+          const deal = PackBuilderSection.hydratePackAsOmniChild(pack);
+          sessionStore.addChild("dealMain", {
+            sectionValues: {
+              dateTimeCreated: deal.get.valueNext("dateTimeFirstSaved"),
+            },
+          });
+          if (!deal.get.valueNext("isArchived")) {
+            feStorePacks.push(pack);
+          }
+        }
+        feStore.replaceChildren({
+          childName: storeName,
+          sectionPacks: feStorePacks,
+        });
+      } else {
+        feStore.replaceChildren({
+          childName: storeName,
+          sectionPacks: this.dbSections.sectionPackArr(storeName),
+        });
+      }
     }
     return {
       feStore: feStore.makeSectionPack(),
+      sessionStore: sessionStore.makeSectionPack(),
     };
   }
   createUserInfoToken(subscriptionValues?: AnalyzerPlanValues): string {

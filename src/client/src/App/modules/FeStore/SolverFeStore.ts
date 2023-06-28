@@ -22,6 +22,7 @@ import { SolverSectionsProps } from "../../sharedWithServer/StateSolvers/SolverB
 import { SolverPrepSection } from "../../sharedWithServer/StateSolvers/SolverPrepSection";
 import { SolverPrepSections } from "../../sharedWithServer/StateSolvers/SolverPrepSections";
 import { SolverSection } from "../../sharedWithServer/StateSolvers/SolverSection";
+import { SolverSections } from "../../sharedWithServer/StateSolvers/SolverSections";
 import { Obj } from "../../sharedWithServer/utils/Obj";
 import { timeS } from "../../sharedWithServer/utils/timeS";
 import { toastNotice } from "./../../components/appWide/toast";
@@ -56,6 +57,9 @@ export class SolverFeStore extends SolverSectionBase<"feStore"> {
   }
   get getterSections(): GetterSections {
     return new GetterSections(this.getterSectionProps);
+  }
+  get solverSections(): SolverSections {
+    return new SolverSections(this.solverSectionsProps);
   }
   get solver(): SolverSection<"feStore"> {
     return new SolverSection(this.solverSectionProps);
@@ -93,10 +97,12 @@ export class SolverFeStore extends SolverSectionBase<"feStore"> {
   }
   loadUserData(userData: UserData) {
     this.appWideSolvePrepSections.deactivateDealAndDealSystem();
+
+    const sessionStore = this.solverSections.oneAndOnly("sessionStore");
+    sessionStore.basicSolvePrepper.loadSelfSectionPack(userData.sessionStore);
+
     this.solver.loadSelfAndSolve(userData.feStore);
-    this.basicSolvePrepper.updateValues({
-      userDataFetchTryCount: 0,
-    });
+    this.basicSolvePrepper.updateValues({ userDataFetchTryCount: 0 });
   }
   newestEntry<SN extends StoreName>(
     storeName: SN
@@ -164,28 +170,38 @@ export class SolverFeStore extends SolverSectionBase<"feStore"> {
     }
   }
   addToStore({ storeName, options }: AddToStoreProps, doSolve: boolean = true) {
-    const storedCount = this.get.childCount(storeName);
-    if (storedCount >= this.getterFeStore.storageLimit) {
-      if (this.getterFeStore.labSubscription === "basicPlan") {
-        toastNotice("To add more of those, upgrade to pro.");
-      } else {
-        toastNotice("You have reached the maximum save limit.");
+    if (
+      storeName === "dealMain" &&
+      this.getterFeStore.labSubscription === "basicPlan"
+    ) {
+      const session = this.getterSections.oneAndOnly("sessionStore");
+      const storedCount = session.childCount("dealMain");
+      if (storedCount >= this.getterFeStore.storageLimit) {
+        return toastNotice("To add more deals, upgrade to pro.");
       }
-      throw new Error("Storage limit reached");
-    } else {
-      const now = timeS.now();
-      const child = this.appWideSolvePrepper.addAndGetChild(storeName, {
-        ...options,
-        sectionValues: {
-          ...options?.sectionValues,
-          dateTimeFirstSaved: now,
-          dateTimeLastSaved: now,
-        },
-      });
-      const storeId = StoreId.make(storeName, child.get.feId);
-      this.addChangeToSave(storeId, { changeName: "add" });
-      if (doSolve) this.solve();
     }
+
+    const now = timeS.now();
+    const child = this.appWideSolvePrepper.addAndGetChild(storeName, {
+      ...options,
+      sectionValues: {
+        ...options?.sectionValues,
+        dateTimeFirstSaved: now,
+        dateTimeLastSaved: now,
+      },
+    });
+    const storeId = StoreId.make(storeName, child.get.feId);
+    this.addChangeToSave(storeId, { changeName: "add" });
+
+    if (storeName === "dealMain") {
+      const session = this.solverSections.oneAndOnly("sessionStore");
+      session.appWideSolvePrepper.addChild("dealMain", {
+        dbId: child.get.dbId,
+        sectionValues: { dateTimeCreated: now },
+      });
+    }
+
+    if (doSolve) this.solve();
   }
   removeFromStore({ storeName, feId }: RemoveFromStoreProps) {
     const child = this.solver.child({
@@ -197,6 +213,16 @@ export class SolverFeStore extends SolverSectionBase<"feStore"> {
       changeName: "remove",
       dbId: child.get.dbId,
     });
+
+    if (storeName === "dealMain") {
+      const session = this.solverSections.oneAndOnly("sessionStore");
+      const proxy = session.childByDbId({
+        childName: "dealMain",
+        dbId: child.get.dbId,
+      });
+      proxy.removeSelfAndSolve();
+    }
+
     child.removeSelfAndSolve();
   }
   removeFromStoreByDbId({ storeName, dbId }: RemoveFromStoreByDbIdProps) {

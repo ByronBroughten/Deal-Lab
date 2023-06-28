@@ -5,6 +5,7 @@ import { PackBuilderSection } from "../../StatePackers/PackBuilderSection";
 import { timeS } from "../../utils/timeS";
 import { makeDefaultDealPack } from "../makeDefaultDeal";
 import { example20PercentDownFinancing } from "./example20PercentDownLoan";
+import { exampleSimpleCapExProps } from "./makeExampleOngoingListsProps";
 import { makeExampleProperty } from "./makeExampleProperty";
 
 export function exampleDealHomebuyer(displayName: string): SectionPack<"deal"> {
@@ -42,7 +43,7 @@ function exampleHomebuyerProperty(): SectionPack<"property"> {
       sqft: numObj(2500),
     },
     taxesOngoingYearly: numObj(2500),
-    homeInsOngoingYearly: numObjNext("1000+(", ["numUnits"], "*200)"),
+    homeInsOngoingYearly: numObj(1200),
     repairValue: [
       ["Replace toilet", 200],
       ["Replace locks", 150],
@@ -52,15 +53,13 @@ function exampleHomebuyerProperty(): SectionPack<"property"> {
     ],
     costOverrunValue: { valuePercent: numObj(0) },
     utilityOngoing: [
-      ["Water", numObjNext("60*", ["numUnits"])],
-      ["Garbage", numObjNext("50*", ["numUnits"])],
+      ["Water", numObj(60)],
+      ["Garbage", numObj(50)],
     ],
     capExValue: {
-      valueSourceName: "fivePercentRent",
-      items: [],
+      valueSourceName: "listTotal",
+      items: exampleSimpleCapExProps,
     },
-    maintenanceValue: {
-      valueSourceName: "onePercentAndSqft",
-    },
+    maintenanceValue: { valueSourceName: "onePercentPrice" },
   });
 }

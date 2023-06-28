@@ -20,5 +20,6 @@ export function makeDefaultFeUserPack(): SectionPack<"feStore"> {
   feStore.addChild("dealMain", {
     sectionPack: makeDefaultDealPack(),
   });
+
   return feStore.makeSectionPack();
 }

@@ -92,7 +92,7 @@ export function useQueryAction() {
       }
       case "showArchivedDeals": {
         const { main } = getterSections;
-        const session = main.onlyChild("sessionVarbs");
+        const session = main.onlyChild("sessionStore");
         if (session.valueNext("archivedAreLoaded")) {
           dispatch({
             type: "updateValue",

@@ -4,11 +4,13 @@ import { ValidationError } from "../utils/Error";
 export const sectionNames = [
   "root",
   "main",
-  "sessionVarbs",
+  "sessionStore",
   "newDealMenu",
   "mainDealMenu",
   "editorControls",
   "variablesMenu",
+
+  "sessionDeal",
 
   "feStore",
 

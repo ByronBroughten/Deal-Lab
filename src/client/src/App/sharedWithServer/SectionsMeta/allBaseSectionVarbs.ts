@@ -1,17 +1,17 @@
 import {
   baseCapExItem,
-  baseOngoingItem,
+  baseOngoingItem
 } from "./allBaseSectionVarbs/baseOngoingItem";
 import {
   BaseSectionVarbs,
   baseSectionVarbs,
-  GeneralBaseSectionVarbs,
+  GeneralBaseSectionVarbs
 } from "./allBaseSectionVarbs/baseSectionVarbs";
 import { baseOptions } from "./allBaseSectionVarbs/baseUnits";
 import {
   baseVarb,
   baseVarbs,
-  baseVarbsS,
+  baseVarbsS
 } from "./allBaseSectionVarbs/baseVarbs";
 import { SectionName, sectionNames } from "./SectionName";
 
@@ -43,7 +43,8 @@ export function makeAllBaseSectionVarbs() {
     editorControls: varbs({
       editedDealDbId: baseVarb("string"),
     }),
-    sessionVarbs: varbs({
+    sessionDeal: varbs({ dateTimeCreated: baseVarb("dateTime") }),
+    sessionStore: varbs({
       archivedAreLoaded: baseVarb("boolean"),
       showArchivedDeals: baseVarb("boolean"),
     }),
@@ -178,7 +179,6 @@ export function makeAllBaseSectionVarbs() {
     }),
     property: varbs({
       ...baseVarbsS.savableSection,
-      likability: baseVarb("numObj"),
       propertyMode: baseVarb("dealMode"),
       completionStatus: baseVarb("completionStatus"),
       streetAddress: baseVarb("string"),
@@ -186,10 +186,12 @@ export function makeAllBaseSectionVarbs() {
       state: baseVarb("string"),
       zipCode: baseVarb("string"),
       one: baseVarb("number"),
+      likability: baseVarb("numObj"),
       ...baseVarbs(
         "numObj",
         [
           "purchasePrice",
+          "pricePerLikability",
           "afterRepairValue",
 
           "sellingCosts",
@@ -309,6 +311,8 @@ export function makeAllBaseSectionVarbs() {
       ...baseVarbsS.ongoingDollars("interestOnlySimple"),
       ...baseVarbsS.ongoingDollars("piFixedStandard"),
       ...baseVarbsS.ongoingDollars("loanPayment"),
+      ...baseVarbsS.ongoingDollars("averagePrincipal"),
+      ...baseVarbsS.ongoingDollars("averageInterest"),
       ...baseVarbsS.ongoingDollars("expenses"),
 
       piCalculationName: baseVarb("string"), // depreciated
@@ -391,6 +395,7 @@ export function makeAllBaseSectionVarbs() {
       ...baseVarbsS.ongoingDollars("ongoingPiti"),
       ...baseVarbsS.ongoingDollars("ongoingLoanPayment"),
       ...baseVarbsS.ongoingDollars("expenses"),
+      ...baseVarbsS.ongoingDollars("averageNonPrincipalCost"),
       ...baseVarbsS.ongoingDollars("cashFlow"),
       ...baseVarbsS.ongoingDecimal("cocRoiDecimal"),
       ...baseVarbsS.ongoingPercent("cocRoi"),
@@ -403,7 +408,6 @@ export function makeAllBaseSectionVarbs() {
       roiPercent: baseVarb("numObj", percent),
       roiPercentPerMonth: baseVarb("numObj", percent),
       roiPercentAnnualized: baseVarb("numObj", percent),
-
       ...baseVarbsS.monthsYears("refiLoanHolding"),
       ...baseVarbsS.monthsYears("purchaseLoanHolding"),
 
@@ -420,6 +424,8 @@ export function makeAllBaseSectionVarbs() {
       ...baseVarbsS.ongoingDollars("loanExpenses"),
       ...baseVarbsS.ongoingDollars("loanPayment"),
       ...baseVarbsS.monthsYearsInput("timeTillRefinance"),
+      ...baseVarbsS.ongoingDollars("averagePrincipal"),
+      ...baseVarbsS.ongoingDollars("averageInterest"),
       ...baseVarbs(
         "numObj",
         [

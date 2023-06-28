@@ -17,7 +17,7 @@ type ExampleMgmtProps = {
   };
 };
 
-function exampleMgmt(props: ExampleMgmtProps) {
+export function makeExampleMgmt(props: ExampleMgmtProps) {
   const mgmt = PackBuilderSection.initAsOmniChild("mgmt");
   mgmt.overwriteSelf(makeDefaultMgmt());
   mgmt.updateValues(props.mgmt);
@@ -31,7 +31,7 @@ function exampleMgmt(props: ExampleMgmtProps) {
   return mgmt.makeSectionPack();
 }
 
-export const exampleDealMgmt = exampleMgmt({
+export const exampleDealMgmt = makeExampleMgmt({
   mgmt: { displayName: stringObj("Owner managed") },
   basePay: { valueSourceName: "zero" },
   vacancyLoss: { valueSourceName: "fivePercentRent" },

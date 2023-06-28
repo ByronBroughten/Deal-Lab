@@ -85,7 +85,7 @@ const prop = updateSectionProp;
 function makeAllUpdateSections() {
   return checkAllUpdateSections({
     ...makeAllDefaultUpdateSections(),
-    ...prop("sessionVarbs", {
+    ...prop("sessionStore", {
       archivedAreLoaded: varb("boolean", {
         initValue: false,
       }),
@@ -157,6 +157,8 @@ function makeAllUpdateSections() {
         targets: { updateFnName: "throwIfReached" },
         monthly: {
           updateOverrides: [
+            // "valueDollarsEditor",
+            // "threeHundredPerUnit",
             updateOverride(
               [switchS.local("valueSourceName", "none")],
               updateBasics("emptyNumObj")

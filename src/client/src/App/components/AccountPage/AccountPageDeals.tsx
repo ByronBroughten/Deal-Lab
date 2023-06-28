@@ -19,7 +19,7 @@ function useFilteredDeals() {
   const main = useGetterSectionOnlyOne("main");
   const feStore = main.onlyChild("feStore");
   const dealMenu = main.onlyChild("mainDealMenu");
-  const session = main.onlyChild("sessionVarbs");
+  const session = main.onlyChild("sessionStore");
 
   const showArchived = session.valueNext("showArchivedDeals");
   const dealNameFilter = dealMenu.valueNext("dealNameFilter");
@@ -44,7 +44,7 @@ function useFilteredSortedDeals() {
 export const accountPageElementMargin = nativeTheme.s3;
 export function AccountPageDeals() {
   const main = useGetterSectionOnlyOne("main");
-  const session = main.onlyChild("sessionVarbs");
+  const session = main.onlyChild("sessionStore");
   const dealMenu = main.onlyChild("mainDealMenu");
   const showArchived = session.valueNext("showArchivedDeals");
 

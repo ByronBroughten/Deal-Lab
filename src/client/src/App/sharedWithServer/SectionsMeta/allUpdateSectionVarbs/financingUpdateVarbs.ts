@@ -56,6 +56,8 @@ export function financingUpdateVarbs(): UpdateSectionVarbs<"financing"> {
     ...sumOngoingLoanVarb("mortgageIns", "mortgageIns"),
     ...sumOngoingLoanVarb("loanExpenses", "expenses"),
     ...sumOngoingLoanVarb("loanPayment", "loanPayment"),
+    ...sumOngoingLoanVarb("averagePrincipal", "averagePrincipal"),
+    ...sumOngoingLoanVarb("averageInterest", "averageInterest"),
     completionStatus: financingCompletionStatus,
     financingMode: updateVarb("financingMode"),
     financingMethod: updateVarb("financingMethod", { initValue: "" }),

@@ -77,6 +77,7 @@ export const allDisplaySectionVarbs = {
     afterRepairValue: varb("After repair value"),
     sellingCosts: varb("Selling costs"),
     sqft: varb("Square feet"),
+    likability: varb("Likability", { endAdornment: "/10" }),
     rehabCost: varb("Rehab cost"),
     rehabCostBase: varb("Rehab cost base"),
     numUnits: varb("Unit count"),
@@ -118,7 +119,7 @@ export const allDisplaySectionVarbs = {
       monthly: { displayNameWithVariant: "Rental income monthly" },
       yearly: { displayNameWithVariant: "Rental income yearly" },
     }),
-    ...ongoingDollars("expenses", "Ongoing expenses"),
+    ...ongoingDollars("expenses", "Average expenses"),
     ...ongoingDollars("miscRevenue", "Misc revenue"),
     ...ongoingDollars("revenue", "Revenue"),
   }),
@@ -237,15 +238,15 @@ export const allDisplaySectionVarbs = {
       monthly: { displayNameWithVariant: "Monthly CoC ROI as decimal" },
       yearly: { displayNameWithVariant: "Yearly CoC ROI as decimal" },
     }),
-    ...group("periodic", "expenses", "Expenses", {
-      targets: { displayNameWithSection: "Deal expenses" },
+    ...group("periodic", "expenses", "Average deal costs", {
+      targets: { displayNameWithSection: "Average deal costs" },
       monthly: {
-        displayNameWithVariant: "Expenses monthly",
-        displayNameFullContext: "Monthly deal expenses",
+        displayNameWithVariant: "Average costs monthly",
+        displayNameFullContext: "Average deal costs monthly",
       },
       yearly: {
-        displayNameWithVariant: "Expenses yearly",
-        displayNameFullContext: "Yearly deal expenses",
+        displayNameWithVariant: "Average costs yearly",
+        displayNameFullContext: "Average deal costs Yearly",
       },
     }),
     ...group("periodic", "revenue", "Revenue", {

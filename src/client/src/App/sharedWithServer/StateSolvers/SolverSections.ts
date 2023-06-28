@@ -239,8 +239,8 @@ export class SolverSections extends SolverSectionsBase {
   }
   loadAndShowArchivedDeals(archivedDeals: SectionPack<"deal">[]) {
     this.feStore.loadChildrenNoDuplicates("dealMain", archivedDeals);
-    const sessionVarbs = this.oneAndOnly("sessionVarbs");
-    sessionVarbs.basicSolvePrepper.updateValues({
+    const sessionStore = this.oneAndOnly("sessionStore");
+    sessionStore.basicSolvePrepper.updateValues({
       showArchivedDeals: true,
       archivedAreLoaded: true,
     });

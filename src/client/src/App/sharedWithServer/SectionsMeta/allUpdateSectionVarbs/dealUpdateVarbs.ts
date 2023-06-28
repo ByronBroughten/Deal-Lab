@@ -39,6 +39,17 @@ function purchasePiti(
   );
 }
 
+function nonPrincipal(
+  financingName: "purchaseFinancing" | "refiFinancing",
+  ending: "Monthly" | "Yearly"
+) {
+  return basicsS.equationLR(
+    "subtract",
+    propS.local(`expenses${ending}`),
+    propS.onlyChild(financingName, `averagePrincipal${ending}`)
+  );
+}
+
 export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
   return {
     ...updateVarbsS._typeUniformity,
@@ -47,6 +58,20 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
     isArchived: updateVarb("boolean", { initValue: false }),
     completionStatus: dealCompletionStatus,
     dealMode: updateVarb("dealMode", { initValue: "buyAndHold" }),
+    ...updateVarbsS.group("averageNonPrincipalCost", "periodic", "monthly", {
+      monthly: dealModeVarb({
+        homeBuyer: nonPrincipal("purchaseFinancing", "Monthly"),
+        buyAndHold: nonPrincipal("purchaseFinancing", "Monthly"),
+        fixAndFlip: nonPrincipal("purchaseFinancing", "Monthly"),
+        brrrr: nonPrincipal("refiFinancing", "Monthly"),
+      }),
+      yearly: dealModeVarb({
+        homeBuyer: nonPrincipal("purchaseFinancing", "Yearly"),
+        buyAndHold: nonPrincipal("purchaseFinancing", "Yearly"),
+        fixAndFlip: nonPrincipal("purchaseFinancing", "Yearly"),
+        brrrr: nonPrincipal("refiFinancing", "Yearly"),
+      }),
+    }),
     ...updateVarbsS.group("ongoingPiti", "periodic", "monthly", {
       monthly: dealModeVarb({
         homeBuyer: purchasePiti("purchaseFinancing", "Monthly"),

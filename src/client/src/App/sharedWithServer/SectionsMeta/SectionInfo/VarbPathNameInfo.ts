@@ -73,6 +73,7 @@ const allVarbPathParams = {
     "totalInvestment",
     ...targetNames("cashFlow", "periodic"),
     ...targetNames("cocRoi", "periodic"),
+    ...targetNames("averageNonPrincipalCost", "periodic"),
   ]),
   propertyExpensesMonthly: fixedVarbPathParams(
     "Property",

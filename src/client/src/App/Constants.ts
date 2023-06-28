@@ -29,7 +29,7 @@ const apiPathBit = "/api";
 const apiPathFull = `${env.apiUrlBase}${apiPathBit}`;
 
 const isBeta = false;
-const maxSectionSaveLimit = 1000;
+const maxSectionSaveLimit = 10000;
 const basicSectionSaveLimit = 4;
 const saveDelayInMs = 2000;
 export const config = {

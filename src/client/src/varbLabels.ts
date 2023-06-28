@@ -104,6 +104,7 @@ export const varbLabels = checkSectionInfoTexts({
     numUnits: input("Unit count"),
     numBedrooms: input("BR count"),
     likability: input("Likability"),
+    pricePerLikability: input("Price per likability"),
     sellingCosts: text({
       inputLabel: "Selling costs",
       title: "Selling Costs",
@@ -131,6 +132,8 @@ export const varbLabels = checkSectionInfoTexts({
     hasLoanExtra: multis.loanExtras,
   }),
   ...prop("financing", {
+    ...simpleOngoing("averagePrincipal", "Average principal payment"),
+    ...simpleOngoing("averageInterest", "Average interest payment"),
     loanUpfrontExpenses: text({
       inputLabel: "Upfront loan expenses",
     }),
@@ -169,12 +172,17 @@ export const varbLabels = checkSectionInfoTexts({
   }),
   ...prop("deal", {
     dealMode: multis.dealMode,
+    ...simpleOngoing("averageNonPrincipalCost", "Average non-principal costs", {
+      title: "Average Non-Principal Cost",
+      info: `The average monthly or yearly cost of all ongoing expenses that would be associated with this deal—property maintenance costs, taxes, loan payments, etc.—minus the average principal loan payment amount given the duration of your loan(s).\n\n
+      When you pay towards your principal, you gain equity in your property, so you don't really lose that money. So by subtracting that from the rest of your expenses, you can get a better idea of how much money this deal would actually cost you per month.\n\nHomebuyers can use this to compare deal expenses to what they'd otherwise spend as renters.`,
+    }),
     ...simpleOngoing("ongoingPiti", "PITI payments", {
       title: "PITI",
       info: `"PITI" stands for "principal and interest, taxes, and insurance". Often, these are the things included in the payments that homebuyers send to the bank every month.`,
     }),
     ...simpleOngoing("ongoingLoanPayment", "Loan payment"),
-    ...simpleOngoing("expenses", "Deal expenses"),
+    ...simpleOngoing("expenses", "Average ongoing costs"),
     totalProfit: input("Total profit"),
     totalInvestment: text({
       inputLabel: "Total investment",

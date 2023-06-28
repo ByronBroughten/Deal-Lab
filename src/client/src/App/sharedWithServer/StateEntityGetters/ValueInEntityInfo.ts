@@ -68,6 +68,8 @@ const fixAndFlip = [
 const hasOngoingOutputs = [
   "dealExpensesMonthly",
   "dealExpensesYearly",
+  "averageNonPrincipalCostMonthly",
+  "averageNonPrincipalCostYearly",
 ] as const;
 
 const hasRentBasics = ["targetRentMonthly", "targetRentYearly"] as const;

@@ -225,28 +225,11 @@ export class DbUser extends DbSectionsQuerierBase {
   private userNotFoundError(): UserNotFoundError {
     return DbUser.userNotFoundError();
   }
-
-  private getLoadedSectionPacks<CN extends DbStoreName>(
-    dbSections: DbSections,
-    childName: CN
-  ): SectionPack<DbSectionName<CN>>[] {
-    if (childName === "dealMain") {
-      const sectionPacks = dbSections.sectionPackArr(
-        childName
-      ) as SectionPack<"deal">[];
-      return sectionPacks.filter((pack) => {
-        const deal = PackBuilderSection.hydratePackAsOmniChild(pack);
-        return !deal.get.valueNext("isArchived");
-      }) as SectionPack<DbSectionName<CN>>[];
-    } else {
-      return dbSections.sectionPackArr(childName);
-    }
-  }
   async loadedDbUser(): Promise<LoadedDbUser> {
     const dbSections = await this.dbSections();
     const dbStore = PackBuilderSection.initAsOmniChild("dbStore");
     for (const childName of dbStoreNames) {
-      let sectionPacks = this.getLoadedSectionPacks(dbSections, childName);
+      let sectionPacks = dbSections.sectionPackArr(childName);
       dbStore.replaceChildren({
         childName,
         sectionPacks,

@@ -26,21 +26,29 @@ function propertyHoldingCosts(): UpdateFnProp[] {
   ];
 }
 
+const varb = updateVarb;
+
 export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
   return {
     ...varbsS._typeUniformity,
     ...varbsS.savableSection,
-    propertyMode: updateVarb("dealMode", {
+    propertyMode: varb("dealMode", {
       initValue: "buyAndHold",
     }),
-    likability: updateVarb("numObj", {
-      initValue: numObj(2.5),
-    }),
+    likability: varb("numObj", { initValue: numObj(5) }),
+    pricePerLikability: varb(
+      "numObj",
+      basicsS.equationLR(
+        "divide",
+        propS.local("purchasePrice"),
+        propS.local("likability")
+      )
+    ),
     completionStatus: propertyCompletionStatus,
-    streetAddress: updateVarb("string"),
-    city: updateVarb("string"),
-    state: updateVarb("string"),
-    zipCode: updateVarb("string"),
+    streetAddress: varb("string"),
+    city: varb("string"),
+    state: varb("string"),
+    zipCode: varb("string"),
     one: updateVarbS.one(),
 
     ...varbsS.group("taxesHolding", "periodic", "yearly", {
