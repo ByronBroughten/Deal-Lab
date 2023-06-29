@@ -191,7 +191,7 @@ export function makeExampleProperty<DM extends StateValue<"dealMode">>(
         makeExampleCapExList("Example CapEx", props.capExValue.items)
       );
 
-      const maintenance = property.onlyChild("maintenanceValue");
+      const maintenance = property.onlyChild("maintenanceOngoing");
       maintenance.updateValues({
         valueSourceName: props.maintenanceValue.valueSourceName,
       });

@@ -140,7 +140,10 @@ export function setPeriodicList<SN extends PeriodicListSn>(
   switchVal: "yearly" | "monthly"
 ) {
   const value = section as SolverSection<any> as SolverSection<PeriodicListSn>;
-  value.updateValues({ valueSourceName: "listTotal" });
+  value.updateValues({
+    valueSourceName: "listTotal",
+    valueDollarsPeriodicSwitch: switchVal,
+  });
   const list = value.onlyChild("ongoingList");
   for (const item of items) {
     list.addAndGetChild("ongoingItem", {

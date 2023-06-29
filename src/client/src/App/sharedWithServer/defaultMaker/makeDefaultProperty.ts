@@ -64,7 +64,7 @@ export function makeDefaultProperty(
   const utilityOngoing = property.addAndGetChild("utilityOngoing");
   utilityOngoing.addChild("ongoingList");
 
-  property.addChild("maintenanceValue");
+  property.addChild("maintenanceOngoing");
 
   const capExValue = property.addAndGetChild("capExValue");
   capExValue.addChild("capExList");

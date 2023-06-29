@@ -15,6 +15,7 @@ import {
   notApplicableString,
   NumObj,
 } from "../SectionsMeta/values/StateValue/NumObj";
+import { numObjNext } from "../SectionsMeta/values/StateValue/numObjNext";
 import {
   stringObj,
   StringObj,
@@ -116,6 +117,9 @@ export class SolveValueVarb<
       };
     },
     numberOne: (): 1 => 1,
+    threeHundredPerUnit: () => numObjNext("300*", ["numUnits"]),
+    threeHundredPerUnitTimesTwelve: () =>
+      numObjNext("300*", ["numUnits"], "*12"),
     activeIsComplete: (): boolean => {
       const { sectionContextName } = this.getterSection;
       if (sectionContextName !== "activeDealSystem") {

@@ -108,7 +108,7 @@ export class GetterVarb<
     }
   }
   get displayNumber(): string {
-    const num = this.numberOrQuestionMark;
+    const num = this.numObjOutput;
     if (typeof num === "number") {
       return this.meta.roundForDisplay(num);
     } else return num;

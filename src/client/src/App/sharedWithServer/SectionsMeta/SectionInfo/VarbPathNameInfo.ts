@@ -42,6 +42,8 @@ const allVarbPathParams = {
     "sqft",
     "numBedrooms",
     "numUnits",
+    ...targetNames("utilitiesHolding", "periodic"),
+    ...targetNames("utilitiesOngoing", "periodic"),
     ...targetNames("taxesHolding", "periodic"),
     ...targetNames("homeInsHolding", "periodic"),
     ...targetNames("taxesOngoing", "periodic"),

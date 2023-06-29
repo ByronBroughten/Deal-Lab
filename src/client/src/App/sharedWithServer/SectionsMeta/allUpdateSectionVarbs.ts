@@ -157,36 +157,44 @@ function makeAllUpdateSections() {
         targets: { updateFnName: "throwIfReached" },
         monthly: {
           updateOverrides: [
-            // "valueDollarsEditor",
-            // "threeHundredPerUnit",
-            updateOverride(
-              [switchS.local("valueSourceName", "none")],
-              updateBasics("emptyNumObj")
-            ),
-            updateOverride(
-              [switchS.local("valueSourceName", "zero")],
-              updateBasics("solvableTextZero")
-            ),
-            updateOverride(
-              [switchS.local("valueSourceName", "listTotal")],
-              updateBasicsS.loadFromChild("ongoingList", "totalMonthly")
-            ),
+            updateOverrideS.activeYearlyToMonthly("valueDollars"),
+            ...valueSourceOverrides("utilityValueSource", {
+              none: updateBasics("emptyNumObj"),
+              zero: updateBasicsS.zero,
+              sameAsHoldingPhase: updateBasicsS.loadByVarbPathName(
+                "utilitiesOngoingMonthly"
+              ),
+              threeHundredPerUnit: updateBasics("threeHundredPerUnit"),
+              valueDollarsEditor: updateBasicsS.loadFromLocal(
+                "valueDollarsPeriodicEditor"
+              ),
+              listTotal: updateBasicsS.loadFromChild(
+                "ongoingList",
+                "totalMonthly"
+              ),
+            }),
           ],
         },
         yearly: {
           updateOverrides: [
-            updateOverride(
-              [switchS.local("valueSourceName", "none")],
-              updateBasics("emptyNumObj")
-            ),
-            updateOverride(
-              [switchS.local("valueSourceName", "zero")],
-              updateBasics("solvableTextZero")
-            ),
-            updateOverride(
-              [switchS.local("valueSourceName", "listTotal")],
-              updateBasicsS.loadFromChild("ongoingList", "totalYearly")
-            ),
+            updateOverrideS.activeMonthlyToYearly("valueDollars"),
+            ...valueSourceOverrides("utilityValueSource", {
+              none: updateBasics("emptyNumObj"),
+              zero: updateBasicsS.zero,
+              sameAsHoldingPhase: updateBasicsS.loadByVarbPathName(
+                "utilitiesOngoingYearly"
+              ),
+              threeHundredPerUnit: updateBasics(
+                "threeHundredPerUnitTimesTwelve"
+              ),
+              valueDollarsEditor: updateBasicsS.loadFromLocal(
+                "valueDollarsPeriodicEditor"
+              ),
+              listTotal: updateBasicsS.loadFromChild(
+                "ongoingList",
+                "totalYearly"
+              ),
+            }),
           ],
         },
       }),

@@ -31,7 +31,7 @@ export function PropertyOngoingCosts({ feId }: FeIdProp) {
           feId={property.onlyChildFeId("utilityOngoing")}
         />
         <CapExValue feId={property.onlyChildFeId("capExValue")} />
-        <MaintenanceValue feId={property.onlyChildFeId("maintenanceValue")} />
+        <MaintenanceValue feId={property.onlyChildFeId("maintenanceOngoing")} />
         <MiscOngoingCost
           feId={property.onlyChildFeId("miscOngoingCost")}
           menuDisplayNames={["HOA Fees", "Landscaping", "Accounting", "Legal"]}

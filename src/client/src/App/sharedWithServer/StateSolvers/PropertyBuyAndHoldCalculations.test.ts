@@ -143,7 +143,7 @@ describe("Property buy and hold calculations", () => {
     addOngoingTaxesHomeInsYearly(property, 2400, 1200);
     setPeriodicList(property.onlyChild("utilityOngoing"), [600], "yearly");
     setPeriodicEditor(property.onlyChild("miscOngoingCost"), 1500, "yearly");
-    setPeriodicEditor(property.onlyChild("maintenanceValue"), 1300, "yearly");
+    setPeriodicEditor(property.onlyChild("maintenanceOngoing"), 1300, "yearly");
     setPeriodicEditor(property.onlyChild("capExValue"), 5000, "yearly");
     expect(property.numValue("expensesYearly")).toBe(12000);
     expect(property.numValue("expensesMonthly")).toBe(12000 / 12);

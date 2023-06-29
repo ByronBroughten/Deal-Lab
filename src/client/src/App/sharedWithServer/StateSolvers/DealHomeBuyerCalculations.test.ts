@@ -64,7 +64,7 @@ describe("homeBuyer output calculations", () => {
     setPeriodicEditor(property.onlyChild("homeInsOngoing"), 200, "monthly");
     setPeriodicEditor(property.onlyChild("miscOngoingCost"), 100, "monthly");
     setPeriodicList(property.onlyChild("utilityOngoing"), [50], "monthly");
-    setPeriodicEditor(property.onlyChild("maintenanceValue"), 30, "monthly");
+    setPeriodicEditor(property.onlyChild("maintenanceOngoing"), 30, "monthly");
     setPeriodicEditor(property.onlyChild("capExValue"), 80, "monthly");
     setFirstLoanFor912p6Monthly(financing, property);
     firstLoan.updateValues({

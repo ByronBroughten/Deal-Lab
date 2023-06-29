@@ -148,16 +148,16 @@ export const allSectionChildren = checkAllSectionChildren({
     costOverrunValue: "costOverrunValue",
     sellingCostValue: "sellingCostValue",
 
-    utilityHolding: "utilityValue",
-    utilityOngoing: "utilityValue",
-
     homeInsHolding: "homeInsHolding",
     taxesHolding: "taxesHolding",
 
     homeInsOngoing: "homeInsOngoing",
     taxesOngoing: "taxesOngoing",
 
-    maintenanceValue: "maintenanceValue",
+    utilityHolding: "utilityValue",
+    utilityOngoing: "utilityValue",
+
+    maintenanceOngoing: "maintenanceValue",
     capExValue: "capExValue",
 
     miscRevenueValue: "miscRevenueValue",

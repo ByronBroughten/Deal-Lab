@@ -27,6 +27,8 @@ const updateFnNames = checkUpdateFnNames({
     "getNumObjOfSwitch",
     "solvableTextZero",
     "solvableTextOne",
+    "threeHundredPerUnit",
+    "threeHundredPerUnitTimesTwelve",
     "solvableTextPointOne",
     "solvableTextPointZeroFive",
     "solvableTextPointEightFive",

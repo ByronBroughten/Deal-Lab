@@ -25,9 +25,7 @@ export function DealDetailRowVarbFound({ varbInfo, level }: Props) {
     level,
     displayName: getDetailDisplayName(varb.get),
     displayVarb: varb.get.displayVarb(),
-    ...(solvableText === `${varb.get.numberOrQuestionMark}`
-      ? {}
-      : { solvableText }),
+    ...(solvableText !== `${varb.get.numObjOutput}` && { solvableText }),
   };
   const { hasInVarbs } = varb;
 

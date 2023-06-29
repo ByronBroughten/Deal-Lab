@@ -61,7 +61,7 @@ function hasOngoingNoneNones(): UpdateFnProp[] {
   return [
     propS.onlyChild("repairValue", "valueSourceName"),
     propS.onlyChild("utilityOngoing", "valueSourceName"),
-    propS.onlyChild("maintenanceValue", "valueSourceName"),
+    propS.onlyChild("maintenanceOngoing", "valueSourceName"),
     propS.onlyChild("capExValue", "valueSourceName"),
   ];
 }
@@ -75,7 +75,7 @@ function hasOngoingValidInputs(): UpdateFnProp[] {
         "valueDollarsPeriodicEditor"
       ),
     ]),
-    propS.onlyChild("maintenanceValue", "valueDollarsPeriodicEditor", [
+    propS.onlyChild("maintenanceOngoing", "valueDollarsPeriodicEditor", [
       oSwitch(
         relVarbInfoS.local("valueSourceName"),
         "valueDollarsPeriodicEditor"

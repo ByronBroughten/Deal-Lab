@@ -161,9 +161,11 @@ function testList(
   rightSide: string[]
 ) {
   function getTestString() {
-    if (typeof leftSide.numberOrQuestionMark === "number")
+    if (leftSide.numberOrQuestionMark === "?") {
+      return leftSide.value("numObj").mainText;
+    } else {
       return `${leftSide.numberValue}`;
-    else return leftSide.value("numObj").mainText;
+    }
   }
   const testString = getTestString();
   const includes = rightSide.includes(testString);

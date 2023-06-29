@@ -182,7 +182,7 @@ export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
         propS.localBaseName("homeInsOngoing"),
         propS.localBaseName("miscCosts"),
         propS.onlyChild("utilityOngoing", "valueDollars"),
-        propS.onlyChild("maintenanceValue", "valueDollars"),
+        propS.onlyChild("maintenanceOngoing", "valueDollars"),
         propS.onlyChild("capExValue", "valueDollars"),
       ],
       "monthly"

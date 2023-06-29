@@ -1,17 +1,17 @@
 import {
   baseCapExItem,
-  baseOngoingItem
+  baseOngoingItem,
 } from "./allBaseSectionVarbs/baseOngoingItem";
 import {
   BaseSectionVarbs,
   baseSectionVarbs,
-  GeneralBaseSectionVarbs
+  GeneralBaseSectionVarbs,
 } from "./allBaseSectionVarbs/baseSectionVarbs";
 import { baseOptions } from "./allBaseSectionVarbs/baseUnits";
 import {
   baseVarb,
   baseVarbs,
-  baseVarbsS
+  baseVarbsS,
 } from "./allBaseSectionVarbs/baseVarbs";
 import { SectionName, sectionNames } from "./SectionName";
 
@@ -214,14 +214,13 @@ export function makeAllBaseSectionVarbs() {
 
       ...baseVarbsS.ongoingDollars("taxesHolding"),
       ...baseVarbsS.ongoingDollars("homeInsHolding"),
+      ...baseVarbsS.ongoingDollars("utilitiesHolding"),
 
       ...baseVarbsS.ongoingDollars("taxesOngoing"),
       ...baseVarbsS.ongoingDollars("homeInsOngoing"),
+      ...baseVarbsS.ongoingDollars("utilitiesOngoing"),
 
       ...baseVarbsS.monthsYearsInput("holdingPeriod"),
-
-      ...baseVarbsS.ongoingDollars("utilitiesOngoing"),
-      ...baseVarbsS.ongoingDollars("utilitiesHolding"),
 
       ...baseVarbsS.ongoingDollars("targetRent"),
       ...baseVarbsS.ongoingDollars("miscRevenue"),
@@ -282,7 +281,7 @@ export function makeAllBaseSectionVarbs() {
       valueSourceName: baseVarb("ongoingPhaseSource"),
     }),
     utilityValue: varbs({
-      ...baseVarbsS.ongoingDollars("valueDollars"),
+      ...baseVarbsS.ongoingDollarsInput("valueDollars"),
       valueSourceName: baseVarb("utilityValueSource"),
     }),
     maintenanceValue: varbs({

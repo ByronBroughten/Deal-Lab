@@ -21,8 +21,8 @@ export function LoanTerms({ feId }: FeIdProp) {
 
   const showLoanExpenses =
     showLoanPayments &&
-    loan.varbNext("expensesMonthly").numberOrQuestionMark !==
-      loan.varbNext("loanPaymentMonthly").numberOrQuestionMark;
+    loan.varbNext("expensesMonthly").displayValue !==
+      loan.varbNext("loanPaymentMonthly").displayValue;
 
   const varbNames: ("loanPaymentMonthly" | "expensesMonthly")[] = [
     "loanPaymentMonthly",
