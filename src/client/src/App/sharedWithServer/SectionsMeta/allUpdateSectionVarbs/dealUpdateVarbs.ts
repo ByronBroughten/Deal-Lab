@@ -62,13 +62,13 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
       monthly: dealModeVarb({
         homeBuyer: nonPrincipal("purchaseFinancing", "Monthly"),
         buyAndHold: nonPrincipal("purchaseFinancing", "Monthly"),
-        fixAndFlip: nonPrincipal("purchaseFinancing", "Monthly"),
+        fixAndFlip: basicsS.notApplicable,
         brrrr: nonPrincipal("refiFinancing", "Monthly"),
       }),
       yearly: dealModeVarb({
         homeBuyer: nonPrincipal("purchaseFinancing", "Yearly"),
         buyAndHold: nonPrincipal("purchaseFinancing", "Yearly"),
-        fixAndFlip: nonPrincipal("purchaseFinancing", "Yearly"),
+        fixAndFlip: basicsS.notApplicable,
         brrrr: nonPrincipal("refiFinancing", "Yearly"),
       }),
     }),
@@ -76,13 +76,13 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
       monthly: dealModeVarb({
         homeBuyer: purchasePiti("purchaseFinancing", "Monthly"),
         buyAndHold: purchasePiti("purchaseFinancing", "Monthly"),
-        fixAndFlip: purchasePiti("purchaseFinancing", "Monthly"),
+        fixAndFlip: basicsS.notApplicable,
         brrrr: purchasePiti("refiFinancing", "Monthly"),
       }),
       yearly: dealModeVarb({
         homeBuyer: purchasePiti("purchaseFinancing", "Yearly"),
         buyAndHold: purchasePiti("purchaseFinancing", "Yearly"),
-        fixAndFlip: purchasePiti("purchaseFinancing", "Yearly"),
+        fixAndFlip: basicsS.notApplicable,
         brrrr: purchasePiti("refiFinancing", "Yearly"),
       }),
     }),
@@ -96,10 +96,7 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
           "purchaseFinancing",
           "loanPaymentMonthly"
         ),
-        fixAndFlip: basicsS.loadFromChild(
-          "purchaseFinancing",
-          "loanPaymentMonthly"
-        ),
+        fixAndFlip: basicsS.notApplicable,
         brrrr: basicsS.loadFromChild("purchaseFinancing", "loanPaymentMonthly"),
       }),
       yearly: dealModeVarb({
@@ -111,10 +108,7 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
           "purchaseFinancing",
           "loanPaymentYearly"
         ),
-        fixAndFlip: basicsS.loadFromChild(
-          "purchaseFinancing",
-          "loanPaymentYearly"
-        ),
+        fixAndFlip: basicsS.notApplicable,
         brrrr: basicsS.loadFromChild("purchaseFinancing", "loanPaymentYearly"),
       }),
     }),
@@ -238,7 +232,7 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
         propS.onlyChild("mgmt", "expensesYearly"),
         propS.onlyChild("purchaseFinancing", "loanExpensesYearly")
       ),
-      fixAndFlip: notApplicable(),
+      fixAndFlip: basicsS.notApplicable,
       brrrr: basicsS.sumNums(
         propS.onlyChild("property", "expensesYearly"),
         propS.onlyChild("mgmt", "expensesYearly"),
@@ -269,7 +263,7 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
         propS.onlyChild("property", "revenueYearly"),
         propS.local("expensesYearly")
       ),
-      fixAndFlip: notApplicable(),
+      fixAndFlip: basicsS.notApplicable,
       brrrr: updateVarbS.equationLR(
         "subtract",
         propS.onlyChild("property", "revenueYearly"),
@@ -286,7 +280,7 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
         propS.local("cashFlowMonthly"),
         propS.local("totalInvestment")
       ),
-      fixAndFlip: notApplicable(),
+      fixAndFlip: basicsS.notApplicable,
       brrrr: updateVarbS.equationLR(
         "divide",
         propS.local("cashFlowMonthly"),
