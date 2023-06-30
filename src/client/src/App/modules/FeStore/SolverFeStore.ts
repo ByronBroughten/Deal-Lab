@@ -102,6 +102,11 @@ export class SolverFeStore extends SolverSectionBase<"feStore"> {
     sessionStore.basicSolvePrepper.loadSelfSectionPack(userData.sessionStore);
 
     this.solver.loadSelfAndSolve(userData.feStore);
+
+    const compareMenu = this.solver.get.onlyChild("dealCompareMenu");
+    for (const comparedDeal of compareMenu.children("comparedDeal")) {
+      this.solverSections.addDealSystemToCompare(comparedDeal.dbId);
+    }
     this.basicSolvePrepper.updateValues({ userDataFetchTryCount: 0 });
   }
   newestEntry<SN extends StoreName>(

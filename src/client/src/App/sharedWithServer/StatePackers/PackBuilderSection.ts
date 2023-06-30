@@ -16,11 +16,11 @@ import {
   SectionNameType,
 } from "../SectionsMeta/SectionNameByType";
 import { SectionValues } from "../SectionsMeta/values/StateValue";
+import { GetterSectionBase } from "../StateGetters/Bases/GetterSectionBase";
 import {
   GetterSection,
   GetterSectionRequiredProps,
 } from "../StateGetters/GetterSection";
-import { UpdaterSectionBase } from "../StateUpdaters/bases/updaterSectionBase";
 import {
   AddChildOptions,
   UpdaterSection,
@@ -41,7 +41,7 @@ export interface AddChildWithPackOptions<
 
 export class PackBuilderSection<
   SN extends SectionName
-> extends UpdaterSectionBase<SN> {
+> extends GetterSectionBase<SN> {
   static init<SN extends SectionName>(
     props: GetterSectionRequiredProps<SN>
   ): PackBuilderSection<SN> {
@@ -49,6 +49,9 @@ export class PackBuilderSection<
       ...props,
       ...GetterSection.initProps(props),
     });
+  }
+  get get() {
+    return new GetterSection(this.getterSectionProps);
   }
   get builderSections() {
     return new PackBuilderSections(this.getterSectionsProps);

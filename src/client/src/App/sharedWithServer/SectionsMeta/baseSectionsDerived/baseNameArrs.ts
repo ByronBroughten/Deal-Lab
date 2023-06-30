@@ -18,7 +18,7 @@ function makeBaseNameArrs() {
     hasVarb: sectionNames,
     hasDealMode: Arr.extractStrict(sectionNames, [
       "deal",
-      "dealCompareMainMenu",
+      "dealCompareMenu",
     ] as const),
     mainDealSection: Arr.extractStrict(sectionNames, [
       "deal",

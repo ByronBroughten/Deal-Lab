@@ -9,12 +9,12 @@ import { PlainIconBtn } from "../general/PlainIconBtn";
 import { icons } from "../Icons";
 import { MaterialStringEditor } from "../inputs/MaterialStringEditor";
 
-function useGetFilteredDeals(): GetterSection<"deal">[] {
+function useFilteredDealsToCompare(): GetterSection<"deal">[] {
   const main = useGetterMain();
   const feStore = main.onlyChild("feStore");
   const deals = feStore.children("dealMain");
 
-  const mainMenu = feStore.onlyChild("dealCompareMainMenu");
+  const mainMenu = feStore.onlyChild("dealCompareMenu");
 
   const selectMenu = main.onlyChild("dealCompareDealSelectMenu");
   const nameFilter = selectMenu.valueNext("dealNameFilter");
@@ -25,9 +25,7 @@ function useGetFilteredDeals(): GetterSection<"deal">[] {
       .includes(nameFilter.toLowerCase())
   );
 
-  const dealSystems = mainMenu.children("comparedDealSystem");
-  const comparedSystems = dealSystems.map((page) => page.onlyChild("deal"));
-  const comparedDbIds = comparedSystems.map(({ dbId }) => dbId);
+  const comparedDbIds = mainMenu.childrenDbIds("comparedDeal");
   return nameFilteredDeals.filter(
     (deal) =>
       !comparedDbIds.includes(deal.dbId) && !deal.valueNext("isArchived")
@@ -40,7 +38,7 @@ export function DealCompareDealSelectMenu({ closeMenu }: Props) {
 
   const menu = useGetterSectionOnlyOne("dealCompareDealSelectMenu");
   const nameFilterVarb = menu.varbNext("dealNameFilter");
-  const filteredDeals = useGetFilteredDeals();
+  const filteredDeals = useFilteredDealsToCompare();
   return (
     <View>
       <MaterialStringEditor

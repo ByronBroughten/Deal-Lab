@@ -1,9 +1,9 @@
 import { View } from "react-native";
 import { nativeTheme } from "../../theme/nativeTheme";
-import { CompareDealRmBtn } from "./CompareDealRmBtn";
+import { DealCompareRmValueBtn } from "./CompareDealRmBtn";
 
 type Props = { compareValueFeIds: string[] };
-export function ComparedDealXBtns({ compareValueFeIds }: Props) {
+export function ComparedDealRmValueBtns({ compareValueFeIds }: Props) {
   return (
     <View
       style={{
@@ -13,18 +13,14 @@ export function ComparedDealXBtns({ compareValueFeIds }: Props) {
       <View style={{ height: nativeTheme.comparedDealHead.height }} />
       <View>
         {compareValueFeIds.map((feId, idx) => (
-          <CompareDealRmBtn
+          <DealCompareRmValueBtn
             {...{
-              sectionName: "outputItem",
+              key: feId,
               feId,
               sx: {
-                borderRadius: 0,
                 ...(idx === 0 && {
                   borderTopLeftRadius: nativeTheme.subSection.borderRadius,
                 }),
-                borderBottomWidth: 0,
-                borderRightWidth: 0,
-                height: nativeTheme.comparedDealValue.height,
               },
             }}
           />

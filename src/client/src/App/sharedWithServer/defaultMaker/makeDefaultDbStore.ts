@@ -4,7 +4,7 @@ import { numObj } from "../SectionsMeta/values/StateValue/NumObj";
 import { stringObj } from "../SectionsMeta/values/StateValue/StringObj";
 import { PackBuilderSection } from "../StatePackers/PackBuilderSection";
 import { timeS } from "../utils/timeS";
-import { makeDefaultDealCompareMenu } from "./makeDefaultDealCompareMenu";
+import { makeDefaultDealCompareCache } from "./makeDefaultDealCompareCache";
 import { exampleDealBuyAndHold } from "./makeDefaultFeUser/exampleDealBuyAndHold";
 import { exampleDealHomebuyer } from "./makeDefaultFeUser/exampleDealHomebuyer";
 import { makeExampleCapExList } from "./makeDefaultFeUser/makeExampleCapEx";
@@ -50,13 +50,14 @@ export function makeDefaultDbStoreArrs({
   const stripeInfoPrivate = dbStore.addAndGetChild("stripeInfoPrivate");
   stripeInfoPrivate.updateValues({ customerId: "" });
 
-  dbStore.addChild("dealCompareMainMenu", {
-    sectionPack: makeDefaultDealCompareMenu(),
+  dbStore.addChild("dealCompareMenu", {
+    sectionPack: makeDefaultDealCompareCache(),
   });
 
   dbStore.addChild("outputSection", {
     sectionPack: makeDefaultOutputSection(),
   });
+
   dbStore.loadChildren({
     childName: "numVarbListMain",
     sectionPacks: makeExampleUserVarbLists(),

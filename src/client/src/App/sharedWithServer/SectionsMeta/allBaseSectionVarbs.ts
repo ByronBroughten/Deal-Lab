@@ -57,14 +57,9 @@ export function makeAllBaseSectionVarbs() {
     dealCompareDealSelectMenu: varbs({
       dealNameFilter: baseVarb("string"),
     }),
-    dealCompareMainMenu: varbs({
+    dealCompareMenu: varbs({
       ...baseVarbsS.savableSection,
       dealMode: baseVarb("dealModePlusMixed"),
-    }),
-    dealCompareCache: varbs({
-      ...baseVarbsS.savableSection,
-      dealMode: baseVarb("dealModePlusMixed"),
-      dbIds: baseVarb("stringArray"),
     }),
     variablesMenu: varbs({
       nameFilter: baseVarb("string"),

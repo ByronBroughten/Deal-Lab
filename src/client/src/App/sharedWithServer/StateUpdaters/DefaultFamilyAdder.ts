@@ -36,6 +36,7 @@ export class DefaultFamilyAdder<
     {
       sectionValues,
       sectionPack,
+      dbId,
       ...rest
     }: AddChildWithPackOptions<SN, CN> = {}
   ): void {
@@ -46,6 +47,10 @@ export class DefaultFamilyAdder<
       child.defaultPackLoader(sectionPack).integrateSectionPack();
     } else {
       child.defaultStateLoader.loadSelfDefaultState();
+    }
+
+    if (dbId) {
+      child.updater.updateDbId(dbId);
     }
     if (sectionValues) {
       child.updater.updateValues(sectionValues);

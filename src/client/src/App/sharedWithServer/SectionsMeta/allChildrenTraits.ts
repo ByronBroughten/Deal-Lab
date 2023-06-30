@@ -94,7 +94,7 @@ function checkAllChildrenTraits<RCS extends GenericAllChildrenTraits>(
 
 export const allChildrenTraits = checkAllChildrenTraits({
   ...makeDefaultAllChildrenTraits(),
-  dealCompareMainMenu: childrenTraits("dealCompareMainMenu", {
+  dealCompareCache: childrenTraits("dealCompareCache", {
     comparedDealSystem: childTraits({
       sectionContextSpecifier: indexesForSpecifiers.dealSystem,
     }),
@@ -105,6 +105,9 @@ export const allChildrenTraits = checkAllChildrenTraits({
     }),
   }),
   main: childrenTraits("main", {
+    dealCompareCache: childTraits({
+      sectionContextName: "comparedDealSystem",
+    }),
     feStore: childTraits({
       sectionContextName: "latentDealSystem",
     }),
@@ -119,9 +122,7 @@ export const allChildrenTraits = checkAllChildrenTraits({
     outputSection: childTraits({
       sectionContextName: "activeDealSystem",
     }),
-    dealCompareMainMenu: childTraits({
-      sectionContextName: "comparedDealSystem",
-    }),
+    dealCompareMenu: childTraits({ sectionContextName: "latentDealSystem" }),
     dealMain: childTraits({
       sectionContextSpecifier: indexesForSpecifiers.deal,
     }),

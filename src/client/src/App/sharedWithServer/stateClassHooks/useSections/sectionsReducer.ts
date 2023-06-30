@@ -222,6 +222,7 @@ export const sectionsReducer: React.Reducer<StateSections, SectionsAction> = (
     removeStoredDeal: ({ feId }) => solverSections.removeStoredDeal(feId),
     activateDeal: ({ feId }) => solverSections.activateDealAndSolve(feId),
     addActiveDeal: ({ dealMode }) => solverSections.addActiveDeal(dealMode),
+
     addDealToCompare: ({ feId }) => solverSections.addDealToCompare(feId),
     removeDealFromCompare: ({ feId }) => {
       solverSections.removeDealFromDealCompare(feId);

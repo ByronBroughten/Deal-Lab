@@ -4,7 +4,7 @@ import { FeIdProp } from "./SectionInfo/NanoIdInfo";
 
 export const sectionStores = {
   outputSection: "outputSection",
-  dealCompareMainMenu: "dealCompareMainMenu",
+  dealCompareMenu: "dealCompareMenu",
 
   dealMain: "deal",
   propertyMain: "property",

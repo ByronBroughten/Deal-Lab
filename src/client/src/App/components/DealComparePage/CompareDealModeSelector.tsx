@@ -4,7 +4,7 @@ import { nativeTheme } from "../../theme/nativeTheme";
 import { MuiSelect } from "../appWide/MuiSelect";
 
 export function CompareDealModeSelector() {
-  const menu = useGetterSectionOnlyOne("dealCompareMainMenu");
+  const menu = useGetterSectionOnlyOne("dealCompareMenu");
   return (
     <MuiSelect
       {...{

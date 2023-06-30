@@ -10,7 +10,7 @@ import { makeDefaultOutputList } from "./makeDefaultOutputList";
 
 type DealModeToOutputChildName = Record<
   DealMode<"plusMixed">,
-  ChildNameOfType<"dealCompareMainMenu", "outputList">
+  ChildNameOfType<"dealCompareMenu", "outputList">
 >;
 
 const _checkOutputListNames = <T extends DealModeToOutputChildName>(t: T) => t;

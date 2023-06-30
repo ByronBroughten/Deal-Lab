@@ -249,10 +249,10 @@ export class SolverSections extends SolverSectionsBase {
     this.deactivateDealIfActive(feId);
 
     const deal = this.solverSection({ sectionName: "deal", feId });
-    const compareMenu = this.oneAndOnly("dealCompareMainMenu");
+    const compareMenu = this.oneAndOnly("dealCompareMenu");
     if (
       compareMenu.get.hasChildByDbInfo({
-        childName: "comparedDealSystem",
+        childName: "comparedDeal",
         dbId: deal.get.dbId,
       })
     ) {
@@ -260,34 +260,49 @@ export class SolverSections extends SolverSectionsBase {
     }
     this.feStore.removeFromStore({ storeName: "dealMain", feId });
   }
+
+  addDealSystemToCompare(dbId: string) {
+    const menu = this.oneAndOnly("dealCompareCache");
+    const feStore = this.oneAndOnly("feStore");
+
+    const dealSystem = menu.addAndGetChild("comparedDealSystem", { dbId });
+    const dealToCompare = dealSystem.onlyChild("deal");
+
+    const deal = feStore.childByDbId({ childName: "dealMain", dbId });
+    dealToCompare.loadSelfAndSolve(deal.packMaker.makeSectionPack());
+  }
   addDealToCompare(feId: string) {
     const { feStore } = this;
-    const menu = this.oneAndOnly("dealCompareMainMenu");
 
-    const storeId = StoreId.make("dealCompareMainMenu", menu.get.feId);
+    const menu = this.oneAndOnly("dealCompareMenu");
+    const cache = this.oneAndOnly("dealCompareCache");
+
+    const storeId = StoreId.make("dealCompareMenu", menu.get.feId);
     feStore.addChangeToSave(storeId, { changeName: "update" });
 
-    const deal = feStore.get.child({
-      childName: "dealMain",
-      feId,
-    });
-    const dealSystem = menu.addAndGetChild("comparedDealSystem", {
-      dbId: deal.dbId,
-    });
+    const deal = feStore.get.child({ childName: "dealMain", feId });
+    const dbId = deal.dbId;
 
-    const dealToCompare = dealSystem.onlyChild("deal");
-    dealToCompare.loadSelfAndSolve(deal.packMaker.makeSectionPack());
+    menu.basicSolvePrepper.addChild("comparedDeal", { dbId });
 
-    const dealSystems = menu.children("comparedDealSystem");
+    if (
+      !cache.get.hasChildByDbInfo({ childName: "comparedDealSystem", dbId })
+    ) {
+      this.addDealSystemToCompare(dbId);
+    }
+
+    const dealSystems = cache.children("comparedDealSystem");
     const dealCount = dealSystems.length;
     if (dealCount === 1) {
-      menu.updateValues({ dealMode: dealToCompare.value("dealMode") });
+      menu.updateValues({ dealMode: deal.valueNext("dealMode") });
     } else if (dealCount > 1) {
       const dealMode = menu.value("dealMode");
       if (dealMode !== "mixed") {
-        const deals = dealSystems.map((system) => system.onlyChild("deal"));
-        for (const deal of deals) {
-          if (deal.value("dealMode") !== dealToCompare.value("dealMode")) {
+        const systemDeals = dealSystems.map((system) =>
+          system.onlyChild("deal")
+        );
+        for (const systemDeal of systemDeals) {
+          if (systemDeal.value("dealMode") !== deal.valueNext("dealMode")) {
             menu.updateValues({ dealMode: "mixed" });
           }
         }
@@ -295,15 +310,19 @@ export class SolverSections extends SolverSectionsBase {
     }
   }
   removeDealFromDealCompare(feId: string) {
-    const { dbId } = this.solverSection({ sectionName: "deal", feId }).get;
-    const compareMenu = this.oneAndOnly("dealCompareMainMenu");
-    const dealSystem = compareMenu.childByDbId({
-      childName: "comparedDealSystem",
+    const compareMenu = this.oneAndOnly("dealCompareMenu");
+
+    const { dbId } = this.solverSection({
+      sectionName: "dealSystem",
+      feId,
+    }).get;
+    const comparedDeal = compareMenu.childByDbId({
+      childName: "comparedDeal",
       dbId,
     });
 
-    dealSystem.removeSelfAndSolve();
-    const storeId = StoreId.make("dealCompareMainMenu", compareMenu.get.feId);
+    comparedDeal.removeSelfAndSolve();
+    const storeId = StoreId.make("dealCompareMenu", compareMenu.get.feId);
     this.feStore.addChangeToSave(storeId, { changeName: "update" });
   }
   activateDealAndSolve(feId: string): void {

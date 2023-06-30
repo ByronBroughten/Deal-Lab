@@ -34,8 +34,8 @@ export const allSectionTraits = checkAllSectionTraits({
   outputSection: sectionTraits({
     defaultStoreName: "outputSection",
   }),
-  dealCompareMainMenu: sectionTraits({
-    defaultStoreName: "dealCompareMainMenu",
+  dealCompareMenu: sectionTraits({
+    defaultStoreName: "dealCompareMenu",
   }),
   deal: sectionTraits({
     displayName: "Deal",

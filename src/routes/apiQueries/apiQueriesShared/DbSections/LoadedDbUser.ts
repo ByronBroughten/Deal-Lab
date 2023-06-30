@@ -137,26 +137,38 @@ export class LoadedDbUser extends GetterSectionBase<"dbStore"> {
       userDataStatus: "loaded",
     });
 
+    const dealPacks = this.dbSections.sectionPackArr("dealMain");
+    const feDealPacks = dealPacks.reduce((storePacks, pack) => {
+      const deal = PackBuilderSection.hydratePackAsOmniChild(pack);
+      sessionStore.addChild("dealMain", {
+        sectionValues: {
+          dateTimeCreated: deal.get.valueNext("dateTimeFirstSaved"),
+        },
+      });
+      if (!deal.get.valueNext("isArchived")) {
+        storePacks.push(pack);
+      }
+      return storePacks;
+    }, [] as SectionPack<"deal">[]);
+
+    const feDealPackIds = feDealPacks.map(({ dbId }) => dbId);
+
     for (const storeName of storeNames) {
       if (storeName === "dealMain") {
-        const packs = this.dbSections.sectionPackArr(
-          storeName
-        ) as SectionPack<"deal">[];
-        const feStorePacks: SectionPack<"deal">[] = [];
-        for (const pack of packs) {
-          const deal = PackBuilderSection.hydratePackAsOmniChild(pack);
-          sessionStore.addChild("dealMain", {
-            sectionValues: {
-              dateTimeCreated: deal.get.valueNext("dateTimeFirstSaved"),
-            },
-          });
-          if (!deal.get.valueNext("isArchived")) {
-            feStorePacks.push(pack);
-          }
-        }
         feStore.replaceChildren({
           childName: storeName,
-          sectionPacks: feStorePacks,
+          sectionPacks: feDealPacks,
+        });
+      } else if (storeName === "dealCompareMenu") {
+        feStore.replaceChildren({
+          childName: storeName,
+          sectionPacks: this.dbSections.sectionPackArr(storeName),
+        });
+        const compareMenu = feStore.onlyChild("dealCompareMenu");
+        compareMenu.children("comparedDeal").forEach((compared) => {
+          if (!feDealPackIds.includes(compared.get.dbId)) {
+            compared.removeSelf();
+          }
         });
       } else {
         feStore.replaceChildren({

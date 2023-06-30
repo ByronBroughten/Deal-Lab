@@ -16,7 +16,7 @@ export function DealCompareValueMenu() {
   const addChild = useAction("addChild");
   const feStore = useGetterFeStore();
 
-  const menu = feStore.get.onlyChild("dealCompareMainMenu");
+  const menu = feStore.get.onlyChild("dealCompareMenu");
   const dealMode = menu.valueNext("dealMode");
   const listName = outputListName(dealMode);
   const list = menu.onlyChild(listName);

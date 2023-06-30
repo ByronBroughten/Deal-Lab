@@ -29,7 +29,8 @@ export const sectionNames = [
   "outputList",
   "outputSection",
 
-  "dealCompareMainMenu",
+  "dealCompareMenu",
+  "dealCompareCache",
   "dealCompareDealSelectMenu",
 
   "outputItem",
@@ -63,6 +64,8 @@ export const sectionNames = [
 
   "homeInsHolding",
   "homeInsOngoing",
+
+  "comparedDeal",
 
   "maintenanceValue",
   "capExValue",

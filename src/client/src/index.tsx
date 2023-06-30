@@ -6,44 +6,17 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
+// Fix varb labels for "Show Details", or unite labeling with baseVarbs to make sure all varbs have their necessary labels, or something.
 
-// So what's happeneing is, the sectionPack has an invalid (depreciated) varbName.
-// I don't necessarily want it to fail for that reason.
-// I think the front-end should be allowed to accept sectionPacks that have old
-// data, lack new data, and allow for db artifacts like _id.
-
-// I could do a much looser validation. It's the front-end after all.
-// Allowing for _id might be too loose, though. I basically wouldn't be validating it at all.
-// Maybe I shouldn't validate them.
-// Or I should only validate what will be used from them. Functional validation.k
-
-// Maybe update homebuyer mode to get people's opinions on it
-// Make sure examples in defaultDbStore have dateTimeSaved
-
-// Restrict editing to only the n most recently created deals
-// - Maintain a session section that has dbId and timeCreated for each deal
-// - It gets sent on login with userData
-// - It's synced with add deal and remove deal
-
-// Restrict adding more than n deals
-// - use the session section to see how many total deals there are
-
-// Implement dealCompare cache
-// - add the cache section
-// - update dbStore
-// - make adding and removing deals to compare update the cache dbIds
-// - update the section to save on CompareSection to be the cache section
-// - make getUserData properly implement dealsToCompare from the cache
-// - make the mainDealMenu drop the outputLists and be session-dependent
+// Restrict editing and copying to only the n most recently created deals
+// - A list of the 5 most recent dbIds is maintained from sessionDeals, and the saved deals
+//   receive a prop if they are deserving of one.
 
 // (you really do need these tests to uncover any numerical errors)
 // Add tests for mgmt
 // Make property tests for brrrr
 // Make some deal tests for each of the dealTypes
-
-// Add more examples
-// - Example mgmt
-// - Example loan
+// Add tests for loan averagePrincipal, averageInterest, deal averageNonPrincipal
 
 // * Marketing *
 // - Consult marketing people
@@ -64,24 +37,14 @@ AppRegistry.runApplication("App", {
 // - Get an influencer to showcase it
 // Done with the app unless it makes any money
 
+// Unite ValueInEntityInfo, VarbPathNameInfo, and the variable labels.
+
+// - Adjust the varbs that Financing DealSubSectionClosed shows
+
 // - Get user variable displayNames to update mainText and entities of numObjs
 
 // Ordered loading
 // - load the deals and components using separate requests
-
-// Add homebuyer variables?
-// (not necessary, but easy)
-// - likeability
-// - purchase price per likability
-// - upfrontInvestment
-// - monthlyHousingBudget
-// Add an easy CapEx default for homebuyer mode (1% or 2% purchase price)
-// Re-add an easy CapEx default for buyAndHold and brrrr (20% rent)
-// Taylor the maintenance defaults for homebuyer mode
-// Is there an easy utilities default homeBuyer?
-// - Ongoing payments towards principle/towards not principle
-
-// Ducktype sectionPack validation so you don't have to fill out db sectionPacks
 
 // Make SolverSections test suite to test the reducer actions
 

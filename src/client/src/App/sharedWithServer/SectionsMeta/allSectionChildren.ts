@@ -47,6 +47,7 @@ export const allSectionChildren = checkAllSectionChildren({
     dealCompareDealSelectMenu: "dealCompareDealSelectMenu",
 
     // These are not saved
+    dealCompareCache: "dealCompareCache",
     sessionStore: "sessionStore",
 
     latentDealSystem: "dealSystem",
@@ -73,21 +74,15 @@ export const allSectionChildren = checkAllSectionChildren({
     numVarbList: "numVarbList",
     boolVarbList: "boolVarbList",
   }),
-  dealCompareCache: sectionChildren({
+  dealCompareMenu: sectionChildren({
+    comparedDeal: "comparedDeal",
     homeBuyerOutputList: "outputList",
     buyAndHoldOutputList: "outputList",
     fixAndFlipOutputList: "outputList",
     brrrrOutputList: "outputList",
     mixedOutputList: "outputList",
   }),
-  dealCompareMainMenu: sectionChildren({
-    comparedDealSystem: "dealSystem",
-    homeBuyerOutputList: "outputList",
-    buyAndHoldOutputList: "outputList",
-    fixAndFlipOutputList: "outputList",
-    brrrrOutputList: "outputList",
-    mixedOutputList: "outputList",
-  }),
+  dealCompareCache: sectionChildren({ comparedDealSystem: "dealSystem" }),
   outputList: {
     outputItem: sectionChild("outputItem"),
   },

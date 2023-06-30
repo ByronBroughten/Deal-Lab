@@ -122,8 +122,7 @@ const activeDealSystem = {
 
 const comparedDealSystemPath: ChildName[] = [
   "main",
-  "feStore",
-  "dealCompareMainMenu",
+  "dealCompareCache",
   "comparedDealSystem",
 ];
 const comparedDealSystem = makeDealSystemFocals(comparedDealSystemPath);

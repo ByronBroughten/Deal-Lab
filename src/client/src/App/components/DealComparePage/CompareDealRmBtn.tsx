@@ -1,27 +1,64 @@
 import { SxProps } from "@mui/material";
-import { FeSectionInfo } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
+import { FeIdProp } from "../../sharedWithServer/SectionsMeta/SectionInfo/NanoIdInfo";
+import { useAction } from "../../sharedWithServer/stateClassHooks/useAction";
 import { nativeTheme } from "../../theme/nativeTheme";
-import { RemoveSectionXBtn } from "../appWide/RemoveSectionXBtn";
+import { arrSx } from "../../utils/mui";
+import { XBtn } from "../appWide/Xbtn";
 
-interface Props extends FeSectionInfo {
+interface Props extends FeIdProp {
   sx?: SxProps;
 }
-export function CompareDealRmBtn({ sx, ...rest }: Props) {
+export function CompareDealRmBtn({ sx, feId }: Props) {
+  const removeComparedDeal = useAction("removeDealFromCompare");
   return (
-    <RemoveSectionXBtn
+    <DealCompareRmBtnStyled
+      {...{ sx, onClick: () => removeComparedDeal({ feId }) }}
+    />
+  );
+}
+
+interface RmValProps extends FeIdProp {
+  sx?: SxProps;
+}
+export function DealCompareRmValueBtn({ sx, feId }: RmValProps) {
+  const removeSelf = useAction("removeSelf");
+  return (
+    <DealCompareRmBtnStyled
+      {...{
+        onClick: () => removeSelf({ sectionName: "outputItem", feId }),
+        sx: [
+          {
+            borderRadius: 0,
+            borderBottomWidth: 0,
+            borderRightWidth: 0,
+            height: nativeTheme.comparedDealValue.height,
+          },
+          ...arrSx(sx),
+        ],
+      }}
+    />
+  );
+}
+
+type StyledProps = { onClick: () => void; sx?: SxProps };
+function DealCompareRmBtnStyled({ sx, ...rest }: StyledProps) {
+  return (
+    <XBtn
       {...{
         ...rest,
-        sx: {
-          backgroundColor: nativeTheme.light,
-          borderRadius: nativeTheme.muiBr0,
-          ...nativeTheme.subSection.borderLines,
-          "&:hover": {
-            borderColor: nativeTheme.notice.light,
-            backgroundColor: nativeTheme.notice.main,
-            color: nativeTheme.light,
+        sx: [
+          {
+            backgroundColor: nativeTheme.light,
+            borderRadius: nativeTheme.muiBr0,
+            ...nativeTheme.subSection.borderLines,
+            "&:hover": {
+              borderColor: nativeTheme.notice.light,
+              backgroundColor: nativeTheme.notice.main,
+              color: nativeTheme.light,
+            },
           },
-          ...sx,
-        },
+          ...arrSx(sx),
+        ],
       }}
     />
   );

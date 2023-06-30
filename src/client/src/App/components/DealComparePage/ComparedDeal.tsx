@@ -10,11 +10,10 @@ type Props = {
   style?: ViewStyle;
 };
 export function ComparedDeal({ feId, style }: Props) {
-  const menu = useGetterSectionOnlyOne("dealCompareMainMenu");
-  const dealSystem = menu.child({
-    childName: "comparedDealSystem",
-    feId,
-  });
+  const menu = useGetterSectionOnlyOne("dealCompareMenu");
+  const cache = useGetterSectionOnlyOne("dealCompareCache");
+
+  const dealSystem = cache.child({ childName: "comparedDealSystem", feId });
 
   const dealMode = menu.valueNext("dealMode");
   const listName = outputListName(dealMode);
@@ -35,7 +34,7 @@ export function ComparedDeal({ feId, style }: Props) {
       }}
     >
       <View style={{ height: nativeTheme.comparedDealHead.height }}>
-        <CompareDealRmBtn {...dealSystem.feInfo} />
+        <CompareDealRmBtn feId={dealSystem.feId} />
         <View
           style={{
             flex: 1,
