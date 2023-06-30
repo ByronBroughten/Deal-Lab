@@ -1,8 +1,10 @@
 import { Box } from "@mui/material";
 import { View } from "react-native";
 import { MoonLoader } from "react-spinners";
+import { constants } from "../../Constants";
 import { useUserDataStatus } from "../../modules/SectionActors/UserDataActor";
 import { useActionWithProps } from "../../sharedWithServer/stateClassHooks/useAction";
+import { useGetterFeStore } from "../../sharedWithServer/stateClassHooks/useFeStore";
 import { useGetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useGetterSection";
 import { IdOfSectionToSaveProvider } from "../../sharedWithServer/stateClassHooks/useIdOfSectionToSave";
 import { useQueryAction } from "../../sharedWithServer/stateClassHooks/useQueryAction";
@@ -13,7 +15,7 @@ import ChunkTitle from "../general/ChunkTitle";
 import { MuiRow } from "../general/MuiRow";
 import { icons } from "../Icons";
 import { BigStringEditor } from "../inputs/BigStringEditor";
-import { AccountPageDeal } from "./AccountPageDeal";
+import { SavedDeal } from "./SavedDeal";
 
 function useFilteredDeals() {
   const main = useGetterSectionOnlyOne("main");
@@ -42,7 +44,8 @@ function useFilteredSortedDeals() {
 }
 
 export const accountPageElementMargin = nativeTheme.s3;
-export function AccountPageDeals() {
+export function SavedDeals() {
+  const { labSubscription } = useGetterFeStore();
   const main = useGetterSectionOnlyOne("main");
   const session = main.onlyChild("sessionStore");
   const dealMenu = main.onlyChild("mainDealMenu");
@@ -57,6 +60,14 @@ export function AccountPageDeals() {
     ...session.varbInfo("showArchivedDeals"),
     value: false,
   });
+
+  const sessionDeals = session.children("dealMain");
+  sessionDeals.sort(
+    (a, b) => a.valueNext("dateTimeCreated") - b.valueNext("dateTimeCreated")
+  );
+
+  const nMostRecent = sessionDeals.slice(0, constants.basicStorageLimit);
+  const nRecentDbIds = nMostRecent.map(({ dbId }) => dbId);
 
   const dataStatus = useUserDataStatus();
   const loading = dataStatus === "loading";
@@ -135,13 +146,15 @@ export function AccountPageDeals() {
                 width: "100%",
               }}
             >
-              {deals.map(({ feId }, idx) => (
+              {deals.map(({ feId, dbId }, idx) => (
                 <IdOfSectionToSaveProvider
                   storeId={StoreId.make("dealMain", feId)}
                   key={feId}
                 >
-                  <AccountPageDeal
+                  <SavedDeal
                     {...{
+                      ...(labSubscription === "basicPlan" &&
+                        !nRecentDbIds.includes(dbId) && { isInactive: true }),
                       feId,
                       ...(idx === deals.length - 1 && {
                         style: { borderBottomWidth: 1 },

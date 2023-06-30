@@ -774,6 +774,9 @@ export class GetterSection<
   valueNext<VN extends VarbName<SN>>(varbName: VN): VarbValue<SN, VN> {
     return this.varb(varbName as string).valueNext() as VarbValue<SN, VN>;
   }
+  numValue<VN extends VarbName<SN>>(varbName: VN): number {
+    return this.varbNext(varbName).numberValue;
+  }
   valueSafe<VN extends VarbName<SN>, AV extends any>(
     varbName: VN,
     acceptedValues: readonly AV[]

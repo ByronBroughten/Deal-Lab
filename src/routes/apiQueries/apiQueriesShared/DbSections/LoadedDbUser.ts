@@ -139,13 +139,14 @@ export class LoadedDbUser extends GetterSectionBase<"dbStore"> {
 
     const dealPacks = this.dbSections.sectionPackArr("dealMain");
     const feDealPacks = dealPacks.reduce((storePacks, pack) => {
-      const deal = PackBuilderSection.hydratePackAsOmniChild(pack);
+      const deal = PackBuilderSection.hydratePackAsOmniChild(pack).get;
       sessionStore.addChild("dealMain", {
+        dbId: deal.dbId,
         sectionValues: {
-          dateTimeCreated: deal.get.valueNext("dateTimeFirstSaved"),
+          dateTimeCreated: deal.valueNext("dateTimeFirstSaved"),
         },
       });
-      if (!deal.get.valueNext("isArchived")) {
+      if (!deal.valueNext("isArchived")) {
         storePacks.push(pack);
       }
       return storePacks;

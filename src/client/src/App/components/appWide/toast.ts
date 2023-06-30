@@ -6,6 +6,12 @@ export function toastNotice(text: string) {
   });
 }
 
+export function showToastInfo(warningText: string) {
+  toast.info(warningText, {
+    position: "top-center",
+  });
+}
+
 export function toastLoginNotice(toWhat?: string): void {
   toastNotice(`To ${toWhat}, please login.`);
 }

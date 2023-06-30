@@ -1,6 +1,7 @@
 import { Box } from "@mui/system";
 import { unstable_batchedUpdates } from "react-dom";
 import { Text, View, ViewStyle } from "react-native";
+import { constants } from "../../Constants";
 import { VarbName } from "../../sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
 import { DealMode } from "../../sharedWithServer/SectionsMeta/values/StateValue/dealMode";
 import { dealModeLabels } from "../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
@@ -8,17 +9,18 @@ import {
   useAction,
   useActionWithProps,
 } from "../../sharedWithServer/stateClassHooks/useAction";
+import { useGetterSection } from "../../sharedWithServer/stateClassHooks/useGetterSection";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { reactNativeS } from "../../utils/reactNative";
 import { StyledActionBtn } from "../appWide/GeneralSection/MainSection/StyledActionBtn";
 import { LabeledVarbNext } from "../appWide/LabeledVarbNext";
+import { showToastInfo } from "../appWide/toast";
 import { useGoToPage } from "../customHooks/useGoToPage";
 import { MuiRow } from "../general/MuiRow";
+import { Row } from "../general/Row";
+import { icons } from "../Icons";
 import { BareStringEditor } from "../inputs/BareStringEditor";
 import { useConfirmationModal } from "../Modals/ConfirmationDialogueProvider";
-import { useGetterSection } from "./../../sharedWithServer/stateClassHooks/useGetterSection";
-import { Row } from "./../general/Row";
-import { icons } from "./../Icons";
 
 const titleProps = (displayName: string) => ({
   sx: {
@@ -51,12 +53,14 @@ const rowStyle = reactNativeS.view({
   alignItems: "center",
 });
 
-export function AccountPageDeal({
+export function SavedDeal({
   feId,
   style,
+  isInactive,
 }: {
   feId: string;
   style?: ViewStyle;
+  isInactive?: boolean;
 }) {
   const storeName = "dealMain";
   const deal = useGetterSection({ sectionName: "deal", feId });
@@ -115,6 +119,18 @@ export function AccountPageDeal({
     brrrr: "roiPercent",
   };
 
+  const archiveBtnProps = isArchived
+    ? {
+        left: icons.unArchive({ size: 20 }),
+        middle: "Un-Archive",
+        onClick: unArchiveDeal,
+      }
+    : {
+        left: icons.doArchive({ size: 20 }),
+        middle: "Archive",
+        onClick: archiveDeal,
+      };
+
   return (
     <View
       style={{
@@ -124,6 +140,7 @@ export function AccountPageDeal({
         paddingLeft: nativeTheme.s4,
         paddingRight: nativeTheme.s4,
         ...nativeTheme.formSection,
+        ...(isInactive && { backgroundColor: nativeTheme["gray-150"] }),
       }}
     >
       <Row style={{ justifyContent: "space-between" }}>
@@ -190,48 +207,45 @@ export function AccountPageDeal({
               left: icons.edit({ size: 20 }),
               middle: "Edit",
               onClick: editDeal,
+              ...(isInactive && {
+                showAsDisabled: true,
+                onClick: () =>
+                  showToastInfo(
+                    `To edit any deals other than your ${constants.basicStorageLimit} newest ones, upgrade to pro.`
+                  ),
+              }),
             }}
           />
           <StyledActionBtn
             {...{
-              onClick: copyDeal,
               sx: {
                 margin: nativeTheme.s1,
                 marginTop: nativeTheme.s25,
                 marginRight: nativeTheme.s15,
               },
+              ...(isInactive && { showAsDisabled: true }),
               left: icons.copy({ size: 20 }),
               middle: "Copy",
+              onClick: copyDeal,
+              ...(isInactive && {
+                showAsDisabled: true,
+                onClick: () =>
+                  showToastInfo(
+                    `To copy any deals other than your ${constants.basicStorageLimit} newest ones, upgrade to pro.`
+                  ),
+              }),
             }}
           />
-          {isArchived && (
-            <StyledActionBtn
-              {...{
-                sx: {
-                  margin: nativeTheme.s15,
-                  marginTop: nativeTheme.s25,
-                  marginRight: nativeTheme.s2,
-                },
-                left: icons.unArchive({ size: 20 }),
-                middle: "Un-Archive",
-                onClick: unArchiveDeal,
-              }}
-            />
-          )}
-          {!isArchived && (
-            <StyledActionBtn
-              {...{
-                sx: {
-                  margin: nativeTheme.s15,
-                  marginTop: nativeTheme.s25,
-                  marginRight: nativeTheme.s2,
-                },
-                left: icons.doArchive({ size: 20 }),
-                middle: "Archive",
-                onClick: archiveDeal,
-              }}
-            />
-          )}
+          <StyledActionBtn
+            {...{
+              sx: {
+                margin: nativeTheme.s15,
+                marginTop: nativeTheme.s25,
+                marginRight: nativeTheme.s2,
+              },
+              ...archiveBtnProps,
+            }}
+          />
           <StyledActionBtn
             {...{
               isDangerous: true,

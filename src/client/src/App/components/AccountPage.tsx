@@ -5,8 +5,8 @@ import { View } from "react-native";
 import { FeRouteName } from "../Constants/feRoutes";
 import { nativeTheme } from "../theme/nativeTheme";
 import { arrSx } from "../utils/mui";
-import { AccountPageDeals } from "./AccountPage/AccountPageDeals";
 import { NewDealSelector } from "./AccountPage/NewDealSelector";
+import { SavedDeals } from "./AccountPage/SavedDeals";
 import { HollowBtn } from "./appWide/HollowBtn";
 import { useMakeGoToPage } from "./customHooks/useGoToPage";
 import ChunkTitle from "./general/ChunkTitle";
@@ -61,7 +61,7 @@ export function AccountPage() {
           />
         </Row>
       </MuiRow>
-      <AccountPageDeals />
+      <SavedDeals />
     </View>
   );
 }

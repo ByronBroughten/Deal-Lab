@@ -151,7 +151,7 @@ export class SolverSection<
     return this.get.valueNext(varbName);
   }
   numValue<VN extends VarbName<SN>>(varbName: VN): number {
-    return this.get.varbNext(varbName).numberValue;
+    return this.get.numValue(varbName);
   }
   varb<VN extends VarbName<SN>>(varbName: VN): SolverVarb<SN> {
     return new SolverVarb({

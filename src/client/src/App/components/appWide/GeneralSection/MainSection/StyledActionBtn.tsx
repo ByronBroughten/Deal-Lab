@@ -45,7 +45,7 @@ export function StyledActionBtn({
               backgroundColor: nativeTheme.darkBlue.main,
             }),
             ...(showAsDisabled && {
-              color: nativeTheme.notice.dark,
+              color: nativeTheme["gray-600"],
               backgroundColor: "transparent",
             }),
           },

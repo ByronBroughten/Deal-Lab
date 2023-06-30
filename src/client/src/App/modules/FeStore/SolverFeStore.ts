@@ -1,4 +1,5 @@
 import { UserData } from "../../sharedWithServer/apiQueriesShared/validateUserData";
+import { Id } from "../../sharedWithServer/SectionsMeta/IdS";
 import { SectionPack } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/SectionPack";
 import { DbIdProp } from "../../sharedWithServer/SectionsMeta/SectionInfo/NanoIdInfo";
 import {
@@ -126,19 +127,15 @@ export class SolverFeStore extends SolverSectionBase<"feStore"> {
   copyInStore(props: FeStoreInfo) {
     const { storeName, feId } = props;
 
-    this.addToStore({ storeName: storeName });
-
-    const addedSection = this.solver.youngestChild(storeName);
-
     const toCopy = this.getterFeStore.get.child({
       childName: storeName,
       feId,
     });
 
-    const sectionPack = toCopy.packMaker.makeSectionPack();
-    const clone = SolverSection.initFromPackAsOmniChild(sectionPack);
-    clone.updater.newDbId();
+    const originalPack = toCopy.packMaker.makeSectionPack();
 
+    const clone = SolverSection.initFromPackAsOmniChild(originalPack);
+    clone.updater.newDbId();
     const name = clone.get.valueNext("displayName");
     const mainText = "Copy of " + name.mainText;
     clone.basicSolvePrepper.updateValues({
@@ -156,19 +153,22 @@ export class SolverFeStore extends SolverSectionBase<"feStore"> {
     }
 
     const clonePack = clone.packMaker.makeSectionPack();
-    addedSection.basicSolvePrepper.loadSelfSectionPack(clonePack);
-    addedSection.updateValuesAndSolve(timeS.makeDateTimeFirstLastSaved());
+    this.addToStore({
+      storeName: storeName,
+      options: { sectionPack: clonePack },
+    });
   }
   saveAndOverwriteToStore({ storeName, sectionPack }: SaveAsToStoreProps) {
-    this.addToStore({ storeName }, false);
+    this.addToStore(
+      { storeName, options: { dbId: Id.make(), sectionPack } },
+      false
+    );
     const added = this.solver.youngestChild(storeName);
-    added.loadSelfAndSolve(sectionPack);
-    added.updater.newDbId();
     const addedName = added.value("displayName").mainText;
     for (const child of this.get.children(storeName)) {
       if (child.feId !== added.get.feId) {
-        const childName = child.valueNext("displayName").mainText;
-        if (childName === addedName) {
+        const childDName = child.valueNext("displayName").mainText;
+        if (childDName === addedName) {
           this.removeFromStore({ storeName, feId: child.feId });
         }
       }
@@ -182,7 +182,9 @@ export class SolverFeStore extends SolverSectionBase<"feStore"> {
       const session = this.getterSections.oneAndOnly("sessionStore");
       const storedCount = session.childCount("dealMain");
       if (storedCount >= this.getterFeStore.storageLimit) {
-        return toastNotice("To add more deals, upgrade to pro.");
+        return toastNotice(
+          `To add more than ${this.getterFeStore.storageLimit} deals, upgrade to pro.`
+        );
       }
     }
 
