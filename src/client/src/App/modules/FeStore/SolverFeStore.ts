@@ -13,6 +13,7 @@ import {
   changeSavingToToSave,
   ChangeToSave,
 } from "../../sharedWithServer/SectionsMeta/values/StateValue/sectionChanges";
+import { showDealLimitReachedMessage } from "../../sharedWithServer/stateClassHooks/useStorageLimitReached";
 import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection";
 import { GetterSections } from "../../sharedWithServer/StateGetters/GetterSections";
 import { StoreId } from "../../sharedWithServer/StateGetters/StoreId";
@@ -26,7 +27,6 @@ import { SolverSection } from "../../sharedWithServer/StateSolvers/SolverSection
 import { SolverSections } from "../../sharedWithServer/StateSolvers/SolverSections";
 import { Obj } from "../../sharedWithServer/utils/Obj";
 import { timeS } from "../../sharedWithServer/utils/timeS";
-import { toastNotice } from "./../../components/appWide/toast";
 import { GetterFeStore } from "./GetterFeStore";
 
 export interface AddToStoreProps<CN extends StoreName = StoreName>
@@ -182,9 +182,7 @@ export class SolverFeStore extends SolverSectionBase<"feStore"> {
       const session = this.getterSections.oneAndOnly("sessionStore");
       const storedCount = session.childCount("dealMain");
       if (storedCount >= this.getterFeStore.storageLimit) {
-        return toastNotice(
-          `To add more than ${this.getterFeStore.storageLimit} deals, upgrade to pro.`
-        );
+        return showDealLimitReachedMessage();
       }
     }
 

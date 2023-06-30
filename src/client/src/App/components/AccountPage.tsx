@@ -3,6 +3,10 @@ import React from "react";
 import { unstable_batchedUpdates } from "react-dom";
 import { View } from "react-native";
 import { FeRouteName } from "../Constants/feRoutes";
+import {
+  showDealLimitReachedMessage,
+  useIsAtDealLimit,
+} from "../sharedWithServer/stateClassHooks/useStorageLimitReached";
 import { nativeTheme } from "../theme/nativeTheme";
 import { arrSx } from "../utils/mui";
 import { NewDealSelector } from "./AccountPage/NewDealSelector";
@@ -19,11 +23,18 @@ import { useDealModeContextInputModal } from "./Modals/InputModalProvider";
 const iconSize = 40;
 export function AccountPage() {
   const { setModal } = useDealModeContextInputModal();
-  const openAddDeal = () =>
-    setModal({
-      title: <ChunkTitle>New Deal</ChunkTitle>,
-      children: <NewDealSelector closeSelector={() => setModal(null)} />,
-    });
+  const isAtDealLimit = useIsAtDealLimit();
+  const openAddDeal = () => {
+    if (isAtDealLimit) {
+      showDealLimitReachedMessage();
+    } else {
+      setModal({
+        title: <ChunkTitle>New Deal</ChunkTitle>,
+        children: <NewDealSelector closeSelector={() => setModal(null)} />,
+      });
+    }
+  };
+
   return (
     <View>
       <MuiRow sx={{ justifyContent: "center" }}>
