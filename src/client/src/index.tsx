@@ -6,11 +6,20 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
+// Make maintenanceValue 1% price depend on ARV when appropriate
+// (or always, and make ARV depend on purchasePrice for homeBuyer and
+//  rental property)
+
+// I could possibly condense taxesHolding and homeInsHolding
+// to just taxesValue and homeInsValue
+
 // Fix varb labels for "Show Details", or unite labeling with baseVarbs to make sure all varbs have their necessary labels, or something.
 
-// Restrict editing and copying to only the n most recently created deals
-// - A list of the 5 most recent dbIds is maintained from sessionDeals, and the saved deals
-//   receive a prop if they are deserving of one.
+// Unite all the variable displayNames and labels.
+// - Make it force me to create a variableLabelObj for every numObj variable
+// - Make it throw an error if a fixed variable doesn't
+//   have a variable name
+// - Copy DisplayName functionality to varbLabels
 
 // (you really do need these tests to uncover any numerical errors)
 // Add tests for mgmt
