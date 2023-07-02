@@ -5,7 +5,7 @@ import { useGetterVarb } from "../../sharedWithServer/stateClassHooks/useGetterV
 import { nativeTheme } from "../../theme/nativeTheme";
 import { FeVarbInfoNext } from "./../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { TogglerBooleanVarb } from "./TogglerBooleanVarb";
-import { VarbLabel } from "./VarbLabel";
+import { VarbStringLabel } from "./VarbStringLabel";
 
 type Props = {
   feVarbInfo: FeVarbInfo;
@@ -26,7 +26,7 @@ export function ToggledNode({ feVarbInfo, toggledNode }: Props) {
       <TogglerBooleanVarb
         {...{
           feVarbInfo,
-          label: <VarbLabel names={feVarbInfo as FeVarbInfoNext} />,
+          label: <VarbStringLabel names={feVarbInfo as FeVarbInfoNext} />,
         }}
       />
       {value && toggledNode}

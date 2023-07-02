@@ -1,4 +1,4 @@
-import { variableLabel } from "../../../../../varbLabels";
+import { fixedVariableLabel } from "../../../../../varbLabels";
 import { ValueFixedVarbPathName } from "../../../StateEntityGetters/ValueInEntityInfo";
 import { Id } from "../../IdS";
 import {
@@ -26,7 +26,7 @@ export function numObjNext(...propArr: EntityNumObjPropArr): NumObj {
       const { pathName, varbName } = getVarbPathParams(varbPathName);
       const sectionName = pathSectionName(pathName);
 
-      const varbLabel = variableLabel(sectionName, varbName as any);
+      const varbLabel = fixedVariableLabel(sectionName, varbName as any);
 
       entities.push({
         ...entityInfo,

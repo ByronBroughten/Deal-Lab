@@ -4,6 +4,7 @@ import {
   VarbName,
 } from "./App/sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
 import { sectionVarbValueName } from "./App/sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionValues";
+import { RelLocalVarbInfo } from "./App/sharedWithServer/SectionsMeta/SectionInfo/RelVarbInfo";
 import {
   SectionName,
   sectionNames,
@@ -513,9 +514,8 @@ function simpleSpan<BN extends string>(
 }
 
 export interface VarbInfoTextProps {
-  inputLabel: string;
-  variableLabel: string;
-  detailsLabel: string;
+  inputLabel: DisplayName;
+  variableLabel: DisplayName;
   title: string;
   info: string;
 }
@@ -527,14 +527,12 @@ function input(inputLabel: string) {
 function text({
   inputLabel = "",
   variableLabel = inputLabel,
-  detailsLabel = variableLabel,
   title = "",
   info = "",
 }: Partial<VarbInfoTextProps>): VarbInfoTextProps {
   return {
     inputLabel,
     variableLabel,
-    detailsLabel,
     title,
     info,
   };
@@ -607,22 +605,31 @@ export const capExItemizeDescription = `Itemizing CapEx is pretty easy, and it c
 export function getVarbLabels<SN extends SectionName, VN extends VarbName<SN>>(
   sectionName: SN,
   varbName: VN
-): VarbInfoText {
+): VarbInfoTextProps {
   const sectionVarbs = varbLabels[sectionName];
-  return (sectionVarbs as any)[varbName] as VarbInfoText;
+  const labels = (sectionVarbs as any)[varbName];
+  if (!labels) {
+    throw new Error(`Varb ${sectionName}.${varbName} has no labels.`);
+  }
+  return labels;
 }
 
-export function variableLabel<SN extends SectionName, VN extends VarbName<SN>>(
-  sectionName: SN,
-  varbName: VN
-): string {
+export function fixedVariableLabel<
+  SN extends SectionName,
+  VN extends VarbName<SN>
+>(sectionName: SN, varbName: VN): string {
   const labels = getVarbLabels(sectionName, varbName);
   if (!labels) {
     throw new Error(`varbLabels for ${sectionName}.${varbName} returned null.`);
   }
-  if (labels.variableLabel) {
-    return labels.variableLabel;
-  } else {
+  const { variableLabel } = labels;
+  if (typeof variableLabel !== "string") {
+    throw new Error(`variableLabel is not a string.`);
+  } else if (!variableLabel) {
     throw new Error(`Variable label for ${sectionName}.${varbName} is blank`);
+  } else {
+    return variableLabel;
   }
 }
+
+export type DisplayName = string | RelLocalVarbInfo;

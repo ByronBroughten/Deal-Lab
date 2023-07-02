@@ -1,7 +1,7 @@
 import { SxProps } from "@mui/material";
 import { useGetterSection } from "../../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { SelectEditor } from "../../../../../../appWide/SelectEditor";
-import { VarbLabel } from "../../../../../../appWide/VarbLabel";
+import { VarbStringLabel } from "../../../../../../appWide/VarbStringLabel";
 import { NumObjEntityEditor } from "../../../../../../inputs/NumObjEntityEditor";
 
 type Props = { feId: string; sx?: SxProps };
@@ -18,7 +18,7 @@ export function CostOverrunValue({ feId, sx }: Props) {
         sx,
         selectProps: { sx: { minWidth: 160 } },
         feVarbInfo,
-        label: <VarbLabel names={feVarbInfo} />,
+        label: <VarbStringLabel names={feVarbInfo} />,
         unionValueName: "overrunValueSource",
         items: [
           ["valueDollarsEditor", "Custom amount"],

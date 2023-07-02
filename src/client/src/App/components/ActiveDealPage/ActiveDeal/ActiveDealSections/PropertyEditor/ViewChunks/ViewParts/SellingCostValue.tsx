@@ -3,7 +3,7 @@ import { StateValue } from "../../../../../../../sharedWithServer/SectionsMeta/v
 import { useGetterSection } from "../../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { StrictExtract } from "../../../../../../../sharedWithServer/utils/types";
 import { SelectAndItemizeEditor } from "../../../../../../appWide/SelectAndItemizeEditor";
-import { VarbLabel } from "../../../../../../appWide/VarbLabel";
+import { VarbStringLabel } from "../../../../../../appWide/VarbStringLabel";
 import { NumObjEntityEditor } from "../../../../../../inputs/NumObjEntityEditor";
 import { ListEditorOneTime } from "../../ValueShared/ListEditorOneTime";
 
@@ -42,7 +42,7 @@ export function SellingCostValue({ feId, sx }: Props) {
       {...{
         sx,
         feVarbInfo,
-        label: <VarbLabel names={feVarbInfo} />,
+        label: <VarbStringLabel names={feVarbInfo} />,
         selectProps: { sx: { minWidth: 160 } },
         itemizedModalTitle: "Selling costs",
         unionValueName: "sellingCostSource",

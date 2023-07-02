@@ -1,7 +1,7 @@
 import { StateValue } from "../../../../../../../sharedWithServer/SectionsMeta/values/StateValue";
 import { useGetterSection } from "../../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { SelectEditor } from "../../../../../../appWide/SelectEditor";
-import { VarbLabel } from "../../../../../../appWide/VarbLabel";
+import { VarbStringLabel } from "../../../../../../appWide/VarbStringLabel";
 import { NumObjEntityEditor } from "../../../../../../inputs/NumObjEntityEditor";
 
 export function MaintenanceValue({ feId }: { feId: string }) {
@@ -42,7 +42,7 @@ export function MaintenanceValue({ feId }: { feId: string }) {
         selectValue: valueSourceName,
         items: menuItems,
         equalsValue,
-        label: <VarbLabel names={feVarbInfo} />,
+        label: <VarbStringLabel names={feVarbInfo} />,
         makeEditor:
           valueSourceName === "valueDollarsPeriodicEditor"
             ? (props) => (

@@ -3,13 +3,12 @@ import React from "react";
 import {
   FeSectionInfo,
   FeVarbInfo,
-  FeVarbInfoNext,
 } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { useGetterSection } from "../../sharedWithServer/stateClassHooks/useGetterSection";
 import { useGetterSections } from "../../sharedWithServer/stateClassHooks/useGetterSections";
+import { useGetterVarb } from "../../sharedWithServer/stateClassHooks/useGetterVarb";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { arrSx } from "../../utils/mui";
-import { useVarbInfoText } from "../customHooks/useVarbInfoText";
 import { MuiRow } from "../general/MuiRow";
 import { InfoIcon } from "./InfoIcon";
 
@@ -28,9 +27,9 @@ export function LabeledVarbNext({ finder, ...rest }: LabeledVarbProps) {
     throw new Error("finder is empty");
   }
 
-  const { inputLabel, info, title } = useVarbInfoText(
-    finder[0] as FeVarbInfoNext
-  );
+  const varb = useGetterVarb(finder[0]);
+  const { info, title } = varb.varbLabels;
+  const { inputLabel } = varb;
 
   let toDisplay = "";
   const sections = useGetterSections();

@@ -1,8 +1,7 @@
 import React from "react";
-import { VarbInfoTextProps } from "../../../varbLabels";
+import { getVarbLabels, VarbInfoTextProps } from "../../../varbLabels";
 import { SectionVarbNames } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { SectionName } from "../../sharedWithServer/SectionsMeta/SectionName";
-import { useVarbInfoText } from "../customHooks/useVarbInfoText";
 import { IconProps } from "../Icons";
 import { LabelWithInfo } from "./LabelWithInfo";
 
@@ -13,19 +12,25 @@ export interface Props<SN extends SectionName>
   label?: React.ReactNode;
 }
 
-export function VarbLabel<SN extends SectionName>({
+export function VarbStringLabel<SN extends SectionName>({
   names,
   iconProps,
   label,
 }: Props<SN>) {
-  const value = useVarbInfoText(names);
+  const labels = getVarbLabels(names.sectionName, names.varbName);
+  if (!label) {
+    const { inputLabel } = labels;
+    if (typeof inputLabel !== "string") {
+      throw new Error("This is not a string label varb.");
+    }
+  }
   return (
     <LabelWithInfo
       {...{
         iconProps,
-        label: label || value.inputLabel,
-        infoTitle: value.title,
-        infoText: value.info,
+        label: label || labels.inputLabel,
+        infoTitle: labels.title,
+        infoText: labels.info,
       }}
     />
   );

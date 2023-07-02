@@ -1,5 +1,5 @@
 import { useGetterSection } from "../../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
-import { VarbLabel } from "../../../../../../appWide/VarbLabel";
+import { VarbStringLabel } from "../../../../../../appWide/VarbStringLabel";
 import { NumObjEntityEditor } from "../../../../../../inputs/NumObjEntityEditor";
 
 type Props = { feId: string };
@@ -12,7 +12,7 @@ export function ArvEditor({ feId }: Props) {
       editorType="equation"
       feVarbInfo={arvInfo}
       quickViewVarbNames={["purchasePrice", "rehabCost"]}
-      label={<VarbLabel names={arvInfo} />}
+      label={<VarbStringLabel names={arvInfo} />}
       sx={{
         "& .DraftEditor-root": {
           minWidth: 145,

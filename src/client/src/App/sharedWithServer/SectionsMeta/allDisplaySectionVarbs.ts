@@ -71,7 +71,6 @@ export const allDisplaySectionVarbs = {
       yearly: { displayNameWithVariant: "Home insurance yearly" },
     }),
   }),
-
   ...displaySectionVarbsProp("property", {
     purchasePrice: varb("Purchase price"),
     afterRepairValue: varb("After repair value"),

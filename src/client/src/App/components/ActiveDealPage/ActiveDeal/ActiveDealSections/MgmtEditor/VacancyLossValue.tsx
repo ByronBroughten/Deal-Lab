@@ -3,7 +3,7 @@ import { useGetterSection } from "../../../../../sharedWithServer/stateClassHook
 import { ValueFixedVarbPathName } from "../../../../../sharedWithServer/StateEntityGetters/ValueInEntityInfo";
 import { GetterSection } from "../../../../../sharedWithServer/StateGetters/GetterSection";
 import { SelectEditor } from "../../../../appWide/SelectEditor";
-import { VarbLabel } from "../../../../appWide/VarbLabel";
+import { VarbStringLabel } from "../../../../appWide/VarbStringLabel";
 import { NumObjEntityEditor } from "../../../../inputs/NumObjEntityEditor";
 
 function getProps(getter: GetterSection<"vacancyLossValue">): {
@@ -85,7 +85,7 @@ export function VacancyLossValue({ feId }: { feId: string }) {
           ["percentOfRentEditor", "Custom percent of rent"],
           ["dollarsEditor", "Custom dollar amount"],
         ],
-        label: <VarbLabel names={feVarbInfo} />,
+        label: <VarbStringLabel names={feVarbInfo} />,
         equalsValue,
         makeEditor: editorProps
           ? (props) => (

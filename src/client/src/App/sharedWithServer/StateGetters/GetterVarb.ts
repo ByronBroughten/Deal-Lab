@@ -1,4 +1,5 @@
 import { cloneDeep } from "lodash";
+import { getVarbLabels, VarbInfoTextProps } from "../../../varbLabels";
 import { DisplayOverrideSwitches } from "../SectionsMeta/displaySectionVarbs/displayVarb";
 import { FeInfoS, FeVarbInfo } from "../SectionsMeta/SectionInfo/FeInfo";
 import {
@@ -60,6 +61,33 @@ export class GetterVarb<
       ...this.feSectionInfo,
       varbName: this.varbName,
     };
+  }
+  get inputLabel() {
+    const { inputLabel } = this.varbLabels;
+    if (typeof inputLabel === "string") {
+      return inputLabel;
+    } else {
+      const varb = this.section.varbByFocalMixed(inputLabel);
+      const { valueName } = varb;
+      if (["stringObj", "string"].includes(valueName)) {
+        return varb.stringValue;
+      } else if (valueName === "numObj") {
+        return varb.stringInputLabel;
+      } else {
+        throw new Error(`valueName "${valueName}" is not accounted for.`);
+      }
+    }
+  }
+  get stringInputLabel() {
+    const { inputLabel } = this.varbLabels;
+    if (typeof inputLabel !== "string") {
+      throw new Error("The inputLabel isn't a string.");
+    } else {
+      return inputLabel;
+    }
+  }
+  get varbLabels(): VarbInfoTextProps {
+    return getVarbLabels(this.sectionName, this.varbName as any);
   }
   checkObjValue(): { isEmpty: boolean; isValid: boolean } {
     const value = this.multiValue("numObj", "stringObj", "string");

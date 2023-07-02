@@ -1,4 +1,4 @@
-import { variableLabel } from "../../../../varbLabels";
+import { fixedVariableLabel } from "../../../../varbLabels";
 import { ValidationError } from "../../utils/Error";
 import { Obj } from "../../utils/Obj";
 import { targetNames } from "../allBaseSectionVarbs/baseSwitchNames";
@@ -180,7 +180,7 @@ export function getVarbPathExtras<VPN extends VarbPathName>(
   return {
     ...params,
     sectionName,
-    displayName: variableLabel(sectionName, varbName as any),
+    displayName: fixedVariableLabel(sectionName, varbName as any),
     varbInfo: varbPathInfo(varbPathName),
   } as VarbPathExtras<VPN>;
 }

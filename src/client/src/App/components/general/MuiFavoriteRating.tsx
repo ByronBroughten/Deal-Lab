@@ -9,7 +9,7 @@ import { numObj } from "../../sharedWithServer/SectionsMeta/values/StateValue/Nu
 import { useAction } from "../../sharedWithServer/stateClassHooks/useAction";
 import { useGetterVarb } from "../../sharedWithServer/stateClassHooks/useGetterVarb";
 import { nativeTheme } from "../../theme/nativeTheme";
-import { VarbLabel } from "../appWide/VarbLabel";
+import { VarbStringLabel } from "../appWide/VarbStringLabel";
 
 type Props = FeVarbInfo;
 export function MuiFavoriteRating(feVarbInfo: Props) {
@@ -24,7 +24,7 @@ export function MuiFavoriteRating(feVarbInfo: Props) {
         width: "275px",
       }}
     >
-      <VarbLabel
+      <VarbStringLabel
         {...{
           names: feVarbInfo as FeVarbInfoNext,
           label: (

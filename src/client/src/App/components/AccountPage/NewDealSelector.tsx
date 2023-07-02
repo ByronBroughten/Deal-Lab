@@ -7,7 +7,7 @@ import { useGetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/
 import { nativeTheme } from "../../theme/nativeTheme";
 import { HollowBtn } from "../appWide/HollowBtn";
 import { MuiSelect } from "../appWide/MuiSelect";
-import { VarbLabel } from "../appWide/VarbLabel";
+import { VarbStringLabel } from "../appWide/VarbStringLabel";
 import { useGoToPage } from "../customHooks/useGoToPage";
 
 type Props = { closeSelector: () => void };
@@ -33,7 +33,7 @@ function NewDealSelectorAddDeal({ closeSelector }: Props) {
           sx: { width: "100%", mt: nativeTheme.s3 },
           selectProps: { sx: { width: "100%" } },
           label: (
-            <VarbLabel
+            <VarbStringLabel
               {...{ names: { sectionName: "deal", varbName: "dealMode" } }}
             />
           ),

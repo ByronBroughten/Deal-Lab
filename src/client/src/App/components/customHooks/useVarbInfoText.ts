@@ -1,18 +1,11 @@
-import {
-  VarbInfoText,
-  VarbInfoTextProps,
-  varbLabels,
-} from "../../../varbLabels";
-import { SectionVarbNames } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
+import { VarbInfoTextProps } from "../../../varbLabels";
+import { FeVarbInfo } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { SectionName } from "../../sharedWithServer/SectionsMeta/SectionName";
+import { useGetterVarb } from "../../sharedWithServer/stateClassHooks/useGetterVarb";
 
-export function useVarbInfoText<SN extends SectionName>({
-  sectionName,
-  varbName,
-}: SectionVarbNames<SN>): VarbInfoTextProps {
-  const props = (varbLabels[sectionName] as any)[varbName] as VarbInfoText;
-  if (props) return props;
-  else {
-    throw new Error(`${sectionName}.${varbName} returned null varbInfoText`);
-  }
+export function useVarbInfoText<SN extends SectionName>(
+  varbInfo: FeVarbInfo<SN>
+): VarbInfoTextProps {
+  const varb = useGetterVarb(varbInfo);
+  return varb.varbLabels;
 }

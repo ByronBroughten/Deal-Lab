@@ -3,7 +3,7 @@ import { StateValue } from "../../../../../../../sharedWithServer/SectionsMeta/v
 import { useGetterSection } from "../../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { LabelWithInfo } from "../../../../../../appWide/LabelWithInfo";
 import { SelectAndItemizeEditor } from "../../../../../../appWide/SelectAndItemizeEditor";
-import { VarbLabel } from "../../../../../../appWide/VarbLabel";
+import { VarbStringLabel } from "../../../../../../appWide/VarbStringLabel";
 import { NumObjEntityEditor } from "../../../../../../inputs/NumObjEntityEditor";
 import { CapExValueList } from "../../ValueShared/CapExListEditor";
 
@@ -41,7 +41,7 @@ export function CapExValue({ feId }: { feId: string }) {
           ],
           ["valueDollarsPeriodicEditor", "Custom amount"],
         ],
-        label: <VarbLabel names={feVarbInfo} />,
+        label: <VarbStringLabel names={feVarbInfo} />,
         selectValue: valueSourceName,
         makeEditor:
           valueSourceName === "valueDollarsPeriodicEditor"

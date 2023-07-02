@@ -1,7 +1,7 @@
 import { useGetterSection } from "../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { nativeTheme } from "../../../../../../theme/nativeTheme";
 import { SelectAndItemizeEditor } from "../../../../../appWide/SelectAndItemizeEditor";
-import { VarbLabel } from "../../../../../appWide/VarbLabel";
+import { VarbStringLabel } from "../../../../../appWide/VarbStringLabel";
 import { NumObjEntityEditor } from "../../../../../inputs/NumObjEntityEditor";
 import { ListEditorOneTime } from "../../PropertyEditor/ValueShared/ListEditorOneTime";
 
@@ -23,7 +23,7 @@ export function ClosingCostValue({ feId, fivePercentLoanDisplay }: Props) {
         selectProps: { sx: { minWidth: 140 } },
         feVarbInfo,
         unionValueName: "closingCostValueSource",
-        label: <VarbLabel names={feVarbInfo} />,
+        label: <VarbStringLabel names={feVarbInfo} />,
         makeEditor:
           valueSourceName === "valueDollarsEditor"
             ? (props) => (

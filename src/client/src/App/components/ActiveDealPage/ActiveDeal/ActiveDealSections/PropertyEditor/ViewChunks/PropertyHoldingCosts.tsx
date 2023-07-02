@@ -1,7 +1,7 @@
 import { FeIdProp } from "../../../../../../sharedWithServer/SectionsMeta/SectionInfo/NanoIdInfo";
 import { useGetterSection } from "../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { FormSectionLabeled } from "../../../../../appWide/FormSectionLabeled";
-import { VarbLabel } from "../../../../../appWide/VarbLabel";
+import { VarbStringLabel } from "../../../../../appWide/VarbStringLabel";
 import { MuiRow } from "../../../../../general/MuiRow";
 import { NumObjEntityEditor } from "../../../../../inputs/NumObjEntityEditor";
 import { MiscHoldingCost } from "./ViewParts/MiscHoldingCost";
@@ -18,7 +18,7 @@ export function PropertyHoldingCosts({ feId }: FeIdProp) {
       <MuiRow>
         <NumObjEntityEditor
           inputMargins
-          label={<VarbLabel names={holdingPeriodInfo} />}
+          label={<VarbStringLabel names={holdingPeriodInfo} />}
           feVarbInfo={holdingPeriodInfo}
         />
         <NumObjEntityEditor
