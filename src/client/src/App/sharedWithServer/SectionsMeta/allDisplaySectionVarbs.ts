@@ -171,7 +171,6 @@ export const allDisplaySectionVarbs = {
 
     loanTotalDollars: varb("Total loan amount"),
     closingCosts: varb("Closing Costs"),
-    wrappedInLoan: varb("Extras wrapped in loan"),
 
     mortgageInsUpfront: varb("Upfront mortgage insurance"),
     mortgageInsUpfrontEditor: varb("Upfront mortgage insurance"),

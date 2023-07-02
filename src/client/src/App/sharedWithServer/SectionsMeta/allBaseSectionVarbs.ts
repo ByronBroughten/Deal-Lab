@@ -317,12 +317,7 @@ export function makeAllBaseSectionVarbs() {
       ...baseVarbsS.ongoingDollarsInput("mortgageIns"),
       ...baseVarbs(
         "numObj",
-        [
-          "loanTotalDollars",
-          "closingCosts",
-          "wrappedInLoan",
-          "fivePercentBaseLoan",
-        ] as const,
+        ["loanTotalDollars", "closingCosts", "fivePercentBaseLoan"] as const,
         dollars
       ),
     } as const),
@@ -346,8 +341,6 @@ export function makeAllBaseSectionVarbs() {
     purchaseLoanValue: baseVarbsS.loanValue,
     repairLoanValue: baseVarbsS.loanValue,
     arvLoanValue: baseVarbsS.loanValue,
-
-    loanValue: baseVarbsS.loanValue,
 
     mgmt: varbs({
       ...baseVarbsS.savableSection,

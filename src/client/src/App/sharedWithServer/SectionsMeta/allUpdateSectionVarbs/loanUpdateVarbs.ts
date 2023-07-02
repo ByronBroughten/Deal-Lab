@@ -143,9 +143,6 @@ export function loanUpdateVarbs(): UpdateSectionVarbs<"loan"> {
         ],
       }
     ),
-    wrappedInLoan: updateVarbS.sumNums([
-      propS.children("wrappedInLoanValue", "value"),
-    ]),
     piCalculationName: updateVarb("string", {
       initValue: "piFixedStandard" as PiCalculationName,
     }),
