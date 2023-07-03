@@ -392,7 +392,7 @@ function makeAllUpdateSections() {
       } as const),
     }),
     ...prop("onetimeList", {
-      total: updateVarbS.sumNums([propS.children("singleTimeItem", "value")]),
+      total: updateVarbS.sumNums([propS.children("onetimeItem", "value")]),
       itemValueSource: updateVarb("editorValueSource", {
         initValue: "valueEditor",
       }),
@@ -413,7 +413,7 @@ function makeAllUpdateSections() {
         }),
       }),
     }),
-    ...prop("singleTimeValue", {
+    ...prop("onetimeValue", {
       ...varbsS.displayNameAndEditor,
       value: updateVarb("numObj", {
         updateFnName: "throwIfReached",
@@ -575,7 +575,7 @@ function makeAllUpdateSections() {
         updateOverrides: [updateOverrideS.loadedVarbProp("loadEndAdornment")],
       }),
     }),
-    ...prop("singleTimeItem", {
+    ...prop("onetimeItem", {
       ...varbsS._typeUniformity,
       ...varbsS.displayNameAndEditor,
       value: updateVarb("numObj", {

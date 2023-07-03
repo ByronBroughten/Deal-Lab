@@ -15,19 +15,19 @@ import { VarbListOngoing } from "../appWide/VarbLists/VarbListOngoing";
 import { Row } from "../general/Row";
 import { componentProps } from "../props/userComponentPropGroups";
 
-const listTypeNames = ["capEx", "periodic", "singleTime"] as const;
+const listTypeNames = ["capEx", "periodic", "onetime"] as const;
 type ListTypeName = (typeof listTypeNames)[number];
 
 type ListProps = Record<ListChildName, ListTypeName>;
 const listTypes: ListProps = {
-  sellingListMain: "singleTime",
-  repairsListMain: "singleTime",
+  sellingListMain: "onetime",
+  repairsListMain: "onetime",
   utilitiesListMain: "periodic",
   holdingCostsListMain: "periodic",
   capExListMain: "capEx",
   closingCostsListMain: "periodic",
-  outputListMain: "singleTime",
-  onetimeListMain: "singleTime",
+  outputListMain: "onetime",
+  onetimeListMain: "onetime",
   ongoingListMain: "periodic",
 };
 
@@ -37,7 +37,7 @@ function useListNodeMakers(
   listName: ListChildName
 ): Record<ListTypeName, MakeListNode> {
   return {
-    singleTime: (nodeProps) => (
+    onetime: (nodeProps) => (
       <IdOfSectionToSaveProvider
         storeId={StoreId.make(listName, nodeProps.feId)}
       >

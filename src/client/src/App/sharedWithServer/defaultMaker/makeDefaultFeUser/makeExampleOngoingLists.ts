@@ -46,7 +46,7 @@ export function makeExampleOneTimeList(
 
   for (const itemProps of itemPropArr) {
     const value = itemProps[1];
-    list.addChild("singleTimeItem", {
+    list.addChild("onetimeItem", {
       sectionValues: {
         displayNameEditor: itemProps[0],
         valueEditor: typeof value === "number" ? numObj(value) : value,

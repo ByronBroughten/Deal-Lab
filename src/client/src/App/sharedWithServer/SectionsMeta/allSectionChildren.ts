@@ -97,8 +97,8 @@ export const allSectionChildren = checkAllSectionChildren({
     ongoingList: sectionChild("ongoingList"),
   },
 
-  singleTimeValue: { onetimeList: sectionChild("onetimeList") },
-  onetimeList: { singleTimeItem: sectionChild("singleTimeItem") },
+  onetimeValue: { onetimeList: sectionChild("onetimeList") },
+  onetimeList: { onetimeItem: sectionChild("onetimeItem") },
   ongoingList: {
     ongoingItem: sectionChild("ongoingItem", {
       isListItem: true,
@@ -124,7 +124,7 @@ export const allSectionChildren = checkAllSectionChildren({
   loan: sectionChildren({
     loanBaseValue: "loanBaseValue",
     closingCostValue: "closingCostValue",
-    wrappedInLoanValue: "singleTimeValue",
+    wrappedInLoanValue: "onetimeValue",
     customVarb: "customVarb",
   }),
   loanBaseValue: sectionChildren({

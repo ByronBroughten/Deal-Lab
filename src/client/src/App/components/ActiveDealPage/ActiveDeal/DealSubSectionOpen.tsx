@@ -1,9 +1,8 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
-import { constants } from "../../../Constants";
 import { nativeTheme } from "../../../theme/nativeTheme";
 import { BackBtnWrapper } from "../../appWide/BackBtnWrapper";
 import { FormSection } from "../../appWide/FormSection";
+import { useGoToPage } from "../../customHooks/useGoToPage";
 import { FinishBtn } from "./FinishBtn";
 import { SubSectionOpen } from "./SubSectionOpen";
 
@@ -13,7 +12,7 @@ type Props = {
 };
 
 export function DealSubSectionOpen({ children, finishIsAllowed }: Props) {
-  const navigate = useNavigate();
+  const goToActiveDeal = useGoToPage("activeDeal");
   return (
     <BackBtnWrapper {...{ to: -1, label: "Back" }}>
       <SubSectionOpen>
@@ -24,7 +23,7 @@ export function DealSubSectionOpen({ children, finishIsAllowed }: Props) {
               boxShadow: "none",
               border: `1px solid ${nativeTheme["gray-400"]}`,
             }}
-            onClick={() => navigate(constants.feRoutes.activeDeal)}
+            onClick={goToActiveDeal}
             btnText="Finish"
           />
         </FormSection>

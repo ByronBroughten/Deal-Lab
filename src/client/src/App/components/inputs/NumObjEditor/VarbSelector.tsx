@@ -47,10 +47,8 @@ export function VarbSelector({
     >
       {collectionProps.map(({ rowInfos, collectionId, ...rest }) => {
         const rowInfosNext = rowInfos.filter((info) => {
-          const { displayNameFull } = latent.varbByFocalMixed(info);
-          return displayNameFull
-            .toLowerCase()
-            .includes(nameFilter.toLowerCase());
+          const { variableLabel } = latent.varbByFocalMixed(info);
+          return variableLabel.toLowerCase().includes(nameFilter.toLowerCase());
         });
         return rowInfosNext.length > 0 ? (
           <VarbSelectorCollection

@@ -57,7 +57,7 @@ export function makeExampleLoan(props: ExampleLoanProps) {
   closingCostValue.updateValues(costProps);
   const closingCostList = closingCostValue.onlyChild("onetimeList");
   for (const item of items) {
-    const closingCostItem = closingCostList.addAndGetChild("singleTimeItem");
+    const closingCostItem = closingCostList.addAndGetChild("onetimeItem");
     closingCostItem.updateValues({
       displayNameEditor: item.displayName,
       valueEditor: item.value,

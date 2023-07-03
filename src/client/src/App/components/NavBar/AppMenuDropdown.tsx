@@ -3,10 +3,9 @@ import { FaHandshake } from "react-icons/fa";
 import { HiOutlineVariable } from "react-icons/hi";
 import { IoIosGitCompare } from "react-icons/io";
 import { SiWebcomponentsdotorg } from "react-icons/si";
-import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { feRoutes } from "../../Constants/feRoutes";
 import theme from "../../theme/Theme";
+import { useMakeGoToPage } from "../customHooks/useGoToPage";
 import { StandardBtnProps } from "../general/StandardProps";
 import { AppMenuBtn } from "./AppMenuBtn";
 
@@ -16,18 +15,17 @@ interface BtnProps extends StandardBtnProps {
 const iconSize = 22;
 
 const navBtnNames = ["deal", "variables", "lists", "compare"] as const;
-export type NavBtnName = typeof navBtnNames[number];
+export type NavBtnName = (typeof navBtnNames)[number];
 
 export type AppMenuProps = { activeBtnName?: NavBtnName };
 export function AppMenuDropdown({ activeBtnName }: AppMenuProps) {
   const [activeName, setActiveName] = React.useState(activeBtnName);
-
-  const navigate = useNavigate();
+  const makeGoToPage = useMakeGoToPage();
   const navBtns = {
     deal: (props: BtnProps) => (
       <AppMenuBtn
         {...props}
-        onClick={() => navigate(feRoutes.activeDeal)}
+        onClick={makeGoToPage("activeDeal")}
         text={"Deal"}
         icon={<FaHandshake size={iconSize} />}
       />
@@ -35,7 +33,7 @@ export function AppMenuDropdown({ activeBtnName }: AppMenuProps) {
     variables: (props: BtnProps) => (
       <AppMenuBtn
         {...props}
-        onClick={() => navigate(feRoutes.userVariables)}
+        onClick={makeGoToPage("userVariables")}
         text={"Variables"}
         icon={
           <HiOutlineVariable
@@ -48,7 +46,7 @@ export function AppMenuDropdown({ activeBtnName }: AppMenuProps) {
     lists: (props: BtnProps) => (
       <AppMenuBtn
         {...props}
-        onClick={() => navigate(feRoutes.components)}
+        onClick={makeGoToPage("components")}
         text={"Components"}
         icon={<SiWebcomponentsdotorg size={iconSize} />}
       />
@@ -56,7 +54,7 @@ export function AppMenuDropdown({ activeBtnName }: AppMenuProps) {
     compare: (props: BtnProps) => (
       <AppMenuBtn
         {...props}
-        onClick={() => navigate(feRoutes.compare)}
+        onClick={makeGoToPage("compare")}
         text={"Compare"}
         icon={
           <IoIosGitCompare

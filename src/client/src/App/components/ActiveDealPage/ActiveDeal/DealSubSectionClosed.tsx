@@ -112,7 +112,7 @@ function getFinancingProps(
       "loanTotalDollars",
       "loanPaymentMonthly",
       "loanUpfrontExpenses",
-      "loanExpensesYearly"
+      "loanExpensesMonthly"
     ),
   };
 }

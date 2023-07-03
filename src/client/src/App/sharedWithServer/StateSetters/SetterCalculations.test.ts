@@ -37,7 +37,7 @@
 //     const propertyCostList = propertyOnetime.onlyChild("onetimeList");
 //     const propertyCosts = [8000, 2000];
 //     for (const amount of propertyCosts) {
-//       propertyCostList.addChild("singleTimeItem", {
+//       propertyCostList.addChild("onetimeItem", {
 //         sectionValues: { valueEditor: numObj(amount) },
 //       });
 //     }
@@ -60,7 +60,7 @@
 //     const mgmtCostList = mgmtOnetime.onlyChild("onetimeList");
 //     const mgmtCosts = [4000, 6000];
 //     for (const amount of mgmtCosts) {
-//       mgmtCostList.addChild("singleTimeItem", {
+//       mgmtCostList.addChild("onetimeItem", {
 //         sectionValues: { valueEditor: numObj(amount) },
 //       });
 //     }
@@ -189,7 +189,7 @@
 //   const wrapped = wrappedValue.onlyChild("onetimeList");
 //   const amounts = [6000, 14000];
 //   for (const amount of amounts) {
-//     wrapped.addChild("singleTimeItem", {
+//     wrapped.addChild("onetimeItem", {
 //       sectionValues: { valueEditor: numObj(amount) },
 //     });
 //   }

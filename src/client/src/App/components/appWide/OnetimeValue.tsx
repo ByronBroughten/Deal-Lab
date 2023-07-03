@@ -12,7 +12,7 @@ export function OnetimeValue(props: ValueSectionOneTimeProps) {
     <ValueSectionGeneric
       {...{
         ...props,
-        sectionName: "singleTimeValue",
+        sectionName: "onetimeValue",
         valueName: "value",
         valueEditorName: "valueEditor",
         makeItemizedListNode: (props) => (

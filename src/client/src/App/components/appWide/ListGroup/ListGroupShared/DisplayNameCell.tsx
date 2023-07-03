@@ -14,7 +14,7 @@ export function EntityDisplayNameCell({ focalInfo, varbInfo }: EntityProps) {
   const hasVarb = section.hasVarbByFocalMixed(varbInfo);
   if (hasVarb) {
     const varb = section.varbByFocalMixed(varbInfo);
-    return <DisplayNameCellStyled {...{ displayName: varb.displayNameFull }} />;
+    return <DisplayNameCellStyled {...{ displayName: varb.variableLabel }} />;
   } else {
     return <DisplayNameNotFoundCell />;
   }

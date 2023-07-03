@@ -94,7 +94,7 @@ export function makeAllBaseSectionVarbs() {
       valuePercentEditor: baseVarb("numObj", percent),
       valueDecimal: baseVarb("numObj", decimal),
     }),
-    singleTimeValue: varbs({
+    onetimeValue: varbs({
       ...varbsS.displayNameAndEditor,
       value: baseVarb("numObj", dollars),
       valueEditor: baseVarb("numObj"),
@@ -136,7 +136,7 @@ export function makeAllBaseSectionVarbs() {
       ...baseVarbsS.savableSection,
       itemValueSource: baseVarb("loadedVarbSource"),
     }),
-    singleTimeItem: varbs({
+    onetimeItem: varbs({
       ...baseVarbsS.displayNameAndEditor,
       value: baseVarb("numObj"),
       valueEditor: baseVarb("numObj"),
@@ -329,7 +329,7 @@ export function makeAllBaseSectionVarbs() {
     }),
     loanBaseExtra: varbs({
       hasLoanExtra: baseVarb("boolean"),
-      valueSourceName: baseVarb("dollarsOrList"),
+      valueSourceName: baseVarb("dollarsListOrZero"),
       valueDollars: baseVarb("numObj", dollars),
       valueDollarsEditor: baseVarb("numObj", dollars),
     }),

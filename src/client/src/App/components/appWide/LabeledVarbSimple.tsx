@@ -25,7 +25,7 @@ function useLabeledVarb({
     };
 
   const varb = sections.varb(feVarbInfo);
-  displayLabel = displayLabel ?? varb.displayName;
+  displayLabel = displayLabel ?? varb.inputLabel;
   displayVarb = displayVarb ?? varb.displayVarb(adornments);
 
   if (parenthInfo) {

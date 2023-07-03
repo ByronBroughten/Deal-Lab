@@ -56,7 +56,7 @@ export function LabeledVarb({
   return (
     <StyledLabeledVarb
       {...{
-        labelText: varb.displayName,
+        labelText: varb.inputLabel,
         displayVarb: varb.displayVarb(),
         labelId: varb.varbId,
         ...rest,

@@ -42,10 +42,10 @@ export const NumObjVarbSelector = React.memo(
 
       const focalSection = useGetterSection(feInfo);
       const onVarbSelect: OnVarbSelect = (varbInfo) => {
-        const { displayNameFull } = focalSection.varbByFocalMixed(varbInfo);
+        const { variableLabel } = focalSection.varbByFocalMixed(varbInfo);
         insertVarbEntity({
           setEditorState,
-          displayName: displayNameFull,
+          displayName: variableLabel,
           varbInfo,
         });
       };

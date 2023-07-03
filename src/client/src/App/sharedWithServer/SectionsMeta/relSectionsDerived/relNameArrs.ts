@@ -8,7 +8,7 @@ export const relNameArrs = {
   hasStore: storeSectionNames,
   hasChild: hasChildSectionNames,
   valueSection: Arr.extractStrict(sectionNames, [
-    "singleTimeValue",
+    "onetimeValue",
     "ongoingValue",
   ] as const),
 } as const;

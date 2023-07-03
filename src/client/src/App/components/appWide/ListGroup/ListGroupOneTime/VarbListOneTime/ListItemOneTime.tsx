@@ -6,7 +6,7 @@ type MemoProps = { feId: string; valueSourceName: string };
 const ListItemOneTimeMemo = React.memo(function ListItemOneTimeMemo({
   feId,
 }: MemoProps) {
-  const feInfo = { sectionName: "singleTimeItem", feId } as const;
+  const feInfo = { sectionName: "onetimeItem", feId } as const;
   return (
     <VarbListItemGeneric {...{ ...feInfo, valueEditorName: "valueEditor" }} />
   );
@@ -15,7 +15,7 @@ const ListItemOneTimeMemo = React.memo(function ListItemOneTimeMemo({
 export function ListItemOneTime({ feId }: { feId: string }) {
   const item = useGetterSection({
     feId,
-    sectionName: "singleTimeItem",
+    sectionName: "onetimeItem",
   });
   return (
     <ListItemOneTimeMemo

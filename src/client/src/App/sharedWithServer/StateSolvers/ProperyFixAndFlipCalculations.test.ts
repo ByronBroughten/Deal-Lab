@@ -53,7 +53,7 @@ describe("Property fix and flip calculations", () => {
     const list = sellingCosts.onlyChild("onetimeList");
     const listItems = [1000, 1500, 2000, 2500];
     for (const num of listItems) {
-      list.addChildAndSolve("singleTimeItem", {
+      list.addChildAndSolve("onetimeItem", {
         sectionValues: {
           valueSourceName: "valueEditor",
           valueEditor: numObj(num),

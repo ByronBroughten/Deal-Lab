@@ -2,15 +2,20 @@ import { SwitchTargetKey } from "./App/sharedWithServer/SectionsMeta/allBaseSect
 import {
   sectionVarbNames,
   VarbName,
+  VarbNameWide,
 } from "./App/sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
 import { sectionVarbValueName } from "./App/sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionValues";
-import { RelLocalVarbInfo } from "./App/sharedWithServer/SectionsMeta/SectionInfo/RelVarbInfo";
+import {
+  RelLocalVarbInfo,
+  relVarbInfoS,
+} from "./App/sharedWithServer/SectionsMeta/SectionInfo/RelVarbInfo";
 import {
   SectionName,
   sectionNames,
 } from "./App/sharedWithServer/SectionsMeta/SectionName";
 import { dealModeLabels } from "./App/sharedWithServer/SectionsMeta/values/StateValue/unionValues";
 import { ValueName } from "./App/sharedWithServer/SectionsMeta/values/ValueName";
+import { StrictOmit } from "./App/sharedWithServer/utils/types";
 
 const multis = {
   loanExtras: text({
@@ -33,11 +38,6 @@ const multis = {
     title: "Vacancy Loss",
     info: `No property will be fully occupied 100% of the time. When tenants move out, it can sometimes take days or weeks to prepare their unit for another renter. To account for this, assume you will miss out on a certain portion of the property's rent.\n\nIf you're owner-managing the property and you're determined to keep vacancy low, a common method is to asume you will miss out on 5% of the rent; and if you're using a property manager or management company (who probably won't be quite as motivated as you), something like 10% is common to assume.`,
   }),
-  holdingPeriod: text({
-    inputLabel: "Holding period",
-    title: "Holding Period",
-    info: `This is the amount of time that a property is owned before its rehab is complete and it is either sold (in the case of fix and flip) or refinanced and rented out (in the case of brrrr).\n\nTypically, the longer the holding period, the more that costs will accumulate.`,
-  }),
   cocRoi(period: SwitchTargetKey<"periodic">) {
     const words = {
       monthly: { start: "Monthly", unit: "month" },
@@ -55,6 +55,7 @@ const multis = {
 
 function getLoanValue(loanForWhat: string) {
   return {
+    valueSourceName: input("Base loan amount"),
     offPercent: text({
       inputLabel: "Down payment",
       variableLabel: `${loanForWhat} down payment`,
@@ -81,7 +82,7 @@ function getLoanValue(loanForWhat: string) {
 }
 
 type InfoTexts = { [SN in SectionName]: SectionInfoText<SN> };
-export const varbLabels = checkSectionInfoTexts({
+export const varbLabels = checkAllVarbLabels({
   ...defaultSectionInfoTexts(),
   ...prop("capExValue", {
     valueSourceName: text({
@@ -89,10 +90,7 @@ export const varbLabels = checkSectionInfoTexts({
       title: "Capital Expenses",
       info: `Capital expenses, or CapEx, are those big, expensive things that every property has and that will eventually need to be replaced—the roof, furnace, water heater, etc. No long-term analysis of a property is complete without accounting for these.\n\nA common (and easy) method to assume that all the CapEx costs together will average to about 5% of the property's rental income. But this can be pretty inaccurate.\n\nA more precise method is to go through each major capital expense and estimate both how much it would cost to replace it and how many years a replacement would last. From there, the app will calculate how much you should budget per month for each capital expense and add them all up.`,
     }),
-    ...simplePeriodic("valueDollars", "Capital Expenses"),
-    valueDollarsPeriodicEditor: input("Capital Expenses"),
-    // The editors should get their displayName from the active
-    // valueDollars, yeah?
+    ...periodicInput("valueDollars", "Capital Expenses"),
   }),
   ...prop("purchaseLoanValue", getLoanValue("Purchase")),
   ...prop("repairLoanValue", getLoanValue("Repair")),
@@ -134,14 +132,17 @@ export const varbLabels = checkSectionInfoTexts({
     onePercentPriceSqftAverage: input("Average of sqft + 1% price"),
   }),
   ...prop("loanBaseValue", {
+    valueSourceName: input("Base loan"),
     valueDollars: input("Base loan amount"),
   }),
   ...prop("loanBaseExtra", {
+    valueSourceName: input("Extra costs covered by loan"),
     hasLoanExtra: multis.loanExtras,
-    valueDollars: input("Extra loan base amount"),
-    valueDollarsEditor: input("Extra loan base amount"),
+    valueDollars: input("Extra cost covered by loan"),
+    valueDollarsEditor: input("Extra cost covered by loan"),
   }),
   ...prop("customLoanBase", {
+    valueSourceName: input("Base loan amount"),
     valueDollars: input("Base loan amount"),
     valueDollarsEditor: input("Base loan amount"),
   }),
@@ -156,8 +157,8 @@ export const varbLabels = checkSectionInfoTexts({
     sqft: input("Square feet"),
     numUnits: input("Unit count"),
     numUnitsEditor: input("Unit count"),
-    numBedroomsEditor: input("BR count"),
-    numBedrooms: input("BR count"),
+    numBedroomsEditor: input("Bedroom count"),
+    numBedrooms: input("Bedroom count", { variableLabel: "BR Count" }),
     likability: input("Likability"),
     pricePerLikability: input("Price per likability"),
     sellingCosts: text({
@@ -170,7 +171,7 @@ export const varbLabels = checkSectionInfoTexts({
     }),
     ...simplePeriodic("targetRent", "Rent"),
     ...simplePeriodic("homeInsOngoing", "Home insurance"),
-    ...simplePeriodic("taxesOngoing", "Home insurance"),
+    ...simplePeriodic("taxesOngoing", "Taxes"),
     ...simplePeriodic("utilitiesOngoing", "Utilities"),
     rehabCost: input("Rehab cost"),
     rehabCostBase: input("Rehab cost base"),
@@ -179,9 +180,10 @@ export const varbLabels = checkSectionInfoTexts({
       title: "After Repair Value",
       info: `This is the price that a property is sold at after repairs are made.`,
     }),
-    holdingPeriodYears: multis.holdingPeriod,
-    holdingPeriodMonths: multis.holdingPeriod,
-    holdingPeriodSpanEditor: multis.holdingPeriod,
+    ...spanInput("holdingPeriod", "Holding period", {
+      title: "Holding Period",
+      info: `This is the amount of time that a property is owned before its rehab is complete and it is either sold (in the case of fix and flip) or refinanced and rented out (in the case of brrrr).\n\nTypically, the longer the holding period, the more that costs will accumulate.`,
+    }),
     holdingCostTotal: input("Holding costs", {
       variableLabel: "Property holding costs",
     }),
@@ -207,17 +209,16 @@ export const varbLabels = checkSectionInfoTexts({
   }),
   ...prop("unit", {
     numBedrooms: input("BR count"),
-    targetRentPeriodicEditor: input("Rent"),
-    ...simplePeriodic("targetRent", "Rent"),
+    ...periodicInput("targetRent", "Rent"),
   }),
   ...prop("capExList", simplePeriodic("total", "Total")),
   ...prop("capExItem", {
     ...simplePeriodic("value", "Item cost"),
-    ...simpleSpan("lifespan", "Item lifespan"),
-    lifespanSpanEditor: input("Item lifespan"),
+    ...spanInput("lifespan", "Item lifespan"),
     costToReplace: input("Item cost to replace"),
   }),
   ...prop("repairValue", {
+    valueSourceName: input("Repair costs"),
     valueDollars: text({
       inputLabel: "Repair cost",
       variableLabel: "Upfront repair cost",
@@ -228,6 +229,7 @@ export const varbLabels = checkSectionInfoTexts({
     }),
   }),
   ...prop("costOverrunValue", {
+    valueSourceName: input("Cost overrun"),
     valueDollars: text({
       inputLabel: "Cost overrun",
       variableLabel: "Upfront cost overrun",
@@ -247,6 +249,7 @@ export const varbLabels = checkSectionInfoTexts({
     valueDecimal: input("Cost overrun percent as decimal"),
   }),
   ...prop("sellingCostValue", {
+    valueSourceName: input("Selling costs"),
     valueDollars: input("Selling cost"),
     valueDollarsEditor: input("Selling cost"),
     valuePercent: input("Selling cost"),
@@ -254,38 +257,31 @@ export const varbLabels = checkSectionInfoTexts({
     valueDecimal: input("Selling cost percent as decimal"),
   }),
   ...prop("utilityValue", {
-    ...simplePeriodic("valueDollars", "Utility costs"),
-    valueDollarsPeriodicEditor: input("Utility costs"),
+    valueSourceName: input("Utilities"),
+    ...periodicInput("valueDollars", "Utility costs"),
   }),
   ...prop("maintenanceValue", {
-    ...simplePeriodic("valueDollars", "Maintenance costs"),
-    valueDollarsPeriodicEditor: input("Maintenance costs"),
+    ...periodicInput("valueDollars", "Maintenance costs"),
+    valueSourceName: input("Maintenance"),
   }),
-  ...prop("taxesHolding", {
-    ...simplePeriodic("valueDollars", "Taxes"),
-    valueDollarsPeriodicEditor: input("Taxes"),
-  }),
-  ...prop("taxesOngoing", {
-    ...simplePeriodic("valueDollars", "Taxes"),
-    valueDollarsPeriodicEditor: input("Taxes"),
-  }),
-  ...prop("homeInsHolding", {
-    ...simplePeriodic("valueDollars", "Home insurance"),
-    valueDollarsPeriodicEditor: input("Home insurance"),
-  }),
-  ...prop("homeInsOngoing", {
-    ...simplePeriodic("valueDollars", "Home insurance"),
-    valueDollarsPeriodicEditor: input("Home insurance"),
-  }),
-
+  ...prop("taxesHolding", periodicInputAndSource("valueDollars", "Taxes")),
+  ...prop("taxesOngoing", periodicInputAndSource("valueDollars", "Taxes")),
+  ...prop(
+    "homeInsHolding",
+    periodicInputAndSource("valueDollars", "Home insurance")
+  ),
+  ...prop(
+    "homeInsOngoing",
+    periodicInputAndSource("valueDollars", "Home insurance")
+  ),
   ...prop("financing", {
     ...simplePeriodic("averagePrincipal", "Average principal payment"),
     ...simplePeriodic("averageInterest", "Average interest payment"),
     loanUpfrontExpenses: text({
-      inputLabel: "Upfront loan expenses",
+      inputLabel: "Upfront loan costs",
     }),
     loanTotalDollars: text({
-      inputLabel: "Total loan amount",
+      inputLabel: "Loan total",
     }),
     loanPaymentMonthly: text({
       inputLabel: "Loan payment",
@@ -301,8 +297,7 @@ export const varbLabels = checkSectionInfoTexts({
     }),
     ...simplePeriodic("mortgageIns", "Total mortgage insurance"),
     mortgageInsUpfront: input("Total upfront mortgage insurance"),
-    ...simpleSpan("timeTillRefinance", "Time till refinance"),
-    timeTillRefinanceSpanEditor: input("Time till refinance"),
+    ...spanInput("timeTillRefinance", "Time till refinance"),
     loanBaseDollars: input("Total loan base"),
     closingCosts: input("Total closing costs"),
   }),
@@ -342,37 +337,38 @@ export const varbLabels = checkSectionInfoTexts({
     ...simplePeriodic("miscCosts", "Misc costs"),
     miscOnetimeCosts: input("Misc onetime costs"),
   }),
-  ...prop("miscOngoingCost", {
-    ...simplePeriodic("valueDollars", "Misc costs"),
-    valueDollarsPeriodicEditor: input("Misc costs"),
-  }),
-  ...prop("miscHoldingCost", {
-    ...simplePeriodic("valueDollars", "Misc costs"),
-    valueDollarsPeriodicEditor: input("Misc costs"),
-  }),
+  ...prop(
+    "miscHoldingCost",
+    periodicInputAndSource("valueDollars", "Misc costs")
+  ),
   ...prop("miscOnetimeCost", {
+    valueSourceName: input("Misc onetime costs"),
     valueDollars: input("Misc onetime costs"),
     valueDollarsEditor: input("Misc onetime costs"),
   }),
-  ...prop("miscRevenueValue", {
-    ...simplePeriodic("valueDollars", "Misc revenue"),
-    valueDollarsPeriodicEditor: input("Misc revenue"),
-  }),
-  ...prop("miscOngoingCost", {
-    ...simplePeriodic("valueDollars", "Misc ongoing costs"),
-    valueDollarsPeriodicEditor: input("Misc ongoing costs"),
-  }),
+  ...prop(
+    "miscRevenueValue",
+    periodicInputAndSource("valueDollars", "Misc revenue")
+  ),
+  ...prop(
+    "miscOngoingCost",
+    periodicInputAndSource("valueDollars", "Misc ongoing costs")
+  ),
   ...prop("mgmtBasePayValue", {
-    ...simplePeriodic("valueDollars", "Mgmt base pay"),
-    valueDollarsPeriodicEditor: input("Mgmt base pay"),
-    valuePercentEditor: input("Mgmt base pay"),
-    valuePercent: input("Mgmt base pay"),
+    ...periodicInputAndSource("valueDollars", "Base pay", {
+      variableLabel: "Mgmt base pay",
+    }),
+    valuePercentEditor: input("Base pay", {
+      variableLabel: "Mgmt base pay percent",
+    }),
+    valuePercent: input("Base pay", {
+      variableLabel: "Mgmt base pay percent",
+    }),
     valueDecimal: input("Base pay percent as decimal"),
   }),
   ...prop("vacancyLossValue", {
     valueSourceName: multis.vacancyLoss,
-    ...simplePeriodic("valueDollars", "Vacancy loss"),
-    valueDollarsPeriodicEditor: input("Vacancy loss"),
+    ...periodicInput("valueDollars", "Vacancy loss"),
     valuePercentEditor: input("Vacancy loss"),
     valuePercent: input("Vacancy loss"),
     valueDecimal: input("Vacancy loss percent as decimal"),
@@ -388,7 +384,7 @@ export const varbLabels = checkSectionInfoTexts({
       When you pay towards your principal, you gain equity in your property, so you don't really lose that money. So by subtracting that from the rest of your expenses, you can get a better idea of how much money this deal would actually cost you per month.\n\nHomebuyers can use this to compare deal expenses to what they'd otherwise spend as renters.`,
       }
     ),
-    ...simplePeriodic("ongoingPiti", "PITI payments", {
+    ...simplePeriodic("ongoingPiti", "PITI payment", {
       title: "PITI",
       info: `"PITI" stands for "principal and interest, taxes, and insurance". Often, these are the things included in the payments that homebuyers send to the bank every month.`,
     }),
@@ -430,8 +426,37 @@ export const varbLabels = checkSectionInfoTexts({
       info: `The total profit from increasing a property's value after purchase, as a percent of the cash that was invested to do so, divided by the number of years—or by the fraction of years—that the holding period lasted.\n\nThis can be used to compare ROI from one-time windfall income with ongoing Cash on Cash ROI from other types of investments.`,
     }),
   }),
-
-  ...prop("ongoingValue", periodicInput("value", "")),
+  ...prop("onetimeValue", {
+    value: input(relVarbInfoS.local("displayName")),
+    valueEditor: input(relVarbInfoS.local("displayName")),
+    valueSourceName: input(relVarbInfoS.local("displayName")),
+  }),
+  ...prop("onetimeItem", {
+    value: input(relVarbInfoS.local("displayName")),
+    valueEditor: input(relVarbInfoS.local("displayName")),
+    valueSourceName: input(relVarbInfoS.local("displayName")),
+  }),
+  ...prop("onetimeList", {
+    total: input("List total"),
+  }),
+  ...prop("ongoingList", simplePeriodic("total", "List total")),
+  ...prop("ongoingItem", {
+    valueSourceName: input(relVarbInfoS.local("displayName")),
+    ...periodicInput("value", relVarbInfoS.local("displayName")),
+  }),
+  ...prop("numVarbItem", {
+    valueSourceName: input(relVarbInfoS.local("displayName")),
+    value: input(relVarbInfoS.local("displayName")),
+    valueEditor: input(relVarbInfoS.local("displayName")),
+  }),
+  ...prop("boolVarbItem", {
+    leftOperandi: input(""),
+    rightOperandi: input(""),
+  }),
+  ...prop("ongoingValue", {
+    valueSourceName: input(""),
+    ...periodicInput("value", ""),
+  }),
   ...prop("virtualVarb", { value: input("") }),
   ...prop("conditionalRowList", { value: input("") }),
   ...prop("conditionalRow", {
@@ -441,11 +466,26 @@ export const varbLabels = checkSectionInfoTexts({
   }),
 });
 
-type Options = { title?: string; info?: string; variableLabel?: string };
+function periodicInputAndSource<BN extends string>(
+  baseName: BN,
+  inputLabel: VarbLabel,
+  options: OptionsNext = {}
+): {
+  [T in
+    | "Monthly"
+    | "Yearly"
+    | "PeriodicEditor" as `${BN}${T}`]: VarbInfoTextProps;
+} & { valueSourceName: VarbInfoTextProps } {
+  return {
+    ...periodicInput(baseName, inputLabel, options),
+    valueSourceName: input(inputLabel, options),
+  };
+}
+
 function periodicInput<BN extends string>(
   baseName: BN,
-  inputLabel: string,
-  options: Options = {}
+  inputLabel: VarbLabel,
+  options: OptionsNext = {}
 ): {
   [T in
     | "Monthly"
@@ -457,27 +497,41 @@ function periodicInput<BN extends string>(
     [`${baseName}PeriodicEditor`]: text({
       inputLabel,
       ...options,
-      variableLabel: options.variableLabel ?? inputLabel,
+      sourceFinder: [
+        {
+          switchInfo: relVarbInfoS.local(`${baseName}PeriodicSwitch`),
+          switchValue: "monthly",
+          sourceInfo: relVarbInfoS.local(`${baseName}Monthly`),
+        },
+        {
+          switchInfo: relVarbInfoS.local(`${baseName}PeriodicSwitch`),
+          switchValue: "yearly",
+          sourceInfo: relVarbInfoS.local(`${baseName}Yearly`),
+        },
+      ],
     }),
   };
 }
 
 function simplePeriodic<BN extends string>(
   baseName: BN,
-  inputLabel: string,
-  { variableLabel, ...rest }: Options = {}
+  inputLabel: VarbLabel,
+  { variableLabel, ...rest }: OptionsNext = {}
 ): {
   [T in "Monthly" | "Yearly" as `${BN}${T}`]: VarbInfoTextProps;
 } {
+  const labelBase = variableLabel ?? inputLabel;
   return {
     [`${baseName}${"Monthly"}`]: text({
       inputLabel,
-      variableLabel: (variableLabel ?? inputLabel) + " monthly",
+      variableLabel:
+        typeof labelBase === "string" ? labelBase + " monthly" : labelBase,
       ...rest,
     }),
     [`${baseName}${"Yearly"}`]: text({
       inputLabel,
-      variableLabel: (variableLabel ?? inputLabel) + " yearly",
+      variableLabel:
+        typeof labelBase === "string" ? labelBase + " yearly" : labelBase,
       ...rest,
     }),
   };
@@ -486,7 +540,7 @@ function simplePeriodic<BN extends string>(
 function spanInput<BN extends string>(
   baseName: BN,
   inputLabel: string,
-  options: Options = {}
+  options: OptionsNext = {}
 ): {
   [T in "Months" | "Years" | "SpanEditor" as `${BN}${T}`]: VarbInfoTextProps;
 } {
@@ -496,6 +550,18 @@ function spanInput<BN extends string>(
       inputLabel,
       ...options,
       variableLabel: options.variableLabel ?? inputLabel,
+      sourceFinder: [
+        {
+          switchInfo: relVarbInfoS.local(`${baseName}SpanSwitch`),
+          switchValue: "months",
+          sourceInfo: relVarbInfoS.local(`${baseName}Months`),
+        },
+        {
+          switchInfo: relVarbInfoS.local(`${baseName}SpanSwitch`),
+          switchValue: "years",
+          sourceInfo: relVarbInfoS.local(`${baseName}Years`),
+        },
+      ],
     }),
   };
 }
@@ -503,7 +569,7 @@ function spanInput<BN extends string>(
 function simpleSpan<BN extends string>(
   baseName: BN,
   inputLabel: string,
-  { variableLabel, ...rest }: Options = {}
+  { variableLabel, ...rest }: OptionsNext = {}
 ): {
   [T in "Months" | "Years" as `${BN}${T}`]: VarbInfoTextProps;
 } {
@@ -521,28 +587,33 @@ function simpleSpan<BN extends string>(
   };
 }
 
+type OptionsNext = Partial<StrictOmit<VarbInfoTextProps, "inputLabel">>;
+
 export interface VarbInfoTextProps {
-  inputLabel: DisplayName;
-  variableLabel: DisplayName;
+  inputLabel: VarbLabel;
+  variableLabel: VarbLabel;
   title: string;
   info: string;
+  sourceFinder: LabelSourceFinder;
 }
 
-function input(inputLabel: string, options?: Options) {
+function input(inputLabel: VarbLabel, options?: OptionsNext) {
   return text({ inputLabel, ...options });
 }
-// I either want it to be "" or inputLabel
+
 function text({
   inputLabel = "",
   variableLabel = inputLabel,
   title = "",
   info = "",
+  sourceFinder = null,
 }: Partial<VarbInfoTextProps>): VarbInfoTextProps {
   return {
     inputLabel,
     variableLabel,
     title,
     info,
+    sourceFinder,
   };
 }
 
@@ -582,7 +653,7 @@ function defaultSectionInfoTexts(): InfoTexts {
   }, {} as InfoTexts);
 }
 
-function checkSectionInfoTexts<T extends InfoTexts>(t: T): T {
+function checkAllVarbLabels<T extends InfoTexts>(t: T): T {
   const pathsNeedingLabels = [];
   for (const sectionName of sectionNames) {
     const varbLs = t[sectionName];
@@ -593,7 +664,11 @@ function checkSectionInfoTexts<T extends InfoTexts>(t: T): T {
         varbName
       ) as ValueName;
 
-      if (valueName === "numObj" && !varbLs[varbName]) {
+      if (
+        (valueName === "numObj" ||
+          (varbName as VarbNameWide) === "valueSourceName") &&
+        !varbLs[varbName]
+      ) {
         pathsNeedingLabels.push(`${sectionName}.${varbName}`);
       }
     }
@@ -640,4 +715,12 @@ export function fixedVariableLabel<
   }
 }
 
-export type DisplayName = string | RelLocalVarbInfo;
+export type VarbLabel = string | RelLocalVarbInfo;
+export type LabelOverrideSwitches = readonly DisplayOverrideSwitch[];
+interface DisplayOverrideSwitch {
+  switchInfo: RelLocalVarbInfo;
+  switchValue: string;
+  sourceInfo: RelLocalVarbInfo;
+}
+
+export type LabelSourceFinder = null | RelLocalVarbInfo | LabelOverrideSwitches;

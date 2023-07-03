@@ -13,7 +13,7 @@ import { detailsConfig } from "./dealDetailsConfig";
 function getDetailDisplayName(varb: GetterVarb) {
   const name = varb.sectionDotVarbName as SimpleSectionVarbName;
   const title = detailsConfig[name as keyof typeof detailsConfig].detailTitle;
-  return title ?? varb.displayName;
+  return title ?? varb.inputLabel;
 }
 
 type Props = { varbInfo: FeVarbInfo; level: number };

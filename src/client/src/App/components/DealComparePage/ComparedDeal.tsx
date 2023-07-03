@@ -80,7 +80,7 @@ export function ComparedDeal({ feId, style }: Props) {
                 numberOfLines={1}
                 style={{ color: nativeTheme.primary.main, fontSize: 16 }}
               >
-                {varb.displayName}
+                {varb.inputLabel}
               </Text>
             </View>
             <View style={{ alignItems: "center" }}>

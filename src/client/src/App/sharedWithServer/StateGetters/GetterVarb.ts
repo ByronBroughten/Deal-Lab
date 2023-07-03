@@ -1,5 +1,10 @@
 import { cloneDeep } from "lodash";
-import { getVarbLabels, VarbInfoTextProps } from "../../../varbLabels";
+import {
+  getVarbLabels,
+  LabelOverrideSwitches,
+  VarbInfoTextProps,
+  VarbLabel,
+} from "../../../varbLabels";
 import { DisplayOverrideSwitches } from "../SectionsMeta/displaySectionVarbs/displayVarb";
 import { FeInfoS, FeVarbInfo } from "../SectionsMeta/SectionInfo/FeInfo";
 import {
@@ -62,32 +67,55 @@ export class GetterVarb<
       varbName: this.varbName,
     };
   }
+  varbByFocalMixed(varbInfo: VarbInfoMixedFocal): GetterVarb {
+    return this.section.varbByFocalMixed(varbInfo);
+  }
   get inputLabel() {
-    const { inputLabel } = this.varbLabels;
-    if (typeof inputLabel === "string") {
-      return inputLabel;
+    return this.varbLabelToString(this.varbLabels.inputLabel);
+  }
+  get variableLabel() {
+    return this.varbLabelToString(this.varbLabels.variableLabel);
+  }
+  private varbLabelToString(varbLabel: VarbLabel): string {
+    if (typeof varbLabel === "string") {
+      if (varbLabel) return varbLabel;
+      else throw new Error("varbLabel is blank");
     } else {
-      const varb = this.section.varbByFocalMixed(inputLabel);
+      const varb = this.section.varbByFocalMixed(varbLabel);
       const { valueName } = varb;
       if (["stringObj", "string"].includes(valueName)) {
         return varb.stringValue;
-      } else if (valueName === "numObj") {
-        return varb.stringInputLabel;
       } else {
         throw new Error(`valueName "${valueName}" is not accounted for.`);
       }
     }
   }
-  get stringInputLabel() {
-    const { inputLabel } = this.varbLabels;
-    if (typeof inputLabel !== "string") {
-      throw new Error("The inputLabel isn't a string.");
+  get varbLabels(): VarbInfoTextProps {
+    return this.labelSource.rawVarbLabels;
+  }
+  private get rawVarbLabels() {
+    return getVarbLabels(this.sectionName, this.varbName as any);
+  }
+  private get labelSource(): GetterVarb<any> {
+    const { sourceFinder } = this.rawVarbLabels;
+    if (sourceFinder === null) {
+      return this;
+    } else if (relVarbInfoS.isLocal(sourceFinder)) {
+      return this.section.varbByFocalMixed(sourceFinder);
     } else {
-      return inputLabel;
+      return this.switchLabelSource(sourceFinder);
     }
   }
-  get varbLabels(): VarbInfoTextProps {
-    return getVarbLabels(this.sectionName, this.varbName as any);
+  private switchLabelSource(
+    overrideSwitches: LabelOverrideSwitches
+  ): GetterVarb {
+    for (const { sourceInfo, switchInfo, switchValue } of overrideSwitches) {
+      const switchVarb = this.varbByFocalMixed(switchInfo);
+      if (switchValue === switchVarb.valueNext()) {
+        return this.varbByFocalMixed(sourceInfo);
+      }
+    }
+    throw new Error(`No switchVarb had a matching value`);
   }
   checkObjValue(): { isEmpty: boolean; isValid: boolean } {
     const value = this.multiValue("numObj", "stringObj", "string");
@@ -219,7 +247,7 @@ export class GetterVarb<
       return cloneDeep(value) as StateValueOrAny<VT>;
     } else {
       throw new ValueTypeError(
-        `Value of ${this.sectionName}.${this.varbName} not of type ${valueName}`
+        `Value "${value}" of ${this.sectionName}.${this.varbName} not of type ${valueName}, and this.valueName is ${this.valueName}`
       );
     }
   }
@@ -287,23 +315,7 @@ export class GetterVarb<
     return this.displaySource.meta;
   }
   get displayName(): string {
-    const { displayName } = this.displayMeta;
-    if (typeof displayName === "string") {
-      return displayName;
-    } else {
-      return this.section.varbByFocalMixed(displayName).value("stringObj")
-        .mainText;
-    }
-  }
-  get displayNameFull(): string {
-    const { displayNameFullContext } = this.displayMeta;
-    if (typeof displayNameFullContext === "string") {
-      return displayNameFullContext;
-    } else {
-      return this.section
-        .varbByFocalMixed(displayNameFullContext)
-        .value("stringObj").mainText;
-    }
+    return this.inputLabel;
   }
   get sectionDotVarbName() {
     return `${this.sectionName}.${this.varbName}`;

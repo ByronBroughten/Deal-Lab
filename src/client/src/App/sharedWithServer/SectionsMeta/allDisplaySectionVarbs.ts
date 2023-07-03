@@ -259,7 +259,7 @@ export const allDisplaySectionVarbs = {
       },
     }),
   }),
-  ...displaySectionVarbsProp("singleTimeValue", {
+  ...displaySectionVarbsProp("onetimeValue", {
     value: varb(relVarbInfoS.local("displayName")),
     valueEditor: varb(relVarbInfoS.local("displayName")),
   }),
@@ -277,7 +277,7 @@ export const allDisplaySectionVarbs = {
   ...displaySectionVarbsProp("ongoingList", {
     ...group("periodic", "total", relVarbInfoS.local("displayName")),
   }),
-  ...displaySectionVarbsProp("singleTimeItem", {
+  ...displaySectionVarbsProp("onetimeItem", {
     value: varb(relVarbInfoS.local("displayName")),
     valueEditor: varb(relVarbInfoS.local("displayName")),
   }),

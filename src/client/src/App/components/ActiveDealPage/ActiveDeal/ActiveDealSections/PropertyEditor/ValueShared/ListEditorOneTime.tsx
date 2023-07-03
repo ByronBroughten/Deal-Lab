@@ -27,7 +27,7 @@ export function ListEditorOneTime({
   const feInfo = { sectionName: "onetimeList", feId } as const;
 
   const onetimeList = useGetterSection(feInfo);
-  const onetimeItems = onetimeList.children("singleTimeItem");
+  const onetimeItems = onetimeList.children("onetimeItem");
 
   const itemDisplayNames = onetimeItems.map(
     (item) => item.valueNext("displayName").mainText
@@ -35,12 +35,12 @@ export function ListEditorOneTime({
 
   const totalVarb = onetimeList.varbNext("total");
   const onChange = (displayName?: string) => {
-    const sectionValues: Partial<SectionValues<"singleTimeItem">> = {
+    const sectionValues: Partial<SectionValues<"onetimeItem">> = {
       ...(displayName && { displayNameEditor: displayName }),
     };
     addChild({
       feInfo,
-      childName: "singleTimeItem",
+      childName: "onetimeItem",
       options: { sectionValues },
     });
   };

@@ -52,7 +52,7 @@ function makeBaseNameArrs() {
     get varbValue() {
       return Arr.extractStrict(sectionNames, [
         "ongoingValue",
-        "singleTimeValue",
+        "onetimeValue",
       ] as const);
     },
     get varbListAllowed() {

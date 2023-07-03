@@ -74,7 +74,7 @@ export function NumObjEntityEditor({
         editorType,
         displayValue: varb.displayValue,
         editorTextStatus: varb.numObj.editorTextStatus,
-        displayName: varb.displayName,
+        displayName: varb.inputLabel,
         startAdornment: props.startAdornment ?? varb.startAdornment,
         endAdornment: props.endAdornment ?? varb.endAdornment,
         quickViewVarbNameString: quickViewVarbNames

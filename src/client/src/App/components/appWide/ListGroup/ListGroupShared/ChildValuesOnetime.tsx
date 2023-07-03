@@ -6,16 +6,16 @@ import { OnetimeValue } from "../../OnetimeValue";
 import { ValueGroupValues } from "./ValueGroupValues";
 
 interface Props<
-  SN extends ParentName<"singleTimeValue">,
-  CN extends ChildNameOfType<SN, "singleTimeValue">
+  SN extends ParentName<"onetimeValue">,
+  CN extends ChildNameOfType<SN, "onetimeValue">
 > {
   sectionName: SN;
   feId: string;
   valueChildName: CN;
 }
 export function ChildValuesOnetime<
-  SN extends ParentName<"singleTimeValue">,
-  CN extends ChildNameOfType<SN, "singleTimeValue">
+  SN extends ParentName<"onetimeValue">,
+  CN extends ChildNameOfType<SN, "onetimeValue">
 >({ valueChildName, ...feInfo }: Props<SN, CN>) {
   const parent = useGetterSection(feInfo);
   const addChild = useAction("addChild");

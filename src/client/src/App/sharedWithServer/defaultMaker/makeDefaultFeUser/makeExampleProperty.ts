@@ -152,7 +152,7 @@ export function makeExampleProperty<DM extends StateValue<"dealMode">>(
 
   const repairList = repairValue.onlyChild("onetimeList");
   for (const [displayName, value] of props.repairValue) {
-    const repairItem = repairList.addAndGetChild("singleTimeItem");
+    const repairItem = repairList.addAndGetChild("onetimeItem");
     repairItem.updateValues({
       valueSourceName: "valueEditor",
       displayNameEditor: displayName,

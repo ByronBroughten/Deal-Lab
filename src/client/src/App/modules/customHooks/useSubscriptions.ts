@@ -1,5 +1,6 @@
 import React from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import { useGoToPage } from "../../components/customHooks/useGoToPage";
 import { constants } from "../../Constants";
 import { StateValue } from "../../sharedWithServer/SectionsMeta/values/StateValue";
 import { useGetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useGetterSection";
@@ -31,7 +32,7 @@ function useUpdateOnSubscribe() {
   const feStore = useFeStoreDepreciated();
   const { pathname } = useLocation();
 
-  const navigate = useNavigate();
+  const goToAccount = useGoToPage("account");
   React.useEffect(() => {
     async function updateOnSubscribe() {
       if (pathname.endsWith(constants.feRoutes.subscribeSuccess)) {
@@ -40,7 +41,7 @@ function useUpdateOnSubscribe() {
         } catch (ex) {
           throw new Error(getErrorMessage(ex));
         }
-        navigate("/");
+        goToAccount();
       }
     }
     updateOnSubscribe();

@@ -5,8 +5,8 @@ import { OnetimeValue } from "../OnetimeValue";
 import { ValueGroupGeneric } from "./ListGroupShared/ValueGroupGeneric";
 
 interface Props<
-  SN extends ParentName<"singleTimeValue">,
-  CN extends ChildNameOfType<SN, "singleTimeValue">
+  SN extends ParentName<"onetimeValue">,
+  CN extends ChildNameOfType<SN, "onetimeValue">
 > {
   sectionName: SN;
   feId: string;
@@ -18,8 +18,8 @@ interface Props<
 }
 
 export function ValueGroupOneTime<
-  SN extends ParentName<"singleTimeValue">,
-  CN extends ChildNameOfType<SN, "singleTimeValue">
+  SN extends ParentName<"onetimeValue">,
+  CN extends ChildNameOfType<SN, "onetimeValue">
 >({
   sectionName,
   feId,

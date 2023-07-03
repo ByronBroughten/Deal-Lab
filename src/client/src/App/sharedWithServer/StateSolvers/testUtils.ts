@@ -100,7 +100,7 @@ export function setOnetimeList<SN extends OnetimeCostSN>(
   const list = onetime.onlyChild("onetimeList");
   for (const item of listItems) {
     total += item;
-    list.addChildAndSolve("singleTimeItem", {
+    list.addChildAndSolve("onetimeItem", {
       sectionValues: {
         valueSourceName: "valueEditor",
         valueEditor: numObj(item),
@@ -228,7 +228,7 @@ export function setFirstLoanFor912p6Monthly(
   const amounts = [6000, 14000];
 
   for (const amount of amounts) {
-    wrapped.addChildAndSolve("singleTimeItem", {
+    wrapped.addChildAndSolve("onetimeItem", {
       sectionValues: { valueEditor: numObj(amount) },
     });
   }
