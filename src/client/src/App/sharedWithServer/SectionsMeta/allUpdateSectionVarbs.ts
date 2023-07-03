@@ -97,7 +97,7 @@ function makeAllUpdateSections() {
     ...prop("loanBaseValue", loanBaseUpdateVarbs()),
     ...prop("loanBaseExtra", {
       hasLoanExtra: varb("boolean", { initValue: false }),
-      valueSourceName: varb("dollarsOrList", {
+      valueSourceName: varb("dollarsListOrZero", {
         initValue: "valueDollarsEditor",
       }),
       valueDollarsEditor: varb("numObj"),

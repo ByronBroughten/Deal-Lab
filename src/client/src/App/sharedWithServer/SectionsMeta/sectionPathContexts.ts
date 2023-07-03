@@ -38,9 +38,6 @@ function makeDealFocals(dealPath: ChildName[]) {
     get capExCostFocal() {
       return abs("capExValue", [...propertyPath, "capExValue"]);
     },
-    get maintenanceCostFocal() {
-      return abs("maintenanceValue", [...propertyPath, "maintenanceValue"]);
-    },
     get costOverrunFocal() {
       return abs("costOverrunValue", [...propertyPath, "costOverrunValue"]);
     },

@@ -13,7 +13,6 @@ const sectionPathNameToSn = checkPathTypeToSectionName({
   unitFocal: "unit",
   repairCostFocal: "repairValue",
   utilityCostFocal: "utilityValue",
-  maintenanceCostFocal: "maintenanceValue",
   capExCostFocal: "capExValue",
 
   costOverrunFocal: "costOverrunValue",

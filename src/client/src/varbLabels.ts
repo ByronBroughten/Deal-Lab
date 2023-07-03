@@ -2,9 +2,7 @@ import { SwitchTargetKey } from "./App/sharedWithServer/SectionsMeta/allBaseSect
 import {
   sectionVarbNames,
   VarbName,
-  VarbNameWide,
 } from "./App/sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
-import { sectionVarbValueName } from "./App/sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionValues";
 import {
   RelLocalVarbInfo,
   relVarbInfoS,
@@ -14,7 +12,6 @@ import {
   sectionNames,
 } from "./App/sharedWithServer/SectionsMeta/SectionName";
 import { dealModeLabels } from "./App/sharedWithServer/SectionsMeta/values/StateValue/unionValues";
-import { ValueName } from "./App/sharedWithServer/SectionsMeta/values/ValueName";
 import { StrictOmit } from "./App/sharedWithServer/utils/types";
 
 const multis = {
@@ -81,7 +78,7 @@ function getLoanValue(loanForWhat: string) {
   };
 }
 
-type InfoTexts = { [SN in SectionName]: SectionInfoText<SN> };
+export type AllVarbLabels = { [SN in SectionName]: SectionInfoText<SN> };
 export const varbLabels = checkAllVarbLabels({
   ...defaultSectionInfoTexts(),
   ...prop("capExValue", {
@@ -645,41 +642,15 @@ function prop<SN extends SectionName>(
   } as Record<SN, SectionInfoText<SN>>;
 }
 
-function defaultSectionInfoTexts(): InfoTexts {
+function defaultSectionInfoTexts(): AllVarbLabels {
   return sectionNames.reduce((defaultTexts, sectionName) => {
     (defaultTexts[sectionName] as SectionInfoText<typeof sectionName>) =
       emptySctionInfoText(sectionName);
     return defaultTexts;
-  }, {} as InfoTexts);
+  }, {} as AllVarbLabels);
 }
 
-function checkAllVarbLabels<T extends InfoTexts>(t: T): T {
-  const pathsNeedingLabels = [];
-  for (const sectionName of sectionNames) {
-    const varbLs = t[sectionName];
-    const varbNames = sectionVarbNames(sectionName);
-    for (const varbName of varbNames) {
-      const valueName = sectionVarbValueName(
-        sectionName,
-        varbName
-      ) as ValueName;
-
-      if (
-        (valueName === "numObj" ||
-          (varbName as VarbNameWide) === "valueSourceName") &&
-        !varbLs[varbName]
-      ) {
-        pathsNeedingLabels.push(`${sectionName}.${varbName}`);
-      }
-    }
-  }
-
-  if (pathsNeedingLabels.length > 0) {
-    throw new Error(
-      `The following varbs need labels:\n${pathsNeedingLabels.join("\n")}`
-    );
-  }
-
+function checkAllVarbLabels<T extends AllVarbLabels>(t: T): T {
   return t;
 }
 
