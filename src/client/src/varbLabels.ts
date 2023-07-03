@@ -165,8 +165,10 @@ export const varbLabels = checkSectionInfoTexts({
       title: "Selling Costs",
       info: "These are the costs associated with selling a property, such as to pay real estate agents, the title company, government fees, etc. They are commonly about 6% of the selling price.",
     }),
-    ...simplePeriodic("expenses", "Property expenses"),
-    ...simplePeriodic("targetRent", "Target rent"),
+    ...simplePeriodic("expenses", "expenses", {
+      variableLabel: "Property expenses",
+    }),
+    ...simplePeriodic("targetRent", "Rent"),
     ...simplePeriodic("homeInsOngoing", "Home insurance"),
     ...simplePeriodic("taxesOngoing", "Home insurance"),
     ...simplePeriodic("utilitiesOngoing", "Utilities"),
@@ -180,7 +182,9 @@ export const varbLabels = checkSectionInfoTexts({
     holdingPeriodYears: multis.holdingPeriod,
     holdingPeriodMonths: multis.holdingPeriod,
     holdingPeriodSpanEditor: multis.holdingPeriod,
-    holdingCostTotal: input("Property holding costs"),
+    holdingCostTotal: input("Holding costs", {
+      variableLabel: "Property holding costs",
+    }),
     miscOnetimeCosts: text({
       inputLabel: "Misc onetime costs",
       variableLabel: "Misc onetime property costs",
@@ -315,7 +319,7 @@ export const varbLabels = checkSectionInfoTexts({
     ...periodicInput("interestRatePercent", "Interest rate"),
     ...simplePeriodic("interestRateDecimal", "Interest rate as decimal"),
     ...spanInput("loanTerm", "Loan term"),
-    ...simplePeriodic("piFixedStandard", "Principal and interest payment"),
+    ...simplePeriodic("piFixedStandard", "Principal and interest"),
     ...simplePeriodic("interestOnlySimple", "Interest only payment"),
     ...simplePeriodic("averagePrincipal", "Average principal payment"),
     ...simplePeriodic("averageInterest", "Average interest payment"),
@@ -326,9 +330,13 @@ export const varbLabels = checkSectionInfoTexts({
     fivePercentBaseLoan: input("5% base loan"),
   }),
   ...prop("mgmt", {
-    ...simplePeriodic("basePayDollars", "Mgmt base pay"),
-    basePayPercent: input("Mgmt base pay"),
-    ...simplePeriodic("expenses", "Management expenses"),
+    ...simplePeriodic("basePayDollars", "Base pay", {
+      variableLabel: "Mgmt base pay",
+    }),
+    basePayPercent: input("Base pay", { variableLabel: "Mgmt pase pay" }),
+    ...simplePeriodic("expenses", "expenses", {
+      variableLabel: "Management expenses",
+    }),
     ...simplePeriodic("vacancyLossDollars", "Vacancy loss"),
     vacancyLossPercent: input("Vacancy loss"),
     ...simplePeriodic("miscCosts", "Misc costs"),
@@ -520,8 +528,8 @@ export interface VarbInfoTextProps {
   info: string;
 }
 
-function input(inputLabel: string) {
-  return text({ inputLabel });
+function input(inputLabel: string, options?: Options) {
+  return text({ inputLabel, ...options });
 }
 // I either want it to be "" or inputLabel
 function text({
