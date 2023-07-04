@@ -41,104 +41,50 @@ const varb = displayVarbOptions;
 const group = displayGroup;
 export const allDisplaySectionVarbs = {
   ...allDefaultDisplaySectionVarbs(),
-  ...displaySectionVarbsProp("utilityValue", {
-    ...group("periodic", "valueDollars", "Utilities", {
-      monthly: { displayNameWithVariant: "Utilities monthly" },
-      yearly: { displayNameWithVariant: "Utilities yearly" },
-    }),
-  }),
-  ...displaySectionVarbsProp("taxesOngoing", {
-    ...editorDisplayGroup("periodicInput", "valueDollars", "Taxes", {
-      monthly: { displayNameWithVariant: "Taxes monthly" },
-      yearly: { displayNameWithVariant: "Taxes yearly" },
-    }),
-  }),
-  ...displaySectionVarbsProp("homeInsOngoing", {
-    ...editorDisplayGroup("periodicInput", "valueDollars", "Home insurance", {
-      monthly: { displayNameWithVariant: "Home insurance monthly" },
-      yearly: { displayNameWithVariant: "Home insurance yearly" },
-    }),
-  }),
-  ...displaySectionVarbsProp("taxesHolding", {
-    ...editorDisplayGroup("periodicInput", "valueDollars", "Taxes", {
-      monthly: { displayNameWithVariant: "Taxes monthly" },
-      yearly: { displayNameWithVariant: "Taxes yearly" },
-    }),
-  }),
-  ...displaySectionVarbsProp("homeInsHolding", {
-    ...editorDisplayGroup("periodicInput", "valueDollars", "Home insurance", {
-      monthly: { displayNameWithVariant: "Home insurance monthly" },
-      yearly: { displayNameWithVariant: "Home insurance yearly" },
-    }),
-  }),
+  ...displaySectionVarbsProp(
+    "utilityValue",
+    group("periodic", "valueDollars", "Utilities")
+  ),
+  ...displaySectionVarbsProp(
+    "taxesOngoing",
+    editorDisplayGroup("periodicInput", "valueDollars", "Taxes")
+  ),
+  ...displaySectionVarbsProp(
+    "homeInsOngoing",
+    editorDisplayGroup("periodicInput", "valueDollars", "Home insurance")
+  ),
+  ...displaySectionVarbsProp(
+    "taxesHolding",
+    editorDisplayGroup("periodicInput", "valueDollars", "Taxes")
+  ),
+  ...displaySectionVarbsProp(
+    "homeInsHolding",
+    editorDisplayGroup("periodicInput", "valueDollars", "Home insurance")
+  ),
   ...displaySectionVarbsProp("property", {
-    purchasePrice: varb("Purchase price"),
-    afterRepairValue: varb("After repair value"),
-    sellingCosts: varb("Selling costs"),
-    sqft: varb("Square feet"),
     likability: varb("Likability", { endAdornment: "/10" }),
-    rehabCost: varb("Rehab cost"),
-    rehabCostBase: varb("Rehab cost base"),
-    numUnits: varb("Unit count"),
-    numBedroomsEditor: varb("BR count"),
     ...editorDisplayGroup(
       "monthsYearsInput",
       "holdingPeriod",
-      "Holding period",
-      {
-        months: { displayNameWithVariant: "Holding period months" },
-        years: { displayNameWithVariant: "Holding period years" },
-      }
+      "Holding period"
     ),
-
-    numUnitsEditor: varb("Unit count"),
-    numBedrooms: varb("BR count"),
-    upfrontExpenses: varb("Upfront expenses"),
-    ...editorDisplayGroup("periodicInput", "taxesOngoing", "Taxes", {
-      monthly: { displayNameWithVariant: "Taxes monthly" },
-      yearly: { displayNameWithVariant: "Taxes yearly" },
-    }),
-    ...editorDisplayGroup("periodicInput", "taxesHolding", "Taxes", {
-      monthly: { displayNameWithVariant: "Taxes monthly" },
-      yearly: { displayNameWithVariant: "Taxes yearly" },
-    }),
-    ...editorDisplayGroup("periodicInput", "homeInsOngoing", "Home insurance", {
-      monthly: { displayNameWithVariant: "Home insurance monthly" },
-      yearly: { displayNameWithVariant: "Home insurance yearly" },
-    }),
-    ...editorDisplayGroup("periodicInput", "homeInsHolding", "Home insurance", {
-      monthly: { displayNameWithVariant: "Home insurance monthly" },
-      yearly: { displayNameWithVariant: "Home insurance yearly" },
-    }),
-    ...editorDisplayGroup("periodicInput", "utilitiesOngoing", "Utilities", {
-      monthly: { displayNameWithVariant: "Utilities monthly" },
-      yearly: { displayNameWithVariant: "Utilities yearly" },
-    }),
-    ...editorDisplayGroup("periodicInput", "targetRent", "Rental income", {
-      monthly: { displayNameWithVariant: "Rental income monthly" },
-      yearly: { displayNameWithVariant: "Rental income yearly" },
-    }),
+    ...editorDisplayGroup("periodicInput", "taxesOngoing", "Taxes"),
+    ...editorDisplayGroup("periodicInput", "taxesHolding", "Taxes"),
+    ...editorDisplayGroup("periodicInput", "homeInsOngoing", "Home insurance"),
+    ...editorDisplayGroup("periodicInput", "homeInsHolding", "Home insurance"),
+    ...editorDisplayGroup("periodicInput", "utilitiesOngoing", "Utilities"),
+    ...editorDisplayGroup("periodicInput", "targetRent", "Rental income"),
     ...ongoingDollars("expenses", "Average expenses"),
     ...ongoingDollars("miscRevenue", "Misc revenue"),
     ...ongoingDollars("revenue", "Revenue"),
   }),
-  ...displaySectionVarbsProp("repairValue", {
-    valueDollarsEditor: varb("Repair cost"),
-    valueDollars: varb("Repair cost"),
-  }),
+  ...displaySectionVarbsProp("repairValue"),
   ...displaySectionVarbsProp("unit", {
-    numBedrooms: varb("Bedrooms"),
     ...ongoingInputDollars("targetRent", "Rent"),
   }),
   ...displaySectionVarbsProp("financing", {
-    ...group("periodic", "loanPayment", "Loan payments", {
-      monthly: { displayNameWithVariant: "Monthly loan payments" },
-      yearly: { displayNameWithVariant: "Yearly loan payments" },
-    }),
-    ...group("periodic", "loanExpenses", "Ongoing expenses", {
-      monthly: { displayNameWithSection: "Ongoing loan expenses" },
-      yearly: { displayNameWithSection: "Ongoing loan expenses" },
-    }),
+    ...group("periodic", "loanPayment", "Loan payments"),
+    ...group("periodic", "loanExpenses", "Ongoing expenses"),
     loanUpfrontExpenses: varb("Upfront expenses", {
       displayNameWithSection: "Upfront loaneExpenses",
     }),

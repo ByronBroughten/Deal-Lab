@@ -14,6 +14,15 @@ AppRegistry.runApplication("App", {
 // - For that you'd just make property taxesOngoing etc take into account
 //   the child valueSource. That's not so bad. Clears out some sections. Nice.
 
+// - Make property taxesOngoing and homeInsOngoing variables use the child switches of those sections to account for whether to load from taxesHolding or homeInsHolding
+// - replace those sections with taxesValue and homeInsValue. I like it.
+// - I can't think of why else they would be different.
+
+// - What if, taxes could be increased from holding to ongoing in relation
+//   to the value increase from purchasePrice to ARV?
+// - taxesOngoing would have a particular value for that.
+//   That would be fine. You'd just hide that for taxesHolding
+
 // (you really do need these tests to uncover any numerical errors)
 // Add tests for mgmt
 // Make property tests for brrrr
@@ -65,6 +74,10 @@ AppRegistry.runApplication("App", {
 // - load outputList
 
 // Add public housing data api
+
+// Eliminate manual allDisplaySectionVarbs
+// - automate periodic and span start and end adornments
+// - delete clutterful manual inputs
 
 // Outputs
 // - Somehow allow restoring to default

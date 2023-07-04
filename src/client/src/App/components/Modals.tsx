@@ -1,7 +1,6 @@
 import { unstable_batchedUpdates } from "react-dom";
 import { nativeTheme } from "../theme/nativeTheme";
 import { ConfirmationDialog } from "./Modals/ConfirmationDialogue";
-import { useConfirmationModal } from "./Modals/ConfirmationDialogueProvider";
 import { InfoModal } from "./Modals/InfoModal";
 import { useInfoModal } from "./Modals/InfoModalProvider";
 import { InputModal } from "./Modals/InputModal";
@@ -13,13 +12,12 @@ export function useCloseAllModals() {
   const inputModal = useInputModal();
   const infoModal = useInfoModal();
   const varbModal = useVarbSelectModal();
-  const confirm = useConfirmationModal();
+  // const confirm = useConfirmationModal();
   return () => {
     unstable_batchedUpdates(() => {
       inputModal.setModal(null);
       infoModal.setModal(null);
       varbModal.setModal(null);
-      confirm.setModal(null);
     });
   };
 }
