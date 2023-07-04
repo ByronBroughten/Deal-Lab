@@ -155,20 +155,14 @@ export const allSectionChildren = checkAllSectionChildren({
     maintenanceOngoing: "maintenanceValue",
     capExValue: "capExValue",
 
-    miscRevenueValue: "miscRevenueValue",
-    miscOngoingCost: "miscOngoingCost",
-    miscHoldingCost: "miscHoldingCost",
+    miscRevenue: "miscPeriodicCost",
+    miscOngoingCost: "miscPeriodicCost",
+    miscHoldingCost: "miscPeriodicCost",
     miscOnetimeCost: "miscOnetimeCost",
 
     customVarb: "customVarb",
   }),
-  miscOngoingCost: sectionChildren({
-    periodicList: "periodicList",
-  }),
-  miscRevenueValue: sectionChildren({
-    periodicList: "periodicList",
-  }),
-  miscHoldingCost: sectionChildren({
+  miscPeriodicCost: sectionChildren({
     periodicList: "periodicList",
   }),
   miscOnetimeCost: sectionChildren({
@@ -192,7 +186,7 @@ export const allSectionChildren = checkAllSectionChildren({
   mgmt: sectionChildren({
     mgmtBasePayValue: "mgmtBasePayValue",
     vacancyLossValue: "vacancyLossValue",
-    miscOngoingCost: "miscOngoingCost",
+    miscOngoingCost: "miscPeriodicCost",
     miscOnetimeCost: "miscOnetimeCost",
     customVarb: "customVarb",
   }),

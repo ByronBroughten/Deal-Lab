@@ -111,9 +111,7 @@ export function setOnetimeList<SN extends OnetimeCostSN>(
 }
 
 type OngoingSectionName =
-  | "miscOngoingCost"
-  | "miscRevenueValue"
-  | "miscHoldingCost"
+  | "miscPeriodicCost"
   | "maintenanceValue"
   | "capExValue"
   | "taxesValue"
@@ -160,7 +158,7 @@ export function setPeriodicList<SN extends PeriodicListSn>(
 // const testOngoing = (
 //   dealMode: DealMode,
 //   baseName: "miscRevenue" | "miscCosts" | "holdingCost",
-//   childName: "miscRevenueValue" | "miscOngoingCost" | "miscHoldingCost"
+//   childName: "miscRevenue" | "miscOngoingCost" | "miscHoldingCost"
 // ) => {
 //   const property = getProperty(dealMode);
 //   const varbNames = switchKeyToVarbNames(baseName, "periodic");

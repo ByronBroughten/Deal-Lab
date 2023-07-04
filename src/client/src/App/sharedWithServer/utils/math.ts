@@ -25,6 +25,7 @@ export const evaluate = (numText: string) => {
 export class NotANumberError extends Error {}
 
 export const mathS = {
+  roundToCents,
   yearlyToMonthly,
   yearsToMonths,
   decimalToPercent,
@@ -88,6 +89,6 @@ export const portionToPercent = ({
   return decimalToPercent(decimalOfBase);
 };
 
-export const roundToCents = (num: number) => {
+export function roundToCents(num: number) {
   return round(num, 2);
-};
+}

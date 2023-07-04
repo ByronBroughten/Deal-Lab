@@ -1,4 +1,5 @@
 import { numObj } from "../SectionsMeta/values/StateValue/NumObj";
+import { roundToCents } from "../utils/math";
 import {
   UnionValue,
   unionValueArr,
@@ -289,6 +290,40 @@ describe("Purchase financing calculations", () => {
     expect(financing.numValue("loanExpensesYearly")).toBeCloseTo(
       expensesAmount * 12
     );
+  });
+  it("should calculate averagePrincipal and averageInterest", () => {
+    const test = (numYearly: number) => {
+      const numMonthly = roundToCents(numYearly / 12);
+      const prinYearly = firstLoan.numValue("averagePrincipalYearly");
+      const prinMonthly = firstLoan.numValue("averagePrincipalMonthly");
+      expect(prinYearly).toBe(numYearly);
+      expect(prinMonthly).toBe(numMonthly);
+
+      const payYearly = firstLoan.numValue("loanPaymentYearly");
+      const payMonthly = firstLoan.numValue("loanPaymentMonthly");
+      expect(firstLoan.numValue("averageInterestYearly")).toBe(
+        payYearly - prinYearly
+      );
+      expect(firstLoan.numValue("averageInterestMonthly")).toBe(
+        payMonthly - prinMonthly
+      );
+    };
+
+    const custom = firstBaseValue.onlyChild("customLoanBase");
+    custom.updateValues({
+      valueSourceName: "valueDollarsEditor",
+      valueDollarsEditor: numObj(100000),
+    });
+
+    firstBaseValue.updateValues({ valueSourceName: "customAmountEditor" });
+    firstLoan.updateValues({
+      loanTermSpanEditor: numObj(30),
+      loanTermSpanSwitch: "years",
+      interestRatePercentPeriodicEditor: numObj(7),
+      interestRateDecimalPeriodicSwitch: "yearly",
+    });
+
+    test(roundToCents(100000 / 30));
   });
 });
 

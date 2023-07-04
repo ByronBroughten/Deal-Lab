@@ -47,7 +47,7 @@ describe("Property buy and hold calculations", () => {
     it("should calculate revenue", () => {
       const rentTotal = addRents(property, [2000, 2100, 2300]);
       const miscTotal = 1200;
-      const misc = property.onlyChild("miscRevenueValue");
+      const misc = property.onlyChild("miscRevenue");
       misc.updateValues({
         valueSourceName: "valueDollarsPeriodicEditor",
         valueDollarsPeriodicSwitch: "monthly",
@@ -130,10 +130,10 @@ describe("Property buy and hold calculations", () => {
     testPropertyVarbPeriodic("miscCosts", 350);
   });
   it("should calculate periodic miscRevenue", () => {
-    setPeriodicEditor(property.onlyChild("miscRevenueValue"), 500, "monthly");
+    setPeriodicEditor(property.onlyChild("miscRevenue"), 500, "monthly");
     testPropertyVarbPeriodic("miscRevenue", 500);
     setPeriodicList(
-      property.onlyChild("miscRevenueValue"),
+      property.onlyChild("miscRevenue"),
       [200, 100, 50],
       "monthly"
     );

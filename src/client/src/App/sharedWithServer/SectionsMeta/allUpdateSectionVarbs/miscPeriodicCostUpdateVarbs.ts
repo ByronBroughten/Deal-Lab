@@ -11,13 +11,7 @@ import { numObj } from "../values/StateValue/NumObj";
 const switchS = overrideSwitchS;
 const basicsS = updateBasicsS;
 
-const basicOngoingValueNames = [
-  "miscHoldingCost",
-  "miscOngoingCost",
-  "miscRevenueValue",
-] as const;
-type BasicOngoingValueName = (typeof basicOngoingValueNames)[number];
-export function dollarsOrListUpdateVarbs(): UpdateSectionVarbs<BasicOngoingValueName> {
+export function miscPeriodicCostUpdateVarbs(): UpdateSectionVarbs<"miscPeriodicCost"> {
   return {
     valueSourceName: updateVarb("dollarsOrListOngoing", {
       initValue: "valueDollarsPeriodicEditor",

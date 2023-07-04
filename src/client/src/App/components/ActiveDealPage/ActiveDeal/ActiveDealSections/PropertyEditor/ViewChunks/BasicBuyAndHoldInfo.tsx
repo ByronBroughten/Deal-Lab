@@ -21,7 +21,7 @@ export function BasicBuyAndHoldInfo({ feId }: Props) {
         />
       </MuiRow>
       <UnitsNext feId={feId} />
-      <MiscIncomeValue feId={property.onlyChildFeId("miscRevenueValue")} />
+      <MiscIncomeValue feId={property.onlyChildFeId("miscRevenue")} />
     </FormSectionLabeled>
   );
 }

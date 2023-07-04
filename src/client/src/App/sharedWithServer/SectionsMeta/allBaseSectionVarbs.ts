@@ -235,15 +235,7 @@ export function makeAllBaseSectionVarbs() {
       valueDollarsEditor: baseVarb("numObj", dollars),
       valueDollars: baseVarb("numObj", dollars),
     }),
-    miscOngoingCost: varbs({
-      valueSourceName: baseVarb("dollarsOrListOngoing"),
-      ...baseVarbsS.periodicDollarsInput("valueDollars"),
-    }),
-    miscHoldingCost: varbs({
-      valueSourceName: baseVarb("dollarsOrListOngoing"),
-      ...baseVarbsS.periodicDollarsInput("valueDollars"),
-    }),
-    miscRevenueValue: varbs({
+    miscPeriodicCost: varbs({
       valueSourceName: baseVarb("dollarsOrListOngoing"),
       ...baseVarbsS.periodicDollarsInput("valueDollars"),
     }),

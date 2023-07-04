@@ -17,8 +17,6 @@ const sectionPathNameToSn = checkPathTypeToSectionName({
 
   costOverrunFocal: "costOverrunValue",
   sellingCostFocal: "sellingCostValue",
-  miscHoldingCostFocal: "miscHoldingCost",
-  miscIncomeFocal: "miscRevenueValue",
 
   financingFocal: "financing",
   loanFocal: "loan",

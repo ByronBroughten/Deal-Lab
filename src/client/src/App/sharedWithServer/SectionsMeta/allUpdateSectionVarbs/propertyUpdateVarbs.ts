@@ -259,8 +259,8 @@ export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
       yearly: basicsS.loadFromChild("miscOngoingCost", "valueDollarsYearly"),
     }),
     ...varbsS.group("miscRevenue", "periodic", "monthly", {
-      monthly: basicsS.loadFromChild("miscRevenueValue", "valueDollarsMonthly"),
-      yearly: basicsS.loadFromChild("miscRevenueValue", "valueDollarsYearly"),
+      monthly: basicsS.loadFromChild("miscRevenue", "valueDollarsMonthly"),
+      yearly: basicsS.loadFromChild("miscRevenue", "valueDollarsYearly"),
     }),
     ...varbsS.monthsYearsInput("holdingPeriod", "months"),
     ...varbsS.ongoingSumNums(

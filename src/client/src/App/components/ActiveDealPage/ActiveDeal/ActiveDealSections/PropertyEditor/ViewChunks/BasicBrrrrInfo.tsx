@@ -22,7 +22,7 @@ export function BasicBrrrrInfo({ feId }: Props) {
           feVarbInfo={property.varbInfo("sqft")}
         />
         <UnitsNext feId={feId} />
-        <MiscIncomeValue feId={property.onlyChildFeId("miscRevenueValue")} />
+        <MiscIncomeValue feId={property.onlyChildFeId("miscRevenue")} />
       </MuiRow>
     </FormSectionLabeled>
   );

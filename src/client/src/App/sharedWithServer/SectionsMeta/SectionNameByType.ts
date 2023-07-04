@@ -76,7 +76,7 @@ export function childNamesOfType<
 
 function _testChildNameOfType<
   SN extends "property" | "mgmt",
-  CN extends ChildNameOfType<SN, "miscOngoingCost">
+  CN extends ChildNameOfType<SN, "miscPeriodicCost">
 >(sn: SN, cn: CN) {}
 _testChildNameOfType("property", "miscOngoingCost");
 

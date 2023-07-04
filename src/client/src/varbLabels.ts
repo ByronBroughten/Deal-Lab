@@ -335,23 +335,12 @@ export const varbLabels = checkAllVarbLabels({
     ...simplePeriodic("miscCosts", "Misc costs"),
     miscOnetimeCosts: input("Misc onetime costs"),
   }),
-  ...prop(
-    "miscHoldingCost",
-    periodicInputAndSource("valueDollars", "Misc costs")
-  ),
+  ...prop("miscPeriodicCost", periodicInputAndSource("valueDollars", "Misc")),
   ...prop("miscOnetimeCost", {
     valueSourceName: input("Misc onetime costs"),
     valueDollars: input("Misc onetime costs"),
     valueDollarsEditor: input("Misc onetime costs"),
   }),
-  ...prop(
-    "miscRevenueValue",
-    periodicInputAndSource("valueDollars", "Misc revenue")
-  ),
-  ...prop(
-    "miscOngoingCost",
-    periodicInputAndSource("valueDollars", "Misc ongoing costs")
-  ),
   ...prop("mgmtBasePayValue", {
     ...periodicInputAndSource("valueDollars", "Base pay", {
       variableLabel: "Mgmt base pay",

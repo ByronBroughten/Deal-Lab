@@ -2,13 +2,13 @@ import { timeS } from "../utils/timeS";
 import { calculatedUpdateVarbs } from "./allUpdateSectionVarbs/calculatedUpdateVarbs";
 import { costOverrunUpdateVarbs } from "./allUpdateSectionVarbs/costOverrunUpdateVarbs";
 import { dealUpdateVarbs } from "./allUpdateSectionVarbs/dealUpdateVarbs";
-import { dollarsOrListUpdateVarbs } from "./allUpdateSectionVarbs/dollarsOrListUpdateVarb";
 import { financingUpdateVarbs } from "./allUpdateSectionVarbs/financingUpdateVarbs";
 import { loanBaseUpdateVarbs } from "./allUpdateSectionVarbs/loanBaseUpdateVarbs";
 import { loanUpdateVarbs } from "./allUpdateSectionVarbs/loanUpdateVarbs";
 import { loanValueUpdateVarbs } from "./allUpdateSectionVarbs/loanValueUpdateVarbs";
 import { mgmtBasePayValueVarbs } from "./allUpdateSectionVarbs/mgmtBasePayUpdateVarbs";
 import { mgmtRelVarbs } from "./allUpdateSectionVarbs/mgmtUpdateVarbs";
+import { miscPeriodicCostUpdateVarbs } from "./allUpdateSectionVarbs/miscPeriodicCostUpdateVarbs";
 import {
   capExItemUpdateVarbs,
   ongoingItemUpdateVarbs,
@@ -508,9 +508,7 @@ function makeAllUpdateSections() {
         editor: { updateFnName: "calcVarbs" },
       }),
     }),
-    ...prop("miscRevenueValue", dollarsOrListUpdateVarbs()),
-    ...prop("miscOngoingCost", dollarsOrListUpdateVarbs()),
-    ...prop("miscHoldingCost", dollarsOrListUpdateVarbs()),
+    ...prop("miscPeriodicCost", miscPeriodicCostUpdateVarbs()),
     ...prop("miscOnetimeCost", {
       valueDollars: updateVarb("numObj", {
         updateFnName: "throwIfReached",
