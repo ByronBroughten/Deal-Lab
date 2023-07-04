@@ -46,19 +46,11 @@ export const allDisplaySectionVarbs = {
     group("periodic", "valueDollars", "Utilities")
   ),
   ...displaySectionVarbsProp(
-    "taxesOngoing",
+    "taxesValue",
     editorDisplayGroup("periodicInput", "valueDollars", "Taxes")
   ),
   ...displaySectionVarbsProp(
-    "homeInsOngoing",
-    editorDisplayGroup("periodicInput", "valueDollars", "Home insurance")
-  ),
-  ...displaySectionVarbsProp(
-    "taxesHolding",
-    editorDisplayGroup("periodicInput", "valueDollars", "Taxes")
-  ),
-  ...displaySectionVarbsProp(
-    "homeInsHolding",
+    "homeInsValue",
     editorDisplayGroup("periodicInput", "valueDollars", "Home insurance")
   ),
   ...displaySectionVarbsProp("property", {

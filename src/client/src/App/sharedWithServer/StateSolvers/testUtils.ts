@@ -116,8 +116,8 @@ type OngoingSectionName =
   | "miscHoldingCost"
   | "maintenanceValue"
   | "capExValue"
-  | "taxesOngoing"
-  | "homeInsOngoing";
+  | "taxesValue"
+  | "homeInsValue";
 
 export const setPeriodicEditor = <SN extends OngoingSectionName>(
   section: SolverSection<SN>,

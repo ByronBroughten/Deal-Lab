@@ -29,12 +29,7 @@ export function DealDetailRowDropDown({
               textMarker: <BiCaretDown />,
             }}
           />
-          <DealDetailRowsNext
-            {...{
-              varbInfo,
-              level: props.level,
-            }}
-          />
+          <DealDetailRowsNext {...{ varbInfo, level: props.level }} />
         </>
       )}
       {!dropped && (

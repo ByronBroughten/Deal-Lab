@@ -1,7 +1,9 @@
-import { validateVarbPathName } from "../SectionInfo/VarbPathNameInfo";
 import { UpdateSectionVarbs } from "../updateSectionVarbs/updateSectionVarbs";
 import { updateVarb } from "../updateSectionVarbs/updateVarb";
-import { updateBasicsS } from "../updateSectionVarbs/updateVarb/UpdateBasics";
+import {
+  updateBasics,
+  updateBasicsS,
+} from "../updateSectionVarbs/updateVarb/UpdateBasics";
 import {
   overrideSwitchS,
   updateOverride,
@@ -10,15 +12,10 @@ import { valueSourceOverrides } from "../updateSectionVarbs/updateVarb/updateVar
 import { updateVarbsS } from "../updateSectionVarbs/updateVarbs";
 
 const varbsS = updateVarbsS;
-export function ongoingValueUpdateVarb(
-  varbPathNameBase: "taxesHolding" | "homeInsHolding"
-): UpdateSectionVarbs<"taxesOngoing"> {
-  const monthlyVpn = validateVarbPathName(`${varbPathNameBase}Monthly`);
-  const yearlyVpn = validateVarbPathName(`${varbPathNameBase}Yearly`);
-
+export function taxesAndHomeInsValueUpdateVarbs(): UpdateSectionVarbs<"taxesValue"> {
   return {
     ...varbsS._typeUniformity,
-    valueSourceName: updateVarb("ongoingPhaseSource", {
+    valueSourceName: updateVarb("taxesAndHomeInsSource", {
       initValue: "sameAsHoldingPhase",
     }),
     valueDollarsPeriodicEditor: updateVarb("numObj"),
@@ -30,8 +27,9 @@ export function ongoingValueUpdateVarb(
             [overrideSwitchS.yearlyIsActive("valueDollars")],
             updateBasicsS.yearlyToMonthly("valueDollars")
           ),
-          ...valueSourceOverrides("ongoingPhaseSource", {
-            sameAsHoldingPhase: updateBasicsS.loadByVarbPathName(monthlyVpn),
+          ...valueSourceOverrides("taxesAndHomeInsSource", {
+            // property accesses the varbSwitchName and accesses holdingPhase
+            sameAsHoldingPhase: updateBasics("emptyNumObj"),
             valueDollarsPeriodicEditor: updateBasicsS.loadFromLocal(
               "valueDollarsPeriodicEditor"
             ),
@@ -44,47 +42,12 @@ export function ongoingValueUpdateVarb(
             [overrideSwitchS.monthlyIsActive("valueDollars")],
             updateBasicsS.monthlyToYearly("valueDollars")
           ),
-          ...valueSourceOverrides("ongoingPhaseSource", {
-            sameAsHoldingPhase: updateBasicsS.loadByVarbPathName(yearlyVpn),
+          ...valueSourceOverrides("taxesAndHomeInsSource", {
+            sameAsHoldingPhase: updateBasics("emptyNumObj"),
             valueDollarsPeriodicEditor: updateBasicsS.loadFromLocal(
               "valueDollarsPeriodicEditor"
             ),
           }),
-        ],
-      },
-    }),
-  };
-}
-
-export function holdingValueUpdateVarb(): UpdateSectionVarbs<"taxesHolding"> {
-  return {
-    ...varbsS._typeUniformity,
-    valueSourceName: updateVarb("valueDollarsPeriodicEditor"),
-    valueDollarsPeriodicEditor: updateVarb("numObj"),
-    ...varbsS.group("valueDollars", "periodic", "monthly", {
-      targets: { updateFnName: "throwIfReached" },
-      monthly: {
-        updateOverrides: [
-          updateOverride(
-            [overrideSwitchS.yearlyIsActive("valueDollars")],
-            updateBasicsS.yearlyToMonthly("valueDollars")
-          ),
-          updateOverride(
-            [overrideSwitchS.monthlyIsActive("valueDollars")],
-            updateBasicsS.loadFromLocal("valueDollarsPeriodicEditor")
-          ),
-        ],
-      },
-      yearly: {
-        updateOverrides: [
-          updateOverride(
-            [overrideSwitchS.monthlyIsActive("valueDollars")],
-            updateBasicsS.monthlyToYearly("valueDollars")
-          ),
-          updateOverride(
-            [overrideSwitchS.yearlyIsActive("valueDollars")],
-            updateBasicsS.loadFromLocal("valueDollarsPeriodicEditor")
-          ),
         ],
       },
     }),

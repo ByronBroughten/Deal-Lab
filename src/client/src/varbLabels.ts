@@ -154,8 +154,8 @@ export const varbLabels = checkAllVarbLabels({
   }),
   ...prop("closingCostValue", {
     valueSourceName: multis.closingCosts,
-    value: input("Closing cost amount"),
-    valueDollarsEditor: input("Closing cost amount"),
+    value: input("Closing costs"),
+    valueDollarsEditor: input("Closing costs"),
   }),
   ...prop("property", {
     propertyMode: multis.dealMode,
@@ -267,14 +267,9 @@ export const varbLabels = checkAllVarbLabels({
     ...periodicInput("valueDollars", "Maintenance costs"),
     valueSourceName: input("Maintenance"),
   }),
-  ...prop("taxesHolding", periodicInputAndSource("valueDollars", "Taxes")),
-  ...prop("taxesOngoing", periodicInputAndSource("valueDollars", "Taxes")),
+  ...prop("taxesValue", periodicInputAndSource("valueDollars", "Taxes")),
   ...prop(
-    "homeInsHolding",
-    periodicInputAndSource("valueDollars", "Home insurance")
-  ),
-  ...prop(
-    "homeInsOngoing",
+    "homeInsValue",
     periodicInputAndSource("valueDollars", "Home insurance")
   ),
   ...prop("financing", {

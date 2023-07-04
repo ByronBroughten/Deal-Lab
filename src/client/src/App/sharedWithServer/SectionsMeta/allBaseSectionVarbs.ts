@@ -260,21 +260,13 @@ export function makeAllBaseSectionVarbs() {
       valueSourceName: baseVarb("repairValueSource"),
       valueDollarsEditor: baseVarb("numObj", dollars),
     }),
-    taxesHolding: varbs({
+    taxesValue: varbs({
       ...baseVarbsS.ongoingDollarsInput("valueDollars"),
-      valueSourceName: baseVarb("valueDollarsPeriodicEditor"),
+      valueSourceName: baseVarb("taxesAndHomeInsSource"),
     }),
-    homeInsHolding: varbs({
+    homeInsValue: varbs({
       ...baseVarbsS.ongoingDollarsInput("valueDollars"),
-      valueSourceName: baseVarb("valueDollarsPeriodicEditor"),
-    }),
-    taxesOngoing: varbs({
-      ...baseVarbsS.ongoingDollarsInput("valueDollars"),
-      valueSourceName: baseVarb("ongoingPhaseSource"),
-    }),
-    homeInsOngoing: varbs({
-      ...baseVarbsS.ongoingDollarsInput("valueDollars"),
-      valueSourceName: baseVarb("ongoingPhaseSource"),
+      valueSourceName: baseVarb("taxesAndHomeInsSource"),
     }),
     utilityValue: varbs({
       ...baseVarbsS.ongoingDollarsInput("valueDollars"),

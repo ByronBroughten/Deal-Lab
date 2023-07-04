@@ -11,6 +11,7 @@ import { overrideSwitchS } from "../updateSectionVarbs/updateVarb/UpdateOverride
 import {
   dealModeVarb,
   unionSwitchOverride,
+  valueSourceOverrides,
 } from "../updateSectionVarbs/updateVarb/updateVarbUtils";
 import { updateVarbsS } from "../updateSectionVarbs/updateVarbs";
 import { numObj } from "../values/StateValue/NumObj";
@@ -19,6 +20,7 @@ import { propertyCompletionStatus } from "./calculatedUpdateVarbs/completionStat
 const basicsS = updateBasicsS;
 const propS = updateFnPropS;
 const varbsS = updateVarbsS;
+const oSwitchS = overrideSwitchS;
 
 function propertyHoldingCosts(): UpdateFnProp[] {
   return [
@@ -64,12 +66,60 @@ export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
     }),
 
     ...varbsS.group("taxesOngoing", "periodic", "yearly", {
-      monthly: basicsS.loadFromChild("taxesOngoing", "valueDollarsMonthly"),
-      yearly: basicsS.loadFromChild("taxesOngoing", "valueDollarsYearly"),
+      monthly: {
+        updateOverrides: valueSourceOverrides(
+          "taxesAndHomeInsSource",
+          {
+            sameAsHoldingPhase: basicsS.loadFromLocal("taxesHoldingMonthly"),
+            valueDollarsPeriodicEditor: basicsS.loadFromChild(
+              "taxesOngoing",
+              "valueDollarsMonthly"
+            ),
+          },
+          relVarbInfoS.onlyChild("taxesOngoing", "valueSourceName")
+        ),
+      },
+      yearly: {
+        updateOverrides: valueSourceOverrides(
+          "taxesAndHomeInsSource",
+          {
+            sameAsHoldingPhase: basicsS.loadFromLocal("taxesHoldingYearly"),
+            valueDollarsPeriodicEditor: basicsS.loadFromChild(
+              "taxesOngoing",
+              "valueDollarsYearly"
+            ),
+          },
+          relVarbInfoS.onlyChild("taxesOngoing", "valueSourceName")
+        ),
+      },
     }),
     ...varbsS.group("homeInsOngoing", "periodic", "yearly", {
-      monthly: basicsS.loadFromChild("homeInsOngoing", "valueDollarsMonthly"),
-      yearly: basicsS.loadFromChild("homeInsOngoing", "valueDollarsYearly"),
+      monthly: {
+        updateOverrides: valueSourceOverrides(
+          "taxesAndHomeInsSource",
+          {
+            sameAsHoldingPhase: basicsS.loadFromLocal("homeInsHoldingMonthly"),
+            valueDollarsPeriodicEditor: basicsS.loadFromChild(
+              "homeInsOngoing",
+              "valueDollarsMonthly"
+            ),
+          },
+          relVarbInfoS.onlyChild("homeInsOngoing", "valueSourceName")
+        ),
+      },
+      yearly: {
+        updateOverrides: valueSourceOverrides(
+          "taxesAndHomeInsSource",
+          {
+            sameAsHoldingPhase: basicsS.loadFromLocal("homeInsHoldingYearly"),
+            valueDollarsPeriodicEditor: basicsS.loadFromChild(
+              "homeInsOngoing",
+              "valueDollarsYearly"
+            ),
+          },
+          relVarbInfoS.onlyChild("homeInsOngoing", "valueSourceName")
+        ),
+      },
     }),
 
     ...varbsS.group("utilitiesOngoing", "periodic", "monthly", {
