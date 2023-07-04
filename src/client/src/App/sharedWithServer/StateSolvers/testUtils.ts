@@ -144,9 +144,10 @@ export function setPeriodicList<SN extends PeriodicListSn>(
     valueSourceName: "listTotal",
     valueDollarsPeriodicSwitch: switchVal,
   });
-  const list = value.onlyChild("ongoingList");
+  const list = value.onlyChild("periodicList");
+  list.removeChildrenAndSolve("periodicItem");
   for (const item of items) {
-    list.addAndGetChild("ongoingItem", {
+    list.addAndGetChild("periodicItem", {
       sectionValues: {
         valueSourceName: "valueEditor",
         valuePeriodicSwitch: switchVal,
@@ -174,10 +175,10 @@ export function setPeriodicList<SN extends PeriodicListSn>(
 //   test(100);
 
 //   value.updateValues({ valueSourceName: "listTotal" });
-//   const list = value.onlyChild("ongoingList");
+//   const list = value.onlyChild("periodicList");
 //   const listItems = [200, 100, 100];
 //   for (const item of listItems) {
-//     list.addAndGetChild("ongoingItem", {
+//     list.addAndGetChild("periodicItem", {
 //       sectionValues: {
 //         valueSourceName: "valueEditor",
 //         valuePeriodicSwitch: "monthly",

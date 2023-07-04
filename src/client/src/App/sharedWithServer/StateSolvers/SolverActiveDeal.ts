@@ -33,6 +33,9 @@ export class SolverActiveDeal extends SolverSectionBase<"deal"> {
   get refiFinancing(): SolverSection<"financing"> {
     return this.solverSection(this.get.onlyChild("refiFinancing").feInfo);
   }
+  get mgmt(): SolverSection<"mgmt"> {
+    return this.solverSection(this.get.onlyChild("mgmt").feInfo);
+  }
   static init(dealMode: DealMode) {
     const deal = SolverSections.initDefault().getActiveDeal();
     deal.updateValuesAndSolve({ dealMode });

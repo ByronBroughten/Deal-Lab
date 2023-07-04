@@ -2,13 +2,13 @@ import { PackBuilderSection } from "../StatePackers/PackBuilderSection";
 
 export function makeDefaultOngoingValue() {
   const itemValueSource = "valueEditor";
-  const ongoingValue = PackBuilderSection.initAsOmniChild("ongoingValue");
-  ongoingValue.updateValues({
+  const periodicValue = PackBuilderSection.initAsOmniChild("periodicValue");
+  periodicValue.updateValues({
     valueSourceName: "none",
     valuePeriodicSwitch: "monthly",
   });
 
-  const list = ongoingValue.addAndGetChild("ongoingList");
+  const list = periodicValue.addAndGetChild("periodicList");
   list.updateValues({ itemValueSource });
-  return ongoingValue.makeSectionPack();
+  return periodicValue.makeSectionPack();
 }

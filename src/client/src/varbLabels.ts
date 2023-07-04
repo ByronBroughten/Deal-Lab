@@ -28,7 +28,7 @@ const multis = {
   closingCosts: text({
     inputLabel: "Closing costs",
     title: "Closing Costs",
-    info: `Most loans require that the borrower pay a number of one-time fees—appraisal fees, title fees, government fees. Collectively, these fees are called closing costs.\n\nNote that closing costs don't include prepaid or escrow costs, such as prepaid home insurance or taxes.`,
+    info: `Most loans require that the borrower pay a number of onetime fees—appraisal fees, title fees, government fees. Collectively, these fees are called closing costs.\n\nNote that closing costs don't include prepaid or escrow costs, such as prepaid home insurance or taxes.`,
   }),
   afterRepairValue: text({
     inputLabel: "After repair value",
@@ -421,7 +421,7 @@ export const varbLabels = checkAllVarbLabels({
     roiPercentAnnualized: text({
       inputLabel: "ROI annualized",
       title: "Annualized Return on Investment",
-      info: `The total profit from increasing a property's value after purchase, as a percent of the cash that was invested to do so, divided by the number of years—or by the fraction of years—that the holding period lasted.\n\nThis can be used to compare ROI from one-time windfall income with ongoing Cash on Cash ROI from other types of investments.`,
+      info: `The total profit from increasing a property's value after purchase, as a percent of the cash that was invested to do so, divided by the number of years—or by the fraction of years—that the holding period lasted.\n\nThis can be used to compare ROI from onetime windfall income with ongoing Cash on Cash ROI from other types of investments.`,
     }),
   }),
   ...prop("onetimeValue", {
@@ -437,8 +437,8 @@ export const varbLabels = checkAllVarbLabels({
   ...prop("onetimeList", {
     total: input("List total"),
   }),
-  ...prop("ongoingList", simplePeriodic("total", "List total")),
-  ...prop("ongoingItem", {
+  ...prop("periodicList", simplePeriodic("total", "List total")),
+  ...prop("periodicItem", {
     valueSourceName: input(relVarbInfoS.local("displayName")),
     ...periodicInput("value", relVarbInfoS.local("displayName")),
   }),
@@ -451,7 +451,7 @@ export const varbLabels = checkAllVarbLabels({
     leftOperandi: input(""),
     rightOperandi: input(""),
   }),
-  ...prop("ongoingValue", {
+  ...prop("periodicValue", {
     valueSourceName: input(""),
     ...periodicInput("value", ""),
   }),

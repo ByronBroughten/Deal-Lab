@@ -10,7 +10,7 @@ import { XBtnCell } from "./XBtnCell";
 
 type Name = StrictExtract<
   SectionName,
-  "onetimeItem" | "ongoingItem" | "numVarbItem"
+  "onetimeItem" | "periodicItem" | "numVarbItem"
 >;
 interface Props<SN extends Name> extends FeSectionInfo<SN> {
   valueEditorName: Extract<VarbName<SN>, "valueEditor" | "valuePeriodicEditor">;

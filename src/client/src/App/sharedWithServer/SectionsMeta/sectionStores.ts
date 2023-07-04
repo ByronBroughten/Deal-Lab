@@ -11,13 +11,13 @@ export const sectionStores = {
   loanMain: "loan",
   mgmtMain: "mgmt",
   repairsListMain: "onetimeList",
-  utilitiesListMain: "ongoingList",
+  utilitiesListMain: "periodicList",
   sellingListMain: "onetimeList",
   capExListMain: "capExList",
-  holdingCostsListMain: "ongoingList",
+  holdingCostsListMain: "periodicList",
   closingCostsListMain: "onetimeList",
   onetimeListMain: "onetimeList",
-  ongoingListMain: "ongoingList",
+  ongoingListMain: "periodicList",
   numVarbListMain: "numVarbList",
   boolVarbListMain: "boolVarbList",
   outputListMain: "outputList",
@@ -142,14 +142,14 @@ export type StoreNameByType<ST extends StoreTypeName> =
 // Depreciating
 export const listChildren = {
   repairsListMain: "onetimeList",
-  utilitiesListMain: "ongoingList",
+  utilitiesListMain: "periodicList",
   capExListMain: "capExList",
   sellingListMain: "onetimeList",
-  holdingCostsListMain: "ongoingList",
+  holdingCostsListMain: "periodicList",
   closingCostsListMain: "onetimeList",
   outputListMain: "outputList",
   onetimeListMain: "onetimeList",
-  ongoingListMain: "ongoingList",
+  ongoingListMain: "periodicList",
 } as const;
 export const listChildrenNames: ListChildName[] = Obj.keys(listChildren);
 type ListChildren = typeof listChildren;

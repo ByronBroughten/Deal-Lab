@@ -55,7 +55,7 @@ export function MiscHoldingCost({ feId }: { feId: string }) {
           <ListEditorOngoing
             {...{
               menuDisplayNames,
-              feId: holdingCost.oneChildFeId("ongoingList"),
+              feId: holdingCost.oneChildFeId("periodicList"),
               menuType: "value",
               routeBtnProps: {
                 title: "Misc Ongoing Lists",

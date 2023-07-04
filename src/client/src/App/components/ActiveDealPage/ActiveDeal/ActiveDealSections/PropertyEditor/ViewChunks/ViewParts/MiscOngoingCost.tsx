@@ -51,7 +51,7 @@ export function MiscOngoingCost({ feId, menuDisplayNames }: Props) {
           <ListEditorOngoing
             {...{
               menuDisplayNames,
-              feId: ongoingCost.oneChildFeId("ongoingList"),
+              feId: ongoingCost.oneChildFeId("periodicList"),
               menuType: "value",
               routeBtnProps: {
                 title: "Misc Ongoing Lists",

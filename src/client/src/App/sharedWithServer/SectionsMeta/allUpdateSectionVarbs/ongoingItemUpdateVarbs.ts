@@ -10,7 +10,7 @@ import {
 import { updateVarbsS } from "../updateSectionVarbs/updateVarbs";
 
 const valueNameBase = "value";
-export function ongoingItemUpdateVarbs(): UpdateSectionVarbs<"ongoingItem"> {
+export function ongoingItemUpdateVarbs(): UpdateSectionVarbs<"periodicItem"> {
   return {
     ...updateVarbsS._typeUniformity,
     ...updateVarbsS.displayNameAndEditor,

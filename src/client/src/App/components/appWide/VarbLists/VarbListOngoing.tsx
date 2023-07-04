@@ -15,7 +15,7 @@ type Props = {
 };
 export function VarbListOngoing({ feId, ...rest }: Props) {
   const addChild = useAction("addChild");
-  const list = useGetterSection({ sectionName: "ongoingList", feId });
+  const list = useGetterSection({ sectionName: "periodicList", feId });
   const totalVarbName = list.activeSwitchTargetName("total", "periodic");
   const itemPeriodicSwitch = list
     .varb("itemPeriodicSwitch")
@@ -23,13 +23,13 @@ export function VarbListOngoing({ feId, ...rest }: Props) {
 
   const addItem = () => {
     const itemValueSource = list.valueNext("itemValueSource");
-    const sectionValues: Partial<SectionValues<"ongoingItem">> = {
+    const sectionValues: Partial<SectionValues<"periodicItem">> = {
       valueSourceName: itemValueSource,
       valuePeriodicSwitch: itemPeriodicSwitch,
     };
     addChild({
       feInfo: list.feInfo,
-      childName: "ongoingItem",
+      childName: "periodicItem",
       options: { sectionValues },
     });
   };
@@ -40,7 +40,7 @@ export function VarbListOngoing({ feId, ...rest }: Props) {
         ...rest,
         feInfo: list.feInfo,
         headers: <VarbListStandardHeaders contentTitle={"Cost"} />,
-        itemName: "ongoingItem",
+        itemName: "periodicItem",
         totalVarbName,
         addItem,
         makeItemNode: ({ feId }) => (

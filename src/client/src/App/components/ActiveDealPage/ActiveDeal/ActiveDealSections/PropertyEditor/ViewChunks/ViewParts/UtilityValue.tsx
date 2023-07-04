@@ -60,7 +60,7 @@ export function UtilityValue({ feId, propertyMode }: Props) {
         itemsComponent: (
           <ListEditorOngoing
             {...{
-              feId: utilityValue.oneChildFeId("ongoingList"),
+              feId: utilityValue.oneChildFeId("periodicList"),
               menuType: "value",
               routeBtnProps: {
                 title: "Utility Lists",

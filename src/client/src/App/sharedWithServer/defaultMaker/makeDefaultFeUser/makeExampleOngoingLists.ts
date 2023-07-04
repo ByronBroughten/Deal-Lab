@@ -22,7 +22,7 @@ export function makeUtilityList(itemPropArr: UtilityItemProp[], dbId?: string) {
     },
   });
   for (const itemProps of itemPropArr) {
-    utilityList.addChild("ongoingItem", {
+    utilityList.addChild("periodicItem", {
       sectionValues: {
         displayNameEditor: itemProps[0],
         valuePeriodicSwitch: "monthly",

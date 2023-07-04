@@ -12,7 +12,7 @@ export function makeDefaultMgmt(): SectionPack<"mgmt"> {
   mgmt.addChild("mgmtBasePayValue");
   mgmt.addChild("vacancyLossValue");
   const ongoingCost = mgmt.addAndGetChild("miscOngoingCost");
-  ongoingCost.addChild("ongoingList");
+  ongoingCost.addChild("periodicList");
   const oneTimeCost = mgmt.addAndGetChild("miscOnetimeCost");
   oneTimeCost.addChild("onetimeList");
   return mgmt.makeSectionPack();

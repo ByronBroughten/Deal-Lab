@@ -10,7 +10,7 @@ interface Props {
 
 export function ValueSectionOngoing({ feId, ...rest }: Props) {
   const section = useSetterSection({
-    sectionName: "ongoingValue",
+    sectionName: "periodicValue",
     feId,
   });
   const valueName = section.get.activeSwitchTargetName("value", "periodic");
@@ -18,7 +18,7 @@ export function ValueSectionOngoing({ feId, ...rest }: Props) {
     <ValueSectionGeneric
       {...{
         ...rest,
-        sectionName: "ongoingValue",
+        sectionName: "periodicValue",
         valueName,
         valueEditorName: "valuePeriodicEditor",
         feId,

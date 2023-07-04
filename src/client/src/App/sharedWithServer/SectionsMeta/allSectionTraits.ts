@@ -62,9 +62,9 @@ export const allSectionTraits = checkAllSectionTraits({
     defaultStoreName: "onetimeListMain",
     varbListItem: "onetimeItem",
   }),
-  ongoingList: sectionTraits({
+  periodicList: sectionTraits({
     defaultStoreName: "ongoingListMain",
-    varbListItem: "ongoingItem",
+    varbListItem: "periodicItem",
   }),
   numVarbList: sectionTraits({
     defaultStoreName: "numVarbListMain",

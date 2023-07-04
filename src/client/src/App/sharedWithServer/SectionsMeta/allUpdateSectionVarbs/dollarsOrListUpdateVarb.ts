@@ -30,7 +30,7 @@ export function dollarsOrListUpdateVarbs(): UpdateSectionVarbs<BasicOngoingValue
         updateOverrides: [
           updateOverride(
             [switchS.valueSourceIs("listTotal")],
-            basicsS.loadFromChild("ongoingList", "totalMonthly")
+            basicsS.loadFromChild("periodicList", "totalMonthly")
           ),
           updateOverride(
             [switchS.local("valueDollarsPeriodicSwitch", "monthly")],
@@ -46,7 +46,7 @@ export function dollarsOrListUpdateVarbs(): UpdateSectionVarbs<BasicOngoingValue
         updateOverrides: [
           updateOverride(
             [switchS.valueSourceIs("listTotal")],
-            basicsS.loadFromChild("ongoingList", "totalYearly")
+            basicsS.loadFromChild("periodicList", "totalYearly")
           ),
           updateOverride(
             [switchS.local("valueDollarsPeriodicSwitch", "yearly")],

@@ -4,13 +4,13 @@ import { baseVarb, baseVarbsS } from "./baseVarbs";
 
 export const baseOngoingItem = baseSectionVarbs({
   valueSourceName: baseVarb("editorValueSource"),
-  ...baseVarbsS.ongoingDollarsInput("value"),
+  ...baseVarbsS.periodicDollarsInput("value"),
   ...baseVarbsS.displayNameAndEditor,
 });
 
 const capExItemBase = {
   ...baseVarbsS.displayNameAndEditor,
-  ...baseVarbsS.ongoingDollars("value"),
+  ...baseVarbsS.periodicDollars("value"),
   ...baseVarbsS.monthsYearsInput("lifespan"),
   costToReplace: baseVarb("numObj", baseOptions.dollars),
 };

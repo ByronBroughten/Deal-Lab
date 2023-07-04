@@ -29,7 +29,7 @@ interface Props<SN extends ValueSectionName> {
 function getChildName<SN extends ValueSectionName>(
   sectionName: SN
 ): ChildName<SN> {
-  if (sectionName === "ongoingValue") return "ongoingList" as ChildName<SN>;
+  if (sectionName === "periodicValue") return "periodicList" as ChildName<SN>;
   else return "onetimeList" as ChildName<SN>;
 }
 

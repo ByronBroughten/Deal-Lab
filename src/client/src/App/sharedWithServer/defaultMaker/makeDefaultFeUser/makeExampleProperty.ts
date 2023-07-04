@@ -116,9 +116,9 @@ function addUtilities(
 ) {
   const utilityChild = property.onlyChild(utilityChildName);
   utilityChild.updateValues({ valueSourceName: "listTotal" });
-  const utilityList = utilityChild.onlyChild("ongoingList");
+  const utilityList = utilityChild.onlyChild("periodicList");
   for (const [displayName, value] of itemProps) {
-    const utilityItem = utilityList.addAndGetChild("ongoingItem");
+    const utilityItem = utilityList.addAndGetChild("periodicItem");
     utilityItem.updateValues({
       valueSourceName: "valueEditor",
       valuePeriodicSwitch: "monthly",

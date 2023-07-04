@@ -76,7 +76,7 @@ export const displayVarbsS = {
   ): SwitchDisplayVarbOptions<BN, "periodicInput"> {
     return this.editorGroup("periodicInput", baseName, displayName, options);
   },
-  ongoingDollars<BN extends string>(
+  periodicDollars<BN extends string>(
     baseName: BN,
     displayName: DisplayName,
     options: SwitchOptions<"periodic"> = {}

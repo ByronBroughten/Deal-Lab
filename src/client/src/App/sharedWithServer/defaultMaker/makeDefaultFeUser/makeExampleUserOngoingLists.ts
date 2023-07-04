@@ -9,7 +9,7 @@ import {
   userRepairVarbProps,
 } from "./makeExampleOngoingListsProps";
 
-export function makeExampleUserOngoingLists(): SectionPack<"ongoingList">[] {
+export function makeExampleUserOngoingLists(): SectionPack<"periodicList">[] {
   const feStore = PackBuilderSection.initAsOmniChild("feStore");
   feStore.addChild("ongoingListMain", {
     sectionPack: makeUtilityList(exampleUserUtilityProps, "exampleUtil1"),

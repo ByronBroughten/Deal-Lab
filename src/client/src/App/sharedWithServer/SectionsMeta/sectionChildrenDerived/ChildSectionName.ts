@@ -104,7 +104,8 @@ function _testChildSectionNameName<
   const _test1: ChildSectionNameName<"property", "miscOngoingCost"> =
     "miscOngoingCost";
   //@ts-expect-error
-  const _test2: ChildSectionNameName<"property", "ongoingList"> = "ongoingList";
+  const _test2: ChildSectionNameName<"property", "periodicList"> =
+    "periodicList";
   const _test3: ChildSectionNameName<
     "onetimeValue" | "repairValue",
     "onetimeList"

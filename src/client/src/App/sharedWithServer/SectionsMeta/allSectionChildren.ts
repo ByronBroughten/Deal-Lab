@@ -93,14 +93,14 @@ export const allSectionChildren = checkAllSectionChildren({
     brrrrOutputList: "outputList",
   }),
   outputItem: { virtualVarb: sectionChild("virtualVarb") },
-  ongoingValue: {
-    ongoingList: sectionChild("ongoingList"),
+  periodicValue: {
+    periodicList: sectionChild("periodicList"),
   },
 
   onetimeValue: { onetimeList: sectionChild("onetimeList") },
   onetimeList: { onetimeItem: sectionChild("onetimeItem") },
-  ongoingList: {
-    ongoingItem: sectionChild("ongoingItem", {
+  periodicList: {
+    periodicItem: sectionChild("periodicItem", {
       isListItem: true,
     }),
   },
@@ -163,13 +163,13 @@ export const allSectionChildren = checkAllSectionChildren({
     customVarb: "customVarb",
   }),
   miscOngoingCost: sectionChildren({
-    ongoingList: "ongoingList",
+    periodicList: "periodicList",
   }),
   miscRevenueValue: sectionChildren({
-    ongoingList: "ongoingList",
+    periodicList: "periodicList",
   }),
   miscHoldingCost: sectionChildren({
-    ongoingList: "ongoingList",
+    periodicList: "periodicList",
   }),
   miscOnetimeCost: sectionChildren({
     onetimeList: "onetimeList",
@@ -181,7 +181,7 @@ export const allSectionChildren = checkAllSectionChildren({
     onetimeList: "onetimeList",
   }),
   utilityValue: sectionChildren({
-    ongoingList: "ongoingList",
+    periodicList: "periodicList",
   }),
   capExValue: sectionChildren({
     capExList: "capExList",

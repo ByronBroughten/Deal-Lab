@@ -28,10 +28,10 @@ function allDefaultDisplaySectionVarbs(): AllDisplaySectionVarbsGeneric {
   }, {} as AllDisplaySectionVarbsGeneric);
 }
 
-const ongoingDollars = <BN extends string>(
+const periodicDollars = <BN extends string>(
   baseName: BN,
   displayName: DisplayName
-) => displayVarbsS.ongoingDollars(baseName, displayName);
+) => displayVarbsS.periodicDollars(baseName, displayName);
 const ongoingInputDollars = <BN extends string>(
   baseName: BN,
   displayName: DisplayName
@@ -66,9 +66,9 @@ export const allDisplaySectionVarbs = {
     ...editorDisplayGroup("periodicInput", "homeInsHolding", "Home insurance"),
     ...editorDisplayGroup("periodicInput", "utilitiesOngoing", "Utilities"),
     ...editorDisplayGroup("periodicInput", "targetRent", "Rental income"),
-    ...ongoingDollars("expenses", "Average expenses"),
-    ...ongoingDollars("miscRevenue", "Misc revenue"),
-    ...ongoingDollars("revenue", "Revenue"),
+    ...periodicDollars("expenses", "Average expenses"),
+    ...periodicDollars("miscRevenue", "Misc revenue"),
+    ...periodicDollars("revenue", "Revenue"),
   }),
   ...displaySectionVarbsProp("repairValue"),
   ...displaySectionVarbsProp("unit", {
@@ -102,9 +102,9 @@ export const allDisplaySectionVarbs = {
     ),
     ...group("periodic", "interestRateDecimal", "Interest rate decimal"),
     ...group("periodic", "piFixedStandard", "Principal and interest"),
-    ...ongoingDollars("interestOnlySimple", "Interest"),
-    ...ongoingDollars("expenses", "Expenses"),
-    ...ongoingDollars("loanPayment", "Loan payment"),
+    ...periodicDollars("interestOnlySimple", "Interest"),
+    ...periodicDollars("expenses", "Expenses"),
+    ...periodicDollars("loanPayment", "Loan payment"),
 
     loanTotalDollars: varb("Total loan amount"),
     closingCosts: varb("Closing Costs"),
@@ -205,14 +205,14 @@ export const allDisplaySectionVarbs = {
     total: varb(relVarbInfoS.local("displayName")),
   }),
   ...displaySectionVarbsProp(
-    "ongoingValue",
+    "periodicValue",
     editorDisplayGroup(
       "periodicInput",
       "value",
       relVarbInfoS.local("displayName")
     )
   ),
-  ...displaySectionVarbsProp("ongoingList", {
+  ...displaySectionVarbsProp("periodicList", {
     ...group("periodic", "total", relVarbInfoS.local("displayName")),
   }),
   ...displaySectionVarbsProp("onetimeItem", {
@@ -220,7 +220,7 @@ export const allDisplaySectionVarbs = {
     valueEditor: varb(relVarbInfoS.local("displayName")),
   }),
   ...displaySectionVarbsProp(
-    "ongoingItem",
+    "periodicItem",
     editorDisplayGroup(
       "periodicInput",
       "value",

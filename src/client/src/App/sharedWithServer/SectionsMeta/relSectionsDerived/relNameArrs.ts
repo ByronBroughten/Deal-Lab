@@ -9,7 +9,7 @@ export const relNameArrs = {
   hasChild: hasChildSectionNames,
   valueSection: Arr.extractStrict(sectionNames, [
     "onetimeValue",
-    "ongoingValue",
+    "periodicValue",
   ] as const),
 } as const;
 

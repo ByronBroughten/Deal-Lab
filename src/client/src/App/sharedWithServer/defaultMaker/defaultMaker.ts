@@ -36,7 +36,7 @@ export const defaultMaker = new DefaultSectionPackMaker({
   numVarbItem: makeDefaultUserVarbItem,
   property: makeDefaultProperty,
   onetimeValue: makeDefaultOneTimeValue,
-  ongoingValue: makeDefaultOngoingValue,
+  periodicValue: makeDefaultOngoingValue,
   mgmt: makeDefaultMgmt,
   loan: makeDefaultLoanPack,
   deal: makeDefaultDealPack,

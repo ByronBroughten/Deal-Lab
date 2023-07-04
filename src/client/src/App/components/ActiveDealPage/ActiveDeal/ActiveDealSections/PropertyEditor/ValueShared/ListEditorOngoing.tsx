@@ -24,25 +24,25 @@ export function ListEditorOngoing({
   ...rest
 }: Props) {
   const addChild = useAction("addChild");
-  const feInfo = { sectionName: "ongoingList", feId } as const;
-  const ongoingList = useGetterSection(feInfo);
+  const feInfo = { sectionName: "periodicList", feId } as const;
+  const periodicList = useGetterSection(feInfo);
 
-  const ongoingItems = ongoingList.children("ongoingItem");
+  const ongoingItems = periodicList.children("periodicItem");
   const itemDisplayNames = ongoingItems.map(
     (item) => item.valueNext("displayName").mainText
   );
 
-  const itemPeriodicSwitch = ongoingList.valueNext("itemPeriodicSwitch");
-  const totalVarb = ongoingList.activeSwitchTarget("total", "periodic");
+  const itemPeriodicSwitch = periodicList.valueNext("itemPeriodicSwitch");
+  const totalVarb = periodicList.activeSwitchTarget("total", "periodic");
 
   const onChange = (displayName?: string) => {
-    const sectionValues: Partial<SectionValues<"ongoingItem">> = {
+    const sectionValues: Partial<SectionValues<"periodicItem">> = {
       valuePeriodicSwitch: itemPeriodicSwitch,
       ...(displayName && { displayNameEditor: displayName }),
     };
     addChild({
       feInfo,
-      childName: "ongoingItem",
+      childName: "periodicItem",
       options: { sectionValues },
     });
   };
@@ -50,7 +50,7 @@ export function ListEditorOngoing({
   return (
     <ValueListGeneral
       {...{
-        ...ongoingList.feInfo,
+        ...periodicList.feInfo,
         ...rest,
         menuType,
         menuDisplayNames,

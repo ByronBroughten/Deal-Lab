@@ -33,7 +33,7 @@ function makeBaseNameArrs() {
     get additiveList() {
       return Arr.extractStrict(sectionNames, [
         "onetimeList",
-        "ongoingList",
+        "periodicList",
       ] as const);
     },
     get userVariable() {
@@ -51,7 +51,7 @@ function makeBaseNameArrs() {
     },
     get varbValue() {
       return Arr.extractStrict(sectionNames, [
-        "ongoingValue",
+        "periodicValue",
         "onetimeValue",
       ] as const);
     },
@@ -59,7 +59,7 @@ function makeBaseNameArrs() {
       return Arr.extractStrict(sectionNames, [
         "capExList",
         "onetimeList",
-        "ongoingList",
+        "periodicList",
         "numVarbList",
         "outputList",
       ] as const);

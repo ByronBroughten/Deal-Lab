@@ -131,7 +131,7 @@ export const allChildrenTraits = checkAllChildrenTraits({
     onetimeList: childTraits(storeName("repairsListMain")),
   }),
   utilityValue: childrenTraits("utilityValue", {
-    ongoingList: childTraits(storeName("utilitiesListMain")),
+    periodicList: childTraits(storeName("utilitiesListMain")),
   }),
   capExValue: childrenTraits("capExValue", {
     capExList: childTraits(storeName("capExListMain")),

@@ -93,10 +93,10 @@
 //     const ongoingCost = property.onlyChild("miscOngoingCost");
 //     ongoingCost.updateValues({ valueSourceName: "listTotal" });
 
-//     const propertyCostList = ongoingCost.onlyChild("ongoingList");
+//     const propertyCostList = ongoingCost.onlyChild("periodicList");
 //     const propertyCosts = [200, 100, 150];
 //     for (const amount of propertyCosts) {
-//       propertyCostList.addChild("ongoingItem", {
+//       propertyCostList.addChild("periodicItem", {
 //         sectionValues: {
 //           valuePeriodicSwitch: "monthly",
 //           valueSourceName: "valueEditor",
@@ -123,10 +123,10 @@
 //     const mgmtOngoing = mgmt.onlyChild("miscOngoingCost");
 //     mgmtOngoing.updateValues({ valueSourceName: "listTotal" });
 
-//     const mgmtCostList = mgmtOngoing.onlyChild("ongoingList");
+//     const mgmtCostList = mgmtOngoing.onlyChild("periodicList");
 //     const mgmtCosts = [100, 100];
 //     for (const amount of mgmtCosts) {
-//       mgmtCostList.addChild("ongoingItem", {
+//       mgmtCostList.addChild("periodicItem", {
 //         sectionValues: {
 //           valuePeriodicSwitch: "monthly",
 //           valueSourceName: "valueEditor",

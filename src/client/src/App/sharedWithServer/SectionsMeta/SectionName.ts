@@ -23,9 +23,9 @@ export const sectionNames = [
   "onetimeValue",
   "onetimeList",
   "onetimeItem",
-  "ongoingValue",
-  "ongoingList",
-  "ongoingItem",
+  "periodicValue",
+  "periodicList",
+  "periodicItem",
   "outputList",
   "outputSection",
 

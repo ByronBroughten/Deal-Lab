@@ -164,7 +164,7 @@ function makeAllUpdateSections() {
                 "valueDollarsPeriodicEditor"
               ),
               listTotal: updateBasicsS.loadFromChild(
-                "ongoingList",
+                "periodicList",
                 "totalMonthly"
               ),
             }),
@@ -186,7 +186,7 @@ function makeAllUpdateSections() {
                 "valueDollarsPeriodicEditor"
               ),
               listTotal: updateBasicsS.loadFromChild(
-                "ongoingList",
+                "periodicList",
                 "totalYearly"
               ),
             }),
@@ -439,7 +439,7 @@ function makeAllUpdateSections() {
         initValue: "valueEditor",
       }),
     }),
-    ...prop("ongoingValue", {
+    ...prop("periodicValue", {
       ...varbsS.displayNameAndEditor,
       valueSourceName: updateVarb("customValueSource", {
         initValue: "valueEditor",
@@ -455,7 +455,7 @@ function makeAllUpdateSections() {
             updateOverride(
               [switchS.valueSourceIs("listTotal")],
               updateBasicsS.loadFromChild(
-                "ongoingList",
+                "periodicList",
                 "totalMonthly"
               ) as UpdateBasics<"numObj">
             ),
@@ -485,7 +485,7 @@ function makeAllUpdateSections() {
             updateOverride(
               [switchS.valueSourceIs("listTotal")],
               updateBasicsS.loadFromChild(
-                "ongoingList",
+                "periodicList",
                 "totalYearly"
               ) as UpdateBasics<"numObj">
             ),
@@ -530,10 +530,10 @@ function makeAllUpdateSections() {
       }),
     }),
 
-    ...prop("ongoingList", {
+    ...prop("periodicList", {
       ...varbsS.ongoingSumNums(
         "total",
-        [propS.children("ongoingItem", "value")],
+        [propS.children("periodicItem", "value")],
         "monthly"
       ),
       itemValueSource: updateVarb("editorValueSource", {
@@ -589,7 +589,7 @@ function makeAllUpdateSections() {
       }),
       valueEditor: updateVarb("numObj"),
     }),
-    ...prop("ongoingItem", ongoingItemUpdateVarbs()),
+    ...prop("periodicItem", ongoingItemUpdateVarbs()),
     ...prop("numVarbItem", {
       ...varbsS.displayNameAndEditor,
       value: updateVarb("numObj", {

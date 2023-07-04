@@ -19,8 +19,8 @@ export function MiscOnetimeCost({ feId, menuDisplayNames }: Props) {
     <SelectAndItemizeEditor
       inputMargins
       {...{
-        label: "Misc one-time costs",
-        itemizedModalTitle: "Misc one-time costs",
+        label: "Misc onetime costs",
+        itemizedModalTitle: "Misc onetime costs",
         makeEditor:
           sourceName === "valueDollarsEditor"
             ? (props) => (
@@ -55,7 +55,7 @@ export function MiscOnetimeCost({ feId, menuDisplayNames }: Props) {
               feId: onetimeCost.oneChildFeId("onetimeList"),
               menuType: "value",
               routeBtnProps: {
-                title: "Misc one-time lists",
+                title: "Misc onetime lists",
                 routeName: "onetimeListMain",
               },
             }}

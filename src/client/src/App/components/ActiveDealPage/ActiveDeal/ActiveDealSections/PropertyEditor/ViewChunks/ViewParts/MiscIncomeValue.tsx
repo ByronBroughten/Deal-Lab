@@ -47,7 +47,7 @@ export function MiscIncomeValue({ feId }: { feId: string }) {
           <ListEditorOngoing
             {...{
               menuDisplayNames,
-              feId: incomeValue.oneChildFeId("ongoingList"),
+              feId: incomeValue.oneChildFeId("periodicList"),
               menuType: "value",
               routeBtnProps: {
                 title: "Misc Ongoing Lists",

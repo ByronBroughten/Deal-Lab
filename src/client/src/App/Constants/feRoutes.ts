@@ -43,7 +43,7 @@ export const feRoutes = {
   utilitiesListMain: componentsRoute + "/utilities",
   capExListMain: componentsRoute + "/cap-ex",
   closingCostsListMain: componentsRoute + "/closing-costs",
-  onetimeListMain: componentsRoute + "/custom-one-time-costs",
+  onetimeListMain: componentsRoute + "/custom-onetime-costs",
   ongoingListMain: componentsRoute + "/custom-ongoing-costs",
 } as const;
 

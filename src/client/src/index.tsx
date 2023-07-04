@@ -6,28 +6,14 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
+// Change "ongoing" to "periodic" in sectionNames, childNames, and varbNames
+// when it doesn't directly reference ongoing/holding
+// - miscOngoingCost
 
-// Delete non-automated displayVarbs
-
-// I could possibly condense taxesHolding and homeInsHolding
-// to just taxesValue and homeInsValue
-// - For that you'd just make property taxesOngoing etc take into account
-//   the child valueSource. That's not so bad. Clears out some sections. Nice.
-
-// - Make property taxesOngoing and homeInsOngoing variables use the child switches of those sections to account for whether to load from taxesHolding or homeInsHolding
-// - replace those sections with taxesValue and homeInsValue. I like it.
-// - I can't think of why else they would be different.
-
-// - What if, taxes could be increased from holding to ongoing in relation
-//   to the value increase from purchasePrice to ARV?
-// - taxesOngoing would have a particular value for that.
-//   That would be fine. You'd just hide that for taxesHolding
-
-// (you really do need these tests to uncover any numerical errors)
-// Add tests for mgmt
+// (you really do need these tests to uncover any numerical or structural errors)
 // Make property tests for brrrr
 // Make some deal tests for each of the dealTypes
-// Add tests for loan averagePrincipal, averageInterest, deal averageNonPrincipal
+// Add homebuyer tests for loan averagePrincipal, averageInterest, deal averageNonPrincipal
 
 // * Marketing *
 // - Consult marketing people
@@ -47,9 +33,6 @@ AppRegistry.runApplication("App", {
 // - The bigger pockets forum
 // - Get an influencer to showcase it
 // Done with the app unless it makes any money
-
-// Make it so "Show Details" rows skip single children that have solvable text
-// identical to their parent
 
 // Unite ValueInEntityInfo, VarbPathNameInfo, and the variable labels.
 

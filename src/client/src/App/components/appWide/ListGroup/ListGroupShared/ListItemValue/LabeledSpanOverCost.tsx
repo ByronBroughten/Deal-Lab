@@ -4,7 +4,7 @@ import theme from "../../../../../theme/Theme";
 import { MaterialStringEditor } from "../../../../inputs/MaterialStringEditor";
 import { NumObjEntityEditor } from "../../../../inputs/NumObjEntityEditor";
 
-interface Props extends FeSectionInfo<"ongoingItem" | "capExItem"> {
+interface Props extends FeSectionInfo<"periodicItem" | "capExItem"> {
   displayValueVarb: string;
   lifespanVarbName: string;
 }

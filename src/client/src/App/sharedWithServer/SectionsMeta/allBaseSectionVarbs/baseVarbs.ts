@@ -186,30 +186,30 @@ export const baseVarbsS = {
   ): SimpleBaseSwitchVarbs<BN, "periodic"> {
     return this.group(baseName, "periodic");
   },
-  ongoingDecimal<BN extends string>(
+  periodicDecimal<BN extends string>(
     baseName: BN
   ): SimpleBaseSwitchVarbs<BN, "periodic"> {
     return this.group(baseName, "periodic", {
       targets: { valueUnit: "decimal" },
     });
   },
-  ongoingDollars<BN extends string>(
+  periodicDollars<BN extends string>(
     baseName: BN
   ): SimpleBaseSwitchVarbs<BN, "periodic"> {
     return this.group(baseName, "periodic", ongoingDollarsOptions);
   },
-  ongoingDollarsInput<BN extends string>(
+  periodicDollarsInput<BN extends string>(
     baseName: BN
   ): SimpleBaseSwitchVarbs<BN, "periodicInput"> {
     return this.group(baseName, "periodicInput", ongoingDollarsOptions);
   },
-  ongoingPercentInput<BN extends string>(
+  periodicPercentInput<BN extends string>(
     baseName: BN
   ): SimpleBaseSwitchVarbs<BN, "periodicInput"> {
     return this.group(baseName, "periodicInput", ongoingPercentOptions);
   },
 
-  ongoingPercent<BN extends string>(
+  periodicPercent<BN extends string>(
     baseName: BN
   ): SimpleBaseSwitchVarbs<BN, "periodic"> {
     return this.group(baseName, "periodic", ongoingPercentOptions);

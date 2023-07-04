@@ -9,7 +9,7 @@ interface MemoProps {
 const ListItemOngoingMemo = React.memo(function ListItemOngoingMemo({
   feId,
 }: MemoProps) {
-  const feInfo = { sectionName: "ongoingItem", feId } as const;
+  const feInfo = { sectionName: "periodicItem", feId } as const;
   return (
     <VarbListItemGeneric
       {...{
@@ -22,7 +22,7 @@ const ListItemOngoingMemo = React.memo(function ListItemOngoingMemo({
 
 type Props = { feId: string };
 export function ListItemOngoing({ feId }: Props) {
-  const section = useGetterSection({ sectionName: "ongoingItem", feId });
+  const section = useGetterSection({ sectionName: "periodicItem", feId });
   const valueVarbName = section.activeSwitchTargetName("value", "periodic");
   const valueVarb = section.varb(valueVarbName);
   return (
