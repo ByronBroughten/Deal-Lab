@@ -6,20 +6,13 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-// Make maintenanceValue 1% price depend on ARV when appropriate
-// (or always, and make ARV depend on purchasePrice for homeBuyer and
-//  rental property)
+
+// Delete non-automated displayVarbs
 
 // I could possibly condense taxesHolding and homeInsHolding
 // to just taxesValue and homeInsValue
-
-// Fix varb labels for "Show Details", or unite labeling with baseVarbs to make sure all varbs have their necessary labels, or something.
-
-// Unite all the variable displayNames and labels.
-// - Make it force me to create a variableLabelObj for every numObj variable
-// - Make it throw an error if a fixed variable doesn't
-//   have a variable name
-// - Copy DisplayName functionality to varbLabels
+// - For that you'd just make property taxesOngoing etc take into account
+//   the child valueSource. That's not so bad. Clears out some sections. Nice.
 
 // (you really do need these tests to uncover any numerical errors)
 // Add tests for mgmt
@@ -45,6 +38,9 @@ AppRegistry.runApplication("App", {
 // - The bigger pockets forum
 // - Get an influencer to showcase it
 // Done with the app unless it makes any money
+
+// Make it so "Show Details" rows skip single children that have solvable text
+// identical to their parent
 
 // Unite ValueInEntityInfo, VarbPathNameInfo, and the variable labels.
 

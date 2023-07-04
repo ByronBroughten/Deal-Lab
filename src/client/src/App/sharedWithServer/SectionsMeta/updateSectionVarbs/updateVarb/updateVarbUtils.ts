@@ -57,11 +57,12 @@ export function completionStatusProps(
 }
 
 export function dealModeVarb(
-  overrideMap: Record<StateValue<"dealMode">, UpdateBasics>
+  overrideMap: Record<StateValue<"dealMode">, UpdateBasics>,
+  switchInfo?: UpdateOverrideSwitchInfo
 ): UpdateVarb<"numObj"> {
   return updateVarb("numObj", {
     updateFnName: "throwIfReached",
-    updateOverrides: dealModeOverrides(overrideMap),
+    updateOverrides: dealModeOverrides(overrideMap, switchInfo),
   });
 }
 

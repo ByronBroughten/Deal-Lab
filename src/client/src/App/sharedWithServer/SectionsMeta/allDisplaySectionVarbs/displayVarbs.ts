@@ -111,8 +111,8 @@ function editorDisplaySourceSwitches<
     "editor",
   ] as const);
   return targetKeys.map((targetKey) => ({
-    switchInfo: relVarbInfoS.local(names.switch),
+    switchInfo: relVarbInfoS.localBase(names.switch),
     switchValue: targetKey as string,
-    sourceInfo: relVarbInfoS.local(names[targetKey]),
+    sourceInfo: relVarbInfoS.localBase(names[targetKey]),
   }));
 }

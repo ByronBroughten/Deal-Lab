@@ -9,6 +9,7 @@ import { updateVarbsS } from "../updateSectionVarbs/updateVarbs";
 
 const propS = updateFnPropS;
 const varbS = updateVarbS;
+const basics = updateBasicsS;
 export function calculatedUpdateVarbs(): UpdateSectionVarbs<"calculatedVarbs"> {
   return {
     ...updateVarbsS._typeUniformity,
@@ -35,52 +36,83 @@ export function calculatedUpdateVarbs(): UpdateSectionVarbs<"calculatedVarbs"> {
     // Property
     two: updateVarb("numObj", updateBasics("two")),
     twelve: updateVarb("numObj", updateBasics("twelve")),
-    onePercentPrice: updateVarb("numObj", {
-      ...updateBasicsS.equationSimple(
-        "onePercent",
-        propS.pathNameBase("propertyFocal", "purchasePrice")
-      ),
-    }),
-    twoPercentPrice: updateVarb("numObj", {
-      ...updateBasicsS.equationSimple(
+    onePercentPrice: updateVarb(
+      "numObj",
+      basics.equationSimple("onePercent", propS.varbPathName("purchasePrice"))
+    ),
+    twoPercentPrice: updateVarb(
+      "numObj",
+      basics.equationSimple(
         "twoPercent",
         propS.pathNameBase("propertyFocal", "purchasePrice")
-      ),
-    }),
+      )
+    ),
+    onePercentArv: updateVarb(
+      "numObj",
+      basics.equationSimple(
+        "onePercent",
+        propS.pathNameBase("propertyFocal", "afterRepairValue")
+      )
+    ),
+    twoPercentArv: updateVarb(
+      "numObj",
+      basics.equationSimple(
+        "twoPercent",
+        propS.varbPathName("afterRepairValue")
+      )
+    ),
     fivePercentRentMonthly: updateVarb("numObj", {
-      ...updateBasicsS.equationSimple(
+      ...basics.equationSimple(
         "fivePercent",
         propS.varbPathName("targetRentMonthly")
       ),
     }),
     fivePercentRentYearly: updateVarb("numObj", {
-      ...updateBasicsS.equationSimple(
+      ...basics.equationSimple(
         "fivePercent",
         propS.varbPathName("targetRentYearly")
       ),
     }),
     tenPercentRentMonthly: updateVarb("numObj", {
-      ...updateBasicsS.equationSimple(
+      ...basics.equationSimple(
         "tenPercent",
         propS.varbPathName("targetRentMonthly")
       ),
     }),
     tenPercentRentYearly: updateVarb("numObj", {
-      ...updateBasicsS.equationSimple(
+      ...basics.equationSimple(
         "tenPercent",
         propS.varbPathName("targetRentYearly")
       ),
     }),
-    onePercentPricePlusSqft: updateVarb("numObj", {
-      ...updateBasicsS.sumVarbPathName("onePercentPrice", "sqft"),
-    }),
-    onePercentPriceSqftAverage: updateVarb("numObj", {
-      ...updateBasicsS.varbPathLeftRight(
+    onePercentArvPlusSqft: updateVarb(
+      "numObj",
+      basics.equationLR(
+        "add",
+        propS.local("onePercentArv"),
+        propS.varbPathName("sqft")
+      )
+    ),
+    onePercentPricePlusSqft: updateVarb(
+      "numObj",
+      basics.varbPathLeftRight("add", "onePercentPrice", "sqft")
+    ),
+    onePercentArvSqftAverage: updateVarb(
+      "numObj",
+      basics.equationLR(
         "divide",
-        "onePercentPricePlusSqft",
-        "two"
-      ),
-    }),
+        propS.local("onePercentArvPlusSqft"),
+        propS.local("two")
+      )
+    ),
+    onePercentPriceSqftAverage: updateVarb(
+      "numObj",
+      basics.equationLR(
+        "divide",
+        propS.local("onePercentArv"),
+        propS.local("two")
+      )
+    ),
     propertyExists: updateVarb("boolean", {
       initValue: false,
       updateFnName: "varbExists",

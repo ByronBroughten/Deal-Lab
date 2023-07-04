@@ -60,6 +60,6 @@ function exampleHomebuyerProperty(): SectionPack<"property"> {
       valueSourceName: "listTotal",
       items: exampleSimpleCapExProps,
     },
-    maintenanceValue: { valueSourceName: "onePercentPrice" },
+    maintenanceValue: { valueSourceName: "onePercentArv" },
   });
 }

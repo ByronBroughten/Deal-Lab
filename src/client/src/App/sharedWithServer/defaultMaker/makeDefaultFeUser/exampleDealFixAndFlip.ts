@@ -15,7 +15,7 @@ export function exampleDealFixAndFlipProperty(): SectionPack<"property"> {
       purchasePrice: numObj(230000),
       sqft: numObj(2500),
       numUnitsEditor: numObj(2),
-      afterRepairValue: numObj(320000),
+      afterRepairValueEditor: numObj(320000),
       holdingPeriodMonths: numObj(4),
     },
     taxesHoldingYearly: numObj(2500),

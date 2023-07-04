@@ -1,4 +1,5 @@
 import { Obj } from "../../utils/Obj";
+import { VarbNameWide } from "../baseSectionsDerived/baseSectionsVarbsTypes";
 import { ChildName } from "../sectionChildrenDerived/ChildName";
 import {
   ParentName,
@@ -77,7 +78,13 @@ export const relVarbInfoS = {
       typeof value.varbName === "string"
     );
   },
-  local(varbName: string): RelLocalVarbInfo {
+  local(varbName: VarbNameWide): RelLocalVarbInfo {
+    return {
+      infoType: "local",
+      varbName,
+    };
+  },
+  localBase(varbName: string): RelLocalVarbInfo {
     return {
       infoType: "local",
       varbName,

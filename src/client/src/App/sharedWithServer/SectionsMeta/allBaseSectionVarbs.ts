@@ -188,6 +188,7 @@ export function makeAllBaseSectionVarbs() {
           "purchasePrice",
           "pricePerLikability",
           "afterRepairValue",
+          "afterRepairValueEditor",
 
           "sellingCosts",
           "miscOnetimeCosts",
@@ -445,6 +446,10 @@ export function makeAllBaseSectionVarbs() {
           "tenPercentRentYearly",
           "onePercentPricePlusSqft",
           "onePercentPriceSqftAverage",
+          "onePercentArv",
+          "twoPercentArv",
+          "onePercentArvPlusSqft",
+          "onePercentArvSqftAverage",
         ] as const,
         percent
       ),

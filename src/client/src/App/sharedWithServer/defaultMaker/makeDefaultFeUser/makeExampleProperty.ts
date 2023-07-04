@@ -46,7 +46,7 @@ interface CommonProperty {
 }
 
 interface PropertyHoldAndArv {
-  afterRepairValue: NumObj;
+  afterRepairValueEditor: NumObj;
   holdingPeriodMonths: NumObj;
 }
 
@@ -216,9 +216,9 @@ export function makeExampleProperty<DM extends StateValue<"dealMode">>(
     case "fixAndFlip":
     case "brrrr": {
       addUtilities(property, "utilityHolding", props.utilityHolding);
-      const { afterRepairValue, holdingPeriodMonths } = props.property;
+      const { afterRepairValueEditor, holdingPeriodMonths } = props.property;
       property.updateValues({
-        afterRepairValue,
+        afterRepairValueEditor,
         holdingPeriodSpanEditor: holdingPeriodMonths,
         holdingPeriodSpanSwitch: "months",
       });

@@ -1,4 +1,4 @@
-import { cloneDeep } from "lodash";
+import { clone, cloneDeep } from "lodash";
 import {
   getVarbLabels,
   LabelOverrideSwitches,
@@ -244,7 +244,7 @@ export class GetterVarb<
   ): StateValueOrAny<VT> {
     const { value } = this.raw;
     if ([this.valueName, "any"].includes(valueName ?? "any")) {
-      return cloneDeep(value) as StateValueOrAny<VT>;
+      return clone(value) as StateValueOrAny<VT>;
     } else {
       throw new ValueTypeError(
         `Value "${value}" of ${this.sectionName}.${this.varbName} not of type ${valueName}, and this.valueName is ${this.valueName}`

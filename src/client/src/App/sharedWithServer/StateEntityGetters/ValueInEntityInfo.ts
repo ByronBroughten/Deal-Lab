@@ -46,7 +46,12 @@ const mgmt = [
 const sharedOutputs = ["totalInvestment"] as const;
 const sharedExtras = ["onePercentPrice", "twoPercentPrice"] as const;
 
-const hasHoldingBasics = ["afterRepairValue", "holdingPeriodMonths"] as const;
+const hasHoldingBasics = [
+  "afterRepairValue",
+  "holdingPeriodMonths",
+  "onePercentArv",
+  "twoPercentArv",
+] as const;
 const fixAndFlipBasics = ["sellingCosts"] as const;
 const hasProfitOutputs = [
   "totalProfit",

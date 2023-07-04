@@ -13,6 +13,7 @@ export function PropertyOngoingCosts({ feId }: FeIdProp) {
 
   const taxes = property.onlyChild("taxesOngoing");
   const homeIns = property.onlyChild("homeInsOngoing");
+  const propertyMode = property.valueNext("propertyMode");
   return (
     <FormSectionLabeled label="Ongoing Costs">
       <MuiRow>
@@ -31,7 +32,10 @@ export function PropertyOngoingCosts({ feId }: FeIdProp) {
           feId={property.onlyChildFeId("utilityOngoing")}
         />
         <CapExValue feId={property.onlyChildFeId("capExValue")} />
-        <MaintenanceValue feId={property.onlyChildFeId("maintenanceOngoing")} />
+        <MaintenanceValue
+          propertyMode={propertyMode}
+          feId={property.onlyChildFeId("maintenanceOngoing")}
+        />
         <MiscOngoingCost
           feId={property.onlyChildFeId("miscOngoingCost")}
           menuDisplayNames={["HOA Fees", "Landscaping", "Accounting", "Legal"]}

@@ -8,7 +8,10 @@ import {
   updateFnPropsS,
 } from "../updateSectionVarbs/updateVarb/UpdateFnProps";
 import { overrideSwitchS } from "../updateSectionVarbs/updateVarb/UpdateOverrides";
-import { unionSwitchOverride } from "../updateSectionVarbs/updateVarb/updateVarbUtils";
+import {
+  dealModeVarb,
+  unionSwitchOverride,
+} from "../updateSectionVarbs/updateVarb/updateVarbUtils";
 import { updateVarbsS } from "../updateSectionVarbs/updateVarbs";
 import { numObj } from "../values/StateValue/NumObj";
 import { propertyCompletionStatus } from "./calculatedUpdateVarbs/completionStatusVarbs";
@@ -79,7 +82,16 @@ export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
     }),
     purchasePrice: updateVarb("numObj"),
     sqft: updateVarb("numObj"),
-    afterRepairValue: updateVarb("numObj"),
+    afterRepairValue: dealModeVarb(
+      {
+        homeBuyer: basicsS.loadFromLocal("purchasePrice"),
+        buyAndHold: basicsS.loadFromLocal("purchasePrice"),
+        fixAndFlip: basicsS.loadFromLocal("afterRepairValueEditor"),
+        brrrr: basicsS.loadFromLocal("afterRepairValueEditor"),
+      },
+      relVarbInfoS.local("propertyMode")
+    ),
+    afterRepairValueEditor: updateVarb("numObj"),
     sellingCosts: updateVarb(
       "numObj",
       basicsS.loadFromChild("sellingCostValue", "valueDollars")

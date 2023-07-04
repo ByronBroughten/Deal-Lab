@@ -90,7 +90,7 @@ describe("Refi financing calculations", () => {
       expect(firstBaseValue.numValue("valueDollars")).toBe(num + extraAmount);
     };
     const assetAmount = 100000;
-    property.updateValues({ afterRepairValue: numObj(100000) });
+    property.updateValues({ afterRepairValueEditor: numObj(100000) });
 
     firstBaseValue.updateValues({ valueSourceName: "arvLoanValue" });
     const valueSection = firstBaseValue.onlyChild("arvLoanValue");

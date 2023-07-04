@@ -119,14 +119,6 @@ export const exampleUserUtilityProps: [string, number | NumObj][] = [
   ["Energy", numObjNext("120*", ["numUnits"])],
 ];
 
-export const priceSqftMiscRepairHybrid = numObjNext(
-  "(",
-  ["onePercentPrice"],
-  "+",
-  ["sqft"],
-  ")/2"
-);
-
 export const userRepairVarbProps: [string, number | NumObj][] = [
   ["Inspection", 500],
   ["Change locks", 120],

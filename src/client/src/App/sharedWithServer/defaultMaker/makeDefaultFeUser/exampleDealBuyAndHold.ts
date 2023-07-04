@@ -73,7 +73,7 @@ function exampleDealBuyAndHoldProperty(): SectionPack<"property"> {
       items: [],
     },
     maintenanceValue: {
-      valueSourceName: "onePercentAndSqft",
+      valueSourceName: "onePercentArvAndSqft",
     },
   });
 }

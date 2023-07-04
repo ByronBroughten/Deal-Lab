@@ -5,7 +5,7 @@ import { NumObjEntityEditor } from "../../../../../../inputs/NumObjEntityEditor"
 type Props = { feId: string };
 export function ArvEditor({ feId }: Props) {
   const property = useGetterSection({ sectionName: "property", feId });
-  const arvInfo = property.varbInfoNext("afterRepairValue");
+  const arvInfo = property.varbInfoNext("afterRepairValueEditor");
   return (
     <NumObjEntityEditor
       inputMargins

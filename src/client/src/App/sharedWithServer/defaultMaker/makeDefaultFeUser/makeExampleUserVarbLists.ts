@@ -4,10 +4,7 @@ import { numObjNext } from "../../SectionsMeta/values/StateValue/numObjNext";
 import { stringObj } from "../../SectionsMeta/values/StateValue/StringObj";
 import { PackBuilderSection } from "../../StatePackers/PackBuilderSection";
 import { Obj } from "../../utils/Obj";
-import {
-  priceSqftMiscRepairHybrid,
-  userVarbLifespans,
-} from "./makeExampleOngoingListsProps";
+import { userVarbLifespans } from "./makeExampleOngoingListsProps";
 
 type UserVarbLifespansMap = typeof userVarbLifespans;
 type UserVarbLifespanArrs = UserVarbLifespansMap[keyof UserVarbLifespansMap][];
@@ -39,15 +36,6 @@ const fullLists = [
       ["Refrigerator", numObj(800)],
       ["Laundry", numObj(1200)],
       ["Roof", numObj(8000)],
-    ],
-  ],
-  [
-    "Misc Repair Estimate Methods",
-    [
-      ["10% of Rent", numObjNext(["targetRentMonthly"], "* .10")],
-      ["1% of Price", numObjNext(["purchasePrice"], "* .01")],
-      ["Square Feet", numObjNext(["sqft"])],
-      ["Price/Sqft Hybrid", priceSqftMiscRepairHybrid],
     ],
   ],
 ] as const;

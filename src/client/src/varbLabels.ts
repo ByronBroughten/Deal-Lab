@@ -30,6 +30,11 @@ const multis = {
     title: "Closing Costs",
     info: `Most loans require that the borrower pay a number of one-time fees—appraisal fees, title fees, government fees. Collectively, these fees are called closing costs.\n\nNote that closing costs don't include prepaid or escrow costs, such as prepaid home insurance or taxes.`,
   }),
+  afterRepairValue: text({
+    inputLabel: "After repair value",
+    title: "After Repair Value",
+    info: `This is the price that a property could feasibly sell for after planned rehab is complete.`,
+  }),
   vacancyLoss: text({
     inputLabel: "Vacancy loss",
     title: "Vacancy Loss",
@@ -117,6 +122,8 @@ export const varbLabels = checkAllVarbLabels({
   ...prop("calculatedVarbs", {
     onePercentPrice: input("1% Purchase price"),
     twoPercentPrice: input("2% Purchase price"),
+    onePercentArv: input("1% After repair value"),
+    twoPercentArv: input("2% After repair value"),
     ...simplePeriodic("fivePercentRent", "5% rent"),
     pricePerSqft: input("Price per sqft"),
     pricePerUnit: input("Price per unit"),
@@ -127,6 +134,8 @@ export const varbLabels = checkAllVarbLabels({
     ...simplePeriodic("tenPercentRent", "10% rent"),
     onePercentPricePlusSqft: input("sqft + 1% property price"),
     onePercentPriceSqftAverage: input("Average of sqft + 1% price"),
+    onePercentArvPlusSqft: input("sqft + 1% property ARV"),
+    onePercentArvSqftAverage: input("Average of sqft + 1% ARV"),
   }),
   ...prop("loanBaseValue", {
     valueSourceName: input("Base loan"),
@@ -172,11 +181,8 @@ export const varbLabels = checkAllVarbLabels({
     ...simplePeriodic("utilitiesOngoing", "Utilities"),
     rehabCost: input("Rehab cost"),
     rehabCostBase: input("Rehab cost base"),
-    afterRepairValue: text({
-      inputLabel: "After repair value",
-      title: "After Repair Value",
-      info: `This is the price that a property is sold at after repairs are made.`,
-    }),
+    afterRepairValue: multis.afterRepairValue,
+    afterRepairValueEditor: multis.afterRepairValue,
     ...spanInput("holdingPeriod", "Holding period", {
       title: "Holding Period",
       info: `This is the amount of time that a property is owned before its rehab is complete and it is either sold (in the case of fix and flip) or refinanced and rented out (in the case of brrrr).\n\nTypically, the longer the holding period, the more that costs will accumulate.`,
@@ -496,14 +502,14 @@ function periodicInput<BN extends string>(
       ...options,
       sourceFinder: [
         {
-          switchInfo: relVarbInfoS.local(`${baseName}PeriodicSwitch`),
+          switchInfo: relVarbInfoS.localBase(`${baseName}PeriodicSwitch`),
           switchValue: "monthly",
-          sourceInfo: relVarbInfoS.local(`${baseName}Monthly`),
+          sourceInfo: relVarbInfoS.localBase(`${baseName}Monthly`),
         },
         {
-          switchInfo: relVarbInfoS.local(`${baseName}PeriodicSwitch`),
+          switchInfo: relVarbInfoS.localBase(`${baseName}PeriodicSwitch`),
           switchValue: "yearly",
-          sourceInfo: relVarbInfoS.local(`${baseName}Yearly`),
+          sourceInfo: relVarbInfoS.localBase(`${baseName}Yearly`),
         },
       ],
     }),
@@ -549,14 +555,14 @@ function spanInput<BN extends string>(
       variableLabel: options.variableLabel ?? inputLabel,
       sourceFinder: [
         {
-          switchInfo: relVarbInfoS.local(`${baseName}SpanSwitch`),
+          switchInfo: relVarbInfoS.localBase(`${baseName}SpanSwitch`),
           switchValue: "months",
-          sourceInfo: relVarbInfoS.local(`${baseName}Months`),
+          sourceInfo: relVarbInfoS.localBase(`${baseName}Months`),
         },
         {
-          switchInfo: relVarbInfoS.local(`${baseName}SpanSwitch`),
+          switchInfo: relVarbInfoS.localBase(`${baseName}SpanSwitch`),
           switchValue: "years",
-          sourceInfo: relVarbInfoS.local(`${baseName}Years`),
+          sourceInfo: relVarbInfoS.localBase(`${baseName}Years`),
         },
       ],
     }),

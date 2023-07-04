@@ -304,7 +304,9 @@ function makeAllUpdateSections() {
               [
                 switchS.local(
                   "valueSourceName",
-                  ...["onePercentPrice", "sqft", "onePercentAndSqft"]
+                  "onePercentArv",
+                  "sqft",
+                  "onePercentArvAndSqft"
                 ),
               ],
               updateBasicsS.yearlyToMonthly("valueDollars")
@@ -332,16 +334,16 @@ function makeAllUpdateSections() {
               updateBasicsS.monthlyToYearly("valueDollars")
             ),
             updateOverride(
-              [switchS.local("valueSourceName", "onePercentPrice")],
-              updateBasicsS.loadByVarbPathName("onePercentPrice")
+              [switchS.local("valueSourceName", "onePercentArv")],
+              updateBasicsS.loadByVarbPathName("onePercentArv")
             ),
             updateOverride(
               [switchS.local("valueSourceName", "sqft")],
               updateBasicsS.loadByVarbPathName("sqft")
             ),
             updateOverride(
-              [switchS.local("valueSourceName", "onePercentAndSqft")],
-              updateBasicsS.loadByVarbPathName("onePercentPriceSqftAverage")
+              [switchS.local("valueSourceName", "onePercentArvAndSqft")],
+              updateBasicsS.loadByVarbPathName("onePercentArvSqftAverage")
             ),
           ],
         },

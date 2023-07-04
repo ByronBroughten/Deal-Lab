@@ -145,6 +145,6 @@ function makeExampleStoreProperty(): SectionPack<"property"> {
       valueSourceName: "listTotal",
       items: examplePropertyCapExListProps,
     },
-    maintenanceValue: { valueSourceName: "onePercentAndSqft" },
+    maintenanceValue: { valueSourceName: "onePercentArvAndSqft" },
   });
 }

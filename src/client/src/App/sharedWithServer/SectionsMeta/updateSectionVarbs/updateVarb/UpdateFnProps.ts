@@ -122,11 +122,11 @@ export const updateFnPropS = {
     return updateFnProp(relVarbInfoS.local(varbName), andSwitches);
   },
   localBaseName(baseName: string) {
-    return updateFnProp(relVarbInfoS.local(baseName));
+    return updateFnProp(relVarbInfoS.localBase(baseName));
   },
   localArr(...varbNames: string[]): UpdateFnProp[] {
     return varbNames.map((varbName) =>
-      updateFnProp(relVarbInfoS.local(varbName))
+      updateFnProp(relVarbInfoS.localBase(varbName))
     );
   },
   children(

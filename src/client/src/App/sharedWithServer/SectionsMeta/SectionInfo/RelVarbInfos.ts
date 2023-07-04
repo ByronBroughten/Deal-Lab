@@ -16,13 +16,13 @@ export const relVarbInfosS = {
     varbNames: readonly VN[]
   ): RelLocalVarbInfos<SN, VN> {
     return varbNames.reduce((localInfos, varbName) => {
-      localInfos[varbName] = relVarbInfoS.local(varbName);
+      localInfos[varbName] = relVarbInfoS.localBase(varbName);
       return localInfos;
     }, {} as RelLocalVarbInfos<SN, VN>);
   },
   local(varbNames: string[]): RelLocalVarbInfo[] {
     return varbNames.map((varbName) => {
-      return relVarbInfoS.local(varbName);
+      return relVarbInfoS.localBase(varbName);
     });
   },
   children<

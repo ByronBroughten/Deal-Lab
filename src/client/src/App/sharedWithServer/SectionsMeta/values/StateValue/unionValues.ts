@@ -68,9 +68,9 @@ const valueSources = {
   ],
   maintainanceValueSource: [
     "none",
-    "onePercentPrice",
+    "onePercentArv",
+    "onePercentArvAndSqft",
     "sqft",
-    "onePercentAndSqft",
     "valueDollarsPeriodicEditor",
   ],
   capExValueSource: [

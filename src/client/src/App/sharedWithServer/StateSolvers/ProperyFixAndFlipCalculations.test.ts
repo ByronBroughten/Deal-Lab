@@ -33,7 +33,7 @@ describe("Property fix and flip calculations", () => {
       expect(property.numValue("sellingCosts")).toBe(num);
     };
 
-    property.updateValues({ afterRepairValue: numObj(100000) });
+    property.updateValues({ afterRepairValueEditor: numObj(100000) });
     sellingCosts.updateValues({ valueSourceName: "sixPercent" });
     testSellingCostDollars(6000);
 
