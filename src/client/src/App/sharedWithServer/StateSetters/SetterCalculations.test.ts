@@ -31,7 +31,7 @@
 //     const property = dealTester.setter.onlyChild("property");
 //     property.varb("purchasePrice").updateValue(numObj(200000));
 
-//     const propertyOnetime = property.onlyChild("miscOnetimeCost");
+//     const propertyOnetime = property.onlyChild(miscOnetimeCost);
 //     propertyOnetime.updateValues({ valueSourceName: "listTotal" });
 
 //     const propertyCostList = propertyOnetime.onlyChild("onetimeList");
@@ -54,7 +54,7 @@
 //     });
 
 //     const mgmt = dealTester.setter.onlyChild("mgmt");
-//     const mgmtOnetime = mgmt.onlyChild("miscOnetimeCost");
+//     const mgmtOnetime = mgmt.onlyChild(miscOnetimeCost);
 //     mgmtOnetime.updateValues({ valueSourceName: "listTotal" });
 
 //     const mgmtCostList = mgmtOnetime.onlyChild("onetimeList");

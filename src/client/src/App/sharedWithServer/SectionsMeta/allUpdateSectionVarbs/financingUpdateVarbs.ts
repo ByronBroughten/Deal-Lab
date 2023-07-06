@@ -61,7 +61,7 @@ export function financingUpdateVarbs(): UpdateSectionVarbs<"financing"> {
     completionStatus: financingCompletionStatus,
     financingMode: updateVarb("financingMode"),
     financingMethod: updateVarb("financingMethod", { initValue: "" }),
-    ...updateVarbsS.group("timeTillRefinance", "monthsYearsInput", "months", {
+    ...updateVarbsS.monthsYearsInput("timeTillRefinance", "months", {
       months: { initValue: numObj(6) },
     }),
     displayName: updateVarb("stringObj", {

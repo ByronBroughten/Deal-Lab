@@ -58,7 +58,7 @@ describe("Property buy and hold calculations", () => {
       expect(property.numValue("revenueMonthly")).toBe(total);
       expect(property.numValue("revenueYearly")).toBe(total * 12);
     });
-  it("should calculate miscOnetimeCost value", () => {
+  it("should calculate miscOnetimeCosts value", () => {
     const onetimeCost = property.onlyChild("miscOnetimeCost");
     const editorValue = setOnetimeEditor(onetimeCost, 2000);
     testPropertyVarb("miscOnetimeCosts", editorValue);

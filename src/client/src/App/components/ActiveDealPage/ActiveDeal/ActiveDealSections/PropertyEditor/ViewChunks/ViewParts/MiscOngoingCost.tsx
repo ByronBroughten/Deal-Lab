@@ -9,7 +9,7 @@ interface Props extends FeIdProp {
   menuDisplayNames: string[];
 }
 export function MiscOngoingCost({ feId, menuDisplayNames }: Props) {
-  const feInfo = { sectionName: "miscOngoingCost", feId } as const;
+  const feInfo = { sectionName: "miscPeriodicValue", feId } as const;
   const ongoingCost = useGetterSection(feInfo);
 
   const valueVarb = ongoingCost.switchVarb("valueDollars", "periodic");

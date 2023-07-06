@@ -5,14 +5,19 @@ export const decimalRounding = 8;
 export const maxRounding = 10;
 
 export function percentToDecimalRounded(num: number): number {
-  return round(mathS.percentToDecimal(num), decimalRounding);
+  return roundDecimal(mathS.percentToDecimal(num));
 }
 
 export function yearlyToMonthlyRounded(num: number): number {
-  return round(mathS.yearlyToMonthly(num), decimalRounding);
+  return roundDecimal(mathS.yearlyToMonthly(num));
 }
 
-export const roundedS = {
+function roundDecimal(num: number) {
+  return round(num, decimalRounding);
+}
+
+export const roundS = {
+  decimal: roundDecimal,
   yearlyToMonthly: yearlyToMonthlyRounded,
   percentToDecimal: percentToDecimalRounded,
   yearsToMonths: (num: number) =>

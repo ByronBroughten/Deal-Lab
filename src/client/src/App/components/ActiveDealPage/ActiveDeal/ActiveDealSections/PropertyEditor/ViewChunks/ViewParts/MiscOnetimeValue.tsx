@@ -9,8 +9,8 @@ interface Props extends FeIdProp {
   menuDisplayNames?: string[];
 }
 
-export function MiscOnetimeCost({ feId, menuDisplayNames }: Props) {
-  const feInfo = { sectionName: "miscOnetimeCost", feId } as const;
+export function MiscOnetimeValue({ feId, menuDisplayNames }: Props) {
+  const feInfo = { sectionName: "miscOnetimeValue", feId } as const;
   const onetimeCost = useGetterSection(feInfo);
 
   const valueVarb = onetimeCost.varbNext("valueDollars");

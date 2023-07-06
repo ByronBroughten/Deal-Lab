@@ -11,7 +11,7 @@ import { numObj } from "../values/StateValue/NumObj";
 const switchS = overrideSwitchS;
 const basicsS = updateBasicsS;
 
-export function miscPeriodicCostUpdateVarbs(): UpdateSectionVarbs<"miscPeriodicCost"> {
+export function miscPeriodicCostUpdateVarbs(): UpdateSectionVarbs<"miscPeriodicValue"> {
   return {
     valueSourceName: updateVarb("dollarsOrListOngoing", {
       initValue: "valueDollarsPeriodicEditor",

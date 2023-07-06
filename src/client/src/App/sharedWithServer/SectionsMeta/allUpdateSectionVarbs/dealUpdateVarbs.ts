@@ -136,58 +136,58 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
         propS.local("refiLoanHoldingYears")
       ),
     }),
-    holdingPurchaseLoanPayment: updateVarbS.equationLR(
+    purchaseLoanHoldingCost: updateVarbS.equationLR(
       "multiply",
       propS.onlyChild("purchaseFinancing", "loanPaymentMonthly"),
       propS.local("purchaseLoanHoldingMonths")
     ),
 
-    holdingRefiLoanPayment: updateVarbS.equationLR(
+    refiLoanHoldingCost: updateVarbS.equationLR(
       "multiply",
       propS.onlyChild("refiFinancing", "loanPaymentMonthly"),
       propS.local("refiLoanHoldingMonths")
     ),
 
-    totalHoldingLoanPayment: dealModeVarb({
+    loanHoldingCostTotal: dealModeVarb({
       homeBuyer: basicsS.notApplicable,
       buyAndHold: basicsS.notApplicable,
-      fixAndFlip: basicsS.loadFromLocal("holdingPurchaseLoanPayment"),
+      fixAndFlip: basicsS.loadFromLocal("purchaseLoanHoldingCost"),
       brrrr: basicsS.equationLR(
         "add",
-        propS.local("holdingPurchaseLoanPayment"),
-        propS.local("holdingRefiLoanPayment")
+        propS.local("purchaseLoanHoldingCost"),
+        propS.local("refiLoanHoldingCost")
       ),
     }),
-    allClosingCosts: dealModeVarb({
-      homeBuyer: basicsS.loadFromChild("purchaseFinancing", "closingCosts"),
-      buyAndHold: basicsS.loadFromChild("purchaseFinancing", "closingCosts"),
-      fixAndFlip: basicsS.loadFromChild("purchaseFinancing", "closingCosts"),
-      brrrr: basicsS.sumNums(
+    purchaseAndRefiClosingCosts: updateVarb(
+      "numObj",
+      basicsS.equationLR(
+        "add",
         propS.onlyChild("purchaseFinancing", "closingCosts"),
         propS.onlyChild("refiFinancing", "closingCosts")
-      ),
-    }),
+      )
+    ),
     preFinanceOneTimeExpenses: dealModeVarb({
       homeBuyer: basicsS.sumNums(
         propS.onlyChild("property", "purchasePrice"),
-        propS.local("allClosingCosts"),
-        propS.onlyChild("property", "rehabCost")
+        propS.onlyChild("property", "rehabCost"),
+        propS.onlyChild("property", "miscOnetimeCosts"),
+        propS.onlyChild("purchaseFinancing", "closingCosts")
       ),
       buyAndHold: basicsS.sumNums(
         propS.onlyChild("property", "purchasePrice"),
-        propS.local("allClosingCosts"),
         propS.onlyChild("property", "rehabCost"),
         propS.onlyChild("property", "miscOnetimeCosts"),
+        propS.onlyChild("purchaseFinancing", "closingCosts"),
         propS.onlyChild("mgmt", "miscOnetimeCosts")
       ),
       fixAndFlip: basicsS.sumNums(
         propS.onlyChild("property", "purchasePrice"),
-        propS.onlyChild("property", "holdingCostTotal"),
         propS.onlyChild("property", "rehabCost"),
-        propS.onlyChild("property", "sellingCosts"),
         propS.onlyChild("property", "miscOnetimeCosts"),
-        propS.local("allClosingCosts"),
-        propS.local("totalHoldingLoanPayment")
+        propS.onlyChild("property", "holdingCostTotal"),
+        propS.onlyChild("property", "sellingCosts"),
+        propS.onlyChild("purchaseFinancing", "closingCosts"),
+        propS.local("loanHoldingCostTotal")
       ),
       brrrr: basicsS.sumNums(
         propS.onlyChild("property", "purchasePrice"),
@@ -195,8 +195,8 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
         propS.onlyChild("property", "miscOnetimeCosts"),
         propS.onlyChild("property", "holdingCostTotal"),
         propS.onlyChild("mgmt", "miscOnetimeCosts"),
-        propS.local("allClosingCosts"),
-        propS.local("totalHoldingLoanPayment")
+        propS.local("purchaseAndRefiClosingCosts"),
+        propS.local("loanHoldingCostTotal")
       ),
     }),
     totalInvestment: dealModeVarb({

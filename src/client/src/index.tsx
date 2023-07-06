@@ -6,14 +6,10 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-// Change "ongoing" to "periodic" in sectionNames, childNames, and varbNames
-// when it doesn't directly reference ongoing/holding
-// - miscOngoingCost
-
-// (you really do need these tests to uncover any numerical or structural errors)
-// Make property tests for brrrr
-// Make some deal tests for each of the dealTypes
-// Add homebuyer tests for loan averagePrincipal, averageInterest, deal averageNonPrincipal
+// Make deal tests
+// - Just use one file for this
+// - Identify the specific end-point varbs that you want to test.
+// - Create an easy mechanism for running the tests with different deal modes
 
 // * Marketing *
 // - Consult marketing people
@@ -33,6 +29,12 @@ AppRegistry.runApplication("App", {
 // - The bigger pockets forum
 // - Get an influencer to showcase it
 // Done with the app unless it makes any money
+
+// Add a loading indicator when "edit" is clicked for deal.
+// - dealMenu variable loadingEdit: dbId | ""
+// - when edit is clicked, this variable is switched on
+// - a useEffect triggers the edit command
+// - the loading command sets the varb back to ""
 
 // Unite ValueInEntityInfo, VarbPathNameInfo, and the variable labels.
 

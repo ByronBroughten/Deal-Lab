@@ -1,6 +1,6 @@
 import { round } from "lodash";
 //@ts-ignore
-import { create, evaluateDependencies } from "mathjs/lib/cjs/number"; // esm or cjs
+import { create, evaluateDependencies } from "mathjs/lib/esm/number"; // esm or cjs
 import { ValidationError } from "./Error";
 import { isStringRationalNumber } from "./Str";
 // // @ts-ignore
@@ -44,10 +44,20 @@ export const mathS = {
     }
     return parsed;
   },
-  isRationalNumber(num: any): num is number {
-    return typeof num === "number" && isStringRationalNumber(`${num}`);
-  },
+  isRationalNumber,
+  validateRationalNumber,
 } as const;
+
+function isRationalNumber(num: any): num is number {
+  return typeof num === "number" && isStringRationalNumber(`${num}`);
+}
+function validateRationalNumber(num: any): number {
+  if (isRationalNumber(num)) {
+    return num;
+  } else {
+    throw new ValidationError(`"${num}" is not a rational number.`);
+  }
+}
 
 export function yearlyToMonthly(yearly: number): number {
   // monthly payments are 1/12th of a yearly payment.
@@ -62,7 +72,7 @@ export function isNumber(v: any): v is number {
   return typeof v === "number";
 }
 export function validateNumber(v: any): number {
-  if (typeof v === "number") return v;
+  if (isNumber(v)) return v;
   else {
     throw new ValidationError(`value "${v}" is not a number`);
   }

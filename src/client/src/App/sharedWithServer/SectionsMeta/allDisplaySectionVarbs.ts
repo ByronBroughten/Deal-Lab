@@ -75,6 +75,11 @@ export const allDisplaySectionVarbs = {
     ...ongoingInputDollars("targetRent", "Rent"),
   }),
   ...displaySectionVarbsProp("financing", {
+    ...editorDisplayGroup(
+      "monthsYearsInput",
+      "timeTillRefinance",
+      "Time till refinance"
+    ),
     ...group("periodic", "loanPayment", "Loan payments"),
     ...group("periodic", "loanExpenses", "Ongoing expenses"),
     loanUpfrontExpenses: varb("Upfront expenses", {

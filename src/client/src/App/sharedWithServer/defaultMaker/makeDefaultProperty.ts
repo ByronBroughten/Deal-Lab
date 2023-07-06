@@ -52,8 +52,8 @@ export function makeDefaultProperty(
   const miscHoldingCost = property.addAndGetChild("miscHoldingCost");
   miscHoldingCost.addChild("periodicList");
 
-  const miscOnetimeCost = property.addAndGetChild("miscOnetimeCost");
-  miscOnetimeCost.addChild("onetimeList");
+  const MiscOnetimeValue = property.addAndGetChild("miscOnetimeCost");
+  MiscOnetimeValue.addChild("onetimeList");
 
   const repairValue = property.addAndGetChild("repairValue");
   repairValue.addChild("onetimeList");

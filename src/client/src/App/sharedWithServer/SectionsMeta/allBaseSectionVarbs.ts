@@ -230,12 +230,12 @@ export function makeAllBaseSectionVarbs() {
       numBedrooms: baseVarb("numObj"),
       ...baseVarbsS.periodicDollarsInput("targetRent"),
     }),
-    miscOnetimeCost: varbs({
+    miscOnetimeValue: varbs({
       valueSourceName: baseVarb("dollarsOrList"),
       valueDollarsEditor: baseVarb("numObj", dollars),
       valueDollars: baseVarb("numObj", dollars),
     }),
-    miscPeriodicCost: varbs({
+    miscPeriodicValue: varbs({
       valueSourceName: baseVarb("dollarsOrListOngoing"),
       ...baseVarbsS.periodicDollarsInput("valueDollars"),
     }),
@@ -372,7 +372,7 @@ export function makeAllBaseSectionVarbs() {
       ...baseVarbsS.periodicDecimal("cocRoiDecimal"),
       ...baseVarbsS.periodicPercent("cocRoi"),
       totalInvestment: baseVarb("numObj", dollars),
-      totalHoldingLoanPayment: baseVarb("numObj", dollars),
+      loanHoldingCostTotal: baseVarb("numObj", dollars),
       preFinanceOneTimeExpenses: baseVarb("numObj", dollars),
       cashExpensesPlusLoanRepay: baseVarb("numObj", dollars),
       totalProfit: baseVarb("numObj", dollars),
@@ -383,9 +383,9 @@ export function makeAllBaseSectionVarbs() {
       ...baseVarbsS.monthsYears("refiLoanHolding"),
       ...baseVarbsS.monthsYears("purchaseLoanHolding"),
 
-      holdingRefiLoanPayment: baseVarb("numObj", dollars),
-      holdingPurchaseLoanPayment: baseVarb("numObj", dollars),
-      allClosingCosts: baseVarb("numObj", dollars),
+      refiLoanHoldingCost: baseVarb("numObj", dollars),
+      purchaseLoanHoldingCost: baseVarb("numObj", dollars),
+      purchaseAndRefiClosingCosts: baseVarb("numObj", dollars),
     }),
     financing: varbs({
       displayName: baseVarb("stringObj"),

@@ -52,7 +52,8 @@ export function addOngoingTaxesHomeInsYearly(
 
 export function addRents(
   property: SolverSection<"property">,
-  rents: number[]
+  rents: number[],
+  periodicSwitch: "monthly" | "yearly" = "monthly"
 ): number {
   let total = 0;
   for (const rent of rents) {
@@ -60,7 +61,7 @@ export function addRents(
     property.addChildAndSolve("unit", {
       sectionValues: {
         targetRentPeriodicEditor: numObj(rent),
-        targetRentPeriodicSwitch: "monthly",
+        targetRentPeriodicSwitch: periodicSwitch,
       },
     });
   }
@@ -69,7 +70,7 @@ export function addRents(
 
 type OnetimeCostSN = StrictExtract<
   SectionName,
-  | "miscOnetimeCost"
+  | "miscOnetimeValue"
   | "repairValue"
   | "costOverrunValue"
   | "sellingCostValue"
@@ -111,7 +112,7 @@ export function setOnetimeList<SN extends OnetimeCostSN>(
 }
 
 type OngoingSectionName =
-  | "miscPeriodicCost"
+  | "miscPeriodicValue"
   | "maintenanceValue"
   | "capExValue"
   | "taxesValue"

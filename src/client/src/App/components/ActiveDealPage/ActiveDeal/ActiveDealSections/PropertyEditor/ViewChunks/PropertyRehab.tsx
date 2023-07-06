@@ -4,7 +4,7 @@ import { nativeTheme } from "../../../../../../theme/nativeTheme";
 import { FormSectionLabeled } from "../../../../../appWide/FormSectionLabeled";
 import { MuiRow } from "../../../../../general/MuiRow";
 import { CostOverrunValue } from "./ViewParts/CostOverrunValue";
-import { MiscOnetimeCost } from "./ViewParts/MiscOnetimeCost";
+import { MiscOnetimeValue } from "./ViewParts/MiscOnetimeValue";
 import { RepairValue } from "./ViewParts/RepairValue";
 
 export function RehabSection({ feId }: FeIdProp) {
@@ -20,7 +20,7 @@ export function RehabSection({ feId }: FeIdProp) {
           feId={repair.feId}
           dealMode={property.valueNext("propertyMode")}
         />
-        <MiscOnetimeCost
+        <MiscOnetimeValue
           feId={property.onlyChildFeId("miscOnetimeCost")}
           menuDisplayNames={[
             "Property Inspection",

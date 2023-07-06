@@ -21,6 +21,10 @@ export class SolverActiveDeal extends SolverSectionBase<"deal"> {
   ): SolverSection<S> {
     return this.sections.solverSection(feInfo);
   }
+  changeDealMode(dealMode: DealMode) {
+    this.solver.updateValues({ dealMode });
+    this.property.updateValues({ propertyMode: dealMode });
+  }
   get property(): SolverSection<"property"> {
     return this.solverSection(this.get.onlyChild("property").feInfo);
   }

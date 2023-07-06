@@ -101,7 +101,7 @@ function _testChildSectionNameName<
   SN extends "property" | "loan",
   CSN extends ChildSectionName<SN>
 >(_sn: SN, _csn: CSN) {
-  const _test1: ChildSectionNameName<"property", "miscPeriodicCost"> =
+  const _test1: ChildSectionNameName<"property", "miscPeriodicValue"> =
     "miscOngoingCost";
   //@ts-expect-error
   const _test2: ChildSectionNameName<"property", "periodicList"> =
@@ -111,7 +111,7 @@ function _testChildSectionNameName<
     "onetimeList"
   > = "onetimeList";
 }
-_testChildSectionNameName("property", "miscOnetimeCost");
+_testChildSectionNameName("property", "miscOnetimeValue");
 
 export type ChildSectionNameToNameArrs = {
   [SN in SectionName]: {

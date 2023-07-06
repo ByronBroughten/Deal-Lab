@@ -335,8 +335,8 @@ export const varbLabels = checkAllVarbLabels({
     ...simplePeriodic("miscCosts", "Misc costs"),
     miscOnetimeCosts: input("Misc onetime costs"),
   }),
-  ...prop("miscPeriodicCost", periodicInputAndSource("valueDollars", "Misc")),
-  ...prop("miscOnetimeCost", {
+  ...prop("miscPeriodicValue", periodicInputAndSource("valueDollars", "Misc")),
+  ...prop("miscOnetimeValue", {
     valueSourceName: input("Misc onetime costs"),
     valueDollars: input("Misc onetime costs"),
     valueDollarsEditor: input("Misc onetime costs"),
@@ -377,11 +377,9 @@ export const varbLabels = checkAllVarbLabels({
     }),
     ...simpleSpan("purchaseLoanHolding", "Purchase loan holding period"),
     ...simpleSpan("refiLoanHolding", "Refi loan holding period"),
-    holdingPurchaseLoanPayment: input(
-      "Holding period purchase loan payment sum"
-    ),
-    holdingRefiLoanPayment: input("Holding period refi loan payment sum"),
-    allClosingCosts: input("All financing closing costs"),
+    purchaseLoanHoldingCost: input("Holding period purchase loan payment sum"),
+    refiLoanHoldingCost: input("Holding period refi loan payment sum"),
+    purchaseAndRefiClosingCosts: input("All financing closing costs"),
     ...simplePeriodic("ongoingLoanPayment", "Loan payment"),
     ...simplePeriodic("expenses", "Average ongoing costs"),
     totalProfit: input("Total profit"),
@@ -392,7 +390,7 @@ export const varbLabels = checkAllVarbLabels({
     }),
     cashExpensesPlusLoanRepay: input("Cash expenses and loan repayment"),
     preFinanceOneTimeExpenses: input("Pre-financing upfront costs"),
-    totalHoldingLoanPayment: input("Total holding loan payment"),
+    loanHoldingCostTotal: input("Total holding loan payment"),
     ...simplePeriodic("cocRoiDecimal", "CoC ROI Decimal"),
     cocRoiMonthly: multis.cocRoi("monthly"),
     cocRoiYearly: multis.cocRoi("yearly"),

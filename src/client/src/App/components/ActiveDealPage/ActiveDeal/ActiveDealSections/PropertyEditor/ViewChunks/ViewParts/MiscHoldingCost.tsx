@@ -5,7 +5,7 @@ import { NumObjEntityEditor } from "../../../../../../inputs/NumObjEntityEditor"
 import { ListEditorOngoing } from "../../ValueShared/ListEditorOngoing";
 
 export function MiscHoldingCost({ feId }: { feId: string }) {
-  const feInfo = { sectionName: "miscHoldingCost", feId } as const;
+  const feInfo = { sectionName: "miscPeriodicValue", feId } as const;
   const holdingCost = useGetterSection(feInfo);
 
   const valueVarb = holdingCost.switchVarb("valueDollars", "periodic");

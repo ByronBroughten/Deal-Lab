@@ -508,8 +508,8 @@ function makeAllUpdateSections() {
         editor: { updateFnName: "calcVarbs" },
       }),
     }),
-    ...prop("miscPeriodicCost", miscPeriodicCostUpdateVarbs()),
-    ...prop("miscOnetimeCost", {
+    ...prop("miscPeriodicValue", miscPeriodicCostUpdateVarbs()),
+    ...prop("miscOnetimeValue", {
       valueDollars: updateVarb("numObj", {
         updateFnName: "throwIfReached",
         updateOverrides: valueSourceOverrides("dollarsOrList", {

@@ -11,6 +11,7 @@ import { VarbInfoMixedFocal } from "../SectionsMeta/SectionInfo/MixedSectionInfo
 import { SectionName } from "../SectionsMeta/SectionName";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { SectionValues, VarbValue } from "../SectionsMeta/values/StateValue";
+import { NumObjOutput } from "../SectionsMeta/values/StateValue/NumObj";
 import { GetterSectionProps } from "../StateGetters/Bases/GetterSectionBase";
 import { GetterSection } from "../StateGetters/GetterSection";
 import {
@@ -152,6 +153,9 @@ export class SolverSection<
   }
   numValue<VN extends VarbName<SN>>(varbName: VN): number {
     return this.get.numValue(varbName);
+  }
+  numOutput<VN extends VarbName<SN>>(varbName: VN): NumObjOutput {
+    return this.get.varbNext(varbName).numObjOutput;
   }
   varb<VN extends VarbName<SN>>(varbName: VN): SolverVarb<SN> {
     return new SolverVarb({

@@ -1,5 +1,7 @@
+import { mathS } from "../../../../utils/math";
 import { Obj } from "../../../../utils/Obj";
 import { NumberOrQ } from "../NumObj";
+import { roundS } from "./calculations/numUnitParams";
 import { piFixedStandardMonthly } from "./calculations/piCalculations/piFixedStandard";
 import { piInterestOnlySimpleYearly } from "./calculations/piCalculations/piInterestOnlySimple";
 
@@ -38,16 +40,13 @@ const solvableTextByArgs = {
     },
     subtractOffsetNegative: ({ leftSide, rightSide }: LRSides) => {
       let baseEquation = `${leftSide} - ${rightSide}`;
-      const subtracted = leftSide - rightSide;
-      if (subtracted !== 0) {
-        let negativeOffset: NumberOrQ = Math.abs(subtracted);
-        if (`${negativeOffset}` === "NaN") {
-          negativeOffset = "?";
-        }
-        baseEquation += ` + ${negativeOffset}`;
+      const subtracted = roundS.decimal(leftSide - rightSide);
+      if (mathS.isRationalNumber(subtracted) && subtracted < 0) {
+        baseEquation = `(${baseEquation}) * 0`;
       }
       return baseEquation;
     },
+
     divide: ({ leftSide, rightSide }: LRSides) => {
       return `${leftSide} / ${rightSide}`;
     },

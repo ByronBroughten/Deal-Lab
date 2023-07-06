@@ -59,7 +59,7 @@ describe("homeBuyer output calculations", () => {
     expect(deal.numValue("ongoingPitiMonthly")).toBe(amount);
     expect(deal.numValue("ongoingPitiYearly")).toBeCloseTo(amount * 12);
   });
-  it("should calculate dealExpenses", () => {
+  it("should calculate ongoing expenses", () => {
     setPeriodicEditor(property.onlyChild("taxesOngoing"), 300, "monthly");
     setPeriodicEditor(property.onlyChild("homeInsOngoing"), 200, "monthly");
     setPeriodicEditor(property.onlyChild("miscOngoingCost"), 100, "monthly");
