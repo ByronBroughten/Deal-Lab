@@ -3,6 +3,11 @@ import { StateValue } from "../SectionsMeta/values/StateValue";
 import { getDealModes } from "../SectionsMeta/values/StateValue/dealMode";
 import { PackBuilderSection } from "../StatePackers/PackBuilderSection";
 import { numObj } from "./../SectionsMeta/values/StateValue/NumObj";
+import { makeExampleCapExList } from "./makeDefaultFeUser/makeExampleCapEx";
+import {
+  exampleAdvancedCapExProps,
+  exampleSimpleCapExProps,
+} from "./makeDefaultFeUser/makeExampleOngoingListsProps";
 
 export function makeDefaultProperty(
   propertyMode: StateValue<"dealMode"> = "buyAndHold"
@@ -67,6 +72,17 @@ export function makeDefaultProperty(
   property.addChild("maintenanceOngoing");
 
   const capExValue = property.addAndGetChild("capExValueOngoing");
-  capExValue.addChild("capExList");
+  const capExList = capExValue.addAndGetChild("capExList");
+
+  if (propertyMode === "homeBuyer") {
+    capExList.overwriteSelf(
+      makeExampleCapExList("Homebuyer Example CapEx", exampleSimpleCapExProps)
+    );
+  } else {
+    capExList.overwriteSelf(
+      makeExampleCapExList("Homebuyer Example CapEx", exampleAdvancedCapExProps)
+    );
+  }
+
   return property.makeSectionPack();
 }

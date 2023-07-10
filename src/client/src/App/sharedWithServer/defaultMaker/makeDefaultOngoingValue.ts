@@ -1,7 +1,6 @@
 import { PackBuilderSection } from "../StatePackers/PackBuilderSection";
 
 export function makeDefaultOngoingValue() {
-  const itemValueSource = "valueEditor";
   const periodicValue = PackBuilderSection.initAsOmniChild("periodicValue");
   periodicValue.updateValues({
     valueSourceName: "none",
@@ -9,6 +8,6 @@ export function makeDefaultOngoingValue() {
   });
 
   const list = periodicValue.addAndGetChild("periodicList");
-  list.updateValues({ itemValueSource });
+  list.updateValues({ itemValueSource: "valueDollarsPeriodicEditor" });
   return periodicValue.makeSectionPack();
 }

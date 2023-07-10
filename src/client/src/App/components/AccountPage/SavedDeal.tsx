@@ -113,7 +113,7 @@ export function SavedDeal({
   const isComplete = deal.valueNext("completionStatus") === "allValid";
 
   const outputPerDeal: Record<DealMode, VarbName<"deal">> = {
-    homeBuyer: "ongoingPitiMonthly",
+    homeBuyer: "averageNonPrincipalOngoingMonthly",
     buyAndHold: "cocRoiYearly",
     fixAndFlip: "valueAddRoiPercent",
     brrrr: "valueAddRoiPercent",

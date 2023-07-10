@@ -10,7 +10,8 @@ export const sectionNames = [
   "editorControls",
   "variablesMenu",
 
-  "sessionDeal",
+  "sessionSection",
+  "sessionVarb",
 
   "feStore",
 
@@ -77,7 +78,6 @@ export const sectionNames = [
   "arvLoanValue",
 
   "customLoanBase",
-
   "closingCostValue",
 
   "mgmt",

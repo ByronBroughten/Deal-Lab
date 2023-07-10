@@ -39,7 +39,15 @@ export function makeAllBaseSectionVarbs() {
     editorControls: varbs({
       editedDealDbId: baseVarb("string"),
     }),
-    sessionDeal: varbs({ dateTimeCreated: baseVarb("dateTime") }),
+    sessionSection: varbs({
+      dateTimeCreated: baseVarb("dateTime"),
+      displayName: baseVarb("string"),
+    }),
+    sessionVarb: varbs({
+      varbName: baseVarb("string"),
+      label: baseVarb("string"),
+      value: baseVarb("string"),
+    }),
     sessionStore: varbs({
       archivedAreLoaded: baseVarb("boolean"),
       showArchivedDeals: baseVarb("boolean"),
