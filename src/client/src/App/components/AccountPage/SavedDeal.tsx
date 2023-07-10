@@ -115,8 +115,8 @@ export function SavedDeal({
   const outputPerDeal: Record<DealMode, VarbName<"deal">> = {
     homeBuyer: "ongoingPitiMonthly",
     buyAndHold: "cocRoiYearly",
-    fixAndFlip: "roiPercent",
-    brrrr: "roiPercent",
+    fixAndFlip: "valueAddRoiPercent",
+    brrrr: "valueAddRoiPercent",
   };
 
   const archiveBtnProps = isArchived

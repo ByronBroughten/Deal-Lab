@@ -18,7 +18,7 @@ function makeDealFocals(dealPath: ChildName[]) {
   const financingPath: ChildName[] = [...dealPath, "purchaseFinancing"];
   const loanPath: ChildName[] = [...financingPath, "loan"];
   const loanBasePath: ChildName[] = [...loanPath, "loanBaseValue"];
-  const mgmtPath: ChildName[] = [...dealPath, "mgmt"];
+  const mgmtPath: ChildName[] = [...dealPath, "mgmtOngoing"];
   return {
     get dealFocal() {
       return abs("deal", dealPath);
@@ -36,7 +36,7 @@ function makeDealFocals(dealPath: ChildName[]) {
       return abs("utilityValue", [...propertyPath, "utilityOngoing"]);
     },
     get capExCostFocal() {
-      return abs("capExValue", [...propertyPath, "capExValue"]);
+      return abs("capExValue", [...propertyPath, "capExValueOngoing"]);
     },
     get costOverrunFocal() {
       return abs("costOverrunValue", [...propertyPath, "costOverrunValue"]);
@@ -67,7 +67,7 @@ function makeDealFocals(dealPath: ChildName[]) {
       return abs("closingCostValue", [...loanPath, "closingCostValue"]);
     },
     get mgmtFocal() {
-      return abs("mgmt", [...dealPath, "mgmt"]);
+      return abs("mgmt", mgmtPath);
     },
     get mgmtBasePayFocal() {
       return abs("mgmtBasePayValue", [...mgmtPath, "mgmtBasePayValue"]);

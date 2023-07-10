@@ -6,21 +6,21 @@ import { makeDefaultLoanPack } from "./makeDefaultLoanPack";
 import { makeDefaultMgmt } from "./makeDefaultMgmt";
 import { makeDefaultProperty } from "./makeDefaultProperty";
 
-export const dealSectionNames = [
+const dealChildNames = [
   "property",
   "purchaseFinancing",
-  "mgmt",
+  "mgmtOngoing",
 ] as const;
-type DealSectionName = (typeof dealSectionNames)[number];
+type DealSectionName = (typeof dealChildNames)[number];
 
 export function makeDefaultDealDisplayName(
   deal: GetterSection<"deal">
 ): string {
-  const names = dealSectionNames.reduce((names, sectionName) => {
+  const names = dealChildNames.reduce((names, sectionName) => {
     names[sectionName] = deal.onlyChild(sectionName).stringValue("displayName");
     return names;
   }, {} as Record<DealSectionName, string>);
-  return `${names.property} / ${names.purchaseFinancing} / ${names.mgmt}`;
+  return `${names.property} / ${names.purchaseFinancing} / ${names.mgmtOngoing}`;
 }
 
 export function makeDefaultDealPack(
@@ -43,14 +43,13 @@ export function makeDefaultDealPack(
   });
 
   const refiFinancing = deal.addAndGetChild("refiFinancing", {
-    sectionValues: { financingMode: "refinance" },
+    sectionValues: { financingMode: "refinance", financingMethod: "useLoan" },
   });
   refiFinancing.addChild("loan", {
     sectionPack: makeDefaultLoanPack("refinance"),
   });
-  refiFinancing.updateValues({ financingMethod: "useLoan" });
 
-  deal.addChild("mgmt", {
+  deal.addChild("mgmtOngoing", {
     sectionPack: makeDefaultMgmt(),
   });
 

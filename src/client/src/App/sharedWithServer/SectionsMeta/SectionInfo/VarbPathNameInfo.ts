@@ -79,39 +79,38 @@ const allVarbPathParams = {
     "totalInvestment",
     ...targetNames("cashFlow", "periodic"),
     ...targetNames("cocRoi", "periodic"),
-    ...targetNames("averageNonPrincipalCost", "periodic"),
+    ...targetNames("averageNonPrincipalOngoing", "periodic"),
   ]),
-  propertyExpensesMonthly: fixedVarbPathParams(
+  propertyExpensesOngoingMonthly: fixedVarbPathParams(
     "Property",
     "propertyFocal",
-    "expensesMonthly"
+    "expensesOngoingMonthly"
   ),
-  propertyExpensesYearly: fixedVarbPathParams(
+  propertyExpensesOngoingYearly: fixedVarbPathParams(
     "Property",
     "propertyFocal",
-    "expensesYearly"
+    "expensesOngoingYearly"
   ),
   dealMode: fixedVarbPathParams("Deal", "dealFocal", "dealMode"),
-  dealExpensesMonthly: fixedVarbPathParams(
+  dealExpensesOngoingMonthly: fixedVarbPathParams(
     "Deal",
     "dealFocal",
-    "expensesMonthly"
+    "expensesOngoingMonthly"
   ),
-  dealExpensesYearly: fixedVarbPathParams(
+  dealExpensesOngoingYearly: fixedVarbPathParams(
     "Deal",
     "dealFocal",
-    "expensesYearly"
+    "expensesOngoingYearly"
   ),
-
-  propertyRevenueMonthly: fixedVarbPathParams(
+  propertyRevenueOngoingMonthly: fixedVarbPathParams(
     "Property",
     "propertyFocal",
-    "revenueMonthly"
+    "revenueOngoingMonthly"
   ),
-  propertyRevenueYearly: fixedVarbPathParams(
+  propertyRevenueOngoingYearly: fixedVarbPathParams(
     "Property",
     "propertyFocal",
-    "revenueYearly"
+    "revenueOngoingYearly"
   ),
   userVarbValue: varbPathParams("numVarbItemMain", "value"),
   rehabCostBase: fixedVarbPathParams(
@@ -121,13 +120,21 @@ const allVarbPathParams = {
   ),
   rehabCost: fixedVarbPathParams("Property", "propertyFocal", "rehabCost"),
 
-  roiPercent: fixedVarbPathParams("Deal", "dealFocal", "roiPercent"),
-  roiPercentAnnualized: fixedVarbPathParams(
+  valueAddRoiPercent: fixedVarbPathParams(
     "Deal",
     "dealFocal",
-    "roiPercentAnnualized"
+    "valueAddRoiPercent"
   ),
-  totalProfit: fixedVarbPathParams("Deal", "dealFocal", "totalProfit"),
+  valueAddRoiPercentAnnualized: fixedVarbPathParams(
+    "Deal",
+    "dealFocal",
+    "valueAddRoiPercentAnnualized"
+  ),
+  totalEquityProfit: fixedVarbPathParams(
+    "Deal",
+    "dealFocal",
+    "totalEquityProfit"
+  ),
 };
 
 export const varbPathNames = Obj.keys(allVarbPathParams);

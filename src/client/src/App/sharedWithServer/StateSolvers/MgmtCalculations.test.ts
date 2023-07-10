@@ -42,7 +42,7 @@ describe("MgmtCalculations", () => {
     test(100);
 
     vacancyLoss.updateValues({
-      valueSourceName: "dollarsEditor",
+      valueSourceName: "valueDollarsPeriodicEditor",
       valueDollarsPeriodicSwitch: "monthly",
       valueDollarsPeriodicEditor: numObj(17),
     });
@@ -77,7 +77,7 @@ describe("MgmtCalculations", () => {
     test(300);
 
     basePay.updateValues({
-      valueSourceName: "dollarsEditor",
+      valueSourceName: "valueDollarsPeriodicEditor",
       valueDollarsPeriodicEditor: numObj(10),
       valueDollarsPeriodicSwitch: "monthly",
     });

@@ -172,8 +172,8 @@ export const varbLabels = checkAllVarbLabels({
       title: "Selling Costs",
       info: "These are the costs associated with selling a property, such as to pay real estate agents, the title company, government fees, etc. They are commonly about 6% of the selling price.",
     }),
-    ...simplePeriodic("expenses", "expenses", {
-      variableLabel: "Property expenses",
+    ...simplePeriodic("expensesOngoing", "Ongoing expenses", {
+      variableLabel: "Property ongoing expenses",
     }),
     ...simplePeriodic("targetRent", "Rent"),
     ...simplePeriodic("homeInsOngoing", "Home insurance"),
@@ -201,14 +201,14 @@ export const varbLabels = checkAllVarbLabels({
     ...simplePeriodic("taxesHolding", "Holding period taxes"),
     ...simplePeriodic("homeInsHolding", "Holding period home insurance"),
     ...simplePeriodic("utilitiesHolding", "Holding period utilities"),
-    ...simplePeriodic("miscRevenue", "Misc revenue"),
-    ...simplePeriodic("miscCosts", "Misc costs", {
+    ...simplePeriodic("miscOngoingRevenue", "Misc revenue"),
+    ...simplePeriodic("miscOngoingCosts", "Misc costs", {
       variableLabel: "Misc property costs",
     }),
     ...simplePeriodic("holdingCost", "Holding cost", {
       variableLabel: "Propety holding cost",
     }),
-    ...simplePeriodic("revenue", "Revenue"),
+    ...simplePeriodic("revenueOngoing", "Revenue"),
   }),
   ...prop("unit", {
     numBedrooms: input("BR count"),
@@ -327,7 +327,7 @@ export const varbLabels = checkAllVarbLabels({
       variableLabel: "Mgmt base pay",
     }),
     basePayPercent: input("Base pay", { variableLabel: "Mgmt pase pay" }),
-    ...simplePeriodic("expenses", "expenses", {
+    ...simplePeriodic("expenses", "Expenses", {
       variableLabel: "Management expenses",
     }),
     ...simplePeriodic("vacancyLossDollars", "Vacancy loss"),
@@ -363,7 +363,7 @@ export const varbLabels = checkAllVarbLabels({
   ...prop("deal", {
     dealMode: multis.dealMode,
     ...simplePeriodic(
-      "averageNonPrincipalCost",
+      "averageNonPrincipalOngoing",
       "Average non-principal costs",
       {
         title: "Average Non-Principal Cost",
@@ -375,22 +375,22 @@ export const varbLabels = checkAllVarbLabels({
       title: "PITI",
       info: `"PITI" stands for "principal and interest, taxes, and insurance". Often, these are the things included in the payments that homebuyers send to the bank every month.`,
     }),
+    ...simpleSpan("timeTillValueAddProfit", "Time till value add profit"),
     ...simpleSpan("purchaseLoanHolding", "Purchase loan holding period"),
     ...simpleSpan("refiLoanHolding", "Refi loan holding period"),
     purchaseLoanHoldingCost: input("Holding period purchase loan payment sum"),
     refiLoanHoldingCost: input("Holding period refi loan payment sum"),
-    purchaseAndRefiClosingCosts: input("All financing closing costs"),
     ...simplePeriodic("ongoingLoanPayment", "Loan payment"),
-    ...simplePeriodic("expenses", "Average ongoing costs"),
-    totalProfit: input("Total profit"),
+    ...simplePeriodic("expensesOngoing", "Average ongoing costs"),
+    totalEquityProfit: input("Total profit"),
     totalInvestment: text({
       inputLabel: "Total investment",
       title: "Total Investment",
       info: "The total amount of upfront cash needed for a deal after all loans have been applied.",
     }),
-    cashExpensesPlusLoanRepay: input("Cash expenses and loan repayment"),
+    cashCostsPlusPurchaseLoanRepay: input("Cash expenses and loan repayment"),
     preFinanceOneTimeExpenses: input("Pre-financing upfront costs"),
-    loanHoldingCostTotal: input("Total holding loan payment"),
+    holdingCostTotal: input("Total holding costs"),
     ...simplePeriodic("cocRoiDecimal", "CoC ROI Decimal"),
     cocRoiMonthly: multis.cocRoi("monthly"),
     cocRoiYearly: multis.cocRoi("yearly"),
@@ -398,14 +398,14 @@ export const varbLabels = checkAllVarbLabels({
       title: "Cash Flow",
       info: "The income that a property brings in every month or year, after expenses have been subtracted.",
     }),
-    roiDecimal: input("ROI Decimal"),
-    roiPercent: text({
+    valueAddRoiDecimal: input("ROI Decimal"),
+    valueAddRoiPercent: text({
       inputLabel: "ROI",
       title: "Return on Investment",
       info: "The total profit from increasing a property's value after purchase, as a percent of the cash that was invested to do so",
     }),
-    roiPercentPerMonth: input("ROI percent per month"),
-    roiPercentAnnualized: text({
+    valueAddRoiPercentPerMonth: input("ROI percent per month"),
+    valueAddRoiPercentAnnualized: text({
       inputLabel: "ROI annualized",
       title: "Annualized Return on Investment",
       info: `The total profit from increasing a property's value after purchase, as a percent of the cash that was invested to do so, divided by the number of years—or by the fraction of years—that the holding period lasted.\n\nThis can be used to compare ROI from onetime windfall income with ongoing Cash on Cash ROI from other types of investments.`,

@@ -8,7 +8,7 @@ import {
   setPeriodicList,
 } from "./testUtils";
 
-// homeBuyer: ["totalInvestment", "ongoingPitiMonthly", "dealExpensesYearly"],
+// homeBuyer: ["totalInvestment", "ongoingPitiMonthly", "dealExpensesOngoingYearly"],
 describe("homeBuyer output calculations", () => {
   let activeDeal: SolverActiveDeal;
   let deal: SolverSection<"deal">;
@@ -65,7 +65,7 @@ describe("homeBuyer output calculations", () => {
     setPeriodicEditor(property.onlyChild("miscOngoingCost"), 100, "monthly");
     setPeriodicList(property.onlyChild("utilityOngoing"), [50], "monthly");
     setPeriodicEditor(property.onlyChild("maintenanceOngoing"), 30, "monthly");
-    setPeriodicEditor(property.onlyChild("capExValue"), 80, "monthly");
+    setPeriodicEditor(property.onlyChild("capExValueOngoing"), 80, "monthly");
     setFirstLoanFor912p6Monthly(financing, property);
     firstLoan.updateValues({
       hasMortgageIns: true,
@@ -74,7 +74,7 @@ describe("homeBuyer output calculations", () => {
     });
 
     const amount = 300 + 200 + 100 + 50 + 30 + 80 + 912.6 + 120;
-    expect(deal.numValue("expensesMonthly")).toBe(amount);
-    expect(deal.numValue("expensesYearly")).toBeCloseTo(amount * 12);
+    expect(deal.numValue("expensesOngoingMonthly")).toBe(amount);
+    expect(deal.numValue("expensesOngoingYearly")).toBeCloseTo(amount * 12);
   });
 });

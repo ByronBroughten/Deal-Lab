@@ -10,14 +10,14 @@ function getItems(mode: DealMode): MuiSelectItems<"utilityValueSource"> {
     return [
       ["zero", "Choose method"],
       ["threeHundredPerUnit", "Three hundred"],
-      ["valueDollarsEditor", "Enter amount"],
+      ["valueDollarsPeriodicEditor", "Enter amount"],
       ["listTotal", "Itemize"],
     ];
   } else {
     return [
       ["zero", "Tenant pays all utilities"],
       ["threeHundredPerUnit", "Three hundred per unit"],
-      ["valueDollarsEditor", "Enter amount"],
+      ["valueDollarsPeriodicEditor", "Enter amount"],
       ["listTotal", "Itemize"],
     ];
   }
@@ -43,7 +43,7 @@ export function UtilityValue({ feId, propertyMode }: Props) {
         },
         items: getItems(propertyMode),
 
-        ...(valueSourceName === "valueDollarsEditor" && {
+        ...(valueSourceName === "valueDollarsPeriodicEditor" && {
           makeEditor: (props) => (
             <NumObjEntityEditor
               {...{

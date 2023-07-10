@@ -7,7 +7,7 @@ import { useGoToPage } from "../../customHooks/useGoToPage";
 
 export type ActiveDealChildName = StrictExtract<
   ChildName<"deal">,
-  "property" | "purchaseFinancing" | "refiFinancing" | "mgmt"
+  "property" | "purchaseFinancing" | "refiFinancing" | "mgmtOngoing"
 >;
 export function useActiveDealPage() {
   const main = useGetterSectionOnlyOne("main");
@@ -34,7 +34,7 @@ export const activeDealRouteNames: Record<ActiveDealChildName, FeRouteName> = {
   property: "activeProperty",
   purchaseFinancing: "activePurchaseFi",
   refiFinancing: "activeRefi",
-  mgmt: "activeMgmt",
+  mgmtOngoing: "activeMgmt",
 };
 
 export function useActiveDealSection(sectionName: ActiveDealChildName) {

@@ -118,12 +118,13 @@ function addUtilities(
   utilityChild.updateValues({ valueSourceName: "listTotal" });
   const utilityList = utilityChild.onlyChild("periodicList");
   for (const [displayName, value] of itemProps) {
-    const utilityItem = utilityList.addAndGetChild("periodicItem");
-    utilityItem.updateValues({
-      valueSourceName: "valueEditor",
-      valuePeriodicSwitch: "monthly",
-      displayNameEditor: displayName,
-      valuePeriodicEditor: numToObj(value),
+    utilityList.addChild("periodicItem", {
+      sectionValues: {
+        valueSourceName: "valueDollarsPeriodicEditor",
+        valuePeriodicSwitch: "monthly",
+        displayNameEditor: displayName,
+        valuePeriodicEditor: numToObj(value),
+      },
     });
   }
 }
@@ -154,7 +155,7 @@ export function makeExampleProperty<DM extends StateValue<"dealMode">>(
   for (const [displayName, value] of props.repairValue) {
     const repairItem = repairList.addAndGetChild("onetimeItem");
     repairItem.updateValues({
-      valueSourceName: "valueEditor",
+      valueSourceName: "valueDollarsEditor",
       displayNameEditor: displayName,
       valueEditor: numToObj(value),
     });
@@ -182,7 +183,7 @@ export function makeExampleProperty<DM extends StateValue<"dealMode">>(
         valueDollarsPeriodicEditor: props.homeInsOngoingYearly,
       });
 
-      const capExValue = property.onlyChild("capExValue");
+      const capExValue = property.onlyChild("capExValueOngoing");
       capExValue.updateValues({
         valueSourceName: props.capExValue.valueSourceName,
       });

@@ -22,7 +22,7 @@ export function exampleDealBuyAndHold(displayName: string) {
 
   example20PercentDownFinancing(deal, "purchaseFinancing");
 
-  const mgmt = deal.onlyChild("mgmt");
+  const mgmt = deal.onlyChild("mgmtOngoing");
   mgmt.overwriteSelf(exampleDealMgmt);
 
   deal.updateValues({

@@ -49,10 +49,7 @@ export function loanUpdateVarbs(): UpdateSectionVarbs<"loan"> {
     mortgageInsUpfront: updateVarb("numObj", {
       updateFnName: "throwIfReached",
       updateOverrides: [
-        updateOverride(
-          [oSwitchS.localIsFalse("hasMortgageIns")],
-          updateBasics("solvableTextZero")
-        ),
+        updateOverride([oSwitchS.localIsFalse("hasMortgageIns")], basicsS.zero),
         updateOverride(
           [oSwitchS.localIsTrue("hasMortgageIns")],
           basicsS.loadFromLocal(
@@ -68,7 +65,7 @@ export function loanUpdateVarbs(): UpdateSectionVarbs<"loan"> {
         updateOverrides: [
           updateOverride(
             [oSwitchS.localIsFalse("hasMortgageIns")],
-            updateBasics("solvableTextZero")
+            basicsS.zero
           ),
           updateOverride(
             [
@@ -92,7 +89,7 @@ export function loanUpdateVarbs(): UpdateSectionVarbs<"loan"> {
         updateOverrides: [
           updateOverride(
             [oSwitchS.localIsFalse("hasMortgageIns")],
-            updateBasics("solvableTextZero")
+            basicsS.zero
           ),
           updateOverride(
             [

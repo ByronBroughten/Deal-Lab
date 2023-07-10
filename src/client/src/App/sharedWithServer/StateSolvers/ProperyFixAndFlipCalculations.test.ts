@@ -12,7 +12,7 @@ import {
 describe("Property fix and flip calculations", () => {
   let property: SolverSection<"property">;
   const testPropertyVarbPeriodic = (
-    baseName: "miscRevenue" | "miscCosts" | "holdingCost",
+    baseName: "miscOngoingRevenue" | "miscOngoingCosts" | "holdingCost",
     num: number
   ) => {
     const varbNames = switchKeyToVarbNames(baseName, "periodic");
@@ -49,13 +49,13 @@ describe("Property fix and flip calculations", () => {
     });
     testSellingCostDollars(5000);
 
-    sellingCosts.updateValues({ valueSourceName: "itemize" });
+    sellingCosts.updateValues({ valueSourceName: "listTotal" });
     const list = sellingCosts.onlyChild("onetimeList");
     const listItems = [1000, 1500, 2000, 2500];
     for (const num of listItems) {
       list.addChildAndSolve("onetimeItem", {
         sectionValues: {
-          valueSourceName: "valueEditor",
+          valueSourceName: "valueDollarsEditor",
           valueEditor: numObj(num),
         },
       });

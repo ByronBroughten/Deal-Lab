@@ -238,14 +238,14 @@ export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
       ),
     }),
     ...varbsS.ongoingSumNums(
-      "expenses",
+      "expensesOngoing",
       [
         propS.localBaseName("taxesOngoing"),
         propS.localBaseName("homeInsOngoing"),
-        propS.localBaseName("miscCosts"),
+        propS.localBaseName("miscOngoingCosts"),
         propS.onlyChild("utilityOngoing", "valueDollars"),
         propS.onlyChild("maintenanceOngoing", "valueDollars"),
-        propS.onlyChild("capExValue", "valueDollars"),
+        propS.onlyChild("capExValueOngoing", "valueDollars"),
       ],
       "monthly"
     ),
@@ -254,13 +254,16 @@ export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
       basicsS.loadFromChild("miscOnetimeCost", "valueDollars")
     ),
 
-    ...varbsS.group("miscCosts", "periodic", "monthly", {
+    ...varbsS.group("miscOngoingCosts", "periodic", "monthly", {
       monthly: basicsS.loadFromChild("miscOngoingCost", "valueDollarsMonthly"),
       yearly: basicsS.loadFromChild("miscOngoingCost", "valueDollarsYearly"),
     }),
-    ...varbsS.group("miscRevenue", "periodic", "monthly", {
-      monthly: basicsS.loadFromChild("miscRevenue", "valueDollarsMonthly"),
-      yearly: basicsS.loadFromChild("miscRevenue", "valueDollarsYearly"),
+    ...varbsS.group("miscOngoingRevenue", "periodic", "monthly", {
+      monthly: basicsS.loadFromChild(
+        "miscOngoingRevenue",
+        "valueDollarsMonthly"
+      ),
+      yearly: basicsS.loadFromChild("miscOngoingRevenue", "valueDollarsYearly"),
     }),
     ...varbsS.monthsYearsInput("holdingPeriod", "months"),
     ...varbsS.ongoingSumNums(
@@ -269,8 +272,8 @@ export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
       "monthly"
     ),
     ...varbsS.ongoingSumNums(
-      "revenue",
-      updateFnPropsS.localBaseNameArr(["targetRent", "miscRevenue"]),
+      "revenueOngoing",
+      updateFnPropsS.localBaseNameArr(["targetRent", "miscOngoingRevenue"]),
       "monthly"
     ),
   };

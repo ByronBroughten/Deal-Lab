@@ -54,9 +54,9 @@ const hasHoldingBasics = [
 ] as const;
 const fixAndFlipBasics = ["sellingCosts"] as const;
 const hasProfitOutputs = [
-  "totalProfit",
-  "roiPercent",
-  "roiPercentAnnualized",
+  "totalEquityProfit",
+  "valueAddRoiPercent",
+  "valueAddRoiPercentAnnualized",
 ] as const;
 const fixAndFlip = [
   ...sharedBasics,
@@ -71,10 +71,10 @@ const fixAndFlip = [
 ] as const;
 
 const hasOngoingOutputs = [
-  "dealExpensesMonthly",
-  "dealExpensesYearly",
-  "averageNonPrincipalCostMonthly",
-  "averageNonPrincipalCostYearly",
+  "dealExpensesOngoingMonthly",
+  "dealExpensesOngoingYearly",
+  "averageNonPrincipalOngoingMonthly",
+  "averageNonPrincipalOngoingYearly",
 ] as const;
 
 const hasRentBasics = ["targetRentMonthly", "targetRentYearly"] as const;

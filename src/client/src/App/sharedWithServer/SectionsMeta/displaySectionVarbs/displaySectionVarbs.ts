@@ -12,6 +12,7 @@ import { SectionName } from "../SectionName";
 import {
   decimalRounding,
   maxRounding,
+  percentRounding,
 } from "../values/StateValue/valuesShared/calculations/numUnitParams";
 import { displayVarb, DisplayVarb, DisplayVarbOptions } from "./displayVarb";
 
@@ -29,7 +30,11 @@ export function displaySectionVarbsProp<SN extends SectionName>(
 }
 
 const dollars = { startAdornment: "$", displayRound: 2, calculateRound: 2 };
-const percent = { endAdornment: "%", displayRound: 3, calculateRound: 6 };
+const percent = {
+  endAdornment: "%",
+  displayRound: 3,
+  calculateRound: percentRounding,
+};
 const decimal = { displayRound: 5, calculateRound: decimalRounding };
 const absolute = { displayRound: 5, calculateRound: maxRounding };
 

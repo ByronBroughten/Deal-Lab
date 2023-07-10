@@ -57,7 +57,10 @@ export function ActiveDealMain() {
             />
           )}
           {isDealMode(dealMode, "hasMgmt") && (
-            <DealSubSectionClosed {...dealElementProps} childName="mgmt" />
+            <DealSubSectionClosed
+              {...dealElementProps}
+              childName="mgmtOngoing"
+            />
           )}
         </View>
         <OutputSection

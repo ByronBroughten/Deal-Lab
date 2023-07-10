@@ -160,7 +160,7 @@ function makeAllUpdateSections() {
                 "utilitiesOngoingMonthly"
               ),
               threeHundredPerUnit: updateBasics("threeHundredPerUnit"),
-              valueDollarsEditor: updateBasicsS.loadFromLocal(
+              valueDollarsPeriodicEditor: updateBasicsS.loadFromLocal(
                 "valueDollarsPeriodicEditor"
               ),
               listTotal: updateBasicsS.loadFromChild(
@@ -182,7 +182,7 @@ function makeAllUpdateSections() {
               threeHundredPerUnit: updateBasics(
                 "threeHundredPerUnitTimesTwelve"
               ),
-              valueDollarsEditor: updateBasicsS.loadFromLocal(
+              valueDollarsPeriodicEditor: updateBasicsS.loadFromLocal(
                 "valueDollarsPeriodicEditor"
               ),
               listTotal: updateBasicsS.loadFromChild(
@@ -383,16 +383,10 @@ function makeAllUpdateSections() {
     ...prop("userInfoPrivate", {
       guestSectionsAreLoaded: updateVarb("boolean", { initValue: false }),
     }),
-    ...prop("outputList", {
-      itemValueSource: updateVarb("loadedVarbSource", {
-        initValue: "loadedVarb",
-      } as const),
-    }),
+    ...prop("outputList", updateVarbsS.savableSection),
     ...prop("onetimeList", {
       total: updateVarbS.sumNums([propS.children("onetimeItem", "value")]),
-      itemValueSource: updateVarb("editorValueSource", {
-        initValue: "valueEditor",
-      }),
+      itemValueSource: updateVarb("valueDollarsEditor"),
     }),
     ...prop("closingCostValue", {
       valueSourceName: updateVarb("closingCostValueSource", {
@@ -534,8 +528,8 @@ function makeAllUpdateSections() {
         [propS.children("periodicItem", "value")],
         "monthly"
       ),
-      itemValueSource: updateVarb("editorValueSource", {
-        initValue: "valueEditor",
+      itemValueSource: updateVarb("valueDollarsPeriodicEditor", {
+        initValue: "valueDollarsPeriodicEditor",
       }),
       itemPeriodicSwitch: updateVarb("ongoingSwitch", {
         initValue: "monthly",
@@ -573,19 +567,17 @@ function makeAllUpdateSections() {
     ...prop("onetimeItem", {
       ...varbsS._typeUniformity,
       ...varbsS.displayNameAndEditor,
+      valueSourceName: updateVarb("valueDollarsEditor"),
+      valueEditor: updateVarb("numObj"),
       value: updateVarb("numObj", {
         updateFnName: "throwIfReached",
         updateOverrides: [
           updateOverride(
-            [switchS.local("valueSourceName", "valueEditor")],
+            [switchS.local("valueSourceName", "valueDollarsEditor")],
             updateBasicsS.loadFromLocalValueEditor()
           ),
         ],
       }),
-      valueSourceName: updateVarb("editorValueSource", {
-        initValue: "valueEditor",
-      }),
-      valueEditor: updateVarb("numObj"),
     }),
     ...prop("periodicItem", ongoingItemUpdateVarbs()),
     ...prop("numVarbItem", {

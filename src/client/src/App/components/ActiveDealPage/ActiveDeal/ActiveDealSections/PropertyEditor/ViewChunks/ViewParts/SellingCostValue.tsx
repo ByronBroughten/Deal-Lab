@@ -20,7 +20,7 @@ function getEqualsVarbName(
   valueSource: StateValue<"sellingCostSource">
 ): "valuePercent" | "valueDollars" | null {
   switch (valueSource) {
-    case "itemize":
+    case "listTotal":
       return null;
     case "valueDollarsEditor":
       return "valuePercent";
@@ -46,12 +46,12 @@ export function SellingCostValue({ feId, sx }: Props) {
         selectProps: { sx: { minWidth: 160 } },
         itemizedModalTitle: "Selling costs",
         unionValueName: "sellingCostSource",
-        itemizeValue: "itemize",
+        itemizeValue: "listTotal",
         items: [
           ["sixPercent", "6% ARV (common)"],
           ["valueDollarsEditor", "Custom amount"],
           ["valuePercentEditor", "Percent of ARV"],
-          ["itemize", "Itemize"],
+          ["listTotal", "Itemize"],
         ],
         equalsValue: equalsVarbName
           ? sellingCost.displayVarb(equalsVarbName)

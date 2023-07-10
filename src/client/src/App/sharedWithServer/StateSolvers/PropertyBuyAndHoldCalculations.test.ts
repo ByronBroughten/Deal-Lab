@@ -20,7 +20,7 @@ describe("Property buy and hold calculations", () => {
   };
 
   const testPropertyVarbPeriodic = (
-    baseName: "miscRevenue" | "miscCosts" | "holdingCost",
+    baseName: "miscOngoingRevenue" | "miscOngoingCosts" | "holdingCost",
     num: number
   ) => {
     const varbNames = switchKeyToVarbNames(baseName, "periodic");
@@ -47,7 +47,7 @@ describe("Property buy and hold calculations", () => {
     it("should calculate revenue", () => {
       const rentTotal = addRents(property, [2000, 2100, 2300]);
       const miscTotal = 1200;
-      const misc = property.onlyChild("miscRevenue");
+      const misc = property.onlyChild("miscOngoingRevenue");
       misc.updateValues({
         valueSourceName: "valueDollarsPeriodicEditor",
         valueDollarsPeriodicSwitch: "monthly",
@@ -55,8 +55,8 @@ describe("Property buy and hold calculations", () => {
       });
 
       const total = rentTotal + miscTotal;
-      expect(property.numValue("revenueMonthly")).toBe(total);
-      expect(property.numValue("revenueYearly")).toBe(total * 12);
+      expect(property.numValue("revenueOngoingMonthly")).toBe(total);
+      expect(property.numValue("revenueOngoingYearly")).toBe(total * 12);
     });
   it("should calculate miscOnetimeCosts value", () => {
     const onetimeCost = property.onlyChild("miscOnetimeCost");
@@ -119,33 +119,33 @@ describe("Property buy and hold calculations", () => {
     });
     expect(property.numValue("upfrontExpenses")).toBe(201000);
   });
-  it("should calculate periodic miscCosts", () => {
+  it("should calculate miscOngoingCosts periodic", () => {
     setPeriodicEditor(property.onlyChild("miscOngoingCost"), 500, "monthly");
-    testPropertyVarbPeriodic("miscCosts", 500);
+    testPropertyVarbPeriodic("miscOngoingCosts", 500);
     setPeriodicList(
       property.onlyChild("miscOngoingCost"),
       [200, 100, 50],
       "monthly"
     );
-    testPropertyVarbPeriodic("miscCosts", 350);
+    testPropertyVarbPeriodic("miscOngoingCosts", 350);
   });
-  it("should calculate periodic miscRevenue", () => {
-    setPeriodicEditor(property.onlyChild("miscRevenue"), 500, "monthly");
-    testPropertyVarbPeriodic("miscRevenue", 500);
+  it("should calculate miscOngoingRevenue periodic", () => {
+    setPeriodicEditor(property.onlyChild("miscOngoingRevenue"), 500, "monthly");
+    testPropertyVarbPeriodic("miscOngoingRevenue", 500);
     setPeriodicList(
-      property.onlyChild("miscRevenue"),
+      property.onlyChild("miscOngoingRevenue"),
       [200, 100, 50],
       "monthly"
     );
-    testPropertyVarbPeriodic("miscRevenue", 350);
+    testPropertyVarbPeriodic("miscOngoingRevenue", 350);
   });
   it("should calculate periodic expenses", () => {
     addOngoingTaxesHomeInsYearly(property, 2400, 1200);
     setPeriodicList(property.onlyChild("utilityOngoing"), [600], "yearly");
     setPeriodicEditor(property.onlyChild("miscOngoingCost"), 1500, "yearly");
     setPeriodicEditor(property.onlyChild("maintenanceOngoing"), 1300, "yearly");
-    setPeriodicEditor(property.onlyChild("capExValue"), 5000, "yearly");
-    expect(property.numValue("expensesYearly")).toBe(12000);
-    expect(property.numValue("expensesMonthly")).toBe(12000 / 12);
+    setPeriodicEditor(property.onlyChild("capExValueOngoing"), 5000, "yearly");
+    expect(property.numValue("expensesOngoingYearly")).toBe(12000);
+    expect(property.numValue("expensesOngoingMonthly")).toBe(12000 / 12);
   });
 });

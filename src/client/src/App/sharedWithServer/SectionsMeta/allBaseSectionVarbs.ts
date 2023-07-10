@@ -1,8 +1,4 @@
 import {
-  baseCapExItem,
-  baseOngoingItem,
-} from "./allBaseSectionVarbs/baseOngoingItem";
-import {
   BaseSectionVarbs,
   baseSectionVarbs,
   GeneralBaseSectionVarbs,
@@ -104,7 +100,13 @@ export function makeAllBaseSectionVarbs() {
     onetimeList: varbs({
       ...varbsS.savableSection,
       total: baseVarb("numObj", dollars),
-      itemValueSource: baseVarb("editorValueSource"),
+      itemValueSource: baseVarb("valueDollarsEditor"),
+    }),
+    onetimeItem: varbs({
+      ...baseVarbsS.displayNameAndEditor,
+      value: baseVarb("numObj", dollars),
+      valueEditor: baseVarb("numObj", dollars),
+      valueSourceName: baseVarb("valueDollarsEditor"),
     }),
     periodicValue: varbs({
       ...varbsS.displayNameAndEditor,
@@ -114,16 +116,25 @@ export function makeAllBaseSectionVarbs() {
     periodicList: varbs({
       ...baseVarbsS.savableSection,
       ...baseVarbsS.periodicDollars("total"),
-      itemValueSource: baseVarb("editorValueSource"),
+      itemValueSource: baseVarb("valueDollarsPeriodicEditor"),
       itemPeriodicSwitch: baseVarb("ongoingSwitch"),
+    }),
+    periodicItem: baseSectionVarbs({
+      valueSourceName: baseVarb("valueDollarsPeriodicEditor"),
+      ...baseVarbsS.periodicDollarsInput("value"),
+      ...baseVarbsS.displayNameAndEditor,
     }),
     capExList: varbs({
       ...baseVarbsS.savableSection,
       ...baseVarbsS.periodicDollars("total"),
       itemPeriodicSwitch: baseVarb("ongoingSwitch"),
     }),
-    capExItem: baseCapExItem,
-    periodicItem: baseOngoingItem,
+    capExItem: baseSectionVarbs({
+      ...baseVarbsS.displayNameAndEditor,
+      ...baseVarbsS.periodicDollars("value"),
+      ...baseVarbsS.monthsYearsInput("lifespan"),
+      costToReplace: baseVarb("numObj", baseOptions.dollars),
+    }),
     numVarbList: varbs({
       ...baseVarbsS.savableSection,
       itemValueSource: baseVarb("editorValueSource"),
@@ -132,16 +143,8 @@ export function makeAllBaseSectionVarbs() {
       ...baseVarbsS.savableSection,
       itemValueSource: baseVarb("editorValueSource"),
     }),
-    outputList: varbs({
-      ...baseVarbsS.savableSection,
-      itemValueSource: baseVarb("loadedVarbSource"),
-    }),
-    onetimeItem: varbs({
-      ...baseVarbsS.displayNameAndEditor,
-      value: baseVarb("numObj"),
-      valueEditor: baseVarb("numObj"),
-      valueSourceName: baseVarb("editorValueSource"),
-    }),
+    outputList: varbs(baseVarbsS.savableSection),
+
     outputItem: varbs({
       valueEntityInfo: baseVarb("inEntityValue"),
     }),
@@ -219,11 +222,11 @@ export function makeAllBaseSectionVarbs() {
       ...baseVarbsS.monthsYearsInput("holdingPeriod"),
 
       ...baseVarbsS.periodicDollars("targetRent"),
-      ...baseVarbsS.periodicDollars("miscRevenue"),
-      ...baseVarbsS.periodicDollars("miscCosts"),
+      ...baseVarbsS.periodicDollars("miscOngoingRevenue"),
+      ...baseVarbsS.periodicDollars("miscOngoingCosts"),
       ...baseVarbsS.periodicDollars("holdingCost"),
-      ...baseVarbsS.periodicDollars("revenue"),
-      ...baseVarbsS.periodicDollars("expenses"),
+      ...baseVarbsS.periodicDollars("revenueOngoing"),
+      ...baseVarbsS.periodicDollars("expensesOngoing"),
     }),
     unit: varbs({
       one: baseVarb("number"),
@@ -364,28 +367,28 @@ export function makeAllBaseSectionVarbs() {
       ...baseVarbsS.displayNameEditor,
       completionStatus: baseVarb("completionStatus"),
       displayNameSource: baseVarb("dealDisplayNameSource"),
+      ...baseVarbsS.monthsYears("timeTillValueAddProfit"),
       ...baseVarbsS.periodicDollars("ongoingPiti"),
       ...baseVarbsS.periodicDollars("ongoingLoanPayment"),
-      ...baseVarbsS.periodicDollars("expenses"),
-      ...baseVarbsS.periodicDollars("averageNonPrincipalCost"),
+      ...baseVarbsS.periodicDollars("expensesOngoing"),
+      ...baseVarbsS.periodicDollars("averageNonPrincipalOngoing"),
       ...baseVarbsS.periodicDollars("cashFlow"),
       ...baseVarbsS.periodicDecimal("cocRoiDecimal"),
       ...baseVarbsS.periodicPercent("cocRoi"),
       totalInvestment: baseVarb("numObj", dollars),
-      loanHoldingCostTotal: baseVarb("numObj", dollars),
+      holdingCostTotal: baseVarb("numObj", dollars),
       preFinanceOneTimeExpenses: baseVarb("numObj", dollars),
-      cashExpensesPlusLoanRepay: baseVarb("numObj", dollars),
-      totalProfit: baseVarb("numObj", dollars),
-      roiDecimal: baseVarb("numObj", decimal),
-      roiPercent: baseVarb("numObj", percent),
-      roiPercentPerMonth: baseVarb("numObj", percent),
-      roiPercentAnnualized: baseVarb("numObj", percent),
+      cashCostsPlusPurchaseLoanRepay: baseVarb("numObj", dollars),
+      totalEquityProfit: baseVarb("numObj", dollars),
+      valueAddRoiDecimal: baseVarb("numObj", decimal),
+      valueAddRoiPercent: baseVarb("numObj", percent),
+      valueAddRoiPercentPerMonth: baseVarb("numObj", percent),
+      valueAddRoiPercentAnnualized: baseVarb("numObj", percent),
       ...baseVarbsS.monthsYears("refiLoanHolding"),
       ...baseVarbsS.monthsYears("purchaseLoanHolding"),
 
       refiLoanHoldingCost: baseVarb("numObj", dollars),
       purchaseLoanHoldingCost: baseVarb("numObj", dollars),
-      purchaseAndRefiClosingCosts: baseVarb("numObj", dollars),
     }),
     financing: varbs({
       displayName: baseVarb("stringObj"),

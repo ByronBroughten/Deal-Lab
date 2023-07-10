@@ -53,11 +53,9 @@ export function makeDefaultDbStoreArrs({
   dbStore.addChild("dealCompareMenu", {
     sectionPack: makeDefaultDealCompareCache(),
   });
-
   dbStore.addChild("outputSection", {
     sectionPack: makeDefaultOutputSection(),
   });
-
   dbStore.loadChildren({
     childName: "numVarbListMain",
     sectionPacks: makeExampleUserVarbLists(),

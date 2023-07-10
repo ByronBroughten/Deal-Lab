@@ -31,7 +31,7 @@ export function PropertyOngoingCosts({ feId }: FeIdProp) {
           propertyMode={property.valueNext("propertyMode")}
           feId={property.onlyChildFeId("utilityOngoing")}
         />
-        <CapExValue feId={property.onlyChildFeId("capExValue")} />
+        <CapExValue feId={property.onlyChildFeId("capExValueOngoing")} />
         <MaintenanceValue
           propertyMode={propertyMode}
           feId={property.onlyChildFeId("maintenanceOngoing")}

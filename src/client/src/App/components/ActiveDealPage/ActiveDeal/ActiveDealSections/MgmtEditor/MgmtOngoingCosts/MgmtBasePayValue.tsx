@@ -37,7 +37,7 @@ function getProps(getter: GetterSection<"mgmtBasePayValue">): {
           quickViewVarbNames: [...commonQuickAccess],
         },
       };
-    case "dollarsEditor": {
+    case "valueDollarsPeriodicEditor": {
       return {
         equalsValue: `${getter.displayVarb("valuePercent")} of rent`,
         editorProps: {
@@ -77,7 +77,7 @@ export function BasePayValue({ feId }: { feId: string }) {
             }`,
           ],
           ["percentOfRentEditor", "Custom percent of rent"],
-          ["dollarsEditor", "Custom dollar amount"],
+          ["valueDollarsPeriodicEditor", "Custom dollar amount"],
         ],
         makeEditor: editorProps
           ? (props) => (

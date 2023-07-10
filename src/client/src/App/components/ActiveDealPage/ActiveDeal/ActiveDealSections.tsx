@@ -34,7 +34,7 @@ export function ActiveDealRefi() {
 }
 
 export function ActiveDealMgmt() {
-  const { isComplete, ...rest } = useActiveDealSection("mgmt");
+  const { isComplete, ...rest } = useActiveDealSection("mgmtOngoing");
   return (
     <DealSubSectionOpen {...{ finishIsAllowed: isComplete }}>
       <MgmtEditor {...rest} />

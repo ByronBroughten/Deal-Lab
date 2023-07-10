@@ -22,7 +22,7 @@ export function sellingCostUpdateVarbs(): UpdateSectionVarbs<"sellingCostValue">
       ...basics.throw,
       updateOverrides: valueSourceOverrides("sellingCostSource", {
         valueDollarsEditor: basics.loadFromLocal("valueDollarsEditor"),
-        itemize: basics.loadFromChild("onetimeList", "total"),
+        listTotal: basics.loadFromChild("onetimeList", "total"),
         valuePercentEditor: basics.equationLR(
           "multiply",
           fnProp.local("valueDecimal"),
@@ -43,7 +43,7 @@ export function sellingCostUpdateVarbs(): UpdateSectionVarbs<"sellingCostValue">
           fnProp.local("valueDollarsEditor"),
           fnProp.varbPathName("afterRepairValue")
         ),
-        itemize: basics.equationLR(
+        listTotal: basics.equationLR(
           "divide",
           fnProp.local("valueDollarsEditor"),
           fnProp.varbPathName("afterRepairValue")
@@ -67,7 +67,7 @@ export function sellingCostUpdateVarbs(): UpdateSectionVarbs<"sellingCostValue">
           "decimalToPercent",
           fnProp.local("valueDecimal")
         ),
-        itemize: basics.equationSimple(
+        listTotal: basics.equationSimple(
           "decimalToPercent",
           fnProp.local("valueDecimal")
         ),

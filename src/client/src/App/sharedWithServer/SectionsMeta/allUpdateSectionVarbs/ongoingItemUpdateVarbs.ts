@@ -14,15 +14,13 @@ export function ongoingItemUpdateVarbs(): UpdateSectionVarbs<"periodicItem"> {
   return {
     ...updateVarbsS._typeUniformity,
     ...updateVarbsS.displayNameAndEditor,
-    valueSourceName: updateVarb("editorValueSource", {
-      initValue: "valueEditor",
-    }),
-    ...updateVarbsS.group("value", "periodicInput", "monthly", {
+    valueSourceName: updateVarb("valueDollarsPeriodicEditor"),
+    ...updateVarbsS.group(valueNameBase, "periodicInput", "monthly", {
       monthly: updateVarb("numObj", {
         updateFnName: "throwIfReached",
         updateOverrides: [
           updateOverride(
-            [overrideSwitchS.monthlyIsActive("value")],
+            [overrideSwitchS.monthlyIsActive(valueNameBase)],
             updateBasicsS.loadFromLocal("valuePeriodicEditor")
           ),
           updateOverrideS.activeYearlyToMonthly(valueNameBase),
@@ -32,7 +30,7 @@ export function ongoingItemUpdateVarbs(): UpdateSectionVarbs<"periodicItem"> {
         updateFnName: "throwIfReached",
         updateOverrides: [
           updateOverride(
-            [overrideSwitchS.yearlyIsActive("value")],
+            [overrideSwitchS.yearlyIsActive(valueNameBase)],
             updateBasicsS.loadFromLocal("valuePeriodicEditor")
           ),
           updateOverrideS.activeMonthlyToYearly(valueNameBase),

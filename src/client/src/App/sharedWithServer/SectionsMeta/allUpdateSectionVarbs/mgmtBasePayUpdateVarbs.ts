@@ -34,7 +34,7 @@ export function mgmtBasePayValueVarbs(): UpdateSectionVarbs<"mgmtBasePayValue"> 
           )
         ),
         updateOverride(
-          [overrideSwitchS.valueSourceIs("dollarsEditor")],
+          [overrideSwitchS.valueSourceIs("valueDollarsPeriodicEditor")],
           updateBasicsS.equationSimple(
             "decimalToPercent",
             updateFnPropS.local("valueDecimal")
@@ -60,7 +60,7 @@ export function mgmtBasePayValueVarbs(): UpdateSectionVarbs<"mgmtBasePayValue"> 
         ),
         updateOverride(
           [
-            overrideSwitchS.valueSourceIs("dollarsEditor"),
+            overrideSwitchS.valueSourceIs("valueDollarsPeriodicEditor"),
             overrideSwitchS.periodic("valueDollars", "monthly"),
           ],
           updateBasicsS.equationLR(
@@ -71,7 +71,7 @@ export function mgmtBasePayValueVarbs(): UpdateSectionVarbs<"mgmtBasePayValue"> 
         ),
         updateOverride(
           [
-            overrideSwitchS.valueSourceIs("dollarsEditor"),
+            overrideSwitchS.valueSourceIs("valueDollarsPeriodicEditor"),
             overrideSwitchS.periodic("valueDollars", "yearly"),
           ],
           updateBasicsS.equationLR(
@@ -102,14 +102,14 @@ export function mgmtBasePayValueVarbs(): UpdateSectionVarbs<"mgmtBasePayValue"> 
           ),
           updateOverride(
             [
-              overrideSwitchS.valueSourceIs("dollarsEditor"),
+              overrideSwitchS.valueSourceIs("valueDollarsPeriodicEditor"),
               overrideSwitchS.monthlyIsActive("valueDollars"),
             ],
             updateBasicsS.loadFromLocal("valueDollarsPeriodicEditor")
           ),
           updateOverride(
             [
-              overrideSwitchS.valueSourceIs("dollarsEditor"),
+              overrideSwitchS.valueSourceIs("valueDollarsPeriodicEditor"),
               overrideSwitchS.yearlyIsActive("valueDollars"),
             ],
             updateBasicsS.yearlyToMonthly("valueDollars")
@@ -135,14 +135,14 @@ export function mgmtBasePayValueVarbs(): UpdateSectionVarbs<"mgmtBasePayValue"> 
           ),
           updateOverride(
             [
-              overrideSwitchS.valueSourceIs("dollarsEditor"),
+              overrideSwitchS.valueSourceIs("valueDollarsPeriodicEditor"),
               overrideSwitchS.monthlyIsActive("valueDollars"),
             ],
             updateBasicsS.monthlyToYearly("valueDollars")
           ),
           updateOverride(
             [
-              overrideSwitchS.valueSourceIs("dollarsEditor"),
+              overrideSwitchS.valueSourceIs("valueDollarsPeriodicEditor"),
               overrideSwitchS.yearlyIsActive("valueDollars"),
             ],
             updateBasicsS.loadFromLocal("valueDollarsPeriodicEditor")

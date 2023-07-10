@@ -12,10 +12,10 @@ export function makeDefaultProperty(
     propertyMode,
     taxesHoldingPeriodicSwitch: "yearly",
     homeInsHoldingPeriodicSwitch: "yearly",
-    expensesPeriodicSwitch: "yearly",
+    expensesOngoingPeriodicSwitch: "yearly",
     targetRentPeriodicSwitch: "monthly",
-    miscRevenuePeriodicSwitch: "monthly",
-    revenuePeriodicSwitch: "monthly",
+    miscOngoingRevenuePeriodicSwitch: "monthly",
+    revenueOngoingPeriodicSwitch: "monthly",
   });
 
   const taxesHomeInsOptions = {
@@ -43,8 +43,8 @@ export function makeDefaultProperty(
   const sellingCost = property.addAndGetChild("sellingCostValue");
   sellingCost.addChild("onetimeList");
 
-  const miscRevenue = property.addAndGetChild("miscRevenue");
-  miscRevenue.addChild("periodicList");
+  const miscOngoingRevenue = property.addAndGetChild("miscOngoingRevenue");
+  miscOngoingRevenue.addChild("periodicList");
 
   const miscOngoingCost = property.addAndGetChild("miscOngoingCost");
   miscOngoingCost.addChild("periodicList");
@@ -66,7 +66,7 @@ export function makeDefaultProperty(
 
   property.addChild("maintenanceOngoing");
 
-  const capExValue = property.addAndGetChild("capExValue");
+  const capExValue = property.addAndGetChild("capExValueOngoing");
   capExValue.addChild("capExList");
   return property.makeSectionPack();
 }

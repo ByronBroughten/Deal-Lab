@@ -48,6 +48,52 @@ export function addOngoingTaxesHomeInsYearly(
     valueDollarsPeriodicEditor: numObj(homeInsVal),
     valueDollarsPeriodicSwitch: "yearly",
   });
+  return {
+    taxesMonthly: taxesVal / 12,
+    homeInsMonthly: homeInsVal / 12,
+  };
+}
+
+export function setLoanBaseValue(loan: SolverSection<"loan">, num: number) {
+  const baseValue = loan.onlyChild("loanBaseValue");
+  baseValue.updateValues({ valueSourceName: "customAmountEditor" });
+  const custom = baseValue.onlyChild("customLoanBase");
+  custom.updateValues({
+    valueSourceName: "valueDollarsEditor",
+    valueDollarsEditor: numObj(num),
+  });
+}
+type LoanOptions = {
+  hasMortgageIns?: boolean;
+  mortgageInsUpfront?: number;
+  mortgageInsMonthly?: number;
+};
+export function setLoanValues(
+  loan: SolverSection<"loan">,
+  loanAmount: number,
+  interestRateYearly: number,
+  loanTermYears: number,
+  loanOptions: LoanOptions = {}
+) {
+  const { hasMortgageIns, mortgageInsMonthly, mortgageInsUpfront } =
+    loanOptions;
+
+  setLoanBaseValue(loan, loanAmount);
+  loan.updateValues({
+    ...(hasMortgageIns && { hasMortgageIns }),
+    ...(mortgageInsMonthly && {
+      mortgageInsPeriodicEditor: numObj(mortgageInsMonthly),
+      mortgageInsPeriodicSwitch: "monthly",
+    }),
+    ...(mortgageInsUpfront && {
+      mortgageInsUpfrontEditor: numObj(mortgageInsUpfront),
+    }),
+    interestRatePercentPeriodicSwitch: "yearly",
+    interestRatePercentPeriodicEditor: numObj(interestRateYearly),
+    loanTermSpanEditor: numObj(loanTermYears),
+    loanTermSpanSwitch: "years",
+  });
+  return loan.numValue("loanPaymentMonthly");
 }
 
 export function addRents(
@@ -103,7 +149,7 @@ export function setOnetimeList<SN extends OnetimeCostSN>(
     total += item;
     list.addChildAndSolve("onetimeItem", {
       sectionValues: {
-        valueSourceName: "valueEditor",
+        valueSourceName: "valueDollarsEditor",
         valueEditor: numObj(item),
       },
     });
@@ -114,14 +160,17 @@ export function setOnetimeList<SN extends OnetimeCostSN>(
 type OngoingSectionName =
   | "miscPeriodicValue"
   | "maintenanceValue"
+  | "utilityValue"
   | "capExValue"
   | "taxesValue"
-  | "homeInsValue";
+  | "homeInsValue"
+  | "vacancyLossValue"
+  | "mgmtBasePayValue";
 
 export const setPeriodicEditor = <SN extends OngoingSectionName>(
   section: SolverSection<SN>,
   amount: number,
-  switchVal: "yearly" | "monthly"
+  switchVal: "yearly" | "monthly" = "monthly"
 ) => {
   (
     section as SolverSection<any> as SolverSection<OngoingSectionName>
@@ -148,7 +197,7 @@ export function setPeriodicList<SN extends PeriodicListSn>(
   for (const item of items) {
     list.addAndGetChild("periodicItem", {
       sectionValues: {
-        valueSourceName: "valueEditor",
+        valueSourceName: "valueDollarsPeriodicEditor",
         valuePeriodicSwitch: switchVal,
         valuePeriodicEditor: numObj(item),
       },
@@ -158,8 +207,8 @@ export function setPeriodicList<SN extends PeriodicListSn>(
 
 // const testOngoing = (
 //   dealMode: DealMode,
-//   baseName: "miscRevenue" | "miscCosts" | "holdingCost",
-//   childName: "miscRevenue" | "miscOngoingCost" | "miscHoldingCost"
+//   baseName: "miscOngoingRevenue" | "miscCosts" | "holdingCost",
+//   childName: "miscOngoingRevenue" | "miscOngoingCost" | "miscHoldingCost"
 // ) => {
 //   const property = getProperty(dealMode);
 //   const varbNames = switchKeyToVarbNames(baseName, "periodic");

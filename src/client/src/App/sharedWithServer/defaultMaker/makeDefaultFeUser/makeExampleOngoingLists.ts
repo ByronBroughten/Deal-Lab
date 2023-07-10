@@ -11,7 +11,7 @@ type UtilityItemProp = [string, number | NumObj];
 export function makeUtilityList(itemPropArr: UtilityItemProp[], dbId?: string) {
   const feStore = PackBuilderSection.initAsOmniChild("feStore");
 
-  const valueSource = "valueEditor";
+  const valueSource = "valueDollarsPeriodicEditor";
   const utilityList = feStore.addAndGetChild("ongoingListMain", {
     dbId,
     sectionValues: {

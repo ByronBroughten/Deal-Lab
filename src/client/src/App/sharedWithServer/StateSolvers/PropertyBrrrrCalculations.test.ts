@@ -21,9 +21,9 @@ describe("PropertyBrrrrCalculations", () => {
   };
   const testPeriodicVarb = (
     baseName:
-      | "expenses"
-      | "revenue"
-      | "miscCosts"
+      | "expensesOngoing"
+      | "revenueOngoing"
+      | "miscOngoingCosts"
       | "holdingCost"
       | "targetRent",
     num: number
@@ -46,17 +46,17 @@ describe("PropertyBrrrrCalculations", () => {
     const total = addRents(property, [2000, 2100, 2300]);
     testPeriodicVarb("targetRent", total);
   });
-  it("should calculate revenue", () => {
+  it("should calculate revenueOngoing", () => {
     const rentTotal = addRents(property, [2000, 2100, 2300]);
     const miscTotal = 1200;
-    const misc = property.onlyChild("miscRevenue");
+    const misc = property.onlyChild("miscOngoingRevenue");
     misc.updateValues({
       valueSourceName: "valueDollarsPeriodicEditor",
       valueDollarsPeriodicSwitch: "monthly",
       valueDollarsPeriodicEditor: numObj(miscTotal),
     });
     const total = rentTotal + miscTotal;
-    testPeriodicVarb("revenue", total);
+    testPeriodicVarb("revenueOngoing", total);
   });
   it("should calculate miscOnetimeCosts value", () => {
     const onetimeCost = property.onlyChild("miscOnetimeCost");
@@ -83,8 +83,8 @@ describe("PropertyBrrrrCalculations", () => {
     setPeriodicList(property.onlyChild("utilityOngoing"), [600], "yearly");
     setPeriodicEditor(property.onlyChild("miscOngoingCost"), 1500, "yearly");
     setPeriodicEditor(property.onlyChild("maintenanceOngoing"), 1300, "yearly");
-    setPeriodicEditor(property.onlyChild("capExValue"), 5000, "yearly");
-    testPeriodicVarb("expenses", 1000);
+    setPeriodicEditor(property.onlyChild("capExValueOngoing"), 5000, "yearly");
+    testPeriodicVarb("expensesOngoing", 1000);
   });
   it("should calculate upfrontExpenses", () => {
     property.updateValues({ purchasePrice: numObj(200000) });

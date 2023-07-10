@@ -38,7 +38,7 @@ export class SolverActiveDeal extends SolverSectionBase<"deal"> {
     return this.solverSection(this.get.onlyChild("refiFinancing").feInfo);
   }
   get mgmt(): SolverSection<"mgmt"> {
-    return this.solverSection(this.get.onlyChild("mgmt").feInfo);
+    return this.solverSection(this.get.onlyChild("mgmtOngoing").feInfo);
   }
   static init(dealMode: DealMode) {
     const deal = SolverSections.initDefault().getActiveDeal();

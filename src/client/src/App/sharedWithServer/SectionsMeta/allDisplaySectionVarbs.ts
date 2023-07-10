@@ -66,9 +66,9 @@ export const allDisplaySectionVarbs = {
     ...editorDisplayGroup("periodicInput", "homeInsHolding", "Home insurance"),
     ...editorDisplayGroup("periodicInput", "utilitiesOngoing", "Utilities"),
     ...editorDisplayGroup("periodicInput", "targetRent", "Rental income"),
-    ...periodicDollars("expenses", "Average expenses"),
-    ...periodicDollars("miscRevenue", "Misc revenue"),
-    ...periodicDollars("revenue", "Revenue"),
+    ...periodicDollars("expensesOngoing", "Average expenses"),
+    ...periodicDollars("miscOngoingRevenue", "Misc revenue"),
+    ...periodicDollars("revenueOngoing", "Revenue"),
   }),
   ...displaySectionVarbsProp("repairValue"),
   ...displaySectionVarbsProp("unit", {
@@ -155,9 +155,9 @@ export const allDisplaySectionVarbs = {
     value: varb(relVarbInfoS.local("displayName")),
   }),
   ...displaySectionVarbsProp("deal", {
-    totalProfit: varb("Total profit"),
-    roiPercent: varb("ROI"),
-    roiPercentAnnualized: varb("ROI Annualized"),
+    totalEquityProfit: varb("Total profit"),
+    valueAddRoiPercent: varb("ROI"),
+    valueAddRoiPercentAnnualized: varb("ROI Annualized"),
     totalInvestment: varb("Total investment"),
     ...group("periodic", "ongoingPiti", "PITI payment", {
       monthly: { displayNameWithVariant: "Monthly PITI payment" },
@@ -179,7 +179,7 @@ export const allDisplaySectionVarbs = {
       monthly: { displayNameWithVariant: "Monthly CoC ROI as decimal" },
       yearly: { displayNameWithVariant: "Yearly CoC ROI as decimal" },
     }),
-    ...group("periodic", "expenses", "Average deal costs", {
+    ...group("periodic", "expensesOngoing", "Average deal costs", {
       targets: { displayNameWithSection: "Average deal costs" },
       monthly: {
         displayNameWithVariant: "Average costs monthly",
@@ -188,17 +188,6 @@ export const allDisplaySectionVarbs = {
       yearly: {
         displayNameWithVariant: "Average costs yearly",
         displayNameFullContext: "Average deal costs Yearly",
-      },
-    }),
-    ...group("periodic", "revenue", "Revenue", {
-      targets: { displayNameWithSection: "Deal revenue" },
-      monthly: {
-        displayNameWithVariant: "Revenue monthly",
-        displayNameFullContext: "Monthly deal revenue",
-      },
-      yearly: {
-        displayNameWithVariant: "Revenue yearly",
-        displayNameFullContext: "Yearly deal revenue",
       },
     }),
   }),

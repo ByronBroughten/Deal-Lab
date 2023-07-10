@@ -26,16 +26,16 @@ const defaultDetailsConfig = simpleSectionVarbNames.reduce(
 const testDetailConfigs = <DSC extends DetailsConfig>(dsc: DSC): DSC => dsc;
 export const detailsConfig = testDetailConfigs({
   ...defaultDetailsConfig,
-  "property.expensesMonthly": { detailTitle: "Ongoing property expenses" },
-  "property.expensesYearly": { detailTitle: "Ongoing property expenses" },
-  "mgmt.expensesMonthly": { detailTitle: "Ongoing management expenses" },
-  "mgmt.expensesYearly": { detailTitle: "Ongoing management expenses" },
-  "loan.expensesMonthly": { detailTitle: "Ongoing loan expenses" },
-  "loan.expensesYearly": { detailTitle: "Ongoing loan expenses" },
-  "financing.loanExpensesMonthly": {
-    detailTitle: "Ongoing loan expenses total",
-  },
-  "financing.loanExpensesYearly": {
-    detailTitle: "Ongoing loan expenses total",
-  },
+  // "property.expensesOngoingMonthly": { detailTitle: "Ongoing property expenses" },
+  // "property.expensesOngoingYearly": { detailTitle: "Ongoing property expenses" },
+  // "mgmt.expensesMonthly": { detailTitle: "Ongoing management expenses" },
+  // "mgmt.expensesYearly": { detailTitle: "Ongoing management expenses" },
+  // "loan.expensesMonthly": { detailTitle: "Ongoing loan expenses" },
+  // "loan.expensesYearly": { detailTitle: "Ongoing loan expenses" },
+  // "financing.loanExpensesMonthly": {
+  //   detailTitle: "Ongoing loan expenses total",
+  // },
+  // "financing.loanExpensesYearly": {
+  //   detailTitle: "Ongoing loan expenses total",
+  // },
 });

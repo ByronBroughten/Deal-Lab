@@ -21,7 +21,7 @@ const dealModeArrs = {
   ] as const),
 } as const;
 type DealModeArrs = typeof dealModeArrs;
-type DealModeName = keyof DealModeArrs;
+export type DealModeName = keyof DealModeArrs;
 
 export type DealMode<DN extends DealModeName = "all"> =
   DealModeArrs[DN][number];
@@ -38,4 +38,10 @@ export function isDealMode<DN extends DealModeName = "all">(
 ): value is DealMode<DN> {
   const modes = getDealModes(dealModeName);
   return modes.includes(value);
+}
+
+export function doWhatPerDealMode(doWhat: (dealMode: DealMode) => void) {
+  for (const dealMode of dealModes) {
+    doWhat(dealMode);
+  }
 }

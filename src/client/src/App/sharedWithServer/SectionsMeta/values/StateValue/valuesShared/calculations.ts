@@ -1,4 +1,4 @@
-import { mathS } from "../../../../utils/math";
+import { isNumber, mathS } from "../../../../utils/math";
 import { Obj } from "../../../../utils/Obj";
 import { NumberOrQ } from "../NumObj";
 import { roundS } from "./calculations/numUnitParams";
@@ -7,7 +7,7 @@ import { piInterestOnlySimpleYearly } from "./calculations/piCalculations/piInte
 
 export type Calculate = (props: any) => string;
 
-type LRSides = { leftSide: number; rightSide: number };
+type LRSides = { leftSide: CalcProp; rightSide: CalcProp };
 export type CalcProp = NumberOrQ;
 export type NumberProps = { [name: string]: CalcProp | CalcProp[] };
 
@@ -29,6 +29,15 @@ const solvableTextByArgs = {
     noNegative: ({ num }: { num: NumProp }) => `${num} < 0 ? 0 : ${num}`,
   },
   leftRight: {
+    larger: ({ leftSide, rightSide }: LRSides) => {
+      if (isNumber(leftSide) && isNumber(rightSide)) {
+        if (leftSide >= rightSide) {
+          return `${leftSide}`;
+        } else {
+          return `${rightSide}`;
+        }
+      } else return "?";
+    },
     multiply: ({ leftSide, rightSide }: LRSides) => {
       return `${leftSide} * ${rightSide}`;
     },
@@ -38,21 +47,18 @@ const solvableTextByArgs = {
     subtract: ({ leftSide, rightSide }: LRSides) => {
       return `${leftSide} - ${rightSide}`;
     },
-    subtractOffsetNegative: ({ leftSide, rightSide }: LRSides) => {
+    subtractFloorZero: ({ leftSide, rightSide }: LRSides) => {
       let baseEquation = `${leftSide} - ${rightSide}`;
-      const subtracted = roundS.decimal(leftSide - rightSide);
-      if (mathS.isRationalNumber(subtracted) && subtracted < 0) {
-        baseEquation = `(${baseEquation}) * 0`;
+      if (isNumber(leftSide) && isNumber(rightSide)) {
+        const subtracted = roundS.decimal(leftSide - rightSide);
+        if (mathS.isRationalNumber(subtracted) && subtracted < 0) {
+          baseEquation = `(${baseEquation}) * 0`;
+        }
       }
       return baseEquation;
     },
-
     divide: ({ leftSide, rightSide }: LRSides) => {
       return `${leftSide} / ${rightSide}`;
-    },
-    subtractFloorZero: ({ leftSide, rightSide }: LRSides) => {
-      const num = leftSide - rightSide;
-      return num > 0 ? `${num}` : `0`;
     },
   },
   nums: {

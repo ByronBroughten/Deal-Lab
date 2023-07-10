@@ -114,7 +114,7 @@ export const allSectionChildren = checkAllSectionChildren({
     property: "property",
     purchaseFinancing: "financing",
     refiFinancing: "financing",
-    mgmt: "mgmt",
+    mgmtOngoing: "mgmt",
   }),
   financing: {
     loan: sectionChild("loan"),
@@ -139,26 +139,24 @@ export const allSectionChildren = checkAllSectionChildren({
   closingCostValue: { onetimeList: sectionChild("onetimeList") },
   property: sectionChildren({
     unit: "unit",
+    miscOngoingRevenue: "miscPeriodicValue",
+
     repairValue: "repairValue",
     costOverrunValue: "costOverrunValue",
     sellingCostValue: "sellingCostValue",
+    miscOnetimeCost: "miscOnetimeValue",
+
+    taxesOngoing: "taxesValue",
+    homeInsOngoing: "homeInsValue",
+    utilityOngoing: "utilityValue",
+    maintenanceOngoing: "maintenanceValue",
+    capExValueOngoing: "capExValue",
+    miscOngoingCost: "miscPeriodicValue",
 
     homeInsHolding: "homeInsValue",
     taxesHolding: "taxesValue",
-
-    homeInsOngoing: "homeInsValue",
-    taxesOngoing: "taxesValue",
-
     utilityHolding: "utilityValue",
-    utilityOngoing: "utilityValue",
-
-    maintenanceOngoing: "maintenanceValue",
-    capExValue: "capExValue",
-
-    miscRevenue: "miscPeriodicValue",
-    miscOngoingCost: "miscPeriodicValue",
     miscHoldingCost: "miscPeriodicValue",
-    miscOnetimeCost: "miscOnetimeValue",
 
     customVarb: "customVarb",
   }),

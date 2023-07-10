@@ -51,7 +51,7 @@ const propsByDealMode = {
         "purchasePrice",
         "rehabCost",
         "targetRentYearly",
-        "expensesYearly",
+        "expensesOngoingYearly",
       ] as const,
     },
     fixAndFlip: {
@@ -69,7 +69,7 @@ const propsByDealMode = {
         "afterRepairValue",
         "holdingPeriodMonths",
         "targetRentYearly",
-        "expensesYearly",
+        "expensesOngoingYearly",
       ],
     },
   },
@@ -131,7 +131,7 @@ function useSectionProps(childName: ActiveDealChildName): SectionProps {
     case "property": {
       return getPropertyProps(deal.onlyChild(childName));
     }
-    case "mgmt": {
+    case "mgmtOngoing": {
       return getMgmtProps(deal.onlyChild(childName));
     }
     case "purchaseFinancing":
