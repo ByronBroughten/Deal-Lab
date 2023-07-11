@@ -442,7 +442,7 @@ describe("DealCalculations", () => {
     });
   });
   // it("should calculate cashCostsPlusPurchaseLoanRepay", () => {});
-  it("should calculate totalEquityProfit", () => {
+  it("should calculate valueAddProfit", () => {
     const purchaseLoanAmount = 75000;
     const afterRepairValue = 150000;
     const refiLoanAmount = 140000;
@@ -455,7 +455,7 @@ describe("DealCalculations", () => {
 
     perDealModeDeal((dealMode) => {
       testVarb(
-        "totalEquityProfit",
+        "valueAddProfit",
         getProfit(
           dealMode,
           perDealMode[dealMode],

@@ -2,18 +2,19 @@ import { Box } from "@mui/system";
 import { unstable_batchedUpdates } from "react-dom";
 import { Text, View, ViewStyle } from "react-native";
 import { constants } from "../../Constants";
-import { VarbName } from "../../sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
-import { DealMode } from "../../sharedWithServer/SectionsMeta/values/StateValue/dealMode";
 import { dealModeLabels } from "../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
 import {
   useAction,
   useActionWithProps,
 } from "../../sharedWithServer/stateClassHooks/useAction";
-import { useGetterSection } from "../../sharedWithServer/stateClassHooks/useGetterSection";
+import {
+  useGetterSection,
+  useGetterSectionOnlyOne,
+} from "../../sharedWithServer/stateClassHooks/useGetterSection";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { reactNativeS } from "../../utils/reactNative";
 import { StyledActionBtn } from "../appWide/GeneralSection/MainSection/StyledActionBtn";
-import { LabeledVarbNext } from "../appWide/LabeledVarbNext";
+import { LabelText, StyledLabeledVarb } from "../appWide/LabeledVarbNext";
 import { showToastInfo } from "../appWide/toast";
 import { useGoToPage } from "../customHooks/useGoToPage";
 import { MuiRow } from "../general/MuiRow";
@@ -64,6 +65,13 @@ export function SavedDeal({
 }) {
   const storeName = "dealMain";
   const deal = useGetterSection({ sectionName: "deal", feId });
+  const session = useGetterSectionOnlyOne("sessionStore");
+  const sessionDeal = session.childByDbId({
+    childName: "dealMain",
+    dbId: deal.dbId,
+  });
+  const sessionVarb = sessionDeal.onlyChild("sessionVarb");
+
   const goToActiveDeal = useGoToPage("activeDeal");
   const copyDeal = useActionWithProps("copyInStore", { storeName, feId });
   const activateDeal = useActionWithProps("activateDeal", { feId });
@@ -111,13 +119,6 @@ export function SavedDeal({
 
   const strDisplayName = deal.stringValue("displayName");
   const isComplete = deal.valueNext("completionStatus") === "allValid";
-
-  const outputPerDeal: Record<DealMode, VarbName<"deal">> = {
-    homeBuyer: "averageNonPrincipalOngoingMonthly",
-    buyAndHold: "cocRoiYearly",
-    fixAndFlip: "valueAddRoiPercent",
-    brrrr: "valueAddRoiPercent",
-  };
 
   const archiveBtnProps = isArchived
     ? {
@@ -185,15 +186,32 @@ export function SavedDeal({
             sx={{
               justifyContent: "flex-end",
               flex: 1,
-              paddingRight: nativeTheme.s45,
+              paddingRight: nativeTheme.s35,
+              paddingLeft: nativeTheme.s35,
             }}
           >
-            <LabeledVarbNext
+            <StyledLabeledVarb
               {...{
-                finder: deal.varbInfo(outputPerDeal[dealMode]),
-                sx: { border: "none", fontSize: 17 },
+                labelId: sessionVarb.valueNext("label"),
+                labelText: (
+                  <LabelText
+                    {...{
+                      label: sessionVarb.valueNext("label"),
+                      sectionName: "deal",
+                      varbName: sessionVarb.valueNext("varbName"),
+                    }}
+                  />
+                ),
+                displayVarb: sessionVarb.valueNext("value"),
+                sx: { fontSize: 17 },
               }}
             />
+            {/* <LabeledVarbNext
+              {...{
+                finder: deal.varbInfo(outputPerDeal[dealMode]),
+                sx: { fontSize: 17 },
+              }}
+            /> */}
           </MuiRow>
         )}
         <MuiRow>

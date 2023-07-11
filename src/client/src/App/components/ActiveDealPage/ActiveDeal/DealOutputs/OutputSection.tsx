@@ -10,7 +10,6 @@ import { nativeTheme } from "../../../../theme/nativeTheme";
 import { CheckMarkCircle } from "../../../appWide/checkMarkCircle";
 import { EditSectionBtn } from "../../../appWide/EditSectionBtn";
 import { MainSection } from "../../../appWide/GeneralSection/MainSection";
-import MainSectionBody from "../../../appWide/GeneralSection/MainSection/MainSectionBody";
 import { StyledActionBtn } from "../../../appWide/GeneralSection/MainSection/StyledActionBtn";
 import { TitleAppend } from "../../../appWide/titleAppend";
 import { LoadedVarbList } from "../../../appWide/VarbLists/LoadedVarbList";
@@ -93,30 +92,26 @@ export function OutputSection({
           />
         )}
       </MuiRow>
-      {dealIsComplete && (
-        <DealOutputListOrDetails
-          {...{
-            detailsIsOpen,
-            feId: listId,
-          }}
-        />
-      )}
       {!dealIsComplete && (
-        <MainSectionBody>
-          <Box
-            sx={{
-              paddingY: nativeTheme.s4,
-              paddingX: nativeTheme.s5,
-              display: "flex",
-              justifyContent: "center",
-              fontSize: nativeTheme.fs22,
-              color: nativeTheme.darkBlue.main,
-            }}
-          >
-            To view outputs, complete all deal sections.
-          </Box>
-        </MainSectionBody>
+        <Box
+          sx={{
+            paddingY: nativeTheme.s4,
+            paddingX: nativeTheme.s5,
+            display: "flex",
+            justifyContent: "center",
+            fontSize: nativeTheme.fs22,
+            color: nativeTheme.notice.dark,
+          }}
+        >
+          Deal Incomplete
+        </Box>
       )}
+      <DealOutputListOrDetails
+        {...{
+          detailsIsOpen,
+          feId: listId,
+        }}
+      />
     </MainSection>
   );
 }

@@ -19,13 +19,13 @@ const outputVarbPathNames: OutputVarbPathNames = {
   buyAndHold: ["totalInvestment", "cashFlowYearly", "cocRoiYearly"],
   fixAndFlip: [
     "totalInvestment",
-    "totalEquityProfit",
+    "valueAddProfit",
     "valueAddRoiPercent",
     "valueAddRoiPercentAnnualized",
   ],
   brrrr: [
     "totalInvestment",
-    "totalEquityProfit",
+    "valueAddProfit",
     "valueAddRoiPercent",
     "valueAddRoiPercentAnnualized",
     "cashFlowYearly",
@@ -33,7 +33,7 @@ const outputVarbPathNames: OutputVarbPathNames = {
   ],
   mixed: [
     "totalInvestment",
-    "totalEquityProfit",
+    "valueAddProfit",
     "valueAddRoiPercent",
     "valueAddRoiPercentAnnualized",
     "cashFlowYearly",

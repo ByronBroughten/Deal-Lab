@@ -155,9 +155,9 @@ export const allDisplaySectionVarbs = {
     value: varb(relVarbInfoS.local("displayName")),
   }),
   ...displaySectionVarbsProp("deal", {
-    totalEquityProfit: varb("Total profit"),
-    valueAddRoiPercent: varb("ROI"),
-    valueAddRoiPercentAnnualized: varb("ROI Annualized"),
+    valueAddProfit: varb("Value add profit"),
+    valueAddRoiPercent: varb("Value add ROI"),
+    valueAddRoiPercentAnnualized: varb("Value add ROI Annualized"),
     totalInvestment: varb("Total investment"),
     ...group("periodic", "ongoingPiti", "PITI payment", {
       monthly: { displayNameWithVariant: "Monthly PITI payment" },

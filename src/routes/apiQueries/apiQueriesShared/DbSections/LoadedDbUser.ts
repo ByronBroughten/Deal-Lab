@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import { constants } from "../../../../client/src/App/Constants";
 import { AnalyzerPlanValues } from "../../../../client/src/App/sharedWithServer/apiQueriesShared/AnalyzerPlanValues";
 import { UserData } from "../../../../client/src/App/sharedWithServer/apiQueriesShared/validateUserData";
+import { makeDefaultSessionDeal } from "../../../../client/src/App/sharedWithServer/defaultMaker/defaultSessionDeal";
 import { SectionPack } from "../../../../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/SectionPack";
 import { storeNames } from "../../../../client/src/App/sharedWithServer/SectionsMeta/sectionStores";
 import {
@@ -141,10 +142,7 @@ export class LoadedDbUser extends GetterSectionBase<"dbStore"> {
     const feDealPacks = dealPacks.reduce((storePacks, pack) => {
       const deal = PackBuilderSection.hydratePackAsOmniChild(pack).get;
       sessionStore.addChild("dealMain", {
-        dbId: deal.dbId,
-        sectionValues: {
-          dateTimeCreated: deal.valueNext("dateTimeFirstSaved"),
-        },
+        sectionPack: makeDefaultSessionDeal(deal),
       });
       if (!deal.valueNext("isArchived")) {
         storePacks.push(pack);

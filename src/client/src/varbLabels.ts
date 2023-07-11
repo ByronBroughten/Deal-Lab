@@ -382,7 +382,7 @@ export const varbLabels = checkAllVarbLabels({
     refiLoanHoldingCost: input("Holding period refi loan payment sum"),
     ...simplePeriodic("ongoingLoanPayment", "Loan payment"),
     ...simplePeriodic("expensesOngoing", "Average ongoing costs"),
-    totalEquityProfit: input("Total profit"),
+    valueAddProfit: input("Value add profit"),
     totalInvestment: text({
       inputLabel: "Total investment",
       title: "Total Investment",

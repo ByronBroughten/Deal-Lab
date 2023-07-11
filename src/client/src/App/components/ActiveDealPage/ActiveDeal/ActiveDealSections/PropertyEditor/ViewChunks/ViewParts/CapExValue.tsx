@@ -36,7 +36,9 @@ export function CapExValue({ feId }: { feId: string }) {
           [
             "listTotal",
             `Itemize${
-              valueSourceName === "listTotal" ? "" : " (more accurate)"
+              valueSourceName === "listTotal"
+                ? ""
+                : " (more precise, recommended)"
             }`,
           ],
           ["valueDollarsPeriodicEditor", "Custom amount"],

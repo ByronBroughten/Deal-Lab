@@ -130,11 +130,7 @@ const allVarbPathParams = {
     "dealFocal",
     "valueAddRoiPercentAnnualized"
   ),
-  totalEquityProfit: fixedVarbPathParams(
-    "Deal",
-    "dealFocal",
-    "totalEquityProfit"
-  ),
+  valueAddProfit: fixedVarbPathParams("Deal", "dealFocal", "valueAddProfit"),
 };
 
 export const varbPathNames = Obj.keys(allVarbPathParams);

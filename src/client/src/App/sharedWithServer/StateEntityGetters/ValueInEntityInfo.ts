@@ -54,7 +54,7 @@ const hasHoldingBasics = [
 ] as const;
 const fixAndFlipBasics = ["sellingCosts"] as const;
 const hasProfitOutputs = [
-  "totalEquityProfit",
+  "valueAddProfit",
   "valueAddRoiPercent",
   "valueAddRoiPercentAnnualized",
 ] as const;

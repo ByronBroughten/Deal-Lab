@@ -1,9 +1,11 @@
 import { Box, SxProps } from "@mui/material";
 import React from "react";
+import { getVarbLabels } from "../../../varbLabels";
 import {
   FeSectionInfo,
   FeVarbInfo,
 } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
+import { VarbNames } from "../../sharedWithServer/SectionsMeta/SectionInfo/VarbInfoBase";
 import { useGetterSection } from "../../sharedWithServer/stateClassHooks/useGetterSection";
 import { useGetterSections } from "../../sharedWithServer/stateClassHooks/useGetterSections";
 import { useGetterVarb } from "../../sharedWithServer/stateClassHooks/useGetterVarb";
@@ -27,8 +29,8 @@ export function LabeledVarbNext({ finder, ...rest }: LabeledVarbProps) {
     throw new Error("finder is empty");
   }
 
-  const varb = useGetterVarb(finder[0]);
-  const { info, title } = varb.varbLabels;
+  const mainFinder = finder[0];
+  const varb = useGetterVarb(mainFinder);
   const { inputLabel } = varb;
 
   let toDisplay = "";
@@ -45,17 +47,12 @@ export function LabeledVarbNext({ finder, ...rest }: LabeledVarbProps) {
     <StyledLabeledVarb
       {...{
         labelText: (
-          <MuiRow>
-            {inputLabel}
-            {info && title && (
-              <InfoIcon
-                {...{
-                  infoText: info,
-                  title,
-                }}
-              />
-            )}
-          </MuiRow>
+          <LabelText
+            {...{
+              label: inputLabel,
+              ...mainFinder,
+            }}
+          />
         ),
         displayVarb: toDisplay,
         labelId: inputLabel,
@@ -63,6 +60,34 @@ export function LabeledVarbNext({ finder, ...rest }: LabeledVarbProps) {
       }}
     />
   );
+}
+
+export function LabelText({
+  label,
+  ...rest
+}: VarbNames<any> & { label: React.ReactNode }) {
+  return (
+    <MuiRow sx={{ flexWrap: "nowrap" }}>
+      {label}
+      <InfoIconIfExists {...rest} />
+    </MuiRow>
+  );
+}
+
+export function InfoIconIfExists({ sectionName, varbName }: VarbNames<any>) {
+  const { info, title } = getVarbLabels(sectionName, varbName);
+  if (info && title) {
+    return (
+      <InfoIcon
+        {...{
+          infoText: info,
+          title,
+        }}
+      />
+    );
+  } else {
+    return null;
+  }
 }
 
 interface LabeledVarbNotFoundProps {

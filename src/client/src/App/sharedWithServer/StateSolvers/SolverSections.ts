@@ -1,5 +1,8 @@
 import { pick } from "lodash";
-import { SolverFeStore } from "../../modules/FeStore/SolverFeStore";
+import {
+  AddToStoreOptions,
+  SolverFeStore,
+} from "../../modules/FeStore/SolverFeStore";
 import { defaultMaker } from "../defaultMaker/defaultMaker";
 import { makeEmptyMain } from "../defaultMaker/makeEmptyMain";
 import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
@@ -198,9 +201,9 @@ export class SolverSections extends SolverSectionsBase {
   hasActiveDeal(): boolean {
     return this.prepperSections.hasActiveDeal();
   }
-  addActiveDeal(dealMode: DealMode) {
+  addActiveDeal(dealMode: DealMode, options?: AddToStoreOptions<"dealMain">) {
     const { feStore } = this;
-    feStore.addToStore({ storeName: "dealMain" }, false);
+    feStore.addToStore({ storeName: "dealMain", options }, false);
     const newDeal = feStore.newestEntry("dealMain");
     const property = newDeal.onlyChild("property");
 

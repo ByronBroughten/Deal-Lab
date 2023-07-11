@@ -387,7 +387,7 @@ export function makeAllBaseSectionVarbs() {
       holdingCostTotal: baseVarb("numObj", dollars),
       preFinanceOneTimeExpenses: baseVarb("numObj", dollars),
       cashCostsPlusPurchaseLoanRepay: baseVarb("numObj", dollars),
-      totalEquityProfit: baseVarb("numObj", dollars),
+      valueAddProfit: baseVarb("numObj", dollars),
       valueAddRoiDecimal: baseVarb("numObj", decimal),
       valueAddRoiPercent: baseVarb("numObj", percent),
       valueAddRoiPercentPerMonth: baseVarb("numObj", percent),

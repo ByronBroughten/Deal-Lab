@@ -396,7 +396,7 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
         propS.onlyChild("purchaseFinancing", "loanTotalDollars")
       ),
     }),
-    totalEquityProfit: dealModeVarb({
+    valueAddProfit: dealModeVarb({
       // possibly depreciated
       homeBuyer: notApplicable(),
       buyAndHold: notApplicable(),
@@ -428,12 +428,12 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
       buyAndHold: notApplicable(),
       fixAndFlip: basicsS.equationLR(
         "divide",
-        propS.local("totalEquityProfit"),
+        propS.local("valueAddProfit"),
         propS.local("totalInvestment")
       ),
       brrrr: basicsS.equationLR(
         "divide",
-        propS.local("totalEquityProfit"),
+        propS.local("valueAddProfit"),
         propS.local("totalInvestment")
       ),
     }),

@@ -5,9 +5,8 @@ import { stringObj } from "../SectionsMeta/values/StateValue/StringObj";
 import { PackBuilderSection } from "../StatePackers/PackBuilderSection";
 import { timeS } from "../utils/timeS";
 import { makeDefaultDealCompareCache } from "./makeDefaultDealCompareCache";
-import { exampleDealBuyAndHold } from "./makeDefaultFeUser/exampleDealBuyAndHold";
-import { exampleDealHomebuyer } from "./makeDefaultFeUser/exampleDealHomebuyer";
 import { makeExampleCapExList } from "./makeDefaultFeUser/makeExampleCapEx";
+import { makeExampleDeal } from "./makeDefaultFeUser/makeExampleDeal";
 import { makeExampleLoan } from "./makeDefaultFeUser/makeExampleLoan";
 import { makeExampleMgmt } from "./makeDefaultFeUser/makeExampleMgmt";
 import {
@@ -27,6 +26,9 @@ export type DbStoreSeed = {
   userName: string;
   timeJoined: number;
 };
+
+const exampleHomeBuyer = makeExampleDeal("homeBuyer", "Homebuyer Deal Example");
+const exampleBuyAndHold = makeExampleDeal("buyAndHold", "Buy and Hold");
 
 export function makeDefaultDbStoreArrs({
   authId,
@@ -62,10 +64,7 @@ export function makeDefaultDbStoreArrs({
   });
   dbStore.loadChildren({
     childName: "dealMain",
-    sectionPacks: [
-      exampleDealHomebuyer("Homebuyer Deal Example"),
-      exampleDealBuyAndHold("Rental Property Deal Example"),
-    ],
+    sectionPacks: [exampleHomeBuyer, exampleBuyAndHold],
   });
   dbStore.loadChildren({
     childName: "capExListMain",

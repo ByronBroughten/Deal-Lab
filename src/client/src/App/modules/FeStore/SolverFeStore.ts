@@ -1,5 +1,7 @@
 import { UserData } from "../../sharedWithServer/apiQueriesShared/validateUserData";
+import { makeDefaultSessionDeal } from "../../sharedWithServer/defaultMaker/defaultSessionDeal";
 import { Id } from "../../sharedWithServer/SectionsMeta/IdS";
+import { ChildSectionName } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/ChildSectionName";
 import { SectionPack } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/SectionPack";
 import { DbIdProp } from "../../sharedWithServer/SectionsMeta/SectionInfo/NanoIdInfo";
 import {
@@ -9,6 +11,7 @@ import {
   StoreNameProp,
   StoreSectionName,
 } from "../../sharedWithServer/SectionsMeta/sectionStores";
+import { SectionValues } from "../../sharedWithServer/SectionsMeta/values/StateValue";
 import {
   changeSavingToToSave,
   ChangeToSave,
@@ -31,7 +34,12 @@ import { GetterFeStore } from "./GetterFeStore";
 
 export interface AddToStoreProps<CN extends StoreName = StoreName>
   extends StoreNameProp<CN> {
-  options?: AddChildWithPackOptions<"feStore", CN>;
+  options?: AddToStoreOptions<CN>;
+}
+
+export interface AddToStoreOptions<CN extends StoreName = StoreName>
+  extends AddChildWithPackOptions<"feStore", CN> {
+  sessionSectionPack?: SectionPack<"sessionSection">;
 }
 
 export interface SaveAsToStoreProps<CN extends StoreName = StoreName>
@@ -153,11 +161,34 @@ export class SolverFeStore extends SolverSectionBase<"feStore"> {
     }
 
     const clonePack = clone.packMaker.makeSectionPack();
+
     this.addToStore({
       storeName: storeName,
-      options: { sectionPack: clonePack },
+      options: {
+        sectionPack: clonePack,
+        ...(storeName === "dealMain" && {
+          sessionSectionPack: this.dealSessionPack(toCopy.dbId, clone.get.dbId),
+        }),
+      },
     });
   }
+
+  private dealSessionPack(oldDbId: string, newDbId: string) {
+    const sessionStore = this.getterSections.oneAndOnly("sessionStore");
+    const sessionDeal = sessionStore.childByDbId({
+      childName: "dealMain",
+      dbId: oldDbId,
+    });
+
+    const clone = SolverSection.initFromPackAsOmniChild(
+      sessionDeal.makeSectionPack()
+    );
+    clone.updater.updateDbId(newDbId);
+    const displayName = "Copy of " + clone.get.stringValue("displayName");
+    clone.basicSolvePrepper.updateValues({ displayName });
+    return clone.packMaker.makeSectionPack();
+  }
+
   saveAndOverwriteToStore({ storeName, sectionPack }: SaveAsToStoreProps) {
     this.addToStore(
       { storeName, options: { dbId: Id.make(), sectionPack } },
@@ -174,7 +205,10 @@ export class SolverFeStore extends SolverSectionBase<"feStore"> {
       }
     }
   }
-  addToStore({ storeName, options }: AddToStoreProps, doSolve: boolean = true) {
+  addToStore<CN extends StoreName>(
+    { storeName, options }: AddToStoreProps<CN>,
+    doSolve: boolean = true
+  ) {
     if (
       storeName === "dealMain" &&
       this.getterFeStore.labSubscription === "basicPlan"
@@ -190,19 +224,19 @@ export class SolverFeStore extends SolverSectionBase<"feStore"> {
     const child = this.appWideSolvePrepper.addAndGetChild(storeName, {
       ...options,
       sectionValues: {
-        ...options?.sectionValues,
+        ...(options as AddToStoreOptions<any>)?.sectionValues,
         dateTimeFirstSaved: now,
         dateTimeLastSaved: now,
-      },
-    });
+      } as Partial<SectionValues<ChildSectionName<"feStore", CN>>>,
+    }) as SolverPrepSection<any>;
     const storeId = StoreId.make(storeName, child.get.feId);
     this.addChangeToSave(storeId, { changeName: "add" });
 
     if (storeName === "dealMain") {
       const session = this.solverSections.oneAndOnly("sessionStore");
       session.appWideSolvePrepper.addChild("dealMain", {
-        dbId: child.get.dbId,
-        sectionValues: { dateTimeCreated: now },
+        sectionPack:
+          options?.sessionSectionPack ?? makeDefaultSessionDeal(child.get),
       });
     }
 
@@ -282,19 +316,46 @@ export class SolverFeStore extends SolverSectionBase<"feStore"> {
       changesToSave: {},
     });
   }
+  private doDealUpdate(dbId: string) {
+    const deal = this.get.childByDbId({ childName: "dealMain", dbId });
+
+    const cache = this.solverSections.oneAndOnly("dealCompareCache");
+    const dealSystems = cache.children("comparedDealSystem");
+    for (const system of dealSystems) {
+      if (system.get.dbId === dbId) {
+        const systemDeal = system.onlyChild("deal");
+        systemDeal.basicSolvePrepper.loadSelfSectionPack(
+          deal.makeSectionPack()
+        );
+      }
+    }
+
+    const session = this.solverSections.oneAndOnly("sessionStore");
+    const sessionDeal = session.childByDbId({ childName: "dealMain", dbId });
+    sessionDeal.loadSelfAndSolve(makeDefaultSessionDeal(deal));
+  }
   private preSaveAndSolve() {
-    const storeIds = Obj.keys(this.get.valueNext("changesToSave"));
+    const changesToSave = this.get.valueNext("changesToSave");
+    const storeIds = Obj.keys(changesToSave);
+
     let doVariableUpdate = false;
     for (const storeId of storeIds) {
-      const { storeName } = StoreId.split(storeId);
+      const change = changesToSave[storeId];
+      const { storeName, feId } = StoreId.split(storeId);
       if (isStoreNameByType(storeName, "variableStore")) {
         doVariableUpdate = true;
         break;
+      }
+      if (storeName === "dealMain" && change.changeName === "update") {
+        const deal = this.get.child({ childName: storeName, feId });
+        this.doDealUpdate(deal.dbId);
       }
     }
     if (doVariableUpdate) {
       this.appWideSolvePrepSections.applyVariablesToDealSystems();
     }
+    this.appWideSolvePrepSections.addAppWideMissingOutEntities();
+    this.solve();
   }
   finishSave({ success }: { success: boolean }) {
     if (success) {
