@@ -37,7 +37,7 @@ export function ListEditorOngoing({
 
   const onChange = (displayName?: string) => {
     const sectionValues: Partial<SectionValues<"periodicItem">> = {
-      valuePeriodicSwitch: itemPeriodicSwitch,
+      valueDollarsPeriodicSwitch: itemPeriodicSwitch,
       ...(displayName && { displayNameEditor: displayName }),
     };
     addChild({

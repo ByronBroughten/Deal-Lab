@@ -13,7 +13,10 @@ type Name = StrictExtract<
   "onetimeItem" | "periodicItem" | "numVarbItem"
 >;
 interface Props<SN extends Name> extends FeSectionInfo<SN> {
-  valueEditorName: Extract<VarbName<SN>, "valueEditor" | "valuePeriodicEditor">;
+  valueEditorName: Extract<
+    VarbName<SN>,
+    "valueDollarsEditor" | "valueDollarsPeriodicEditor"
+  >;
   valueEditorProps?: { endAdornment?: React.ReactNode };
 }
 export function VarbListItemGeneric<SN extends Name>({

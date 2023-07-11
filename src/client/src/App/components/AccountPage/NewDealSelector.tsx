@@ -1,7 +1,10 @@
 import { Box } from "@mui/material";
 import { unstable_batchedUpdates } from "react-dom";
 import { dealModeLabels } from "../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
-import { useAction } from "../../sharedWithServer/stateClassHooks/useAction";
+import {
+  useAction,
+  useActionNoSave,
+} from "../../sharedWithServer/stateClassHooks/useAction";
 import { useGetterFeStore } from "../../sharedWithServer/stateClassHooks/useFeStore";
 import { useGetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useGetterSection";
 import { nativeTheme } from "../../theme/nativeTheme";
@@ -17,6 +20,14 @@ export function NewDealSelector(props: Props) {
 }
 
 function NewDealSelectorAddDeal({ closeSelector }: Props) {
+  const updateValue = useActionNoSave("updateValue");
+  const session = useGetterSectionOnlyOne("sessionStore");
+  const setCreatingDeal = () =>
+    updateValue({
+      ...session.varbInfo("isCreatingDeal"),
+      value: true,
+    });
+
   const newDealMenu = useGetterSectionOnlyOne("newDealMenu");
   const addActiveDeal = useAction("addActiveDeal");
   const goToActiveDeal = useGoToPage("activeDeal");

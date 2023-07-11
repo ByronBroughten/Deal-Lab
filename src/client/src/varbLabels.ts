@@ -154,7 +154,7 @@ export const varbLabels = checkAllVarbLabels({
   }),
   ...prop("closingCostValue", {
     valueSourceName: multis.closingCosts,
-    value: input("Closing costs"),
+    valueDollars: input("Closing costs"),
     valueDollarsEditor: input("Closing costs"),
   }),
   ...prop("property", {
@@ -412,8 +412,8 @@ export const varbLabels = checkAllVarbLabels({
     }),
   }),
   ...prop("onetimeItem", {
-    value: input(relVarbInfoS.local("displayName")),
-    valueEditor: input(relVarbInfoS.local("displayName")),
+    valueDollars: input(relVarbInfoS.local("displayName")),
+    valueDollarsEditor: input(relVarbInfoS.local("displayName")),
     valueSourceName: input(relVarbInfoS.local("displayName")),
   }),
   ...prop("onetimeList", {
@@ -422,7 +422,7 @@ export const varbLabels = checkAllVarbLabels({
   ...prop("periodicList", simplePeriodic("total", "List total")),
   ...prop("periodicItem", {
     valueSourceName: input(relVarbInfoS.local("displayName")),
-    ...periodicInput("value", relVarbInfoS.local("displayName")),
+    ...periodicInput("valueDollars", relVarbInfoS.local("displayName")),
   }),
   ...prop("numVarbItem", {
     valueSourceName: input(relVarbInfoS.local("displayName")),

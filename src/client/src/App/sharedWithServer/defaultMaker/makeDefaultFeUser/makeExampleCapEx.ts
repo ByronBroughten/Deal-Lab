@@ -24,7 +24,7 @@ export function makeExampleCapExList(
       displayNameEditor: displayName,
       costToReplace: numToObj(replacementCost),
       lifespanSpanEditor: numToObj(lifeSpan),
-      valuePeriodicSwitch: "yearly",
+      valueDollarsPeriodicSwitch: "yearly",
       lifespanSpanSwitch: "years",
     });
   }

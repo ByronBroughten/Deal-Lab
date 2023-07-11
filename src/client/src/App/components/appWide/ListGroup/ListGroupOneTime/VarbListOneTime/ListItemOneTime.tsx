@@ -8,7 +8,9 @@ const ListItemOneTimeMemo = React.memo(function ListItemOneTimeMemo({
 }: MemoProps) {
   const feInfo = { sectionName: "onetimeItem", feId } as const;
   return (
-    <VarbListItemGeneric {...{ ...feInfo, valueEditorName: "valueEditor" }} />
+    <VarbListItemGeneric
+      {...{ ...feInfo, valueEditorName: "valueDollarsEditor" }}
+    />
   );
 });
 

@@ -121,7 +121,7 @@ export function loanUpdateVarbs(): UpdateSectionVarbs<"loan"> {
       propS.local("loanBaseDollars")
     ),
     closingCosts: updateVarbS.sumNums(
-      [propS.children("closingCostValue", "value")],
+      [propS.children("closingCostValue", "valueDollars")],
       {
         updateOverrides: [
           updateOverride(

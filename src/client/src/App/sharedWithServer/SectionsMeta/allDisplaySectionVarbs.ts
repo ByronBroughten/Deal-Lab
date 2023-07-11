@@ -198,14 +198,14 @@ export const allDisplaySectionVarbs = {
     ...group("periodic", "total", relVarbInfoS.local("displayName")),
   }),
   ...displaySectionVarbsProp("onetimeItem", {
-    value: varb(relVarbInfoS.local("displayName")),
-    valueEditor: varb(relVarbInfoS.local("displayName")),
+    valueDollars: varb(relVarbInfoS.local("displayName")),
+    valueDollarsEditor: varb(relVarbInfoS.local("displayName")),
   }),
   ...displaySectionVarbsProp(
     "periodicItem",
     editorDisplayGroup(
       "periodicInput",
-      "value",
+      "valueDollars",
       relVarbInfoS.local("displayName")
     )
   ),

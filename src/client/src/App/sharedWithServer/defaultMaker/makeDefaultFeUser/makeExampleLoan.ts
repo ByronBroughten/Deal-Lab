@@ -60,7 +60,7 @@ export function makeExampleLoan(props: ExampleLoanProps) {
     const closingCostItem = closingCostList.addAndGetChild("onetimeItem");
     closingCostItem.updateValues({
       displayNameEditor: item.displayName,
-      valueEditor: item.value,
+      valueDollarsEditor: item.value,
       valueSourceName: "valueDollarsEditor",
     });
   }

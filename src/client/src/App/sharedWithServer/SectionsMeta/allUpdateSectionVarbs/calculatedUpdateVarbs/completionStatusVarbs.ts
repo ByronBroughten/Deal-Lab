@@ -201,7 +201,7 @@ export const loanCompletionStatus = updateVarb(
       propS.local("interestRatePercentPeriodicEditor"),
       propS.local("loanTermSpanEditor"),
       propS.onlyChild("closingCostValue", "valueDollarsEditor", [
-        switchS.valueSourceIs("valueEditor"),
+        switchS.valueSourceIs("valueDollarsEditor"),
       ]),
     ],
   })

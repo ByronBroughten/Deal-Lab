@@ -25,9 +25,9 @@ export function makeUtilityList(itemPropArr: UtilityItemProp[], dbId?: string) {
     utilityList.addChild("periodicItem", {
       sectionValues: {
         displayNameEditor: itemProps[0],
-        valuePeriodicSwitch: "monthly",
+        valueDollarsPeriodicSwitch: "monthly",
         valueSourceName: valueSource,
-        valuePeriodicEditor: numToObj(itemProps[1]),
+        valueDollarsPeriodicEditor: numToObj(itemProps[1]),
       },
     });
   }
@@ -49,7 +49,7 @@ export function makeExampleOneTimeList(
     list.addChild("onetimeItem", {
       sectionValues: {
         displayNameEditor: itemProps[0],
-        valueEditor: typeof value === "number" ? numObj(value) : value,
+        valueDollarsEditor: typeof value === "number" ? numObj(value) : value,
       },
     });
   }
@@ -75,7 +75,7 @@ export function makeCapExList(
     capExList.addChild("capExItem", {
       sectionValues: {
         displayNameEditor: itemProps[0],
-        valuePeriodicSwitch: itemPeriodicSwitch,
+        valueDollarsPeriodicSwitch: itemPeriodicSwitch,
         lifespanSpanEditor: numToObj(itemProps[1]),
         lifespanSpanSwitch: "years",
         costToReplace: numToObj(itemProps[2]),

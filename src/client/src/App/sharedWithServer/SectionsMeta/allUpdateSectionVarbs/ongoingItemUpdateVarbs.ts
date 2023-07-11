@@ -9,7 +9,7 @@ import {
 } from "../updateSectionVarbs/updateVarb/UpdateOverrides";
 import { updateVarbsS } from "../updateSectionVarbs/updateVarbs";
 
-const valueNameBase = "value";
+const valueNameBase = "valueDollars";
 export function ongoingItemUpdateVarbs(): UpdateSectionVarbs<"periodicItem"> {
   return {
     ...updateVarbsS._typeUniformity,
@@ -21,7 +21,7 @@ export function ongoingItemUpdateVarbs(): UpdateSectionVarbs<"periodicItem"> {
         updateOverrides: [
           updateOverride(
             [overrideSwitchS.monthlyIsActive(valueNameBase)],
-            updateBasicsS.loadFromLocal("valuePeriodicEditor")
+            updateBasicsS.loadFromLocal("valueDollarsPeriodicEditor")
           ),
           updateOverrideS.activeYearlyToMonthly(valueNameBase),
         ],
@@ -31,7 +31,7 @@ export function ongoingItemUpdateVarbs(): UpdateSectionVarbs<"periodicItem"> {
         updateOverrides: [
           updateOverride(
             [overrideSwitchS.yearlyIsActive(valueNameBase)],
-            updateBasicsS.loadFromLocal("valuePeriodicEditor")
+            updateBasicsS.loadFromLocal("valueDollarsPeriodicEditor")
           ),
           updateOverrideS.activeMonthlyToYearly(valueNameBase),
         ],
@@ -44,7 +44,7 @@ export function capExItemUpdateVarbs(): UpdateSectionVarbs<"capExItem"> {
   return {
     ...updateVarbsS._typeUniformity,
     ...updateVarbsS.displayNameAndEditor,
-    ...updateVarbsS.group("value", "periodic", "monthly", {
+    ...updateVarbsS.group("valueDollars", "periodic", "monthly", {
       yearly: updateBasicsS.equationLR(
         "divide",
         updateFnPropS.local("costToReplace"),

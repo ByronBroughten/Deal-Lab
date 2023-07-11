@@ -25,7 +25,7 @@ export function VarbListOngoing({ feId, ...rest }: Props) {
     const itemValueSource = list.valueNext("itemValueSource");
     const sectionValues: Partial<SectionValues<"periodicItem">> = {
       valueSourceName: itemValueSource,
-      valuePeriodicSwitch: itemPeriodicSwitch,
+      valueDollarsPeriodicSwitch: itemPeriodicSwitch,
     };
     addChild({
       feInfo: list.feInfo,

@@ -24,7 +24,7 @@ export function VarbListCapEx({ feId, ...rest }: Props) {
     .value("ongoingSwitch");
 
   const sectionValues: Partial<SectionValues<"capExItem">> = {
-    valuePeriodicSwitch: itemPeriodicSwitch,
+    valueDollarsPeriodicSwitch: itemPeriodicSwitch,
   };
 
   const addItem = () => {

@@ -56,7 +56,7 @@ describe("Property fix and flip calculations", () => {
       list.addChildAndSolve("onetimeItem", {
         sectionValues: {
           valueSourceName: "valueDollarsEditor",
-          valueEditor: numObj(num),
+          valueDollarsEditor: numObj(num),
         },
       });
     }

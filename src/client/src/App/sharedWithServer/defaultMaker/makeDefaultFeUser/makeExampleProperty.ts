@@ -121,9 +121,9 @@ function addUtilities(
     utilityList.addChild("periodicItem", {
       sectionValues: {
         valueSourceName: "valueDollarsPeriodicEditor",
-        valuePeriodicSwitch: "monthly",
+        valueDollarsPeriodicSwitch: "monthly",
         displayNameEditor: displayName,
-        valuePeriodicEditor: numToObj(value),
+        valueDollarsPeriodicEditor: numToObj(value),
       },
     });
   }
@@ -157,7 +157,7 @@ export function makeExampleProperty<DM extends StateValue<"dealMode">>(
     repairItem.updateValues({
       valueSourceName: "valueDollarsEditor",
       displayNameEditor: displayName,
-      valueEditor: numToObj(value),
+      valueDollarsEditor: numToObj(value),
     });
   }
 

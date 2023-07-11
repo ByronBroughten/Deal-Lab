@@ -51,6 +51,8 @@ export function makeAllBaseSectionVarbs() {
     sessionStore: varbs({
       archivedAreLoaded: baseVarb("boolean"),
       showArchivedDeals: baseVarb("boolean"),
+      isCreatingDeal: baseVarb("boolean"),
+      isStartingDealEdit: baseVarb("string"),
     }),
     newDealMenu: varbs({ dealMode: baseVarb("dealMode") }),
     mainDealMenu: varbs({
@@ -106,8 +108,8 @@ export function makeAllBaseSectionVarbs() {
 
     onetimeItem: varbs({
       ...baseVarbsS.displayNameAndEditor,
-      value: baseVarb("numObj", dollars),
-      valueEditor: baseVarb("numObj", dollars),
+      valueDollars: baseVarb("numObj", dollars),
+      valueDollarsEditor: baseVarb("numObj", dollars),
       valueSourceName: baseVarb("valueDollarsEditor"),
     }),
     periodicList: varbs({
@@ -118,7 +120,7 @@ export function makeAllBaseSectionVarbs() {
     }),
     periodicItem: baseSectionVarbs({
       valueSourceName: baseVarb("valueDollarsPeriodicEditor"),
-      ...baseVarbsS.periodicDollarsInput("value"),
+      ...baseVarbsS.periodicDollarsInput("valueDollars"),
       ...baseVarbsS.displayNameAndEditor,
     }),
     capExList: varbs({
@@ -128,7 +130,7 @@ export function makeAllBaseSectionVarbs() {
     }),
     capExItem: baseSectionVarbs({
       ...baseVarbsS.displayNameAndEditor,
-      ...baseVarbsS.periodicDollars("value"),
+      ...baseVarbsS.periodicDollars("valueDollars"),
       ...baseVarbsS.monthsYearsInput("lifespan"),
       costToReplace: baseVarb("numObj", baseOptions.dollars),
     }),
@@ -270,9 +272,9 @@ export function makeAllBaseSectionVarbs() {
       valueSourceName: baseVarb("capExValueSource"),
     }),
     closingCostValue: varbs({
-      value: baseVarb("numObj", dollars),
-      valueSourceName: baseVarb("closingCostValueSource"),
+      valueDollars: baseVarb("numObj", dollars),
       valueDollarsEditor: baseVarb("numObj", dollars),
+      valueSourceName: baseVarb("closingCostValueSource"),
     }),
     loan: varbs({
       ...baseVarbsS.savableSection,

@@ -42,7 +42,7 @@ export function ClosingCostValue({ feId, fivePercentLoanDisplay }: Props) {
           ["listTotal", "Itemize"],
         ],
         equalsValue,
-        total: closingCostValue.varbNext("value").displayVarb(),
+        total: closingCostValue.varbNext("valueDollars").displayVarb(),
         itemizeValue: "listTotal",
         itemizedModalTitle: "Closing Costs",
         itemsComponent: (

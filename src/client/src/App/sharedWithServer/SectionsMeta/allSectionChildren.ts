@@ -98,9 +98,7 @@ export const allSectionChildren = checkAllSectionChildren({
   outputItem: { virtualVarb: sectionChild("virtualVarb") },
   onetimeList: { onetimeItem: sectionChild("onetimeItem") },
   periodicList: {
-    periodicItem: sectionChild("periodicItem", {
-      isListItem: true,
-    }),
+    periodicItem: sectionChild("periodicItem", { isListItem: true }),
   },
   numVarbList: { numVarbItem: sectionChild("numVarbItem") },
   boolVarbList: { boolVarbItem: sectionChild("boolVarbItem") },

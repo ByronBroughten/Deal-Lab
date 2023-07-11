@@ -14,7 +14,7 @@ const ListItemOngoingMemo = React.memo(function ListItemOngoingMemo({
     <VarbListItemGeneric
       {...{
         ...feInfo,
-        valueEditorName: "valuePeriodicEditor",
+        valueEditorName: "valueDollarsPeriodicEditor",
       }}
     />
   );

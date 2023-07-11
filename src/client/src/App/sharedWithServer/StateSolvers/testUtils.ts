@@ -150,7 +150,7 @@ export function setOnetimeList<SN extends OnetimeCostSN>(
     list.addChildAndSolve("onetimeItem", {
       sectionValues: {
         valueSourceName: "valueDollarsEditor",
-        valueEditor: numObj(item),
+        valueDollarsEditor: numObj(item),
       },
     });
   }
@@ -198,8 +198,8 @@ export function setPeriodicList<SN extends PeriodicListSn>(
     list.addAndGetChild("periodicItem", {
       sectionValues: {
         valueSourceName: "valueDollarsPeriodicEditor",
-        valuePeriodicSwitch: switchVal,
-        valuePeriodicEditor: numObj(item),
+        valueDollarsPeriodicSwitch: switchVal,
+        valueDollarsPeriodicEditor: numObj(item),
       },
     });
   }

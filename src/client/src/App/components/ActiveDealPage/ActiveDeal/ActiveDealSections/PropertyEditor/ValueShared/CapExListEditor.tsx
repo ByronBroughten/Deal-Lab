@@ -41,7 +41,7 @@ export function CapExValueList({ feId, menuType }: Props) {
 
   const onChange = (displayName?: string) => {
     const sectionValues: Partial<SectionValues<"capExItem">> = {
-      valuePeriodicSwitch: itemPeriodicSwitch,
+      valueDollarsPeriodicSwitch: itemPeriodicSwitch,
       ...(displayName && { displayNameEditor: displayName }),
     };
     addChild({ feInfo, childName: "capExItem", options: { sectionValues } });
