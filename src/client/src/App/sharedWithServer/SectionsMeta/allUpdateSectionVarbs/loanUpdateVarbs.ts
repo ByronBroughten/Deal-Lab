@@ -110,10 +110,7 @@ export function loanUpdateVarbs(): UpdateSectionVarbs<"loan"> {
         ],
       },
     }),
-    loanTotalDollars: updateVarbS.sumNums([
-      propS.local("loanBaseDollars"),
-      propS.children("wrappedInLoanValue", "value"),
-    ]),
+    loanTotalDollars: updateVarbS.sumNums([propS.local("loanBaseDollars")]),
     ...updateVarbsS.ongoingSumNums(
       "expenses",
       [propS.localBaseName("loanPayment"), propS.localBaseName("mortgageIns")],

@@ -6,8 +6,6 @@ import { makeDefaultFeUserPack } from "./makeDefaultFeStore";
 import { makeDefaultLoanPack } from "./makeDefaultLoanPack";
 import { makeDefaultMain } from "./makeDefaultMain";
 import { makeDefaultMgmt } from "./makeDefaultMgmt";
-import { makeDefaultOneTimeValue } from "./makeDefaultOneTimeValue";
-import { makeDefaultOngoingValue } from "./makeDefaultOngoingValue";
 import { makeDefaultProperty } from "./makeDefaultProperty";
 import { makeDefaultUserVarbItem } from "./makeDefaultUserVarbItem";
 
@@ -35,8 +33,6 @@ class DefaultSectionPackMaker<SN extends SectionName> {
 export const defaultMaker = new DefaultSectionPackMaker({
   numVarbItem: makeDefaultUserVarbItem,
   property: makeDefaultProperty,
-  onetimeValue: makeDefaultOneTimeValue,
-  periodicValue: makeDefaultOngoingValue,
   mgmt: makeDefaultMgmt,
   loan: makeDefaultLoanPack,
   deal: makeDefaultDealPack,

@@ -96,11 +96,6 @@ export const allSectionChildren = checkAllSectionChildren({
     brrrrOutputList: "outputList",
   }),
   outputItem: { virtualVarb: sectionChild("virtualVarb") },
-  periodicValue: {
-    periodicList: sectionChild("periodicList"),
-  },
-
-  onetimeValue: { onetimeList: sectionChild("onetimeList") },
   onetimeList: { onetimeItem: sectionChild("onetimeItem") },
   periodicList: {
     periodicItem: sectionChild("periodicItem", {
@@ -127,7 +122,6 @@ export const allSectionChildren = checkAllSectionChildren({
   loan: sectionChildren({
     loanBaseValue: "loanBaseValue",
     closingCostValue: "closingCostValue",
-    wrappedInLoanValue: "onetimeValue",
     customVarb: "customVarb",
   }),
   loanBaseValue: sectionChildren({

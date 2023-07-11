@@ -270,15 +270,9 @@ export function setFirstLoanFor912p6Monthly(
     amountPercentEditor: numObj(75),
   });
 
-  const wrappedValue = loan.addAndGetChild("wrappedInLoanValue", {
-    sectionValues: { valueSourceName: "listTotal" },
-  });
-  const wrapped = wrappedValue.onlyChild("onetimeList");
-  const amounts = [6000, 14000];
+  const extras = baseValue.onlyChild("loanBaseExtra");
+  extras.updateValues({ hasLoanExtra: true, valueSourceName: "listTotal" });
 
-  for (const amount of amounts) {
-    wrapped.addChildAndSolve("onetimeItem", {
-      sectionValues: { valueEditor: numObj(amount) },
-    });
-  }
+  const amounts = [6000, 14000];
+  setOnetimeList(extras, amounts);
 }

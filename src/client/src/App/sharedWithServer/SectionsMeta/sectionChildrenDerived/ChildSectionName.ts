@@ -107,7 +107,7 @@ function _testChildSectionNameName<
   const _test2: ChildSectionNameName<"property", "periodicList"> =
     "periodicList";
   const _test3: ChildSectionNameName<
-    "onetimeValue" | "repairValue",
+    "sellingCostValue" | "repairValue",
     "onetimeList"
   > = "onetimeList";
 }

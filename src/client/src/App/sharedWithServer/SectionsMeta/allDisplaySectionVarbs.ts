@@ -191,21 +191,9 @@ export const allDisplaySectionVarbs = {
       },
     }),
   }),
-  ...displaySectionVarbsProp("onetimeValue", {
-    value: varb(relVarbInfoS.local("displayName")),
-    valueEditor: varb(relVarbInfoS.local("displayName")),
-  }),
   ...displaySectionVarbsProp("onetimeList", {
     total: varb(relVarbInfoS.local("displayName")),
   }),
-  ...displaySectionVarbsProp(
-    "periodicValue",
-    editorDisplayGroup(
-      "periodicInput",
-      "value",
-      relVarbInfoS.local("displayName")
-    )
-  ),
   ...displaySectionVarbsProp("periodicList", {
     ...group("periodic", "total", relVarbInfoS.local("displayName")),
   }),

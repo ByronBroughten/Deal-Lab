@@ -11,7 +11,7 @@ import { mgmtRelVarbs } from "./allUpdateSectionVarbs/mgmtUpdateVarbs";
 import { miscPeriodicCostUpdateVarbs } from "./allUpdateSectionVarbs/miscPeriodicCostUpdateVarbs";
 import {
   capExItemUpdateVarbs,
-  ongoingItemUpdateVarbs,
+  ongoingItemUpdateVarbs
 } from "./allUpdateSectionVarbs/ongoingItemUpdateVarbs";
 import { taxesAndHomeInsValueUpdateVarbs } from "./allUpdateSectionVarbs/ongoingValueUpdateVarb";
 import { propertyUpdateVarbs } from "./allUpdateSectionVarbs/propertyUpdateVarbs";
@@ -23,26 +23,24 @@ import { SectionName, sectionNames } from "./SectionName";
 import {
   defaultSectionUpdateVarbs,
   updateSectionProp,
-  UpdateSectionVarbs,
+  UpdateSectionVarbs
 } from "./updateSectionVarbs/updateSectionVarbs";
 import { updateVarb, updateVarbS } from "./updateSectionVarbs/updateVarb";
 import {
-  updateBasics,
-  UpdateBasics,
-  updateBasicsS,
+  updateBasics, updateBasicsS
 } from "./updateSectionVarbs/updateVarb/UpdateBasics";
 import {
   updateFnPropS,
-  updateFnPropsS,
+  updateFnPropsS
 } from "./updateSectionVarbs/updateVarb/UpdateFnProps";
 import {
   overrideSwitchS,
   updateOverride,
-  updateOverrideS,
+  updateOverrideS
 } from "./updateSectionVarbs/updateVarb/UpdateOverrides";
 import {
   valueSourceNumObj,
-  valueSourceOverrides,
+  valueSourceOverrides
 } from "./updateSectionVarbs/updateVarb/updateVarbUtils";
 import { updateVarbsS } from "./updateSectionVarbs/updateVarbs";
 import { numObj } from "./values/StateValue/NumObj";
@@ -402,104 +400,6 @@ function makeAllUpdateSections() {
           valueDollarsEditor:
             updateBasicsS.loadSolvableTextByVarbInfo("valueDollarsEditor"),
         }),
-      }),
-    }),
-    ...prop("onetimeValue", {
-      ...varbsS.displayNameAndEditor,
-      value: updateVarb("numObj", {
-        updateFnName: "throwIfReached",
-        updateOverrides: [
-          updateOverride(
-            [switchS.valueSourceIs("none")],
-            updateBasics("emptyNumObj")
-          ),
-          updateOverride(
-            [switchS.valueSourceIs("listTotal")],
-            updateBasicsS.loadFromChild(
-              "onetimeList",
-              "total"
-            ) as UpdateBasics<"numObj">
-          ),
-          updateOverride(
-            [switchS.valueSourceIs("valueEditor")],
-            updateBasicsS.loadSolvableTextByVarbInfo(
-              "valueEditor"
-            ) as UpdateBasics<"numObj">
-          ),
-        ],
-      }),
-      valueEditor: updateVarb("numObj"),
-      valueSourceName: updateVarb("customValueSource", {
-        initValue: "valueEditor",
-      }),
-    }),
-    ...prop("periodicValue", {
-      ...varbsS.displayNameAndEditor,
-      valueSourceName: updateVarb("customValueSource", {
-        initValue: "valueEditor",
-      }),
-      ...varbsS.periodicInput("value", {
-        monthly: {
-          updateFnName: "throwIfReached",
-          updateOverrides: [
-            updateOverride(
-              [switchS.valueSourceIs("none")],
-              updateBasics("emptyNumObj")
-            ),
-            updateOverride(
-              [switchS.valueSourceIs("listTotal")],
-              updateBasicsS.loadFromChild(
-                "periodicList",
-                "totalMonthly"
-              ) as UpdateBasics<"numObj">
-            ),
-            updateOverride(
-              [
-                switchS.valueSourceIs("valueEditor"),
-                switchS.monthlyIsActive("value"),
-              ],
-              updateBasicsS.loadFromLocal("valuePeriodicEditor")
-            ),
-            updateOverride(
-              [
-                switchS.valueSourceIs("valueEditor"),
-                switchS.yearlyIsActive("value"),
-              ],
-              updateBasicsS.yearlyToMonthly("value")
-            ),
-          ],
-        },
-        yearly: {
-          updateFnName: "throwIfReached",
-          updateOverrides: [
-            updateOverride(
-              [switchS.valueSourceIs("none")],
-              updateBasics("emptyNumObj")
-            ),
-            updateOverride(
-              [switchS.valueSourceIs("listTotal")],
-              updateBasicsS.loadFromChild(
-                "periodicList",
-                "totalYearly"
-              ) as UpdateBasics<"numObj">
-            ),
-            updateOverride(
-              [
-                switchS.valueSourceIs("valueEditor"),
-                switchS.yearlyIsActive("value"),
-              ],
-              updateBasicsS.loadFromLocal("valuePeriodicEditor")
-            ),
-            updateOverride(
-              [
-                switchS.valueSourceIs("valueEditor"),
-                switchS.monthlyIsActive("value"),
-              ],
-              updateBasicsS.monthlyToYearly("value")
-            ),
-          ],
-        },
-        editor: { updateFnName: "calcVarbs" },
       }),
     }),
     ...prop("miscPeriodicValue", miscPeriodicCostUpdateVarbs()),

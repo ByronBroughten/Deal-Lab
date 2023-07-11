@@ -49,12 +49,6 @@ function makeBaseNameArrs() {
         "arvLoanValue",
       ] as const);
     },
-    get varbValue() {
-      return Arr.extractStrict(sectionNames, [
-        "periodicValue",
-        "onetimeValue",
-      ] as const);
-    },
     get varbListAllowed() {
       return Arr.extractStrict(sectionNames, [
         "capExList",

@@ -98,28 +98,17 @@ export function makeAllBaseSectionVarbs() {
       valuePercentEditor: baseVarb("numObj", percent),
       valueDecimal: baseVarb("numObj", decimal),
     }),
-    onetimeValue: varbs({
-      ...varbsS.displayNameAndEditor,
-      value: baseVarb("numObj", dollars),
-      valueEditor: baseVarb("numObj"),
-      valueSourceName: baseVarb("customValueSource"),
-      isItemized: baseVarb("boolean"),
-    }),
     onetimeList: varbs({
       ...varbsS.savableSection,
       total: baseVarb("numObj", dollars),
       itemValueSource: baseVarb("valueDollarsEditor"),
     }),
+
     onetimeItem: varbs({
       ...baseVarbsS.displayNameAndEditor,
       value: baseVarb("numObj", dollars),
       valueEditor: baseVarb("numObj", dollars),
       valueSourceName: baseVarb("valueDollarsEditor"),
-    }),
-    periodicValue: varbs({
-      ...varbsS.displayNameAndEditor,
-      ...varbsS.periodicDollarsInput("value"),
-      valueSourceName: baseVarb("customValueSource"),
     }),
     periodicList: varbs({
       ...baseVarbsS.savableSection,
@@ -152,10 +141,7 @@ export function makeAllBaseSectionVarbs() {
       itemValueSource: baseVarb("editorValueSource"),
     }),
     outputList: varbs(baseVarbsS.savableSection),
-
-    outputItem: varbs({
-      valueEntityInfo: baseVarb("inEntityValue"),
-    }),
+    outputItem: baseVarbsS.loadableVarb,
     virtualVarb: varbs({
       valueEntityInfo: baseVarb("inEntityValue"),
       value: baseVarb("numObj"),

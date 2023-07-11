@@ -411,11 +411,6 @@ export const varbLabels = checkAllVarbLabels({
       info: `The total profit from increasing a property's value after purchase, as a percent of the cash that was invested to do so, divided by the number of years—or by the fraction of years—that the holding period lasted.\n\nThis can be used to compare ROI from onetime windfall income with ongoing Cash on Cash ROI from other types of investments.`,
     }),
   }),
-  ...prop("onetimeValue", {
-    value: input(relVarbInfoS.local("displayName")),
-    valueEditor: input(relVarbInfoS.local("displayName")),
-    valueSourceName: input(relVarbInfoS.local("displayName")),
-  }),
   ...prop("onetimeItem", {
     value: input(relVarbInfoS.local("displayName")),
     valueEditor: input(relVarbInfoS.local("displayName")),
@@ -437,10 +432,6 @@ export const varbLabels = checkAllVarbLabels({
   ...prop("boolVarbItem", {
     leftOperandi: input(""),
     rightOperandi: input(""),
-  }),
-  ...prop("periodicValue", {
-    valueSourceName: input(""),
-    ...periodicInput("value", ""),
   }),
   ...prop("virtualVarb", { value: input("") }),
   ...prop("conditionalRowList", { value: input("") }),
