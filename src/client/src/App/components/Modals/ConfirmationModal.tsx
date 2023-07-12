@@ -21,30 +21,52 @@ export function ConfirmationModal(props: Props) {
     <ModalSection
       {...{
         ...props,
-        sx: { borderColor: nativeTheme.notice.dark },
+        modalSectionProps: {
+          sx: { border: `solid 2px ${nativeTheme.notice.dark}` },
+        },
         titleSx: { color: nativeTheme.notice.dark },
         title: modalState?.title,
         show: Boolean(modalState),
         closeModal,
       }}
     >
-      <Box>{modalState?.description}</Box>
-      <MuiRow>
-        <StyledActionBtn
-          {...{
-            middle: "Yes",
-            isDangerous: true,
-            ...(modalState && {
-              onClick: () => {
-                unstable_batchedUpdates(() => {
-                  modalState.handleSubmit();
-                  closeModal();
-                });
+      <Box sx={{ fontSize: nativeTheme.fs20 }}>{modalState?.description}</Box>
+      <MuiRow
+        sx={{
+          fontSize: 20,
+          paddingTop: nativeTheme.s3,
+          justifyContent: "flex-end",
+        }}
+      >
+        {modalState && (
+          <StyledActionBtn
+            {...{
+              sx: { fontSize: nativeTheme.fs22 },
+              middle: "Yes",
+              isDangerous: true,
+              ...(modalState && {
+                onClick: () => {
+                  unstable_batchedUpdates(() => {
+                    modalState.handleSubmit();
+                    closeModal();
+                  });
+                },
+              }),
+            }}
+          />
+        )}
+        {modalState && (
+          <StyledActionBtn
+            {...{
+              sx: {
+                fontSize: nativeTheme.fs22,
+                paddingLeft: nativeTheme.s5,
               },
-            }),
-          }}
-        />
-        <StyledActionBtn {...{ middle: "Cancel", onClick: closeModal }} />
+              middle: "Cancel",
+              onClick: closeModal,
+            }}
+          />
+        )}
       </MuiRow>
     </ModalSection>
   );
