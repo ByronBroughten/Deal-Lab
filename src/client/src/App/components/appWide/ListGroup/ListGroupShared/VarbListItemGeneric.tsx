@@ -15,7 +15,7 @@ type Name = StrictExtract<
 interface Props<SN extends Name> extends FeSectionInfo<SN> {
   valueEditorName: Extract<
     VarbName<SN>,
-    "valueDollarsEditor" | "valueDollarsPeriodicEditor"
+    "valueEditor" | "valueDollarsEditor" | "valueDollarsPeriodicEditor"
   >;
   valueEditorProps?: { endAdornment?: React.ReactNode };
 }

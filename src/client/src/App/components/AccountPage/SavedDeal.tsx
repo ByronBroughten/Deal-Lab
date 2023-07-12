@@ -1,10 +1,11 @@
 import { Box } from "@mui/system";
-import { unstable_batchedUpdates } from "react-dom";
 import { Text, View, ViewStyle } from "react-native";
+import { ClipLoader } from "react-spinners";
 import { constants } from "../../Constants";
 import { dealModeLabels } from "../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
 import {
   useAction,
+  useActionNoSave,
   useActionWithProps,
 } from "../../sharedWithServer/stateClassHooks/useAction";
 import {
@@ -16,7 +17,6 @@ import { reactNativeS } from "../../utils/reactNative";
 import { StyledActionBtn } from "../appWide/GeneralSection/MainSection/StyledActionBtn";
 import { LabelText, StyledLabeledVarb } from "../appWide/LabeledVarbNext";
 import { showToastInfo } from "../appWide/toast";
-import { useGoToPage } from "../customHooks/useGoToPage";
 import { MuiRow } from "../general/MuiRow";
 import { Row } from "../general/Row";
 import { icons } from "../Icons";
@@ -66,16 +66,23 @@ export function SavedDeal({
   const storeName = "dealMain";
   const deal = useGetterSection({ sectionName: "deal", feId });
   const session = useGetterSectionOnlyOne("sessionStore");
+  const dbIdToEdit = session.valueNext("dealDbIdToEdit");
+  const loadingEdit = deal.dbId === dbIdToEdit;
+
+  const updateValueNoSave = useActionNoSave("updateValue");
+  const setCreatingDeal = () =>
+    updateValueNoSave({
+      ...session.varbInfo("dealDbIdToEdit"),
+      value: deal.dbId,
+    });
+
   const sessionDeal = session.childByDbId({
     childName: "dealMain",
     dbId: deal.dbId,
   });
   const sessionVarb = sessionDeal.onlyChild("sessionVarb");
 
-  const goToActiveDeal = useGoToPage("activeDeal");
   const copyDeal = useActionWithProps("copyInStore", { storeName, feId });
-  const activateDeal = useActionWithProps("activateDeal", { feId });
-
   const archiveDeal = useActionWithProps("archiveDeal", { feId });
 
   const updateValue = useAction("updateValue");
@@ -110,12 +117,6 @@ export function SavedDeal({
   }).format(dateNumber);
 
   const dealMode = deal.valueNext("dealMode");
-  const editDeal = () => {
-    unstable_batchedUpdates(() => {
-      activateDeal();
-      goToActiveDeal();
-    });
-  };
 
   const strDisplayName = deal.stringValue("displayName");
   const isComplete = deal.valueNext("completionStatus") === "allValid";
@@ -221,10 +222,27 @@ export function SavedDeal({
                 margin: nativeTheme.s15,
                 marginTop: nativeTheme.s25,
                 marginRight: nativeTheme.s2,
+                width: "64px",
               },
-              left: icons.edit({ size: 20 }),
-              middle: "Edit",
-              onClick: editDeal,
+
+              ...(loadingEdit
+                ? {
+                    middle: (
+                      <ClipLoader
+                        {...{
+                          loading: true,
+                          color: nativeTheme.light,
+                          size: 22,
+                        }}
+                      />
+                    ),
+                  }
+                : {
+                    left: icons.edit({ size: 20 }),
+                    onClick: setCreatingDeal,
+                    middle: "Edit",
+                  }),
+
               ...(isInactive && {
                 showAsDisabled: true,
                 onClick: () =>

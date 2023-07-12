@@ -27,9 +27,8 @@ export type DbStoreSeed = {
   timeJoined: number;
 };
 
-const exampleHomeBuyer = () =>
-  makeExampleDeal("homeBuyer", "Homebuyer Deal Example");
-const exampleBuyAndHold = () => makeExampleDeal("buyAndHold", "Buy and Hold");
+const exampleHomeBuyer = makeExampleDeal("homeBuyer", "Homebuyer Deal Example");
+const exampleBuyAndHold = makeExampleDeal("buyAndHold", "Buy and Hold");
 
 export function makeDefaultDbStoreArrs({
   authId,
@@ -65,7 +64,7 @@ export function makeDefaultDbStoreArrs({
   });
   dbStore.loadChildren({
     childName: "dealMain",
-    sectionPacks: [exampleHomeBuyer(), exampleBuyAndHold()],
+    sectionPacks: [exampleHomeBuyer, exampleBuyAndHold],
   });
   dbStore.loadChildren({
     childName: "capExListMain",

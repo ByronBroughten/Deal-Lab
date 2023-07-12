@@ -52,7 +52,7 @@ export function makeAllBaseSectionVarbs() {
       archivedAreLoaded: baseVarb("boolean"),
       showArchivedDeals: baseVarb("boolean"),
       isCreatingDeal: baseVarb("boolean"),
-      isStartingDealEdit: baseVarb("string"),
+      dealDbIdToEdit: baseVarb("string"),
     }),
     newDealMenu: varbs({ dealMode: baseVarb("dealMode") }),
     mainDealMenu: varbs({

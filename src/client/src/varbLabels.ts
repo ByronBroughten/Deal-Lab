@@ -216,7 +216,7 @@ export const varbLabels = checkAllVarbLabels({
   }),
   ...prop("capExList", simplePeriodic("total", "Total")),
   ...prop("capExItem", {
-    ...simplePeriodic("value", "Item cost"),
+    ...simplePeriodic("valueDollars", "Item cost"),
     ...spanInput("lifespan", "Item lifespan"),
     costToReplace: input("Item cost to replace"),
   }),
@@ -367,8 +367,7 @@ export const varbLabels = checkAllVarbLabels({
       "Average non-principal costs",
       {
         title: "Average Non-Principal Cost",
-        info: `The average monthly or yearly cost of all ongoing expenses that would be associated with this deal—property maintenance costs, taxes, loan payments, etc.—minus the average principal loan payment amount given the duration of your loan(s).\n\n
-      When you pay towards your principal, you gain equity in your property, so you don't really lose that money. So by subtracting that from the rest of your expenses, you can get a better idea of how much money this deal would actually cost you per month.\n\nHomebuyers can use this to compare deal expenses to what they'd otherwise spend as renters.`,
+        info: `The average cost of all ongoing expenses that would be associated with this deal—loan payments, taxes, property maintenance, etc.—minus the average principal portion of your loan payments over the duration of your loans.\n\nWhen you pay towards the loan principal, you gain equity in your property, so you don't really lose that money. Subtracting that from the rest of your expenses gives a better idea of how much money this deal would actually cost you per month, which you can compare to what you'd otherwise spend on rent and utilities as a renter.`,
       }
     ),
     ...simplePeriodic("ongoingPiti", "PITI payment", {

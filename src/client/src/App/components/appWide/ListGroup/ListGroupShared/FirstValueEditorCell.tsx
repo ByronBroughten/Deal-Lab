@@ -4,7 +4,10 @@ import { NumObjEntityEditor } from "../../../inputs/NumObjEntityEditor";
 interface Props extends FeSectionInfo {
   className?: string;
   endAdornment?: string;
-  valueEditorName: "valueDollarsEditor" | "valueDollarsPeriodicEditor";
+  valueEditorName:
+    | "valueEditor"
+    | "valueDollarsEditor"
+    | "valueDollarsPeriodicEditor";
 }
 export function FirstValueEditorCell({
   className,

@@ -4,6 +4,10 @@ import { unstable_batchedUpdates } from "react-dom";
 import { View } from "react-native";
 import { FeRouteName } from "../Constants/feRoutes";
 import {
+  useAddDeal,
+  useEditDeal,
+} from "../sharedWithServer/stateClassHooks/useLoading";
+import {
   showDealLimitReachedMessage,
   useIsAtDealLimit,
 } from "../sharedWithServer/stateClassHooks/useStorageLimitReached";
@@ -22,6 +26,9 @@ import { useDealModeContextInputModal } from "./Modals/InputModalProvider";
 
 const iconSize = 40;
 export function AccountPage() {
+  useAddDeal();
+  useEditDeal();
+
   const { setModal } = useDealModeContextInputModal();
   const isAtDealLimit = useIsAtDealLimit();
   const openAddDeal = () => {
