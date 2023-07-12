@@ -34,14 +34,14 @@ export function ConfirmationModal(props: Props) {
       <MuiRow
         sx={{
           fontSize: 20,
-          paddingTop: nativeTheme.s3,
+          paddingTop: nativeTheme.s4,
           justifyContent: "flex-end",
         }}
       >
         {modalState && (
           <StyledActionBtn
             {...{
-              sx: { fontSize: nativeTheme.fs22 },
+              sx: { fontSize: nativeTheme.fs22, padding: nativeTheme.s4 },
               middle: "Yes",
               isDangerous: true,
               ...(modalState && {
@@ -60,7 +60,8 @@ export function ConfirmationModal(props: Props) {
             {...{
               sx: {
                 fontSize: nativeTheme.fs22,
-                paddingLeft: nativeTheme.s5,
+                marginLeft: nativeTheme.s5,
+                padding: nativeTheme.s4,
               },
               middle: "Cancel",
               onClick: closeModal,
