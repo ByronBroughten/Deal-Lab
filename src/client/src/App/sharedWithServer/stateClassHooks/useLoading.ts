@@ -1,13 +1,12 @@
 import React from "react";
 import { unstable_batchedUpdates } from "react-dom";
 import { useGoToPage } from "../../components/customHooks/useGoToPage";
-import { useDealModeContextInputModal } from "../../components/Modals/InputModalProvider";
-import { useAction, useActionNoSave } from "./useAction";
+import { useInputModal } from "../../components/Modals/InputModalProvider";
+import { useAction } from "./useAction";
 import { useGetterSectionOnlyOne } from "./useGetterSection";
 
 export function useAddDeal() {
-  const updateValue = useActionNoSave("updateValue");
-  const { setModal } = useDealModeContextInputModal();
+  const { setModal } = useInputModal();
   const newDealMenu = useGetterSectionOnlyOne("newDealMenu");
   const addActiveDeal = useAction("addActiveDeal");
   const goToActiveDeal = useGoToPage("activeDeal");
@@ -15,52 +14,39 @@ export function useAddDeal() {
   const sessionStore = useGetterSectionOnlyOne("sessionStore");
   const isCreatingDeal = sessionStore.valueNext("isCreatingDeal");
 
-  const initNewDeal = () =>
-    unstable_batchedUpdates(() => {
-      addActiveDeal({ dealMode: newDealMenu.valueNext("dealMode") });
-      goToActiveDeal();
-      setModal(null);
-      updateValue({
-        ...sessionStore.varbInfo("isCreatingDeal"),
-        value: false,
-      });
-    });
-
   React.useEffect(() => {
     if (isCreatingDeal) {
-      initNewDeal();
+      unstable_batchedUpdates(() => {
+        addActiveDeal({ dealMode: newDealMenu.valueNext("dealMode") });
+        setModal(null);
+        goToActiveDeal();
+      });
     }
-  }, [isCreatingDeal]);
+  }, [isCreatingDeal, addActiveDeal, setModal]);
 }
 
 export function useEditDeal() {
-  const sessionStore = useGetterSectionOnlyOne("sessionStore");
-  const dbId = sessionStore.valueNext("dealDbIdToEdit");
-
-  const feStore = useGetterSectionOnlyOne("feStore");
-
   const activateDeal = useAction("activateDeal");
   const goToActiveDeal = useGoToPage("activeDeal");
 
-  const updateValueNoSave = useActionNoSave("updateValue");
-  const endLoading = () =>
-    updateValueNoSave({
-      ...sessionStore.varbInfo("dealDbIdToEdit"),
-      value: "",
-    });
-
-  const editDeal = ({ feId }: { feId: string }) => {
-    unstable_batchedUpdates(() => {
-      activateDeal({ feId });
-      goToActiveDeal();
-      endLoading();
-    });
-  };
-
-  React.useEffect(() => {
+  const sessionStore = useGetterSectionOnlyOne("sessionStore");
+  const dbId = sessionStore.valueNext("dealDbIdToEdit");
+  const feStore = useGetterSectionOnlyOne("feStore");
+  const getFeId = (): string => {
     if (dbId) {
       const deal = feStore.childByDbId({ childName: "dealMain", dbId });
-      editDeal({ feId: deal.feId });
+      return deal.feId;
+    } else {
+      return "";
     }
-  }, [dbId]);
+  };
+  const feId = getFeId();
+  React.useEffect(() => {
+    if (feId) {
+      unstable_batchedUpdates(() => {
+        activateDeal({ feId, finishEditLoading: true });
+        goToActiveDeal();
+      });
+    }
+  }, [feId, activateDeal]);
 }

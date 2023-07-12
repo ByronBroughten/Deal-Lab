@@ -95,15 +95,16 @@ export function OutputSection({
       {!dealIsComplete && (
         <Box
           sx={{
-            paddingY: nativeTheme.s4,
+            paddingTop: nativeTheme.s3,
+            paddingBottom: nativeTheme.s3,
             paddingX: nativeTheme.s5,
             display: "flex",
             justifyContent: "center",
-            fontSize: nativeTheme.fs22,
-            color: nativeTheme.notice.dark,
+            fontSize: nativeTheme.fs18,
+            color: nativeTheme.darkBlue.main,
           }}
         >
-          Deal Incomplete
+          {"(Deal Incomplete)"}
         </Box>
       )}
       <DealOutputListOrDetails

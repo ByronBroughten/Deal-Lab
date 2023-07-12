@@ -8,7 +8,7 @@ export interface InputModalOptions {
   title: React.ReactNode;
   children: React.ReactNode;
   timeSet: number;
-  dealMode: DealMode<"plusMixed">;
+  dealMode?: DealMode<"plusMixed">;
 }
 
 type SetModalOptions = StrictOmit<InputModalOptions, "timeSet">;
@@ -47,16 +47,20 @@ export const useDealModeContextInputModal = () => {
 type Props = { children: React.ReactNode };
 export function InputModalProvider({ children }: Props) {
   const [modalState, setModalState] = React.useState<InputModalState>(null);
-  const setModal: SetModal = (options) => {
-    setModalState(
-      options === null
-        ? options
-        : {
-            ...options,
-            timeSet: timeS.now(),
-          }
-    );
-  };
+
+  const setModal = React.useCallback(
+    (options: SetModalProps) => {
+      setModalState(
+        options === null
+          ? options
+          : {
+              ...options,
+              timeSet: timeS.now(),
+            }
+      );
+    },
+    [setModalState]
+  );
 
   return (
     <InputModalContext.Provider value={{ modalState, setModal }}>

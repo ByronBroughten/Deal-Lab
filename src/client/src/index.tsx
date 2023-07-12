@@ -6,10 +6,10 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-// Make deal tests
-// - Just use one file for this
-// - Identify the specific end-point varbs that you want to test.
-// - Create an easy mechanism for running the tests with different deal modes
+
+// Ask for Marina, Ed, and Kate to give feedback
+
+// Market precision and accuracy with transparency
 
 // * Marketing *
 // - Consult marketing people
@@ -30,7 +30,17 @@ AppRegistry.runApplication("App", {
 // - Get an influencer to showcase it
 // Done with the app unless it makes any money
 
+// "Add Deal" takes a long time.
+// - add something for showing a loading circle for it
+
+// "Edit Deal" takes a pretty long time, too
+// - add something for showing a loading circle for it
+
+// Make sumNums not show zeros
+// - I'd need to fix it at the prop-gathering stage
+
 // Add a loading indicator when "edit" is clicked for deal.
+// Also do it for adding a new deal
 // - dealMenu variable loadingEdit: dbId | ""
 // - when edit is clicked, this variable is switched on
 // - a useEffect triggers the edit command

@@ -1,6 +1,6 @@
 import { Box } from "@mui/system";
 import { Text, View, ViewStyle } from "react-native";
-import { ClipLoader } from "react-spinners";
+import { PulseLoader } from "react-spinners";
 import { constants } from "../../Constants";
 import { dealModeLabels } from "../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
 import {
@@ -21,7 +21,7 @@ import { MuiRow } from "../general/MuiRow";
 import { Row } from "../general/Row";
 import { icons } from "../Icons";
 import { BareStringEditor } from "../inputs/BareStringEditor";
-import { useConfirmationModal } from "../Modals/ConfirmationDialogueProvider";
+import { useConfirmationModal } from "../Modals/ConfirmationModalProvider";
 
 const titleProps = (displayName: string) => ({
   sx: {
@@ -97,14 +97,12 @@ export function SavedDeal({
   const deleteDeal = useActionWithProps("removeStoredDeal", { feId });
   const { setModal } = useConfirmationModal();
 
-  const warnAndDelete = async () =>
+  const warnAndDelete = () =>
     setModal({
       title: "Are you sure you want to delete this deal?",
       description: "It will be deleted permanently.",
-      variant: "danger",
-    })
-      .then(deleteDeal)
-      .catch();
+      handleSubmit: deleteDeal,
+    });
 
   const dateNumber = deal.valueNext("dateTimeFirstSaved");
   const dateCreated = new Intl.DateTimeFormat("en-US", {
@@ -216,42 +214,38 @@ export function SavedDeal({
           </MuiRow>
         )}
         <MuiRow>
-          <StyledActionBtn
-            {...{
-              sx: {
-                margin: nativeTheme.s15,
-                marginTop: nativeTheme.s25,
-                marginRight: nativeTheme.s2,
-                width: "64px",
-              },
-
-              ...(loadingEdit
-                ? {
-                    middle: (
-                      <ClipLoader
-                        {...{
-                          loading: true,
-                          color: nativeTheme.light,
-                          size: 22,
-                        }}
-                      />
+          {loadingEdit && (
+            <PulseLoader
+              {...{
+                loading: true,
+                color: nativeTheme.darkBlue.main,
+                size: 15, //22
+                style: { width: "64px" },
+              }}
+            />
+          )}
+          {!loadingEdit && (
+            <StyledActionBtn
+              {...{
+                sx: {
+                  margin: nativeTheme.s15,
+                  marginTop: nativeTheme.s25,
+                  marginRight: nativeTheme.s2,
+                  width: "64px",
+                },
+                left: icons.edit({ size: 20 }),
+                onClick: setCreatingDeal,
+                middle: "Edit",
+                ...(isInactive && {
+                  showAsDisabled: true,
+                  onClick: () =>
+                    showToastInfo(
+                      `To edit any deals other than your ${constants.basicStorageLimit} newest ones, upgrade to pro.`
                     ),
-                  }
-                : {
-                    left: icons.edit({ size: 20 }),
-                    onClick: setCreatingDeal,
-                    middle: "Edit",
-                  }),
-
-              ...(isInactive && {
-                showAsDisabled: true,
-                onClick: () =>
-                  showToastInfo(
-                    `To edit any deals other than your ${constants.basicStorageLimit} newest ones, upgrade to pro.`
-                  ),
-              }),
-            }}
-          />
+                }),
+              }}
+            />
+          )}
           <StyledActionBtn
             {...{
               sx: {

@@ -164,7 +164,7 @@ export class SolverSections extends SolverSectionsBase {
     const defaultMainPack = defaultMaker.makeSectionPack("main");
     const solver = this.initSolverFromMainPack(defaultMainPack);
     const { feId } = solver.onlyChild("feStore").youngestChild("dealMain").get;
-    solver.solverSections.activateDealAndSolve(feId);
+    solver.solverSections.activateDealAndSolve({ feId });
     return solver.solverSections;
   }
 
@@ -210,7 +210,10 @@ export class SolverSections extends SolverSectionsBase {
     newDeal.basicSolvePrepper.updateValues({ dealMode });
     property.basicSolvePrepper.updateValues({ propertyMode: dealMode });
 
-    this.activateDealAndSolve(newDeal.get.feId);
+    const sessionStore = this.oneAndOnly("sessionStore");
+    sessionStore.updateValues({ isCreatingDeal: false });
+
+    this.activateDealAndSolve({ feId: newDeal.get.feId });
   }
   get activeDealSystem(): SolverSection<"dealSystem"> {
     const main = this.oneAndOnly("main");
@@ -328,8 +331,20 @@ export class SolverSections extends SolverSectionsBase {
     const storeId = StoreId.make("dealCompareMenu", compareMenu.get.feId);
     this.feStore.addChangeToSave(storeId, { changeName: "update" });
   }
-  activateDealAndSolve(feId: string): void {
+  activateDealAndSolve({
+    feId,
+    finishEditLoading,
+  }: {
+    feId: string;
+    finishEditLoading?: boolean;
+  }): void {
     this.prepperSections.activateDeal(feId);
+
+    if (finishEditLoading) {
+      const session = this.prepperSections.oneAndOnly("sessionStore");
+      session.updateValues({ dealDbIdToEdit: "" });
+    }
+
     this.prepperSections.addAppWideMissingOutEntities();
     this.solve();
   }

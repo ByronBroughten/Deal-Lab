@@ -1,6 +1,7 @@
 import { unstable_batchedUpdates } from "react-dom";
 import { nativeTheme } from "../theme/nativeTheme";
-import { ConfirmationDialog } from "./Modals/ConfirmationDialogue";
+import { ConfirmationModal } from "./Modals/ConfirmationModal";
+import { useConfirmationModal } from "./Modals/ConfirmationModalProvider";
 import { InfoModal } from "./Modals/InfoModal";
 import { useInfoModal } from "./Modals/InfoModalProvider";
 import { InputModal } from "./Modals/InputModal";
@@ -12,12 +13,13 @@ export function useCloseAllModals() {
   const inputModal = useInputModal();
   const infoModal = useInfoModal();
   const varbModal = useVarbSelectModal();
-  // const confirm = useConfirmationModal();
+  const confirmationModal = useConfirmationModal();
   return () => {
     unstable_batchedUpdates(() => {
       inputModal.setModal(null);
       infoModal.setModal(null);
       varbModal.setModal(null);
+      confirmationModal.setModal(null);
     });
   };
 }
@@ -43,7 +45,7 @@ function OtherModals({ doBr }: Props) {
     <>
       <InfoModal {...props} />
       <VarbSelectorModal {...props} />
-      <ConfirmationDialog {...props} />
+      <ConfirmationModal {...props} />
     </>
   );
 }

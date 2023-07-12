@@ -8,7 +8,7 @@ import { useGetterSection } from "../../../../../sharedWithServer/stateClassHook
 import { nativeTheme } from "../../../../../theme/nativeTheme";
 import { DropdownBtnWrapper } from "../../../../general/DropdownBtnWrapper";
 import { MaterialStringEditor } from "../../../../inputs/MaterialStringEditor";
-import { useConfirmationModal } from "../../../../Modals/ConfirmationDialogueProvider";
+import { useConfirmationModal } from "../../../../Modals/ConfirmationModalProvider";
 import { SectionBtn } from "../../../SectionBtn";
 import { StyledActionBtn } from "../StyledActionBtn";
 
@@ -86,13 +86,7 @@ export function ActionSaveAsNewBtn({ btnProps, ...feInfo }: Props) {
                             description:
                               "Would you like to overwrite ALL of them?",
                           };
-                    setModal({
-                      variant: "danger",
-                      catchOnCancel: true,
-                      ...options,
-                    })
-                      .then(doSave)
-                      .catch();
+                    setModal({ ...options, handleSubmit: doSave });
                   }
                 },
               }}

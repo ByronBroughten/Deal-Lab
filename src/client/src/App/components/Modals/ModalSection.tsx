@@ -14,6 +14,7 @@ export interface ModalSectionProps extends ModalWrapperProps {
   title: React.ReactNode;
   modalWrapperProps?: { sx?: SxProps };
   modalSectionProps?: { sx?: SxProps };
+  titleSx?: SxProps;
 }
 
 export function ModalSection({
@@ -24,6 +25,7 @@ export function ModalSection({
   show,
   modalWrapperProps,
   modalSectionProps,
+  titleSx,
 }: ModalSectionProps) {
   return (
     <ModalWrapper {...{ show, ...modalWrapperProps }} className={className}>
@@ -37,7 +39,7 @@ export function ModalSection({
             }}
           >
             <SectionTitleRow
-              leftSide={<ChunkTitle children={title} />}
+              leftSide={<ChunkTitle sx={titleSx} children={title} />}
               rightSide={
                 <PlainIconBtn
                   sx={{ ml: nativeTheme.s3 }}

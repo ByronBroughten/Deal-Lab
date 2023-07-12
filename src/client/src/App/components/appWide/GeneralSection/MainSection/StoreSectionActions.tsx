@@ -5,7 +5,7 @@ import { SectionNameByType } from "../../../../sharedWithServer/SectionsMeta/Sec
 import { useActionWithProps } from "../../../../sharedWithServer/stateClassHooks/useAction";
 import theme from "../../../../theme/Theme";
 import { useMakeGoToPage } from "../../../customHooks/useGoToPage";
-import { useConfirmationModal } from "../../../Modals/ConfirmationDialogueProvider";
+import { useConfirmationModal } from "../../../Modals/ConfirmationModalProvider";
 import { ListRouteName } from "../../../UserListEditorPage/UserComponentClosed";
 import { ActionLoadBtn } from "./ActionBtns/ActionLoadBtn";
 import { ActionMenuProps } from "./ActionBtns/ActionMenuTypes";
@@ -35,10 +35,8 @@ export function StoreSectionActions<
     setModal({
       title: "Are you sure you want to reset this section to default?",
       description: "If yes, you will lose all the changes made to it.",
-      variant: "danger",
-    })
-      .then(resetSelfToDefault)
-      .catch();
+      handleSubmit: resetSelfToDefault,
+    });
 
   return (
     <Styled {...{ className }}>

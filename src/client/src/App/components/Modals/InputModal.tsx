@@ -1,4 +1,5 @@
 import React from "react";
+import { DealMode } from "../../sharedWithServer/SectionsMeta/values/StateValue/dealMode";
 import { timeS } from "../../sharedWithServer/utils/timeS";
 import { DealModeProvider } from "../customContexts/dealModeContext";
 import {
@@ -8,7 +9,9 @@ import {
 } from "./InputModalProvider";
 import { ModalSection } from "./ModalSection";
 
-function getInputModalOptions(modalState: InputModalState): InputModalOptions {
+function getInputModalOptions(
+  modalState: InputModalState
+): InputModalOptions & { dealMode: DealMode<"plusMixed"> } {
   return {
     title: "",
     children: null,

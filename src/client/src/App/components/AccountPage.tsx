@@ -4,10 +4,6 @@ import { unstable_batchedUpdates } from "react-dom";
 import { View } from "react-native";
 import { FeRouteName } from "../Constants/feRoutes";
 import {
-  useAddDeal,
-  useEditDeal,
-} from "../sharedWithServer/stateClassHooks/useLoading";
-import {
   showDealLimitReachedMessage,
   useIsAtDealLimit,
 } from "../sharedWithServer/stateClassHooks/useStorageLimitReached";
@@ -22,14 +18,11 @@ import { MuiRow } from "./general/MuiRow";
 import { Row } from "./general/Row";
 import { MuiBtnPropsNext } from "./general/StandardProps";
 import { icons } from "./Icons";
-import { useDealModeContextInputModal } from "./Modals/InputModalProvider";
+import { useInputModal } from "./Modals/InputModalProvider";
 
 const iconSize = 40;
 export function AccountPage() {
-  useAddDeal();
-  useEditDeal();
-
-  const { setModal } = useDealModeContextInputModal();
+  const { setModal } = useInputModal();
   const isAtDealLimit = useIsAtDealLimit();
   const openAddDeal = () => {
     if (isAtDealLimit) {

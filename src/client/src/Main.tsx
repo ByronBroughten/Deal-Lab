@@ -17,6 +17,7 @@ import { feRoutes } from "./App/Constants/feRoutes";
 import { useSubscriptions } from "./App/modules/customHooks/useSubscriptions";
 import { useControlUserData } from "./App/modules/SectionActors/UserDataActor";
 import { useAutoSave } from "./App/sharedWithServer/stateClassHooks/useAutoSave";
+import { useEditDeal } from "./App/sharedWithServer/stateClassHooks/useLoading";
 import { nativeTheme } from "./App/theme/nativeTheme";
 import { LoginSuccess } from "./LoginSuccess";
 import { PrivacyPolicyPage } from "./PrivacyPolicyPage";
@@ -26,6 +27,7 @@ export function Main() {
   useControlUserData();
   useSubscriptions();
   useAutoSave();
+  useEditDeal();
   return (
     <Styled className="App-root">
       <Routes>
