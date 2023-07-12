@@ -6,10 +6,16 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
+// Create a custom confirmation dialogue.
+// It's state has "doSubmit" and "doCancel"
+
+// Why does it have async bullshit?
 
 // Ask for Marina, Ed, and Kate to give feedback
 
 // Market precision and accuracy with transparency
+
+// Take screenshots
 
 // * Marketing *
 // - Consult marketing people
