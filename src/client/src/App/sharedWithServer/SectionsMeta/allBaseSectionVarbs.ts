@@ -430,6 +430,7 @@ export function makeAllBaseSectionVarbs() {
           "twoPercentArv",
           "onePercentArvPlusSqft",
           "onePercentArvSqftAverage",
+          "threeHundred",
           "threeHundredPerUnit",
           "threeHundredPerUnitTimesTwelve",
         ] as const,
