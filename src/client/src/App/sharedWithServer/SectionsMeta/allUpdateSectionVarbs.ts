@@ -156,7 +156,9 @@ function makeAllUpdateSections() {
               sameAsHoldingPhase: updateBasicsS.loadByVarbPathName(
                 "utilitiesOngoingMonthly"
               ),
-              threeHundredPerUnit: updateBasics("threeHundredPerUnit"),
+              threeHundredPerUnit: updateBasicsS.loadByVarbPathName(
+                "threeHundredPerUnit"
+              ),
               valueDollarsPeriodicEditor: updateBasicsS.loadFromLocal(
                 "valueDollarsPeriodicEditor"
               ),
@@ -176,7 +178,7 @@ function makeAllUpdateSections() {
               sameAsHoldingPhase: updateBasicsS.loadByVarbPathName(
                 "utilitiesOngoingYearly"
               ),
-              threeHundredPerUnit: updateBasics(
+              threeHundredPerUnit: updateBasicsS.loadByVarbPathName(
                 "threeHundredPerUnitTimesTwelve"
               ),
               valueDollarsPeriodicEditor: updateBasicsS.loadFromLocal(

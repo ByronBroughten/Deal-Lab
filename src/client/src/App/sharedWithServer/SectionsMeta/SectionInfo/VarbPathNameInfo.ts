@@ -34,6 +34,8 @@ const allVarbPathParams = {
     "onePercentArvSqftAverage",
     "onePercentPricePlusSqft",
     "onePercentPriceSqftAverage",
+    "threeHundredPerUnit",
+    "threeHundredPerUnitTimesTwelve",
     ...targetNames("fivePercentRent", "periodic"),
     ...targetNames("tenPercentRent", "periodic"),
   ]),

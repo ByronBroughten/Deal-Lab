@@ -29,7 +29,7 @@ export function ActiveDealMain() {
       <BackgroundContainer>
         <PageTitle
           sx={{ marginTop: nativeTheme.s35 }}
-          text={`${dealModeLabels[dealMode]} Deal`}
+          text={`${dealModeLabels[dealMode]}`}
         />
         <Row
           style={{

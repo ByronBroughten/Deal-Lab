@@ -29,6 +29,7 @@ export function PropertyOngoingCosts({ feId }: FeIdProp) {
         />
         <UtilityValue
           propertyMode={property.valueNext("propertyMode")}
+          periodicMode={"ongoing"}
           feId={property.onlyChildFeId("utilityOngoing")}
         />
         <CapExValue feId={property.onlyChildFeId("capExValueOngoing")} />

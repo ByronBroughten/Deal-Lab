@@ -1,15 +1,26 @@
 import { DealMode } from "../../../../../../../sharedWithServer/SectionsMeta/values/StateValue/dealMode";
+import { PeriodicMode } from "../../../../../../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
 import { useGetterSection } from "../../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { SelectAndItemizeEditor } from "../../../../../../appWide/SelectAndItemizeEditor";
 import { NumObjEntityEditor } from "../../../../../../inputs/NumObjEntityEditor";
 import { ListEditorOngoing } from "../../ValueShared/ListEditorOngoing";
 import { MuiSelectItems } from "./../../../../../../appWide/MuiSelect";
 
-function getItems(mode: DealMode): MuiSelectItems<"utilityValueSource"> {
-  if (mode === "homeBuyer") {
+function getItems(
+  dealMode: DealMode,
+  periodicMode: PeriodicMode
+): MuiSelectItems<"utilityValueSource"> {
+  if (dealMode === "homeBuyer") {
     return [
       ["zero", "Choose method"],
-      ["threeHundredPerUnit", "Three hundred"],
+      ["threeHundredPerUnit", "$300 per month"],
+      ["valueDollarsPeriodicEditor", "Enter amount"],
+      ["listTotal", "Itemize"],
+    ];
+  } else if (periodicMode === "holding") {
+    return [
+      ["zero", "None"],
+      ["threeHundredPerUnit", "$300 per unit per month"],
       ["valueDollarsPeriodicEditor", "Enter amount"],
       ["listTotal", "Itemize"],
     ];
@@ -23,8 +34,12 @@ function getItems(mode: DealMode): MuiSelectItems<"utilityValueSource"> {
   }
 }
 
-type Props = { feId: string; propertyMode: DealMode };
-export function UtilityValue({ feId, propertyMode }: Props) {
+type Props = {
+  feId: string;
+  propertyMode: DealMode;
+  periodicMode: PeriodicMode;
+};
+export function UtilityValue({ feId, propertyMode, periodicMode }: Props) {
   const feInfo = { sectionName: "utilityValue", feId } as const;
   const utilityValue = useGetterSection(feInfo);
   const valueSourceName = utilityValue.valueNext("valueSourceName");
@@ -41,7 +56,7 @@ export function UtilityValue({ feId, propertyMode }: Props) {
           ...feInfo,
           varbName: "valueSourceName",
         },
-        items: getItems(propertyMode),
+        items: getItems(propertyMode, periodicMode),
 
         ...(valueSourceName === "valueDollarsPeriodicEditor" && {
           makeEditor: (props) => (

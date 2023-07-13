@@ -1,7 +1,7 @@
 import { Arr } from "../../../utils/Arr";
 import { ValidationError } from "../../../utils/Error";
 import { Obj } from "../../../utils/Obj";
-import { dealModes, getDealModes } from "./dealMode";
+import { dealModes, getDealModes, isDealMode } from "./dealMode";
 import { financingModes } from "./financingMode";
 
 const valueSources = {
@@ -157,9 +157,12 @@ export function getFinancingTitle(
   dealMode: UnionValue<"dealMode">,
   financingMode: UnionValue<"financingMode">
 ): string {
-  if (dealMode !== "brrrr") {
+  if (!isDealMode("hasHolding")) {
     return "Financing";
   } else {
     return financingModeLabels[financingMode];
   }
 }
+
+const periodicMode = ["holding", "ongoing"] as const;
+export type PeriodicMode = (typeof periodicMode)[number];

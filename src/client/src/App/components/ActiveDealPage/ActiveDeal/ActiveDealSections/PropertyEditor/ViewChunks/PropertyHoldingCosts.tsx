@@ -33,6 +33,7 @@ export function PropertyHoldingCosts({ feId }: FeIdProp) {
         />
         <UtilityValue
           propertyMode={property.valueNext("propertyMode")}
+          periodicMode={"holding"}
           feId={property.onlyChildFeId("utilityHolding")}
         />
         <MiscHoldingCost feId={property.onlyChildFeId("miscHoldingCost")} />

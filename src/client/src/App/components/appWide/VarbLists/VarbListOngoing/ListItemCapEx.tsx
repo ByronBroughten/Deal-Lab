@@ -78,10 +78,10 @@ type Props = { feId: string };
 export function ListItemCapEx({ feId }: Props) {
   const section = useGetterSection({ sectionName: "capExItem", feId });
   const valueVarbName = section.activeSwitchTargetName(
-    "value",
+    "valueDollars",
     "periodic"
-  ) as "valueMonthly";
-  const valueVarb = section.varb(valueVarbName);
+  ) as "valueDollarsMonthly";
+  const valueVarb = section.varbNext(valueVarbName);
   return (
     <ListItemOngoingMemo
       {...{

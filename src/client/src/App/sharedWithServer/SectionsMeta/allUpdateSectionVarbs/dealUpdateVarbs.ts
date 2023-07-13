@@ -407,7 +407,7 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
       ),
       brrrr: basicsS.equationLR(
         "subtract",
-        propS.onlyChild("refiFinancing", "loanTotalDollars"),
+        propS.onlyChild("property", "afterRepairValue"),
         propS.local("preFinanceOneTimeExpenses")
       ),
     }),

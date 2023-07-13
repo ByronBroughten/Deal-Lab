@@ -413,14 +413,11 @@ export function makeAllBaseSectionVarbs() {
     calculatedVarbs: varbs({
       ...baseVarbs(
         "numObj",
-        ["pricePerUnit", "pricePerSqft", "arvPerSqft", "rehabPerSqft"] as const,
-        dollars
-      ),
-      ...baseVarbs(
-        "numObj",
         [
-          "two",
-          "twelve",
+          "pricePerUnit",
+          "pricePerSqft",
+          "arvPerSqft",
+          "rehabPerSqft",
           "onePercentPrice",
           "twoPercentPrice",
           "fivePercentRentMonthly",
@@ -433,9 +430,12 @@ export function makeAllBaseSectionVarbs() {
           "twoPercentArv",
           "onePercentArvPlusSqft",
           "onePercentArvSqftAverage",
+          "threeHundredPerUnit",
+          "threeHundredPerUnitTimesTwelve",
         ] as const,
-        percent
+        dollars
       ),
+      ...baseVarbs("numObj", ["two", "twelve"] as const),
       ...baseVarbs("boolean", ["propertyExists", "mgmtExists"] as const),
     }),
     feStore: varbs({

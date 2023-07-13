@@ -1,4 +1,3 @@
-import { SimpleSectionVarbName } from "../../../../../../sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
 import { FeVarbInfo } from "../../../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { useGetterSectionsProps } from "../../../../../../sharedWithServer/stateClassHooks/useGetterSectionsProps";
 import { useSetterVarb } from "../../../../../../sharedWithServer/stateClassHooks/useSetterVarb";
@@ -8,12 +7,9 @@ import {
   DealDetailRowDropDown,
   DealDetailRowEndPoint,
 } from "./DealDetailRowStyled";
-import { detailsConfig } from "./dealDetailsConfig";
 
 function getDetailDisplayName(varb: GetterVarb) {
-  const name = varb.sectionDotVarbName as SimpleSectionVarbName;
-  const title = detailsConfig[name as keyof typeof detailsConfig].detailTitle;
-  return title ?? varb.inputLabel;
+  return varb.variableLabel;
 }
 
 type Props = { varbInfo: FeVarbInfo; level: number };

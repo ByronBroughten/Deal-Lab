@@ -201,6 +201,18 @@ export const allDisplaySectionVarbs = {
     valueDollars: varb(relVarbInfoS.local("displayName")),
     valueDollarsEditor: varb(relVarbInfoS.local("displayName")),
   }),
+  ...displaySectionVarbsProp("miscPeriodicValue", {
+    ...editorDisplayGroup("periodicInput", "valueDollars", "Misc"),
+  }),
+  ...displaySectionVarbsProp("capExValue", {
+    ...editorDisplayGroup("periodicInput", "valueDollars", "CapEx"),
+  }),
+  ...displaySectionVarbsProp("maintenanceValue", {
+    ...editorDisplayGroup("periodicInput", "valueDollars", "Maintenance"),
+  }),
+  ...displaySectionVarbsProp("utilityValue", {
+    ...editorDisplayGroup("periodicInput", "valueDollars", "Utilities"),
+  }),
   ...displaySectionVarbsProp(
     "periodicItem",
     editorDisplayGroup(

@@ -23,8 +23,11 @@ const ListItemOngoingMemo = React.memo(function ListItemOngoingMemo({
 type Props = { feId: string };
 export function ListItemOngoing({ feId }: Props) {
   const section = useGetterSection({ sectionName: "periodicItem", feId });
-  const valueVarbName = section.activeSwitchTargetName("value", "periodic");
-  const valueVarb = section.varb(valueVarbName);
+  const valueVarbName = section.activeSwitchTargetName(
+    "valueDollars",
+    "periodic"
+  );
+  const valueVarb = section.varbNext(valueVarbName);
   return (
     <ListItemOngoingMemo
       {...{

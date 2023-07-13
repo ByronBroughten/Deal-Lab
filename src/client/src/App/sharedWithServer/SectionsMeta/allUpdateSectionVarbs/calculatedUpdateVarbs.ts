@@ -113,6 +113,23 @@ export function calculatedUpdateVarbs(): UpdateSectionVarbs<"calculatedVarbs"> {
         propS.local("two")
       )
     ),
+    threeHundred: updateVarb("numObj", updateBasics("solvableText300")),
+    threeHundredPerUnit: updateVarb(
+      "numObj",
+      basics.equationLR(
+        "multiply",
+        propS.local("threeHundred"),
+        propS.varbPathName("numUnits")
+      )
+    ),
+    threeHundredPerUnitTimesTwelve: updateVarb(
+      "numObj",
+      basics.equationLR(
+        "multiply",
+        propS.local("threeHundredPerUnit"),
+        propS.local("twelve")
+      )
+    ),
     propertyExists: updateVarb("boolean", {
       initValue: false,
       updateFnName: "varbExists",
