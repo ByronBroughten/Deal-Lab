@@ -1,8 +1,8 @@
+import { Box } from "@mui/material";
 import styled from "styled-components";
 import { FeSectionInfo } from "../../../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { SectionNameByType } from "../../../../../../sharedWithServer/SectionsMeta/SectionNameByType";
 import { nativeTheme } from "../../../../../../theme/nativeTheme";
-import theme from "../../../../../../theme/Theme";
 import { FormSection } from "../../../../../appWide/FormSection";
 import { VarbListGenericMenuType } from "../../../../../appWide/ListGroup/ListGroupShared/VarbListGeneric";
 import { VarbListMenuDual } from "../../../../../appWide/ListGroup/ListGroupShared/VarbListMenuDual";
@@ -27,7 +27,15 @@ export function ValueListGeneral<
   SN extends SectionNameByType<"varbListAllowed">
 >({ className, menuType, table, menuDisplayNames, ...rest }: Props<SN>) {
   return (
-    <Styled className={`ValueListGeneral-root ${className ?? ""}`}>
+    <Styled
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        flex: 1,
+      }}
+      className={`ValueListGeneral-root ${className ?? ""}`}
+    >
       <VarbListMenuDual
         {...{
           className: "ValueListGeneral-menu",
@@ -35,42 +43,24 @@ export function ValueListGeneral<
           ...rest,
         }}
       />
-      <FormSection className="ValueListGeneral-itemSection">
+      <FormSection sx={{ flexDirection: "column" }}>
         {menuDisplayNames && (
           <CommonItemsList
             {...{
-              className: "ValueListGeneral-commonItemsList",
+              sx: { marginBottom: nativeTheme.s4 },
               menuDisplayNames,
               ...rest,
             }}
           />
         )}
-
         {table}
       </FormSection>
     </Styled>
   );
 }
 
-const Styled = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: "center";
-  flex: 1;
-  .ValueListGeneral-itemSection {
-    flex-direction: column;
-  }
-  .ValueListGeneral-commonItemsList {
-    margin-bottom: ${theme.s4};
-  }
-
+const Styled = styled(Box)`
   .ValueListGeneral-menu {
     padding-bottom: ${nativeTheme.s3};
-  }
-  .ValueListGeneral-checkBoxList {
-    padding-top: ${theme.s2};
-  }
-  .ValueListGeneral-table {
-    margin-top: ${theme.s4};
   }
 `;

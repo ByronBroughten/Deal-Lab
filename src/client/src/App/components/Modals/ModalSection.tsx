@@ -33,9 +33,23 @@ export function ModalSection({
         <div>
           <MainSection
             {...{
-              className: "ModalSection-mainSection",
               ...modalSectionProps,
-              sx: [{ minWidth: 250 }, ...arrSx(modalSectionProps?.sx)],
+              sx: [
+                {
+                  minWidth: 250,
+                  maxHeight: "95vh",
+                  overflow: "auto",
+                  "&::-webkit-scrollbar": {},
+                  "&::-webkit-scrollbar-track": {
+                    backgroundColor: nativeTheme["gray-300"],
+                  },
+                  "&::-webkit-scrollbar-thumb": {
+                    backgroundColor: nativeTheme["gray-500"],
+                    border: `1px solid ${nativeTheme["gray-300"]}`,
+                  },
+                },
+                ...arrSx(modalSectionProps?.sx),
+              ],
             }}
           >
             <SectionTitleRow

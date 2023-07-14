@@ -82,6 +82,18 @@ const ccs = {
       justify-content: space-between;
     `,
   },
+  smallScrollBar: css`
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background-color: ${theme["gray-300"]};
+    }
+    ::-webkit-scrollbar-thumb {
+      background-color: ${theme["gray-500"]};
+      border: 1px solid ${theme["gray-300"]};
+    }
+  `,
   dropdown: {
     scrollbar: css`
       ::-webkit-scrollbar {

@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import { Box, SxProps } from "@mui/material";
 import { nativeTheme } from "../../../../../../theme/nativeTheme";
 import { CheckboxList } from "./CheckboxList";
 
@@ -9,21 +9,23 @@ export type CommonItemsListProps = {
   menuDisplayNames: readonly string[];
   itemDisplayNames?: readonly string[];
   onChange: AddWithDisplayName;
+  sx?: SxProps;
 };
 export function CommonItemsList({
   itemDisplayNames = [],
   menuDisplayNames,
   onChange,
   className,
+  sx,
 }: CommonItemsListProps) {
   const unusedDisplayNames = menuDisplayNames.filter(
     (name) => !itemDisplayNames.includes(name)
   );
   return (
-    <Styled className={`CommonItemsList-root ${className ?? ""}`}>
+    <Box sx={sx} className={className}>
       <CheckboxList
         {...{
-          className: "CommonItemsList-checkBoxList",
+          sx: { marginTop: nativeTheme.s2 },
           checkboxProps: unusedDisplayNames.map((displayName) => ({
             checked: false,
             onChange: () => onChange(displayName),
@@ -32,11 +34,6 @@ export function CommonItemsList({
           })),
         }}
       />
-    </Styled>
+    </Box>
   );
 }
-const Styled = styled.div`
-  .CommonItemsList-checkBoxList {
-    margin-top: ${nativeTheme.s2};
-  }
-`;

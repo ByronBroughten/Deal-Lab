@@ -65,6 +65,16 @@ export const nativeTheme = {
       color: themeColors["gray-500"],
     },
   },
+  smallXScrollbar: {
+    "&::-webkit-scrollbar": {},
+    "&::-webkit-scrollbar-track": {
+      backgroundColor: themeColors["gray-300"],
+    },
+    "&::-webkit-scrollbar-thumb": {
+      backgroundColor: themeColors["gray-500"],
+      border: `1px solid ${themeColors["gray-300"]}`,
+    },
+  },
   editorMargins: {
     my: unitSizes.s4,
     mr: unitSizes.s45,
