@@ -112,6 +112,10 @@ export class SolverFeStore extends SolverSectionBase<"feStore"> {
 
     this.solver.loadSelfAndSolve(userData.feStore);
 
+    this.appWideSolvePrepSections.applyVariablesToDealSystems();
+    this.appWideSolvePrepSections.addAppWideMissingOutEntities();
+    this.solve();
+
     const compareMenu = this.solver.get.onlyChild("dealCompareMenu");
     for (const comparedDeal of compareMenu.children("comparedDeal")) {
       this.solverSections.addDealSystemToCompare(comparedDeal.dbId);

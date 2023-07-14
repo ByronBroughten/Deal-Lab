@@ -16,7 +16,7 @@ const userVarbCapExNames = {
   laundry: "Laundry",
   flooring: "Flooring",
   structure: "Structure",
-  cabinetsCounters: "Cabinets/counters",
+  cabinetsCounters: "Cabinets & counters",
   garageDoor: "Garage door",
   landscaping: "Landscaping",
 } as const;
@@ -35,7 +35,7 @@ export const userVarbLifespans = {
   laundry: ["Laundry", numObj(12)],
   flooring: ["Flooring", numObj(20)],
   structure: ["Structure", numObj(50)],
-  cabinetsCounters: ["Cabinets/counters", numObj(20)],
+  cabinetsCounters: ["Cabinets & counters", numObj(20)],
   garageDoor: ["Garage door", numObj(10)],
   landscaping: ["Landscaping", numObj(10)],
 } as const;

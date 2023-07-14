@@ -301,18 +301,6 @@ export class SolverSections extends SolverSectionsBase {
     const dealCount = dealSystems.length;
     if (dealCount === 1) {
       menu.updateValues({ dealMode: deal.valueNext("dealMode") });
-    } else if (dealCount > 1) {
-      const dealMode = menu.value("dealMode");
-      if (dealMode !== "mixed") {
-        const systemDeals = dealSystems.map((system) =>
-          system.onlyChild("deal")
-        );
-        for (const systemDeal of systemDeals) {
-          if (systemDeal.value("dealMode") !== deal.valueNext("dealMode")) {
-            menu.updateValues({ dealMode: "mixed" });
-          }
-        }
-      }
     }
   }
   removeDealFromDealCompare(feId: string) {

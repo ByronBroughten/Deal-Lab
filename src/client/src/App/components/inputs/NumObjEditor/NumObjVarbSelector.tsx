@@ -33,7 +33,7 @@ export const NumObjVarbSelector = React.memo(
     (
       {
         setEditorState,
-        varbPathNames = ["purchasePrice", "numUnits"],
+        varbPathNames = ["purchasePrice", "numUnits", "sqft"],
         ...feInfo
       }: Props,
       ref: PopperRef

@@ -80,7 +80,10 @@ type NeededPropertyVarbs = CheckNeededPropertyVarbs<{
   homeBuyer: SharedSections &
     OngoingSections & {
       dealMode: "homeBuyer";
-      property: CommonProperty & { numBedroomsEditor: NumObj };
+      property: CommonProperty & {
+        numBedroomsEditor: NumObj;
+        likability: NumObj;
+      };
     };
   buyAndHold: SharedSections &
     OngoingSections & {

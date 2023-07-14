@@ -38,6 +38,7 @@ function exampleHomebuyerProperty(): SectionPack<"property"> {
       state: "MN",
       zipCode: "55411",
       displayName: "",
+      likability: numObj(8),
       numBedroomsEditor: numObj(3),
       purchasePrice: numObj(230000),
       sqft: numObj(2500),

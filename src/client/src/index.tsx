@@ -6,16 +6,19 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-// Create a custom confirmation dialogue.
-// It's state has "doSubmit" and "doCancel"
+// Example homebuyer had its displayed average non-principal costs waaaay lower than they should have been.
+// So did Example buyAndHold, with ROI
 
-// Why does it have async bullshit?
+// How is valueAddProfit really calculated for BRRRR?
 
-// Ask for Marina, Ed, and Kate to give feedback
+// Fix how the values selected for dealCompare are selected—don't do mixed
 
-// Market precision and accuracy with transparency
+// - Market precision and accuracy with transparency
+// - Find out what your expenses will *really* be
 
 // Take screenshots
+
+// Ask for Marina, Ed, and Kate to give feedback
 
 // * Marketing *
 // - Consult marketing people
@@ -44,6 +47,14 @@ AppRegistry.runApplication("App", {
 
 // Make sumNums not show zeros
 // - I'd need to fix it at the prop-gathering stage
+
+// - Closing costs should have "zero" option
+// - Cost overrun should have 10% option
+// - Split BRRRR into Holding Phase and Ongoing Phase. Put rent in Ongoing Phase
+// - Maybe remove "Turn Key" option from Fix & Flip and BRRRR
+
+// - BRRRR should show "holding costs" on property
+// - Show BRRRR ROI and CoC ROI on Saved Deals
 
 // Add a loading indicator when "edit" is clicked for deal.
 // Also do it for adding a new deal

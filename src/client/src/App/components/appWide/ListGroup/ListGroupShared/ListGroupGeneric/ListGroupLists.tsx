@@ -19,13 +19,15 @@ type Props = {
 export function ListGroupLists({ feIds, makeListNode, addList }: Props) {
   return (
     <Styled className="ListGroup-lists">
-      {feIds.map((feId) => {
-        return makeListNode({
-          feId,
-          key: feId,
-          className: "ListGroup-list",
-        });
-      })}
+      {feIds.map((feId) => (
+        <div key={feId}>
+          {makeListNode({
+            feId,
+            key: feId,
+            className: "ListGroup-list",
+          })}
+        </div>
+      ))}
       <HollowBtn
         className="ListGroup-addListBtn ListGroup-list"
         onClick={addList}

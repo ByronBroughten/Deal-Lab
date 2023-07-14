@@ -69,7 +69,7 @@ function validateCustomValueInEntity(value: any): ValueInEntityCustom {
 function validateValueInEntity(value: any): ValueInEntity {
   if ((value as ValueInEntity).infoType === "varbPathName") {
     return validateFixedValueInEntity(value);
-  } else if ((value as ValueInEntity).infoType === "varbPathName") {
+  } else if ((value as ValueInEntity).infoType === "varbPathDbId") {
     return validateCustomValueInEntity(value);
   } else {
     throw new Error(`value.infoType "${value.infoType}" is not valid.`);
