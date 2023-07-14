@@ -6,6 +6,7 @@ import { timeS } from "../../utils/timeS";
 import { makeDefaultDealPack } from "../makeDefaultDeal";
 import { example20PercentDownFinancing } from "./example20PercentDownLoan";
 import { exampleDealMgmt } from "./makeExampleMgmt";
+import { exampleAdvancedCapExProps } from "./makeExampleOngoingListsProps";
 import { makeExampleProperty } from "./makeExampleProperty";
 
 export function exampleDealBuyAndHold(displayName: string) {
@@ -69,8 +70,8 @@ function exampleDealBuyAndHoldProperty(): SectionPack<"property"> {
       ["Garbage", numObjNext("50*", ["numUnits"])],
     ],
     capExValue: {
-      valueSourceName: "fivePercentRent",
-      items: [],
+      valueSourceName: "listTotal",
+      items: exampleAdvancedCapExProps,
     },
     maintenanceValue: {
       valueSourceName: "onePercentArvAndSqft",
