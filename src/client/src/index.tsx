@@ -6,17 +6,7 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-// Example homebuyer had its displayed average non-principal costs waaaay lower than they should have been.
-// So did Example buyAndHold, with ROI
-
 // How is valueAddProfit really calculated for BRRRR?
-
-// Fix how the values selected for dealCompare are selected—don't do mixed
-
-// - Market precision and accuracy with transparency
-// - Find out what your expenses will *really* be
-
-// Take screenshots
 
 // Ask for Marina, Ed, and Kate to give feedback
 
