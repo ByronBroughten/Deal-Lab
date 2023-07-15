@@ -41,7 +41,6 @@ export function FinishBtn({
             border: "none",
             height: "50px",
             width: "100%",
-            marginTop: nativeTheme.s3,
             fontSize: nativeTheme.fs22,
             ...(styleDisabled && nativeTheme.disabledBtn),
           },

@@ -7,7 +7,7 @@ import { useGetterVarbNext } from "../../sharedWithServer/stateClassHooks/useGet
 import { nativeTheme } from "../../theme/nativeTheme";
 import { arrSx } from "../../utils/mui";
 import { MuiRow } from "../general/MuiRow";
-import { useDealModeContextInputModal } from "../Modals/InputModalProvider";
+import { useInputModalWithContext } from "../Modals/InputModalProvider";
 import { EditSectionBtn } from "./EditSectionBtn";
 import { SelectEditor, SelectEditorPropsNext } from "./SelectEditor";
 
@@ -40,7 +40,7 @@ export function SelectAndItemizeEditor<
   const value = varb.value(rest.unionValueName);
   const isItemized = value === itemizeValue;
 
-  const { setModal } = useDealModeContextInputModal();
+  const { setModal } = useInputModalWithContext();
   const openItems = () =>
     setModal({
       title: itemizedModalTitle,

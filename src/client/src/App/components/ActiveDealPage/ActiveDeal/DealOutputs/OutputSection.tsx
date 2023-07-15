@@ -14,7 +14,7 @@ import { StyledActionBtn } from "../../../appWide/GeneralSection/MainSection/Sty
 import { TitleAppend } from "../../../appWide/titleAppend";
 import { LoadedVarbList } from "../../../appWide/VarbLists/LoadedVarbList";
 import { MuiRow } from "../../../general/MuiRow";
-import { useDealModeContextInputModal } from "../../../Modals/InputModalProvider";
+import { useInputModalWithContext } from "../../../Modals/InputModalProvider";
 import { DealSubSectionTitle } from "../DealSubSectionTitle";
 import { DealOutputListOrDetails } from "./OutputSection/DealOutputListOrDetails";
 
@@ -36,7 +36,7 @@ export function OutputSection({
   const { detailsIsOpen, toggleDetails } = useToggleView("details", false);
 
   const listId = outputSection.oneChildFeId(outputListName(dealMode));
-  const { setModal } = useDealModeContextInputModal();
+  const { setModal } = useInputModalWithContext();
   const openEdit = () =>
     setModal({
       title: (

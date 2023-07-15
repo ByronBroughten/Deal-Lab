@@ -107,10 +107,11 @@ export const varbLabels = checkAllVarbLabels({
   }),
   ...prop("maintenanceValue", {
     valueSourceName: text({
-      inputLabel: "Ongoing maintenance",
-      title: "Ongoing Maintenance",
+      inputLabel: "Maintenance",
+      title: "Maintenance",
       info: `Every property needs minor repairs from time to time. Doorknobs break. Oven igniters die. Pipes burst. To account for these and other miscellaneous things, there are a few common methods.\n\nOne is to assume you will spend $1 per property square foot per year. The idea is that the more square feet there is, the more opportunity there is for something to go wrong.\n\nAnother common method is to assume that miscellanious repairs will cost 1% of the property's purchase price (or after repair value) per year. The reasoning is that more expensive properties may generally have more expensive components that require more expensive repairs.\n\nA third method is to just use the average between the first two methods.\n\nThere are probably other, more creative methods out there. By selecting the "custom amount" method, you are free to enter any equation that suits you.`,
     }),
+    ...periodicInput("valueDollars", "Maintenance"),
   }),
   ...prop("costOverrunValue", {
     valueSourceName: text({
@@ -266,10 +267,7 @@ export const varbLabels = checkAllVarbLabels({
     valueSourceName: input("Utilities"),
     ...periodicInput("valueDollars", "Utility costs"),
   }),
-  ...prop("maintenanceValue", {
-    ...periodicInput("valueDollars", "Maintenance costs"),
-    valueSourceName: input("Maintenance"),
-  }),
+
   ...prop("taxesValue", periodicInputAndSource("valueDollars", "Taxes")),
   ...prop(
     "homeInsValue",

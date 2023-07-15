@@ -26,9 +26,9 @@ export function UserComponents() {
               <LabelWithInfo
                 {...{
                   iconProps: { size: nativeTheme.pageInfoDotSize },
-                  label: "Deal Components",
-                  infoTitle: "Components",
-                  infoText: `Here you'll find different types of components that you can create, edit, and use as templates throughout the app. This can reduce data entry by letting you reuse pieces of deals, such as when itemizing costs for things like utilities or CapEx.`,
+                  label: "Component Templates",
+                  infoTitle: "Component Templates",
+                  infoText: `Here you can create and edit templates for different types of deal components that you can then plug in throughout the app. This way you don't have to repetetively input all the costs for things like utilities, Capital Expenses, and whatnot.`,
                 }}
               />
             ),

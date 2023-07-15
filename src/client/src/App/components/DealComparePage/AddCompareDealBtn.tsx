@@ -1,6 +1,6 @@
 import { nativeTheme } from "../../theme/nativeTheme";
 import { HollowBtn } from "../appWide/HollowBtn";
-import { useDealModeContextInputModal } from "../Modals/InputModalProvider";
+import { useInputModalWithContext } from "../Modals/InputModalProvider";
 import { DealCompareDealSelectMenu } from "./DealCompareDealSelectMenu";
 
 interface Props {
@@ -20,7 +20,7 @@ export function AddCompareDealBtn({ dealCount }: Props) {
         borderBottomRightRadius: nativeTheme.subSection.borderRadius,
       };
 
-  const { setModal } = useDealModeContextInputModal();
+  const { setModal } = useInputModalWithContext();
   const openDealMenu = () =>
     setModal({
       title: "Select a deal to compare",

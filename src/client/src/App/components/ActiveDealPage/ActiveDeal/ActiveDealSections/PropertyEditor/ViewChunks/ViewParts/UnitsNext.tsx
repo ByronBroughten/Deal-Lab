@@ -6,13 +6,13 @@ import { StyledActionBtn } from "../../../../../../appWide/GeneralSection/MainSe
 import { LabeledVarbRow } from "../../../../../../appWide/LabeledVarbRow";
 import { MuiRow } from "../../../../../../general/MuiRow";
 import { icons } from "../../../../../../Icons";
-import { useDealModeContextInputModal } from "../../../../../../Modals/InputModalProvider";
+import { useInputModalWithContext } from "../../../../../../Modals/InputModalProvider";
 import { UnitList } from "../Units/UnitList";
 
 export function UnitsNext({ feId }: FeIdProp) {
   const property = useGetterSection({ sectionName: "property", feId });
   const hasUnits = property.childFeIds("unit").length > 0;
-  const { setModal } = useDealModeContextInputModal();
+  const { setModal } = useInputModalWithContext();
   const openUnits = () =>
     setModal({
       title: "Units",

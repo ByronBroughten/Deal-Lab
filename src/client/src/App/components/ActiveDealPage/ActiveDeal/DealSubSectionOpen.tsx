@@ -22,6 +22,7 @@ export function DealSubSectionOpen({ children, finishIsAllowed }: Props) {
             sx={{
               boxShadow: "none",
               border: `1px solid ${nativeTheme["gray-400"]}`,
+              marginTop: nativeTheme.s3,
             }}
             onClick={goToActiveDeal}
             btnText="Finish"

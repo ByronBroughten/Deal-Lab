@@ -1,5 +1,5 @@
-import { AiOutlineArrowRight } from "react-icons/ai";
 import { BiReset } from "react-icons/bi";
+import { HiOutlineTemplate } from "react-icons/hi";
 import styled from "styled-components";
 import { SectionNameByType } from "../../../../sharedWithServer/SectionsMeta/SectionNameByType";
 import { useActionWithProps } from "../../../../sharedWithServer/stateClassHooks/useAction";
@@ -51,8 +51,8 @@ export function StoreSectionActions<
       />
       {routeBtnProps && (
         <StyledActionBtn
-          middle={routeBtnProps.title}
-          left={<AiOutlineArrowRight size={23} />}
+          middle={"Go to templates"}
+          left={<HiOutlineTemplate size={23} />}
           onClick={makeGoToPage(routeBtnProps.routeName)}
         />
       )}

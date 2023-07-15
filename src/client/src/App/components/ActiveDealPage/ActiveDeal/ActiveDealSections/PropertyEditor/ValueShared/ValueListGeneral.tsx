@@ -43,7 +43,7 @@ export function ValueListGeneral<
           ...rest,
         }}
       />
-      <FormSection sx={{ flexDirection: "column" }}>
+      <FormSection sx={{ flexDirection: "column", paddingBottom: 0 }}>
         {menuDisplayNames && (
           <CommonItemsList
             {...{

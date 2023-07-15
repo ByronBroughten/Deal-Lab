@@ -3,6 +3,7 @@ import React from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { arrSx } from "../../utils/mui";
+import { FinishBtn } from "../ActiveDealPage/ActiveDeal/FinishBtn";
 import { MainSection } from "../appWide/GeneralSection/MainSection";
 import { SectionTitleRow } from "../appWide/GeneralSection/MainSection/SectionTitleRow";
 import ChunkTitle from "../general/ChunkTitle";
@@ -62,7 +63,15 @@ export function ModalSection({
                 />
               }
             />
-            <Box sx={{ mt: nativeTheme.s3 }}>{children}</Box>
+            <Box sx={{ mt: nativeTheme.s3, mb: nativeTheme.s3 }}>
+              {children}
+            </Box>
+            <FinishBtn
+              {...{
+                btnText: "Finish",
+                onClick: closeModal,
+              }}
+            />
           </MainSection>
         </div>
       </ClickAwayListener>

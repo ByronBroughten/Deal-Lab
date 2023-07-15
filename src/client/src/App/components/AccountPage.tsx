@@ -60,7 +60,7 @@ export function AccountPage() {
             feRouteName="components"
             text={
               <div style={{ whiteSpace: "pre-line", lineHeight: "26px" }}>
-                {"Deal\nComponents"}
+                {"Component\nTemplates"}
               </div>
             }
             icon={icons.dealComponents({ size: iconSize })}
