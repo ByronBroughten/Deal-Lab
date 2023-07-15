@@ -43,6 +43,7 @@ export function SelectAndItemizeEditor<
   const { setModal } = useInputModalWithContext();
   const openItems = () =>
     setModal({
+      showFinish: true,
       title: itemizedModalTitle,
       children: itemsComponent,
     });

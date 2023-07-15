@@ -11,6 +11,7 @@ export interface InputModalOptions {
   timeSet: number;
   idOfSectionToSave?: string;
   dealMode?: DealMode<"plusMixed">;
+  showFinish?: boolean;
 }
 
 type SetModalOptions = StrictOmit<InputModalOptions, "timeSet">;

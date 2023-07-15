@@ -22,6 +22,7 @@ function getInputModalOptions(
     timeSet: 0,
     idOfSectionToSave: "",
     dealMode: "mixed",
+    showFinish: false,
     ...modalState,
   };
 }

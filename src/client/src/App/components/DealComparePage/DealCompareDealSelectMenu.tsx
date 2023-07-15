@@ -1,3 +1,4 @@
+import { Box } from "@mui/material";
 import { unstable_batchedUpdates } from "react-dom";
 import { View } from "react-native";
 import { useAction } from "../../sharedWithServer/stateClassHooks/useAction";
@@ -59,49 +60,62 @@ export function DealCompareDealSelectMenu({ closeMenu }: Props) {
           borderRadius: nativeTheme.br0,
         }}
       >
-        {filteredDeals.map((deal, idx) => {
-          const displayName = deal.valueNext("displayName").mainText;
-          return (
-            <View
-              key={deal.feId}
-              style={{
-                borderStyle: "solid",
-                borderTopWidth: idx === 0 ? 0 : 1,
-                borderColor: nativeTheme.subSection.borderLines.borderColor,
-                minWidth: 200,
-                padding: 0,
-                flexWrap: "nowrap",
-              }}
-            >
-              <PlainIconBtn
-                left={icons[deal.valueNext("dealMode")]()}
-                middle={displayName || "Untitled"}
-                sx={{
-                  color: nativeTheme.primary.main,
-                  ...(!displayName && { fontStyle: "italic" }),
-                  display: "flex",
-                  fontSize: 16,
-                  flex: 1,
-                  justifyContent: "flex-start",
-                  alignItems: "center",
-                  whiteSpace: "nowrap",
-                  padding: nativeTheme.s1,
-                  paddingLeft: nativeTheme.s3,
-                  paddingRight: nativeTheme.s3,
-                  "&:hover": {
-                    backgroundColor: nativeTheme["gray-400"],
-                  },
+        {filteredDeals.length === 0 && (
+          <Box
+            sx={{
+              padding: nativeTheme.s3,
+              fontSize: nativeTheme.inputLabel.fontSize,
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            {"None"}
+          </Box>
+        )}
+        {filteredDeals.length > 0 &&
+          filteredDeals.map((deal, idx) => {
+            const displayName = deal.valueNext("displayName").mainText;
+            return (
+              <View
+                key={deal.feId}
+                style={{
+                  borderStyle: "solid",
+                  borderTopWidth: idx === 0 ? 0 : 1,
+                  borderColor: nativeTheme.subSection.borderLines.borderColor,
+                  minWidth: 200,
+                  padding: 0,
+                  flexWrap: "nowrap",
                 }}
-                onClick={() => {
-                  unstable_batchedUpdates(() => {
-                    addDealToCompare({ feId: deal.feId });
-                    closeMenu();
-                  });
-                }}
-              />
-            </View>
-          );
-        })}
+              >
+                <PlainIconBtn
+                  left={icons[deal.valueNext("dealMode")]()}
+                  middle={displayName || "Untitled"}
+                  sx={{
+                    color: nativeTheme.primary.main,
+                    ...(!displayName && { fontStyle: "italic" }),
+                    display: "flex",
+                    fontSize: 16,
+                    flex: 1,
+                    justifyContent: "flex-start",
+                    alignItems: "center",
+                    whiteSpace: "nowrap",
+                    padding: nativeTheme.s1,
+                    paddingLeft: nativeTheme.s3,
+                    paddingRight: nativeTheme.s3,
+                    "&:hover": {
+                      backgroundColor: nativeTheme["gray-400"],
+                    },
+                  }}
+                  onClick={() => {
+                    unstable_batchedUpdates(() => {
+                      addDealToCompare({ feId: deal.feId });
+                      closeMenu();
+                    });
+                  }}
+                />
+              </View>
+            );
+          })}
       </View>
     </View>
   );

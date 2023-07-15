@@ -39,6 +39,7 @@ export function OutputSection({
   const { setModal } = useInputModalWithContext();
   const openEdit = () =>
     setModal({
+      showFinish: true,
       title: (
         <MuiRow>
           <Box>Outputs</Box>

@@ -16,6 +16,7 @@ export interface ModalSectionProps extends ModalWrapperProps {
   modalWrapperProps?: { sx?: SxProps };
   modalSectionProps?: { sx?: SxProps };
   titleSx?: SxProps;
+  showFinish?: boolean;
 }
 
 export function ModalSection({
@@ -27,6 +28,7 @@ export function ModalSection({
   modalWrapperProps,
   modalSectionProps,
   titleSx,
+  showFinish,
 }: ModalSectionProps) {
   return (
     <ModalWrapper {...{ show, ...modalWrapperProps }} className={className}>
@@ -66,12 +68,14 @@ export function ModalSection({
             <Box sx={{ mt: nativeTheme.s3, mb: nativeTheme.s3 }}>
               {children}
             </Box>
-            <FinishBtn
-              {...{
-                btnText: "Finish",
-                onClick: closeModal,
-              }}
-            />
+            {showFinish && (
+              <FinishBtn
+                {...{
+                  btnText: "Finish",
+                  onClick: closeModal,
+                }}
+              />
+            )}
           </MainSection>
         </div>
       </ClickAwayListener>

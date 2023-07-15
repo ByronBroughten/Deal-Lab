@@ -17,6 +17,7 @@ export function UnitsNext({ feId }: FeIdProp) {
     setModal({
       title: "Units",
       children: <UnitList {...{ feId }} />,
+      showFinish: true,
     });
   return (
     <>
