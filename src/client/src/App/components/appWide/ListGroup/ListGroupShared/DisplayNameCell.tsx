@@ -1,23 +1,15 @@
 import React from "react";
-import { FeSectionInfo } from "../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
-import { useGetterSection } from "../../../../sharedWithServer/stateClassHooks/useGetterSection";
-import { ValueInEntityInfo } from "../../../../sharedWithServer/StateEntityGetters/ValueInEntityInfo";
+import {
+  useVariableLabels,
+  VarbFinderProps,
+  variableNotFoundLabel,
+} from "../../../../sharedWithServer/StateGetters/useVariableLabels";
 import { nativeTheme } from "../../../../theme/nativeTheme";
 import { SectionTitle } from "../../SectionTitle";
 
-interface EntityProps {
-  focalInfo: FeSectionInfo;
-  varbInfo: ValueInEntityInfo;
-}
-export function EntityDisplayNameCell({ focalInfo, varbInfo }: EntityProps) {
-  const section = useGetterSection(focalInfo);
-  const hasVarb = section.hasVarbByFocalMixed(varbInfo);
-  if (hasVarb) {
-    const varb = section.varbByFocalMixed(varbInfo);
-    return <DisplayNameCellStyled {...{ displayName: varb.variableLabel }} />;
-  } else {
-    return <DisplayNameNotFoundCell />;
-  }
+export function EntityDisplayNameCell(props: VarbFinderProps) {
+  const { variableLabel } = useVariableLabels(props);
+  return <DisplayNameCellStyled {...{ displayName: variableLabel }} />;
 }
 
 interface StyledProps {
@@ -25,7 +17,7 @@ interface StyledProps {
 }
 
 export function DisplayNameNotFoundCell() {
-  return <DisplayNameCellStyled {...{ displayName: "Variable not found" }} />;
+  return <DisplayNameCellStyled {...{ displayName: variableNotFoundLabel }} />;
 }
 
 export function DisplayNameCellStyled({ displayName }: StyledProps) {

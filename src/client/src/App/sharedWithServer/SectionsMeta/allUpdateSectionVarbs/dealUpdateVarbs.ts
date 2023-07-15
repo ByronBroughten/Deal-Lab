@@ -404,6 +404,7 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
         "subtract",
         propS.onlyChild("property", "afterRepairValue"),
         propS.local("preFinanceOneTimeExpenses")
+        // this does include selling costs...
       ),
       brrrr: basicsS.equationLR(
         "subtract",

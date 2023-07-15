@@ -1,27 +1,44 @@
-import styled from "styled-components";
+import { Box, SxProps } from "@mui/material";
 import theme from "../../../../theme/Theme";
+import { arrSx } from "../../../../utils/mui";
 import { StandardProps } from "../../../general/StandardProps";
 
-export function VarbListStyled({ children, className }: StandardProps) {
+export function VarbListStyled({
+  children,
+  className,
+  sx,
+  viewableSx,
+}: StandardProps & { sx?: SxProps; viewableSx?: SxProps }) {
   return (
-    <Styled className={`VarbListStyled-root ${className ?? ""}`}>
-      <div className="VarbListStyled-viewable">{children}</div>
-    </Styled>
+    <Box
+      sx={[
+        {
+          display: "flex",
+          alignItems: "flex-start",
+        },
+        ...arrSx(sx),
+      ]}
+      className={`VarbListStyled-root ${className ?? ""}`}
+    >
+      <Box
+        sx={[
+          {
+            minWidth: 230,
+            display: "inline-block",
+            border: `solid 1px ${theme.primaryBorder}`,
+            background: theme.light,
+            borderRadius: theme.br0,
+            padding: theme.sectionPadding,
+            "&.VarbListMenu-root": {
+              marginBottom: theme.s3,
+            },
+          },
+          ...arrSx(viewableSx),
+        ]}
+        className="VarbListStyled-viewable"
+      >
+        {children}
+      </Box>
+    </Box>
   );
 }
-
-const Styled = styled.div`
-  display: flex;
-  align-items: flex-start;
-  .VarbListStyled-viewable {
-    min-width: 230px;
-    display: inline-block;
-    border: solid 1px ${theme.primaryBorder};
-    background: ${theme.light};
-    border-radius: ${theme.br0};
-    padding: ${theme.sectionPadding};
-  }
-  .VarbListMenu-root {
-    margin-bottom: ${theme.s2};
-  }
-`;

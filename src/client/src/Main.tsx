@@ -8,7 +8,7 @@ import {
   AuthProtectedPage,
   UserDataNeededPage,
 } from "./App/components/AuthProtectedPage";
-import { DealCompareSection } from "./App/components/DealComparePage/DealCompareSection";
+import { CompareDealsDisplay } from "./App/components/DealComparePage/CompareDealsDisplay";
 import { FooterNext } from "./App/components/Footer";
 import NotFound from "./App/components/general/NotFound";
 import { NavBarOutletPage } from "./App/components/NavBarOutletPage";
@@ -51,7 +51,7 @@ export function Main() {
             <Route index element={<UserVarbEditorPage />} />
           </Route>
           <Route path={feRoutes.compare} element={<UserDataNeededPage />}>
-            <Route index element={<DealCompareSection />} />
+            <Route index element={<CompareDealsDisplay />} />
           </Route>
         </Route>
         <Route path="*" element={<NotFound />} />

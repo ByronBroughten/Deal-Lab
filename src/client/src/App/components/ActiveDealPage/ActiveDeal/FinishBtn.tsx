@@ -9,7 +9,8 @@ import { icons } from "../../Icons";
 interface Props extends MuiBtnPropsNext {
   styleDisabled?: boolean;
   warningText?: string;
-  btnText: string;
+  btnText?: React.ReactNode;
+  btnIcon?: React.ReactNode;
 }
 
 function disabledWarning(warningText: string) {
@@ -20,7 +21,8 @@ export function FinishBtn({
   styleDisabled,
   onClick,
   className,
-  btnText,
+  btnText = "Finish",
+  btnIcon = icons.finish(),
   warningText,
   sx,
 }: Props) {
@@ -28,7 +30,7 @@ export function FinishBtn({
     <HollowBtn
       {...{
         className,
-        left: icons.finish(),
+        left: btnIcon,
         middle: <Box sx={{ ml: nativeTheme.s2 }}>{btnText}</Box>,
         onClick:
           styleDisabled && warningText

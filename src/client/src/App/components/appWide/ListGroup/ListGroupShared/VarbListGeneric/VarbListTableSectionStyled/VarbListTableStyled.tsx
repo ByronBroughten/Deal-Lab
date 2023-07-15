@@ -1,27 +1,37 @@
+import { Box, SxProps } from "@mui/material";
 import React from "react";
 import styled from "styled-components";
 import { nativeTheme } from "../../../../../../theme/nativeTheme";
 import theme from "../../../../../../theme/Theme";
+import { arrSx } from "../../../../../../utils/mui";
 
 interface Props {
   className?: string;
   headers: React.ReactNode;
   rows: React.ReactNode;
+  sx?: SxProps;
 }
-export function VarbListTableStyled({ className, headers, rows }: Props) {
+export function VarbListTableStyled({ className, headers, rows, sx }: Props) {
   return (
-    <Styled className={`VarbListTable-root ${className ?? ""}`}>
+    <Styled
+      className={`VarbListTable-root ${className ?? ""}`}
+      component={"table"}
+      sx={[
+        {
+          border: theme.borderStyle,
+          width: "100%",
+          borderCollapse: "collapse",
+        },
+        ...arrSx(sx),
+      ]}
+    >
       <thead>{headers}</thead>
       <tbody>{rows}</tbody>
     </Styled>
   );
 }
 
-const Styled = styled.table`
-  border: ${theme.borderStyle};
-  width: 100%;
-  border-collapse: collapse;
-
+const Styled = styled(Box)`
   th {
     border-bottom: solid 1px ${theme.primaryBorder};
     padding-top: ${theme.s2};

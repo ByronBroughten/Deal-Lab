@@ -49,6 +49,7 @@ export function makeAllBaseSectionVarbs() {
       value: baseVarb("string"),
     }),
     sessionStore: varbs({
+      isEditingComparedDeals: baseVarb("boolean"),
       archivedAreLoaded: baseVarb("boolean"),
       showArchivedDeals: baseVarb("boolean"),
       isCreatingDeal: baseVarb("boolean"),
@@ -376,6 +377,7 @@ export function makeAllBaseSectionVarbs() {
       preFinanceOneTimeExpenses: baseVarb("numObj", dollars),
       cashCostsPlusPurchaseLoanRepay: baseVarb("numObj", dollars),
       valueAddProfit: baseVarb("numObj", dollars),
+      // valueAddProfitOnSale: baseVarb("numObj", dollars),
       valueAddRoiDecimal: baseVarb("numObj", decimal),
       valueAddRoiPercent: baseVarb("numObj", percent),
       valueAddRoiPercentPerMonth: baseVarb("numObj", percent),

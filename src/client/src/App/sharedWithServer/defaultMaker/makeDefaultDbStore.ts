@@ -4,7 +4,7 @@ import { numObj } from "../SectionsMeta/values/StateValue/NumObj";
 import { stringObj } from "../SectionsMeta/values/StateValue/StringObj";
 import { PackBuilderSection } from "../StatePackers/PackBuilderSection";
 import { timeS } from "../utils/timeS";
-import { makeDefaultDealCompareCache } from "./makeDefaultDealCompareCache";
+import { makeDefaultCompareDealMenu } from "./makeDefaultCompareDealMenu";
 import { makeExampleCapExList } from "./makeDefaultFeUser/makeExampleCapEx";
 import { makeExampleDeal } from "./makeDefaultFeUser/makeExampleDeal";
 import { makeExampleLoan } from "./makeDefaultFeUser/makeExampleLoan";
@@ -18,6 +18,7 @@ import {
 } from "./makeDefaultFeUser/makeExampleOngoingListsProps";
 import { makeExampleProperty } from "./makeDefaultFeUser/makeExampleProperty";
 import { makeExampleUserVarbLists } from "./makeDefaultFeUser/makeExampleUserVarbLists";
+import { makeDefaultOutputList } from "./makeDefaultOutputList";
 import { makeDefaultOutputSection } from "./makeDefaultOutputSection";
 
 export type DbStoreSeed = {
@@ -53,10 +54,19 @@ export function makeDefaultDbStoreArrs({
   stripeInfoPrivate.updateValues({ customerId: "" });
 
   dbStore.addChild("dealCompareMenu", {
-    sectionPack: makeDefaultDealCompareCache(),
+    sectionPack: makeDefaultCompareDealMenu(),
   });
   dbStore.addChild("outputSection", {
     sectionPack: makeDefaultOutputSection(),
+  });
+  dbStore.loadChildren({
+    childName: "outputListMain",
+    sectionPacks: [
+      makeDefaultOutputList("homeBuyer"),
+      makeDefaultOutputList("buyAndHold"),
+      makeDefaultOutputList("fixAndFlip"),
+      makeDefaultOutputList("brrrr"),
+    ],
   });
   dbStore.loadChildren({
     childName: "numVarbListMain",

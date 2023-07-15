@@ -5,8 +5,10 @@ import { PackBuilderSection } from "../StatePackers/PackBuilderSection";
 import { defaultOutputInfos } from "./makeDefaultOutputList";
 import { outputListName } from "./makeDefaultOutputSection";
 
-export function makeDefaultDealCompareCache(): SectionPack<"dealCompareMenu"> {
+export function makeDefaultCompareDealMenu(): SectionPack<"dealCompareMenu"> {
   const cache = PackBuilderSection.initAsOmniChild("dealCompareMenu");
+
+  cache.addChild("outputList");
 
   for (const dealMode of getDealModes("plusMixed")) {
     const listName = outputListName(dealMode);

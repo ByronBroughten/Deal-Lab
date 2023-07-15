@@ -82,6 +82,7 @@ function makeAllUpdateSections() {
   return checkAllUpdateSections({
     ...makeAllDefaultUpdateSections(),
     ...prop("sessionStore", {
+      isEditingComparedDeals: varb("boolean", { initValue: false }),
       archivedAreLoaded: varb("boolean", { initValue: false }),
       showArchivedDeals: varb("boolean", { initValue: false }),
       isCreatingDeal: varb("boolean", { initValue: false }),

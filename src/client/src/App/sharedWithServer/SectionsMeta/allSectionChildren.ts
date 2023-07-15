@@ -79,6 +79,7 @@ export const allSectionChildren = checkAllSectionChildren({
   }),
   dealCompareMenu: sectionChildren({
     comparedDeal: "comparedDeal",
+    outputList: "outputList",
     homeBuyerOutputList: "outputList",
     buyAndHoldOutputList: "outputList",
     fixAndFlipOutputList: "outputList",

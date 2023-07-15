@@ -1,7 +1,9 @@
+import { Box, SxProps } from "@mui/material";
 import React from "react";
 import { IoChevronBack } from "react-icons/io5";
-import { Text, View } from "react-native";
+import { Text } from "react-native";
 import { nativeTheme } from "../../theme/nativeTheme";
+import { arrSx } from "../../utils/mui";
 import { GoToPageValue, useGoToPage } from "../customHooks/useGoToPage";
 import { PlainIconBtn } from "../general/PlainIconBtn";
 import { Row } from "../general/Row";
@@ -10,17 +12,21 @@ interface Props {
   children: React.ReactNode;
   to: GoToPageValue;
   label: string;
+  sx?: SxProps;
 }
-export function BackBtnWrapper({ children, to, label }: Props) {
+export function BackBtnWrapper({ children, to, label, sx }: Props) {
   const goToPage = useGoToPage(to);
   return (
-    <View
-      style={{
-        width: "100%",
-        maxWidth: 828,
-        flex: 1,
-        alignItems: "flex-start",
-      }}
+    <Box
+      sx={[
+        {
+          width: "100%",
+          maxWidth: 800,
+          flex: 1,
+          alignItems: "flex-start",
+        },
+        ...arrSx(sx),
+      ]}
     >
       <PlainIconBtn
         {...{
@@ -42,6 +48,6 @@ export function BackBtnWrapper({ children, to, label }: Props) {
         }}
       />
       {children}
-    </View>
+    </Box>
   );
 }

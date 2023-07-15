@@ -1,3 +1,4 @@
+import { SxProps } from "@mui/material";
 import React, { ReactNode } from "react";
 import { ChildName } from "../../../../sharedWithServer/SectionsMeta/sectionChildrenDerived/ChildName";
 import { FeSectionInfo } from "../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
@@ -16,6 +17,9 @@ type Props<SN extends VarbListAllowed> = {
   className?: string;
   menuType?: VarbListGenericMenuType;
   addItem?: () => void;
+  sx?: SxProps;
+  tableSx?: SxProps;
+  viewableSx?: SxProps;
 };
 
 export type VarbListGenericMenuType = "value" | "editorPage";
@@ -26,6 +30,9 @@ export function VarbListGeneric<SN extends VarbListAllowed>({
   totalVarbName,
   className,
   menuType = "value",
+  sx,
+  tableSx,
+  viewableSx,
   ...props
 }: Props<SN>) {
   const list = useSetterSection(feInfo);
@@ -38,7 +45,7 @@ export function VarbListGeneric<SN extends VarbListAllowed>({
 
   const items = list.get.children(itemName);
   return (
-    <VarbListStyled className={`VarbListGeneric-root ${className ?? ""}`}>
+    <VarbListStyled sx={sx} viewableSx={viewableSx} className={className}>
       <VarbListMenuDual
         {...{
           menuType,
@@ -46,7 +53,7 @@ export function VarbListGeneric<SN extends VarbListAllowed>({
         }}
       />
       <VarbListTableSectionGeneric
-        {...{ addItem, varbListTotal: total, headers }}
+        {...{ addItem, varbListTotal: total, headers, tableSx }}
       >
         {items.map((item) => makeItemNode(item))}
       </VarbListTableSectionGeneric>
