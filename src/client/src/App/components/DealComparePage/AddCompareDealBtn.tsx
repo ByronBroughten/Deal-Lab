@@ -1,3 +1,4 @@
+import { Box } from "@mui/material";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { HollowBtn } from "../appWide/HollowBtn";
 import { useInputModalWithContext } from "../Modals/InputModalProvider";
@@ -29,13 +30,14 @@ export function AddCompareDealBtn({ dealCount }: Props) {
   return (
     <HollowBtn
       {...{
-        middle: text,
+        middle: <Box sx={{ minWidth: 120 }}>{text}</Box>,
         onClick: openDealMenu,
         sx: {
           ...extraSx,
           ...nativeTheme.subSection.borderLines,
           fontSize: nativeTheme.fs24,
           width,
+          minWidth: "100px",
           minHeight: 300,
           zIndex: -1,
         },

@@ -35,7 +35,7 @@ export function DealCompareSection() {
     <BackBtnWrapper {...{ label: "Deal Menu", to: "account" }}>
       <DealModeProvider dealMode={"mixed"}>
         <IdOfSectionToSaveProvider {...{ storeId: menu.mainStoreId }}>
-          <SubSectionOpen>
+          <SubSectionOpen sx={{ overflow: "auto" }}>
             <PageTitle
               text={
                 "Compare Deals"

@@ -1,4 +1,4 @@
-const width = 150;
+const width = "150px";
 export const comparedDeal = {
   width,
 };

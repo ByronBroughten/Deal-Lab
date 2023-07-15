@@ -1,21 +1,27 @@
+import { SxProps } from "@mui/material";
 import { nativeTheme } from "../../../theme/nativeTheme";
+import { arrSx } from "../../../utils/mui";
 import { MainSection } from "../../appWide/GeneralSection/MainSection";
 
 interface Props {
   children: React.ReactNode;
+  sx?: SxProps;
 }
-export function SubSectionOpen({ children }: Props) {
+export function SubSectionOpen({ children, sx }: Props) {
   return (
     <MainSection
-      sx={{
-        width: "100%",
-        maxWidth: 800,
-        minHeight: 300,
-        paddingTop: nativeTheme.s5,
-        paddingLeft: nativeTheme.s6,
-        paddingRight: nativeTheme.s6,
-        marginBottom: nativeTheme.s4,
-      }}
+      sx={[
+        {
+          width: "100%",
+          maxWidth: 800,
+          minHeight: 300,
+          paddingTop: nativeTheme.s5,
+          paddingLeft: nativeTheme.s6,
+          paddingRight: nativeTheme.s6,
+          marginBottom: nativeTheme.s4,
+        },
+        ...arrSx(sx),
+      ]}
     >
       {children}
     </MainSection>
