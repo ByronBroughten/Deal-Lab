@@ -26,9 +26,10 @@ export function ComparedDealDisplay({ feId, sx }: Props) {
           ...nativeTheme.subSection.borderLines,
           minWidth: nativeTheme.comparedDeal.width,
           minHeight: 400,
-          padding: nativeTheme.comparedDealRoot.padding,
+          padding: nativeTheme.s4,
           paddingBottom: 0,
           borderRadius: nativeTheme.br0,
+          boxShadow: nativeTheme.oldShadow1,
         },
         ...arrSx(sx),
       ]}
@@ -69,9 +70,9 @@ export function ComparedDealDisplay({ feId, sx }: Props) {
               sx={{
                 fontSize: nativeTheme.fs20,
                 color: nativeTheme.primary.main,
+                paddingRight: nativeTheme.s3,
                 ...(!displayName && {
                   fontStyle: "italic",
-                  paddingRight: nativeTheme.s2,
                 }),
               }}
             >
