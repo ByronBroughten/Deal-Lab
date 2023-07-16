@@ -5,7 +5,7 @@ import { PackBuilderSection } from "../StatePackers/PackBuilderSection";
 import { defaultOutputInfos } from "./makeDefaultOutputList";
 import { outputListName } from "./makeDefaultOutputSection";
 
-export function makeDefaultCompareDealMenu(): SectionPack<"dealCompareMenu"> {
+export function makeDefaultDealCompareMenu(): SectionPack<"dealCompareMenu"> {
   const cache = PackBuilderSection.initAsOmniChild("dealCompareMenu");
 
   cache.addChild("outputList");

@@ -4,7 +4,7 @@ import { numObj } from "../SectionsMeta/values/StateValue/NumObj";
 import { stringObj } from "../SectionsMeta/values/StateValue/StringObj";
 import { PackBuilderSection } from "../StatePackers/PackBuilderSection";
 import { timeS } from "../utils/timeS";
-import { makeDefaultCompareDealMenu } from "./makeDefaultCompareDealMenu";
+import { makeDefaultDealCompareMenu } from "./makeDefaultDealCompareMenu";
 import { makeExampleCapExList } from "./makeDefaultFeUser/makeExampleCapEx";
 import { makeExampleDeal } from "./makeDefaultFeUser/makeExampleDeal";
 import { makeExampleLoan } from "./makeDefaultFeUser/makeExampleLoan";
@@ -54,7 +54,7 @@ export function makeDefaultDbStoreArrs({
   stripeInfoPrivate.updateValues({ customerId: "" });
 
   dbStore.addChild("dealCompareMenu", {
-    sectionPack: makeDefaultCompareDealMenu(),
+    sectionPack: makeDefaultDealCompareMenu(),
   });
   dbStore.addChild("outputSection", {
     sectionPack: makeDefaultOutputSection(),
