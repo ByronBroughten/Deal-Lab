@@ -40,6 +40,7 @@ const allVarbPathParams = {
     ...targetNames("tenPercentRent", "periodic"),
   ]),
   ...sectionVarbNameParams("propertyFocal", "Property", [
+    "likability",
     "sellingCosts",
     "holdingPeriodMonths",
     "holdingPeriodYears",

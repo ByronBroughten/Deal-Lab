@@ -98,6 +98,7 @@ function LoadedVarbItemNext({ feId }: FeIdProp) {
         borderBottom: "none",
         fontSize: nativeTheme.fs18,
         color: nativeTheme.primary.main,
+        zIndex: -1,
       }}
     >
       <MuiRow>

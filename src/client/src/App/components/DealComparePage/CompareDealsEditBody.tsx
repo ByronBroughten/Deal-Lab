@@ -1,4 +1,6 @@
 import { Box } from "@mui/material";
+import { useAction } from "../../sharedWithServer/stateClassHooks/useAction";
+import { useGetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useGetterSection";
 import { useGetterMain } from "../../sharedWithServer/stateClassHooks/useMain";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { FinishBtn } from "../ActiveDealPage/ActiveDeal/FinishBtn";
@@ -17,6 +19,15 @@ export function CompareDealsEditBody() {
   const comparedSystemFeIds = comparedDbIds.map(
     (dbId) => cache.childByDbId({ childName: "comparedDealSystem", dbId }).feId
   );
+
+  const session = useGetterSectionOnlyOne("sessionStore");
+  const updateValue = useAction("updateValue");
+  const showComparedDeals = () =>
+    updateValue({
+      ...session.varbInfo("isEditingComparedDeals"),
+      value: false,
+    });
+
   return (
     <Box>
       <MuiRow
@@ -46,6 +57,7 @@ export function CompareDealsEditBody() {
       </MuiRow>
       <FinishBtn
         {...{
+          onClick: showComparedDeals,
           btnText: "Compare",
           btnIcon: icons.compareDeals(),
           sx: { borderRadius: nativeTheme.muiBr0 },

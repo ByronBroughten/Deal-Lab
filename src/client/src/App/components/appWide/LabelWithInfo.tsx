@@ -19,13 +19,7 @@ export function LabelWithInfo({
   iconProps,
 }: Props) {
   return (
-    <MuiRow
-      className={className}
-      sx={{
-        flexWrap: "nowrap",
-        zIndex: 10,
-      }}
-    >
+    <MuiRow className={className} sx={{ flexWrap: "nowrap" }}>
       <Box>{label}</Box>
       {infoTitle && infoText && (
         <InfoIcon

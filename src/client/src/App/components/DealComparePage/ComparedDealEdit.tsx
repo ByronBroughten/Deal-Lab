@@ -31,11 +31,7 @@ export function ComparedDealEdit({ feId, sx }: Props) {
     >
       <Box>
         <Box>
-          <MuiRow
-            sx={{
-              justifyContent: "flex-end",
-            }}
-          >
+          <MuiRow sx={{ justifyContent: "flex-end" }}>
             <RemoveSectionXBtn {...dealSystem.feInfo} />
           </MuiRow>
           <MuiRow>

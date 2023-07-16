@@ -107,6 +107,7 @@ const buyAndHold = [
 
 const homeBuyer = [
   ...sharedBasics,
+  "likability",
   "numBedrooms",
   ...sharedOngoing,
   ...sharedUpfront,
@@ -141,6 +142,7 @@ export const fixedVarbPathNames = checkFixedVarbNames({
   brrrr,
   mixed: [
     ...sharedBasics,
+    "likability",
     "numBedrooms",
     ...nonHomebuyBasics,
     ...hasRentBasics,
