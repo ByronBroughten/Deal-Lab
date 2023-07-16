@@ -1,6 +1,5 @@
 import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
 import { ChildNameOfType } from "../SectionsMeta/SectionNameByType";
-import { StateValue } from "../SectionsMeta/values/StateValue";
 import {
   DealMode,
   getDealModes,
@@ -9,8 +8,8 @@ import { PackBuilderSection } from "../StatePackers/PackBuilderSection";
 import { makeDefaultOutputList } from "./makeDefaultOutputList";
 
 type DealModeToOutputChildName = Record<
-  DealMode<"plusMixed">,
-  ChildNameOfType<"dealCompareMenu", "outputList">
+  DealMode,
+  ChildNameOfType<"outputSection", "outputList">
 >;
 
 const _checkOutputListNames = <T extends DealModeToOutputChildName>(t: T) => t;
@@ -19,10 +18,9 @@ const dealModeToOutputListName = _checkOutputListNames({
   buyAndHold: "buyAndHoldOutputList",
   fixAndFlip: "fixAndFlipOutputList",
   brrrr: "brrrrOutputList",
-  mixed: "mixedOutputList",
 });
 type DealModeToOutputListName = typeof dealModeToOutputListName;
-export function outputListName<DM extends StateValue<"dealModePlusMixed">>(
+export function outputListName<DM extends DealMode>(
   dealMode: DM
 ): DealModeToOutputListName[DM] {
   return dealModeToOutputListName[dealMode];

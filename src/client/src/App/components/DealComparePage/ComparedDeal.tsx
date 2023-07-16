@@ -1,5 +1,4 @@
 import { Text, View, ViewStyle } from "react-native";
-import { outputListName } from "../../sharedWithServer/defaultMaker/makeDefaultOutputSection";
 import { useGetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useGetterSection";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { icons } from "../Icons";
@@ -16,8 +15,8 @@ export function ComparedDeal({ feId, style }: Props) {
   const dealSystem = cache.child({ childName: "comparedDealSystem", feId });
 
   const dealMode = menu.valueNext("dealMode");
-  const listName = outputListName(dealMode);
-  const outputList = menu.onlyChild(listName);
+  // const listName = outputListName(dealMode);
+  const outputList = menu.onlyChild("outputList");
   const compareValues = outputList.children("outputItem");
   const deal = dealSystem.onlyChild("deal");
   const displayName = deal.valueNext("displayName").mainText;

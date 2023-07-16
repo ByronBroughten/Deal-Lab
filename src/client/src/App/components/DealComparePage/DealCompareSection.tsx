@@ -1,5 +1,4 @@
 import { View } from "react-native";
-import { outputListName } from "../../sharedWithServer/defaultMaker/makeDefaultOutputSection";
 import { IdOfSectionToSaveProvider } from "../../sharedWithServer/stateClassHooks/useIdOfSectionToSave";
 import { useGetterMain } from "../../sharedWithServer/stateClassHooks/useMain";
 import { nativeTheme } from "../../theme/nativeTheme";
@@ -21,8 +20,8 @@ export function DealCompareSection() {
   const menu = main.onlyChild("feStore").onlyChild("dealCompareMenu");
 
   const dealMode = menu.valueNext("dealMode");
-  const listName = outputListName(dealMode);
-  const outputList = menu.onlyChild(listName);
+  // const listName = outputListName(dealMode);
+  const outputList = menu.onlyChild("outputList");
 
   const compareValueFeIds = outputList.childFeIds("outputItem");
   const comparedDbIds = menu.childrenDbIds("comparedDeal");

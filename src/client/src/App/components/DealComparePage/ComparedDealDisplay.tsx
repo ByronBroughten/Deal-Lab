@@ -1,6 +1,5 @@
 import { Box, SxProps } from "@mui/material";
 import { Text, View } from "react-native";
-import { outputListName } from "../../sharedWithServer/defaultMaker/makeDefaultOutputSection";
 import { useGetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useGetterSection";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { arrSx } from "../../utils/mui";
@@ -16,10 +15,7 @@ export function ComparedDealDisplay({ feId, sx }: Props) {
   const cache = useGetterSectionOnlyOne("dealCompareCache");
 
   const dealSystem = cache.child({ childName: "comparedDealSystem", feId });
-
-  const dealMode = menu.valueNext("dealMode");
-  const listName = outputListName(dealMode);
-  const outputList = menu.onlyChild(listName);
+  const outputList = menu.onlyChild("outputList");
   const compareValues = outputList.children("outputItem");
   const deal = dealSystem.onlyChild("deal");
   const displayName = deal.valueNext("displayName").mainText;

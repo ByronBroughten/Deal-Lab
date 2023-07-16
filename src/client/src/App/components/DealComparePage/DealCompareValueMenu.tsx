@@ -8,7 +8,6 @@ import {
   useDealModeContextVarbSelect,
   useVarbSelectModal,
 } from "../Modals/VarbSelectModalProvider";
-import { outputListName } from "./../../sharedWithServer/defaultMaker/makeDefaultOutputSection";
 import { useAction } from "./../../sharedWithServer/stateClassHooks/useAction";
 import { useGetterFeStore } from "./../../sharedWithServer/stateClassHooks/useFeStore";
 
@@ -18,8 +17,8 @@ export function DealCompareValueMenu() {
 
   const menu = feStore.get.onlyChild("dealCompareMenu");
   const dealMode = menu.valueNext("dealMode");
-  const listName = outputListName(dealMode);
-  const list = menu.onlyChild(listName);
+  // const listName = outputListName(dealMode);
+  const list = menu.onlyChild("outputList");
 
   const { setModal } = useVarbSelectModal();
   const onVarbSelect: OnVarbSelect = (varbInfo) => {
