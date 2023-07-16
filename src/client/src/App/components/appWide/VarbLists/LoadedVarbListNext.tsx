@@ -11,7 +11,6 @@ import { MuiRow } from "../../general/MuiRow";
 import { OnVarbSelect } from "../../inputs/NumObjEditor/NumObjVarbSelector/VarbSelectorCollection";
 import { useDealModeContextVarbSelect } from "../../Modals/VarbSelectModalProvider";
 import { HollowBtn } from "../HollowBtn";
-import { LabelWithInfo } from "../LabelWithInfo";
 import { VarbListMenuDual } from "../ListGroup/ListGroupShared/VarbListMenuDual";
 import { RemoveSectionXBtn } from "../RemoveSectionXBtn";
 
@@ -109,12 +108,13 @@ function LoadedVarbItem({ feId }: FeIdProp) {
       }}
     >
       <MuiRow>
-        <LabelWithInfo
+        {variableLabel}
+        {/* <LabelWithInfo
           {...{
             label: variableLabel,
             infoProps,
           }}
-        />
+        /> */}
       </MuiRow>
       <RemoveSectionXBtn {...feInfo} />
     </MuiRow>

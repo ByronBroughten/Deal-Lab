@@ -22,7 +22,6 @@ export function ComparedDealEdit({ feId, sx }: Props) {
         {
           ...nativeTheme.subSection.borderLines,
           minWidth: nativeTheme.comparedDeal.width,
-          borderRadius: nativeTheme.muiBr0,
           padding: nativeTheme.s25,
           width: "300px",
         },

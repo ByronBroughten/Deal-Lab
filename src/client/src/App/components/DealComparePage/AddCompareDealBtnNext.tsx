@@ -31,6 +31,8 @@ export function AddCompareDealBtnNext({ dealCount, sx }: Props) {
           {
             ...nativeTheme.subSection.borderLines,
             borderRadius: nativeTheme.muiBr0,
+            borderTopLeftRadius: 0,
+            borderTopRightRadius: 0,
             fontSize: nativeTheme.fs24,
             width: 300,
             minHeight: 55,
