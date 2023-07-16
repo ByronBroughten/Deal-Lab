@@ -400,15 +400,15 @@ export const varbLabels = checkAllVarbLabels({
     }),
     valueAddRoiDecimal: input("ROI Decimal"),
     valueAddRoiPercent: text({
-      inputLabel: "ROI",
-      title: "Return on Investment",
+      inputLabel: "VA ROI",
+      title: "Value Add Return on Investment",
       info: "The total profit from increasing a property's value after purchase, as a percent of the cash that was invested to do so",
     }),
     valueAddRoiPercentPerMonth: input("ROI percent per month"),
     valueAddRoiPercentAnnualized: text({
-      inputLabel: "ROI annualized",
-      title: "Annualized Return on Investment",
-      info: `The total profit from increasing a property's value after purchase, as a percent of the cash that was invested to do so, divided by the number of years—or by the fraction of years—that the holding period lasted.\n\nThis can be used to compare ROI from onetime windfall income with ongoing Cash on Cash ROI from other types of investments.`,
+      inputLabel: "VA ROI annualized",
+      title: "Annualized Return on Investment from Value Add",
+      info: `The total profit from increasing a property's value after purchase, as a percent of the cash that was invested to do so, divided by the number of years—or by the fraction of years—that the holding period lasted.\n\nThis can be used to compare ROI from onetime windfall income with ongoing income from other types of investments.`,
     }),
   }),
   ...prop("onetimeItem", {

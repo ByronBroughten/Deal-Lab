@@ -372,18 +372,26 @@ export function makeAllBaseSectionVarbs() {
       ...baseVarbsS.periodicDollars("cashFlow"),
       ...baseVarbsS.periodicDecimal("cocRoiDecimal"),
       ...baseVarbsS.periodicPercent("cocRoi"),
+
+      ...baseVarbsS.monthsYears("refiLoanHolding"),
+      ...baseVarbsS.monthsYears("purchaseLoanHolding"),
+
       totalInvestment: baseVarb("numObj", dollars),
       holdingCostTotal: baseVarb("numObj", dollars),
       preFinanceOneTimeExpenses: baseVarb("numObj", dollars),
       cashCostsPlusPurchaseLoanRepay: baseVarb("numObj", dollars),
+
       valueAddProfit: baseVarb("numObj", dollars),
-      // valueAddProfitOnSale: baseVarb("numObj", dollars),
       valueAddRoiDecimal: baseVarb("numObj", decimal),
       valueAddRoiPercent: baseVarb("numObj", percent),
       valueAddRoiPercentPerMonth: baseVarb("numObj", percent),
       valueAddRoiPercentAnnualized: baseVarb("numObj", percent),
-      ...baseVarbsS.monthsYears("refiLoanHolding"),
-      ...baseVarbsS.monthsYears("purchaseLoanHolding"),
+
+      valueAddProfitOnSale: baseVarb("numObj", dollars),
+      valueAddRoiOnSaleDecimal: baseVarb("numObj", decimal),
+      valueAddRoiOnSalePercent: baseVarb("numObj", percent),
+      valueAddRoiOnSalePercentPerMonth: baseVarb("numObj", percent),
+      valueAddRoiOnSalePercentAnnualized: baseVarb("numObj", percent),
 
       refiLoanHoldingCost: baseVarb("numObj", dollars),
       purchaseLoanHoldingCost: baseVarb("numObj", dollars),

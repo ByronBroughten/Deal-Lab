@@ -466,6 +466,72 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
         propS.local("valueAddRoiPercentPerMonth")
       ),
     }),
+    valueAddProfitOnSale: dealModeVarb({
+      // possibly depreciated
+      homeBuyer: notApplicable(),
+      buyAndHold: notApplicable(),
+      fixAndFlip: basicsS.loadByVarbPathName("valueAddProfit"),
+      brrrr: basicsS.equationLR(
+        "subtract",
+        propS.local("valueAddProfit"),
+        propS.onlyChild("property", "closingCosts")
+      ),
+    }),
+    valueAddRoiOnSaleDecimal: dealModeVarb({
+      homeBuyer: notApplicable(),
+      buyAndHold: notApplicable(),
+      fixAndFlip: basicsS.equationLR(
+        "divide",
+        propS.local("valueAddProfitOnSale"),
+        propS.local("totalInvestment")
+      ),
+      brrrr: basicsS.equationLR(
+        "divide",
+        propS.local("valueAddProfitOnSale"),
+        propS.local("totalInvestment")
+      ),
+    }),
+    valueAddRoiOnSalePercent: dealModeVarb({
+      homeBuyer: notApplicable(),
+      buyAndHold: notApplicable(),
+      fixAndFlip: basicsS.equationSimple(
+        "decimalToPercent",
+        propS.local("valueAddRoiOnSaleDecimal")
+      ),
+      brrrr: basicsS.equationSimple(
+        "decimalToPercent",
+        propS.local("valueAddRoiOnSaleDecimal")
+      ),
+    }),
+    valueAddRoiOnSalePercentPerMonth: dealModeVarb({
+      homeBuyer: notApplicable(),
+      buyAndHold: notApplicable(),
+      fixAndFlip: basicsS.equationLR(
+        "divide",
+        propS.local("valueAddRoiOnSalePercent"),
+        propS.onlyChild("property", "holdingPeriodMonths")
+      ),
+      brrrr: basicsS.equationLR(
+        "divide",
+        propS.local("valueAddRoiOnSalePercent"),
+        propS.local("timeTillValueAddProfitMonths")
+      ),
+    }),
+    valueAddRoiOnSalePercentAnnualized: dealModeVarb({
+      homeBuyer: notApplicable(),
+      buyAndHold: notApplicable(),
+      fixAndFlip: basicsS.equationLR(
+        "multiply",
+        propS.varbPathName("twelve"),
+        propS.local("valueAddRoiOnSalePercentPerMonth")
+      ),
+      brrrr: basicsS.equationLR(
+        "multiply",
+        propS.varbPathName("twelve"),
+        propS.local("valueAddRoiOnSalePercentPerMonth")
+      ),
+    }),
+
     displayName: updateVarb("stringObj", {
       updateFnName: "throwIfReached",
       updateOverrides: [
