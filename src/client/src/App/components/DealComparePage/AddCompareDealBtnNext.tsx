@@ -14,7 +14,7 @@ export function AddCompareDealBtnNext({ dealCount, sx }: Props) {
 
   const areNone = dealCount === 0;
 
-  const text = areNone ? "Add Deals To Compare" : "+ Deal";
+  const text = areNone ? "Add Deal To Compare" : "+ Deal";
 
   const { setModal } = useInputModalWithContext();
   const openDealMenu = () =>

@@ -28,24 +28,43 @@ export function Modals() {
   const { modalState } = useInputModal();
   return (
     <>
-      <InputModal extraChildren={modalState && <OtherModals doBr={true} />} />
-      {!modalState && <OtherModals doBr={false} />}
+      <InputModal
+        modalChildren={modalState && <ModalsSecondTier doBr={true} />}
+      />
+      {!modalState && <ModalsSecondTier doBr={false} />}
+    </>
+  );
+}
+
+function ModalsSecondTier({ doBr }: Props) {
+  const { modalState } = useVarbSelectModal();
+  const props = getBrProps(doBr);
+  return (
+    <>
+      <VarbSelectorModal
+        {...props}
+        modalChildren={modalState && <ModalsBottom doBr={true} />}
+      />
+      {!modalState && <ModalsBottom doBr={doBr} />}
+    </>
+  );
+}
+
+function ModalsBottom({ doBr }: Props) {
+  const props = getBrProps(doBr);
+  return (
+    <>
+      <InfoModal {...props} />
+      <ConfirmationModal {...props} />
     </>
   );
 }
 
 type Props = { doBr: boolean };
-function OtherModals({ doBr }: Props) {
-  const options = {
-    true: { modalWrapperProps: { sx: { borderRadius: nativeTheme.br0 } } },
-    false: {},
-  };
-  const props = doBr ? options.true : options.false;
-  return (
-    <>
-      <InfoModal {...props} />
-      <VarbSelectorModal {...props} />
-      <ConfirmationModal {...props} />
-    </>
-  );
+function getBrProps(doBr: boolean) {
+  if (doBr) {
+    return { modalWrapperProps: { sx: { borderRadius: nativeTheme.br0 } } };
+  } else {
+    return {};
+  }
 }

@@ -7,26 +7,28 @@ export interface VarbFinderProps {
   varbInfo: ValueInEntityInfo;
 }
 
-export const variableNotFoundLabel = "Variable not found";
-export function useVariableLabels({ focalInfo, varbInfo }: VarbFinderProps): {
+interface ToReturn {
   variableLabel: string;
-  infoDot: null | { info: string; title: string };
-} {
+  infoProps?: { info: string; title: string };
+}
+
+export const variableNotFoundLabel = "Variable not found";
+export function useVariableLabels({
+  focalInfo,
+  varbInfo,
+}: VarbFinderProps): ToReturn {
   const section = useGetterSection(focalInfo);
   const hasVarb = section.hasVarbByFocalMixed(varbInfo);
   if (hasVarb) {
     const varb = section.varbByFocalMixed(varbInfo);
-
     const { info, title } = varb.varbLabels;
-
     return {
       variableLabel: varb.variableLabel,
-      infoDot: info && title ? { info, title } : null,
+      ...(info && title && { infoProps: { info, title } }),
     };
   } else {
     return {
       variableLabel: variableNotFoundLabel,
-      infoDot: null,
     };
   }
 }

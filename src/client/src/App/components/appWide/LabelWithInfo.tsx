@@ -6,27 +6,24 @@ import { InfoIcon } from "./InfoIcon";
 
 type Props = {
   label: React.ReactNode;
-  infoTitle?: React.ReactNode;
-  infoText?: string;
+  infoProps?: { title: React.ReactNode; info: string };
   iconProps?: IconProps;
   className?: string;
 };
 export function LabelWithInfo({
   className,
   label,
-  infoTitle = label,
-  infoText,
+  infoProps,
   iconProps,
 }: Props) {
   return (
     <MuiRow className={className} sx={{ flexWrap: "nowrap" }}>
       <Box>{label}</Box>
-      {infoTitle && infoText && (
+      {infoProps && (
         <InfoIcon
           {...{
             iconProps,
-            title: infoTitle,
-            infoText,
+            ...infoProps,
           }}
         />
       )}

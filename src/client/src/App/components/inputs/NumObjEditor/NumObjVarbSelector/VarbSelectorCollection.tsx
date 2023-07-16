@@ -28,12 +28,16 @@ export function VarbSelectorCollection({
         </div>
       )}
       {rowInfos.map((varbInfo) => {
-        const { variableLabel, varbId } = latent.varbByFocalMixed(varbInfo);
+        const { variableLabel, varbId, varbLabels } =
+          latent.varbByFocalMixed(varbInfo);
+        const { info, title } = varbLabels;
+
         return (
           <VarbSelectorRow
             {...{
               key: varbId,
               displayName: variableLabel,
+              ...(info && title && { infoProps: { title, info } }),
               onClick: () => onVarbSelect(varbInfo),
             }}
           />

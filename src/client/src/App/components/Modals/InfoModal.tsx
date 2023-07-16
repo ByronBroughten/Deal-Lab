@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
 function getInfoModalOptions(modalState: InfoModalState): InfoModalOptions {
   return {
     title: "",
-    infoText: "",
+    info: "",
     timeSet: 0,
     ...modalState,
   };
@@ -34,34 +34,36 @@ interface Props {
 }
 export function InfoModal({ modalWrapperProps }: Props) {
   const { modalState, setModal } = useInfoModal();
-  const { infoText, timeSet, title } = getInfoModalOptions(modalState);
+  const { info, timeSet, title } = getInfoModalOptions(modalState);
   return (
     <ModalSection
       {...{
         title: (
-          <MuiRow>
+          <MuiRow sx={{ flexWrap: "nowrap", alignItems: "flex-start" }}>
             {icons.info({
               size: 30,
               style: {
                 color: nativeTheme.complementary.main,
-                marginRight: nativeTheme.s2,
+                marginRight: nativeTheme.s25,
+                marginTop: nativeTheme.s15,
               },
             })}
-            {title}
+            <MuiRow sx={{ flexWrap: "noWrap" }}>{title}</MuiRow>
           </MuiRow>
         ),
-        infoText,
         show: Boolean(modalState),
         closeModal: () => {
           if (timeSet && timeSet < timeS.now() - 200) {
             setModal(null);
           }
         },
-        modalSectionProps: { sx: { maxWidth: 600, zIndex: 5 } },
+        modalSectionProps: {
+          sx: { flex: 1, minWidth: 500, maxWidth: 600, zIndex: 5 },
+        },
         modalWrapperProps,
       }}
     >
-      <Text style={styles.text}>{infoText}</Text>
+      <Text style={styles.text}>{info}</Text>
     </ModalSection>
   );
 }

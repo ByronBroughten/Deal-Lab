@@ -56,7 +56,7 @@ export const NumObjVarbSelector = React.memo(
       const openModal = () =>
         setModal({
           title: "Equation Editor and Variables",
-          infoText: `This input is a Variable Editor. Like all the other numeric editors, it lets you enter numbers as well as symbols, to add, subtract, multiply, and divide (+,-,*,/).\n\nAdditionally, you may enter variables. This lets you plug in the values of other inputs, much like excel spreadsheet formulas.\n\nTo add a variable, simply click the "+ Variables" button and choose one from the dropdown.`,
+          info: `This input is a Variable Editor. Like all the other numeric editors, it lets you enter numbers as well as symbols, to add, subtract, multiply, and divide (+,-,*,/).\n\nAdditionally, you may enter variables. This lets you plug in the values of other inputs, much like excel spreadsheet formulas.\n\nTo add a variable, simply click the "+ Variables" button and choose one from the dropdown.`,
         });
 
       return (

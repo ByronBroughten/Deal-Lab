@@ -4,7 +4,7 @@ import { StrictOmit } from "../../sharedWithServer/utils/types";
 
 export interface InfoModalOptions {
   title: React.ReactNode;
-  infoText: string;
+  info: string;
   timeSet: number;
 }
 

@@ -80,7 +80,7 @@ export function InfoIconIfExists({ sectionName, varbName }: VarbNames<any>) {
     return (
       <InfoIcon
         {...{
-          infoText: info,
+          info,
           title,
         }}
       />

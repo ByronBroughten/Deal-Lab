@@ -24,13 +24,14 @@ export function VarbStringLabel<SN extends SectionName>({
       throw new Error("This is not a string label varb.");
     }
   }
+
+  const { title, info } = labels;
   return (
     <LabelWithInfo
       {...{
         iconProps,
         label: label || labels.inputLabel,
-        infoTitle: labels.title,
-        infoText: labels.info,
+        ...(title && info && { infoProps: { title, info } }),
       }}
     />
   );

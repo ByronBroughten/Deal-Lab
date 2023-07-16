@@ -37,8 +37,9 @@ function getVarbSelectModalOptions(
 
 interface Props {
   modalWrapperProps?: { sx?: SxProps };
+  modalChildren?: React.ReactNode;
 }
-export function VarbSelectorModal(props: Props) {
+export function VarbSelectorModal({ modalChildren, ...rest }: Props) {
   const goToVariables = useGoToPage("userVariables");
   const menu = useGetterSectionOnlyOne("variablesMenu");
 
@@ -48,7 +49,7 @@ export function VarbSelectorModal(props: Props) {
   return (
     <ModalSection
       {...{
-        ...props,
+        ...rest,
         title: "Variable Select",
         show: Boolean(modalState),
         closeModal: () => {
@@ -93,6 +94,7 @@ export function VarbSelectorModal(props: Props) {
           onVarbSelect,
         }}
       />
+      {modalChildren}
     </ModalSection>
   );
 }

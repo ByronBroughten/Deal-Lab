@@ -6,7 +6,28 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-// How is valueAddProfit really calculated for BRRRR?
+
+// Add questionMarks to Variables to compare by (for templates)
+// Add questionMarks to the variable selector(?)
+
+// Speed up
+// - create comparison deals on cliku
+
+// Intermediary build compare screen
+// - The only question is, how do I prompt people to start
+//   with a template?
+// - Change load saved to
+
+// - Then display the compared deals similar to how they are now.
+// - Then have an “Edit” button to go back to editing the compared deals.
+
+// Consider making a "valueAddProfitOnSale" variable
+// for fixAndFlip, as opposed to "valueAddProfit" for BRRRR
+// Then there's these:
+// valueAddRoiDecimal
+// valueAddRoiPercent
+// valueAddRoiPercentPerMonth
+// valueAddRoiPercentAnnualized
 
 // Ask for Marina, Ed, and Kate to give feedback
 

@@ -27,8 +27,10 @@ export function UserComponents() {
                 {...{
                   iconProps: { size: nativeTheme.pageInfoDotSize },
                   label: "Component Templates",
-                  infoTitle: "Component Templates",
-                  infoText: `Here you can create and edit templates for different types of deal components that you can then plug in throughout the app. This way you don't have to repetetively input all the costs for things like utilities, Capital Expenses, and whatnot.`,
+                  infoProps: {
+                    title: "Component Templates",
+                    info: `Here you can create and edit templates for different types of deal components that you can then plug in throughout the app. This way you don't have to repetetively input all the costs for things like utilities, Capital Expenses, and whatnot.`,
+                  },
                 }}
               />
             ),

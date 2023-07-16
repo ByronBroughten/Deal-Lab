@@ -37,9 +37,10 @@ export function ComparedDealDisplay({ feId, sx }: Props) {
         ...arrSx(sx),
       ]}
     >
-      <View style={{ height: nativeTheme.comparedDealHead.height }}>
-        <View
-          style={{
+      <Box sx={{ height: 85 }}>
+        {/* <Box
+          sx={{
+            display: "flex"
             flex: 1,
             paddingTop: nativeTheme.s3,
             paddingBottom: nativeTheme.s25,
@@ -47,34 +48,43 @@ export function ComparedDealDisplay({ feId, sx }: Props) {
             justifyContent: "flex-start",
             maxWidth: 200,
           }}
+        > */}
+        <MuiRow
+          sx={{
+            alignItems: "flex-start",
+            flexWrap: "nowrap",
+            maxWidth: 200,
+          }}
         >
+          {icons[deal.valueNext("dealMode")]({
+            size: 25,
+            style: {
+              marginLeft: nativeTheme.s2,
+              color: nativeTheme.darkBlue.main,
+            },
+          })}
           <MuiRow
-            sx={{ flexDirection: "column", justifyContent: "space-between" }}
+            sx={{
+              marginLeft: nativeTheme.s4,
+              flex: 1,
+            }}
           >
-            <MuiRow sx={{ marginLeft: nativeTheme.s2 }}>
-              <Box
-                sx={{
-                  fontSize: nativeTheme.fs20,
-                  color: nativeTheme.primary.main,
-                  ...(!displayName && {
-                    fontStyle: "italic",
-                    paddingRight: nativeTheme.s2,
-                  }),
-                }}
-              >
-                {displayName || "Untitled"}
-              </Box>
-            </MuiRow>
-            {icons[deal.valueNext("dealMode")]({
-              size: 25,
-              style: {
-                marginLeft: nativeTheme.s2,
-                color: nativeTheme.darkBlue.main,
-              },
-            })}
+            <Box
+              sx={{
+                fontSize: nativeTheme.fs20,
+                color: nativeTheme.primary.main,
+                ...(!displayName && {
+                  fontStyle: "italic",
+                  paddingRight: nativeTheme.s2,
+                }),
+              }}
+            >
+              {displayName || "Untitled"}
+            </Box>
           </MuiRow>
-        </View>
-      </View>
+        </MuiRow>
+        {/* </Box> */}
+      </Box>
       {compareValues.map((compareValue) => {
         const info = compareValue.valueEntityInfo();
         const varb = dealSystem.varbByFocalMixed(info);

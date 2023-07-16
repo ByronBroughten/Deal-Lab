@@ -37,18 +37,7 @@ export function CompareDealsPage() {
             }}
           >
             <MuiRow>
-              <PageTitle
-                text={
-                  "Compare Deals"
-                  // <LabelWithInfo
-                  //   {...{
-                  //     labeil: "Compare",
-                  //     infoTitle: "Compare",
-                  //     infoText: `Compare deals side-by-side. Just click the "+" button to add a deal, and choose which values to compare by adding or subtracting values at the top of the page.`,
-                  //   }}
-                  // />
-                }
-              />
+              <PageTitle text={"Compare Deals"} />
               {!isEditingComparedDeals && (
                 <StyledActionBtn
                   {...{

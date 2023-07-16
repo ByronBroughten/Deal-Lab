@@ -33,8 +33,10 @@ export function UserVarbEditor() {
               {...{
                 iconProps: { size: nativeTheme.pageInfoDotSize },
                 label: "Input Variables",
-                infoTitle: "Input Variables",
-                infoText: `This page lets you define variables you can then plug in all throughout the app.\n\nFor example, you might define a variable for something like the cost to replace an oven in your area. Then, any time a property you're analyzing needs a new oven, you can plug that variable into a repair cost item and not have to go, "hmmm, how much does it cost to replace an oven, again?"\n\nThen if the cost of ovens changes—maybe you find a vendor with lower prices—simply update the variable and all inputs that reference it will update automatically, throughout all your deals.`,
+                infoProps: {
+                  title: "Input Variables",
+                  info: `This page lets you define variables you can then plug in all throughout the app.\n\nFor example, you might define a variable for something like the cost to replace an oven in your area. Then, any time a property you're analyzing needs a new oven, you can plug that variable into a repair cost item and not have to go, "hmmm, how much does it cost to replace an oven, again?"\n\nThen if the cost of ovens changes—maybe you find a vendor with lower prices—simply update the variable and all inputs that reference it will update automatically, throughout all your deals.`,
+                },
               }}
             />
           }

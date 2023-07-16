@@ -14,6 +14,8 @@ export function CompareDealsDisplayBody() {
     (dbId) => cache.childByDbId({ childName: "comparedDealSystem", dbId }).feId
   );
 
+  const areDealsToCompare = comparedSystemFeIds.length > 0;
+
   return (
     <MuiRow
       sx={{
@@ -22,17 +24,32 @@ export function CompareDealsDisplayBody() {
         marginBottom: nativeTheme.s4,
       }}
     >
-      {comparedSystemFeIds.map((feId) => (
-        <ComparedDealDisplay
-          {...{
-            sx: {
-              marginRight: nativeTheme.s4,
-            },
-            key: feId,
-            feId,
+      {!areDealsToCompare && (
+        <MuiRow
+          sx={{
+            flexWrap: "nowrap",
+            flex: 1,
+            justifyContent: "center",
+            minHeight: 200,
+            fontSize: nativeTheme.fs26,
+            color: nativeTheme.darkBlue.main,
           }}
-        />
-      ))}
+        >
+          No deals selected for comparison
+        </MuiRow>
+      )}
+      {areDealsToCompare &&
+        comparedSystemFeIds.map((feId) => (
+          <ComparedDealDisplay
+            {...{
+              sx: {
+                marginRight: nativeTheme.s4,
+              },
+              key: feId,
+              feId,
+            }}
+          />
+        ))}
     </MuiRow>
   );
 }

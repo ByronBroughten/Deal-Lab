@@ -61,8 +61,10 @@ export function CapExValue({ feId }: { feId: string }) {
           <LabelWithInfo
             {...{
               label: "Capital Expense Budget",
-              infoTitle: "How to Itemize CapEx",
-              infoText: capExItemizeDescription,
+              infoProps: {
+                title: "How to Itemize CapEx",
+                info: capExItemizeDescription,
+              },
             }}
           />
         ),

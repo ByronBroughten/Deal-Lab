@@ -43,6 +43,8 @@ export function LoadedVarbListNext({ feId, sx, title }: Props) {
         sx={[
           {
             borderRadius: nativeTheme.muiBr0,
+            borderBottomRightRadius: 0,
+            borderBottomLeftRadius: 0,
             ...nativeTheme.subSection.borderLines,
             borderBottom: "none",
             padding: nativeTheme.s2,
@@ -70,7 +72,7 @@ export function LoadedVarbListNext({ feId, sx, title }: Props) {
         />
       </Box>
       {itemIds.map((itemId) => (
-        <LoadedVarbItemNext {...{ feId: itemId, key: itemId }} />
+        <LoadedVarbItem {...{ feId: itemId, key: itemId }} />
       ))}
       <AddItemBtn
         {...{
@@ -82,11 +84,11 @@ export function LoadedVarbListNext({ feId, sx, title }: Props) {
   );
 }
 
-function LoadedVarbItemNext({ feId }: FeIdProp) {
+function LoadedVarbItem({ feId }: FeIdProp) {
   const feInfo = { sectionName: "outputItem", feId } as const;
   const outputItem = useGetterSection(feInfo);
   const varbInfo = outputItem.valueEntityInfo();
-  const { variableLabel, infoDot } = useVariableLabels({
+  const { variableLabel, infoProps } = useVariableLabels({
     focalInfo: feInfo,
     varbInfo,
   });
@@ -100,7 +102,6 @@ function LoadedVarbItemNext({ feId }: FeIdProp) {
         padding: nativeTheme.s3,
         paddingLeft: nativeTheme.s4,
         ...nativeTheme.subSection.borderLines,
-        borderRadius: nativeTheme.muiBr0,
         borderBottom: "none",
         fontSize: nativeTheme.fs18,
         color: nativeTheme.primary.main,
@@ -111,7 +112,7 @@ function LoadedVarbItemNext({ feId }: FeIdProp) {
         <LabelWithInfo
           {...{
             label: variableLabel,
-            ...infoDot,
+            infoProps,
           }}
         />
       </MuiRow>
@@ -138,6 +139,8 @@ function AddItemBtn({
           {
             ...nativeTheme.subSection.borderLines,
             borderRadius: nativeTheme.muiBr0,
+            borderTopRightRadius: 0,
+            borderTopLeftRadius: 0,
             fontSize: nativeTheme.fs20,
             minHeight: 25,
             width: "100%",

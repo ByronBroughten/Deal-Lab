@@ -27,8 +27,8 @@ function getInputModalOptions(
   };
 }
 
-type Props = { extraChildren?: React.ReactNode };
-export function InputModal({ extraChildren = null }: Props) {
+type Props = { modalChildren?: React.ReactNode };
+export function InputModal({ modalChildren = null }: Props) {
   const { modalState, setModal } = useInputModal();
   const { children, timeSet, title, dealMode, idOfSectionToSave } =
     getInputModalOptions(modalState);
@@ -47,7 +47,7 @@ export function InputModal({ extraChildren = null }: Props) {
       <DealModeProvider {...{ dealMode }}>
         <IdOfSectionToSaveProvider {...{ storeId: idOfSectionToSave }}>
           {children}
-          {extraChildren}
+          {modalChildren}
         </IdOfSectionToSaveProvider>
       </DealModeProvider>
     </ModalSection>
