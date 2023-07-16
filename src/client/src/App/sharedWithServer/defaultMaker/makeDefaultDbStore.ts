@@ -28,8 +28,11 @@ export type DbStoreSeed = {
   timeJoined: number;
 };
 
-const exampleBuyAndHold = makeExampleDeal("buyAndHold", "Buy and Hold");
-const exampleHomeBuyer = makeExampleDeal("homeBuyer", "Homebuyer Deal Example");
+const exampleBuyAndHold = makeExampleDeal(
+  "buyAndHold",
+  "Rental Property Example"
+);
+const exampleHomeBuyer = makeExampleDeal("homeBuyer", "Homebuyer Example");
 
 export function makeDefaultDbStoreArrs({
   authId,
