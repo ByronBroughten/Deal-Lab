@@ -47,6 +47,7 @@ export function CompareDealsEditBody() {
         />
         <LoadedVarbListNext
           {...{
+            title: "Values to Compare By",
             feId: outputList.feId,
             sx: {
               marginTop: nativeTheme.s4,

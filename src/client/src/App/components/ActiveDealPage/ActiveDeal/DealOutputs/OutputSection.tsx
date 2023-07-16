@@ -12,7 +12,7 @@ import { EditSectionBtn } from "../../../appWide/EditSectionBtn";
 import { MainSection } from "../../../appWide/GeneralSection/MainSection";
 import { StyledActionBtn } from "../../../appWide/GeneralSection/MainSection/StyledActionBtn";
 import { TitleAppend } from "../../../appWide/titleAppend";
-import { LoadedVarbList } from "../../../appWide/VarbLists/LoadedVarbList";
+import { LoadedVarbListNext } from "../../../appWide/VarbLists/LoadedVarbListNext";
 import { MuiRow } from "../../../general/MuiRow";
 import { useInputModalWithContext } from "../../../Modals/InputModalProvider";
 import { DealSubSectionTitle } from "../DealSubSectionTitle";
@@ -51,10 +51,13 @@ export function OutputSection({
       ),
       children: (
         <IdOfSectionToSaveProvider {...{ storeId: outputSection.mainStoreId }}>
-          <LoadedVarbList
+          <LoadedVarbListNext
             {...{
               feId: listId,
-              menuType: "value",
+              sx: {
+                marginTop: nativeTheme.s4,
+                marginBottom: nativeTheme.s4,
+              },
             }}
           />
         </IdOfSectionToSaveProvider>

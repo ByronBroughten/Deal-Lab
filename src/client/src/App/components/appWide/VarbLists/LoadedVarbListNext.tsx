@@ -15,7 +15,11 @@ import { LabelWithInfo } from "../LabelWithInfo";
 import { VarbListMenuDual } from "../ListGroup/ListGroupShared/VarbListMenuDual";
 import { RemoveSectionXBtn } from "../RemoveSectionXBtn";
 
-export function LoadedVarbListNext({ feId, sx }: FeIdProp & { sx?: SxProps }) {
+interface Props extends FeIdProp {
+  sx: SxProps;
+  title?: string;
+}
+export function LoadedVarbListNext({ feId, sx, title }: Props) {
   const feInfo = { sectionName: "outputList", feId } as const;
   const outputList = useGetterSection(feInfo);
   const itemIds = outputList.childFeIds("outputItem");
@@ -46,16 +50,18 @@ export function LoadedVarbListNext({ feId, sx }: FeIdProp & { sx?: SxProps }) {
           },
         ]}
       >
-        <MuiRow
-          sx={{
-            justifyContent: "center",
-            fontSize: nativeTheme.fs20,
-            color: nativeTheme.darkBlue.main,
-            marginBottom: nativeTheme.s2,
-          }}
-        >
-          Variables to compare by
-        </MuiRow>
+        {title && (
+          <MuiRow
+            sx={{
+              justifyContent: "center",
+              fontSize: nativeTheme.fs20,
+              color: nativeTheme.darkBlue.main,
+              marginBottom: nativeTheme.s2,
+            }}
+          >
+            {title}
+          </MuiRow>
+        )}
         <VarbListMenuDual
           {...{
             ...feInfo,
