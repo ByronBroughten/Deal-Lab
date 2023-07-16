@@ -470,7 +470,7 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
       // possibly depreciated
       homeBuyer: notApplicable(),
       buyAndHold: notApplicable(),
-      fixAndFlip: basicsS.loadByVarbPathName("valueAddProfit"),
+      fixAndFlip: basicsS.loadFromLocal("valueAddProfit"),
       brrrr: basicsS.equationLR(
         "subtract",
         propS.local("valueAddProfit"),
@@ -480,11 +480,7 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
     valueAddRoiOnSaleDecimal: dealModeVarb({
       homeBuyer: notApplicable(),
       buyAndHold: notApplicable(),
-      fixAndFlip: basicsS.equationLR(
-        "divide",
-        propS.local("valueAddProfitOnSale"),
-        propS.local("totalInvestment")
-      ),
+      fixAndFlip: basicsS.loadFromLocal("valueAddRoiDecimal"),
       brrrr: basicsS.equationLR(
         "divide",
         propS.local("valueAddProfitOnSale"),
@@ -494,10 +490,7 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
     valueAddRoiOnSalePercent: dealModeVarb({
       homeBuyer: notApplicable(),
       buyAndHold: notApplicable(),
-      fixAndFlip: basicsS.equationSimple(
-        "decimalToPercent",
-        propS.local("valueAddRoiOnSaleDecimal")
-      ),
+      fixAndFlip: basicsS.loadFromLocal("valueAddRoiPercent"),
       brrrr: basicsS.equationSimple(
         "decimalToPercent",
         propS.local("valueAddRoiOnSaleDecimal")
@@ -506,11 +499,7 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
     valueAddRoiOnSalePercentPerMonth: dealModeVarb({
       homeBuyer: notApplicable(),
       buyAndHold: notApplicable(),
-      fixAndFlip: basicsS.equationLR(
-        "divide",
-        propS.local("valueAddRoiOnSalePercent"),
-        propS.onlyChild("property", "holdingPeriodMonths")
-      ),
+      fixAndFlip: basicsS.loadFromLocal("valueAddRoiPercentPerMonth"),
       brrrr: basicsS.equationLR(
         "divide",
         propS.local("valueAddRoiOnSalePercent"),
@@ -520,11 +509,7 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
     valueAddRoiOnSalePercentAnnualized: dealModeVarb({
       homeBuyer: notApplicable(),
       buyAndHold: notApplicable(),
-      fixAndFlip: basicsS.equationLR(
-        "multiply",
-        propS.varbPathName("twelve"),
-        propS.local("valueAddRoiOnSalePercentPerMonth")
-      ),
+      fixAndFlip: basicsS.loadFromLocal("valueAddRoiPercentAnnualized"),
       brrrr: basicsS.equationLR(
         "multiply",
         propS.varbPathName("twelve"),
