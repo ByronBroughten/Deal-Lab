@@ -39,9 +39,9 @@ export function VarbSelectorByDealMode({ dealMode, ...rest }: Props) {
 function useFixedCollections(dealMode: DealMode<"plusMixed">): CollectionProps {
   const orderedCollectionNames = Arr.extractStrict(collectionNamesFixed, [
     "Property",
+    "Deal",
     "Financing",
     "Management",
-    "Deal",
   ] as const);
 
   const optionArr = fixedVarbOptionArrs[dealMode];
