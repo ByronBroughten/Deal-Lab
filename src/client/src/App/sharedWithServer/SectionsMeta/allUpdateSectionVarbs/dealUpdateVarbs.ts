@@ -474,7 +474,7 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
       brrrr: basicsS.equationLR(
         "subtract",
         propS.local("valueAddProfit"),
-        propS.onlyChild("property", "closingCosts")
+        propS.onlyChild("property", "sellingCosts")
       ),
     }),
     valueAddRoiOnSaleDecimal: dealModeVarb({

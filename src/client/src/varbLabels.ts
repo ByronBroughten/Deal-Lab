@@ -382,7 +382,6 @@ export const varbLabels = checkAllVarbLabels({
     refiLoanHoldingCost: input("Holding period refi loan payment sum"),
     ...simplePeriodic("ongoingLoanPayment", "Loan payment"),
     ...simplePeriodic("expensesOngoing", "Average ongoing costs"),
-    valueAddProfit: input("Value add profit"),
     totalInvestment: text({
       inputLabel: "Total investment",
       title: "Total Investment",
@@ -398,7 +397,8 @@ export const varbLabels = checkAllVarbLabels({
       title: "Cash Flow",
       info: "The income that a property brings in every month or year, after expenses have been subtracted.",
     }),
-    valueAddRoiDecimal: input("ROI Decimal"),
+    valueAddProfit: input("Value add profit"),
+    valueAddRoiDecimal: input("VA ROI Decimal"),
     valueAddRoiPercent: text({
       inputLabel: "VA ROI",
       title: "Value Add Return on Investment",
@@ -409,6 +409,19 @@ export const varbLabels = checkAllVarbLabels({
       inputLabel: "VA ROI annualized",
       title: "Annualized Return on Investment from Value Add",
       info: `The total profit from increasing a property's value after purchase, as a percent of the cash that was invested to do so, divided by the number of years—or by the fraction of years—that the holding period lasted.\n\nThis can be used to compare ROI from onetime windfall income with ongoing income from other types of investments.`,
+    }),
+    valueAddProfitOnSale: input("VA profit on sale"),
+    valueAddRoiOnSaleDecimal: input("VA ROI on sale decimal"),
+    valueAddRoiOnSalePercent: text({
+      inputLabel: "VA ROI on sale",
+      title: "Value Add ROI on sale",
+      info: "The total profit from increasing a property's value after purchase, as a percent of the cash that was invested to do so, including selling costs.\n\nThis is useful if you plan on accessing the value added to a property by selling it, as opposed to by using a HELOC or something else.",
+    }),
+    valueAddRoiOnSalePercentPerMonth: input("VA ROI on sale per month"),
+    valueAddRoiOnSalePercentAnnualized: text({
+      inputLabel: "VA ROI on sale annualized",
+      title: "Annualized ROI from Value Add on Sale",
+      info: `The total profit from increasing a property's value after purchase, as a percent of the cash that was invested to do so, including selling costs, divided by the number of years—or by the fraction of years—that the holding period lasted.\n\nThis can be used to compare ROI from onetime windfall income with ongoing income from other types of investments.`,
     }),
   }),
   ...prop("onetimeItem", {
