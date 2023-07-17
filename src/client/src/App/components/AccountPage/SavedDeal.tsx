@@ -25,6 +25,10 @@ import { useConfirmationModal } from "../Modals/ConfirmationModalProvider";
 
 const titleProps = (displayName: string) => ({
   sx: {
+    color: nativeTheme.primary.main,
+    fontSize: nativeTheme.fs18,
+    maxWidth: 800,
+    ...(!displayName && { fontStyle: "italic" }),
     "& .DraftEditor-root": {
       color: nativeTheme.primary.main,
       fontSize: nativeTheme.fs18,
@@ -145,14 +149,15 @@ export function SavedDeal({
     >
       <Row style={{ justifyContent: "space-between" }}>
         <Box {...titleProps(strDisplayName)}>
+          {/* {strDisplayName || "Untitled"} */}
           <BareStringEditor
             {...{
               ...titleProps(strDisplayName),
               feVarbInfo: deal.varbInfoNext("displayNameEditor"),
               placeholder: "Untitled",
+              noSolve: true,
             }}
           />
-          {/* {strDisplayName || "Untitled"} */}
         </Box>
         <Row
           style={{

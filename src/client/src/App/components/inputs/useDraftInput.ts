@@ -11,7 +11,10 @@ import { StrictOmit } from "../../sharedWithServer/utils/types";
 
 interface UseDraftInputProps
   extends FeVarbInfo,
-    StrictOmit<CreateEditorProps, "valueType"> {}
+    StrictOmit<CreateEditorProps, "valueType"> {
+  altUpdate?: AltUpdate;
+  noSolve?: boolean;
+}
 
 export function useDraftInput(props: UseDraftInputProps) {
   const setterVarb = useSetterVarb(props);
@@ -31,6 +34,7 @@ export function useDraftInput(props: UseDraftInputProps) {
   useUpdateValueFromEditor({
     ...varb.feVarbInfo,
     editorState,
+    noSolve: props.noSolve,
   });
 
   useUpdateEditorFromValue({
@@ -75,20 +79,29 @@ function useUpdateEditorFromValue({
   }, [contentIsUpdated, strValue, contentState]);
 }
 
+interface AltUpdateProps extends Partial<FeVarbInfo> {
+  contentState: ContentState;
+}
+
+type AltUpdate = (props: AltUpdateProps) => void;
+
 interface Props extends FeVarbInfo {
   editorState: EditorState;
+  altUpdate?: AltUpdate;
+  noSolve?: boolean;
 }
-function useUpdateValueFromEditor({ editorState, ...rest }: Props) {
+function useUpdateValueFromEditor({ editorState, altUpdate, ...rest }: Props) {
   const updateFromContent = useAction("updateValueFromContent");
   const contentState = editorState.getCurrentContent();
   const isFirstUpdateRef = React.useRef(true);
+  const updateFn = altUpdate ?? updateFromContent;
   useEffect(() => {
     if (isFirstUpdateRef.current) {
       isFirstUpdateRef.current = false;
       return;
     }
-    updateFromContent({ contentState, ...rest });
-  }, [contentState, updateFromContent]);
+    updateFn({ contentState, ...rest });
+  }, [contentState, updateFn]);
 }
 
 export interface VarbContentInfo extends FeVarbInfo {

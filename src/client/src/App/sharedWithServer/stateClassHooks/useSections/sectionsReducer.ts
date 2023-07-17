@@ -100,7 +100,9 @@ export type SectionsAction = SectionActionsMap[SectionActionName];
 interface UpdateValueProps extends FeVarbValueInfo, IdOfSectionToSaveProp {}
 interface UpdateContentValueProps
   extends VarbContentInfo,
-    IdOfSectionToSaveProp {}
+    IdOfSectionToSaveProp {
+  noSolve?: boolean;
+}
 interface RemoveFromStoreProps extends StoreNameProp, FeIdProp {}
 interface RemoveFromStoreDbIdProps extends StoreNameProp, DbIdProp {}
 interface AddChildActionProps<
@@ -205,8 +207,13 @@ export const sectionsReducer: React.Reducer<StateSections, SectionsAction> = (
       const editorVarb = new EditorUpdaterVarb(
         varb.getterVarbBase.getterVarbProps
       );
+
       const value = editorVarb.valueFromContentState(contentState);
-      varb.editorUpdateAndSolve(value);
+      if (props.noSolve) {
+        varb.updaterVarb.updateValue(value);
+      } else {
+        varb.editorUpdateAndSolve(value);
+      }
     },
 
     addToStore: (props) => solverSections.feStore.addToStore(props),

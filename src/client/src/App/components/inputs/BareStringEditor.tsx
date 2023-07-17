@@ -10,15 +10,20 @@ interface Props {
   className?: string;
   placeholder?: string;
   sx?: SxProps;
+  noSolve?: boolean;
 }
 
 export function BareStringEditor({
   feVarbInfo,
   className,
   placeholder,
+  noSolve,
   sx,
 }: Props) {
-  const { editorState, setEditorState } = useDraftInput(feVarbInfo);
+  const { editorState, setEditorState } = useDraftInput({
+    ...feVarbInfo,
+    noSolve,
+  });
   return (
     <BareDraftEditor
       {...{

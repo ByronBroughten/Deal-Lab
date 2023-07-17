@@ -60,14 +60,14 @@ export function AccountPage() {
             feRouteName="components"
             text={
               <div style={{ whiteSpace: "pre-line", lineHeight: "26px" }}>
-                {"Component\nTemplates"}
+                {"Your\nComponents"}
               </div>
             }
             icon={icons.dealComponents({ size: iconSize })}
           />
           <AccountBtn
             feRouteName="userVariables"
-            text={<div>Input Variables</div>}
+            text={<div>Your Variables</div>}
             icon={icons.variable({ size: iconSize })}
           />
         </Row>
