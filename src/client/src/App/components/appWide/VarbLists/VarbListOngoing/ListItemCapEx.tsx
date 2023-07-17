@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import { useGetterSection } from "../../../../sharedWithServer/stateClassHooks/useGetterSection";
-import theme from "../../../../theme/Theme";
 import { NumObjEntityEditor } from "../../../inputs/NumObjEntityEditor";
 import { NameEditorCell } from "../../ListGroup/ListGroupShared/NameEditorCell";
 import { VarbListItemStyledNext } from "../../ListGroup/ListGroupShared/VarbListItemStyled";
@@ -46,8 +45,9 @@ const ListItemOngoingMemo = React.memo(function ListItemOngoingMemo({
           }}
         />
       </td>
+      <td>=</td>
       <td className="VarbListTable-extenderCell">
-        <span className="ListItemCapEx-equals">{`= ${
+        <span className="ListItemCapEx-equals">{`${
           lifespan && costToReplace ? displayValueVarb : "?"
         }`}</span>
       </td>
@@ -58,13 +58,12 @@ const ListItemOngoingMemo = React.memo(function ListItemOngoingMemo({
 
 const Styled = styled(VarbListItemStyledNext)`
   .ListItemCapEx-equals {
-    margin-left: ${theme.s2};
     font-size: 17px;
   }
 
   .ListItemCapEx-lifespan {
     .DraftEditor-root {
-      min-width: 46px;
+      min-width: 28px;
     }
   }
 

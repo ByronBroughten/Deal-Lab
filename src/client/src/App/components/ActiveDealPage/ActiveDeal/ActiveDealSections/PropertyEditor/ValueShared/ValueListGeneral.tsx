@@ -6,6 +6,7 @@ import { nativeTheme } from "../../../../../../theme/nativeTheme";
 import { FormSection } from "../../../../../appWide/FormSection";
 import { VarbListGenericMenuType } from "../../../../../appWide/ListGroup/ListGroupShared/VarbListGeneric";
 import { VarbListMenuDual } from "../../../../../appWide/ListGroup/ListGroupShared/VarbListMenuDual";
+import { MuiRow } from "../../../../../general/MuiRow";
 import { ListRouteName } from "../../../../../UserListEditorPage/UserComponentClosed";
 import { AddWithDisplayName, CommonItemsList } from "./CommonItemsList";
 
@@ -36,14 +37,22 @@ export function ValueListGeneral<
       }}
       className={`ValueListGeneral-root ${className ?? ""}`}
     >
-      <VarbListMenuDual
-        {...{
-          className: "ValueListGeneral-menu",
-          menuType,
-          ...rest,
+      <MuiRow sx={{ width: "100%", justifyContent: "flex-start" }}>
+        <VarbListMenuDual
+          {...{
+            className: "ValueListGeneral-menu",
+            menuType,
+            ...rest,
+          }}
+        />
+      </MuiRow>
+      <FormSection
+        sx={{
+          flexDirection: "column",
+          paddingBottom: 0,
+          paddingTop: nativeTheme.s2,
         }}
-      />
-      <FormSection sx={{ flexDirection: "column", paddingBottom: 0 }}>
+      >
         {menuDisplayNames && (
           <CommonItemsList
             {...{

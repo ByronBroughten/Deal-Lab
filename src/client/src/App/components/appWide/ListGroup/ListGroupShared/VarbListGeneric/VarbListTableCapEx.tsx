@@ -23,6 +23,7 @@ export function VarbListTableCapEx({
             Cost to Replace
           </th>
           <th className="VarbListTable-lifespanHeader">Lifespan</th>
+          <th></th>
           <th className="VarbListTable-budgetHeader VarbListTable-extenderHeader">
             Budget
           </th>
