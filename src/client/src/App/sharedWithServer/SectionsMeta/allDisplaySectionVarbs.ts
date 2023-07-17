@@ -207,6 +207,10 @@ export const allDisplaySectionVarbs = {
   ...displaySectionVarbsProp("capExValue", {
     ...editorDisplayGroup("periodicInput", "valueDollars", "CapEx"),
   }),
+  ...displaySectionVarbsProp("capExItem", {
+    ...editorDisplayGroup("periodicInput", "valueDollars", "CapEx Item"),
+    ...editorDisplayGroup("monthsYearsInput", "lifespan", "CapEx Item"),
+  }),
   ...displaySectionVarbsProp("maintenanceValue", {
     ...editorDisplayGroup("periodicInput", "valueDollars", "Maintenance"),
   }),

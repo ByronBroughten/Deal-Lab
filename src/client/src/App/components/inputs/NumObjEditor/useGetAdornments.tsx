@@ -23,7 +23,6 @@ export function getEntityEditorAdornments({
   doEquals,
 }: GetAdornmentsProps): Adornments {
   if (editorTextStatus === "solvableText" && doEquals) {
-    startAdornment = " ";
     endAdornment = (
       <span className="NumObjEntityEditor-equalsAdornment">
         <span className="NumObjEntityEditor-equals">=</span>
@@ -32,6 +31,7 @@ export function getEntityEditorAdornments({
         {endAdornment}
       </span>
     );
+    startAdornment = " ";
   }
   return { startAdornment, endAdornment };
 }

@@ -59,6 +59,7 @@ const ListItemOngoingMemo = React.memo(function ListItemOngoingMemo({
 const Styled = styled(VarbListItemStyledNext)`
   .ListItemCapEx-equals {
     margin-left: ${theme.s2};
+    font-size: 17px;
   }
 
   .ListItemCapEx-lifespan {

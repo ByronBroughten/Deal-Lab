@@ -58,7 +58,7 @@ export function VarbListTableSectionStyled({
               }}
             >
               <Text
-                style={{ color: nativeTheme["gray-700"], fontSize: 15 }}
+                style={{ color: nativeTheme["gray-700"], fontSize: 18 }}
               >{`Total: ${varbListTotal}`}</Text>
             </View>
           )}

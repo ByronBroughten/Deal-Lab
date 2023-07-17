@@ -9,6 +9,10 @@ const fontSize = inputStyles.inputEditor.fontSize;
 export const materialDraftEditor = (label?: React.ReactNode) =>
   sxProps({
     display: "inline-block",
+    "& .NumObjEntityEditor-equals": {
+      marginLeft: "2px",
+      marginRight: "2px",
+    },
     "& .NumObjEntityEditor-equalsAdornment": {
       fontSize,
     },
