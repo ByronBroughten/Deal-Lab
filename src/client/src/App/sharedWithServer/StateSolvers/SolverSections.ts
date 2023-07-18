@@ -301,7 +301,7 @@ export class SolverSections extends SolverSectionsBase {
     }
 
     const session = this.oneAndOnly("sessionStore");
-    session.basic.updateValues({ isEditingComparedDeals: false });
+    session.basic.updateValues({ compareDealStatus: "comparing" });
 
     this.prepperSections.addAppWideMissingOutEntities();
     this.solve();

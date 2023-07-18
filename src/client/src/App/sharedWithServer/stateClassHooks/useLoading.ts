@@ -5,6 +5,18 @@ import { useInputModal } from "../../components/Modals/InputModalProvider";
 import { useAction } from "./useAction";
 import { useGetterSectionOnlyOne } from "./useGetterSection";
 
+export function useDoCompare() {
+  const sessionStore = useGetterSectionOnlyOne("sessionStore");
+  const status = sessionStore.valueNext("compareDealStatus");
+  const doCompare = useAction("doDealCompare");
+
+  React.useEffect(() => {
+    if (status === "buildingCompare") {
+      doCompare({});
+    }
+  }, [status]);
+}
+
 export function useAddDeal() {
   const { setModal } = useInputModal();
   const newDealMenu = useGetterSectionOnlyOne("newDealMenu");

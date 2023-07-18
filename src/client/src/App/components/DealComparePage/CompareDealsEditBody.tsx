@@ -14,7 +14,12 @@ export function CompareDealsEditBody() {
   const outputList = menu.onlyChild("outputList");
 
   const session = useGetterSectionOnlyOne("sessionStore");
-  const doDealCompare = useAction("doDealCompare");
+  const updateValue = useAction("updateValue");
+  const buildCompare = () =>
+    updateValue({
+      ...session.varbInfo("compareDealStatus"),
+      value: "buildingCompare",
+    });
 
   return (
     <Box>
@@ -46,7 +51,7 @@ export function CompareDealsEditBody() {
       </MuiRow>
       <FinishBtn
         {...{
-          onClick: () => doDealCompare({}),
+          onClick: buildCompare,
           btnText: "Compare",
           btnIcon: icons.compareDeals(),
           sx: { borderRadius: nativeTheme.muiBr0 },

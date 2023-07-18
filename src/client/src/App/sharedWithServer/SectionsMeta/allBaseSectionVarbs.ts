@@ -54,7 +54,7 @@ export function makeAllBaseSectionVarbs() {
       value: baseVarb("string"),
     }),
     sessionStore: varbs({
-      isEditingComparedDeals: baseVarb("boolean"),
+      compareDealStatus: baseVarb("compareDealStatus"),
       archivedAreLoaded: baseVarb("boolean"),
       showArchivedDeals: baseVarb("boolean"),
       isCreatingDeal: baseVarb("boolean"),

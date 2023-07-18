@@ -1,3 +1,4 @@
+import { MoonLoader } from "react-spinners";
 import { useAction } from "../../sharedWithServer/stateClassHooks/useAction";
 import { useGetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useGetterSection";
 import { IdOfSectionToSaveProvider } from "../../sharedWithServer/stateClassHooks/useIdOfSectionToSave";
@@ -15,13 +16,13 @@ import { CompareDealsEditBody } from "./CompareDealsEditBody";
 export function CompareDealsPage() {
   const menu = useGetterSectionOnlyOne("dealCompareMenu");
   const session = useGetterSectionOnlyOne("sessionStore");
-  const isEditingComparedDeals = session.valueNext("isEditingComparedDeals");
+  const status = session.valueNext("compareDealStatus");
 
   const updateValue = useAction("updateValue");
   const editComparedDeals = () =>
     updateValue({
-      ...session.varbInfo("isEditingComparedDeals"),
-      value: true,
+      ...session.varbInfo("compareDealStatus"),
+      value: "editing",
     });
 
   return (
@@ -39,7 +40,7 @@ export function CompareDealsPage() {
           >
             <MuiRow>
               <PageTitle text={"Compare Deals"} />
-              {!isEditingComparedDeals && (
+              {status === "comparing" && (
                 <StyledActionBtn
                   {...{
                     sx: { marginLeft: nativeTheme.s2 },
@@ -50,8 +51,26 @@ export function CompareDealsPage() {
                 />
               )}
             </MuiRow>
-            {isEditingComparedDeals && <CompareDealsEditBody />}
-            {!isEditingComparedDeals && <CompareDealsDisplayBody />}
+            {status === "editing" && <CompareDealsEditBody />}
+            {status === "buildingCompare" && (
+              <MuiRow
+                sx={{
+                  justifyContent: "center",
+                  padding: nativeTheme.s45,
+                }}
+              >
+                <MoonLoader
+                  {...{
+                    loading: status === "buildingCompare",
+                    color: nativeTheme.primary.main,
+                    size: 100,
+                    speedMultiplier: 0.8,
+                    cssOverride: { marginTop: nativeTheme.s3 },
+                  }}
+                />
+              </MuiRow>
+            )}
+            {status === "comparing" && <CompareDealsDisplayBody />}
           </SubSectionOpen>
         </IdOfSectionToSaveProvider>
       </DealModeProvider>
