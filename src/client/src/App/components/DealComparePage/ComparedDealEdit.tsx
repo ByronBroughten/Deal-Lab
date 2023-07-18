@@ -11,11 +11,18 @@ type Props = {
   sx?: SxProps;
 };
 export function ComparedDealEdit({ feId, sx }: Props) {
-  const cache = useGetterSectionOnlyOne("dealCompareCache");
-  const dealSystem = cache.child({ childName: "comparedDealSystem", feId });
+  const menu = useGetterSectionOnlyOne("dealCompareMenu");
+  const comparedDeal = menu.child({ childName: "comparedDeal", feId });
 
-  const deal = dealSystem.onlyChild("deal");
-  const displayName = deal.valueNext("displayName").mainText;
+  const session = useGetterSectionOnlyOne("sessionStore");
+  const sessionDeal = session.childByDbId({
+    childName: "dealMain",
+    dbId: comparedDeal.dbId,
+  });
+
+  const displayName = sessionDeal.valueNext("displayName");
+  const dealMode = sessionDeal.valueNext("dealMode");
+
   return (
     <Box
       sx={[
@@ -31,10 +38,10 @@ export function ComparedDealEdit({ feId, sx }: Props) {
       <Box>
         <Box>
           <MuiRow sx={{ justifyContent: "flex-end" }}>
-            <RemoveSectionXBtn {...dealSystem.feInfo} />
+            <RemoveSectionXBtn {...comparedDeal.feInfo} />
           </MuiRow>
           <MuiRow>
-            {icons[deal.valueNext("dealMode")]({
+            {icons[dealMode]({
               size: 25,
               style: {
                 marginLeft: nativeTheme.s2,

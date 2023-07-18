@@ -16,8 +16,9 @@ export function CompareDealsPage() {
   const menu = useGetterSectionOnlyOne("dealCompareMenu");
   const session = useGetterSectionOnlyOne("sessionStore");
   const isEditingComparedDeals = session.valueNext("isEditingComparedDeals");
+
   const updateValue = useAction("updateValue");
-  const editParameters = () =>
+  const editComparedDeals = () =>
     updateValue({
       ...session.varbInfo("isEditingComparedDeals"),
       value: true,
@@ -43,7 +44,7 @@ export function CompareDealsPage() {
                   {...{
                     sx: { marginLeft: nativeTheme.s2 },
                     left: icons.edit({ size: 20 }),
-                    onClick: editParameters,
+                    onClick: editComparedDeals,
                     middle: "Edit",
                   }}
                 />

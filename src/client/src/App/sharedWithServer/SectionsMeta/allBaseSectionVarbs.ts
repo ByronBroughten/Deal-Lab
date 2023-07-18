@@ -43,6 +43,11 @@ export function makeAllBaseSectionVarbs() {
       dateTimeCreated: baseVarb("dateTime"),
       displayName: baseVarb("string"),
     }),
+    sessionDeal: varbs({
+      dateTimeCreated: baseVarb("dateTime"),
+      displayName: baseVarb("string"),
+      dealMode: baseVarb("dealMode"),
+    }),
     sessionVarb: varbs({
       varbName: baseVarb("string"),
       label: baseVarb("string"),

@@ -5,13 +5,13 @@ import { AddCompareDealBtnNext } from "./AddCompareDealBtnNext";
 import { ComparedDealEdit } from "./ComparedDealEdit";
 
 type Props = {
-  dealSystemIds: string[];
+  comparedDealFeIds: string[];
   sx?: SxProps;
 };
-export function CompareDealsEdit({ dealSystemIds, sx }: Props) {
+export function CompareDealsEdit({ comparedDealFeIds, sx }: Props) {
   return (
     <Box sx={[{ marginRight: nativeTheme.s5 }, ...arrSx(sx)]}>
-      {dealSystemIds.map((feId, idx) => (
+      {comparedDealFeIds.map((feId, idx) => (
         <ComparedDealEdit
           {...{
             key: feId,
@@ -28,7 +28,7 @@ export function CompareDealsEdit({ dealSystemIds, sx }: Props) {
       ))}
       <AddCompareDealBtnNext
         {...{
-          dealCount: dealSystemIds.length,
+          dealCount: comparedDealFeIds.length,
         }}
       />
     </Box>

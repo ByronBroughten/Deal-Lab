@@ -54,7 +54,10 @@ export const allSectionChildren = checkAllSectionChildren({
     activeDealSystem: "dealSystem",
   }),
   sessionStore: sectionChildren({
-    dealMain: "sessionSection",
+    dealMain: "sessionDeal",
+  }),
+  sessionDeal: sectionChildren({
+    sessionVarb: "sessionVarb",
   }),
   sessionSection: sectionChildren({
     sessionVarb: "sessionVarb",

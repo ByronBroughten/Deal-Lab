@@ -12,12 +12,13 @@ const outputPerDeal: Record<DealMode, VarbName<"deal">> = {
 
 export function makeDefaultSessionDeal(deal: GetterSection<"deal">) {
   const dealMode = deal.valueNext("dealMode");
-  const sessionDeal = PackBuilderSection.initAsOmniChild("sessionSection", {
+  const sessionDeal = PackBuilderSection.initAsOmniChild("sessionDeal", {
     dbId: deal.dbId,
   });
   sessionDeal.updateValues({
     dateTimeCreated: deal.valueNext("dateTimeFirstSaved"),
     displayName: deal.valueNext("displayName").mainText,
+    dealMode,
   });
 
   const varbName = outputPerDeal[dealMode];

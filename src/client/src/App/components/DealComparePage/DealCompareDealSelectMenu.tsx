@@ -35,10 +35,17 @@ function useFilteredDealsToCompare(): GetterSection<"deal">[] {
 
 type Props = { closeMenu: () => void };
 export function DealCompareDealSelectMenu({ closeMenu }: Props) {
-  const addDealToCompare = useAction("addDealToCompare");
+  const compareMenu = useGetterSectionOnlyOne("dealCompareMenu");
+  const addChild = useAction("addChild");
+  const addToCompare = (dbId: string) =>
+    addChild({
+      feInfo: compareMenu.feInfo,
+      childName: "comparedDeal",
+      options: { dbId },
+    });
 
-  const menu = useGetterSectionOnlyOne("dealCompareDealSelectMenu");
-  const nameFilterVarb = menu.varbNext("dealNameFilter");
+  const selectMenu = useGetterSectionOnlyOne("dealCompareDealSelectMenu");
+  const nameFilterVarb = selectMenu.varbNext("dealNameFilter");
   const filteredDeals = useFilteredDealsToCompare();
   return (
     <View>
@@ -108,7 +115,7 @@ export function DealCompareDealSelectMenu({ closeMenu }: Props) {
                   }}
                   onClick={() => {
                     unstable_batchedUpdates(() => {
-                      addDealToCompare({ feId: deal.feId });
+                      addToCompare(deal.dbId);
                       closeMenu();
                     });
                   }}

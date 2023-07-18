@@ -52,6 +52,9 @@ export class SolverSection<
   get basicSolvePrepper(): SolverAdderPrepSection<SN> {
     return new SolverAdderPrepSection(this.solverSectionProps);
   }
+  get basic(): SolverAdderPrepSection<SN> {
+    return this.basicSolvePrepper;
+  }
   static init<S extends SectionName>(
     props: SolverSectionInitProps<S>
   ): SolverSection<S> {

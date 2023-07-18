@@ -1,7 +1,6 @@
 import { Box } from "@mui/material";
 import { useAction } from "../../sharedWithServer/stateClassHooks/useAction";
 import { useGetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useGetterSection";
-import { useGetterMain } from "../../sharedWithServer/stateClassHooks/useMain";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { FinishBtn } from "../ActiveDealPage/ActiveDeal/FinishBtn";
 import { LoadedVarbListNext } from "../appWide/VarbLists/LoadedVarbListNext";
@@ -10,23 +9,12 @@ import { icons } from "../Icons";
 import { CompareDealsEdit } from "./CompareDealsEdit";
 
 export function CompareDealsEditBody() {
-  const main = useGetterMain();
-  const cache = main.onlyChild("dealCompareCache");
-  const menu = main.onlyChild("feStore").onlyChild("dealCompareMenu");
+  const menu = useGetterSectionOnlyOne("dealCompareMenu");
+  const comparedDealFeIds = menu.childFeIds("comparedDeal");
   const outputList = menu.onlyChild("outputList");
 
-  const comparedDbIds = menu.childrenDbIds("comparedDeal");
-  const comparedSystemFeIds = comparedDbIds.map(
-    (dbId) => cache.childByDbId({ childName: "comparedDealSystem", dbId }).feId
-  );
-
   const session = useGetterSectionOnlyOne("sessionStore");
-  const updateValue = useAction("updateValue");
-  const showComparedDeals = () =>
-    updateValue({
-      ...session.varbInfo("isEditingComparedDeals"),
-      value: false,
-    });
+  const doDealCompare = useAction("doDealCompare");
 
   return (
     <Box>
@@ -38,7 +26,7 @@ export function CompareDealsEditBody() {
       >
         <CompareDealsEdit
           {...{
-            dealSystemIds: comparedSystemFeIds,
+            comparedDealFeIds,
             sx: {
               marginTop: nativeTheme.s4,
               marginBottom: nativeTheme.s4,
@@ -58,7 +46,7 @@ export function CompareDealsEditBody() {
       </MuiRow>
       <FinishBtn
         {...{
-          onClick: showComparedDeals,
+          onClick: () => doDealCompare({}),
           btnText: "Compare",
           btnIcon: icons.compareDeals(),
           sx: { borderRadius: nativeTheme.muiBr0 },

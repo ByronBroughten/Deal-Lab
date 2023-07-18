@@ -207,8 +207,8 @@ export class SolverSections extends SolverSectionsBase {
     const newDeal = feStore.newestEntry("dealMain");
     const property = newDeal.onlyChild("property");
 
-    newDeal.basicSolvePrepper.updateValues({ dealMode });
-    property.basicSolvePrepper.updateValues({ propertyMode: dealMode });
+    newDeal.basic.updateValues({ dealMode });
+    property.basic.updateValues({ propertyMode: dealMode });
 
     const sessionStore = this.oneAndOnly("sessionStore");
     sessionStore.updateValues({ isCreatingDeal: false });
@@ -246,7 +246,7 @@ export class SolverSections extends SolverSectionsBase {
   loadAndShowArchivedDeals(archivedDeals: SectionPack<"deal">[]) {
     this.feStore.loadChildrenNoDuplicates("dealMain", archivedDeals);
     const sessionStore = this.oneAndOnly("sessionStore");
-    sessionStore.basicSolvePrepper.updateValues({
+    sessionStore.basic.updateValues({
       showArchivedDeals: true,
       archivedAreLoaded: true,
     });
@@ -266,43 +266,57 @@ export class SolverSections extends SolverSectionsBase {
     }
     this.feStore.removeFromStore({ storeName: "dealMain", feId });
   }
+  doDealCompare() {
+    const { feStore } = this;
+    const dealDbIds = feStore.get.childrenDbIds("dealMain");
 
-  addDealSystemToCompare(dbId: string) {
-    const menu = this.oneAndOnly("dealCompareCache");
+    const menu = this.oneAndOnly("dealCompareMenu");
+    for (const dbId of menu.get.childrenDbIds("comparedDeal")) {
+      if (!dealDbIds.includes(dbId)) {
+        const compareDeal = menu.childByDbId({
+          childName: "comparedDeal",
+          dbId,
+        });
+        compareDeal.basic.removeSelf();
+      }
+    }
+
+    const compareDbIds = menu.get.childrenDbIds("comparedDeal");
+    const cache = this.oneAndOnly("dealCompareCache");
+    for (const system of cache.children("comparedDealSystem")) {
+      if (!compareDbIds.includes(system.get.dbId)) {
+        system.basic.removeSelf();
+      }
+    }
+
+    for (const dbId of compareDbIds) {
+      if (
+        !cache.get.hasChildByDbInfo({
+          childName: "comparedDealSystem",
+          dbId,
+        })
+      ) {
+        this.addDealSystemToCompareCache(dbId);
+      }
+    }
+
+    const session = this.oneAndOnly("sessionStore");
+    session.basic.updateValues({ isEditingComparedDeals: false });
+
+    this.prepperSections.addAppWideMissingOutEntities();
+    this.solve();
+  }
+  private addDealSystemToCompareCache(dbId: string) {
+    const cache = this.oneAndOnly("dealCompareCache");
     const feStore = this.oneAndOnly("feStore");
 
-    const dealSystem = menu.addAndGetChild("comparedDealSystem", { dbId });
+    const dealSystem = cache.addAndGetChild("comparedDealSystem", { dbId });
     const dealToCompare = dealSystem.onlyChild("deal");
 
     const deal = feStore.childByDbId({ childName: "dealMain", dbId });
-    dealToCompare.loadSelfAndSolve(deal.packMaker.makeSectionPack());
+    dealToCompare.basic.loadSelfSectionPack(deal.packMaker.makeSectionPack());
   }
-  addDealToCompare(feId: string) {
-    const { feStore } = this;
 
-    const menu = this.oneAndOnly("dealCompareMenu");
-    const cache = this.oneAndOnly("dealCompareCache");
-
-    const storeId = StoreId.make("dealCompareMenu", menu.get.feId);
-    feStore.addChangeToSave(storeId, { changeName: "update" });
-
-    const deal = feStore.get.child({ childName: "dealMain", feId });
-    const dbId = deal.dbId;
-
-    menu.basicSolvePrepper.addChild("comparedDeal", { dbId });
-
-    if (
-      !cache.get.hasChildByDbInfo({ childName: "comparedDealSystem", dbId })
-    ) {
-      this.addDealSystemToCompare(dbId);
-    }
-
-    const dealSystems = cache.children("comparedDealSystem");
-    const dealCount = dealSystems.length;
-    if (dealCount === 1) {
-      menu.updateValues({ dealMode: deal.valueNext("dealMode") });
-    }
-  }
   removeDealFromDealCompare(feId: string) {
     const compareMenu = this.oneAndOnly("dealCompareMenu");
 

@@ -11,6 +11,7 @@ export const sectionNames = [
   "variablesMenu",
 
   "sessionSection",
+  "sessionDeal",
   "sessionVarb",
 
   "feStore",

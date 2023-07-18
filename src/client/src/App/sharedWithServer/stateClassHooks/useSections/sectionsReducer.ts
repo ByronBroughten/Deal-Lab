@@ -47,8 +47,7 @@ const sectionActionNames = [
   "loadUserData",
   "incrementGetUserDataTry",
   "makeDefaultMain",
-  "addDealToCompare",
-  "removeDealFromCompare",
+  "doDealCompare",
 ] as const;
 export type SectionActionName = (typeof sectionActionNames)[number];
 
@@ -82,9 +81,6 @@ type ExtraActionProps = _CheckSectionActionProps<{
   copyInStore: FeStoreInfo;
   removeFromStore: RemoveFromStoreProps;
   removeFromStoreByDbId: RemoveFromStoreDbIdProps;
-
-  addDealToCompare: FeIdProp;
-  removeDealFromCompare: FeIdProp;
 }>;
 
 export type ActionPropsMap = _CheckSectionActionProps<
@@ -229,11 +225,7 @@ export const sectionsReducer: React.Reducer<StateSections, SectionsAction> = (
     removeStoredDeal: ({ feId }) => solverSections.removeStoredDeal(feId),
     activateDeal: (props) => solverSections.activateDealAndSolve(props),
     addActiveDeal: ({ dealMode }) => solverSections.addActiveDeal(dealMode),
-
-    addDealToCompare: ({ feId }) => solverSections.addDealToCompare(feId),
-    removeDealFromCompare: ({ feId }) => {
-      solverSections.removeDealFromDealCompare(feId);
-    },
+    doDealCompare: () => solverSections.doDealCompare(),
   };
 
   switch (action.type) {

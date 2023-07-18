@@ -9,12 +9,7 @@ interface Props extends FeIdProp {
   sx?: SxProps;
 }
 export function CompareDealRmBtn({ sx, feId }: Props) {
-  const removeComparedDeal = useAction("removeDealFromCompare");
-  return (
-    <DealCompareRmBtnStyled
-      {...{ sx, onClick: () => removeComparedDeal({ feId }) }}
-    />
-  );
+  return <DealCompareRmBtnStyled {...{ sx, onClick: () => {} }} />;
 }
 
 interface RmValProps extends FeIdProp {

@@ -39,7 +39,7 @@ export interface AddToStoreProps<CN extends StoreName = StoreName>
 
 export interface AddToStoreOptions<CN extends StoreName = StoreName>
   extends AddChildWithPackOptions<"feStore", CN> {
-  sessionSectionPack?: SectionPack<"sessionSection">;
+  sessionSectionPack?: SectionPack<"sessionSection" | "sessionDeal">;
 }
 
 export interface SaveAsToStoreProps<CN extends StoreName = StoreName>
@@ -110,16 +110,11 @@ export class SolverFeStore extends SolverSectionBase<"feStore"> {
     const sessionStore = this.solverSections.oneAndOnly("sessionStore");
     sessionStore.basicSolvePrepper.loadSelfSectionPack(userData.sessionStore);
 
-    this.solver.loadSelfAndSolve(userData.feStore);
-
+    this.solver.basicSolvePrepper.loadSelfSectionPack(userData.feStore);
     this.appWideSolvePrepSections.applyVariablesToDealSystems();
     this.appWideSolvePrepSections.addAppWideMissingOutEntities();
     this.solve();
 
-    const compareMenu = this.solver.get.onlyChild("dealCompareMenu");
-    for (const comparedDeal of compareMenu.children("comparedDeal")) {
-      this.solverSections.addDealSystemToCompare(comparedDeal.dbId);
-    }
     this.basicSolvePrepper.updateValues({ userDataFetchTryCount: 0 });
   }
   newestEntry<SN extends StoreName>(
@@ -177,7 +172,10 @@ export class SolverFeStore extends SolverSectionBase<"feStore"> {
     });
   }
 
-  private dealSessionPack(oldDbId: string, newDbId: string) {
+  private dealSessionPack(
+    oldDbId: string,
+    newDbId: string
+  ): SectionPack<"sessionDeal"> {
     const sessionStore = this.getterSections.oneAndOnly("sessionStore");
     const sessionDeal = sessionStore.childByDbId({
       childName: "dealMain",
@@ -240,7 +238,8 @@ export class SolverFeStore extends SolverSectionBase<"feStore"> {
       const session = this.solverSections.oneAndOnly("sessionStore");
       session.appWideSolvePrepper.addChild("dealMain", {
         sectionPack:
-          options?.sessionSectionPack ?? makeDefaultSessionDeal(child.get),
+          (options?.sessionSectionPack as SectionPack<"sessionDeal">) ??
+          makeDefaultSessionDeal(child.get),
       });
     }
 
