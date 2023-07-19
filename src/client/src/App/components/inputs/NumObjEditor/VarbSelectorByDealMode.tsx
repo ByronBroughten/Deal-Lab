@@ -6,7 +6,6 @@ import { useGetterMainOnlyChild } from "../../../sharedWithServer/stateClassHook
 import { ValueCustomVarbPathInfo } from "../../../sharedWithServer/StateEntityGetters/ValueInEntityInfo";
 import { fixedVarbOptionArrs } from "../../../sharedWithServer/StateEntityGetters/varbPathOptions";
 import { GetterSection } from "../../../sharedWithServer/StateGetters/GetterSection";
-import { Arr } from "../../../sharedWithServer/utils/Arr";
 import { OnVarbSelect } from "./NumObjVarbSelector/VarbSelectorCollection";
 import { CollectionProps, VarbSelector } from "./VarbSelector";
 
@@ -37,13 +36,7 @@ export function VarbSelectorByDealMode({ dealMode, ...rest }: Props) {
 }
 
 function useFixedCollections(dealMode: DealMode<"plusMixed">): CollectionProps {
-  const orderedCollectionNames = Arr.extractStrict(collectionNamesFixed, [
-    "Property",
-    "Deal",
-    "Financing",
-    "Management",
-  ] as const);
-
+  const orderedCollectionNames = collectionNamesFixed;
   const optionArr = fixedVarbOptionArrs[dealMode];
   return orderedCollectionNames.map((collectionName) => {
     const rowInfos = optionArr

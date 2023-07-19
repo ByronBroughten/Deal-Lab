@@ -18,6 +18,40 @@ interface Props extends FeIdProp {
   sx: SxProps;
   title?: string;
 }
+
+function ListItemsViewWindow({ feId }: FeIdProp) {
+  const outputList = useGetterSection({ sectionName: "outputList", feId });
+  const itemIds = outputList.childFeIds("outputItem");
+  return (
+    <Box sx={{ marginBottom: nativeTheme.s4 }}>
+      {itemIds.map((itemId, idx) => (
+        <LoadedVarbItem
+          {...{
+            feId: itemId,
+            key: itemId,
+            sx: {
+              fontSize: 16,
+              padding: nativeTheme.s3,
+              paddingTop: nativeTheme.s2,
+              paddingBottom: nativeTheme.s2,
+              minHeight: "30px",
+              ...(idx === 0 && {
+                borderTopRightRadius: nativeTheme.muiBr0,
+                borderTopLeftRadius: nativeTheme.muiBr0,
+              }),
+              ...(idx === itemIds.length - 1 && {
+                borderBottomRightRadius: nativeTheme.muiBr0,
+                borderBottomLeftRadius: nativeTheme.muiBr0,
+                borderBottom: `1px solid ${nativeTheme["gray-400"]}`,
+              }),
+            },
+          }}
+        />
+      ))}
+    </Box>
+  );
+}
+
 export function LoadedVarbListNext({ feId, sx, title }: Props) {
   const feInfo = { sectionName: "outputList", feId } as const;
   const outputList = useGetterSection(feInfo);
@@ -35,7 +69,10 @@ export function LoadedVarbListNext({ feId, sx, title }: Props) {
     });
   };
 
-  const openVarbSelect = useDealModeContextVarbSelect(addItem);
+  const openVarbSelect = useDealModeContextVarbSelect(addItem, () => (
+    <ListItemsViewWindow {...{ feId }} />
+  ));
+
   return (
     <Box sx={sx}>
       <Box
@@ -45,7 +82,7 @@ export function LoadedVarbListNext({ feId, sx, title }: Props) {
             borderBottomRightRadius: 0,
             borderBottomLeftRadius: 0,
             ...nativeTheme.subSection.borderLines,
-            borderBottom: "none",
+            borderBottomWidth: 0,
             padding: nativeTheme.s2,
             paddingTop: nativeTheme.s3,
           },
@@ -83,7 +120,7 @@ export function LoadedVarbListNext({ feId, sx, title }: Props) {
   );
 }
 
-function LoadedVarbItem({ feId }: FeIdProp) {
+function LoadedVarbItem({ feId, sx }: { feId: string; sx?: SxProps }) {
   const feInfo = { sectionName: "outputItem", feId } as const;
   const outputItem = useGetterSection(feInfo);
   const varbInfo = outputItem.valueEntityInfo();
@@ -94,18 +131,21 @@ function LoadedVarbItem({ feId }: FeIdProp) {
   return (
     <MuiRow
       className={"LoadedVarbItem-root"}
-      sx={{
-        minWidth: 200,
-        minHeight: 45,
-        justifyContent: "space-between",
-        padding: nativeTheme.s3,
-        paddingLeft: nativeTheme.s4,
-        ...nativeTheme.subSection.borderLines,
-        borderBottom: "none",
-        fontSize: nativeTheme.fs18,
-        color: nativeTheme.primary.main,
-        zIndex: -1,
-      }}
+      sx={[
+        {
+          minWidth: 200,
+          minHeight: 45,
+          justifyContent: "space-between",
+          padding: nativeTheme.s3,
+          paddingLeft: nativeTheme.s4,
+          ...nativeTheme.subSection.borderLines,
+          borderBottom: "none",
+          fontSize: nativeTheme.fs18,
+          color: nativeTheme.primary.main,
+          zIndex: -1,
+        },
+        ...arrSx(sx),
+      ]}
     >
       <MuiRow>
         {variableLabel}

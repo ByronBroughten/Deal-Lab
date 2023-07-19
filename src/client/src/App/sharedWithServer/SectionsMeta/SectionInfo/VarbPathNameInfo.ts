@@ -217,9 +217,9 @@ type SectionVarbPathParams<
 
 export const collectionNamesFixed = [
   "Property",
+  "Deal",
   "Financing",
   "Management",
-  "Deal",
 ] as const;
 type CollectionNameFixed = (typeof collectionNamesFixed)[number];
 

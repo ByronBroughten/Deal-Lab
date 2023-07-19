@@ -8,6 +8,7 @@ import { OnVarbSelect } from "../inputs/NumObjEditor/NumObjVarbSelector/VarbSele
 export interface VarbSelectModalOptions {
   dealMode: DealMode<"plusMixed">;
   onVarbSelect: OnVarbSelect;
+  viewWindow: () => React.ReactNode;
   timeSet: number;
 }
 
@@ -34,13 +35,17 @@ const VarbSelectModalContext =
 export const useVarbSelectModal = () =>
   React.useContext(VarbSelectModalContext);
 
-export const useDealModeContextVarbSelect = (onVarbSelect: OnVarbSelect) => {
+export const useDealModeContextVarbSelect = (
+  onVarbSelect: OnVarbSelect,
+  viewWindow: () => React.ReactNode
+) => {
   const dealMode = useDealModeContext();
   const { setModal } = useVarbSelectModal();
   return () =>
     setModal({
       dealMode,
       onVarbSelect,
+      viewWindow,
     });
 };
 

@@ -30,6 +30,7 @@ function getVarbSelectModalOptions(
   return {
     onVarbSelect: () => {},
     dealMode: "mixed",
+    viewWindow: () => null,
     timeSet: 0,
     ...modalState,
   };
@@ -44,7 +45,7 @@ export function VarbSelectorModal({ modalChildren, ...rest }: Props) {
   const menu = useGetterSectionOnlyOne("variablesMenu");
 
   const { modalState, setModal } = useVarbSelectModal();
-  const { timeSet, onVarbSelect, dealMode } =
+  const { timeSet, onVarbSelect, dealMode, viewWindow } =
     getVarbSelectModalOptions(modalState);
   return (
     <ModalSection
@@ -59,6 +60,7 @@ export function VarbSelectorModal({ modalChildren, ...rest }: Props) {
         },
       }}
     >
+      {viewWindow()}
       <MuiRow sx={{ justifyContent: "space-between" }}>
         <MaterialStringEditor
           {...{
