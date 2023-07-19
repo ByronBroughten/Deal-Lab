@@ -22,7 +22,7 @@ interface Props extends FeIdProp {
 function ListItemsViewWindow({ feId }: FeIdProp) {
   const outputList = useGetterSection({ sectionName: "outputList", feId });
   const itemIds = outputList.childFeIds("outputItem");
-  return (
+  return itemIds.length === 0 ? null : (
     <Box sx={{ marginBottom: nativeTheme.s4 }}>
       {itemIds.map((itemId, idx) => (
         <LoadedVarbItem

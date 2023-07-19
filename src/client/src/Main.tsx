@@ -18,6 +18,7 @@ import { useSubscriptions } from "./App/modules/customHooks/useSubscriptions";
 import { useControlUserData } from "./App/modules/SectionActors/UserDataActor";
 import { useAutoSave } from "./App/sharedWithServer/stateClassHooks/useAutoSave";
 import {
+  useAddDeal,
   useDoCompare,
   useEditDeal,
 } from "./App/sharedWithServer/stateClassHooks/useLoading";
@@ -30,6 +31,7 @@ export function Main() {
   useControlUserData();
   useSubscriptions();
   useAutoSave();
+  useAddDeal();
   useEditDeal();
   useDoCompare();
   return (

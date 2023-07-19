@@ -4,7 +4,6 @@ import { dealModeLabels } from "../../sharedWithServer/SectionsMeta/values/State
 import { useActionNoSave } from "../../sharedWithServer/stateClassHooks/useAction";
 import { useGetterFeStore } from "../../sharedWithServer/stateClassHooks/useFeStore";
 import { useGetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useGetterSection";
-import { useAddDeal } from "../../sharedWithServer/stateClassHooks/useLoading";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { HollowBtn } from "../appWide/HollowBtn";
 import { MuiSelect } from "../appWide/MuiSelect";
@@ -17,16 +16,15 @@ export function NewDealSelector(props: Props) {
 }
 
 function NewDealSelectorAddDeal({ closeSelector }: Props) {
-  useAddDeal();
-
-  const session = useGetterSectionOnlyOne("sessionStore");
-  const isCreatingDeal = session.valueNext("isCreatingDeal");
   const updateValue = useActionNoSave("updateValue");
   const setCreatingDeal = () =>
     updateValue({
       ...session.varbInfo("isCreatingDeal"),
       value: true,
     });
+
+  const session = useGetterSectionOnlyOne("sessionStore");
+  const isCreatingDeal = session.valueNext("isCreatingDeal");
 
   const newDealMenu = useGetterSectionOnlyOne("newDealMenu");
   return (
@@ -53,44 +51,43 @@ function NewDealSelectorAddDeal({ closeSelector }: Props) {
           ],
         }}
       />
-      <HollowBtn
-        sx={{
-          mt: nativeTheme.s4,
-          width: "100%",
-          height: "50px",
-          fontSize: nativeTheme.fs20,
-        }}
-        middle={
-          isCreatingDeal ? (
-            <ClipLoader
-              {...{
-                loading: isCreatingDeal,
-                color: nativeTheme.light,
-                size: 25,
-              }}
-            />
-          ) : (
-            "Create Deal"
-          )
-        }
-        onClick={setCreatingDeal}
+      {isCreatingDeal && (
+        <ClipLoader
+          {...{
+            loading: true,
+            color: nativeTheme.light,
+            size: 25,
+          }}
+        />
+      )}
+      {!isCreatingDeal && (
+        <HollowBtn
+          sx={{
+            mt: nativeTheme.s4,
+            width: "100%",
+            height: "50px",
+            fontSize: nativeTheme.fs20,
+          }}
+          middle={"Create Deal"}
+          onClick={setCreatingDeal}
 
-        // {...{
-        //   ...(!isCreatingDeal
-        //     ? { middle: "Create Deal", onClick: setCreatingDeal }
-        //     : {
-        //         middle: (
-        //           <ClipLoader
-        //             {...{
-        //               loading: isCreatingDeal,
-        //               color: nativeTheme.light,
-        //               size: 25,
-        //             }}
-        //           />
-        //         ),
-        //       }),
-        // }}
-      />
+          // {...{
+          //   ...(!isCreatingDeal
+          //     ? { middle: "Create Deal", onClick: setCreatingDeal }
+          //     : {
+          //         middle: (
+          //           <ClipLoader
+          //             {...{
+          //               loading: isCreatingDeal,
+          //               color: nativeTheme.light,
+          //               size: 25,
+          //             }}
+          //           />
+          //         ),
+          //       }),
+          // }}
+        />
+      )}
     </Box>
   );
 }

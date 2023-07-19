@@ -51,7 +51,9 @@ export function VarbSelectorModal({ modalChildren, ...rest }: Props) {
     <ModalSection
       {...{
         ...rest,
+        topChild: viewWindow(),
         title: "Variable Select",
+        titleSx: { color: nativeTheme.complementary.main, lineHeight: 1 },
         show: Boolean(modalState),
         closeModal: () => {
           if (timeSet && timeSet < timeS.now() - 200) {
@@ -60,7 +62,7 @@ export function VarbSelectorModal({ modalChildren, ...rest }: Props) {
         },
       }}
     >
-      {viewWindow()}
+      {/* {viewWindow()} */}
       <MuiRow sx={{ justifyContent: "space-between" }}>
         <MaterialStringEditor
           {...{
