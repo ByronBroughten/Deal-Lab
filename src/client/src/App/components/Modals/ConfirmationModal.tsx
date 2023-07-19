@@ -22,9 +22,9 @@ export function ConfirmationModal(props: Props) {
       {...{
         ...props,
         modalSectionProps: {
-          sx: { border: `solid 2px ${nativeTheme.notice.dark}` },
+          // sx: { border: `solid 2px ${nativeTheme.notice.dark}` },
         },
-        titleSx: { color: nativeTheme.notice.dark },
+        titleSx: { color: nativeTheme.darkBlue.main },
         title: modalState?.title,
         show: Boolean(modalState),
         closeModal,
