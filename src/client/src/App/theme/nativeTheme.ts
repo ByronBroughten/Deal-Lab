@@ -65,6 +65,7 @@ export const nativeTheme = {
       color: themeColors["gray-500"],
     },
   },
+  unlabeledInputHeight: "21px",
   smallXScrollbar: {
     "&::-webkit-scrollbar": {},
     "&::-webkit-scrollbar-track": {

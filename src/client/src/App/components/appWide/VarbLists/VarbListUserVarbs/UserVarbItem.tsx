@@ -1,4 +1,4 @@
-import { VarbListItemGeneric } from "../../ListGroup/ListGroupShared/VarbListItemGeneric";
+import { VarbListItemSimple } from "../../ListGroup/ListGroupShared/VarbListItemSimple";
 
 type Props = { feId: string };
 export function UserVarbItem({ feId }: Props) {
@@ -7,7 +7,7 @@ export function UserVarbItem({ feId }: Props) {
     feId,
   } as const;
   return (
-    <VarbListItemGeneric {...{ ...feInfo, valueEditorName: "valueEditor" }} />
+    <VarbListItemSimple {...{ ...feInfo, valueEditorName: "valueEditor" }} />
     // doEquals: varb.isPureUserVarb
   );
 }

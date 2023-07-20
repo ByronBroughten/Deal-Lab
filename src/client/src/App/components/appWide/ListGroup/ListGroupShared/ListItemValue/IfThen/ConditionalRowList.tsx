@@ -1,6 +1,8 @@
+import { Box } from "@mui/material";
 import { rem } from "polished";
 import styled from "styled-components";
 import { useGetterSection } from "../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
+import { nativeTheme } from "../../../../../../theme/nativeTheme";
 import theme from "../../../../../../theme/Theme";
 import ConditionalRows from "./ConditionalRowList/ConditionalRows";
 import LogicRow from "./ConditionalRowList/LogicRow";
@@ -23,7 +25,20 @@ export function ConditionalRowList({ viewIsOpen, toggleView, feId }: Props) {
         {!viewIsOpen && (
           <>
             <LogicRow feId={conditionalRowIds[0]} />
-            <div className="ellipsis">{"..."}</div>
+            <Box
+              className="ellipsis"
+              sx={{
+                display: "flex",
+                alignItems: "flex-end",
+                position: "relative",
+                lineHeight: "20px",
+                height: nativeTheme.unlabeledInputHeight,
+                fontSize: "1.7rem",
+                marginLeft: "0.125rem",
+              }}
+            >
+              {"..."}
+            </Box>
           </>
         )}
         {viewIsOpen && <ConditionalRows {...{ conditionalRowIds }} />}

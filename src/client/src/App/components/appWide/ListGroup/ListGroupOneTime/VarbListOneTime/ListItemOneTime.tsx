@@ -1,6 +1,6 @@
 import React from "react";
 import { useGetterSection } from "../../../../../sharedWithServer/stateClassHooks/useGetterSection";
-import { VarbListItemGeneric } from "../../ListGroupShared/VarbListItemGeneric";
+import { VarbListItemSimple } from "../../ListGroupShared/VarbListItemSimple";
 
 type MemoProps = { feId: string; valueSourceName: string };
 const ListItemOneTimeMemo = React.memo(function ListItemOneTimeMemo({
@@ -8,8 +8,18 @@ const ListItemOneTimeMemo = React.memo(function ListItemOneTimeMemo({
 }: MemoProps) {
   const feInfo = { sectionName: "onetimeItem", feId } as const;
   return (
-    <VarbListItemGeneric
-      {...{ ...feInfo, valueEditorName: "valueDollarsEditor" }}
+    <VarbListItemSimple
+      {...{
+        ...feInfo,
+        valueEditorName: "valueDollarsEditor",
+        sx: {
+          "& .VarbListItemSimple-editorCell": {
+            ".DraftEditor-root": {
+              minWidth: 60,
+            },
+          },
+        },
+      }}
     />
   );
 });
@@ -21,7 +31,10 @@ export function ListItemOneTime({ feId }: { feId: string }) {
   });
   return (
     <ListItemOneTimeMemo
-      {...{ feId, valueSourceName: item.valueNext("valueSourceName") }}
+      {...{
+        feId,
+        valueSourceName: item.valueNext("valueSourceName"),
+      }}
     />
   );
 }

@@ -1,5 +1,7 @@
 import { FeSectionInfo } from "../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
+import { MuiRow } from "../../../general/MuiRow";
 import { NumObjEntityEditor } from "../../../inputs/NumObjEntityEditor";
+import { FirstContentCell } from "./VarbListGeneric/FirstContentCellAndHeader";
 
 interface Props extends FeSectionInfo {
   className?: string;
@@ -16,19 +18,18 @@ export function FirstValueEditorCell({
   ...feInfo
 }: Props) {
   return (
-    <td className={`VarbListTable-firstContentCell ${className ?? ""}`}>
-      <div className="VarbListItem-contentCellDiv ">
+    <FirstContentCell className={className}>
+      <MuiRow sx={{ alignItems: "flex-end", flexWrap: "nowrap" }}>
         <NumObjEntityEditor
           editorType="equation"
           feVarbInfo={{
             ...feInfo,
             varbName: valueEditorName,
           }}
-          className="LabeledValueEditor-equationEditor"
           labeled={false}
           endAdornment={endAdornment}
         />
-      </div>
-    </td>
+      </MuiRow>
+    </FirstContentCell>
   );
 }

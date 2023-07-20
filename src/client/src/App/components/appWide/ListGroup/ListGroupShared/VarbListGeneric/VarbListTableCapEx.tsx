@@ -1,5 +1,6 @@
 import React, { Children } from "react";
 import { StandardProps } from "../../../../general/StandardProps";
+import { FirstContentHeader } from "./FirstContentCellAndHeader";
 import { VarbListTableSectionStyled } from "./VarbListTableSectionStyled";
 
 interface Props extends StandardProps {
@@ -19,14 +20,10 @@ export function VarbListTableCapEx({
       headers={
         <tr>
           <th className="VarbListTable-nameHeader">Name</th>
-          <th className="VarbListTable-replacementCostHeader VarbListTable-firstContentHeader">
-            Cost to Replace
-          </th>
+          <FirstContentHeader>Cost to Replace</FirstContentHeader>
           <th className="VarbListTable-lifespanHeader">Lifespan</th>
           <th></th>
-          <th className="VarbListTable-budgetHeader VarbListTable-extenderHeader">
-            Budget
-          </th>
+          <th>Budget</th>
           <th className="VarbListTable-btnHeader"></th>
         </tr>
       }

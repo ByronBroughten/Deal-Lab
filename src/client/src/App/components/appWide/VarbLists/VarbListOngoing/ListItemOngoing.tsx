@@ -1,6 +1,6 @@
 import React from "react";
 import { useGetterSection } from "../../../../sharedWithServer/stateClassHooks/useGetterSection";
-import { VarbListItemGeneric } from "../../ListGroup/ListGroupShared/VarbListItemGeneric";
+import { VarbListItemSimple } from "../../ListGroup/ListGroupShared/VarbListItemSimple";
 
 interface MemoProps {
   feId: string;
@@ -11,8 +11,15 @@ const ListItemOngoingMemo = React.memo(function ListItemOngoingMemo({
 }: MemoProps) {
   const feInfo = { sectionName: "periodicItem", feId } as const;
   return (
-    <VarbListItemGeneric
+    <VarbListItemSimple
       {...{
+        sx: {
+          "& .VarbListItemSimple-editorCell": {
+            ".DraftEditor-root": {
+              minWidth: 25,
+            },
+          },
+        },
         ...feInfo,
         valueEditorName: "valueDollarsPeriodicEditor",
       }}

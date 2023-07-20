@@ -1,6 +1,8 @@
 import { useToggleView } from "../../../../../modules/customHooks/useToggleView";
 import { useGetterSection } from "../../../../../sharedWithServer/stateClassHooks/useGetterSection";
+import { MuiRow } from "../../../../general/MuiRow";
 import { MaterialStringEditor } from "../../../../inputs/MaterialStringEditor";
+import { FirstContentCell } from "../VarbListGeneric/FirstContentCellAndHeader";
 import { ConditionalRowList } from "./IfThen/ConditionalRowList";
 
 type Props = { feId: string };
@@ -17,8 +19,8 @@ export default function IfThen({ feId }: Props) {
       <td className="VarbListTable-nameCell">
         <MaterialStringEditor {...numVarbItem.varbInfo("displayNameEditor")} />
       </td>
-      <td className="VarbListTable-firstContentCell">
-        <div className="VarbListItem-contentCellDiv">
+      <FirstContentCell>
+        <MuiRow sx={{ alignItems: "flex-end", flexWrap: "nowrap" }}>
           <ConditionalRowList
             {...{
               feId: numVarbItem.onlyChild("conditionalRowList").feId,
@@ -26,8 +28,8 @@ export default function IfThen({ feId }: Props) {
               toggleView,
             }}
           />
-        </div>
-      </td>
+        </MuiRow>
+      </FirstContentCell>
     </>
   );
 }

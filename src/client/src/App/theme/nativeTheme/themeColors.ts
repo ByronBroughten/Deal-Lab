@@ -38,6 +38,7 @@ const baseThemeColors = {
   placeholderGray: basicColors["gray-600"] + "e0",
   dark: "#001E2B",
   light: "#fff",
+  borderColor: basicColors["gray-400"],
 } as const;
 
 export const themeColors = {

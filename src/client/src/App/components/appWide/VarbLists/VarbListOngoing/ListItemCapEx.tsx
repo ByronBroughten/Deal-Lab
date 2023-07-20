@@ -1,9 +1,10 @@
+import { Box } from "@mui/material";
 import React from "react";
-import styled from "styled-components";
 import { useGetterSection } from "../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { NumObjEntityEditor } from "../../../inputs/NumObjEntityEditor";
 import { NameEditorCell } from "../../ListGroup/ListGroupShared/NameEditorCell";
-import { VarbListItemStyledNext } from "../../ListGroup/ListGroupShared/VarbListItemStyled";
+import { FirstContentCell } from "../../ListGroup/ListGroupShared/VarbListGeneric/FirstContentCellAndHeader";
+import { VarbListItemStyled } from "../../ListGroup/ListGroupShared/VarbListItemStyled";
 import { XBtnCell } from "../../ListGroup/ListGroupShared/XBtnCell";
 
 interface MemoProps extends Props {
@@ -20,9 +21,25 @@ const ListItemOngoingMemo = React.memo(function ListItemOngoingMemo({
   const lifespan = capExItem.valueNext("lifespanSpanEditor").mainText;
   const costToReplace = capExItem.valueNext("costToReplace").mainText;
   return (
-    <Styled {...{ className: "ListItemCapEx-root" }}>
+    <VarbListItemStyled
+      {...{
+        className: "ListItemCapEx-root",
+        sx: {
+          "& .ListItemCapEx-lifespan": {
+            "& .DraftEditor-root": {
+              minWidth: "28px",
+            },
+          },
+          "& .ListItemCapEx-costToReplace": {
+            "& .DraftEditor-root": {
+              minWidth: "93px",
+            },
+          },
+        },
+      }}
+    >
       <NameEditorCell {...{ displayName, ...feInfo }} />
-      <td className="VarbListTable-firstContentCell">
+      <FirstContentCell>
         <NumObjEntityEditor
           className="ListItemCapEx-costToReplace"
           labeled={false}
@@ -33,7 +50,7 @@ const ListItemOngoingMemo = React.memo(function ListItemOngoingMemo({
           editorType="equation"
           quickViewVarbNames={["numUnits", "numBedrooms", "sqft"]}
         />
-      </td>
+      </FirstContentCell>
       <td>
         <NumObjEntityEditor
           className="ListItemCapEx-lifespan"
@@ -46,33 +63,15 @@ const ListItemOngoingMemo = React.memo(function ListItemOngoingMemo({
         />
       </td>
       <td>=</td>
-      <td className="VarbListTable-extenderCell">
-        <span className="ListItemCapEx-equals">{`${
-          lifespan && costToReplace ? displayValueVarb : "?"
-        }`}</span>
+      <td>
+        <Box component={"span"} sx={{ fontSize: "17px" }}>
+          {`${lifespan && costToReplace ? displayValueVarb : "?"}`}
+        </Box>
       </td>
       <XBtnCell {...feInfo} />
-    </Styled>
+    </VarbListItemStyled>
   );
 });
-
-const Styled = styled(VarbListItemStyledNext)`
-  .ListItemCapEx-equals {
-    font-size: 17px;
-  }
-
-  .ListItemCapEx-lifespan {
-    .DraftEditor-root {
-      min-width: 28px;
-    }
-  }
-
-  .ListItemCapEx-costToReplace {
-    .DraftEditor-root {
-      min-width: 93px;
-    }
-  }
-`;
 
 type Props = { feId: string };
 export function ListItemCapEx({ feId }: Props) {

@@ -1,3 +1,4 @@
+import { SxProps } from "@mui/material";
 import React from "react";
 import { VarbName } from "../../../../sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
 import { FeSectionInfo } from "../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
@@ -5,7 +6,7 @@ import { SectionName } from "../../../../sharedWithServer/SectionsMeta/SectionNa
 import { StrictExtract } from "../../../../sharedWithServer/utils/types";
 import { FirstValueEditorCell } from "./FirstValueEditorCell";
 import { NameEditorCell } from "./NameEditorCell";
-import { VarbListItemStyledNext } from "./VarbListItemStyled";
+import { VarbListItemStyled } from "./VarbListItemStyled";
 import { XBtnCell } from "./XBtnCell";
 
 type Name = StrictExtract<
@@ -18,24 +19,26 @@ interface Props<SN extends Name> extends FeSectionInfo<SN> {
     "valueEditor" | "valueDollarsEditor" | "valueDollarsPeriodicEditor"
   >;
   valueEditorProps?: { endAdornment?: React.ReactNode };
+  sx?: SxProps;
 }
-export function VarbListItemGeneric<SN extends Name>({
+export function VarbListItemSimple<SN extends Name>({
   valueEditorProps = {},
   valueEditorName,
+  sx,
   ...feInfo
 }: Props<SN>) {
   return (
-    <VarbListItemStyledNext>
+    <VarbListItemStyled sx={sx}>
       <NameEditorCell {...feInfo} />
       <FirstValueEditorCell
         {...{
-          className: "VarbListTable-extenderCell",
+          className: "VarbListItemSimple-editorCell",
           valueEditorProps,
           ...feInfo,
           valueEditorName,
         }}
       />
       <XBtnCell {...feInfo} />
-    </VarbListItemStyledNext>
+    </VarbListItemStyled>
   );
 }

@@ -43,11 +43,6 @@ const Styled = styled(Box)`
     color: ${theme.primaryNext};
   }
 
-  th.VarbListTable-extenderHeader,
-  td.VarbListTable-extenderCell {
-    width: 100%;
-  }
-
   th,
   td {
     width: 1px;
@@ -66,10 +61,5 @@ const Styled = styled(Box)`
   th.VarbListTable-nameHeader,
   td.VarbListTable-nameCell {
     background: ${theme["gray-200"]};
-  }
-
-  th.VarbListTable-firstContentHeader,
-  td.VarbListTable-firstContentCell {
-    border-left: 1px solid ${theme.primaryBorder};
   }
 `;
