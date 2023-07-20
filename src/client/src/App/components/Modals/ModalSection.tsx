@@ -6,6 +6,7 @@ import { arrSx } from "../../utils/mui";
 import { FinishBtn } from "../ActiveDealPage/ActiveDeal/FinishBtn";
 import { MainSection } from "../appWide/GeneralSection/MainSection";
 import { SectionTitleRow } from "../appWide/GeneralSection/MainSection/SectionTitleRow";
+import { useIsDevices } from "../customHooks/useMediaQueries";
 import ChunkTitle from "../general/ChunkTitle";
 import { ModalWrapper, ModalWrapperProps } from "../general/ModalWrapper";
 import { PlainIconBtn } from "../general/PlainIconBtn";
@@ -32,6 +33,7 @@ export function ModalSection({
   showFinish,
   topChild,
 }: ModalSectionProps) {
+  const { isPhone } = useIsDevices();
   return (
     <ModalWrapper {...{ show, ...modalWrapperProps }} className={className}>
       <ClickAwayListener mouseEvent="onMouseDown" onClickAway={closeModal}>
@@ -43,6 +45,7 @@ export function ModalSection({
                 {
                   minWidth: 250,
                   maxHeight: "95vh",
+                  maxWidth: "95vw",
                   overflow: "auto",
                   "&::-webkit-scrollbar": {},
                   "&::-webkit-scrollbar-track": {
@@ -63,8 +66,14 @@ export function ModalSection({
               }
               rightSide={
                 <PlainIconBtn
-                  sx={{ ml: nativeTheme.s3 }}
-                  middle={<AiOutlineClose />}
+                  sx={{
+                    ml: nativeTheme.s3,
+                    ...(isPhone && {
+                      marginTop: nativeTheme.s2,
+                      marginRight: nativeTheme.s2,
+                    }),
+                  }}
+                  middle={<AiOutlineClose size={20} />}
                   onClick={closeModal}
                 />
               }

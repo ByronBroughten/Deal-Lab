@@ -1,6 +1,7 @@
 import { Box, styled, SxProps } from "@mui/material";
 import { nativeTheme } from "../../../theme/nativeTheme";
 import { arrSx } from "../../../utils/mui";
+import { useIsDevices } from "../../customHooks/useMediaQueries";
 import { PlainIconBtn } from "../../general/PlainIconBtn";
 
 export interface MainSectionProps {
@@ -9,11 +10,23 @@ export interface MainSectionProps {
   className?: string;
 }
 export function MainSection({ sx, ...rest }: MainSectionProps) {
+  const { isPhone } = useIsDevices();
+
   return (
     <Box
       {...{
         ...rest,
-        sx: [nativeTheme.mainSection, ...arrSx(sx)],
+        sx: [
+          {
+            ...nativeTheme.mainSection,
+            ...(isPhone && {
+              padding: nativeTheme.s15,
+              borderRadius: nativeTheme.brMin,
+            }),
+            overflow: "auto",
+          },
+          ...arrSx(sx),
+        ],
       }}
     />
   );

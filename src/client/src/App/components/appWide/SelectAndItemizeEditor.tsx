@@ -6,6 +6,7 @@ import { UnionValueName } from "../../sharedWithServer/SectionsMeta/values/State
 import { useGetterVarbNext } from "../../sharedWithServer/stateClassHooks/useGetterVarb";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { arrSx } from "../../utils/mui";
+import { useIsDevices } from "../customHooks/useMediaQueries";
 import { MuiRow } from "../general/MuiRow";
 import { useInputModalWithContext } from "../Modals/InputModalProvider";
 import { EditSectionBtn } from "./EditSectionBtn";
@@ -36,6 +37,8 @@ export function SelectAndItemizeEditor<
   inputMargins = false,
   ...rest
 }: SelectAndItemizeEditorProps<UVN, SN>) {
+  const { isPhone } = useIsDevices();
+
   const varb = useGetterVarbNext(rest.feVarbInfo);
   const value = varb.value(rest.unionValueName);
   const isItemized = value === itemizeValue;
@@ -73,7 +76,7 @@ export function SelectAndItemizeEditor<
       {rightOfControls
         ? null
         : isItemized && (
-            <Box
+            <MuiRow
               sx={{
                 ...(rest.label && { height: 55 }),
                 ...(!rest.label && { height: 30 }),
@@ -82,20 +85,22 @@ export function SelectAndItemizeEditor<
                 borderBottomColor: nativeTheme["gray-600"],
                 borderTopRightRadius: nativeTheme.muiBr0,
                 pl: nativeTheme.s3,
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
+                ...(isPhone && {
+                  flexDirection: "column",
+                  alignItems: "flex-start",
+                }),
               }}
             >
-              <EditSectionBtn onClick={openItems} />
+              <EditSectionBtn sx={{ paddingBottom: -1 }} onClick={openItems} />
               <Box
                 sx={{
                   fontSize: "18px",
                   ml: nativeTheme.s2,
                   mr: nativeTheme.s25,
+                  whiteSpace: "nowrap",
                 }}
               >{`Total = ${total}`}</Box>
-            </Box>
+            </MuiRow>
           )}
     </MuiRow>
   );

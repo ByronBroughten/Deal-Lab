@@ -30,6 +30,7 @@ const fontSizes = {
 
 const borderRadiuses = {
   br0: 5,
+  brMin: "5px",
 } as const;
 
 const muiBr = {

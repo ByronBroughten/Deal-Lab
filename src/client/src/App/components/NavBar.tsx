@@ -1,14 +1,15 @@
 import { AppBar, Box, Toolbar } from "@mui/material";
 import { rem } from "polished";
 import styled from "styled-components";
+import logo from "../../icons/logo500.png";
 import logoAndName from "../../icons/logoAndName.png";
 import { nativeTheme } from "../theme/nativeTheme";
 import theme from "../theme/Theme";
 import { SaveStatusIndicator } from "./appWide/SaveStatusIndicator";
 import { useGoToPage } from "./customHooks/useGoToPage";
+import { useIsDevices } from "./customHooks/useMediaQueries";
 import { PlainIconBtn } from "./general/PlainIconBtn";
 import { AppMenuProps } from "./NavBar/AppMenuDropdown";
-import { NavAppMenu } from "./NavBar/NavAppMenu";
 import { NavBarBtns } from "./NavBar/NavBarBtns";
 
 interface Props extends AppMenuProps {
@@ -17,6 +18,7 @@ interface Props extends AppMenuProps {
 
 export function NavBar({ showMenu = true, ...props }: Props) {
   const goToMain = useGoToPage("mainPage");
+  const { isPhone } = useIsDevices();
   return (
     <Styled
       sx={{
@@ -31,15 +33,17 @@ export function NavBar({ showMenu = true, ...props }: Props) {
     >
       <Toolbar disableGutters={true}>
         <div className="NavBar-leftSide">
-          {showMenu ? (
-            <NavAppMenu {...props} />
-          ) : (
-            <div className="NavBar-menuPlaceholder"></div>
-          )}
           <PlainIconBtn
-            sx={{ height: nativeTheme.navBar.height }}
+            sx={{
+              marginLeft: nativeTheme.s4,
+              height: nativeTheme.navBar.height,
+            }}
             middle={
-              <Box sx={{ height: 50 }} component="img" src={logoAndName} />
+              <Box
+                sx={{ height: 50 }}
+                component="img"
+                src={isPhone ? logo : logoAndName}
+              />
             }
             onClick={goToMain}
           />

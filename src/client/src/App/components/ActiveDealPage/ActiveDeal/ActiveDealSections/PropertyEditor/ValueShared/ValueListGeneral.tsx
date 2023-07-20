@@ -32,7 +32,7 @@ export function ValueListGeneral<
       sx={{
         display: "flex",
         flexDirection: "column",
-        alignItems: "center",
+        alignItems: "flex-start",
         flex: 1,
       }}
       className={`ValueListGeneral-root ${className ?? ""}`}
@@ -51,6 +51,7 @@ export function ValueListGeneral<
           flexDirection: "column",
           paddingBottom: 0,
           paddingTop: nativeTheme.s2,
+          width: "100%",
         }}
       >
         {menuDisplayNames && (
@@ -62,6 +63,7 @@ export function ValueListGeneral<
             }}
           />
         )}
+
         {table}
       </FormSection>
     </Styled>

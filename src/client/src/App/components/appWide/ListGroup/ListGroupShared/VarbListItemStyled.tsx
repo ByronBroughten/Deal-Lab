@@ -13,6 +13,25 @@ export function VarbListItemStyledNext({ className, children }: Props) {
     </Styled>
   );
 }
+// This ought to be broken up for ongoing and oneTime, or something.
+
+// Convert to Box with sx
+// Maybe make it take a mode: "ongoing", "onetime", or "numValue"
+
+// .LabeledValueEditor-equationEditor {
+//   .DraftEditor-root {
+//     min-width: 25px;
+//   }
+// }
+
+// .XBtn {
+//   visibility: hidden;
+// }
+// :hover {
+//   .XBtn {
+//     visibility: visible;
+//   }
+// }
 
 const Styled = styled.tr`
   td {
@@ -29,26 +48,12 @@ const Styled = styled.tr`
       min-width: 60px;
     }
   }
-  .LabeledValueEditor-equationEditor {
-    .DraftEditor-root {
-      min-width: 70px;
-    }
-  }
 
   .VarbListItem-contentCellDiv {
     display: flex;
     flex: 1;
     justify-content: flex-start;
     align-items: flex-end;
-  }
-
-  .XBtn {
-    visibility: hidden;
-  }
-  :hover {
-    .XBtn {
-      visibility: visible;
-    }
   }
 
   .ellipsis {

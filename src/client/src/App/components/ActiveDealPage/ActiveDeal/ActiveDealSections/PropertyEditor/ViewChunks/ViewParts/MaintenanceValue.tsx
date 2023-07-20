@@ -31,11 +31,11 @@ export function MaintenanceValue({
 
   const onePercentWhat = isDealMode(propertyMode, "hasHolding")
     ? "ARV"
-    : "purchase price";
+    : "price";
   const menuItems: [StateValue<"maintainanceValueSource">, string][] = [
     ["onePercentArv", `1% ${onePercentWhat}`],
     ["sqft", "$1 per sqft"],
-    ["onePercentArvAndSqft", `1% ${onePercentWhat} and $1 sqft, average`],
+    ["onePercentArvAndSqft", `1% ${onePercentWhat}, $1 sqft, average`],
     ["valueDollarsPeriodicEditor", "Custom amount"],
   ];
 

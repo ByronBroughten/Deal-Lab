@@ -2,6 +2,7 @@ import { Box } from "@mui/system";
 import { Text, View, ViewStyle } from "react-native";
 import { PulseLoader } from "react-spinners";
 import { constants } from "../../Constants";
+import { FeIdProp } from "../../sharedWithServer/SectionsMeta/SectionInfo/NanoIdInfo";
 import { dealModeLabels } from "../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
 import {
   useAction,
@@ -22,6 +23,7 @@ import { Row } from "../general/Row";
 import { icons } from "../Icons";
 import { BareStringEditor } from "../inputs/BareStringEditor";
 import { useConfirmationModal } from "../Modals/ConfirmationModalProvider";
+import { useIsDevices } from "./../customHooks/useMediaQueries";
 
 const titleProps = (displayName: string) => ({
   sx: {
@@ -67,46 +69,16 @@ export function SavedDeal({
   style?: ViewStyle;
   isInactive?: boolean;
 }) {
-  const storeName = "dealMain";
+  const { isDesktop, isTab, isPhone } = useIsDevices();
+
   const deal = useGetterSection({ sectionName: "deal", feId });
   const session = useGetterSectionOnlyOne("sessionStore");
-  const dbIdToEdit = session.valueNext("dealDbIdToEdit");
-  const loadingEdit = deal.dbId === dbIdToEdit;
-
-  const updateValueNoSave = useActionNoSave("updateValue");
-  const setCreatingDeal = () =>
-    updateValueNoSave({
-      ...session.varbInfo("dealDbIdToEdit"),
-      value: deal.dbId,
-    });
 
   const sessionDeal = session.childByDbId({
     childName: "dealMain",
     dbId: deal.dbId,
   });
   const sessionVarb = sessionDeal.onlyChild("sessionVarb");
-
-  const copyDeal = useActionWithProps("copyInStore", { storeName, feId });
-  const archiveDeal = useActionWithProps("archiveDeal", { feId });
-
-  const updateValue = useAction("updateValue");
-  const unArchiveDeal = () =>
-    updateValue({
-      ...deal.varbInfo("isArchived"),
-      value: false,
-    });
-
-  const isArchived = deal.valueNext("isArchived");
-
-  const deleteDeal = useActionWithProps("removeStoredDeal", { feId });
-  const { setModal } = useConfirmationModal();
-
-  const warnAndDelete = () =>
-    setModal({
-      title: "Are you sure you want to delete this deal?",
-      description: "It will be deleted permanently.",
-      handleSubmit: deleteDeal,
-    });
 
   const dateNumber = deal.valueNext("dateTimeFirstSaved");
   const dateCreated = new Intl.DateTimeFormat("en-US", {
@@ -122,18 +94,6 @@ export function SavedDeal({
 
   const strDisplayName = deal.stringValue("displayName");
   const isComplete = deal.valueNext("completionStatus") === "allValid";
-
-  const archiveBtnProps = isArchived
-    ? {
-        left: icons.unArchive({ size: 20 }),
-        middle: "Un-Archive",
-        onClick: unArchiveDeal,
-      }
-    : {
-        left: icons.doArchive({ size: 20 }),
-        middle: "Archive",
-        onClick: archiveDeal,
-      };
 
   return (
     <View
@@ -159,20 +119,25 @@ export function SavedDeal({
             }}
           />
         </Box>
-        <Row
-          style={{
-            ...rowStyle,
-            paddingLeft: nativeTheme.s4,
-          }}
-        >
-          <Text>Created </Text>
-          <Text>{dateCreated}</Text>
-        </Row>
+        {isDesktop && (
+          <Row
+            style={{
+              ...rowStyle,
+              paddingLeft: nativeTheme.s4,
+            }}
+          >
+            <Text>Created </Text>
+            <Text>{dateCreated}</Text>
+          </Row>
+        )}
       </Row>
       <Row style={{ justifyContent: "space-between" }}>
         <Row style={rowStyle}>
           {icons[dealMode](iconProps)}
-          <Text {...dealTypeProps}>{dealModeLabels[dealMode]}</Text>
+          {isDesktop && (
+            <Text {...dealTypeProps}>{dealModeLabels[dealMode]}</Text>
+          )}
+
           {!isComplete && (
             <Box
               sx={{
@@ -210,91 +175,150 @@ export function SavedDeal({
                 sx: { fontSize: 17 },
               }}
             />
-            {/* <LabeledVarbNext
-              {...{
-                finder: deal.varbInfo(outputPerDeal[dealMode]),
-                sx: { fontSize: 17 },
-              }}
-            /> */}
           </MuiRow>
         )}
-        <MuiRow>
-          {loadingEdit && (
-            <PulseLoader
-              {...{
-                loading: true,
-                color: nativeTheme.darkBlue.main,
-                size: 15, //22
-                style: { width: "64px" },
-              }}
-            />
-          )}
-          {!loadingEdit && (
-            <StyledActionBtn
-              {...{
-                sx: {
-                  margin: nativeTheme.s15,
-                  marginTop: nativeTheme.s25,
-                  marginRight: nativeTheme.s2,
-                  width: "64px",
-                },
-                left: icons.edit({ size: 20 }),
-                onClick: setCreatingDeal,
-                middle: "Edit",
-                ...(isInactive && {
-                  showAsDisabled: true,
-                  onClick: () =>
-                    showToastInfo(
-                      `To edit any deals other than your ${constants.basicStorageLimit} newest ones, upgrade to pro.`
-                    ),
-                }),
-              }}
-            />
-          )}
-          <StyledActionBtn
+        {isDesktop && <DealActions {...{ feId, isInactive }} />}
+      </Row>
+      <MuiRow sx={{ justifyContent: "flex-end" }}>
+        {!isDesktop && <DealActions {...{ feId, isInactive }} />}
+      </MuiRow>
+    </View>
+  );
+}
+
+function DealActions({
+  feId,
+  isInactive,
+}: FeIdProp & { isInactive?: boolean }) {
+  const deal = useGetterSection({ sectionName: "deal", feId });
+
+  const session = useGetterSectionOnlyOne("sessionStore");
+  const dbIdToEdit = session.valueNext("dealDbIdToEdit");
+  const loadingEdit = deal.dbId === dbIdToEdit;
+
+  const copyDeal = useActionWithProps("copyInStore", {
+    storeName: "dealMain",
+    feId,
+  });
+
+  const updateValueNoSave = useActionNoSave("updateValue");
+  const setCreatingDeal = () =>
+    updateValueNoSave({
+      ...session.varbInfo("dealDbIdToEdit"),
+      value: deal.dbId,
+    });
+
+  const isArchived = deal.valueNext("isArchived");
+  const deleteDeal = useActionWithProps("removeStoredDeal", { feId });
+  const { setModal } = useConfirmationModal();
+  const warnAndDelete = () =>
+    setModal({
+      title: "Are you sure you want to delete this deal?",
+      description: "It will be deleted permanently.",
+      handleSubmit: deleteDeal,
+    });
+
+  const archiveDeal = useActionWithProps("archiveDeal", { feId });
+
+  const updateValue = useAction("updateValue");
+  const unArchiveDeal = () =>
+    updateValue({
+      ...deal.varbInfo("isArchived"),
+      value: false,
+    });
+
+  const archiveBtnProps = isArchived
+    ? {
+        left: icons.unArchive({ size: 20 }),
+        middle: "Un-Archive",
+        onClick: unArchiveDeal,
+      }
+    : {
+        left: icons.doArchive({ size: 20 }),
+        middle: "Archive",
+        onClick: archiveDeal,
+      };
+
+  return (
+    <MuiRow sx={{ justifyContent: "flex-end" }}>
+      <MuiRow>
+        {loadingEdit && (
+          <PulseLoader
             {...{
-              sx: {
-                margin: nativeTheme.s1,
-                marginTop: nativeTheme.s25,
-                marginRight: nativeTheme.s15,
-              },
-              ...(isInactive && { showAsDisabled: true }),
-              left: icons.copy({ size: 20 }),
-              middle: "Copy",
-              onClick: copyDeal,
-              ...(isInactive && {
-                showAsDisabled: true,
-                onClick: () =>
-                  showToastInfo(
-                    `To copy any deals other than your ${constants.basicStorageLimit} newest ones, upgrade to pro.`
-                  ),
-              }),
+              loading: true,
+              color: nativeTheme.darkBlue.main,
+              size: 15, //22
+              style: { width: "64px" },
             }}
           />
+        )}
+        {!loadingEdit && (
           <StyledActionBtn
             {...{
               sx: {
                 margin: nativeTheme.s15,
                 marginTop: nativeTheme.s25,
                 marginRight: nativeTheme.s2,
+                width: "64px",
               },
-              ...archiveBtnProps,
+              left: icons.edit({ size: 20 }),
+              onClick: setCreatingDeal,
+              middle: "Edit",
+              ...(isInactive && {
+                showAsDisabled: true,
+                onClick: () =>
+                  showToastInfo(
+                    `To edit any deals other than your ${constants.basicStorageLimit} newest ones, upgrade to pro.`
+                  ),
+              }),
             }}
           />
-          <StyledActionBtn
-            {...{
-              isDangerous: true,
-              onClick: warnAndDelete,
-              sx: {
-                margin: nativeTheme.s1,
-                marginTop: nativeTheme.s25,
-              },
-              left: icons.delete({ size: 20 }),
-              middle: "Delete",
-            }}
-          />
-        </MuiRow>
-      </Row>
-    </View>
+        )}
+        <StyledActionBtn
+          {...{
+            sx: {
+              margin: nativeTheme.s1,
+              marginTop: nativeTheme.s25,
+              marginRight: nativeTheme.s15,
+            },
+            ...(isInactive && { showAsDisabled: true }),
+            left: icons.copy({ size: 20 }),
+            middle: "Copy",
+            onClick: copyDeal,
+            ...(isInactive && {
+              showAsDisabled: true,
+              onClick: () =>
+                showToastInfo(
+                  `To copy any deals other than your ${constants.basicStorageLimit} newest ones, upgrade to pro.`
+                ),
+            }),
+          }}
+        />
+      </MuiRow>
+      <MuiRow>
+        <StyledActionBtn
+          {...{
+            sx: {
+              margin: nativeTheme.s15,
+              marginTop: nativeTheme.s25,
+              marginRight: nativeTheme.s2,
+            },
+            ...archiveBtnProps,
+          }}
+        />
+        <StyledActionBtn
+          {...{
+            isDangerous: true,
+            onClick: warnAndDelete,
+            sx: {
+              margin: nativeTheme.s1,
+              marginTop: nativeTheme.s25,
+            },
+            left: icons.delete({ size: 20 }),
+            middle: "Delete",
+          }}
+        />
+      </MuiRow>
+    </MuiRow>
   );
 }

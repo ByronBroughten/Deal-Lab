@@ -5,6 +5,7 @@ import { SectionNameByType } from "../../../../sharedWithServer/SectionsMeta/Sec
 import { useActionWithProps } from "../../../../sharedWithServer/stateClassHooks/useAction";
 import theme from "../../../../theme/Theme";
 import { useMakeGoToPage } from "../../../customHooks/useGoToPage";
+import { MuiRow } from "../../../general/MuiRow";
 import { useConfirmationModal } from "../../../Modals/ConfirmationModalProvider";
 import { ListRouteName } from "../../../UserListEditorPage/UserComponentClosed";
 import { ActionLoadBtn } from "./ActionBtns/ActionLoadBtn";
@@ -40,22 +41,28 @@ export function StoreSectionActions<
 
   return (
     <Styled {...{ className }}>
-      <ActionLoadBtn {...{ feInfo }} />
-      <ActionSaveAsNewBtn {...{ btnProps: { sx: { ml: "2px" } }, ...feInfo }} />
-      <StyledActionBtn
-        sx={{ ml: "2px" }}
-        isDangerous={true}
-        middle="Reset default"
-        left={<BiReset size={23} />}
-        onClick={warnThenReset}
-      />
-      {routeBtnProps && (
-        <StyledActionBtn
-          middle={"Go to templates"}
-          left={<HiOutlineTemplate size={23} />}
-          onClick={makeGoToPage(routeBtnProps.routeName)}
+      <MuiRow>
+        <ActionLoadBtn {...{ feInfo }} />
+        <ActionSaveAsNewBtn
+          {...{ btnProps: { sx: { ml: "2px" } }, ...feInfo }}
         />
-      )}
+      </MuiRow>
+      <MuiRow>
+        <StyledActionBtn
+          sx={{ ml: "2px" }}
+          isDangerous={true}
+          middle="Reset default"
+          left={<BiReset size={23} />}
+          onClick={warnThenReset}
+        />
+        {routeBtnProps && (
+          <StyledActionBtn
+            middle={"Go to templates"}
+            left={<HiOutlineTemplate size={23} />}
+            onClick={makeGoToPage(routeBtnProps.routeName)}
+          />
+        )}
+      </MuiRow>
     </Styled>
   );
 }

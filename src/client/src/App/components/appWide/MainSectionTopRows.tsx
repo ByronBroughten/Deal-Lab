@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { SectionNameByType } from "../../sharedWithServer/SectionsMeta/SectionNameByType";
 import { nativeTheme } from "../../theme/nativeTheme";
 import theme from "../../theme/Theme";
+import { useIsDevices } from "../customHooks/useMediaQueries";
 import { MuiRow } from "../general/MuiRow";
 import { StoreSectionActions } from "./GeneralSection/MainSection/StoreSectionActions";
 import { PageTitle } from "./PageTitle";
@@ -38,10 +39,15 @@ export function MainSectionTopRows({
   topLeft,
   ...feInfo
 }: Props) {
+  const { isPhone } = useIsDevices();
   return (
     <Styled className={`MainSectionTopRows-root ${className ?? ""}`}>
       <div className="MainSectionTopRows-topRow">
-        <MuiRow>
+        <MuiRow
+          sx={{
+            ...(isPhone && { marginLeft: nativeTheme.s15 }),
+          }}
+        >
           <PageTitle sx={{ mr: nativeTheme.s3 }} text={sectionTitle} />
           {titleAppend && <TitleAppend children={titleAppend} />}
           {topLeft}

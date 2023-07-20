@@ -50,7 +50,10 @@ export const NumObjVarbSelector = React.memo(
         });
       };
 
-      const openVarbSelect = useDealModeContextVarbSelect(onVarbSelect);
+      const openVarbSelect = useDealModeContextVarbSelect(
+        onVarbSelect,
+        () => null
+      );
 
       const { setModal } = useInfoModal();
       const openModal = () =>
