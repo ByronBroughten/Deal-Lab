@@ -23,7 +23,7 @@ export function SubSectionOpen({ children, sx }: Props) {
           paddingTop: topPadding,
           paddingLeft: sidePadding,
           paddingRight: sidePadding,
-          marginBottom: nativeTheme.s4,
+          marginBottom: nativeTheme.s6,
           ...(isPhone && { borderTopLeftRadius: brMin }),
         },
         ...arrSx(sx),

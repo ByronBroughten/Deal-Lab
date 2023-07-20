@@ -14,6 +14,7 @@ export function BackgroundContainer({ children }: Props) {
         width: "100%",
         maxWidth: 1000,
         flex: 1,
+        marginBottom: nativeTheme.s6,
       }}
     >
       {children}
