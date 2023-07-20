@@ -125,6 +125,7 @@ function CurrentActiveDeal() {
           sx: {
             ...dealElementProps.sx,
             marginBottom: dealElementProps.sx.marginTop,
+            border: "none",
           },
           btnText: "Finish",
           onClick: goToAccountPage,

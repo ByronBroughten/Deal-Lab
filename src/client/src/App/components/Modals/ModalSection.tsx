@@ -87,6 +87,10 @@ export function ModalSection({
                 {...{
                   btnText: "Finish",
                   onClick: closeModal,
+                  sx: {
+                    marginTop: nativeTheme.s4,
+                    height: "35px",
+                  },
                 }}
               />
             )}

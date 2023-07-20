@@ -8,6 +8,8 @@ AppRegistry.runApplication("App", {
 });
 // Get rid of the MUI select component that breaks the UI...
 
+// Give the deal a menu that opens up with with its options
+
 // Mobile passability
 // - Change SavedDeal based on a breakpoint
 //   - Put actions behind ellipses
@@ -17,6 +19,8 @@ AppRegistry.runApplication("App", {
 // - Change some margins based on a breakpoint
 // - Shorten some select titles
 // - Add scrolling to sections or something
+
+// Add NumObjEntityEditor window to its varb select
 
 // *Speed up
 // Don't load deals till you need them

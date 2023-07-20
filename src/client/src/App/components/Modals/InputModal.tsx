@@ -30,11 +30,12 @@ function getInputModalOptions(
 type Props = { modalChildren?: React.ReactNode };
 export function InputModal({ modalChildren = null }: Props) {
   const { modalState, setModal } = useInputModal();
-  const { children, timeSet, title, dealMode, idOfSectionToSave } =
+  const { children, timeSet, title, dealMode, idOfSectionToSave, showFinish } =
     getInputModalOptions(modalState);
   return (
     <ModalSection
       {...{
+        showFinish,
         title,
         show: Boolean(modalState),
         closeModal: () => {

@@ -38,9 +38,9 @@ export function FinishBtn({
             : onClick,
         sx: [
           {
+            border: `1px solid ${nativeTheme["gray-300"]}`,
             boxShadow: nativeTheme.oldShadow1,
             borderRadius: nativeTheme.br0,
-            border: "none",
             height: "50px",
             width: "100%",
             fontSize: nativeTheme.fs22,
