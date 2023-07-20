@@ -101,6 +101,7 @@ const unionValueArrs = {
   completionStatus: ["allEmpty", "allValid", "someInvalid"],
   dealMode: dealModes,
   dealModePlusMixed: getDealModes("plusMixed"),
+  dealModePlusEmpty: getDealModes("plusEmpty"),
   financingMode: financingModes,
   financingMethod: ["cashOnly", "useLoan", ""],
   userDataStatus: [

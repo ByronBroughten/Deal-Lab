@@ -1,3 +1,4 @@
+import React from "react";
 import { Navigate, Route } from "react-router-dom";
 import {
   ActiveDealMgmt,
@@ -13,26 +14,67 @@ import { useGetterSections } from "./App/sharedWithServer/stateClassHooks/useGet
 import { IdOfSectionToSaveProvider } from "./App/sharedWithServer/stateClassHooks/useIdOfSectionToSave";
 
 export const ActiveDealRoutes = (
-  <Route path={feRoutes.activeDeal} element={<ActiveDealController />}>
+  <Route path={feRoutes.activeDeal} element={<ActiveDealMainController />}>
     <Route index element={<ActiveDealMain />} />
-    <Route path={feRoutes.activeProperty} element={<ActiveDealProperty />} />
+    <Route
+      path={feRoutes.activeProperty}
+      element={
+        <ActiveDealChildController>
+          <ActiveDealProperty />
+        </ActiveDealChildController>
+      }
+    />
     <Route
       path={feRoutes.activePurchaseFi}
-      element={<ActiveDealPurchaseFi />}
+      element={
+        <ActiveDealChildController>
+          <ActiveDealPurchaseFi />
+        </ActiveDealChildController>
+      }
     />
-    <Route path={feRoutes.activeRefi} element={<ActiveDealRefi />} />
-    <Route path={feRoutes.activeMgmt} element={<ActiveDealMgmt />} />
+    <Route
+      path={feRoutes.activeRefi}
+      element={
+        <ActiveDealChildController>
+          <ActiveDealRefi />
+        </ActiveDealChildController>
+      }
+    />
+    <Route
+      path={feRoutes.activeMgmt}
+      element={
+        <ActiveDealChildController>
+          <ActiveDealMgmt />
+        </ActiveDealChildController>
+      }
+    />
   </Route>
 );
 
-function ActiveDealController() {
+function ActiveDealMainController() {
   const getters = useGetterSections();
+  const session = getters.oneAndOnly("sessionStore");
+  const creatingDealOfMode = session.valueNext("creatingDealOfMode");
+
   if (getters.hasActiveDeal()) {
     return <ActiveDealWrapper />;
+  } else if (creatingDealOfMode) {
+    return <UserDataNeededPage />;
   } else {
     return <Navigate to={feRoutes.account} />;
   }
 }
+
+type ChildControllerProps = { children: React.ReactElement };
+function ActiveDealChildController({ children }: ChildControllerProps) {
+  const getters = useGetterSections();
+  if (getters.hasActiveDeal()) {
+    return children;
+  } else {
+    return <Navigate to={feRoutes.activeDeal} />;
+  }
+}
+
 function ActiveDealWrapper() {
   const getters = useGetterSections();
   const deal = getters.getActiveDeal();

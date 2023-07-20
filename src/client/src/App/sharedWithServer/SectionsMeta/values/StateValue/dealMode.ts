@@ -11,6 +11,7 @@ const dealModeArrs = {
   all: dealModes,
   hasHolding: Arr.extractStrict(dealModes, ["fixAndFlip", "brrrr"]),
   plusMixed: [...dealModes, "mixed"],
+  plusEmpty: [...dealModes, ""],
   maybeNoRehab: Arr.extractStrict(dealModes, ["buyAndHold", "homeBuyer"]),
   hasMgmt: Arr.extractStrict(dealModes, ["buyAndHold", "brrrr"] as const),
   hasRefi: Arr.extractStrict(dealModes, ["brrrr"]),

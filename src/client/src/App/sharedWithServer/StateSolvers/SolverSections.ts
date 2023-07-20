@@ -211,7 +211,7 @@ export class SolverSections extends SolverSectionsBase {
     property.basic.updateValues({ propertyMode: dealMode });
 
     const sessionStore = this.oneAndOnly("sessionStore");
-    sessionStore.updateValues({ isCreatingDeal: false });
+    sessionStore.updateValues({ creatingDealOfMode: "" });
 
     this.activateDealAndSolve({ feId: newDeal.get.feId });
   }

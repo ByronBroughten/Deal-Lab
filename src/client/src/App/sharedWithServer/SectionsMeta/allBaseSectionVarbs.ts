@@ -57,7 +57,7 @@ export function makeAllBaseSectionVarbs() {
       compareDealStatus: baseVarb("compareDealStatus"),
       archivedAreLoaded: baseVarb("boolean"),
       showArchivedDeals: baseVarb("boolean"),
-      isCreatingDeal: baseVarb("boolean"),
+      creatingDealOfMode: baseVarb("dealModePlusEmpty"),
       dealDbIdToEdit: baseVarb("string"),
     }),
     newDealMenu: varbs({ dealMode: baseVarb("dealMode") }),

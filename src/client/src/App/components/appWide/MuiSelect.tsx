@@ -50,6 +50,7 @@ export function MuiSelect<UVN extends UnionValueName, SN extends SectionName>({
   return (
     <MuiSelectStyled
       {...{
+        id: varb.varbId,
         value: varb.value(unionValueName),
         onChange: (e, ...args) => {
           unstable_batchedUpdates(() => {

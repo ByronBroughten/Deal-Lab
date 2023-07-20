@@ -14,6 +14,7 @@ type DraftHandlerOutput = "handled" | "not-handled";
 type HandleBeforeInput = (char: string) => DraftHandlerOutput;
 export type HandleReturn = () => DraftHandlerOutput;
 interface Props extends Omit<FilledTextFieldProps, "InputProps" | "variant"> {
+  id: string;
   sx?: SxProps;
   sectionName?: ThemeName;
   editorState: EditorState;
@@ -95,6 +96,7 @@ export const MaterialDraftEditor = React.memo(function MaterialDraftEditor({
           InputProps={{
             inputComponent: MaterialDraftField as any,
             inputProps: {
+              id,
               component: Editor,
               editorRef,
               editorState,

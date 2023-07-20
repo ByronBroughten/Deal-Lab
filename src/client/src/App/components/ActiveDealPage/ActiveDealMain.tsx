@@ -1,10 +1,17 @@
+import { Box } from "@mui/material";
 import { View } from "react-native";
-import { isDealMode } from "../../sharedWithServer/SectionsMeta/values/StateValue/dealMode";
+import { MoonLoader } from "react-spinners";
+import {
+  DealMode,
+  isDealMode,
+} from "../../sharedWithServer/SectionsMeta/values/StateValue/dealMode";
 import { dealModeLabels } from "../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
+import { useGetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useGetterSection";
 import { BackBtnWrapper } from "../appWide/BackBtnWrapper";
 import { BackgroundContainer } from "../appWide/BackgroundContainter";
 import { PageTitle } from "../appWide/PageTitle";
 import { useGoToPage } from "../customHooks/useGoToPage";
+import { MuiRow } from "../general/MuiRow";
 import { BigStringEditor } from "../inputs/BigStringEditor";
 import { nativeTheme } from "./../../theme/nativeTheme";
 import { Row } from "./../general/Row";
@@ -20,69 +27,109 @@ const dealElementProps = {
 };
 
 export function ActiveDealMain() {
+  const session = useGetterSectionOnlyOne("sessionStore");
+  const creatingDealOfMode = session.valueNext("creatingDealOfMode");
+  return (
+    <BackBtnWrapper {...{ to: "account", label: "Deal Menu" }}>
+      <BackgroundContainer>
+        {creatingDealOfMode ? (
+          <CreatingActiveDeal {...{ dealMode: creatingDealOfMode }} />
+        ) : (
+          <CurrentActiveDeal />
+        )}
+      </BackgroundContainer>
+    </BackBtnWrapper>
+  );
+}
+
+function CreatingActiveDeal({ dealMode }: { dealMode: DealMode }) {
+  return (
+    <Box>
+      <PageTitle
+        sx={{ marginTop: nativeTheme.s35 }}
+        text={`Initializing Deal...`}
+      />
+      <Box>
+        <MuiRow
+          sx={{
+            justifyContent: "center",
+            padding: nativeTheme.s5,
+          }}
+        >
+          <MoonLoader
+            {...{
+              loading: true,
+              color: nativeTheme.primary.main,
+              size: 150,
+              speedMultiplier: 0.8,
+              cssOverride: { marginTop: nativeTheme.s4 },
+            }}
+          />
+        </MuiRow>
+      </Box>
+    </Box>
+  );
+}
+
+function CurrentActiveDeal() {
   const goToAccountPage = useGoToPage("account");
   const { deal, feStore } = useActiveDealPage();
   const dealMode = deal.valueNext("dealMode");
   const completionStatus = deal.valueNext("completionStatus");
   return (
-    <BackBtnWrapper {...{ to: "account", label: "Deal Menu" }}>
-      <BackgroundContainer>
-        <PageTitle
-          sx={{ marginTop: nativeTheme.s35 }}
-          text={`${dealModeLabels[dealMode]}`}
-        />
-        <Row
-          style={{
-            alignItems: "flex-end",
-            marginTop: nativeTheme.s35,
+    <Box>
+      <PageTitle
+        sx={{ marginTop: nativeTheme.s35 }}
+        text={`${dealModeLabels[dealMode]}`}
+      />
+      <Row
+        style={{
+          alignItems: "flex-end",
+          marginTop: nativeTheme.s35,
+        }}
+      >
+        <BigStringEditor
+          {...{
+            label: "Title",
+            feVarbInfo: deal.varbNext("displayNameEditor").feVarbInfo,
           }}
-        >
-          <BigStringEditor
-            {...{
-              label: "Title",
-              feVarbInfo: deal.varbNext("displayNameEditor").feVarbInfo,
-            }}
-          />
-        </Row>
-        <View>
-          <DealSubSectionClosed {...dealElementProps} childName="property" />
+        />
+      </Row>
+      <View>
+        <DealSubSectionClosed {...dealElementProps} childName="property" />
+        <DealSubSectionClosed
+          {...dealElementProps}
+          childName="purchaseFinancing"
+        />
+        {isDealMode(dealMode, "hasRefi") && (
           <DealSubSectionClosed
             {...dealElementProps}
-            childName="purchaseFinancing"
+            childName="refiFinancing"
           />
-          {isDealMode(dealMode, "hasRefi") && (
-            <DealSubSectionClosed
-              {...dealElementProps}
-              childName="refiFinancing"
-            />
-          )}
-          {isDealMode(dealMode, "hasMgmt") && (
-            <DealSubSectionClosed
-              {...dealElementProps}
-              childName="mgmtOngoing"
-            />
-          )}
-        </View>
-        <OutputSection
-          {...{
-            ...dealElementProps,
-            dealIsComplete: completionStatus === "allValid",
-            feId: feStore.onlyChildFeId("outputSection"),
-            disableOpenOutputs: completionStatus !== "allValid",
-            dealMode,
-          }}
-        />
-        <FinishBtn
-          {...{
-            sx: {
-              ...dealElementProps.sx,
-              marginBottom: dealElementProps.sx.marginTop,
-            },
-            btnText: "Finish",
-            onClick: goToAccountPage,
-          }}
-        />
-      </BackgroundContainer>
-    </BackBtnWrapper>
+        )}
+        {isDealMode(dealMode, "hasMgmt") && (
+          <DealSubSectionClosed {...dealElementProps} childName="mgmtOngoing" />
+        )}
+      </View>
+      <OutputSection
+        {...{
+          ...dealElementProps,
+          dealIsComplete: completionStatus === "allValid",
+          feId: feStore.onlyChildFeId("outputSection"),
+          disableOpenOutputs: completionStatus !== "allValid",
+          dealMode,
+        }}
+      />
+      <FinishBtn
+        {...{
+          sx: {
+            ...dealElementProps.sx,
+            marginBottom: dealElementProps.sx.marginTop,
+          },
+          btnText: "Finish",
+          onClick: goToAccountPage,
+        }}
+      />
+    </Box>
   );
 }

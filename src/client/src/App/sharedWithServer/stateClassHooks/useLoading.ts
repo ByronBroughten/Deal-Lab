@@ -1,7 +1,6 @@
 import React from "react";
 import { unstable_batchedUpdates } from "react-dom";
 import { useGoToPage } from "../../components/customHooks/useGoToPage";
-import { useInputModal } from "../../components/Modals/InputModalProvider";
 import { useAction } from "./useAction";
 import { useGetterSectionOnlyOne } from "./useGetterSection";
 
@@ -14,27 +13,20 @@ export function useDoCompare() {
     if (status === "buildingCompare") {
       doCompare({});
     }
-  }, [status]);
+  }, [status, doCompare]);
 }
 
 export function useAddDeal() {
-  const { setModal } = useInputModal();
-  const newDealMenu = useGetterSectionOnlyOne("newDealMenu");
   const addActiveDeal = useAction("addActiveDeal");
-  const goToActiveDeal = useGoToPage("activeDeal");
-
   const sessionStore = useGetterSectionOnlyOne("sessionStore");
-  const isCreatingDeal = sessionStore.valueNext("isCreatingDeal");
+
+  const creatingDealOfMode = sessionStore.valueNext("creatingDealOfMode");
 
   React.useEffect(() => {
-    if (isCreatingDeal) {
-      unstable_batchedUpdates(() => {
-        addActiveDeal({ dealMode: newDealMenu.valueNext("dealMode") });
-        setModal(null);
-        goToActiveDeal();
-      });
+    if (creatingDealOfMode) {
+      addActiveDeal({ dealMode: creatingDealOfMode });
     }
-  }, [isCreatingDeal, addActiveDeal, setModal]);
+  }, [creatingDealOfMode, addActiveDeal]);
 }
 
 export function useEditDeal() {

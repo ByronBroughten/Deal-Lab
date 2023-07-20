@@ -82,10 +82,10 @@ function makeAllUpdateSections() {
   return checkAllUpdateSections({
     ...makeAllDefaultUpdateSections(),
     ...prop("sessionStore", {
+      creatingDealOfMode: varb("dealModePlusEmpty", { initValue: "" }),
       compareDealStatus: varb("compareDealStatus", { initValue: "editing" }),
       archivedAreLoaded: varb("boolean", { initValue: false }),
       showArchivedDeals: varb("boolean", { initValue: false }),
-      isCreatingDeal: varb("boolean", { initValue: false }),
       isStartingDealEdit: varb("string", { initValue: "" }),
     }),
     ...prop("loan", loanUpdateVarbs()),

@@ -7,8 +7,6 @@ import { useGetterSectionOnlyOne } from "../sharedWithServer/stateClassHooks/use
 import { OuterSectionNext } from "./appWide/GeneralSection/OuterSectionNext";
 import { DealModeProvider } from "./customContexts/dealModeContext";
 import { PageMain } from "./general/PageMain";
-import { ModalProviders } from "./ModalProviders";
-import { Modals } from "./Modals";
 import { NavBar } from "./NavBar";
 
 export function UserDataNeededPage() {
@@ -38,15 +36,12 @@ export function AuthProtectedPage() {
     <LoginToAccess>
       <DefaultMainNeededPage>
         <DealModeProvider dealMode="mixed">
-          <ModalProviders>
-            <Modals />
-            <PageMain>
-              <NavBar />
-              <OuterSectionNext>
-                <Outlet />
-              </OuterSectionNext>
-            </PageMain>
-          </ModalProviders>
+          <PageMain>
+            <NavBar />
+            <OuterSectionNext>
+              <Outlet />
+            </OuterSectionNext>
+          </PageMain>
         </DealModeProvider>
       </DefaultMainNeededPage>
     </LoginToAccess>

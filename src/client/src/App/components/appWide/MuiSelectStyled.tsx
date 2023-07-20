@@ -11,6 +11,7 @@ import { arrSx, MuiSelectOnChange } from "../../utils/mui";
 
 export type SelectItemProp = [string, string] | null;
 export interface MuiSelectStyledProps {
+  id: string;
   className?: string;
   label?: React.ReactNode;
   value: string;
@@ -20,6 +21,7 @@ export interface MuiSelectStyledProps {
   sx?: SxProps;
 }
 export function MuiSelectStyled({
+  id,
   label,
   className,
   value,
@@ -29,10 +31,12 @@ export function MuiSelectStyled({
   sx,
 }: MuiSelectStyledProps) {
   const displayItems = getDisplayItems(items, value);
+  const [isOpen, setIsOpen] = React.useState(false);
   return (
     <FormControl
       className={`MuiSelectStyled-root ${className ?? ""}`}
       hiddenLabel={!label}
+      onClick={() => setIsOpen(!isOpen)}
       sx={[
         {
           border: `solid 1px ${nativeTheme["gray-300"]}`,
@@ -67,6 +71,7 @@ export function MuiSelectStyled({
     >
       {label && (
         <InputLabel
+          htmlFor={id}
           sx={{ fontSize: nativeTheme.fs22, color: nativeTheme.inactiveLabel }}
         >
           {label}
@@ -74,10 +79,14 @@ export function MuiSelectStyled({
       )}
       <Select
         {...{
+          id,
+          name: id,
           value,
           onChange,
+          MenuProps: {
+            // disablePortal: true,
+          },
           labelId: "ActiveDeal-modeSelector",
-          id: "demo-simple-select",
           ...(label && { label }),
           autoWidth: true,
           sx: [
