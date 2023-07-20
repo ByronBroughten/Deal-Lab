@@ -392,11 +392,11 @@ export function makeAllBaseSectionVarbs() {
       valueAddRoiPercentPerMonth: baseVarb("numObj", percent),
       valueAddRoiPercentAnnualized: baseVarb("numObj", percent),
 
-      valueAddProfitOnSale: baseVarb("numObj", dollars),
+      vaProfitOnSale: baseVarb("numObj", dollars),
       valueAddRoiOnSaleDecimal: baseVarb("numObj", decimal),
-      valueAddRoiOnSalePercent: baseVarb("numObj", percent),
+      vaRoiOnSalePercent: baseVarb("numObj", percent),
       valueAddRoiOnSalePercentPerMonth: baseVarb("numObj", percent),
-      valueAddRoiOnSalePercentAnnualized: baseVarb("numObj", percent),
+      vaRoiOnSalePercentAnnualized: baseVarb("numObj", percent),
 
       refiLoanHoldingCost: baseVarb("numObj", dollars),
       purchaseLoanHoldingCost: baseVarb("numObj", dollars),

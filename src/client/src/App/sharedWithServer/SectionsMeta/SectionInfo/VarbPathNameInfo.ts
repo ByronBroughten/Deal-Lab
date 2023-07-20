@@ -123,6 +123,7 @@ const allVarbPathParams = {
   ),
   rehabCost: fixedVarbPathParams("Property", "propertyFocal", "rehabCost"),
 
+  valueAddProfit: fixedVarbPathParams("Deal", "dealFocal", "valueAddProfit"),
   valueAddRoiPercent: fixedVarbPathParams(
     "Deal",
     "dealFocal",
@@ -133,7 +134,18 @@ const allVarbPathParams = {
     "dealFocal",
     "valueAddRoiPercentAnnualized"
   ),
-  valueAddProfit: fixedVarbPathParams("Deal", "dealFocal", "valueAddProfit"),
+
+  vaProfitOnSale: fixedVarbPathParams("Deal", "dealFocal", "vaProfitOnSale"),
+  vaRoiOnSalePercent: fixedVarbPathParams(
+    "Deal",
+    "dealFocal",
+    "vaRoiOnSalePercent"
+  ),
+  vaRoiOnSalePercentAnnualized: fixedVarbPathParams(
+    "Deal",
+    "dealFocal",
+    "vaRoiOnSalePercentAnnualized"
+  ),
 };
 
 export const varbPathNames = Obj.keys(allVarbPathParams);

@@ -57,6 +57,10 @@ const hasProfitOutputs = [
   "valueAddProfit",
   "valueAddRoiPercent",
   "valueAddRoiPercentAnnualized",
+
+  "vaProfitOnSale",
+  "vaRoiOnSalePercent",
+  "vaRoiOnSalePercentAnnualized",
 ] as const;
 const fixAndFlip = [
   ...sharedBasics,

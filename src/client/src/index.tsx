@@ -6,30 +6,28 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
+// Get rid of the MUI select component that breaks the UI...
 
-// Add questionMarks to Variables to compare by (for templates)
-// Add questionMarks to the variable selector(?)
+// Mobile passability
+// - Change SavedDeal based on a breakpoint
+//   - Put actions behind ellipses
+//   - Maybe don't show metrics
+//   - Maybe reduce font size
+//   - Maybe get rid of deal type word, but keep icon
+// - Change some margins based on a breakpoint
+// - Shorten some select titles
+// - Add scrolling to sections or something
 
-// Speed up
-// - create comparison deals on cliku
+// *Speed up
+// Don't load deals till you need them
+// - Right now dealCompare relies on the deals being there
+// - AddDeal should pretty much work as is
+// - EditDeal that gets deal from db if needed
+// - CopyDeal with new route that copies the deal on the server
+// - RemoveDeal that works even if deal isn't in feStore
+// - Route for editing just deal displayName
 
-// Intermediary build compare screen
-// - The only question is, how do I prompt people to start
-//   with a template?
-// - Change load saved to
-
-// - Then display the compared deals similar to how they are now.
-// - Then have an “Edit” button to go back to editing the compared deals.
-
-// Consider making a "valueAddProfitOnSale" variable
-// for fixAndFlip, as opposed to "valueAddProfit" for BRRRR
-// Then there's these:
-// valueAddRoiDecimal
-// valueAddRoiPercent
-// valueAddRoiPercentPerMonth
-// valueAddRoiPercentAnnualized
-
-// Ask for Marina, Ed, and Kate to give feedback
+// Ask for Marina, Ed, Kate(?), and Dave(?) to give feedback
 
 // * Marketing *
 // - Consult marketing people
@@ -49,6 +47,8 @@ AppRegistry.runApplication("App", {
 // - The bigger pockets forum
 // - Get an influencer to showcase it
 // Done with the app unless it makes any money
+
+// Get the email in feStore and show which account is logged in
 
 // "Add Deal" takes a long time.
 // - add something for showing a loading circle for it

@@ -410,15 +410,15 @@ export const varbLabels = checkAllVarbLabels({
       title: "Annualized Return on Investment from Value Add",
       info: `The total profit from increasing a property's value after purchase, as a percent of the cash that was invested to do so, divided by the number of years—or by the fraction of years—that the holding period lasted.\n\nThis can be used to compare ROI from onetime windfall income with ongoing income from other types of investments.`,
     }),
-    valueAddProfitOnSale: input("VA profit on sale"),
+    vaProfitOnSale: input("VA profit on sale"),
     valueAddRoiOnSaleDecimal: input("VA ROI on sale decimal"),
-    valueAddRoiOnSalePercent: text({
+    vaRoiOnSalePercent: text({
       inputLabel: "VA ROI on sale",
       title: "Value Add ROI on sale",
       info: "The total profit from increasing a property's value after purchase, as a percent of the cash that was invested to do so, including selling costs.\n\nThis is useful if you plan on accessing the value added to a property by selling it, as opposed to by using a HELOC or something else.",
     }),
     valueAddRoiOnSalePercentPerMonth: input("VA ROI on sale per month"),
-    valueAddRoiOnSalePercentAnnualized: text({
+    vaRoiOnSalePercentAnnualized: text({
       inputLabel: "VA ROI on sale annualized",
       title: "Annualized ROI from Value Add on Sale",
       info: `The total profit from increasing a property's value after purchase, as a percent of the cash that was invested to do so, including selling costs, divided by the number of years—or by the fraction of years—that the holding period lasted.\n\nThis can be used to compare ROI from onetime windfall income with ongoing income from other types of investments.`,

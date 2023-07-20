@@ -466,7 +466,7 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
         propS.local("valueAddRoiPercentPerMonth")
       ),
     }),
-    valueAddProfitOnSale: dealModeVarb({
+    vaProfitOnSale: dealModeVarb({
       // possibly depreciated
       homeBuyer: notApplicable(),
       buyAndHold: notApplicable(),
@@ -483,11 +483,11 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
       fixAndFlip: basicsS.loadFromLocal("valueAddRoiDecimal"),
       brrrr: basicsS.equationLR(
         "divide",
-        propS.local("valueAddProfitOnSale"),
+        propS.local("vaProfitOnSale"),
         propS.local("totalInvestment")
       ),
     }),
-    valueAddRoiOnSalePercent: dealModeVarb({
+    vaRoiOnSalePercent: dealModeVarb({
       homeBuyer: notApplicable(),
       buyAndHold: notApplicable(),
       fixAndFlip: basicsS.loadFromLocal("valueAddRoiPercent"),
@@ -502,11 +502,11 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
       fixAndFlip: basicsS.loadFromLocal("valueAddRoiPercentPerMonth"),
       brrrr: basicsS.equationLR(
         "divide",
-        propS.local("valueAddRoiOnSalePercent"),
+        propS.local("vaRoiOnSalePercent"),
         propS.local("timeTillValueAddProfitMonths")
       ),
     }),
-    valueAddRoiOnSalePercentAnnualized: dealModeVarb({
+    vaRoiOnSalePercentAnnualized: dealModeVarb({
       homeBuyer: notApplicable(),
       buyAndHold: notApplicable(),
       fixAndFlip: basicsS.loadFromLocal("valueAddRoiPercentAnnualized"),
