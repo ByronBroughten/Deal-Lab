@@ -2,6 +2,7 @@ import React from "react";
 import { DealMode } from "../../sharedWithServer/SectionsMeta/values/StateValue/dealMode";
 import { IdOfSectionToSaveProvider } from "../../sharedWithServer/stateClassHooks/useIdOfSectionToSave";
 import { timeS } from "../../sharedWithServer/utils/timeS";
+import { nativeTheme } from "../../theme/nativeTheme";
 import { DealModeProvider } from "../customContexts/dealModeContext";
 import {
   InputModalOptions,
@@ -35,6 +36,12 @@ export function InputModal({ modalChildren = null }: Props) {
   return (
     <ModalSection
       {...{
+        modalSectionProps: {
+          sx: {
+            padding: nativeTheme.s4,
+            borderRadius: nativeTheme.br0,
+          },
+        },
         showFinish,
         title,
         show: Boolean(modalState),

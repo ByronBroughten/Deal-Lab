@@ -26,6 +26,7 @@ export type PopperRef = React.Ref<HTMLDivElement>;
 interface Props extends FeSectionInfo {
   setEditorState: React.Dispatch<React.SetStateAction<EditorState>>;
   varbPathNames?: ValueFixedVarbPathName[];
+  makeViewWindow?: () => React.ReactNode;
 }
 
 export const NumObjVarbSelector = React.memo(
@@ -34,6 +35,7 @@ export const NumObjVarbSelector = React.memo(
       {
         setEditorState,
         varbPathNames = ["purchasePrice", "numUnits", "sqft"],
+        makeViewWindow = () => null,
         ...feInfo
       }: Props,
       ref: PopperRef
@@ -52,7 +54,7 @@ export const NumObjVarbSelector = React.memo(
 
       const openVarbSelect = useDealModeContextVarbSelect(
         onVarbSelect,
-        () => null
+        makeViewWindow
       );
 
       const { setModal } = useInfoModal();
