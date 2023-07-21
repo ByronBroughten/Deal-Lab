@@ -48,10 +48,8 @@ export const nativeTheme = {
     height: 70,
     activeBtn: themeColors["gray-200"],
   }),
-  formSection: view({
-    borderTopWidth: 1,
-    borderColor: themeColors["gray-400"],
-    borderStyle: "solid",
+  formSection: sxProps({
+    borderTop: `solid 1px ${themeColors.borderColor}`,
   }),
   dealMenuElement: view({
     margin: unitSizes.s3,

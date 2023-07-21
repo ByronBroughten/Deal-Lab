@@ -11,6 +11,7 @@ import { useQueryAction } from "../../sharedWithServer/stateClassHooks/useQueryA
 import { StoreId } from "../../sharedWithServer/StateGetters/StoreId";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { StyledActionBtn } from "../appWide/GeneralSection/MainSection/StyledActionBtn";
+import { useIsDevices } from "../customHooks/useMediaQueries";
 import ChunkTitle from "../general/ChunkTitle";
 import { MuiRow } from "../general/MuiRow";
 import { icons } from "../Icons";
@@ -71,6 +72,9 @@ export function SavedDeals() {
 
   const dataStatus = useUserDataStatus();
   const loading = dataStatus === "loading";
+
+  const { isPhone } = useIsDevices();
+
   return (
     <MuiRow
       sx={{
@@ -79,13 +83,19 @@ export function SavedDeals() {
         height: "100%",
         margin: nativeTheme.dealMenuElement.margin,
         justifyContent: "center",
-        paddingLeft: nativeTheme.s45,
-        paddingRight: nativeTheme.s45,
-        paddingBottom: nativeTheme.s5,
-        paddingTop: nativeTheme.s4,
-        // borderColor: nativeTheme.primary.main,
-        // borderWidth: 1,
-        // borderStyle: "solid",
+        ...(isPhone
+          ? {
+              paddingLeft: nativeTheme.s2,
+              paddingRight: nativeTheme.s2,
+              paddingBottom: nativeTheme.s25,
+              paddingTop: nativeTheme.s15,
+            }
+          : {
+              paddingLeft: nativeTheme.s45,
+              paddingRight: nativeTheme.s45,
+              paddingBottom: nativeTheme.s5,
+              paddingTop: nativeTheme.s4,
+            }),
         borderRadius: nativeTheme.br0,
         backgroundColor: nativeTheme.light,
         boxShadow: nativeTheme.oldShadow4,
@@ -108,21 +118,30 @@ export function SavedDeals() {
           <>
             <MuiRow
               sx={{
-                mt: nativeTheme.s3,
                 width: "100%",
                 justifyContent: "flex-start",
+                ...(isPhone && { marginLeft: nativeTheme.s15 }),
               }}
             >
               <BigStringEditor
                 {...{
                   placeholder: "Filter by title",
                   feVarbInfo: dealMenu.varbInfo("dealNameFilter"),
+                  sx: {
+                    mt: nativeTheme.s3,
+                    marginRight: nativeTheme.s2,
+                    ...(isPhone && {
+                      "& .DraftEditor-root": {
+                        minWidth: 150,
+                      },
+                    }),
+                  },
                 }}
               />
               {showArchived && (
                 <StyledActionBtn
                   {...{
-                    sx: { marginLeft: nativeTheme.s2 },
+                    sx: { mt: nativeTheme.s3 },
                     onClick: hideArchivedDeals,
                     left: icons.unArchive({ size: 25 }),
                     middle: "Hide Archived",
@@ -132,7 +151,7 @@ export function SavedDeals() {
               {!showArchived && (
                 <StyledActionBtn
                   {...{
-                    sx: { marginLeft: nativeTheme.s2 },
+                    sx: { mt: nativeTheme.s3 },
                     onClick: showArchivedDeals,
                     left: icons.doArchive({ size: 25 }),
                     middle: "Show Archived",

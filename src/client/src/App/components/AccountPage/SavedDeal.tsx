@@ -1,5 +1,6 @@
+import { SxProps } from "@mui/material";
 import { Box } from "@mui/system";
-import { Text, View, ViewStyle } from "react-native";
+import { Text } from "react-native";
 import { PulseLoader } from "react-spinners";
 import { constants } from "../../Constants";
 import { FeIdProp } from "../../sharedWithServer/SectionsMeta/SectionInfo/NanoIdInfo";
@@ -13,7 +14,9 @@ import {
   useGetterSection,
   useGetterSectionOnlyOne,
 } from "../../sharedWithServer/stateClassHooks/useGetterSection";
+import { timeS } from "../../sharedWithServer/utils/timeS";
 import { nativeTheme } from "../../theme/nativeTheme";
+import { arrSx } from "../../utils/mui";
 import { reactNativeS } from "../../utils/reactNative";
 import { StyledActionBtn } from "../appWide/GeneralSection/MainSection/StyledActionBtn";
 import { LabelText, StyledLabeledVarb } from "../appWide/LabeledVarbNext";
@@ -25,18 +28,16 @@ import { BareStringEditor } from "../inputs/BareStringEditor";
 import { useConfirmationModal } from "../Modals/ConfirmationModalProvider";
 import { useIsDevices } from "./../customHooks/useMediaQueries";
 
-const titleProps = (displayName: string) => ({
-  sx: {
+const titleSx = (displayName: string, minWidth: number | string) => ({
+  color: nativeTheme.primary.main,
+  fontSize: nativeTheme.fs18,
+  maxWidth: minWidth,
+  ...(!displayName && { fontStyle: "italic" }),
+  "& .DraftEditor-root": {
     color: nativeTheme.primary.main,
     fontSize: nativeTheme.fs18,
-    maxWidth: 800,
+    maxWidth: minWidth,
     ...(!displayName && { fontStyle: "italic" }),
-    "& .DraftEditor-root": {
-      color: nativeTheme.primary.main,
-      fontSize: nativeTheme.fs18,
-      maxWidth: 800,
-      ...(!displayName && { fontStyle: "italic" }),
-    },
   },
 });
 
@@ -60,66 +61,121 @@ const rowStyle = reactNativeS.view({
   alignItems: "center",
 });
 
-export function SavedDeal({
-  feId,
-  style,
-  isInactive,
-}: {
+type SavedDealProps = {
   feId: string;
-  style?: ViewStyle;
+  sx?: SxProps;
   isInactive?: boolean;
-}) {
-  const { isDesktop, isTab, isPhone } = useIsDevices();
+};
 
+export function SavedDeal(props: SavedDealProps) {
+  const { isPhone } = useIsDevices();
+  if (isPhone) {
+    return <PhoneVersion {...props} />;
+  } else {
+    return <TabAndDeskVersion {...props} />;
+  }
+}
+
+function PhoneVersion({ feId, isInactive, sx }: SavedDealProps) {
   const deal = useGetterSection({ sectionName: "deal", feId });
   const session = useGetterSectionOnlyOne("sessionStore");
-
   const sessionDeal = session.childByDbId({
     childName: "dealMain",
     dbId: deal.dbId,
   });
   const sessionVarb = sessionDeal.onlyChild("sessionVarb");
-
-  const dateNumber = deal.valueNext("dateTimeFirstSaved");
-  const dateCreated = new Intl.DateTimeFormat("en-US", {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-    hour: "2-digit",
-    minute: "2-digit",
-    // second: "2-digit",
-  }).format(dateNumber);
-
   const dealMode = deal.valueNext("dealMode");
 
   const strDisplayName = deal.stringValue("displayName");
   const isComplete = deal.valueNext("completionStatus") === "allValid";
 
   return (
-    <View
-      style={{
-        ...style,
-        flex: 1,
-        padding: nativeTheme.s3,
-        paddingLeft: nativeTheme.s4,
-        paddingRight: nativeTheme.s4,
-        ...nativeTheme.formSection,
-        ...(isInactive && { backgroundColor: nativeTheme["gray-150"] }),
-      }}
+    <Box
+      sx={[
+        {
+          flex: 1,
+          padding: nativeTheme.s2,
+          // paddingLeft: nativeTheme.s15,
+          // paddingRight: nativeTheme.s15,
+          border: "none",
+          ...nativeTheme.formSection,
+          ...(isInactive && { backgroundColor: nativeTheme["gray-150"] }),
+        },
+        ...arrSx(sx),
+      ]}
+    >
+      <MuiRow>
+        <MuiRow
+          sx={{
+            ...titleSx(strDisplayName, "auto"),
+            flexWrap: "nowrap",
+          }}
+        >
+          {/* {strDisplayName || "Untitled"} */}
+          {icons[dealMode](iconProps)}
+          <BareStringEditor
+            {...{
+              sx: {
+                marginLeft: nativeTheme.s2,
+                ...titleSx(strDisplayName, "auto"),
+              },
+              feVarbInfo: deal.varbInfoNext("displayNameEditor"),
+              placeholder: "Untitled",
+              noSolve: true,
+            }}
+          />
+        </MuiRow>
+      </MuiRow>
+      <MuiRow>
+        <DealActions {...{ feId, isInactive }} />
+      </MuiRow>
+    </Box>
+  );
+}
+
+function TabAndDeskVersion({ feId, isInactive, sx }: SavedDealProps) {
+  const { isDesktop } = useIsDevices();
+  const deal = useGetterSection({ sectionName: "deal", feId });
+  const dealMode = deal.valueNext("dealMode");
+  const strDisplayName = deal.stringValue("displayName");
+  const isComplete = deal.valueNext("completionStatus") === "allValid";
+
+  const dateNumber = deal.valueNext("dateTimeFirstSaved");
+  const dateCreated = timeS.timestampToLegible(dateNumber);
+
+  const session = useGetterSectionOnlyOne("sessionStore");
+  const sessionDeal = session.childByDbId({
+    childName: "dealMain",
+    dbId: deal.dbId,
+  });
+  const sessionVarb = sessionDeal.onlyChild("sessionVarb");
+  return (
+    <Box
+      sx={[
+        {
+          flex: 1,
+          padding: nativeTheme.s3,
+          paddingLeft: nativeTheme.s4,
+          paddingRight: nativeTheme.s4,
+          ...nativeTheme.formSection,
+          ...(isInactive && { backgroundColor: nativeTheme["gray-150"] }),
+        },
+        ...arrSx(sx),
+      ]}
     >
       <Row style={{ justifyContent: "space-between" }}>
-        <Box {...titleProps(strDisplayName)}>
+        <Box sx={titleSx(strDisplayName, 400)}>
           {/* {strDisplayName || "Untitled"} */}
           <BareStringEditor
             {...{
-              ...titleProps(strDisplayName),
+              sx: titleSx(strDisplayName, 400),
               feVarbInfo: deal.varbInfoNext("displayNameEditor"),
               placeholder: "Untitled",
               noSolve: true,
             }}
           />
         </Box>
-        {isDesktop && (
+        {
           <Row
             style={{
               ...rowStyle,
@@ -129,7 +185,7 @@ export function SavedDeal({
             <Text>Created </Text>
             <Text>{dateCreated}</Text>
           </Row>
-        )}
+        }
       </Row>
       <Row style={{ justifyContent: "space-between" }}>
         <Row style={rowStyle}>
@@ -177,12 +233,9 @@ export function SavedDeal({
             />
           </MuiRow>
         )}
-        {isDesktop && <DealActions {...{ feId, isInactive }} />}
+        {<DealActions {...{ feId, isInactive }} />}
       </Row>
-      <MuiRow sx={{ justifyContent: "flex-end" }}>
-        {!isDesktop && <DealActions {...{ feId, isInactive }} />}
-      </MuiRow>
-    </View>
+    </Box>
   );
 }
 
@@ -240,7 +293,7 @@ function DealActions({
       };
 
   return (
-    <MuiRow sx={{ justifyContent: "flex-end" }}>
+    <MuiRow>
       <MuiRow>
         {loadingEdit && (
           <PulseLoader
@@ -256,9 +309,8 @@ function DealActions({
           <StyledActionBtn
             {...{
               sx: {
-                margin: nativeTheme.s15,
+                margin: nativeTheme.s1,
                 marginTop: nativeTheme.s25,
-                marginRight: nativeTheme.s2,
                 width: "64px",
               },
               left: icons.edit({ size: 20 }),
@@ -279,7 +331,6 @@ function DealActions({
             sx: {
               margin: nativeTheme.s1,
               marginTop: nativeTheme.s25,
-              marginRight: nativeTheme.s15,
             },
             ...(isInactive && { showAsDisabled: true }),
             left: icons.copy({ size: 20 }),
@@ -299,9 +350,8 @@ function DealActions({
         <StyledActionBtn
           {...{
             sx: {
-              margin: nativeTheme.s15,
+              margin: nativeTheme.s1,
               marginTop: nativeTheme.s25,
-              marginRight: nativeTheme.s2,
             },
             ...archiveBtnProps,
           }}
