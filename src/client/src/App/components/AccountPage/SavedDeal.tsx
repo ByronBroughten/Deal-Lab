@@ -3,7 +3,10 @@ import { Box } from "@mui/system";
 import { Text } from "react-native";
 import { PulseLoader } from "react-spinners";
 import { constants } from "../../Constants";
-import { FeIdProp } from "../../sharedWithServer/SectionsMeta/SectionInfo/NanoIdInfo";
+import {
+  DbIdProp,
+  FeIdProp,
+} from "../../sharedWithServer/SectionsMeta/SectionInfo/NanoIdInfo";
 import { dealModeLabels } from "../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
 import {
   useAction,
@@ -83,7 +86,8 @@ function PhoneVersion({ feId, isInactive, sx }: SavedDealProps) {
     childName: "dealMain",
     dbId: deal.dbId,
   });
-  const sessionVarb = sessionDeal.onlyChild("sessionVarb");
+  const { dbId } = deal;
+
   const dealMode = deal.valueNext("dealMode");
 
   const strDisplayName = deal.stringValue("displayName");
@@ -127,7 +131,7 @@ function PhoneVersion({ feId, isInactive, sx }: SavedDealProps) {
         </MuiRow>
       </MuiRow>
       <MuiRow>
-        <DealActions {...{ feId, isInactive }} />
+        <DealActions {...{ dbId, feId, isInactive }} />
       </MuiRow>
     </Box>
   );
@@ -136,6 +140,7 @@ function PhoneVersion({ feId, isInactive, sx }: SavedDealProps) {
 function TabAndDeskVersion({ feId, isInactive, sx }: SavedDealProps) {
   const { isDesktop } = useIsDevices();
   const deal = useGetterSection({ sectionName: "deal", feId });
+  const { dbId } = deal;
   const dealMode = deal.valueNext("dealMode");
   const strDisplayName = deal.stringValue("displayName");
   const isComplete = deal.valueNext("completionStatus") === "allValid";
@@ -146,7 +151,7 @@ function TabAndDeskVersion({ feId, isInactive, sx }: SavedDealProps) {
   const session = useGetterSectionOnlyOne("sessionStore");
   const sessionDeal = session.childByDbId({
     childName: "dealMain",
-    dbId: deal.dbId,
+    dbId,
   });
   const sessionVarb = sessionDeal.onlyChild("sessionVarb");
   return (
@@ -233,16 +238,17 @@ function TabAndDeskVersion({ feId, isInactive, sx }: SavedDealProps) {
             />
           </MuiRow>
         )}
-        {<DealActions {...{ feId, isInactive }} />}
+        {<DealActions {...{ feId, dbId, isInactive }} />}
       </Row>
     </Box>
   );
 }
 
 function DealActions({
+  dbId,
   feId,
   isInactive,
-}: FeIdProp & { isInactive?: boolean }) {
+}: FeIdProp & DbIdProp & { isInactive?: boolean }) {
   const deal = useGetterSection({ sectionName: "deal", feId });
 
   const session = useGetterSectionOnlyOne("sessionStore");
@@ -262,7 +268,7 @@ function DealActions({
     });
 
   const isArchived = deal.valueNext("isArchived");
-  const deleteDeal = useActionWithProps("removeStoredDeal", { feId });
+  const deleteDeal = useActionWithProps("removeStoredDeal", { dbId });
   const { setModal } = useConfirmationModal();
   const warnAndDelete = () =>
     setModal({

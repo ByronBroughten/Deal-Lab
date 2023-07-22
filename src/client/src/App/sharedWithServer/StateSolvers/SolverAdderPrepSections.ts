@@ -3,12 +3,12 @@ import { FeSectionInfo } from "../SectionsMeta/SectionInfo/FeInfo";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { GetterList } from "../StateGetters/GetterList";
 import { GetterSections } from "../StateGetters/GetterSections";
-import { SolverAdderPrepSection } from "./SolverAdderPrepSection";
+import { BasicSolvePrepperSection } from "./BasicSolvePrepperSection";
 import { SolverSectionsBase } from "./SolverBases/SolverSectionsBase";
 
 export class SolverAdderPrepSections extends SolverSectionsBase {
   adderPrepSection<S extends SectionName>(feInfo: FeSectionInfo<S>) {
-    return new SolverAdderPrepSection({
+    return new BasicSolvePrepperSection({
       ...this.solverSectionsProps,
       ...feInfo,
     });
@@ -24,7 +24,7 @@ export class SolverAdderPrepSections extends SolverSectionsBase {
   }
   oneAndOnly<SN extends SectionName>(
     sectionName: SN
-  ): SolverAdderPrepSection<SN> {
+  ): BasicSolvePrepperSection<SN> {
     const { feInfo } = this.getterSections.oneAndOnly(sectionName);
     return this.adderPrepSection(feInfo);
   }

@@ -194,8 +194,17 @@ export class GetterSections extends GetterSectionsBase {
     if (this.hasActiveDeal()) {
       const activeDeal = this.getActiveDeal();
       return activeDeal.feId === feId;
+    } else {
+      return false;
     }
-    return false;
+  }
+  isActiveDealByDbId(dbId: string): boolean {
+    if (this.hasActiveDeal()) {
+      const activeDeal = this.getActiveDeal();
+      return activeDeal.dbId === dbId;
+    } else {
+      return false;
+    }
   }
   hasActiveDeal(): boolean {
     const deals = this.getActiveDeals();

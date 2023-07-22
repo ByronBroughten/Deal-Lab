@@ -59,8 +59,8 @@ export const MaterialDraftEditor = React.memo(function MaterialDraftEditor({
   const editorRef = React.useRef<Editor | null>(null);
   const handleOnChange = useOnChange({ setEditorState, editorState });
 
-  const hasFocus = editorState.getSelection().getHasFocus();
-  const hasText = editorState.getCurrentContent().hasText();
+  // const hasFocus = editorState.getSelection().getHasFocus();
+  // const hasText = editorState.getCurrentContent().hasText();
 
   const shrinkLabel = true; // hasFocus || hasText;
   ({ endAdornment, startAdornment } = getEntityEditorAdornments(shrinkLabel, {
@@ -100,6 +100,9 @@ export const MaterialDraftEditor = React.memo(function MaterialDraftEditor({
               component: Editor,
               editorRef,
               editorState,
+              // This is the crux right here. The Editor needs the editorState.
+              // I could use a section-level variable
+
               placeholder,
               handleOnChange,
               handleBeforeInput,

@@ -29,7 +29,7 @@ import {
   AddChildOptions,
   UpdaterSection,
 } from "../StateUpdaters/UpdaterSection";
-import { SolverAdderPrepSection } from "./SolverAdderPrepSection";
+import { BasicSolvePrepperSection } from "./BasicSolvePrepperSection";
 import { SolverSectionBase } from "./SolverBases/SolverSectionBase";
 import {
   HasSolveShare,
@@ -49,10 +49,10 @@ export class SolverSection<
   get appWideSolvePrepper() {
     return new SolverPrepSection(this.solverSectionProps);
   }
-  get basicSolvePrepper(): SolverAdderPrepSection<SN> {
-    return new SolverAdderPrepSection(this.solverSectionProps);
+  get basicSolvePrepper(): BasicSolvePrepperSection<SN> {
+    return new BasicSolvePrepperSection(this.solverSectionProps);
   }
-  get basic(): SolverAdderPrepSection<SN> {
+  get basic(): BasicSolvePrepperSection<SN> {
     return this.basicSolvePrepper;
   }
   static init<S extends SectionName>(

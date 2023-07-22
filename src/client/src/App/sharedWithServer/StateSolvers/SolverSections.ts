@@ -227,6 +227,11 @@ export class SolverSections extends SolverSectionsBase {
       sectionPack: section.makeSectionPack(),
     });
   }
+  deactivateDealByDbIdIfActive(dbId: string) {
+    if (this.getterSections.isActiveDealByDbId(dbId)) {
+      this.prepperSections.deactivateDealAndDealSystem();
+    }
+  }
   deactivateDealIfActive(feId: string) {
     if (this.getterSections.isActiveDeal(feId)) {
       this.prepperSections.deactivateDealAndDealSystem();
@@ -251,20 +256,27 @@ export class SolverSections extends SolverSectionsBase {
       archivedAreLoaded: true,
     });
   }
-  removeStoredDeal(feId: string) {
-    this.deactivateDealIfActive(feId);
+  removeStoredDeal(dbId: string) {
+    this.deactivateDealByDbIdIfActive(dbId);
 
-    const deal = this.solverSection({ sectionName: "deal", feId });
+    const childInfo = { childName: "dealMain", dbId } as const;
+
+    const { feStore } = this;
+    if (feStore.get.hasChildByDbInfo(childInfo)) {
+      feStore.removeFromStoreByDbId({ storeName: "dealMain", dbId });
+      // this removes both the feStore and sessionVersion
+    }
+
     const compareMenu = this.oneAndOnly("dealCompareMenu");
     if (
       compareMenu.get.hasChildByDbInfo({
         childName: "comparedDeal",
-        dbId: deal.get.dbId,
+        dbId,
       })
     ) {
-      this.removeDealFromDealCompare(feId);
+      this.removeDealFromDealCompareMenu(dbId);
     }
-    this.feStore.removeFromStore({ storeName: "dealMain", feId });
+    this.solve();
   }
   doDealCompare() {
     const { feStore } = this;
@@ -317,19 +329,12 @@ export class SolverSections extends SolverSectionsBase {
     dealToCompare.basic.loadSelfSectionPack(deal.packMaker.makeSectionPack());
   }
 
-  removeDealFromDealCompare(feId: string) {
+  private removeDealFromDealCompareMenu(dbId: string) {
     const compareMenu = this.oneAndOnly("dealCompareMenu");
-
-    const { dbId } = this.solverSection({
-      sectionName: "dealSystem",
-      feId,
-    }).get;
-    const comparedDeal = compareMenu.childByDbId({
+    compareMenu.basic.removeChildByDbId({
       childName: "comparedDeal",
       dbId,
     });
-
-    comparedDeal.removeSelfAndSolve();
     const storeId = StoreId.make("dealCompareMenu", compareMenu.get.feId);
     this.feStore.addChangeToSave(storeId, { changeName: "update" });
   }

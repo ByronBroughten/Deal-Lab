@@ -67,7 +67,7 @@ type ExtraActionProps = _CheckSectionActionProps<{
   archiveDeal: FeIdProp;
   loadAndShowArchivedDeals: { archivedDeals: SectionPack<"deal">[] };
   activateDeal: FeIdProp & { finishEditLoading?: boolean };
-  removeStoredDeal: FeIdProp;
+  removeStoredDeal: DbIdProp;
 
   addChild: AddChildActionProps;
   updateValue: UpdateValueProps;
@@ -222,7 +222,7 @@ export const sectionsReducer: React.Reducer<StateSections, SectionsAction> = (
     archiveDeal: ({ feId }) => solverSections.archiveDeal(feId),
     loadAndShowArchivedDeals: ({ archivedDeals }) =>
       solverSections.loadAndShowArchivedDeals(archivedDeals),
-    removeStoredDeal: ({ feId }) => solverSections.removeStoredDeal(feId),
+    removeStoredDeal: ({ dbId }) => solverSections.removeStoredDeal(dbId),
     activateDeal: (props) => solverSections.activateDealAndSolve(props),
     addActiveDeal: ({ dealMode }) => solverSections.addActiveDeal(dealMode),
     doDealCompare: () => solverSections.doDealCompare(),

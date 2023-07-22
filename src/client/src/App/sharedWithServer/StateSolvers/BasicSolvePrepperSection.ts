@@ -1,5 +1,8 @@
 import { VarbName } from "../SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
-import { ChildName } from "../SectionsMeta/sectionChildrenDerived/ChildName";
+import {
+  ChildName,
+  DbChildInfo,
+} from "../SectionsMeta/sectionChildrenDerived/ChildName";
 import { ChildSectionName } from "../SectionsMeta/sectionChildrenDerived/ChildSectionName";
 import { ChildArrPack } from "../SectionsMeta/sectionChildrenDerived/ChildSectionPack";
 import { ParentNameSafe } from "../SectionsMeta/sectionChildrenDerived/ParentName";
@@ -17,7 +20,7 @@ import { SolverAdderPrepSections } from "./SolverAdderPrepSections";
 import { SolverSectionBase } from "./SolverBases/SolverSectionBase";
 import { SolverRemoverPrepSection } from "./SolverRemoverPrepSection";
 
-export class SolverAdderPrepSection<
+export class BasicSolvePrepperSection<
   SN extends SectionName
 > extends SolverSectionBase<SN> {
   get get() {
@@ -34,8 +37,8 @@ export class SolverAdderPrepSection<
   }
   adderPrepSection<S extends SectionName>(
     info: FeSectionInfo<S>
-  ): SolverAdderPrepSection<S> {
-    return new SolverAdderPrepSection({
+  ): BasicSolvePrepperSection<S> {
+    return new BasicSolvePrepperSection({
       ...this.solverSectionsProps,
       ...info,
     });
@@ -43,13 +46,13 @@ export class SolverAdderPrepSection<
   get prepperSections(): SolverAdderPrepSections {
     return new SolverAdderPrepSections(this.solverSectionsProps);
   }
-  get parent(): SolverAdderPrepSection<ParentNameSafe<SN>> {
+  get parent(): BasicSolvePrepperSection<ParentNameSafe<SN>> {
     const { parentInfoSafe } = this.get;
     return this.adderPrepSection(parentInfoSafe);
   }
   youngestChild<CN extends ChildName<SN>>(
     childName: CN
-  ): SolverAdderPrepSection<ChildSectionName<SN, CN>> {
+  ): BasicSolvePrepperSection<ChildSectionName<SN, CN>> {
     const { feInfo } = this.get.youngestChild(childName);
     return this.adderPrepSection(feInfo);
   }
@@ -108,6 +111,14 @@ export class SolverAdderPrepSection<
   removeSelf(): void {
     this.removePrepper.removeSelf();
   }
+  removeChildByDbId<CN extends ChildName<SN>>(dbInfo: DbChildInfo<SN, CN>) {
+    const child = this.get.childByDbId(dbInfo);
+    this.removePrepper.removeChild({
+      childName: dbInfo.childName,
+      feId: child.feId,
+    });
+  }
+
   resetToDefault(): void {
     const { feInfo, feId, idx, dbId } = this.get;
     const { parent } = this;

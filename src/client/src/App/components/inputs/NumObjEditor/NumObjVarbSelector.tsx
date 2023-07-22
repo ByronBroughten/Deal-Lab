@@ -40,9 +40,12 @@ export const NumObjVarbSelector = React.memo(
       }: Props,
       ref: PopperRef
     ) => {
+      // here it needs its own editorState.
+
       const { toggleVarbs, varbsIsOpen, closeVarbs } = useToggleView("varbs");
 
       const focalSection = useGetterSection(feInfo);
+
       const onVarbSelect: OnVarbSelect = (varbInfo) => {
         const { variableLabel } = focalSection.varbByFocalMixed(varbInfo);
         insertVarbEntity({

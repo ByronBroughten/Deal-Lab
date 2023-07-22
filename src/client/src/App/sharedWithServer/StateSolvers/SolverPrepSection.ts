@@ -16,7 +16,7 @@ import {
   FeSectionInfo,
   FeVarbInfo,
 } from "./../SectionsMeta/SectionInfo/FeInfo";
-import { SolverAdderPrepSection } from "./SolverAdderPrepSection";
+import { BasicSolvePrepperSection } from "./BasicSolvePrepperSection";
 import { SolverSectionBase } from "./SolverBases/SolverSectionBase";
 import { SolverPrepSections } from "./SolverPrepSections";
 import { SolverRemoverPrepSection } from "./SolverRemoverPrepSection";
@@ -37,8 +37,8 @@ export class SolverPrepSection<
   get prepperSections(): SolverPrepSections {
     return new SolverPrepSections(this.solverSectionsProps);
   }
-  get basicSolvePrepper(): SolverAdderPrepSection<SN> {
-    return new SolverAdderPrepSection(this.solverSectionProps);
+  get basicSolvePrepper(): BasicSolvePrepperSection<SN> {
+    return new BasicSolvePrepperSection(this.solverSectionProps);
   }
   get removerPrepper(): SolverRemoverPrepSection<SN> {
     return new SolverRemoverPrepSection(this.solverSectionProps);

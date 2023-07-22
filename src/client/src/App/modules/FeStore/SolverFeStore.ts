@@ -21,7 +21,7 @@ import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection
 import { GetterSections } from "../../sharedWithServer/StateGetters/GetterSections";
 import { StoreId } from "../../sharedWithServer/StateGetters/StoreId";
 import { AddChildWithPackOptions } from "../../sharedWithServer/StatePackers/PackBuilderSection";
-import { SolverAdderPrepSection } from "../../sharedWithServer/StateSolvers/SolverAdderPrepSection";
+import { BasicSolvePrepperSection } from "../../sharedWithServer/StateSolvers/BasicSolvePrepperSection";
 import { SolverSectionBase } from "../../sharedWithServer/StateSolvers/SolverBases/SolverSectionBase";
 import { SolverSectionsProps } from "../../sharedWithServer/StateSolvers/SolverBases/SolverSectionsBase";
 import { SolverPrepSection } from "../../sharedWithServer/StateSolvers/SolverPrepSection";
@@ -79,8 +79,8 @@ export class SolverFeStore extends SolverSectionBase<"feStore"> {
   get appWideSolvePrepper(): SolverPrepSection<"feStore"> {
     return new SolverPrepSection(this.solverSectionProps);
   }
-  get basicSolvePrepper(): SolverAdderPrepSection<"feStore"> {
-    return new SolverAdderPrepSection(this.solverSectionProps);
+  get basicSolvePrepper(): BasicSolvePrepperSection<"feStore"> {
+    return new BasicSolvePrepperSection(this.solverSectionProps);
   }
   loadChildrenNoDuplicates<SN extends StoreName>(
     storeName: SN,
@@ -246,10 +246,7 @@ export class SolverFeStore extends SolverSectionBase<"feStore"> {
     if (doSolve) this.solve();
   }
   removeFromStore({ storeName, feId }: RemoveFromStoreProps) {
-    const child = this.solver.child({
-      childName: storeName,
-      feId,
-    });
+    const child = this.solver.child({ childName: storeName, feId });
     const storeId = StoreId.make(storeName, feId);
     this.addChangeToSave(storeId, {
       changeName: "remove",
@@ -262,7 +259,7 @@ export class SolverFeStore extends SolverSectionBase<"feStore"> {
         childName: "dealMain",
         dbId: child.get.dbId,
       });
-      proxy.removeSelfAndSolve();
+      proxy.basic.removeSelf();
     }
 
     child.removeSelfAndSolve();

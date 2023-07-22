@@ -35,9 +35,16 @@ type Props = PropAdornments & {
   editorType?: NumEditorType;
   quickViewVarbNames?: ValueFixedVarbPathName[];
   inputMargins?: boolean;
+  hideVarbSelector?: boolean;
 };
 
 const seperator = ".";
+
+// I have to completely divorce the entityEditor from the
+// Varb Selector
+// For the same editorState to be used, I must pass the same editorState
+
+// NumObjEntityEditor > MemoEntityEditor (editorState, etc) >
 
 export function NumObjEntityEditor({
   editorType = "numeric",
@@ -46,6 +53,7 @@ export function NumObjEntityEditor({
   labeled = true,
   bypassNumeric = false,
   inputMargins = false,
+  hideVarbSelector,
   quickViewVarbNames,
   label,
   sx,
@@ -71,6 +79,7 @@ export function NumObjEntityEditor({
           }),
           ...sx,
         },
+        inputMargins,
         editorType,
         displayValue: varb.displayValue,
         editorTextStatus: varb.numObj.editorTextStatus,
@@ -102,6 +111,9 @@ interface MemoProps extends Adornments, FeVarbInfo {
   displayName: string;
   editorType: NumEditorType;
   quickViewVarbNameString?: string;
+  hideVarbSelector?: boolean;
+
+  inputMargins?: boolean;
 
   className?: string;
   labeled?: boolean;
@@ -123,6 +135,8 @@ const MemoNumObjEntityEditor = React.memo(function MemoNumObjEntityEditor({
   editorState,
   bypassNumeric,
   quickViewVarbNameString,
+  hideVarbSelector,
+  inputMargins,
   ...rest
 }: MemoProps) {
   const { startAdornment, endAdornment } = getEntityEditorAdornments({
@@ -155,6 +169,16 @@ const MemoNumObjEntityEditor = React.memo(function MemoNumObjEntityEditor({
     setEditorState((editorState) => insertChars(editorState, text));
     return "handled";
   }, []);
+
+  const feVarbInfo = {
+    sectionName: rest.sectionName,
+    varbName: rest.varbName,
+    feId: rest.feId,
+  };
+
+  const quickViewVarbNames = quickViewVarbNameString
+    ? (quickViewVarbNameString.split(seperator) as ValueFixedVarbPathName[])
+    : undefined;
 
   return (
     <SectionInfoContextProvider {...rest}>
@@ -196,16 +220,12 @@ const MemoNumObjEntityEditor = React.memo(function MemoNumObjEntityEditor({
               ...(!bypassNumeric && { handlePastedText, handleBeforeInput }),
             }}
           />
-          {varbSelectorIsOpen && (
+          {!hideVarbSelector && varbSelectorIsOpen && (
             <NumObjVarbSelector
               {...{
                 ...rest,
                 setEditorState,
-                varbPathNames: quickViewVarbNameString
-                  ? (quickViewVarbNameString.split(
-                      seperator
-                    ) as ValueFixedVarbPathName[])
-                  : undefined,
+                varbPathNames: quickViewVarbNames,
               }}
               ref={popperRef}
             />
