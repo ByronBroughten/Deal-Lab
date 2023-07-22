@@ -64,6 +64,7 @@ export function ActionSaveAsNewBtn({ btnProps, ...feInfo }: Props) {
                   borderTopRightRadius: 0,
                   backgroundColor: nativeTheme.darkBlue.light,
                   color: nativeTheme.dark,
+                  fontSize: 18,
                   "&:hover": {
                     borderTopWidth: 0,
                     backgroundColor: nativeTheme.darkBlue.main,
