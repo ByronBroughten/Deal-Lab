@@ -84,7 +84,7 @@ export function MuiSelectStyled({
           value,
           onChange,
           MenuProps: {
-            // disablePortal: true,
+            disablePortal: true,
           },
           labelId: "ActiveDeal-modeSelector",
           ...(label && { label }),

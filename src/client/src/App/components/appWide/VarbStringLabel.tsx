@@ -1,3 +1,4 @@
+import { SxProps } from "@mui/material";
 import React from "react";
 import { getVarbLabels, VarbInfoTextProps } from "../../../varbLabels";
 import { SectionVarbNames } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
@@ -10,12 +11,15 @@ export interface Props<SN extends SectionName>
   names: SectionVarbNames<SN>;
   iconProps?: IconProps;
   label?: React.ReactNode;
+  id?: string;
+  sx?: SxProps;
 }
 
 export function VarbStringLabel<SN extends SectionName>({
   names,
   iconProps,
   label,
+  ...rest
 }: Props<SN>) {
   const labels = getVarbLabels(names.sectionName, names.varbName);
   if (!label) {
@@ -32,6 +36,7 @@ export function VarbStringLabel<SN extends SectionName>({
         iconProps,
         label: label || labels.inputLabel,
         ...(title && info && { infoProps: { title, info } }),
+        ...rest,
       }}
     />
   );

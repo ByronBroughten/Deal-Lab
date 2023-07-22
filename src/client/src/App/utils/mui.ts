@@ -6,6 +6,8 @@ export type MuiSelectOnChange = (
   child: React.ReactNode
 ) => void;
 
+export type MuiRadioOnChange = MuiSelectOnChange;
+
 export const muiS = {
   sxProps: <T extends SxProps>(props: T) => props,
 };

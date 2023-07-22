@@ -19,14 +19,16 @@ export function useDoCompare() {
 export function useAddDeal() {
   const addActiveDeal = useAction("addActiveDeal");
   const sessionStore = useGetterSectionOnlyOne("sessionStore");
+  const newDealMenu = useGetterSectionOnlyOne("newDealMenu");
 
-  const creatingDealOfMode = sessionStore.valueNext("creatingDealOfMode");
+  const isCreatingDeal = sessionStore.valueNext("isCreatingDeal");
+  const dealMode = newDealMenu.valueNext("dealMode");
 
   React.useEffect(() => {
-    if (creatingDealOfMode) {
-      addActiveDeal({ dealMode: creatingDealOfMode });
+    if (isCreatingDeal) {
+      addActiveDeal({ dealMode });
     }
-  }, [creatingDealOfMode, addActiveDeal]);
+  }, [isCreatingDeal, addActiveDeal, dealMode]);
 }
 
 export function useEditDeal() {

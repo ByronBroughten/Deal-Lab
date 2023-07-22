@@ -54,11 +54,11 @@ export const ActiveDealRoutes = (
 function ActiveDealMainController() {
   const getters = useGetterSections();
   const session = getters.oneAndOnly("sessionStore");
-  const creatingDealOfMode = session.valueNext("creatingDealOfMode");
 
+  const isCreatingDeal = session.valueNext("isCreatingDeal");
   if (getters.hasActiveDeal()) {
     return <ActiveDealWrapper />;
-  } else if (creatingDealOfMode) {
+  } else if (isCreatingDeal) {
     return <UserDataNeededPage />;
   } else {
     return <Navigate to={feRoutes.account} />;

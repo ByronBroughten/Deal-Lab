@@ -168,3 +168,5 @@ export function getFinancingTitle(
 
 const periodicMode = ["holding", "ongoing"] as const;
 export type PeriodicMode = (typeof periodicMode)[number];
+
+export const defaultCreatingDealModeOf = "homeBuyer";

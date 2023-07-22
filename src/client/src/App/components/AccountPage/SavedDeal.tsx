@@ -65,7 +65,7 @@ const rowStyle = reactNativeS.view({
 });
 
 type SavedDealProps = {
-  feId: string;
+  dbId: string;
   sx?: SxProps;
   isInactive?: boolean;
 };
@@ -79,15 +79,20 @@ export function SavedDeal(props: SavedDealProps) {
   }
 }
 
-function PhoneVersion({ feId, isInactive, sx }: SavedDealProps) {
-  const deal = useGetterSection({ sectionName: "deal", feId });
+function PhoneVersion({ dbId, isInactive, sx }: SavedDealProps) {
+  const feStore = useGetterSectionOnlyOne("feStore");
+  const deal = feStore.childByDbId({
+    childName: "dealMain",
+    dbId,
+  });
+
   const session = useGetterSectionOnlyOne("sessionStore");
   const sessionDeal = session.childByDbId({
     childName: "dealMain",
     dbId: deal.dbId,
   });
-  const { dbId } = deal;
 
+  const { feId } = deal;
   const dealMode = deal.valueNext("dealMode");
 
   const strDisplayName = deal.stringValue("displayName");
@@ -137,10 +142,15 @@ function PhoneVersion({ feId, isInactive, sx }: SavedDealProps) {
   );
 }
 
-function TabAndDeskVersion({ feId, isInactive, sx }: SavedDealProps) {
+function TabAndDeskVersion({ dbId, isInactive, sx }: SavedDealProps) {
+  const feStore = useGetterSectionOnlyOne("feStore");
+  const deal = feStore.childByDbId({
+    childName: "dealMain",
+    dbId,
+  });
+  const { feId } = deal;
+
   const { isDesktop } = useIsDevices();
-  const deal = useGetterSection({ sectionName: "deal", feId });
-  const { dbId } = deal;
   const dealMode = deal.valueNext("dealMode");
   const strDisplayName = deal.stringValue("displayName");
   const isComplete = deal.valueNext("completionStatus") === "allValid";

@@ -64,7 +64,7 @@ export function SavedDeals() {
 
   const sessionDeals = session.children("dealMain");
   sessionDeals.sort(
-    (a, b) => a.valueNext("dateTimeCreated") - b.valueNext("dateTimeCreated")
+    (a, b) => b.valueNext("dateTimeCreated") - a.valueNext("dateTimeCreated")
   );
 
   const nMostRecent = sessionDeals.slice(0, constants.basicStorageLimit);
@@ -174,7 +174,7 @@ export function SavedDeals() {
                     {...{
                       ...(labSubscription === "basicPlan" &&
                         !nRecentDbIds.includes(dbId) && { isInactive: true }),
-                      feId,
+                      dbId,
                       ...(idx === deals.length - 1 && {
                         style: { borderBottomWidth: 1 },
                       }),

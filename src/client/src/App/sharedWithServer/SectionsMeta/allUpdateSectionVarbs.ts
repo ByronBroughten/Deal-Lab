@@ -45,6 +45,7 @@ import {
 } from "./updateSectionVarbs/updateVarb/updateVarbUtils";
 import { updateVarbsS } from "./updateSectionVarbs/updateVarbs";
 import { numObj } from "./values/StateValue/NumObj";
+import { defaultCreatingDealModeOf } from "./values/StateValue/unionValues";
 
 const propS = updateFnPropS;
 const propsS = updateFnPropsS;
@@ -82,7 +83,9 @@ function makeAllUpdateSections() {
   return checkAllUpdateSections({
     ...makeAllDefaultUpdateSections(),
     ...prop("sessionStore", {
-      creatingDealOfMode: varb("dealModePlusEmpty", { initValue: "" }),
+      creatingDealOfMode: varb("dealMode", {
+        initValue: defaultCreatingDealModeOf,
+      }),
       compareDealStatus: varb("compareDealStatus", { initValue: "editing" }),
       archivedAreLoaded: varb("boolean", { initValue: false }),
       showArchivedDeals: varb("boolean", { initValue: false }),

@@ -30,7 +30,7 @@ export function AccountPage() {
     } else {
       setModal({
         title: <ChunkTitle>New Deal</ChunkTitle>,
-        children: <NewDealSelector closeSelector={() => setModal(null)} />,
+        children: <NewDealSelector />,
       });
     }
   };

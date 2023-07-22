@@ -1,10 +1,7 @@
 import { Box } from "@mui/material";
 import { View } from "react-native";
 import { MoonLoader } from "react-spinners";
-import {
-  DealMode,
-  isDealMode,
-} from "../../sharedWithServer/SectionsMeta/values/StateValue/dealMode";
+import { isDealMode } from "../../sharedWithServer/SectionsMeta/values/StateValue/dealMode";
 import { dealModeLabels } from "../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
 import { useGetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useGetterSection";
 import { BackBtnWrapper } from "../appWide/BackBtnWrapper";
@@ -28,21 +25,17 @@ const dealElementProps = {
 
 export function ActiveDealMain() {
   const session = useGetterSectionOnlyOne("sessionStore");
-  const creatingDealOfMode = session.valueNext("creatingDealOfMode");
+  const isCreatingDeal = session.valueNext("isCreatingDeal");
   return (
     <BackBtnWrapper {...{ to: "account", label: "Deal Menu" }}>
       <BackgroundContainer>
-        {creatingDealOfMode ? (
-          <CreatingActiveDeal {...{ dealMode: creatingDealOfMode }} />
-        ) : (
-          <CurrentActiveDeal />
-        )}
+        {isCreatingDeal ? <CreatingActiveDeal /> : <CurrentActiveDeal />}
       </BackgroundContainer>
     </BackBtnWrapper>
   );
 }
 
-function CreatingActiveDeal({ dealMode }: { dealMode: DealMode }) {
+function CreatingActiveDeal() {
   return (
     <Box>
       <PageTitle
