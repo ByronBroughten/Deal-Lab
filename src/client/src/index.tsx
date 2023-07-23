@@ -6,30 +6,38 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-// Get rid of the MUI select component that breaks the UI...
-
-// Give the deal a menu that opens up with with its options
-
-// Mobile passability
-// - Change SavedDeal based on a breakpoint
-//   - Put actions behind ellipses
-//   - Maybe don't show metrics
-//   - Maybe reduce font size
-//   - Maybe get rid of deal type word, but keep icon
-// - Change some margins based on a breakpoint
-// - Shorten some select titles
-// - Add scrolling to sections or something
-
-// Add NumObjEntityEditor window to its varb select
+// 3. A high level editorState and setEditorState are created and propogated through
+//    context "varbWindowEditorContext".
+//    Both makeViewWindow and onVarbSelect can optionally accept those two things as arguments, and the editorState and setEditorState sent through the context are
+//    passed to both of those components.
+//    It is also set on the modal opening.
 
 // *Speed up
 // Don't load deals till you need them
-// - Right now dealCompare relies on the deals being there
+// This is a pretty big undertaking. Is it worth it right now?
+// I'm afraid that the changes I start making here will make it difficult to
+// implement changes regarding the broken API
+// This won't deal with the select component at all, though.
+// I want to be able to fix the select component without pushing this all through, though.
+// I can hop over to a different branch.
+
+// - dealCompare and editDeal will now be query actions. They both start with,
+//   loadNeededDeals
+//   - Make a route for fetching multiples—getSections
+// - For now, dealCompare relies on the deals being there.
+//   - Make it start with loadNeededDeals, then proceed.
+// - EditDeal should also start with loadNeededDeals
 // - AddDeal should pretty much work as is
-// - EditDeal that gets deal from db if needed
-// - CopyDeal with new route that copies the deal on the server
-// - RemoveDeal that works even if deal isn't in feStore
-// - Route for editing just deal displayName
+// - CopyDeal could also just start with loadNeededDeals (love it)
+// - RemoveDeal just needs to do a check before removing the deal in feStore
+// - A special route for editing a section's displayName or displayNameEditor
+// - Don't load deals at the outset.
+
+// Loading a deal to feStore and then activating it is slower than just loading
+// it in an activated state, ala editDeal. Hmmm. That's probably fine for now.
+
+// Should I get rid of displayNameEditor? I should either get rid of it, or
+// give it to all the stored sections.
 
 // Ask for Marina, Ed, Kate(?), and Dave(?) to give feedback
 
@@ -51,6 +59,9 @@ AppRegistry.runApplication("App", {
 // - The bigger pockets forum
 // - Get an influencer to showcase it
 // Done with the app unless it makes any money
+
+// Mobile passability
+// - Test it out on your phone
 
 // Get the email in feStore and show which account is logged in
 

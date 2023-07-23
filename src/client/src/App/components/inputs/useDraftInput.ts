@@ -8,6 +8,7 @@ import { useSetterVarb } from "../../sharedWithServer/stateClassHooks/useSetterV
 import { CreateEditorProps } from "../../sharedWithServer/StateSetters/EditorUpdaterVarb";
 import { SetterVarb } from "../../sharedWithServer/StateSetters/SetterVarb";
 import { StrictOmit } from "../../sharedWithServer/utils/types";
+import { SetEditorState } from "../../utils/DraftS";
 
 interface UseDraftInputProps
   extends FeVarbInfo,
@@ -16,7 +17,10 @@ interface UseDraftInputProps
   noSolve?: boolean;
 }
 
-export function useDraftInput(props: UseDraftInputProps) {
+export function useDraftInput(props: UseDraftInputProps): {
+  editorState: EditorState;
+  setEditorState: SetEditorState;
+} {
   const setterVarb = useSetterVarb(props);
   const varb = setterVarb.get;
   const { valueName } = varb;
@@ -46,7 +50,6 @@ export function useDraftInput(props: UseDraftInputProps) {
   });
 
   return {
-    varb,
     editorState,
     setEditorState,
   };

@@ -9,7 +9,7 @@ import { nativeTheme } from "../../../theme/nativeTheme";
 import { arrSx } from "../../../utils/mui";
 import { MuiRow } from "../../general/MuiRow";
 import { OnVarbSelect } from "../../inputs/NumObjEditor/NumObjVarbSelector/VarbSelectorCollection";
-import { useDealModeContextVarbSelect } from "../../Modals/VarbSelectModalProvider";
+import { useDealModeContextVarbSelectModal } from "../../Modals/VarbSelectModalProvider";
 import { HollowBtn } from "../HollowBtn";
 import { VarbListMenuDual } from "../ListGroup/ListGroupShared/VarbListMenuDual";
 import { RemoveSectionXBtn } from "../RemoveSectionXBtn";
@@ -69,7 +69,7 @@ export function LoadedVarbListNext({ feId, sx, title }: Props) {
     });
   };
 
-  const openVarbSelect = useDealModeContextVarbSelect(addItem, () => (
+  const openVarbSelect = useDealModeContextVarbSelectModal(addItem, () => (
     <ListItemsViewWindow {...{ feId }} />
   ));
 

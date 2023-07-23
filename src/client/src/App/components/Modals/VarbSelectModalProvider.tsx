@@ -1,16 +1,36 @@
+import { EditorState } from "draft-js";
 import React from "react";
+import { FeVarbInfo } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { DealMode } from "../../sharedWithServer/SectionsMeta/values/StateValue/dealMode";
+import { ValueInEntityInfo } from "../../sharedWithServer/StateEntityGetters/ValueInEntityInfo";
 import { timeS } from "../../sharedWithServer/utils/timeS";
 import { StrictOmit } from "../../sharedWithServer/utils/types";
+import { SetEditorState } from "../../utils/DraftS";
 import { useDealModeContext } from "../customContexts/dealModeContext";
-import { OnVarbSelect } from "../inputs/NumObjEditor/NumObjVarbSelector/VarbSelectorCollection";
+
+interface EditorOptions {
+  editorState: EditorState;
+  setEditorState: SetEditorState;
+}
+
+export type ModalOnVarbSelect = (
+  props: ValueInEntityInfo & EditorOptions
+) => void;
+export type ModalViewWindow = (props: EditorOptions) => React.ReactNode;
 
 export interface VarbSelectModalOptions {
   dealMode: DealMode<"plusMixed">;
-  onVarbSelect: OnVarbSelect;
-  viewWindow: () => React.ReactNode;
+  onVarbSelect: ModalOnVarbSelect;
+  viewWindow: ModalViewWindow;
   timeSet: number;
+  editorState?: EditorState;
+  editorVarbInfo?: FeVarbInfo;
 }
+
+type EditorProps = {
+  editorState?: EditorState;
+  varbInfo?: FeVarbInfo;
+};
 
 export type SetVarbSelectModalOptions = StrictOmit<
   VarbSelectModalOptions,
@@ -35,9 +55,10 @@ const VarbSelectModalContext =
 export const useVarbSelectModal = () =>
   React.useContext(VarbSelectModalContext);
 
-export const useDealModeContextVarbSelect = (
-  onVarbSelect: OnVarbSelect,
-  viewWindow: () => React.ReactNode
+export const useDealModeContextVarbSelectModal = (
+  onVarbSelect: ModalOnVarbSelect,
+  viewWindow: ModalViewWindow,
+  editorProps?: EditorProps
 ) => {
   const dealMode = useDealModeContext();
   const { setModal } = useVarbSelectModal();
@@ -46,6 +67,10 @@ export const useDealModeContextVarbSelect = (
       dealMode,
       onVarbSelect,
       viewWindow,
+      ...(editorProps && {
+        editorState: editorProps.editorState,
+        editorVarbInfo: editorProps.varbInfo,
+      }),
     });
 };
 

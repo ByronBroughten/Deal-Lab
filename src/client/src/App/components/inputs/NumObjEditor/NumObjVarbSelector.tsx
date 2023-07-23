@@ -2,17 +2,25 @@ import { EditorState } from "draft-js";
 import React from "react";
 import styled from "styled-components";
 import { useToggleView } from "../../../modules/customHooks/useToggleView";
-import { FeSectionInfo } from "../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
+import { FeVarbInfo } from "../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { mixedInfoS } from "../../../sharedWithServer/SectionsMeta/SectionInfo/MixedSectionInfo";
 import { useGetterSection } from "../../../sharedWithServer/stateClassHooks/useGetterSection";
-import { ValueFixedVarbPathName } from "../../../sharedWithServer/StateEntityGetters/ValueInEntityInfo";
+import {
+  ValueFixedVarbPathName,
+  ValueInEntityInfo,
+} from "../../../sharedWithServer/StateEntityGetters/ValueInEntityInfo";
 import { nativeTheme } from "../../../theme/nativeTheme";
 import theme from "../../../theme/Theme";
+import { SetEditorState } from "../../../utils/DraftS";
 import { HollowBtn } from "../../appWide/HollowBtn";
 import { DropdownContainer } from "../../general/DropdownContainer";
 import { icons } from "../../Icons";
 import { useInfoModal } from "../../Modals/InfoModalProvider";
-import { useDealModeContextVarbSelect } from "../../Modals/VarbSelectModalProvider";
+import {
+  ModalOnVarbSelect,
+  ModalViewWindow,
+  useDealModeContextVarbSelectModal,
+} from "../../Modals/VarbSelectModalProvider";
 import { insertVarbEntity } from "./NumObjVarbSelector/insertVarbEntity";
 import {
   OnVarbSelect,
@@ -23,30 +31,34 @@ import { VarbSelectorShell } from "./NumObjVarbSelector/VarbSelectorShell";
 
 export type PopperRef = React.Ref<HTMLDivElement>;
 
-interface Props extends FeSectionInfo {
-  setEditorState: React.Dispatch<React.SetStateAction<EditorState>>;
+interface Props extends FeVarbInfo {
+  editorState: EditorState;
+  setEditorState: SetEditorState;
   varbPathNames?: ValueFixedVarbPathName[];
-  makeViewWindow?: () => React.ReactNode;
+  makeViewWindow?: ModalViewWindow;
 }
 
 export const NumObjVarbSelector = React.memo(
   React.forwardRef(
     (
       {
-        setEditorState,
         varbPathNames = ["purchasePrice", "numUnits", "sqft"],
         makeViewWindow = () => null,
-        ...feInfo
+        sectionName,
+        varbName,
+        feId,
+        ...rest
       }: Props,
       ref: PopperRef
     ) => {
-      // here it needs its own editorState.
-
+      const varbInfo = { sectionName, feId, varbName } as const;
       const { toggleVarbs, varbsIsOpen, closeVarbs } = useToggleView("varbs");
+      const focalSection = useGetterSection(varbInfo);
 
-      const focalSection = useGetterSection(feInfo);
-
-      const onVarbSelect: OnVarbSelect = (varbInfo) => {
+      const onVarbSelectCore = (
+        setEditorState: SetEditorState,
+        varbInfo: ValueInEntityInfo
+      ) => {
         const { variableLabel } = focalSection.varbByFocalMixed(varbInfo);
         insertVarbEntity({
           setEditorState,
@@ -55,10 +67,26 @@ export const NumObjVarbSelector = React.memo(
         });
       };
 
-      const openVarbSelect = useDealModeContextVarbSelect(
-        onVarbSelect,
-        makeViewWindow
+      const onModalVarbSelect: ModalOnVarbSelect = ({
+        setEditorState,
+        ...varbInfo
+      }) => onVarbSelectCore(setEditorState, varbInfo);
+
+      // onClick happens
+      // openModalVarbSelect happens
+      // But then the editorState loses its SelectState
+
+      const openModalVarbSelect = useDealModeContextVarbSelectModal(
+        onModalVarbSelect,
+        makeViewWindow,
+        {
+          varbInfo,
+          editorState: rest.editorState,
+        }
       );
+
+      const onVarbSelect: OnVarbSelect = (varbInfo) =>
+        onVarbSelectCore(rest.setEditorState, varbInfo);
 
       const { setModal } = useInfoModal();
       const openModal = () =>
@@ -102,7 +130,7 @@ export const NumObjVarbSelector = React.memo(
                   <VarbSelectorShell>
                     <VarbSelectorCollection
                       {...{
-                        focalInfo: feInfo,
+                        focalInfo: varbInfo,
                         onVarbSelect,
                         rowInfos: varbPathNames.map((varbPathName) =>
                           mixedInfoS.varbPathName(varbPathName)
@@ -111,7 +139,7 @@ export const NumObjVarbSelector = React.memo(
                     />
                     <ViewAllRow
                       {...{
-                        onClick: openVarbSelect,
+                        onClick: openModalVarbSelect,
                         displayName: "View All",
                         className: "NumObjVarbSelector-viewAll",
                       }}

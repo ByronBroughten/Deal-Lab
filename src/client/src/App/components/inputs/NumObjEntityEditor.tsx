@@ -6,6 +6,7 @@ import { useToggleView } from "../../modules/customHooks/useToggleView";
 import { SetEditorState } from "../../modules/draftjs/draftUtils";
 import { insertChars } from "../../modules/draftjs/insert";
 import { FeVarbInfo } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
+import { useGetterVarb } from "../../sharedWithServer/stateClassHooks/useGetterVarb";
 import { SectionInfoContextProvider } from "../../sharedWithServer/stateClassHooks/useSectionContext";
 import { ValueFixedVarbPathName } from "../../sharedWithServer/StateEntityGetters/ValueInEntityInfo";
 import { GetterVarb } from "../../sharedWithServer/StateGetters/GetterVarb";
@@ -59,10 +60,12 @@ export function NumObjEntityEditor({
   sx,
   ...props
 }: Props) {
-  let { editorState, setEditorState, varb } = useDraftInput({
+  let { editorState, setEditorState } = useDraftInput({
     ...feVarbInfo,
     compositeDecorator: varSpanDecorator,
   });
+
+  const varb = useGetterVarb(feVarbInfo);
 
   const showEqualsStatus = useShowEqualsContext();
   const doEquals = showEqualsStatus === "showAll" ? true : varb.isPureUserVarb;
@@ -163,19 +166,6 @@ const MemoNumObjEntityEditor = React.memo(function MemoNumObjEntityEditor({
     []
   );
 
-  const handlePastedText = React.useCallback((text: string): "handled" => {
-    const reverseRegEx = /[^\d.*/+()-]/;
-    text = text.replaceAll(new RegExp(reverseRegEx, "g"), "");
-    setEditorState((editorState) => insertChars(editorState, text));
-    return "handled";
-  }, []);
-
-  const feVarbInfo = {
-    sectionName: rest.sectionName,
-    varbName: rest.varbName,
-    feId: rest.feId,
-  };
-
   const quickViewVarbNames = quickViewVarbNameString
     ? (quickViewVarbNameString.split(seperator) as ValueFixedVarbPathName[])
     : undefined;
@@ -217,15 +207,41 @@ const MemoNumObjEntityEditor = React.memo(function MemoNumObjEntityEditor({
               editorState,
               startAdornment,
               endAdornment,
-              ...(!bypassNumeric && { handlePastedText, handleBeforeInput }),
+              ...(!bypassNumeric && {
+                handleBeforeInput,
+                handlePastedText: makeHandlePastedText(setEditorState),
+              }),
             }}
           />
           {!hideVarbSelector && varbSelectorIsOpen && (
             <NumObjVarbSelector
               {...{
-                ...rest,
+                editorState,
                 setEditorState,
+                ...rest,
                 varbPathNames: quickViewVarbNames,
+                makeViewWindow: (props) => (
+                  <SectionInfoContextProvider {...rest}>
+                    <MaterialDraftEditor
+                      sx={sx}
+                      className={"NumObjEditor-materialDraftEditor"}
+                      id={`${GetterVarb.feVarbInfoToVarbId(rest)}-modal`}
+                      {...{
+                        label,
+                        setEditorState: props.setEditorState,
+                        editorState: props.editorState,
+                        startAdornment,
+                        endAdornment,
+                        ...(!bypassNumeric && {
+                          handleBeforeInput,
+                          handlePastedText: makeHandlePastedText(
+                            props.setEditorState
+                          ),
+                        }),
+                      }}
+                    />
+                  </SectionInfoContextProvider>
+                ),
               }}
               ref={popperRef}
             />
@@ -258,4 +274,13 @@ function editorRegEx(editorType: NumEditorType): RegExp {
     },
   };
   return regEx[editorType];
+}
+
+function makeHandlePastedText(setEditorState: SetEditorState) {
+  return (text: string): "handled" => {
+    const reverseRegEx = /[^\d.*/+()-]/;
+    text = text.replaceAll(new RegExp(reverseRegEx, "g"), "");
+    setEditorState((editorState) => insertChars(editorState, text));
+    return "handled";
+  };
 }

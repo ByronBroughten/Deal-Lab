@@ -109,7 +109,6 @@ function CurrentActiveDeal() {
           ...dealElementProps,
           dealIsComplete: completionStatus === "allValid",
           feId: feStore.onlyChildFeId("outputSection"),
-          disableOpenOutputs: completionStatus !== "allValid",
           dealMode,
         }}
       />

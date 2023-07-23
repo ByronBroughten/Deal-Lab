@@ -29,7 +29,6 @@ export const insertChars = (
       undefined,
       entityKey
     );
-    const text = content.getPlainText();
     const initialFocus = selection.getFocusOffset();
 
     anchorOffset = initialFocus + 1;
@@ -54,6 +53,7 @@ export const insertEntity = (
   data: any = undefined
 ) => {
   let content = editorState.getCurrentContent();
+
   // I change "IMMUTABLE" here and up there, I suppose.
   content = content.createEntity("TOKEN", "IMMUTABLE", data);
 

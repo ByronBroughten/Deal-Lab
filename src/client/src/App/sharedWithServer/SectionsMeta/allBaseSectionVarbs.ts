@@ -76,6 +76,7 @@ export function makeAllBaseSectionVarbs() {
     }),
     variablesMenu: varbs({
       nameFilter: baseVarb("string"),
+      defaultViewEditor: baseVarb("string"),
     }),
     proxyStoreItem: varbs({
       dbId: baseVarb("string"),
