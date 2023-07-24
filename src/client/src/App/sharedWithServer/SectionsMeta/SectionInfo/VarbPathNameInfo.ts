@@ -284,6 +284,17 @@ export function varbPathInfo<VPN extends VarbPathName>(
   };
 }
 
+export function varbPathDbIdInfo<VPN extends VarbPathName>(
+  varbPathName: VPN,
+  dbId: string
+): VarbPathNameDbInfoMixed<VPN> {
+  return {
+    infoType: "varbPathDbId",
+    varbPathName,
+    dbId,
+  };
+}
+
 type VarbPathArrParam<VPN extends VarbPathName = VarbPathName> =
   VarbPathParams<VPN> & {
     varbPathName: VPN;

@@ -1,18 +1,42 @@
 import { fixedVariableLabel } from "../../../../../varbLabels";
-import { ValueFixedVarbPathName } from "../../../StateEntityGetters/ValueInEntityInfo";
+import {
+  ValueFixedVarbPathName,
+  ValueInEntityInfo,
+} from "../../../StateEntityGetters/ValueInEntityInfo";
 import { Id } from "../../IdS";
 import {
   getVarbPathParams,
+  varbPathDbIdInfo,
   varbPathInfo,
 } from "../../SectionInfo/VarbPathNameInfo";
 import { pathSectionName } from "../../sectionPathContexts/sectionPathNames";
 import { NumObj } from "./NumObj";
 import { ValueInEntity } from "./valuesShared/entities";
 
+type FixedEntity = [ValueFixedVarbPathName];
+type DbIdEntity = [string, string];
+function isDbIdEntity(value: FixedEntity | DbIdEntity): value is DbIdEntity {
+  return value.length === 2;
+}
+
 export function numObjNext(...propArr: EntityNumObjPropArr): NumObj {
   let mainText: string = "";
   let solvableText: string = "";
   const entities: ValueInEntity[] = [];
+  const makeAndAddEntity = (
+    entityInfo: ValueInEntityInfo,
+    varbLabel: string,
+    mainText: string
+  ) => {
+    entities.push({
+      ...entityInfo,
+      entityId: Id.make(),
+      length: varbLabel.length,
+      offset: mainText.length,
+      entitySource: "editor",
+    });
+  };
+
   for (const prop of propArr) {
     if (typeof prop === "string") {
       mainText += prop;
@@ -21,20 +45,21 @@ export function numObjNext(...propArr: EntityNumObjPropArr): NumObj {
       mainText += `${prop}`;
       solvableText += `${prop}`;
     } else {
-      const varbPathName = prop[0];
-      const entityInfo = varbPathInfo(varbPathName);
-      const { pathName, varbName } = getVarbPathParams(varbPathName);
-      const sectionName = pathSectionName(pathName);
-
-      const varbLabel = fixedVariableLabel(sectionName, varbName as any);
-
-      entities.push({
-        ...entityInfo,
-        entityId: Id.make(),
-        length: varbLabel.length,
-        offset: mainText.length,
-        entitySource: "editor",
-      });
+      let varbLabel = "";
+      if (isDbIdEntity(prop)) {
+        const dbId = prop[0];
+        varbLabel = prop[1];
+        const entityInfo = varbPathDbIdInfo("userVarbValue", dbId);
+        makeAndAddEntity(entityInfo, varbLabel, mainText);
+      } else {
+        const str = prop[0];
+        const varbPathName = str;
+        const entityInfo = varbPathInfo(varbPathName);
+        const { pathName, varbName } = getVarbPathParams(varbPathName);
+        const sectionName = pathSectionName(pathName);
+        varbLabel = fixedVariableLabel(sectionName, varbName as any);
+        makeAndAddEntity(entityInfo, varbLabel, mainText);
+      }
       mainText += varbLabel;
       solvableText += "?";
     }
@@ -47,4 +72,9 @@ export function numObjNext(...propArr: EntityNumObjPropArr): NumObj {
   };
 }
 
-type EntityNumObjPropArr = (number | string | [ValueFixedVarbPathName])[];
+type EntityNumObjPropArr = (
+  | number
+  | string
+  | [ValueFixedVarbPathName]
+  | [string, string]
+)[];

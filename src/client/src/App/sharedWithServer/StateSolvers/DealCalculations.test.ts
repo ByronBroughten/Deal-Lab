@@ -446,19 +446,17 @@ describe("DealCalculations", () => {
     const purchaseLoanAmount = 75000;
     const afterRepairValue = 150000;
     const refiLoanAmount = 140000;
-    const perDealMode = setPreFinanceOnetimeExpenses(
+    const expensesPerDealMode = setPreFinanceOnetimeExpenses(
       purchaseLoanAmount,
       refiLoanAmount
     );
-
     property.updateValues({ afterRepairValueEditor: numObj(afterRepairValue) });
-
     perDealModeDeal((dealMode) => {
       testVarb(
         "valueAddProfit",
         getProfit(
           dealMode,
-          perDealMode[dealMode],
+          expensesPerDealMode[dealMode],
           afterRepairValue,
           refiLoanAmount
         )
