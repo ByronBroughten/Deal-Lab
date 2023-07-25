@@ -231,7 +231,6 @@ export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
           brrrr: updateVarbS.sumNums([
             propS.local("purchasePrice"),
             propS.local("rehabCost"),
-            propS.local("sellingCosts"),
             propS.local("holdingCostTotal"),
           ]),
         }

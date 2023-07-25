@@ -122,13 +122,12 @@ function holdingCostTotal(
 const getProfit = (
   dealMode: DealMode,
   repay: number,
-  arv: number,
-  refiAmount: number
+  arv: number
 ): NumObjOutput => {
   if (dealMode === "fixAndFlip") {
     return roundS.cents(arv - repay);
   } else if (dealMode === "brrrr") {
-    return roundS.cents(refiAmount - repay);
+    return roundS.cents(arv - repay);
   } else {
     return "N/A";
   }
@@ -189,8 +188,14 @@ describe("DealCalculations", () => {
     }
   };
 
-  const testVarb = (varbName: VarbName<"deal">, num: NumObjOutput) => {
-    expect(deal.numOutput(varbName)).toBe(num);
+  const testVarb = (
+    varbName: VarbName<"deal">,
+    num: NumObjOutput,
+    showExtra?: string
+  ) => {
+    expect(`${showExtra ?? ""}${deal.numOutput(varbName)}`).toBe(
+      `${showExtra ?? ""}${num}`
+    );
   };
 
   type BaseName =
@@ -296,7 +301,7 @@ describe("DealCalculations", () => {
       mgmtUpfront +
       getHoldingCost("brrrr") +
       refiMortIns +
-      refiClosing;
+      refiClosing; // selling costs were expected to be subtracted, but they weren't
 
     setHoldingAndTillRefiMonths(holdingMonths, monthsTillRefi);
     property.updateValues({ purchasePrice: numObj(purchasePrice) });
@@ -454,12 +459,8 @@ describe("DealCalculations", () => {
     perDealModeDeal((dealMode) => {
       testVarb(
         "valueAddProfit",
-        getProfit(
-          dealMode,
-          expensesPerDealMode[dealMode],
-          afterRepairValue,
-          refiLoanAmount
-        )
+        getProfit(dealMode, expensesPerDealMode[dealMode], afterRepairValue),
+        dealMode
       );
     });
   });
@@ -507,12 +508,7 @@ describe("DealCalculations", () => {
     perDealModeDeal((dealMode) => {
       const preFinanceExpenses = perDealMode[dealMode];
       const totalInvestment = preFinanceExpenses - purchaseLoanAmount;
-      const profit = getProfit(
-        dealMode,
-        perDealMode[dealMode],
-        arv,
-        refiLoanAmount
-      );
+      const profit = getProfit(dealMode, perDealMode[dealMode], arv);
 
       if (isDealMode(dealMode, "hasHolding")) {
         const monthsTillValueAdd = deal.numValue(

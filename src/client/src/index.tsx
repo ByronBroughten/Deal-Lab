@@ -6,15 +6,10 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-// 3. A high level editorState and setEditorState are created and propogated through
-//    context "varbWindowEditorContext".
-//    Both makeViewWindow and onVarbSelect can optionally accept those two things as arguments, and the editorState and setEditorState sent through the context are
-//    passed to both of those components.
-//    It is also set on the modal opening.
 
 // *Speed up
 // Don't load deals till you need them
-// This is a pretty big undertaking. Is it worth it right now?
+// This is a pretty big undertaking. Is it wort`h it right now?
 // I'm afraid that the changes I start making here will make it difficult to
 // implement changes regarding the broken API
 // This won't deal with the select component at all, though.
