@@ -90,6 +90,7 @@ function makeAllUpdateSections() {
       archivedAreLoaded: varb("boolean", { initValue: false }),
       showArchivedDeals: varb("boolean", { initValue: false }),
       isStartingDealEdit: varb("string", { initValue: "" }),
+      isCreatingDeal: varb("boolean", { initValue: false }),
     }),
     ...prop("loan", loanUpdateVarbs()),
     ...prop("loanBaseValue", loanBaseUpdateVarbs()),
