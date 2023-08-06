@@ -10,11 +10,9 @@ import { makeExampleDeal } from "./makeDefaultFeUser/makeExampleDeal";
 import { makeExampleLoan } from "./makeDefaultFeUser/makeExampleLoan";
 import { makeExampleMgmt } from "./makeDefaultFeUser/makeExampleMgmt";
 import {
-  exampleAdvancedCapExProps,
-  examplePropertyCapExListProps,
+  avgHomeAdvisorNahbCapExProps,
   examplePropertyRepairProps,
   examplePropertyUtilityProps,
-  exampleSimpleCapExProps,
 } from "./makeDefaultFeUser/makeExampleOngoingListsProps";
 import { makeExampleProperty } from "./makeDefaultFeUser/makeExampleProperty";
 import { makeExampleUserVarbLists } from "./makeDefaultFeUser/makeExampleUserVarbLists";
@@ -83,15 +81,15 @@ export function makeDefaultDbStoreArrs({
     childName: "capExListMain",
     sectionPacks: [
       makeExampleCapExList(
-        "Simple CapEx Example",
-        exampleSimpleCapExProps,
+        "HomeAdvisor & NAHB Averages",
+        avgHomeAdvisorNahbCapExProps,
         timeS.now()
       ),
-      makeExampleCapExList(
-        "Advanced CapEx Example",
-        exampleAdvancedCapExProps,
-        timeS.now()
-      ),
+      // makeExampleCapExList(
+      //   "Advanced CapEx Example",
+      //   exampleAdvancedCapExProps,
+      //   timeS.now()
+      // ),
     ],
   });
   dbStore.addChild("propertyMain", { sectionPack: makeExampleStoreProperty() });
@@ -153,7 +151,7 @@ function makeExampleStoreProperty(): SectionPack<"property"> {
     costOverrunValue: { valuePercent: numObj(0) },
     capExValue: {
       valueSourceName: "listTotal",
-      items: examplePropertyCapExListProps,
+      items: avgHomeAdvisorNahbCapExProps,
     },
     maintenanceValue: { valueSourceName: "onePercentArvAndSqft" },
   });

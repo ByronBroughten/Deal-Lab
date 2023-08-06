@@ -41,6 +41,7 @@ export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
       initValue: "buyAndHold",
     }),
     likability: varb("numObj", { initValue: numObj(5) }),
+    yearBuilt: varb("numObj"),
     pricePerLikability: varb(
       "numObj",
       basicsS.equationLR(

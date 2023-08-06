@@ -34,6 +34,7 @@ import { InEntityGetterVarb } from "../StateGetters/InEntityGetterVarb";
 import { UpdaterVarb } from "../StateUpdaters/UpdaterVarb";
 import { Arr } from "../utils/Arr";
 import { Obj } from "../utils/Obj";
+import { timeS } from "./../utils/timeS";
 import { ConditionalValueSolver } from "./ValueUpdaterVarb/ConditionalValueSolver";
 import { UserVarbValueSolver } from "./ValueUpdaterVarb/UserVarbValueSolver";
 
@@ -246,6 +247,12 @@ export class SolveValueVarb<
       return {
         ...this.getterVarb.value("numObj"),
         solvableText: "1",
+      };
+    },
+    currentYear: () => {
+      return {
+        ...this.getterVarb.value("numObj"),
+        solvableText: `${timeS.currentYear()}`,
       };
     },
     solvableText300: (): NumObj => {

@@ -4,11 +4,13 @@ import { SectionName } from "../../sharedWithServer/SectionsMeta/SectionName";
 import { UnionValueName } from "../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { arrSx } from "../../utils/mui";
+import { NumEditorType } from "../inputs/NumObjEntityEditor";
 import { MuiSelect, MuiSelectProps } from "./MuiSelect";
 
 type MakeEditor = (props: {
   sx: SxProps;
   labeled: boolean;
+  editorType: NumEditorType;
   className: string;
 }) => React.ReactNode;
 export interface SelectEditorPropsNext<
@@ -64,6 +66,7 @@ export function SelectEditor<
       {makeEditor &&
         makeEditor({
           className: "SelectEditor-editor",
+          editorType: "equation",
           labeled: false,
           sx: {
             "& .NumObjEditor-materialDraftEditor": {

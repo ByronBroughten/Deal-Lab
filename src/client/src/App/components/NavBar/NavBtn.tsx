@@ -1,59 +1,56 @@
+import { SxProps } from "@mui/material";
 import { ButtonProps } from "@mui/material/Button";
-import { rem } from "polished";
 import React from "react";
-import styled, { css } from "styled-components";
 import { nativeTheme } from "../../theme/nativeTheme";
-import theme from "../../theme/Theme";
-import PlainBtn from "../general/PlainBtn";
+import { arrSx } from "../../utils/mui";
+import { PlainIconBtn } from "./../general/PlainIconBtn";
 
 export type NavBtnProps = ButtonProps & {
   $isactive?: boolean;
   target?: string;
   icon?: React.ReactNode;
-  text: string | React.ReactNode;
+  text: React.ReactNode;
+  sx?: SxProps;
+  href?: string;
 };
-export function NavBtn({ className, icon, text, ...rest }: NavBtnProps) {
+export function NavBtn({
+  className,
+  icon,
+  text,
+  $isactive,
+  sx,
+  ...rest
+}: NavBtnProps) {
   return (
-    <Styled
+    <PlainIconBtn
       {...{
         className: `NavBtn-root ${className}`,
+        sx: [
+          {
+            color: nativeTheme.primary.main,
+            fontSize: 16,
+            padding: `0 ${nativeTheme.s3}`,
+            height: 70,
+            "&:hover": {
+              backgroundColor: nativeTheme.secondary.main,
+              color: nativeTheme.light,
+            },
+            ...($isactive && {
+              backgroundColor: nativeTheme.primary.main,
+              color: nativeTheme.light,
+            }),
+          },
+          ...arrSx(sx),
+        ],
         disableRipple: true,
         ...rest,
-        // title: "Test title",
+        ...(text && {
+          middle: text,
+        }),
+        ...(icon && {
+          left: icon,
+        }),
       }}
-    >
-      {icon && <span className="NavBtn-icon">{icon}</span>}
-      {text && <span className="NavBtn-text">{text}</span>}
-    </Styled>
+    />
   );
 }
-const Styled = styled(PlainBtn)<{ $isactive?: boolean }>`
-  color: inherit;
-  font-size: ${rem("16px")};
-  padding: 0 ${theme.s3};
-  height: 65px;
-  flex: 1;
-  white-space: nowrap;
-  .NavBtn-text {
-    margin-left: ${rem("2px")};
-    display: flex;
-    align-items: center;
-  }
-  .NavBtn-icon {
-    display: flex;
-    align-items: center;
-    font-size: 20px;
-  }
-
-  :hover {
-    background-color: ${nativeTheme.secondary.main};
-    color: ${theme.light};
-  }
-
-  ${({ $isactive }) =>
-    $isactive &&
-    css`
-      background-color: ${theme.primaryNext};
-      color: ${theme.light};
-    `};
-`;

@@ -327,7 +327,7 @@ function DealActions({
               sx: {
                 margin: nativeTheme.s1,
                 marginTop: nativeTheme.s25,
-                width: "64px",
+                minWidth: "64px",
               },
               left: icons.edit({ size: 20 }),
               onClick: setCreatingDeal,
@@ -347,6 +347,7 @@ function DealActions({
             sx: {
               margin: nativeTheme.s1,
               marginTop: nativeTheme.s25,
+              minWidth: "64px",
             },
             ...(isInactive && { showAsDisabled: true }),
             left: icons.copy({ size: 20 }),

@@ -1,105 +1,143 @@
 import { NumObj, numObj } from "../../SectionsMeta/values/StateValue/NumObj";
 import { numObjNext } from "../../SectionsMeta/values/StateValue/numObjNext";
+import { Obj } from "./../../utils/Obj";
 
 export type ExampleCapExProps = [string, number | NumObj, number | NumObj][];
 
-const userVarbCapExNames = {
-  roof: "Roof",
-  waterHeater: "Water heater",
-  hvac: "HVAC",
-  interiorPaint: "Interior paint",
-  windows: "Windows",
-  siding: "Siding",
-  appliances: "Appliances",
-  plumbing: "Plumbing",
-  driveway: "Driveway",
-  laundry: "Laundry",
-  flooring: "Flooring",
-  structure: "Structure",
-  cabinetsCounters: "Cabinets & counters",
-  garageDoor: "Garage door",
-  landscaping: "Landscaping",
-} as const;
-
-const names = userVarbCapExNames;
-export const userVarbLifespans = {
-  roof: [names.roof, numObj(20)],
-  waterHeater: [names.waterHeater, numObj(12)],
-  hvac: ["HVAC", numObj(20)],
-  interiorPaint: ["Interior paint", numObj(10)],
-  windows: ["Windows", numObj(50)],
-  siding: ["Siding", numObj(50)],
-  appliances: ["Appliances", numObj(10)],
-  plumbing: ["Plumbing", numObj(50)],
-  driveway: ["Driveway", numObj(50)],
-  laundry: ["Laundry", numObj(12)],
-  flooring: ["Flooring", numObj(20)],
-  structure: ["Structure", numObj(50)],
-  cabinetsCounters: ["Cabinets & counters", numObj(20)],
-  garageDoor: ["Garage door", numObj(10)],
-  landscaping: ["Landscaping", numObj(10)],
-} as const;
-
-const spans = userVarbLifespans;
-
-export const defaultPropertyCapExListProps = [
-  [names.roof, numObj(), numObj()],
-  [names.waterHeater, numObj(), numObj()],
-  [names.hvac, numObj(), numObj()],
-  [names.interiorPaint, numObj(), numObj()],
-  [names.windows, numObj(), numObj()],
-  [names.siding, numObj(), numObj()],
-  [names.appliances, numObj(), numObj()],
-  [names.plumbing, numObj(), numObj()],
-  [names.flooring, numObj(), numObj()],
-  [names.structure, numObj(), numObj()],
-  [names.cabinetsCounters, numObj(), numObj()],
-  [names.landscaping, numObj(), numObj()],
+type CapExName = (typeof capExNames)[number];
+const capExNames = [
+  "roof",
+  "siding",
+  "gutters",
+  "windows",
+  "furnace",
+  "waterHeater",
+  "interiorPaint",
+  "cabinets",
+  "countertops",
+  "refrigerator",
+  "range",
+  "dishwasher",
+  "flooring",
+  // "plumbing",
+  // "foundation",
+  // "electrical"
+  "landscaping",
+  "laundry",
+  "centralAc",
+  "driveway",
+  "garageDoor",
 ] as const;
 
-export const examplePropertyCapExListProps: [
-  string,
-  number | NumObj,
-  number | NumObj
-][] = [
-  [...spans.roof, numObj(8000)],
-  [...spans.waterHeater, numObjNext("1200*", ["numUnits"])],
-  [...spans.hvac, numObjNext("5000*", ["numUnits"])],
-  [...spans.interiorPaint, numObjNext(["sqft"], "*3")],
-  [...spans.windows, numObjNext("(5+2*", ["numBedrooms"], ")*500")],
-  [...spans.siding, numObjNext(["sqft"], "*4")],
-  [...spans.appliances, numObjNext("550+715")],
-  [...spans.plumbing, numObjNext("5000*", ["numUnits"])],
-  [...spans.flooring, numObjNext(["sqft"], "*3")],
-  [...spans.structure, numObjNext(10000)],
-  [...spans.cabinetsCounters, numObjNext("4000*", ["numUnits"])],
-  [...spans.landscaping, numObjNext(1000)],
-];
+const capExDisplayNameMap: Record<CapExName, string> = {
+  roof: "Roof",
+  siding: "Siding",
+  windows: "Windows",
+  furnace: "Furnace",
+  centralAc: "Central AC",
+  waterHeater: "Water heater",
+  interiorPaint: "Interior paint",
+  cabinets: "Cabinets",
+  countertops: "Countertops",
+  refrigerator: "Refrigerator",
+  range: "Range",
+  dishwasher: "Dish washer",
+  flooring: "Flooring",
+  landscaping: "Landscaping",
+  laundry: "Laundry",
+  driveway: "Driveway",
+  garageDoor: "Garage door",
+  gutters: "Gutters",
+};
 
-export const exampleSimpleCapExProps: ExampleCapExProps = [
-  [...spans.roof, numObj(8000)],
-  [...spans.waterHeater, numObjNext(1200)],
-  [...spans.hvac, numObjNext(5000)],
-  [...spans.interiorPaint, numObjNext(["sqft"], "*3")],
-  [...spans.windows, numObjNext(6000)],
-  [...spans.siding, numObjNext(["sqft"], "*4")],
-  [...spans.appliances, numObjNext(1200)],
-  [...spans.plumbing, numObjNext(5000)],
-  [...spans.flooring, numObjNext(["sqft"], "*3")],
-  [...spans.structure, numObjNext(10000)],
-  [...spans.cabinetsCounters, numObjNext(4000)],
-  [...spans.landscaping, numObjNext(1000)],
-  [...userVarbLifespans.laundry, numObjNext(1200)],
-  [...userVarbLifespans.driveway, numObjNext(5000)],
-  [...userVarbLifespans.garageDoor, numObjNext(1000)],
-];
+export const capExDisplayNames = Obj.values(capExDisplayNameMap);
 
-export const exampleAdvancedCapExProps: ExampleCapExProps = [
-  ...examplePropertyCapExListProps,
-  [...userVarbLifespans.laundry, numObjNext(1200)],
-  [...userVarbLifespans.driveway, numObjNext(5000)],
-  [...userVarbLifespans.garageDoor, numObjNext(1000)],
-];
+const capExNahbLifespans: Record<CapExName, number> = {
+  roof: 20,
+  siding: 30, // nahb says it lasts forever, but I dunno
+  windows: 30,
+  furnace: 18,
+  waterHeater: 10,
+  interiorPaint: 15,
+  cabinets: 50,
+  countertops: 20,
+  refrigerator: 13,
+  range: 15,
+  dishwasher: 9,
+  flooring: 50, // Vinyl, allegedly
+  landscaping: 18,
+  laundry: 13,
+  centralAc: 13,
+  driveway: 18,
+  garageDoor: 30, // nahb doesn't say, but The Book on Estimating Rehab Costs says 20-30
+  gutters: 20, // aluminum ones, most common
+};
+
+// It would be nice to have "lowHomeAdvisorCosts" too, or something.
+const averageHomeAdvisorCosts2023: Record<CapExName, NumObj | number> = {
+  roof: 9154,
+  siding: 10750,
+  windows: 6831,
+  furnace: 4719,
+  centralAc: 5887,
+  waterHeater: 1285,
+  interiorPaint: numObjNext("3.5*", ["sqft"]),
+  cabinets: 5435,
+  countertops: 3107,
+  refrigerator: 1500,
+  range: 2000,
+  dishwasher: 970,
+  flooring: numObjNext("12.5*", ["sqft"]),
+  // plumbing: 7500 — PVC plumbing essentially lasts forever, 100 years
+  // foundation: 9084 — "should" last a lifetime if done properly
+  landscaping: 3423,
+  laundry: 1372 + 1272.5,
+  // washer 445 - 2300 (median 1372), dryer 445 - 2100 = 1272.5,
+  // https://www.homeadvisor.com/cost/appliances/
+  driveway: 4760,
+  garageDoor: 1193,
+  gutters: 1600, // 1200 for single-story, 2000 for two story, allegedly
+};
+
+export const avgHomeAdvisorNahbCapExProps = capExNames.reduce((props, name) => {
+  props.push([
+    capExDisplayNameMap[name],
+    capExNahbLifespans[name],
+    averageHomeAdvisorCosts2023[name],
+  ]);
+  return props;
+}, [] as ExampleCapExProps);
+
+const myCosts = {
+  roof: 8000,
+  waterHeater: 1200,
+  furnace: numObjNext("5000*", ["numUnits"]),
+  interiorPaint: numObjNext(["sqft"], "*3"), // refer to Jesus
+  windows: numObjNext("(4+2*", ["numBedrooms"], ")*500"), // refer to Jesus
+  siding: numObjNext(["sqft"], "*4"), // ?
+  range: 450,
+  refrigerator: 450,
+  flooring: numObjNext(["sqft"], "*3"),
+  cabinets: numObjNext("2000*", ["numUnits"]),
+  counters: numObjNext("2000*", ["numUnits"]),
+  landscaping: numObjNext(1000),
+  laundry: numObjNext(1200),
+  driveway: numObjNext(5000),
+  garageDoor: numObjNext(1000),
+};
+
+const myLifespans = {
+  siding: 50,
+  windows: 50,
+  interiorPaint: 10,
+  kitchenAppliances: 10,
+  driveway: 50,
+  laundry: 12,
+  flooring: 20,
+  cabinetsCounters: 20,
+  garageDoor: 10,
+  landscaping: 10,
+};
 
 export const examplePropertyUtilityProps: [string, number | NumObj][] = [
   ["Water", numObjNext("60*", ["numUnits"])],

@@ -19,6 +19,10 @@ export function BasicBuyAndHoldInfo({ feId }: Props) {
           inputMargins
           feVarbInfo={property.varbInfo("sqft")}
         />
+        <NumObjEntityEditor
+          inputMargins
+          feVarbInfo={property.varbInfo("yearBuilt")}
+        />
       </MuiRow>
       <UnitsNext feId={feId} />
       <MiscIncomeValue feId={property.onlyChildFeId("miscOngoingRevenue")} />

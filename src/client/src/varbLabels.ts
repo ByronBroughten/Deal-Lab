@@ -121,6 +121,8 @@ export const varbLabels = checkAllVarbLabels({
     }),
   }),
   ...prop("calculatedVarbs", {
+    currentYear: input("Current year"),
+    propertyAge: input("Property age"),
     onePercentPrice: input("1% Purchase price"),
     twoPercentPrice: input("2% Purchase price"),
     onePercentArv: input("1% After repair value"),
@@ -165,6 +167,7 @@ export const varbLabels = checkAllVarbLabels({
     propertyMode: multis.dealMode,
     purchasePrice: input("Purchase price"),
     sqft: input("Square feet"),
+    yearBuilt: input("Year built"),
     numUnits: input("Unit count"),
     numUnitsEditor: input("Unit count"),
     numBedroomsEditor: input("Bedroom count"),

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import theme from "../../../../theme/Theme";
 import { InfoIcon } from "../../../appWide/InfoIcon";
-import PlainBtn from "../../../general/PlainBtn";
+import { PlainBtn } from "../../../general/PlainBtn";
 
 type Props = {
   className?: string;

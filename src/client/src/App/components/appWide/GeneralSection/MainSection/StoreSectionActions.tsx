@@ -34,8 +34,8 @@ export function StoreSectionActions<
   const { setModal } = useConfirmationModal();
   const warnThenReset = () =>
     setModal({
-      title: "Are you sure you want to reset this section to default?",
-      description: "If yes, you will lose all the changes made to it.",
+      title: "Are you sure you want to clear this section?",
+      description: "If yes, you will lose all data entered into it.",
       handleSubmit: resetSelfToDefault,
     });
 
@@ -51,7 +51,7 @@ export function StoreSectionActions<
         <StyledActionBtn
           sx={{ ml: "2px" }}
           isDangerous={true}
-          middle="Reset default"
+          middle="Clear"
           left={<BiReset size={23} />}
           onClick={warnThenReset}
         />

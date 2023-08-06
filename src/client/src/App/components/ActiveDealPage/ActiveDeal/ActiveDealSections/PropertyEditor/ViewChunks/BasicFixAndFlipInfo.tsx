@@ -31,6 +31,10 @@ export function BasicFixAndFlipInfo({ feId }: Props) {
             inputMargins
             feVarbInfo={property.varbInfo("sqft")}
           />
+          <NumObjEntityEditor
+            inputMargins
+            feVarbInfo={property.varbInfo("yearBuilt")}
+          />
           <ArvEditor feId={feId} />
           <SellingCostValue feId={property.onlyChildFeId("sellingCostValue")} />
         </MuiRow>

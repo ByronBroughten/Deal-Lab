@@ -21,6 +21,10 @@ export function BasicBrrrrInfo({ feId }: Props) {
           inputMargins
           feVarbInfo={property.varbInfo("sqft")}
         />
+        <NumObjEntityEditor
+          inputMargins
+          feVarbInfo={property.varbInfo("yearBuilt")}
+        />
         <UnitsNext feId={feId} />
         <MiscIncomeValue feId={property.onlyChildFeId("miscOngoingRevenue")} />
       </MuiRow>

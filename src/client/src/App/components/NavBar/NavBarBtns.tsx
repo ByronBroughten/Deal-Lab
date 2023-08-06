@@ -4,6 +4,7 @@ import { View } from "react-native";
 import { useUserSubscription } from "../../modules/customHooks/useSubscriptions";
 import { useUserDataActor } from "../../modules/SectionActors/UserDataActor";
 import { nativeTheme } from "../../theme/nativeTheme";
+import { MuiRow } from "../general/MuiRow";
 import { NavBtn } from "./NavBtn";
 import { NavDropDown } from "./NavDropDown";
 import { NavUserMenu } from "./NavUserMenu";
@@ -29,6 +30,7 @@ export function NavBarBtns() {
     ),
     basicUser: () => (
       <>
+        <GiveFeedbackBtn />
         <NavDropDown
           className="NavBar-upgradeToProDropdown"
           btnIcon={
@@ -52,26 +54,30 @@ export function NavBarBtns() {
         <NavUserMenu />
       </>
     ),
-    proUser: () => <NavUserMenu />,
+    proUser: () => (
+      <>
+        <GiveFeedbackBtn />
+        <NavUserMenu />
+      </>
+    ),
   };
   const scenarioKey = useScenarioKey();
   return (
-    <View style={{ flexDirection: "row" }}>
-      {/* <NavBtn
-        className="NavBar-demoBtn NavBtn"
-        href="https://youtu.be/81Ed3e54YS8"
-        target="_blank"
-        icon={<AiOutlineYoutube className="NavBar-demoBtnIcon" />}
-        text="1 Min Demo"
-      /> */}
-      {/* <NavDropDown
-        className="NavBar-feedbackDropDown"
-        btnText="Feedback"
-        btnIcon={<VscFeedback />}
-      >
-        <FeedbackPanel />
-      </NavDropDown> */}
-      {scenarios[scenarioKey]()}
-    </View>
+    <View style={{ flexDirection: "row" }}>{scenarios[scenarioKey]()}</View>
+  );
+}
+
+function GiveFeedbackBtn() {
+  return (
+    <NavBtn
+      href="deallab.app/contact"
+      text={
+        <MuiRow sx={{ justifyContent: "center" }}>
+          <div style={{ whiteSpace: "pre-line", lineHeight: "20px" }}>
+            {"Give\nFeedback"}
+          </div>
+        </MuiRow>
+      }
+    />
   );
 }

@@ -1,4 +1,4 @@
-import { clone, cloneDeep } from "lodash";
+import { clone } from "lodash";
 import {
   getVarbLabels,
   LabelOverrideSwitches,
@@ -256,7 +256,7 @@ export class GetterVarb<
     for (const valueName of valueNames) {
       const meta = this.sectionsMeta.valueByName(valueName);
       if (meta.is(value)) {
-        return cloneDeep(value) as StateValueOrAny<VT>;
+        return clone(value) as StateValueOrAny<VT>;
       }
     }
     throw new ValueTypeError(

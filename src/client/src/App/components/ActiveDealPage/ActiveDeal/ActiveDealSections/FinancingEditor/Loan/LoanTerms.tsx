@@ -34,7 +34,7 @@ export function LoanTerms({ feId }: FeIdProp) {
 
   return (
     <FormSectionLabeled
-      label={"Loan Terms"}
+      label={"Other Parameters"}
       className="BasicLoanInfo-otherInfo"
     >
       <MuiRow>

@@ -17,7 +17,12 @@ const checkFixedVarbNames = <
   t: T
 ) => t;
 
-const sharedBasics = ["purchasePrice", "sqft"] as const;
+const sharedBasics = [
+  "purchasePrice",
+  "sqft",
+  "yearBuilt",
+  "propertyAge",
+] as const;
 const nonHomebuyBasics = ["numUnits"] as const;
 
 const sharedOngoing = [

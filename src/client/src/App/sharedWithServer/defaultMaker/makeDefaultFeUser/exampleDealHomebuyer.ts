@@ -5,7 +5,7 @@ import { PackBuilderSection } from "../../StatePackers/PackBuilderSection";
 import { timeS } from "../../utils/timeS";
 import { makeDefaultDealPack } from "../makeDefaultDeal";
 import { example20PercentDownFinancing } from "./example20PercentDownLoan";
-import { exampleSimpleCapExProps } from "./makeExampleOngoingListsProps";
+import { avgHomeAdvisorNahbCapExProps } from "./makeExampleOngoingListsProps";
 import { makeExampleProperty } from "./makeExampleProperty";
 
 export function exampleDealHomebuyer(displayName: string): SectionPack<"deal"> {
@@ -59,7 +59,7 @@ function exampleHomebuyerProperty(): SectionPack<"property"> {
     ],
     capExValue: {
       valueSourceName: "listTotal",
-      items: exampleSimpleCapExProps,
+      items: avgHomeAdvisorNahbCapExProps,
     },
     maintenanceValue: { valueSourceName: "onePercentArv" },
   });

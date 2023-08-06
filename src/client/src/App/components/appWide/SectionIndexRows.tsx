@@ -48,6 +48,7 @@ export function SectionIndexRows<
           <TextField
             hiddenLabel
             {...{
+              sx: { width: "100%" },
               size: "small",
               className: "SectionIndexRows-filter",
               placeholder: "Search",

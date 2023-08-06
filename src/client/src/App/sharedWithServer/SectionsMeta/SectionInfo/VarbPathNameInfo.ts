@@ -24,6 +24,8 @@ type MakeVarbPathParams<
 
 const allVarbPathParams = {
   ...sectionVarbNameParams("calculatedVarbsFocal", "Property", [
+    "propertyAge",
+    "currentYear",
     "two",
     "twelve",
     "onePercentPrice",
@@ -41,6 +43,7 @@ const allVarbPathParams = {
   ]),
   ...sectionVarbNameParams("propertyFocal", "Property", [
     "likability",
+    "yearBuilt",
     "sellingCosts",
     "holdingPeriodMonths",
     "holdingPeriodYears",

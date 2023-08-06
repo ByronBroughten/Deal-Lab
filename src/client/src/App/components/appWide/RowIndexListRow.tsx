@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { TrashBtn } from "../general/TrashBtn";
 import theme from "./../../theme/Theme";
-import PlainBtn from "./../general/PlainBtn";
+import { PlainBtn } from "./../general/PlainBtn";
 
 type Props = {
   className?: string;

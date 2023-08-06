@@ -13,6 +13,12 @@ const basics = updateBasicsS;
 export function calculatedUpdateVarbs(): UpdateSectionVarbs<"calculatedVarbs"> {
   return {
     ...updateVarbsS._typeUniformity,
+    currentYear: updateVarb("numObj", updateBasics("currentYear")),
+    propertyAge: varbS.equationLR(
+      "subtract",
+      propS.varbPathName("currentYear"),
+      propS.varbPathName("yearBuilt")
+    ),
     pricePerUnit: varbS.equationLR(
       "divide",
       propS.varbPathName("purchasePrice"),

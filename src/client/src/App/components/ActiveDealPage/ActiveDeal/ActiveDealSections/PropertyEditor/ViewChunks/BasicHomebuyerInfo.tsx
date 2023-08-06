@@ -22,6 +22,10 @@ export function BasicHomebuyerInfo({ feId }: Props) {
           inputMargins
           feVarbInfo={property.varbInfo("numBedroomsEditor")}
         />
+        <NumObjEntityEditor
+          inputMargins
+          feVarbInfo={property.varbInfo("yearBuilt")}
+        />
       </MuiRow>
       <MuiFavoriteRating {...property.varbInfo("likability")} />
     </FormSectionLabeled>

@@ -9,7 +9,7 @@ interface Props extends MuiBtnPropsNext {
 }
 export function AddItemBtn({
   sx,
-  middle = <AiOutlinePlus size={17} />,
+  middle = <AiOutlinePlus size={20} />,
   ...rest
 }: Props) {
   return (

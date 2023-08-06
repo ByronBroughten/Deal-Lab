@@ -25,6 +25,7 @@ const updateFnNames = checkUpdateFnNames({
     "loadSolvableTextByVarbInfo",
     "loadNumObj",
     "getNumObjOfSwitch",
+    "currentYear",
     "solvableTextZero",
     "solvableTextOne",
     "solvableText300",

@@ -1,6 +1,10 @@
 import { sectionNames } from "../../SectionsMeta/SectionName";
 import { StateValue } from "../../SectionsMeta/values/StateValue";
-import { NumObj, numToObj } from "../../SectionsMeta/values/StateValue/NumObj";
+import {
+  numObj,
+  NumObj,
+  numToObj,
+} from "../../SectionsMeta/values/StateValue/NumObj";
 import { stringObj } from "../../SectionsMeta/values/StateValue/StringObj";
 import { PackBuilderSection } from "../../StatePackers/PackBuilderSection";
 import { Arr } from "../../utils/Arr";
@@ -140,6 +144,7 @@ export function makeExampleProperty<DM extends StateValue<"dealMode">>(
   const property = PackBuilderSection.initAsOmniChild("property");
   property.overwriteSelf(makeDefaultProperty());
   property.updateValues({
+    yearBuilt: numObj(1950),
     ...rest,
     propertyMode: props.dealMode,
     displayName: stringObj(displayName),

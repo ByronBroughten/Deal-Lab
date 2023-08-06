@@ -189,6 +189,8 @@ export function makeAllBaseSectionVarbs() {
       zipCode: baseVarb("string"),
       one: baseVarb("number"),
       likability: baseVarb("numObj"),
+      yearBuilt: baseVarb("numObj"),
+
       ...baseVarbs(
         "numObj",
         [
@@ -431,6 +433,8 @@ export function makeAllBaseSectionVarbs() {
       ...baseVarbs(
         "numObj",
         [
+          "currentYear",
+          "propertyAge",
           "pricePerUnit",
           "pricePerSqft",
           "arvPerSqft",

@@ -39,7 +39,12 @@ export function PropertyOngoingCosts({ feId }: FeIdProp) {
         />
         <MiscOngoingCost
           feId={property.onlyChildFeId("miscOngoingCost")}
-          menuDisplayNames={["HOA Fees", "Landscaping", "Accounting", "Legal"]}
+          menuDisplayNames={[
+            "HOA fees",
+            "Yardwork",
+            "Gutter cleaning",
+            ...(propertyMode === "homeBuyer" ? [] : ["Accounting", "Legal"]),
+          ]}
         />
       </MuiRow>
     </FormSectionLabeled>

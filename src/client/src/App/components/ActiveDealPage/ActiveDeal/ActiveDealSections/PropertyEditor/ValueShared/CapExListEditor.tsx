@@ -1,3 +1,4 @@
+import { capExDisplayNames } from "../../../../../../sharedWithServer/defaultMaker/makeDefaultFeUser/makeExampleOngoingListsProps";
 import { SectionValues } from "../../../../../../sharedWithServer/SectionsMeta/values/StateValue";
 import { useAction } from "../../../../../../sharedWithServer/stateClassHooks/useAction";
 import { useGetterSection } from "../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
@@ -5,24 +6,6 @@ import { VarbListGenericMenuType } from "../../../../../appWide/ListGroup/ListGr
 import { VarbListTableCapEx } from "../../../../../appWide/ListGroup/ListGroupShared/VarbListGeneric/VarbListTableCapEx";
 import { ListItemCapEx } from "../../../../../appWide/VarbLists/VarbListOngoing/ListItemCapEx";
 import { ValueListGeneral } from "./ValueListGeneral";
-
-const capExDisplayNames = [
-  "Appliances",
-  "Cabinets & counters",
-  "Driveway",
-  "Flooring",
-  "Garage door",
-  "HVAC",
-  "Interior paint",
-  "Landscaping",
-  "Laundry",
-  "Plumbing",
-  "Roof",
-  "Siding",
-  "Structure",
-  "Water heater",
-  "Windows",
-] as const;
 
 type Props = { feId: string; menuType: VarbListGenericMenuType };
 export function CapExValueList({ feId, menuType }: Props) {

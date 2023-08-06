@@ -4,53 +4,6 @@ import { numObj } from "../../SectionsMeta/values/StateValue/NumObj";
 import { numObjNext } from "../../SectionsMeta/values/StateValue/numObjNext";
 import { stringObj } from "../../SectionsMeta/values/StateValue/StringObj";
 import { PackBuilderSection } from "../../StatePackers/PackBuilderSection";
-import { Obj } from "../../utils/Obj";
-import { userVarbLifespans } from "./makeExampleOngoingListsProps";
-
-type UserVarbLifespansMap = typeof userVarbLifespans;
-type UserVarbLifespanArrs = UserVarbLifespansMap[keyof UserVarbLifespansMap][];
-const userVarbLifespanArrs: UserVarbLifespanArrs = Obj.keys(
-  userVarbLifespans
-).map((key) => {
-  return userVarbLifespans[key];
-});
-
-const fullLists = [
-  ["Average lifespan examples", userVarbLifespanArrs],
-  [
-    "Common repair examples",
-    [
-      ["Swap toilet hardware", numObj(30)],
-      ["Change deadbolt", numObj(20)],
-      ["Add smoke detector", numObj(15)],
-      ["Install outlet", numObj(30)],
-    ],
-  ],
-  [
-    "Replacement cost examples",
-    [
-      ["Vinyl plank per sqft", numObj(3)],
-      ["Force Air Furnace", numObj(3500)],
-      ["Water heater", numObj(1200)],
-      ["Window", numObj(500)],
-      ["Stove", numObj(600)],
-      ["Refrigerator", numObj(800)],
-      ["Laundry", numObj(1200)],
-      ["Roof", numObj(8000)],
-    ],
-  ],
-] as const;
-
-const lists = [
-  [
-    "Example collection",
-    [
-      ["Change lock cost", numObj(20)],
-      ["New HVAC Cost", numObjNext(["numUnits"], "*4000")],
-      ["Flooring $ per sqft", numObj(4)],
-    ],
-  ],
-] as const;
 
 const userVarbNames = [
   "btusPerSqft",

@@ -1,16 +1,24 @@
 import { Button } from "@mui/material";
-import styled from "styled-components";
+import { arrSx } from "../../utils/mui";
 
 type Props = any;
-export default function PlainBtn({ children, ...rest }: Props) {
-  return <Styled {...rest}>{children}</Styled>;
+export function PlainBtn({ children, sx, ...rest }: Props) {
+  return (
+    <Button
+      {...{
+        sx: [
+          {
+            background: "none",
+            border: "none",
+            borderRadius: 0,
+            "&:hover": { background: "none" },
+          },
+          ...arrSx(sx),
+        ],
+        ...rest,
+      }}
+    >
+      {children}
+    </Button>
+  );
 }
-
-const Styled = styled(Button)`
-  background: none;
-  border: none;
-  border-radius: 0;
-  :hover {
-    background: none;
-  }
-`;

@@ -14,21 +14,21 @@ function getItems(
     return [
       ["zero", "Choose method"],
       ["threeHundredPerUnit", "$300 per month"],
-      ["valueDollarsPeriodicEditor", "Enter amount"],
+      ["valueDollarsPeriodicEditor", "Custom amount"],
       ["listTotal", "Itemize"],
     ];
   } else if (periodicMode === "holding") {
     return [
       ["zero", "None"],
       ["threeHundredPerUnit", "$300 per unit per month"],
-      ["valueDollarsPeriodicEditor", "Enter amount"],
+      ["valueDollarsPeriodicEditor", "Custom amount"],
       ["listTotal", "Itemize"],
     ];
   } else {
     return [
       ["zero", "Tenant pays all utilities"],
       ["threeHundredPerUnit", "Three hundred per unit"],
-      ["valueDollarsPeriodicEditor", "Enter amount"],
+      ["valueDollarsPeriodicEditor", "Custom amount"],
       ["listTotal", "Itemize"],
     ];
   }
@@ -84,8 +84,8 @@ export function UtilityValue({ feId, propertyMode, periodicMode }: Props) {
               menuDisplayNames: [
                 "Water/sewer",
                 "Garbage",
-                "Heat",
-                "Misc energy",
+                "Natural gas",
+                "Electricity",
               ],
             }}
           />
