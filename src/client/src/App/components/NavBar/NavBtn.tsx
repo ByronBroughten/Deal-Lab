@@ -1,11 +1,10 @@
 import { SxProps } from "@mui/material";
-import { ButtonProps } from "@mui/material/Button";
 import React from "react";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { arrSx } from "../../utils/mui";
-import { PlainIconBtn } from "./../general/PlainIconBtn";
+import { PlainIconBtn, PlainIconBtnProps } from "./../general/PlainIconBtn";
 
-export type NavBtnProps = ButtonProps & {
+export type NavBtnProps = PlainIconBtnProps & {
   $isactive?: boolean;
   target?: string;
   icon?: React.ReactNode;

@@ -70,7 +70,8 @@ export function NavBarBtns() {
 function GiveFeedbackBtn() {
   return (
     <NavBtn
-      href="deallab.app/contact"
+      href="https://deallab.app/contact"
+      target="_blank"
       text={
         <MuiRow sx={{ justifyContent: "center" }}>
           <div style={{ whiteSpace: "pre-line", lineHeight: "20px" }}>
