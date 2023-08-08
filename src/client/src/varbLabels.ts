@@ -1,3 +1,4 @@
+import { externalLink } from "./App/Constants/externalLinks";
 import { SwitchTargetKey } from "./App/sharedWithServer/SectionsMeta/allBaseSectionVarbs/baseSwitchNames";
 import {
   sectionVarbNames,
@@ -90,7 +91,8 @@ export const varbLabels = checkAllVarbLabels({
     valueSourceName: text({
       inputLabel: "Capital expenses",
       title: "Capital Expenses",
-      info: `Capital expenses, or CapEx, are those big, expensive things that every property has and that will eventually need to be replaced—the roof, furnace, water heater, etc. No long-term analysis of a property is complete without accounting for these.\n\nA common (and easy) method to assume that all the CapEx costs together will average to about 5% of the property's rental income. But this can be pretty inaccurate.\n\nA more precise method is to go through each major capital expense and estimate both how much it would cost to replace it and how many years a replacement would last. From there, the app will calculate how much you should budget per month for each capital expense and add them all up.`,
+      moreInfoLink: externalLink("capEx"),
+      info: `Capital expenses, or CapEx, are the big expensive things that every property has that will eventually need to be replaced—the roof, furnace, water heater, etc. No long-term analysis of a property is complete without accounting for these.\n\nTo do so, simply go through each major capital expense and estimate how much it would cost to replace it and how many years a replacement would last. From there, the app will calculate how much you should budget per month for all of them together.\n\nWe included a handy template of national averages. Feel free to use that as a rough estimate or tailor it to suite your needs`,
     }),
     ...periodicInput("valueDollars", "Capital Expenses"),
   }),
@@ -586,6 +588,7 @@ export interface VarbInfoTextProps {
   variableLabel: VarbLabel;
   title: string;
   info: string;
+  moreInfoLink: string;
   sourceFinder: LabelSourceFinder;
 }
 
@@ -598,6 +601,7 @@ function text({
   variableLabel = inputLabel,
   title = "",
   info = "",
+  moreInfoLink = "",
   sourceFinder = null,
 }: Partial<VarbInfoTextProps>): VarbInfoTextProps {
   return {
@@ -605,6 +609,7 @@ function text({
     variableLabel,
     title,
     info,
+    moreInfoLink,
     sourceFinder,
   };
 }

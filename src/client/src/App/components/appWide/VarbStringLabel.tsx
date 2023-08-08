@@ -29,13 +29,13 @@ export function VarbStringLabel<SN extends SectionName>({
     }
   }
 
-  const { title, info } = labels;
+  const { title, info, moreInfoLink } = labels;
   return (
     <LabelWithInfo
       {...{
         iconProps,
         label: label || labels.inputLabel,
-        ...(title && info && { infoProps: { title, info } }),
+        ...(title && info && { infoProps: { title, info, moreInfoLink } }),
         ...rest,
       }}
     />

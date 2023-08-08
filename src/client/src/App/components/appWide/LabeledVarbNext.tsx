@@ -75,13 +75,14 @@ export function LabelText({
 }
 
 export function InfoIconIfExists({ sectionName, varbName }: VarbNames<any>) {
-  const { info, title } = getVarbLabels(sectionName, varbName);
+  const { info, title, moreInfoLink } = getVarbLabels(sectionName, varbName);
   if (info && title) {
     return (
       <InfoIcon
         {...{
           info,
           title,
+          moreInfoLink,
         }}
       />
     );

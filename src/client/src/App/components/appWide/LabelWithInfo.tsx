@@ -8,7 +8,7 @@ import { InfoIcon } from "./InfoIcon";
 type Props = {
   label: React.ReactNode;
   id?: string;
-  infoProps?: { title: React.ReactNode; info: string };
+  infoProps?: { title: React.ReactNode; info: string; moreInfoLink?: string };
   iconProps?: IconProps;
   sx?: SxProps;
   className?: string;
