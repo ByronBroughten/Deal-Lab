@@ -41,7 +41,16 @@ export type ApiQueries = {
   getArchivedDeals: (
     req: MakeReq<{}>
   ) => Promise<MakeRes<SectionPack<"deal">[]>>;
+  getNewDeal: (
+    req: MakeReq<LoadFromServer>
+  ) => Promise<MakeRes<SectionPack<"deal">>>;
 };
+
+export type CreateDealReq = MakeReq<LoadFromServer>;
+
+type LoadFromServer =
+  | { loadFrom: "zillow" }
+  | { loadFrom: "dataBase"; dbId: string };
 
 type ApiQueriesTest<
   T extends Record<ApiQueryName, (req: any) => Promise<any>>

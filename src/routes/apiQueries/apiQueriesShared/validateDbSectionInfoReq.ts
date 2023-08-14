@@ -29,7 +29,7 @@ export function validateDbStoreName<DT extends DbStoreType = "all">(
   }
 }
 
-function validateDbId(value: any): string {
+export function validateDbId(value: any): string {
   if (Id.is(value)) return value;
   else {
     throw new Error("The received dbId is not valid.");

@@ -38,7 +38,7 @@ export const config = {
   maxSectionSaveLimit,
   stripePrices,
   saveDelayInMs,
-  supportEmail: "support@deallab.com",
+  supportEmail: "support@deallab.com", // doesn't work with custom name server
   feedbackEmail: "feedback@deallab.com",
   discordLink: "https://discord.gg/W6pxEXT8EV",
   clientProdUrl,
@@ -87,6 +87,7 @@ export const config = {
     "getUserData",
     "getSubscriptionData",
     "makeSession",
+    "getNewDeal",
   ],
   get superTokensAppInfo() {
     return {

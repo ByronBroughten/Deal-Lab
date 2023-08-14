@@ -13,7 +13,10 @@ import { validateUserData } from "../sharedWithServer/apiQueriesShared/validateU
 import { validateSectionPackArrByType } from "../sharedWithServer/SectionsMeta/SectionNameByType";
 import { Obj } from "../sharedWithServer/utils/Obj";
 import { StrictOmit } from "../sharedWithServer/utils/types";
-import { SectionPack } from "./../sharedWithServer/SectionsMeta/sectionChildrenDerived/SectionPack";
+import {
+  SectionPack,
+  validateSectionPack,
+} from "./../sharedWithServer/SectionsMeta/sectionChildrenDerived/SectionPack";
 import {
   validateAxiosRes,
   validateDbIdData,
@@ -43,6 +46,12 @@ function makeApiQueries(): ApiQueries {
             sectionType: "deal",
           }) as SectionPack<"deal">[],
         };
+      },
+    },
+    getNewDeal: {
+      doingWhat: "creating a new deal",
+      validateRes(res: AxiosResponse<unknown>): QueryRes<"getNewDeal"> {
+        return { data: validateSectionPack(res.data, "deal") };
       },
     },
     getUserData: {
