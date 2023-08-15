@@ -1,4 +1,5 @@
 import { ContentState } from "draft-js";
+import { EditorUpdaterVarb } from "../../../modules/EditorUpdaterVarb";
 import { AddToStoreProps } from "../../../modules/FeStore/SolverFeStore";
 import { UserData } from "../../apiQueriesShared/validateUserData";
 import { defaultMaker } from "../../defaultMaker/defaultMaker";
@@ -16,9 +17,9 @@ import {
   StoreNameProp,
   StoreSectionName,
 } from "../../SectionsMeta/sectionStores";
+import { SectionValues } from "../../SectionsMeta/values/StateValue";
 import { DealMode } from "../../SectionsMeta/values/StateValue/dealMode";
 import { StateSections } from "../../StateSections/StateSections";
-import { EditorUpdaterVarb } from "../../StateSetters/EditorUpdaterVarb";
 import { SolverSections } from "../../StateSolvers/SolverSections";
 import { AddChildOptions } from "../../StateUpdaters/UpdaterSection";
 import { Arr } from "../../utils/Arr";
@@ -38,6 +39,7 @@ const sectionActionNames = [
   "removeFromStore",
   "removeFromStoreByDbId",
   "resetSelfToDefault",
+  "updateValues",
   "updateValue",
   "updateValueFromContent",
   "onChangeIdle",
@@ -70,10 +72,11 @@ type ExtraActionProps = _CheckSectionActionProps<{
   removeStoredDeal: DbIdProp;
 
   addChild: AddChildActionProps;
+  updateValues: UpdateValuesProps;
   updateValue: UpdateValueProps;
   updateValueFromContent: UpdateContentValueProps;
   removeSelf: RemoveSelfProps;
-  resetSelfToDefault: FeSectionInfo<StoreSectionName>;
+  resetSelfToDefault: FeSectionInfo;
   loadSelfCopyFromStore: FeSectionInfo<StoreSectionName> & DbIdProp;
 
   addToStore: AddToStoreProps;
@@ -87,13 +90,34 @@ export type ActionPropsMap = _CheckSectionActionProps<
   Merge<DefaultActionProps, ExtraActionProps>
 >;
 
-export type SectionActionsMap = {
+export type StateActionsMap = {
   [AN in SectionActionName]: ActionPropsMap[AN] & { type: AN };
 };
 
-export type SectionsAction = SectionActionsMap[SectionActionName];
+export type StateAction = StateActionsMap[SectionActionName];
 
-interface UpdateValueProps extends FeVarbValueInfo, IdOfSectionToSaveProp {}
+interface IdOfSectionToSaveProp {
+  idOfSectionToSave?: string;
+}
+
+type UpdateValuesProps = {
+  [SN in SectionName]: {
+    values: Partial<SectionValues<SN>>;
+  } & FeSectionInfo<SN> &
+    IdOfSectionToSaveProp;
+}[SectionName];
+
+type UpdateValueProps = FeVarbValueInfo & IdOfSectionToSaveProp;
+
+// type UpdateValueProps = {
+//   [SN in SectionName]: {
+//     [VN in VarbName<SN>]: {
+//       value: VarbValue<SN, VN>;
+//     } & FeVarbInfoNext<SN, VN> &
+//       IdOfSectionToSaveProp;
+//   }[VarbName<SN>];
+// }[SectionName];
+
 interface UpdateContentValueProps
   extends VarbContentInfo,
     IdOfSectionToSaveProp {
@@ -111,9 +135,6 @@ interface AddChildActionProps<
 }
 interface RemoveSelfProps extends IdOfSectionToSaveProp, FeSectionInfo {}
 
-interface IdOfSectionToSaveProp {
-  idOfSectionToSave?: string;
-}
 export interface VarbContentInfo extends FeVarbInfo {
   contentState: ContentState;
 }
@@ -123,17 +144,23 @@ export function isSectionActionName(value: any): value is SectionActionName {
 }
 
 type SavableActionName = SavableActions["type"];
-type SavableActions = Extract<SectionsAction, { idOfSectionToSave?: string }>;
+type SavableActions = Extract<StateAction, { idOfSectionToSave?: string }>;
 
 const savableActionNames = Arr.extractStrict(sectionActionNames, [
   "addChild",
   "removeSelf",
   "resetSelfToDefault",
+  "updateValues",
   "updateValue",
   "updateValueFromContent",
 ] as const);
 export function isSavableActionName(value: any): value is SavableActionName {
   return savableActionNames.includes(value);
+}
+function isSavableAction(
+  value: StateAction
+): value is StateActionsMap[SavableActionName] {
+  return savableActionNames.includes(value.type as any);
 }
 
 export type SectionActionProps<T extends SectionActionName> = ActionPropsMap[T];
@@ -142,7 +169,7 @@ type ReducerActions = {
   [AN in SectionActionName]: (prop: ActionPropsMap[AN]) => void;
 };
 
-export const sectionsReducer: React.Reducer<StateSections, SectionsAction> = (
+export const sectionsReducer: React.Reducer<StateSections, StateAction> = (
   currentSections,
   action
 ) => {
@@ -192,6 +219,10 @@ export const sectionsReducer: React.Reducer<StateSections, SectionsAction> = (
       section.loadSelfAndSolve(stored.makeSectionPack());
       section.updater.newDbId();
     },
+    updateValues: (props) => {
+      const section = solverSections.solverSection(props);
+      section.updateValues(props.values);
+    },
     updateValue: (props) => {
       const varb = solverSections.solverVarb(props);
       varb.directUpdateAndSolve(props.value);
@@ -228,16 +259,11 @@ export const sectionsReducer: React.Reducer<StateSections, SectionsAction> = (
     doDealCompare: () => solverSections.doDealCompare(),
   };
 
-  switch (action.type) {
-    case "addChild":
-    case "removeSelf":
-    case "updateValue":
-    case "updateValueFromContent": {
-      if (action.idOfSectionToSave) {
-        solverSections.feStore.addChangeToSave(action.idOfSectionToSave, {
-          changeName: "update",
-        });
-      }
+  if (isSavableAction(action)) {
+    if (action.idOfSectionToSave) {
+      solverSections.feStore.addChangeToSave(action.idOfSectionToSave, {
+        changeName: "update",
+      });
     }
   }
 

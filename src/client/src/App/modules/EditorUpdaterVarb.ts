@@ -5,26 +5,23 @@ import Draft, {
   RawDraftContentState,
 } from "draft-js";
 import { pick } from "lodash";
-import {
-  draftUtils,
-  numObjToRawContent,
-} from "../../modules/draftjs/draftUtils";
-import { EntityMap, EntityRanges, RawEditorState } from "../../utils/DraftS";
-import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
-import { isEditorUpdateFnName } from "../SectionsMeta/updateSectionVarbs/updateVarb/UpdateFnName";
-import { EditorValueName } from "../SectionsMeta/values/EditorValue";
+import { SectionName } from "../sharedWithServer/SectionsMeta/SectionName";
+import { isEditorUpdateFnName } from "../sharedWithServer/SectionsMeta/updateSectionVarbs/updateVarb/UpdateFnName";
+import { EditorValueName } from "../sharedWithServer/SectionsMeta/values/EditorValue";
 import {
   EntitiesAndEditorText,
   NumObj,
-} from "../SectionsMeta/values/StateValue/NumObj";
-import { StringObj } from "../SectionsMeta/values/StateValue/StringObj";
-import { ValueInEntity } from "../SectionsMeta/values/StateValue/valuesShared/entities";
-import { GetterVarbBase } from "../StateGetters/Bases/GetterVarbBase";
-import { GetterVarb } from "../StateGetters/GetterVarb";
-import { GetterVarbNumObj } from "../StateGetters/GetterVarbNumObj";
-import { InEntityGetterVarb } from "../StateGetters/InEntityGetterVarb";
-import { UpdaterVarb } from "../StateUpdaters/UpdaterVarb";
-import { Arr } from "../utils/Arr";
+} from "../sharedWithServer/SectionsMeta/values/StateValue/NumObj";
+import { StringObj } from "../sharedWithServer/SectionsMeta/values/StateValue/StringObj";
+import { ValueInEntity } from "../sharedWithServer/SectionsMeta/values/StateValue/valuesShared/entities";
+import { GetterVarbBase } from "../sharedWithServer/StateGetters/Bases/GetterVarbBase";
+import { GetterVarb } from "../sharedWithServer/StateGetters/GetterVarb";
+import { GetterVarbNumObj } from "../sharedWithServer/StateGetters/GetterVarbNumObj";
+import { InEntityGetterVarb } from "../sharedWithServer/StateGetters/InEntityGetterVarb";
+import { UpdaterVarb } from "../sharedWithServer/StateUpdaters/UpdaterVarb";
+import { Arr } from "../sharedWithServer/utils/Arr";
+import { EntityMap, EntityRanges, RawEditorState } from "../utils/DraftS";
+import { draftUtils, numObjToRawContent } from "./draftjs/draftUtils";
 
 const editorEntitySource = "editor";
 
@@ -36,7 +33,7 @@ export type CreateEditorProps = {
   compositeDecorator?: CompositeDecorator;
 };
 export class EditorUpdaterVarb<
-  SN extends SectionNameByType<"hasVarb">
+  SN extends SectionName = SectionName
 > extends GetterVarbBase<SN> {
   get updaterVarb(): UpdaterVarb<SN> {
     return new UpdaterVarb(this.getterVarbProps);

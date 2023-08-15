@@ -4,9 +4,9 @@ import { useGoToPage } from "../../components/customHooks/useGoToPage";
 import { constants } from "../../Constants";
 import { StateValue } from "../../sharedWithServer/SectionsMeta/values/StateValue";
 import { useGetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useGetterSection";
+import { useQueryAction } from "../../sharedWithServer/stateClassHooks/useQueryAction";
 import { timeS } from "../../sharedWithServer/utils/timeS";
 import { getErrorMessage } from "../../utils/error";
-import { useFeStoreDepreciated } from "../sectionActorHooks/useFeStoreDepreciated";
 
 export function useSubscriptions() {
   useUpdateOnSubscribe();
@@ -29,7 +29,8 @@ export function useUserSubscription(): {
 }
 
 function useUpdateOnSubscribe() {
-  const feStore = useFeStoreDepreciated();
+  const queryAction = useQueryAction();
+
   const { pathname } = useLocation();
 
   const goToAccount = useGoToPage("account");
@@ -37,7 +38,7 @@ function useUpdateOnSubscribe() {
     async function updateOnSubscribe() {
       if (pathname.endsWith(constants.feRoutes.subscribeSuccess)) {
         try {
-          await feStore.updateSubscriptionData();
+          queryAction({ type: "updateSubscriptionData" });
         } catch (ex) {
           throw new Error(getErrorMessage(ex));
         }
@@ -49,12 +50,12 @@ function useUpdateOnSubscribe() {
 }
 
 function useUpdateOnExpire() {
-  const feStore = useFeStoreDepreciated();
+  const queryAction = useQueryAction();
   const { userPlanExpiration } = useUserSubscription();
 
   React.useEffect(() => {
     if (userPlanExpiration < timeS.now()) {
-      feStore.updateSubscriptionData();
+      queryAction({ type: "updateSubscriptionData" });
     }
   });
 }

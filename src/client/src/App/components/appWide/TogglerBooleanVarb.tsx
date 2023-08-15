@@ -1,7 +1,8 @@
 import React from "react";
 import { unstable_batchedUpdates } from "react-dom";
 import { FeVarbInfo } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
-import { useSetterVarb } from "../../sharedWithServer/stateClassHooks/useSetterVarb";
+import { useAction } from "../../sharedWithServer/stateClassHooks/useAction";
+import { useGetterVarb } from "../../sharedWithServer/stateClassHooks/useGetterVarb";
 import { Toggler } from "../general/Toggler";
 
 export interface TogglerBooleanVarbProps {
@@ -18,7 +19,8 @@ export function TogglerBooleanVarb({
   onChange,
   ...rest
 }: TogglerBooleanVarbProps) {
-  const boolVarb = useSetterVarb(feVarbInfo);
+  const updateValue = useAction("updateValue");
+  const boolVarb = useGetterVarb(feVarbInfo);
   const checked = boolVarb.value("boolean");
   return (
     <Toggler
@@ -28,7 +30,10 @@ export function TogglerBooleanVarb({
         onChange: () => {
           unstable_batchedUpdates(() => {
             const nextValue = !checked;
-            boolVarb.updateValue(nextValue);
+            updateValue({
+              ...feVarbInfo,
+              value: nextValue,
+            });
             onChange && onChange(nextValue);
           });
         },

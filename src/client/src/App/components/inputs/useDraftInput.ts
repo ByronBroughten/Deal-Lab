@@ -1,12 +1,14 @@
 import { ContentState, EditorState } from "draft-js";
 import { isEqual } from "lodash";
 import React, { useEffect, useState } from "react";
+import {
+  CreateEditorProps,
+  EditorUpdaterVarb,
+} from "../../modules/EditorUpdaterVarb";
 import { FeVarbInfo } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { isEditorValueName } from "../../sharedWithServer/SectionsMeta/values/EditorValue";
 import { useAction } from "../../sharedWithServer/stateClassHooks/useAction";
-import { useSetterVarb } from "../../sharedWithServer/stateClassHooks/useSetterVarb";
-import { CreateEditorProps } from "../../sharedWithServer/StateSetters/EditorUpdaterVarb";
-import { SetterVarb } from "../../sharedWithServer/StateSetters/SetterVarb";
+import { useGetterVarb } from "../../sharedWithServer/stateClassHooks/useGetterVarb";
 import { StrictOmit } from "../../sharedWithServer/utils/types";
 import { SetEditorState } from "../../utils/DraftS";
 
@@ -21,15 +23,15 @@ export function useDraftInput(props: UseDraftInputProps): {
   editorState: EditorState;
   setEditorState: SetEditorState;
 } {
-  const setterVarb = useSetterVarb(props);
-  const varb = setterVarb.get;
+  const varb = useGetterVarb(props);
   const { valueName } = varb;
   if (!isEditorValueName(valueName)) {
     throw new Error(`valueName "${valueName}" is not an editorValueName`);
   }
 
+  const editorVarb = new EditorUpdaterVarb(varb.getterVarbProps);
   const [editorState, setEditorState] = useState<EditorState>(() =>
-    setterVarb.createEditor({
+    editorVarb.createEditor({
       ...props,
       valueType: valueName,
     })
@@ -46,7 +48,7 @@ export function useDraftInput(props: UseDraftInputProps): {
     valueType: valueName,
     editorState,
     setEditorState,
-    setterVarb,
+    editorVarb,
   });
 
   return {
@@ -57,12 +59,12 @@ export function useDraftInput(props: UseDraftInputProps): {
 
 interface UseUpdateEditorFromValueProps extends CreateEditorProps {
   editorState: EditorState;
-  setterVarb: SetterVarb;
+  editorVarb: EditorUpdaterVarb;
   setEditorState: React.Dispatch<React.SetStateAction<EditorState>>;
 }
 function useUpdateEditorFromValue({
   editorState,
-  setterVarb,
+  editorVarb,
   setEditorState,
   ...rest
 }: UseUpdateEditorFromValueProps) {
@@ -72,12 +74,12 @@ function useUpdateEditorFromValue({
     contentIsUpdated = true;
   }, [contentState]);
 
-  const value = setterVarb.get.value();
+  const value = editorVarb.getterVarb.value();
   const strValue = JSON.stringify(value);
   useEffect(() => {
-    const valueFromEditor = setterVarb.valueFromContentState(contentState);
+    const valueFromEditor = editorVarb.valueFromContentState(contentState);
     if (!contentIsUpdated && !isEqual(value, valueFromEditor)) {
-      setEditorState(setterVarb.createEditor(rest));
+      setEditorState(editorVarb.createEditor(rest));
     }
   }, [contentIsUpdated, strValue, contentState]);
 }

@@ -1,12 +1,14 @@
 import { Checkbox, FormControlLabel } from "@mui/material";
 import styled from "styled-components";
 import { PiCalculationName } from "../../../../../../sharedWithServer/SectionsMeta/values/StateValue/valuesShared/calculations/piCalculations";
-import { useSetterVarb } from "../../../../../../sharedWithServer/stateClassHooks/useSetterVarb";
+import { useAction } from "../../../../../../sharedWithServer/stateClassHooks/useAction";
+import { useGetterVarbNext } from "../../../../../../sharedWithServer/stateClassHooks/useGetterVarb";
 import theme from "../../../../../../theme/Theme";
 
 type PiCalculationControlProps = { feId: string };
 export function PiCalculationControl({ feId }: PiCalculationControlProps) {
-  const varb = useSetterVarb({
+  const updateValue = useAction("updateValue");
+  const varb = useGetterVarbNext({
     feId,
     sectionName: "loan",
     varbName: "piCalculationName",
@@ -18,7 +20,11 @@ export function PiCalculationControl({ feId }: PiCalculationControlProps) {
       piCalculationName === "piFixedStandard"
         ? "interestOnlySimple"
         : ("piFixedStandard" as PiCalculationName);
-    varb.updateValue(nextCalcName);
+
+    updateValue({
+      ...varb.feVarbInfo,
+      value: nextCalcName,
+    });
   }
 
   return (

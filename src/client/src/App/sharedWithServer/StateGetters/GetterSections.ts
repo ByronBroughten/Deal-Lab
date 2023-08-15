@@ -25,13 +25,16 @@ export class GetterSections extends GetterSectionsBase {
   get meta(): SectionsMeta {
     return sectionsMeta;
   }
-  list<SN extends SectionNameByType>(sectionName: SN): GetterList<SN> {
+  list<SN extends SectionName>(sectionName: SN): GetterList<SN> {
     return new GetterList({
       sectionName,
       ...this.getterSectionsProps,
     });
   }
-  oneAndOnly<SN extends SectionNameByType>(sectionName: SN): GetterSection<SN> {
+  onlyFeInfo<SN extends SectionName>(sectionName: SN): FeSectionInfo<SN> {
+    return this.oneAndOnly(sectionName).feInfo;
+  }
+  oneAndOnly<SN extends SectionName>(sectionName: SN): GetterSection<SN> {
     return this.list(sectionName).oneAndOnly;
   }
   get root(): GetterSection<"root"> {

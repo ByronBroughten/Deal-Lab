@@ -1,31 +1,22 @@
 import React from "react";
 import styled from "styled-components";
-import { useSetterSection } from "../../../../../../../sharedWithServer/stateClassHooks/useSetterSection";
-import { useSetterSections } from "../../../../../../../sharedWithServer/stateClassHooks/useSetterSections";
+import { useGetterSection } from "../../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import theme from "../../../../../../../theme/Theme";
-import MaterialSelect from "../../../../../../inputs/MaterialSelect";
 import { NumObjEntityEditor } from "../../../../../../inputs/NumObjEntityEditor";
 import SolidBtn from "../../../../../SolidBtn";
-import {
-  IfOptions,
-  OrElseOptions,
-  orElseOptions,
-} from "./ConditionalRows/ControlRow/IfOrElseOptions";
 import IfLogic from "./LogicRow/IfLogic";
 
 type Props = { feId: string; idx?: number | string };
 export default function LogicRow({ feId, idx = "" }: Props) {
   const sectionName = "conditionalRow";
-  const row = useSetterSection({
+  const row = useGetterSection({
     sectionName,
     feId,
   });
 
-  const sections = useSetterSections();
-
-  const typeVarb = row.get.varb("type");
-  const type = row.get.value("type", "string");
-  const level = row.get.value("level", "number");
+  const typeVarb = row.varb("type");
+  const type = row.value("type", "string");
+  const level = row.value("level", "number");
   const levelArray = Array(level).fill(0);
   return (
     <Styled className={`${idx}`}>
@@ -33,7 +24,11 @@ export default function LogicRow({ feId, idx = "" }: Props) {
         levelArray.map((_, idx) => (
           <SolidBtn className="invisible" key={idx} />
         ))}
-      <MaterialSelect
+      {/* 
+        event.target used to contain both a name (varbId) and a value.
+        You can use an improved select component now.
+      */}
+      {/* <MaterialSelect
         {...{
           name: typeVarb.varbId,
           value: type,
@@ -44,9 +39,9 @@ export default function LogicRow({ feId, idx = "" }: Props) {
         }}
       >
         {(orElseOptions.includes(type) && OrElseOptions()) || IfOptions()}
-      </MaterialSelect>
+      </MaterialSelect> */}
 
-      {["if", "or if"].includes(type) && <IfLogic rowId={row.get.feId} />}
+      {["if", "or if"].includes(type) && <IfLogic rowId={row.feId} />}
       {["then", "or else"].includes(type) && (
         <NumObjEntityEditor
           feVarbInfo={row.varbInfo("then")}

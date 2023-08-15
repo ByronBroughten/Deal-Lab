@@ -1,22 +1,17 @@
 import styled from "styled-components";
-import { useSetterSection } from "../../../../../../../../sharedWithServer/stateClassHooks/useSetterSection";
-import { useUpdateVarbCurrentTarget } from "../../../../../../../../sharedWithServer/stateClassHooks/useUpdateVarbCurrentTarget";
+import { useGetterSection } from "../../../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { listOperators } from "../../../../../../../../sharedWithServer/StateSolvers/ValueUpdaterVarb/ConditionalValueSolver";
-import { MuiSelectOnChange } from "../../../../../../../../utils/mui";
-import MaterialSelect from "../../../../../../../inputs/MaterialSelect";
 import { NumObjEntityEditor } from "../../../../../../../inputs/NumObjEntityEditor";
 import { StringArrEditor } from "../../../../../../../inputs/StringArrEditor";
-import LogicOperators from "../../../../../../LogicOperators";
 
 export default function IfLogic({ rowId }: { rowId: string }) {
   const sectionName = "conditionalRow";
-  const updateVarbCurrentTarget = useUpdateVarbCurrentTarget();
-  const row = useSetterSection({
+  const row = useGetterSection({
     sectionName,
     feId: rowId,
   });
 
-  const operatorVarb = row.get.varb("operator");
+  const operatorVarb = row.varb("operator");
   const operatorVal = operatorVarb.value("string");
 
   let logicType: string;
@@ -26,10 +21,6 @@ export default function IfLogic({ rowId }: { rowId: string }) {
     logicType = "valueLogic";
   }
 
-  const onChange: MuiSelectOnChange = (event) => {
-    updateVarbCurrentTarget({ currentTarget: event.target });
-  };
-
   return (
     <Styled>
       <NumObjEntityEditor
@@ -37,16 +28,17 @@ export default function IfLogic({ rowId }: { rowId: string }) {
         className="logic-left"
         bypassNumeric={true}
       />
-      <MaterialSelect
+      {/*  */}
+      {/* <MaterialSelect
         {...{
           name: operatorVarb.varbId,
           value: operatorVal,
-          onChange,
+          onChange: (event: any) => setterSections.updateVarbCurrentTarget(event);,
           className: "select-operator",
         }}
       >
         {LogicOperators()}
-      </MaterialSelect>
+      </MaterialSelect> */}
       {logicType === "listLogic" && (
         <StringArrEditor
           className="logic-right"

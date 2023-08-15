@@ -1,6 +1,6 @@
 import { FeVarbInfo } from "../../../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { useGetterSectionsProps } from "../../../../../../sharedWithServer/stateClassHooks/useGetterSectionsProps";
-import { useSetterVarb } from "../../../../../../sharedWithServer/stateClassHooks/useSetterVarb";
+import { useGetterVarb } from "../../../../../../sharedWithServer/stateClassHooks/useGetterVarb";
 import { GetterVarb } from "../../../../../../sharedWithServer/StateGetters/GetterVarb";
 import { InEntityGetterVarb } from "../../../../../../sharedWithServer/StateGetters/InEntityGetterVarb";
 import {
@@ -14,21 +14,21 @@ function getDetailDisplayName(varb: GetterVarb) {
 
 type Props = { varbInfo: FeVarbInfo; level: number };
 export function DealDetailRowVarbFound({ varbInfo, level }: Props) {
-  const varb = useSetterVarb(varbInfo);
+  const varb = useGetterVarb(varbInfo);
   const { solvableText } = varb.value("numObj");
   const props = {
     varbInfo,
     level,
-    displayName: getDetailDisplayName(varb.get),
-    displayVarb: varb.get.displayVarb(),
-    ...(solvableText !== `${varb.get.numObjOutput}` && { solvableText }),
+    displayName: getDetailDisplayName(varb),
+    displayVarb: varb.displayVarb(),
+    ...(solvableText !== `${varb.numObjOutput}` && { solvableText }),
   };
-  const { hasInVarbs } = varb;
+  const { hasActiveInEntities } = varb.inEntity;
 
   return (
     <>
-      {hasInVarbs && <DealDetailRowDropDown {...props} />}
-      {!hasInVarbs && <DealDetailRowEndPoint {...props} />}
+      {hasActiveInEntities && <DealDetailRowDropDown {...props} />}
+      {!hasActiveInEntities && <DealDetailRowEndPoint {...props} />}
     </>
   );
 }

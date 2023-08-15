@@ -1,11 +1,11 @@
 import { useCallback } from "react";
 import { useIdOfSectionToSave } from "./useIdOfSectionToSave";
-import { useSectionsDispatch } from "./useSections";
+import { SectionsDispatch, useSectionsDispatch } from "./useSections";
 import {
   isSavableActionName,
   SectionActionName,
   SectionActionProps,
-  SectionsAction,
+  StateAction,
 } from "./useSections/sectionsReducer";
 
 export function useActionWithProps<T extends SectionActionName>(
@@ -19,17 +19,19 @@ export function useActionWithProps<T extends SectionActionName>(
     dispatch({
       type,
       ...props,
-    } as SectionsAction);
+    } as StateAction);
 }
 
-export function useAction<T extends SectionActionName>(type: T) {
+export function useAction<T extends SectionActionName>(
+  type: T
+): (props: SectionActionProps<T>) => void {
   const dispatch = useDispatchAndSave();
   return useCallback(
     (props: SectionActionProps<T>) =>
       dispatch({
         type,
         ...props,
-      } as SectionsAction),
+      } as StateAction),
     [type, dispatch]
   );
 }
@@ -41,16 +43,16 @@ export function useActionNoSave<T extends SectionActionName>(type: T) {
       dispatch({
         type,
         ...props,
-      } as SectionsAction),
+      } as StateAction),
     [dispatch]
   );
 }
 
-export function useDispatchAndSave(): (props: SectionsAction) => void {
+export function useDispatchAndSave(): SectionsDispatch {
   const dispatch = useSectionsDispatch();
   const storeId = useIdOfSectionToSave();
   return useCallback(
-    (props: SectionsAction) =>
+    (props: StateAction) =>
       dispatch({
         ...(isSavableActionName(props.type)
           ? { idOfSectionToSave: storeId }

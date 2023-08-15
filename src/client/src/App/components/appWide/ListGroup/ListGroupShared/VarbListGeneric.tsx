@@ -3,7 +3,8 @@ import React, { ReactNode } from "react";
 import { ChildName } from "../../../../sharedWithServer/SectionsMeta/sectionChildrenDerived/ChildName";
 import { FeSectionInfo } from "../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { SectionNameByType } from "../../../../sharedWithServer/SectionsMeta/SectionNameByType";
-import { useSetterSection } from "../../../../sharedWithServer/stateClassHooks/useSetterSection";
+import { useAction } from "../../../../sharedWithServer/stateClassHooks/useAction";
+import { useGetterSection } from "../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { VarbListTableSectionGeneric } from "./VarbListGeneric/VarbListTableSectionGeneric";
 import { VarbListMenuDual } from "./VarbListMenuDual";
 import { VarbListStyled } from "./VarbListStyled";
@@ -35,15 +36,22 @@ export function VarbListGeneric<SN extends VarbListAllowed>({
   viewableSx,
   ...props
 }: Props<SN>) {
-  const list = useSetterSection(feInfo);
+  const addChild = useAction("addChild");
+  const list = useGetterSection(feInfo);
   const itemName = list.meta.varbListItem as ChildName<SN>;
-  const addItem = props.addItem ?? (() => list.addChild(itemName));
+  const addItem =
+    props.addItem ??
+    (() =>
+      addChild({
+        feInfo: list.feInfo,
+        childName: itemName,
+      }));
 
   const total = totalVarbName
-    ? list.get.varb(totalVarbName).displayVarb()
+    ? list.varb(totalVarbName).displayVarb()
     : undefined;
 
-  const items = list.get.children(itemName);
+  const items = list.children(itemName);
   return (
     <VarbListStyled sx={sx} viewableSx={viewableSx} className={className}>
       <VarbListMenuDual

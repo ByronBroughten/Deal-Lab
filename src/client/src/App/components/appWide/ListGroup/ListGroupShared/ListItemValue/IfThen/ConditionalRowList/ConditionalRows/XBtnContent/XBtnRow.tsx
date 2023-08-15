@@ -1,11 +1,14 @@
 import React from "react";
-import { useSetterSection } from "../../../../../../../../../sharedWithServer/stateClassHooks/useSetterSection";
+import { useAction } from "../../../../../../../../../sharedWithServer/stateClassHooks/useAction";
+import { useGetterSection } from "../../../../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import SolidBtn from "../../../../../../../SolidBtn";
 import { XBtn } from "../../../../../../../Xbtn";
 import { conditionalRowSectionName } from "../../ConditionalRows";
 
 export default function XBtnRow({ feId, idx }: { feId: string; idx: number }) {
-  const conditionalRow = useSetterSection({
+  const addChild = useAction("addChild");
+  const removeSelf = useAction("removeSelf");
+  const conditionalRow = useGetterSection({
     sectionName: conditionalRowSectionName,
     feId,
   });
@@ -31,8 +34,15 @@ export default function XBtnRow({ feId, idx }: { feId: string; idx: number }) {
       className="XBtn-row content-row"
       style={{ height: height, display: "flex" }}
     >
-      <SolidBtn onClick={() => parent.addChild(conditionalRowSectionName)} />
-      <XBtn onClick={() => conditionalRow.removeSelf} />
+      <SolidBtn
+        onClick={() =>
+          addChild({
+            feInfo: parent.feInfo,
+            childName: conditionalRowSectionName,
+          })
+        }
+      />
+      <XBtn onClick={() => removeSelf(conditionalRow.feInfo)} />
     </div>
   );
 }

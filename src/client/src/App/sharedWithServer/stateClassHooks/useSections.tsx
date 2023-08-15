@@ -3,7 +3,7 @@ import { react } from "../../utils/react";
 import { StateSections } from "../StateSections/StateSections";
 import { SolverSections } from "../StateSolvers/SolverSections";
 import { StrictOmit } from "../utils/types";
-import { SectionsAction, sectionsReducer } from "./useSections/sectionsReducer";
+import { sectionsReducer, StateAction } from "./useSections/sectionsReducer";
 import {
   SectionsStore,
   StateMissingFromStorageError,
@@ -15,49 +15,28 @@ type UseSectionsProps = {
   prePopulatedSections?: StateSections;
   storeSectionsLocally?: boolean;
 };
-export type SectionsDispatch = React.Dispatch<SectionsAction>;
+export type SectionsDispatch = React.Dispatch<StateAction>;
 export interface SectionsAndControls {
-  sectionsDispatch: React.Dispatch<SectionsAction>;
+  sectionsDispatch: React.Dispatch<StateAction>;
   sections: StateSections;
-  setSections: React.Dispatch<React.SetStateAction<StateSections>>;
 }
 
-function makeSetSections(
-  currentSections: StateSections,
-  sectionsDispatch: SectionsDispatch
-): SetSections {
-  return (value) => {
-    if (value instanceof StateSections)
-      sectionsDispatch({
-        type: "setState",
-        sections: value,
-      });
-    else {
-      sectionsDispatch({
-        type: "setState",
-        sections: value(currentSections),
-      });
-    }
-  };
-}
-
-export function useSections(
+function useSections(
   initializeSections: () => StateSections
-): [StateSections, SetSections, SectionsDispatch] {
+): [StateSections, SectionsDispatch] {
   const [sections, sectionsDispatch] = React.useReducer(
     sectionsReducer,
     StateSections.initEmpty(),
     initializeSections
   );
-  const setSections = makeSetSections(sections, sectionsDispatch);
-  return [sections, setSections, sectionsDispatch];
+  return [sections, sectionsDispatch];
 }
 
 export function useDealLabSections({
   prePopulatedSections,
   storeSectionsLocally = false,
 }: UseSectionsProps = {}): SectionsAndControls {
-  const [sections, setSections, sectionsDispatch] = useSections(() =>
+  const [sections, sectionsDispatch] = useSections(() =>
     initializeAnalyzerSections(prePopulatedSections)
   );
   useLocalSectionsStore({
@@ -66,7 +45,6 @@ export function useDealLabSections({
   });
   return {
     sections,
-    setSections,
     sectionsDispatch,
   };
 }

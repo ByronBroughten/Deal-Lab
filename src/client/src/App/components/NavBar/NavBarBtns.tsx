@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 import { BsArrowUpCircle } from "react-icons/bs";
 import { View } from "react-native";
 import { useUserSubscription } from "../../modules/customHooks/useSubscriptions";
-import { useUserDataActor } from "../../modules/SectionActors/UserDataActor";
+import { useUserDataStatus } from "../../sharedWithServer/stateClassHooks/useFeStore";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { MuiRow } from "../general/MuiRow";
 import { NavBtn } from "./NavBtn";
@@ -11,7 +11,7 @@ import { NavUserMenu } from "./NavUserMenu";
 import { UpgradeUserToProPanel } from "./UpgradeUserToProPanel";
 
 function useScenarioKey() {
-  const { userDataStatus } = useUserDataActor();
+  const userDataStatus = useUserDataStatus();
   const { userPlan } = useUserSubscription();
   if (userDataStatus === "notLoaded") return "guest";
   else if (userDataStatus === "loading") return "loggingInUser";

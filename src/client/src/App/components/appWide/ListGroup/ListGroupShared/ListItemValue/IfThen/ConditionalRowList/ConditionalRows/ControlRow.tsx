@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { useSetterVarb } from "../../../../../../../../sharedWithServer/stateClassHooks/useSetterVarb";
+import { useAction } from "../../../../../../../../sharedWithServer/stateClassHooks/useAction";
+import { useGetterVarbNext } from "../../../../../../../../sharedWithServer/stateClassHooks/useGetterVarb";
 import theme from "../../../../../../../../theme/Theme";
 import TicBtn from "./ControlRow/TicBtn";
 
@@ -11,13 +12,17 @@ export default function ControlRow({
   feId: string;
   idx: number;
 }) {
-  const levelVarb = useSetterVarb({
+  const updateValue = useAction("updateValue");
+  const levelVarb = useGetterVarbNext({
     sectionName: "conditionalRow",
     feId,
     varbName: "level",
   });
   const incrementLevel = (num: number) =>
-    levelVarb.updateValue(levelVarb.value("number") + num);
+    updateValue({
+      ...levelVarb.feVarbInfo,
+      value: levelVarb.value("number") + num,
+    });
 
   const [height, setHeight] = React.useState("31px");
   const ccRef = React.useRef(null);

@@ -2,9 +2,11 @@ import { Box } from "@mui/material";
 import { View } from "react-native";
 import { MoonLoader } from "react-spinners";
 import { constants } from "../../Constants";
-import { useUserDataStatus } from "../../modules/SectionActors/UserDataActor";
 import { useActionWithProps } from "../../sharedWithServer/stateClassHooks/useAction";
-import { useGetterFeStore } from "../../sharedWithServer/stateClassHooks/useFeStore";
+import {
+  useGetterFeStore,
+  useUserDataStatus,
+} from "../../sharedWithServer/stateClassHooks/useFeStore";
 import { useGetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useGetterSection";
 import { IdOfSectionToSaveProvider } from "../../sharedWithServer/stateClassHooks/useIdOfSectionToSave";
 import { useQueryAction } from "../../sharedWithServer/stateClassHooks/useQueryAction";

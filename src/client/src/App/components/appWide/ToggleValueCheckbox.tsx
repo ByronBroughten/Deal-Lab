@@ -1,6 +1,7 @@
 import React from "react";
 import { FeVarbInfo } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
-import { useSetterVarb } from "../../sharedWithServer/stateClassHooks/useSetterVarb";
+import { useAction } from "../../sharedWithServer/stateClassHooks/useAction";
+import { useGetterVarb } from "../../sharedWithServer/stateClassHooks/useGetterVarb";
 import { CheckboxStyled } from "../general/CheckboxStyled";
 
 interface Props extends FeVarbInfo {
@@ -10,12 +11,17 @@ export const ToggleValueCheckbox = React.memo(function UpdateValueNextBtn({
   className,
   ...feVarbInfo
 }: Props) {
-  const varb = useSetterVarb(feVarbInfo);
+  const varb = useGetterVarb(feVarbInfo);
+  const updateValue = useAction("updateValue");
   return (
     <CheckboxStyled
       {...{
         className,
-        onChange: () => varb.toggleValue(),
+        onChange: () =>
+          updateValue({
+            ...varb.feVarbInfo,
+            value: !varb.value("boolean"),
+          }),
         checked: varb.value("boolean"),
         name: varb.varbName,
       }}

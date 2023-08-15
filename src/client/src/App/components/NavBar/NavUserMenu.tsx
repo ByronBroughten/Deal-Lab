@@ -4,8 +4,8 @@ import { MdAccountCircle } from "react-icons/md";
 import styled from "styled-components";
 import { useUserSubscription } from "../../modules/customHooks/useSubscriptions";
 import useToggle from "../../modules/customHooks/useToggle";
-import { useLogout } from "../../modules/SectionActors/UserDataActor";
 import { goToCustomerPortalPage } from "../../modules/services/stripeService";
+import { useQueryAction } from "../../sharedWithServer/stateClassHooks/useQueryAction";
 import theme from "../../theme/Theme";
 import { NavDropdownMenuBtn } from "../appWide/ListGroup/ListGroupShared/ListMenuSimple/NavDropdownMenuBtn";
 import { StandardProps } from "../general/StandardProps";
@@ -16,7 +16,8 @@ function BtnDiv({ children, className }: StandardProps) {
 }
 
 export function NavUserMenu() {
-  const logout = useLogout();
+  const queryAction = useQueryAction();
+
   const { userIsPro } = useUserSubscription();
   const { value: doCloseMenuToggle, toggle: closeMenu } = useToggle();
   return (
@@ -40,7 +41,7 @@ export function NavUserMenu() {
           <NavDropdownMenuBtn
             text="Logout"
             icon={<BiLogOut size={20} />}
-            onClick={logout}
+            onClick={() => queryAction({ type: "logout" })}
           />
         </BtnDiv>
       </div>

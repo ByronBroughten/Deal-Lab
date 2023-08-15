@@ -7,9 +7,54 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
+// Zillow API
+// branding and display requirements - https://www.zillow.com/howto/api/BrandingRequirements.htm
+
+// The create deal page has a dropdown:
+// 1. create with data from Zillow - Address needed
+// 2. create from saved deal
+// 3. start from scratch
+
+// on createDeal, create a deal. if not 3, we also retrieve a dealPack from the server and load it.
+
+// Make a server route called createDeal
+
+// if 1. the use node-zillow to get what data you want. You need the address.
+//  - get the property posting data if there is any and mortgage rates
+//  - create a deal from it and send it up.
+
+// if 2.
+//  - load from the db and do yo' thang
+
+// Once you get it working, you should try to consult with Zillow
+// regarding branding of the data. You might need to track with numObj whether
+// data was loaded with Zillow or whether it was inputted.
+
+// Add other "more info" buttons to the info modals.
+
+// make new deals loadable from current deals
+
+// add options to homebuyer mode for rent and
+// multi-family mode
+
+// add 1% rule monthly/yearly
+// add 1% rule sqft average monthly/yearly
+
 // *Speed up
+// 1. Don't solve after every keystroke.
+// - make StateSections contain SolveShare
+// - but it need not operate on SolveShare
+
+// - make AddSolverSection
+// - get rid of SolverSections
+
+// 2. Don't load deals till you need them
+
+// 3. Make saving happen faster, or cancel on keystroke, or not happen as often
+// -
+
 // Don't load deals till you need them
-// This is a pretty big undertaking. Is it wort`h it right now?
+// This is a pretty big undertaking. Is it worth it right now?
 // I'm afraid that the changes I start making here will make it difficult to
 // implement changes regarding the broken API
 // This won't deal with the select component at all, though.
