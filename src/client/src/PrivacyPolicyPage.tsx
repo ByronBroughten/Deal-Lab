@@ -1,8 +1,8 @@
-import { PageMain } from "./App/components/general/PageMain";
+import { MainSection } from "./App/components/appWide/GeneralSection/MainSection";
 
 export function PrivacyPolicyPage() {
   return (
-    <PageMain style={{ padding: "20px" }}>
+    <MainSection>
       <h1>Privacy Policy forUltimate Property Analyzer</h1>
 
       <p>
@@ -214,6 +214,6 @@ export function PrivacyPolicyPage() {
         encourage you to contact us immediately and we will do our best efforts
         to promptly remove such information from our records.
       </p>
-    </PageMain>
+    </MainSection>
   );
 }

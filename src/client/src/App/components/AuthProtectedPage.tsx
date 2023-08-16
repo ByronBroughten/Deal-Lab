@@ -4,46 +4,16 @@ import { SessionAuth } from "supertokens-auth-react/recipe/session";
 import { feRoutes } from "../Constants/feRoutes";
 import { useUserDataStatus } from "../sharedWithServer/stateClassHooks/useFeStore";
 import { useGetterSectionOnlyOne } from "../sharedWithServer/stateClassHooks/useGetterSection";
-import { OuterSectionNext } from "./appWide/GeneralSection/OuterSectionNext";
 import { DealModeProvider } from "./customContexts/dealModeContext";
-import { PageMain } from "./general/PageMain";
-import { NavBar } from "./NavBar";
-
-export function UserDataNeededPage() {
-  const userDataStatus = useUserDataStatus();
-  return userDataStatus === "loaded" ? (
-    <Outlet />
-  ) : (
-    <Navigate to={feRoutes.auth} />
-  );
-}
-
-export function DefaultMainNeededPage({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  const main = useGetterSectionOnlyOne("main");
-  if (main.hasOnlyChild("mainDealMenu")) {
-    return <div>{children}</div>;
-  } else {
-    return <Navigate to={feRoutes.auth} />;
-  }
-}
 
 export function AuthProtectedPage() {
   return (
     <LoginToAccess>
-      <DefaultMainNeededPage>
-        <DealModeProvider dealMode="mixed">
-          <PageMain>
-            <NavBar />
-            <OuterSectionNext>
-              <Outlet />
-            </OuterSectionNext>
-          </PageMain>
-        </DealModeProvider>
-      </DefaultMainNeededPage>
+      <DealModeProvider dealMode="mixed">
+        <DefaultMainNeededPage>
+          <UserDataNeededPage />
+        </DefaultMainNeededPage>
+      </DealModeProvider>
     </LoginToAccess>
   );
 }
@@ -58,5 +28,27 @@ function LoginToAccess({ children }: Props) {
     >
       {children}
     </SessionAuth>
+  );
+}
+
+export function DefaultMainNeededPage({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const main = useGetterSectionOnlyOne("main");
+  if (main.hasOnlyChild("mainDealMenu")) {
+    return <div>{children}</div>;
+  } else {
+    return <Navigate to={feRoutes.handleAuth} />;
+  }
+}
+
+export function UserDataNeededPage() {
+  const userDataStatus = useUserDataStatus();
+  return userDataStatus === "notLoaded" ? (
+    <Navigate to={feRoutes.handleAuth} />
+  ) : (
+    <Outlet />
   );
 }

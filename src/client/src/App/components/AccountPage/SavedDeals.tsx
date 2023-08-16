@@ -167,23 +167,36 @@ export function SavedDeals() {
                 width: "100%",
               }}
             >
-              {deals.map(({ feId, dbId }, idx) => (
-                <IdOfSectionToSaveProvider
-                  storeId={StoreId.make("dealMain", feId)}
-                  key={feId}
-                >
-                  <SavedDeal
-                    {...{
-                      ...(labSubscription === "basicPlan" &&
-                        !nRecentDbIds.includes(dbId) && { isInactive: true }),
-                      dbId,
-                      ...(idx === deals.length - 1 && {
-                        style: { borderBottomWidth: 1 },
-                      }),
-                    }}
-                  />
-                </IdOfSectionToSaveProvider>
-              ))}
+              {deals.map(({ feId, dbId }, idx) => {
+                if (
+                  session.hasChildByDbInfo({
+                    childName: "dealMain",
+                    dbId,
+                  })
+                ) {
+                  return (
+                    <IdOfSectionToSaveProvider
+                      storeId={StoreId.make("dealMain", feId)}
+                      key={feId}
+                    >
+                      <SavedDeal
+                        {...{
+                          ...(labSubscription === "basicPlan" &&
+                            !nRecentDbIds.includes(dbId) && {
+                              isInactive: true,
+                            }),
+                          dbId,
+                          ...(idx === deals.length - 1 && {
+                            style: { borderBottomWidth: 1 },
+                          }),
+                        }}
+                      />
+                    </IdOfSectionToSaveProvider>
+                  );
+                } else {
+                  return null;
+                }
+              })}
             </Box>
           </>
         )}

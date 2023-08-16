@@ -24,7 +24,7 @@ export const feRoutes = {
   compare: "/compare",
   userVariables: "/variables",
   userOutputs: "/outputs",
-  authSuccess: "/login-success",
+  handleAuth: "/handle-auth",
   subscribeSuccess: "/subscription-success",
 
   account: accountPageRoute,

@@ -6,7 +6,6 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-
 // Zillow API
 // branding and display requirements - https://www.zillow.com/howto/api/BrandingRequirements.htm
 

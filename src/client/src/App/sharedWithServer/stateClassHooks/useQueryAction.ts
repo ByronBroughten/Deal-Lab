@@ -69,10 +69,7 @@ export function useQueryAction() {
         userTokenS.removeUserAuthDataToken();
         await authS.endSession();
         unstable_batchedUpdates(() => {
-          dispatch({
-            type: "resetSelfToDefault",
-            ...getterSections.onlyFeInfo("main"),
-          });
+          dispatch({ type: "makeEmptyMain" });
           goToAuthPage();
         });
         break;

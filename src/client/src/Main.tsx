@@ -1,21 +1,19 @@
 import * as reactRouterDom from "react-router-dom";
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Navigate, Outlet, Route, Routes } from "react-router-dom";
 import styled from "styled-components";
 import { getSuperTokensRoutesForReactRouterDom } from "supertokens-auth-react";
 import { ActiveDealRoutes } from "./ActiveDealRoutes";
 import { AccountPage } from "./App/components/AccountPage";
-import {
-  AuthProtectedPage,
-  UserDataNeededPage,
-} from "./App/components/AuthProtectedPage";
+import { PageContent } from "./App/components/appWide/GeneralSection/PageContent";
+import { AuthProtectedPage } from "./App/components/AuthProtectedPage";
 import { CompareDealsPage } from "./App/components/DealComparePage/CompareDealsPage";
 import { FooterNext } from "./App/components/Footer";
 import NotFound from "./App/components/general/NotFound";
-import { NavBarOutletPage } from "./App/components/NavBarOutletPage";
+import { NavBar } from "./App/components/NavBar";
 import { UserVarbEditorPage } from "./App/components/UserVarbEditorPage";
 import { feRoutes } from "./App/Constants/feRoutes";
+import { useControlUserData } from "./App/modules/customHooks/useControlUserData";
 import { useSubscriptions } from "./App/modules/customHooks/useSubscriptions";
-import { useControlUserData } from "./App/modules/SectionActors/UserDataActor";
 import { useAutoSave } from "./App/sharedWithServer/stateClassHooks/useAutoSave";
 import {
   useAddDeal,
@@ -23,8 +21,9 @@ import {
   useEditDeal,
 } from "./App/sharedWithServer/stateClassHooks/useLoading";
 import { nativeTheme } from "./App/theme/nativeTheme";
-import { LoginSuccess } from "./LoginSuccess";
+import { HandleAuth } from "./HandleAuth";
 import { PrivacyPolicyPage } from "./PrivacyPolicyPage";
+import { TermsOfServicePage } from "./TermsOfServicePage";
 import { UserComponentRoutes } from "./UserComponentRoutes";
 
 export function Main() {
@@ -36,32 +35,40 @@ export function Main() {
   useDoCompare();
   return (
     <Styled className="App-root">
-      <Routes>
-        <Route path={feRoutes.privacyPolicy} element={<PrivacyPolicyPage />} />
-        <Route path={feRoutes.termsOfService} element={<PrivacyPolicyPage />} />
-        <Route path="/not-found" element={<NotFound />} />
-        <Route path={feRoutes.auth} element={<NavBarOutletPage />}>
-          {getSuperTokensRoutesForReactRouterDom(reactRouterDom)}
-        </Route>
-        <Route path={feRoutes.authSuccess} element={<LoginSuccess />} />
-        <Route
-          path={feRoutes.subscribeSuccess}
-          element={<Navigate to={"/"} />}
-        />
-        <Route path={"/"} element={<AuthProtectedPage />}>
-          <Route index element={<Navigate to={feRoutes.account} />} />
-          <Route path={feRoutes.account} element={<AccountPage />} />
-          {ActiveDealRoutes}
-          {UserComponentRoutes}
-          <Route path={feRoutes.userVariables} element={<UserDataNeededPage />}>
-            <Route index element={<UserVarbEditorPage />} />
+      <NavBar />
+      <PageContent>
+        <Routes>
+          <Route path={feRoutes.auth} element={<Outlet />}>
+            {getSuperTokensRoutesForReactRouterDom(reactRouterDom)}
           </Route>
-          <Route path={feRoutes.compare} element={<UserDataNeededPage />}>
-            <Route index element={<CompareDealsPage />} />
+          <Route path={feRoutes.handleAuth} element={<HandleAuth />} />
+          <Route path={"/"} element={<AuthProtectedPage />}>
+            <Route index element={<Navigate to={feRoutes.account} />} />
+            <Route path={feRoutes.account} element={<AccountPage />} />
+            {ActiveDealRoutes}
+            {UserComponentRoutes}
+            <Route
+              path={feRoutes.userVariables}
+              element={<UserVarbEditorPage />}
+            />
+            <Route path={feRoutes.compare} element={<CompareDealsPage />} />
           </Route>
-        </Route>
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+          <Route
+            path={feRoutes.subscribeSuccess}
+            element={<Navigate to={"/"} />}
+          />
+          <Route
+            path={feRoutes.privacyPolicy}
+            element={<PrivacyPolicyPage />}
+          />
+          <Route
+            path={feRoutes.termsOfService}
+            element={<TermsOfServicePage />}
+          />
+          <Route path="/not-found" element={<NotFound />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </PageContent>
       <FooterNext />
     </Styled>
   );
@@ -69,6 +76,9 @@ export function Main() {
 
 const Styled = styled.div`
   display: flex;
+  flex: 1;
+  z-index: 5;
+  overflow: visible;
   flex-direction: column;
   min-height: 100vh;
   background-color: ${nativeTheme.light};

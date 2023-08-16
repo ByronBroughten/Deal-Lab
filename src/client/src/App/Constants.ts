@@ -70,7 +70,7 @@ export const config = {
   feRoutes,
   auth: {
     get successUrl() {
-      return `${env.clientUrlBase}${config.feRoutes.authSuccess}`;
+      return `${env.clientUrlBase}${config.feRoutes.handleAuth}`;
     },
   },
   basicStorageLimit: 5,

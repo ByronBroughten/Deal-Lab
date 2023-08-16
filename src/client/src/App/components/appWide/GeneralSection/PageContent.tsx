@@ -6,7 +6,7 @@ type OuterSectionNextProps = {
   children: React.ReactNode;
   style?: ViewStyle;
 };
-export function OuterSectionNext({ children, style }: OuterSectionNextProps) {
+export function PageContent({ children, style }: OuterSectionNextProps) {
   const isTablet = useMediaQuery("(min-width:1024px)");
 
   const dimensions = useWindowDimensions();
@@ -19,9 +19,9 @@ export function OuterSectionNext({ children, style }: OuterSectionNextProps) {
         overflow: "hidden",
         minHeight: dimensions.height - nativeTheme.navBar.height,
         paddingTop: nativeTheme.s4,
+        paddingBottom: nativeTheme.s4,
         paddingLeft: paddingLR,
         paddingRight: paddingLR,
-        // backgroundColor: nativeTheme["gray-100"],
         backgroundColor: nativeTheme.lightBackground,
         ...style,
       }}

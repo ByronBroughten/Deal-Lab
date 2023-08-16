@@ -1,8 +1,8 @@
-import { PageMain } from "./App/components/general/PageMain";
+import { MainSection } from "./App/components/appWide/GeneralSection/MainSection";
 
 export function TermsOfServicePage() {
   return (
-    <PageMain style={{ padding: "20px" }}>
+    <MainSection>
       <h1>Website Terms and Conditions of Use</h1>
 
       <h2>1. Terms</h2>
@@ -118,6 +118,6 @@ export function TermsOfServicePage() {
         Any claim related to Deal Lab's Website shall be governed by the laws of
         us without regards to its conflict of law provisions.
       </p>
-    </PageMain>
+    </MainSection>
   );
 }

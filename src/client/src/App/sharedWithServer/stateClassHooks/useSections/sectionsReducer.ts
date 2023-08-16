@@ -3,6 +3,7 @@ import { EditorUpdaterVarb } from "../../../modules/EditorUpdaterVarb";
 import { AddToStoreProps } from "../../../modules/FeStore/SolverFeStore";
 import { UserData } from "../../apiQueriesShared/validateUserData";
 import { defaultMaker } from "../../defaultMaker/defaultMaker";
+import { makeEmptyMain } from "../../defaultMaker/makeEmptyMain";
 import { ChildName } from "../../SectionsMeta/sectionChildrenDerived/ChildName";
 import { SectionPack } from "../../SectionsMeta/sectionChildrenDerived/SectionPack";
 import {
@@ -46,9 +47,10 @@ const sectionActionNames = [
   "setState",
   "finishSave",
   "removeStoredDeal",
+  "doLogin",
   "loadUserData",
   "incrementGetUserDataTry",
-  "makeDefaultMain",
+  "makeEmptyMain",
   "doDealCompare",
 ] as const;
 export type SectionActionName = (typeof sectionActionNames)[number];
@@ -185,9 +187,15 @@ export const sectionsReducer: React.Reducer<StateSections, StateAction> = (
     setState: () => {
       throw new Error("State should already be returned.");
     },
-    makeDefaultMain: () => {
+    makeEmptyMain: () => {
+      const main = solverSections.oneAndOnly("main");
+      main.loadSelfAndSolve(makeEmptyMain());
+    },
+    doLogin: () => {
       const main = solverSections.oneAndOnly("main");
       main.loadSelfAndSolve(defaultMaker.makeSectionPack("main"));
+      const feStore = main.onlyChild("feStore");
+      feStore.basic.updateValues({ userDataStatus: "loading" });
     },
     loadUserData: ({ userData }) =>
       solverSections.feStore.loadUserData(userData),
