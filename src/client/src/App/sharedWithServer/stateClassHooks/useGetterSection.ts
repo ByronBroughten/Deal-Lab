@@ -3,9 +3,8 @@ import { SectionName } from "../SectionsMeta/SectionName";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { GetterSection } from "../StateGetters/GetterSection";
 import { GetterSections } from "../StateGetters/GetterSections";
-
+import { useSectionsContext } from "./useMainState";
 import { useSectionInfoContext } from "./useSectionContext";
-import { useSectionsContext } from "./useSections";
 
 export function useGetterSectionContext() {
   const feInfo = useSectionInfoContext();
@@ -15,9 +14,9 @@ export function useGetterSectionContext() {
 export function useGetterSection<SN extends SectionName>(
   feInfo: FeSectionInfo<SN>
 ): GetterSection<SN> {
-  const sectionsContext = useSectionsContext();
+  const sections = useSectionsContext();
   return new GetterSection({
-    ...GetterSections.initProps(sectionsContext),
+    ...GetterSections.initProps({ sections }),
     ...feInfo,
   });
 }
@@ -26,11 +25,11 @@ export function useGetterSectionMulti<SN extends SectionName>(
   sectionName: SN,
   feIds: string[]
 ): GetterSection<SN>[] {
-  const sectionsContext = useSectionsContext();
+  const sections = useSectionsContext();
   return feIds.map(
     (feId) =>
       new GetterSection({
-        ...GetterSections.initProps(sectionsContext),
+        ...GetterSections.initProps({ sections }),
         sectionName,
         feId,
       })
@@ -40,7 +39,7 @@ export function useGetterSectionMulti<SN extends SectionName>(
 export function useGetterSectionOnlyOne<SN extends SectionNameByType>(
   sectionName: SN
 ): GetterSection<SN> {
-  const { sections } = useSectionsContext();
+  const sections = useSectionsContext();
   const { feId } = sections.onlyOneRawSection(sectionName);
   return new GetterSection({
     ...GetterSections.initProps({ sections }),

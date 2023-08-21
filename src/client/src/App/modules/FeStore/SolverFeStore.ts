@@ -21,11 +21,10 @@ import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection
 import { GetterSections } from "../../sharedWithServer/StateGetters/GetterSections";
 import { StoreId } from "../../sharedWithServer/StateGetters/StoreId";
 import { AddChildWithPackOptions } from "../../sharedWithServer/StatePackers/PackBuilderSection";
-import { BasicSolvePrepperSection } from "../../sharedWithServer/StateSolvers/BasicSolvePrepperSection";
+import { SolvePrepper } from "../../sharedWithServer/StateSolvers/SolvePreppers/SolvePrepper";
+import { SolvePrepperSection } from "../../sharedWithServer/StateSolvers/SolvePreppers/SolvePrepperSection";
 import { SolverSectionBase } from "../../sharedWithServer/StateSolvers/SolverBases/SolverSectionBase";
 import { SolverSectionsProps } from "../../sharedWithServer/StateSolvers/SolverBases/SolverSectionsBase";
-import { SolverPrepSection } from "../../sharedWithServer/StateSolvers/SolverPrepSection";
-import { SolverPrepSections } from "../../sharedWithServer/StateSolvers/SolverPrepSections";
 import { SolverSection } from "../../sharedWithServer/StateSolvers/SolverSection";
 import { SolverSections } from "../../sharedWithServer/StateSolvers/SolverSections";
 import { Obj } from "../../sharedWithServer/utils/Obj";
@@ -73,14 +72,12 @@ export class SolverFeStore extends SolverSectionBase<"feStore"> {
   get solver(): SolverSection<"feStore"> {
     return new SolverSection(this.solverSectionProps);
   }
-  get appWideSolvePrepSections(): SolverPrepSections {
-    return new SolverPrepSections(this.solverSectionsProps);
+  get solvePrepper(): SolvePrepper {
+    return new SolvePrepper(this.solverSectionsProps);
   }
-  get appWideSolvePrepper(): SolverPrepSection<"feStore"> {
-    return new SolverPrepSection(this.solverSectionProps);
-  }
-  get basicSolvePrepper(): BasicSolvePrepperSection<"feStore"> {
-    return new BasicSolvePrepperSection(this.solverSectionProps);
+
+  get prepper(): SolvePrepperSection<"feStore"> {
+    return new SolvePrepperSection(this.solverSectionProps);
   }
   loadChildrenNoDuplicates<SN extends StoreName>(
     storeName: SN,
@@ -93,29 +90,26 @@ export class SolverFeStore extends SolverSectionBase<"feStore"> {
           dbId: pack.dbId,
         })
     );
-
-    this.basicSolvePrepper.loadChildren({
+    this.prepper.loadChildren({
       childName: storeName,
       sectionPacks: filteredPacks as SectionPack<any>[],
     });
-    this.appWideSolvePrepper.addAppWideMissingOutEntities();
     this.solve();
   }
   solve() {
     this.solver.solve();
   }
   loadUserData(userData: UserData) {
-    this.appWideSolvePrepSections.deactivateDealAndDealSystem();
+    this.solvePrepper.deactivateDealAndDealSystem();
 
-    const sessionStore = this.solverSections.oneAndOnly("sessionStore");
-    sessionStore.basicSolvePrepper.loadSelfSectionPack(userData.sessionStore);
+    const sessionStore = this.solvePrepper.oneAndOnly("sessionStore");
+    sessionStore.loadSelfSectionPack(userData.sessionStore);
 
-    this.solver.basicSolvePrepper.loadSelfSectionPack(userData.feStore);
-    this.appWideSolvePrepSections.applyVariablesToDealSystems();
-    this.appWideSolvePrepSections.addAppWideMissingOutEntities();
+    this.prepper.loadSelfSectionPack(userData.feStore);
+    this.solvePrepper.applyVariablesToDealSystems();
     this.solve();
 
-    this.basicSolvePrepper.updateValues({ userDataFetchTryCount: 0 });
+    this.prepper.updateValues({ userDataFetchTryCount: 0 });
   }
   newestEntry<SN extends StoreName>(
     storeName: SN
@@ -127,7 +121,7 @@ export class SolverFeStore extends SolverSectionBase<"feStore"> {
   }
   incrementGetUserDataTry() {
     const count = this.get.valueNext("userDataFetchTryCount");
-    this.basicSolvePrepper.updateValues({
+    this.prepper.updateValues({
       userDataFetchTryCount: count + 1,
     });
   }
@@ -145,7 +139,7 @@ export class SolverFeStore extends SolverSectionBase<"feStore"> {
     clone.updater.newDbId();
     const name = clone.get.valueNext("displayName");
     const mainText = "Copy of " + name.mainText;
-    clone.basicSolvePrepper.updateValues({
+    clone.prepper.updateValues({
       displayName: {
         ...name,
         mainText,
@@ -153,7 +147,7 @@ export class SolverFeStore extends SolverSectionBase<"feStore"> {
     });
 
     if (clone.isOfSectionName("deal")) {
-      (clone as SolverSection<"deal">).basicSolvePrepper.updateValues({
+      (clone as SolverSection<"deal">).prepper.updateValues({
         displayNameEditor: mainText,
         displayNameSource: "displayNameEditor",
       });
@@ -187,7 +181,7 @@ export class SolverFeStore extends SolverSectionBase<"feStore"> {
     );
     clone.updater.updateDbId(newDbId);
     const displayName = "Copy of " + clone.get.stringValue("displayName");
-    clone.basicSolvePrepper.updateValues({ displayName });
+    clone.prepper.updateValues({ displayName });
     return clone.packMaker.makeSectionPack();
   }
 
@@ -223,20 +217,20 @@ export class SolverFeStore extends SolverSectionBase<"feStore"> {
     }
 
     const now = timeS.now();
-    const child = this.appWideSolvePrepper.addAndGetChild(storeName, {
+    const child = this.prepper.addAndGetChild(storeName, {
       ...options,
       sectionValues: {
         ...(options as AddToStoreOptions<any>)?.sectionValues,
         dateTimeFirstSaved: now,
         dateTimeLastSaved: now,
       } as Partial<SectionValues<ChildSectionName<"feStore", CN>>>,
-    }) as SolverPrepSection<any>;
+    }) as SolvePrepperSection<any>;
     const storeId = StoreId.make(storeName, child.get.feId);
     this.addChangeToSave(storeId, { changeName: "add" });
 
     if (storeName === "dealMain") {
       const session = this.solverSections.oneAndOnly("sessionStore");
-      session.appWideSolvePrepper.addChild("dealMain", {
+      session.prepper.addChild("dealMain", {
         sectionPack:
           (options?.sessionSectionPack as SectionPack<"sessionDeal">) ??
           makeDefaultSessionDeal(child.get),
@@ -292,14 +286,14 @@ export class SolverFeStore extends SolverSectionBase<"feStore"> {
 
     const now = timeS.now();
     const section = this.sectionByStoreId(storeId);
-    section.basicSolvePrepper.updateValues({ dateTimeLastSaved: now });
-    this.basicSolvePrepper.updateValues({
+    section.prepper.updateValues({ dateTimeLastSaved: now });
+    this.prepper.updateValues({
       changesToSave: toSave,
       timeOfLastChange: now,
     });
   }
   onChangeIdle(): void {
-    this.basicSolvePrepper.updateValues({
+    this.prepper.updateValues({
       timeOfChangeIdle: timeS.now(),
     });
 
@@ -310,7 +304,7 @@ export class SolverFeStore extends SolverSectionBase<"feStore"> {
   }
   private initiateSave() {
     this.preSaveAndSolve();
-    this.basicSolvePrepper.updateValues({
+    this.prepper.updateValues({
       timeOfSave: timeS.now(),
       changesSaving: this.getterFeStore.toSaveToSaving(),
       changesToSave: {},
@@ -324,9 +318,7 @@ export class SolverFeStore extends SolverSectionBase<"feStore"> {
     for (const system of dealSystems) {
       if (system.get.dbId === dbId) {
         const systemDeal = system.onlyChild("deal");
-        systemDeal.basicSolvePrepper.loadSelfSectionPack(
-          deal.makeSectionPack()
-        );
+        systemDeal.prepper.loadSelfSectionPack(deal.makeSectionPack());
       }
     }
 
@@ -352,14 +344,13 @@ export class SolverFeStore extends SolverSectionBase<"feStore"> {
       }
     }
     if (doVariableUpdate) {
-      this.appWideSolvePrepSections.applyVariablesToDealSystems();
+      this.solvePrepper.applyVariablesToDealSystems();
     }
-    this.appWideSolvePrepSections.addAppWideMissingOutEntities();
     this.solve();
   }
   finishSave({ success }: { success: boolean }) {
     if (success) {
-      this.basicSolvePrepper.updateValues({ changesSaving: {} });
+      this.prepper.updateValues({ changesSaving: {} });
       if (this.getterFeStore.nextSaveIsDue) {
         this.initiateSave();
       }
@@ -373,7 +364,7 @@ export class SolverFeStore extends SolverSectionBase<"feStore"> {
       const failedChange = changeSavingToToSave(failedChanges[storeId]);
       this.reIntegrateFailedChanges(storeId, failedChange);
     }
-    this.basicSolvePrepper.updateValues({
+    this.prepper.updateValues({
       changesSaving: {},
       timeOfFailedSave: timeS.now(),
     });
@@ -410,6 +401,6 @@ export class SolverFeStore extends SolverSectionBase<"feStore"> {
         }
       }
     }
-    this.basicSolvePrepper.updateValues({ changesToSave: toSave });
+    this.prepper.updateValues({ changesToSave: toSave });
   }
 }

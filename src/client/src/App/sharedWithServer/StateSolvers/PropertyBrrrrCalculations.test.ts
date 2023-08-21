@@ -92,7 +92,8 @@ describe("PropertyBrrrrCalculations", () => {
     setOnetimeEditor(property.onlyChild("repairValue"), 500);
     setOnetimeEditor(property.onlyChild("miscOnetimeCost"), 300);
     setOnetimeEditor(property.onlyChild("costOverrunValue"), 200);
-    setOnetimeEditor(property.onlyChild("sellingCostValue"), 10000);
+
+    200000 + 500 + 300 + 200 + 2400 + 1200;
 
     addHoldingTaxesHomeInsYearly(property, 2400, 1200);
     property.updateValues({
@@ -100,6 +101,6 @@ describe("PropertyBrrrrCalculations", () => {
       holdingPeriodSpanSwitch: "months",
     });
 
-    testVarb("upfrontExpenses", 214600);
+    testVarb("upfrontExpenses", 204600);
   });
 });

@@ -19,6 +19,8 @@ import { PackBuilderSections } from "../StatePackers/PackBuilderSections";
 import { StateSections } from "../StateSections/StateSections";
 import { UpdaterVarb } from "../StateUpdaters/UpdaterVarb";
 import { StrictOmit } from "../utils/types";
+import { EntityPrepperVarb } from "./EntityPreppers/EntityPrepperVarb";
+import { SolverSectionsBase } from "./SolverBases/SolverSectionsBase";
 import { SolverVarbBase, SolverVarbProps } from "./SolverBases/SolverVarbBase";
 import { SolverSection } from "./SolverSection";
 import { SolverSections } from "./SolverSections";
@@ -45,6 +47,9 @@ export class SolverVarb<
   }
   get outEntity() {
     return new OutEntityGetterVarb(this.getterVarbBase.getterVarbProps);
+  }
+  get entity() {
+    return new EntityPrepperVarb(this.getterVarbBase.getterVarbProps);
   }
   get getterSections() {
     return new GetterSections(this.getterSectionsBase.getterSectionsProps);
@@ -78,14 +83,8 @@ export class SolverVarb<
   ): SolverVarb<SN> {
     return new SolverVarb({
       ...props,
-      solveShare: {
-        varbIdsToSolveFor: new Set(),
-      },
+      solveShare: SolverSectionsBase.initSolveShare(),
     });
-  }
-  calculateAndUpdateValue() {
-    const newValue = this.valueSolver.solveValue();
-    this.updateValue(newValue);
   }
   directUpdateAndSolve(value: StateValue): void {
     this.updateValue(value);
@@ -124,18 +123,7 @@ export class SolverVarb<
       })
     );
   }
-  addOutEntitiesFromAllInEntities(): void {
-    const { allInEntities } = this.inEntity;
-    for (const entity of allInEntities) {
-      const entityVarbs = this.varbsByFocalMixed(entity);
-      for (const inEntityVarb of entityVarbs) {
-        const outEntity = this.newSelfOutEntity(entity.entityId);
-        if (!inEntityVarb.outEntity.hasOutEntity(outEntity)) {
-          inEntityVarb.addOutEntity(outEntity);
-        }
-      }
-    }
-  }
+
   private addOutEntitiesFromNewValueIn(inEntities: ValueInEntity[]): void {
     for (const entity of inEntities) {
       if (this.inEntitySectionExists(entity)) {

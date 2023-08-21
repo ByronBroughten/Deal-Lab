@@ -11,11 +11,7 @@ import { ModalProviders } from "./App/components/ModalProviders";
 import { Modals } from "./App/components/Modals";
 import { initSupertokens } from "./App/modules/initSupertokens";
 import { IdOfSectionToSaveProvider } from "./App/sharedWithServer/stateClassHooks/useIdOfSectionToSave";
-import {
-  SectionsContext,
-  SectionsDispatchContext,
-  useDealLabSections,
-} from "./App/sharedWithServer/stateClassHooks/useSections";
+import { MainStateProvider } from "./App/sharedWithServer/stateClassHooks/useMainState";
 import { Theme } from "./App/theme/Theme";
 import { GlobalFonts } from "./fonts/fonts";
 import {
@@ -30,10 +26,6 @@ const styledComponentsGlobalFonts = <GlobalFonts />;
 
 initSupertokens();
 const App: React.FC = () => {
-  const { sectionsDispatch, ...sectionsContext } = useDealLabSections({
-    storeSectionsLocally: true,
-  });
-
   return (
     <SuperTokensWrapper>
       <React.StrictMode>
@@ -42,23 +34,21 @@ const App: React.FC = () => {
           <ThemeProvider theme={muiTheme}>
             <Theme>
               <BrowserRouter>
-                <SectionsContext.Provider value={sectionsContext}>
-                  <SectionsDispatchContext.Provider value={sectionsDispatch}>
-                    <IdOfSectionToSaveProvider storeId="">
-                      <ShowEqualsProvider showEqualsStatus="showAll">
-                        <CssBaseline />
-                        {muiGlobalStyles}
-                        {styledComponentsGlobalFonts}
-                        {styledComponentsGlobalStyle}
-                        <ModalProviders>
-                          <Modals />
-                          <Main />
-                        </ModalProviders>
-                        <ToastContainer />
-                      </ShowEqualsProvider>
-                    </IdOfSectionToSaveProvider>
-                  </SectionsDispatchContext.Provider>
-                </SectionsContext.Provider>
+                <MainStateProvider>
+                  <IdOfSectionToSaveProvider storeId="">
+                    <ShowEqualsProvider showEqualsStatus="showAll">
+                      <CssBaseline />
+                      {muiGlobalStyles}
+                      {styledComponentsGlobalFonts}
+                      {styledComponentsGlobalStyle}
+                      <ModalProviders>
+                        <Modals />
+                        <Main />
+                      </ModalProviders>
+                      <ToastContainer />
+                    </ShowEqualsProvider>
+                  </IdOfSectionToSaveProvider>
+                </MainStateProvider>
               </BrowserRouter>
             </Theme>
           </ThemeProvider>

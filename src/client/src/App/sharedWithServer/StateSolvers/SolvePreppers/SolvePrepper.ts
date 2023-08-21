@@ -1,75 +1,81 @@
-import { FeChildInfo } from "../SectionsMeta/sectionChildrenDerived/ChildName";
-import { ChildSectionName } from "../SectionsMeta/sectionChildrenDerived/ChildSectionName";
-import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
-import { FeSectionInfo } from "../SectionsMeta/SectionInfo/FeInfo";
-import { SectionName } from "../SectionsMeta/SectionName";
+import { FeChildInfo } from "../../SectionsMeta/sectionChildrenDerived/ChildName";
+import { ChildSectionName } from "../../SectionsMeta/sectionChildrenDerived/ChildSectionName";
+import { SectionPack } from "../../SectionsMeta/sectionChildrenDerived/SectionPack";
+import { FeSectionInfo } from "../../SectionsMeta/SectionInfo/FeInfo";
+import { SectionName } from "../../SectionsMeta/SectionName";
 import {
   activeDealPathIdx,
   SectionPathContextName,
-} from "../SectionsMeta/sectionPathContexts";
-import { StoreName } from "../SectionsMeta/sectionStores";
-import { GetterSections } from "../StateGetters/GetterSections";
-import { InEntityGetterSections } from "../StateGetters/InEntityGetterSections";
-import { AddChildOptions } from "../StateUpdaters/UpdaterSection";
-import { SolverAdderPrepSections } from "./SolverAdderPrepSections";
-import { SolverSectionsBase } from "./SolverBases/SolverSectionsBase";
-import { SolverPrepSection } from "./SolverPrepSection";
-import { SolverVarb } from "./SolverVarb";
+} from "../../SectionsMeta/sectionPathContexts";
+import { StoreName } from "../../SectionsMeta/sectionStores";
+import { GetterList } from "../../StateGetters/GetterList";
+import { GetterSections } from "../../StateGetters/GetterSections";
+import { AddChildOptions } from "../../StateUpdaters/UpdaterSection";
+import { SolvePrepperBase } from "./SolvePrepperBases/SolvePrepperBase";
+import { SolvePrepperSection } from "./SolvePrepperSection";
 
-export class SolverPrepSections extends SolverSectionsBase {
-  prepperSection<S extends SectionName>(feInfo: FeSectionInfo<S>) {
-    return new SolverPrepSection({
-      ...this.solverSectionsProps,
-      ...feInfo,
-    });
-  }
+export class SolvePrepper extends SolvePrepperBase {
   get getterSections() {
     return new GetterSections(this.getterSectionsBase.getterSectionsProps);
   }
-  private get adderPrepSections() {
-    return new SolverAdderPrepSections(this.solverSectionsProps);
+  private getterList<SN extends SectionName>(sectionName: SN): GetterList<SN> {
+    return new GetterList({
+      ...this.getterSectionsBase,
+      sectionName,
+    });
   }
-  private get inEntitySections() {
-    return new InEntityGetterSections(
-      this.getterSectionsBase.getterSectionsProps
-    );
+  prepperSection<S extends SectionName>(feInfo: FeSectionInfo<S>) {
+    return new SolvePrepperSection({
+      ...this.solverProps,
+      ...feInfo,
+    });
   }
-  oneAndOnly<SN extends SectionName>(sectionName: SN): SolverPrepSection<SN> {
+  oneAndOnly<SN extends SectionName>(sectionName: SN): SolvePrepperSection<SN> {
     const { feInfo } = this.getterSections.oneAndOnly(sectionName);
     return this.prepperSection(feInfo);
   }
-  addAppWideMissingOutEntities(): void {
-    const { appWideVarbInfosWithInEntities } = this.inEntitySections;
-    for (const feVarbInfo of appWideVarbInfosWithInEntities) {
-      const solverVarb = new SolverVarb({
-        ...this.solverSectionsProps,
-        ...feVarbInfo,
-      });
-      solverVarb.addOutEntitiesFromAllInEntities();
-    }
-  }
   applyVariablesToDealSystem(feId: string) {
-    this.adderPrepSections.applyVariablesToDealSystem(feId);
-    this.addAppWideMissingOutEntities();
+    const userVarbPacks = this.getSavedUserVarbPacks();
+    this.applyVarbPacksToDealSystem(feId, userVarbPacks);
   }
   applyVariablesToDealSystems() {
-    this.adderPrepSections.applyVariablesToDealSystems();
-    this.addAppWideMissingOutEntities();
+    const { feIds } = this.getterList("dealSystem");
+    const userVarbPacks = this.getSavedUserVarbPacks();
+    for (const feId of feIds) {
+      this.applyVarbPacksToDealSystem(feId, userVarbPacks);
+    }
+  }
+  private getSavedUserVarbPacks(): SectionPack<"numVarbList">[] {
+    const feStore = this.oneAndOnly("feStore");
+    const userVarbLists = feStore.get.children("numVarbListMain");
+    return userVarbLists.map((list) => list.packMaker.makeSectionPack());
+  }
+  private applyVarbPacksToDealSystem(
+    feId: string,
+    numVarbPacks: SectionPack<"numVarbList">[]
+  ): void {
+    const dealSystem = this.prepperSection({
+      sectionName: "dealSystem",
+      feId,
+    });
+    dealSystem.replaceChildPackArrs({
+      numVarbList: numVarbPacks,
+    });
   }
 
-  getActiveDeal(): SolverPrepSection<"deal"> {
+  getActiveDeal(): SolvePrepperSection<"deal"> {
     const { feInfo } = this.getterSections.getActiveDeal();
     return this.prepperSection(feInfo);
   }
   hasActiveDeal(): boolean {
     return this.getterSections.hasActiveDeal();
   }
-  private getActiveDeals(): SolverPrepSection<"deal">[] {
+  private getActiveDeals(): SolvePrepperSection<"deal">[] {
     return this.getterSections
       .getActiveDeals()
       .map(({ feInfo }) => this.prepperSection(feInfo));
   }
-  activateDeal(feId: string): void {
+  activateDeal(feId: string, finishEditLoading?: boolean): void {
     if (this.hasActiveDeal() && this.getActiveDeal().get.feId === feId) {
       return;
     }
@@ -83,6 +89,11 @@ export class SolverPrepSections extends SolverSectionsBase {
       "activeDealSystem"
     );
     this.updateActiveSystems(feId);
+
+    if (finishEditLoading) {
+      const session = this.oneAndOnly("sessionStore");
+      session.updateValues({ dealDbIdToEdit: "" });
+    }
   }
   deactivateDealAndDealSystem(): void {
     this.deactivateDeals();
@@ -144,8 +155,7 @@ export class SolverPrepSections extends SolverSectionsBase {
       childName,
       dbId,
     });
-    feStore.loadChild({
-      childName: childName,
+    feStore.addChild(childName, {
       sectionPack: sectionPack as SectionPack<ChildSectionName<"feStore", CN>>,
       sectionContextName,
       feId,

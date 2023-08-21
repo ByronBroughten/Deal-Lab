@@ -2,9 +2,9 @@ import {
   GetterSectionsBase,
   GetterSectionsProps,
 } from "../StateGetters/Bases/GetterSectionsBase";
-import { useSectionsContext } from "./useSections";
+import { useSectionsContext } from "./useMainState";
 
 export function useGetterSectionsProps(): GetterSectionsProps {
-  const props = useSectionsContext();
-  return GetterSectionsBase.initProps(props);
+  const sections = useSectionsContext();
+  return GetterSectionsBase.initProps({ sections });
 }

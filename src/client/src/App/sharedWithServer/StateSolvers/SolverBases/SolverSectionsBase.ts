@@ -1,3 +1,4 @@
+import { MainStateProps } from "../../MainState";
 import { FeVarbInfo } from "../../SectionsMeta/SectionInfo/FeInfo";
 import {
   GetterSectionsBase,
@@ -5,9 +6,10 @@ import {
   GetterSectionsRequiredProps,
 } from "../../StateGetters/Bases/GetterSectionsBase";
 import { GetterVarb } from "../../StateGetters/GetterVarb";
-import { Arr } from "../../utils/Arr";
+import { SolveState } from "../../StateSections/SolveState";
+import { StateSections } from "../../StateSections/StateSections";
 
-export type SolveShare = { varbIdsToSolveFor: Set<string> };
+type SolveShare = { solveState: SolveState };
 export type HasSolveShare = {
   solveShare: SolveShare;
 };
@@ -27,15 +29,24 @@ export class SolverSectionsBase {
   static initProps(props: SolverSectionsRequiredProps): SolverSectionsProps {
     return {
       ...GetterSectionsBase.initProps(props),
-      solveShare: this.initSolveShare(),
+      solveShare: { solveState: SolveState.initEmpty() },
     };
   }
   static initSolveShare(): SolveShare {
+    return { solveState: SolveState.initEmpty() };
+  }
+  get stateSections(): StateSections {
+    return this.sectionsShare.sections;
+  }
+  get solveState(): SolveState {
+    return this.solveShare.solveState;
+  }
+  get mainStateProps(): MainStateProps {
     return {
-      varbIdsToSolveFor: new Set(),
+      stateSections: this.stateSections,
+      solveState: this.solveState,
     };
   }
-
   get sectionsShare() {
     return this.getterSectionsBase.sectionsShare;
   }
@@ -46,21 +57,20 @@ export class SolverSectionsBase {
     };
   }
   get varbIdsToSolveFor(): Set<string> {
-    return this.solveShare.varbIdsToSolveFor;
+    return this.solveState.varbIdsToSolveFor;
   }
   addVarbInfosToSolveFor(...varbInfos: FeVarbInfo[]): void {
     const varbIds = GetterVarb.varbInfosToVarbIds(varbInfos);
     this.addVarbIdsToSolveFor(...varbIds);
   }
   addVarbIdsToSolveFor(...varbIds: string[]): void {
-    this.solveShare.varbIdsToSolveFor = new Set([
-      ...this.varbIdsToSolveFor,
-      ...varbIds,
-    ]);
+    this.solveShare.solveState = this.solveState.addVarbIdsToSolveFor(
+      ...varbIds
+    );
   }
   removeVarbIdsToSolveFor(...varbIds: string[]): void {
-    this.solveShare.varbIdsToSolveFor = new Set(
-      Arr.exclude([...this.varbIdsToSolveFor], varbIds)
+    this.solveShare.solveState = this.solveState.removeVarbIdsToSolveFor(
+      ...varbIds
     );
   }
 }

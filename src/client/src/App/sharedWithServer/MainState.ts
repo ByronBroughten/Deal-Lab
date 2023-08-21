@@ -1,28 +1,30 @@
-import { SolveStateIds } from "./StateSections/SolveStateIds";
+import { SolveState } from "./StateSections/SolveState";
 import { StateSections } from "./StateSections/StateSections";
 
 export type MainStateProps = {
   stateSections: StateSections;
-  solveStateIds: SolveStateIds;
+  solveState: SolveState;
 };
 export class MainState {
-  private stateSections: StateSections;
-  private solveStateIds: SolveStateIds;
+  readonly stateSections: StateSections;
+  readonly solveState: SolveState;
   constructor(props: MainStateProps) {
     this.stateSections = props.stateSections;
-    this.solveStateIds = props.solveStateIds;
+    this.solveState = props.solveState;
   }
   update(partial: Partial<MainStateProps>): MainState {
     return new MainState({
       stateSections: this.stateSections,
-      solveStateIds: this.solveStateIds,
+      solveState: this.solveState,
       ...partial,
     });
   }
-  static initEmpty() {
+  static initEmpty(
+    props: { stateSections?: StateSections; solveState?: SolveState } = {}
+  ) {
     return new MainState({
-      stateSections: StateSections.initEmpty(),
-      solveStateIds: SolveStateIds.initEmpty(),
+      stateSections: props.stateSections ?? StateSections.initEmpty(),
+      solveState: props.solveState ?? SolveState.initEmpty(),
     });
   }
 }

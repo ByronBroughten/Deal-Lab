@@ -4,6 +4,7 @@ import { AddToStoreProps } from "../../../modules/FeStore/SolverFeStore";
 import { UserData } from "../../apiQueriesShared/validateUserData";
 import { defaultMaker } from "../../defaultMaker/defaultMaker";
 import { makeEmptyMain } from "../../defaultMaker/makeEmptyMain";
+import { MainState } from "../../MainState";
 import { ChildName } from "../../SectionsMeta/sectionChildrenDerived/ChildName";
 import { SectionPack } from "../../SectionsMeta/sectionChildrenDerived/SectionPack";
 import {
@@ -20,7 +21,6 @@ import {
 } from "../../SectionsMeta/sectionStores";
 import { SectionValues } from "../../SectionsMeta/values/StateValue";
 import { DealMode } from "../../SectionsMeta/values/StateValue/dealMode";
-import { StateSections } from "../../StateSections/StateSections";
 import { SolverSections } from "../../StateSolvers/SolverSections";
 import { AddChildOptions } from "../../StateUpdaters/UpdaterSection";
 import { Arr } from "../../utils/Arr";
@@ -44,7 +44,6 @@ const sectionActionNames = [
   "updateValue",
   "updateValueFromContent",
   "onChangeIdle",
-  "setState",
   "finishSave",
   "removeStoredDeal",
   "doLogin",
@@ -62,8 +61,6 @@ type DefaultActionProps = _CheckSectionActionProps<
   Record<SectionActionName, {}>
 >;
 type ExtraActionProps = _CheckSectionActionProps<{
-  setState: { sections: StateSections };
-
   loadUserData: { userData: UserData };
   finishSave: { success: boolean };
 
@@ -171,22 +168,16 @@ type ReducerActions = {
   [AN in SectionActionName]: (prop: ActionPropsMap[AN]) => void;
 };
 
-export const sectionsReducer: React.Reducer<StateSections, StateAction> = (
-  currentSections,
+export const mainStateReducer: React.Reducer<MainState, StateAction> = (
+  currentState,
   action
 ) => {
-  if (action.type === "setState") {
-    return action.sections;
-  }
-
-  const solverSections = SolverSections.init({
-    sectionsShare: { sections: currentSections },
+  const solverSections = new SolverSections({
+    sectionsShare: { sections: currentState.stateSections },
+    solveShare: { solveState: currentState.solveState },
   });
 
   const reducerActions: ReducerActions = {
-    setState: () => {
-      throw new Error("State should already be returned.");
-    },
     makeEmptyMain: () => {
       const main = solverSections.oneAndOnly("main");
       main.loadSelfAndSolve(makeEmptyMain());
@@ -276,5 +267,8 @@ export const sectionsReducer: React.Reducer<StateSections, StateAction> = (
   }
 
   reducerActions[action.type](action as any);
-  return solverSections.stateSections;
+  return new MainState({
+    stateSections: solverSections.stateSections,
+    solveState: solverSections.solveState,
+  });
 };

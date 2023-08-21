@@ -4,7 +4,7 @@ import { GetterSectionsBase } from "../StateGetters/Bases/GetterSectionsBase";
 import { GetterVarbProps } from "../StateGetters/Bases/GetterVarbBase";
 import { GetterVarb } from "../StateGetters/GetterVarb";
 import { StrictOmit } from "../utils/types";
-import { useSectionsContext } from "./useSections";
+import { useSectionsContext } from "./useMainState";
 
 export interface UseGetterVarbProps<SN extends SectionNameByType>
   extends StrictOmit<GetterVarbProps<SN>, "sectionsShare"> {}
@@ -12,10 +12,10 @@ export interface UseGetterVarbProps<SN extends SectionNameByType>
 export function useGetterVarb<SN extends SectionNameByType>(
   props: UseGetterVarbProps<SN>
 ): GetterVarb<SN> {
-  const context = useSectionsContext();
+  const sections = useSectionsContext();
   return new GetterVarb({
     ...props,
-    ...GetterSectionsBase.initProps(context),
+    ...GetterSectionsBase.initProps({ sections }),
   });
 }
 
@@ -27,10 +27,10 @@ export function useGetterVarbNext<SN extends SectionNameByType>({
   varbName,
   ...props
 }: UseGetterVarbNextProps<SN>): GetterVarb<SN> {
-  const context = useSectionsContext();
+  const sections = useSectionsContext();
   return new GetterVarb({
     ...props,
     varbName: varbName as string,
-    ...GetterSectionsBase.initProps(context),
+    ...GetterSectionsBase.initProps({ sections }),
   });
 }

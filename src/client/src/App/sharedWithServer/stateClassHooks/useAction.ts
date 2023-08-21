@@ -1,12 +1,12 @@
 import { useCallback } from "react";
 import { useIdOfSectionToSave } from "./useIdOfSectionToSave";
-import { SectionsDispatch, useSectionsDispatch } from "./useSections";
+import { MainStateDispatch, useMainDispatch } from "./useMainState";
 import {
   isSavableActionName,
   SectionActionName,
   SectionActionProps,
   StateAction,
-} from "./useSections/sectionsReducer";
+} from "./useMainState/mainStateReducer";
 
 export function useActionWithProps<T extends SectionActionName>(
   type: T,
@@ -37,7 +37,7 @@ export function useAction<T extends SectionActionName>(
 }
 
 export function useActionNoSave<T extends SectionActionName>(type: T) {
-  const dispatch = useSectionsDispatch();
+  const dispatch = useMainDispatch();
   return useCallback(
     (props: SectionActionProps<T>) =>
       dispatch({
@@ -48,8 +48,8 @@ export function useActionNoSave<T extends SectionActionName>(type: T) {
   );
 }
 
-export function useDispatchAndSave(): SectionsDispatch {
-  const dispatch = useSectionsDispatch();
+export function useDispatchAndSave(): MainStateDispatch {
+  const dispatch = useMainDispatch();
   const storeId = useIdOfSectionToSave();
   return useCallback(
     (props: StateAction) =>

@@ -6,7 +6,7 @@ import { makeReq } from "../apiQueriesShared/makeReqAndRes";
 import { authS } from "./../../modules/customHooks/authS";
 import { useDispatchAndSave } from "./useAction";
 import { useGetterSections } from "./useGetterSections";
-import { StateAction } from "./useSections/sectionsReducer";
+import { StateAction } from "./useMainState/mainStateReducer";
 
 const queryActionNames = [
   "updateSubscriptionData",
