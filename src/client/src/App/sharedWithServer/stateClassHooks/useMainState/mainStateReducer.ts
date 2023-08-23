@@ -2,8 +2,6 @@ import { ContentState } from "draft-js";
 import { EditorUpdaterVarb } from "../../../modules/EditorUpdaterVarb";
 import { AddToStoreProps } from "../../../modules/FeStore/SolverFeStore";
 import { UserData } from "../../apiQueriesShared/validateUserData";
-import { defaultMaker } from "../../defaultMaker/defaultMaker";
-import { makeEmptyMain } from "../../defaultMaker/makeEmptyMain";
 import { MainState } from "../../MainState";
 import { ChildName } from "../../SectionsMeta/sectionChildrenDerived/ChildName";
 import { SectionPack } from "../../SectionsMeta/sectionChildrenDerived/SectionPack";
@@ -21,10 +19,12 @@ import {
 } from "../../SectionsMeta/sectionStores";
 import { SectionValues } from "../../SectionsMeta/values/StateValue";
 import { DealMode } from "../../SectionsMeta/values/StateValue/dealMode";
-import { SolverSections } from "../../StateSolvers/SolverSections";
+import { SolvePrepperSection } from "../../StateSolvers/SolvePreppers/SolvePrepperSection";
+import { SolvePrepperVarb } from "../../StateSolvers/SolvePreppers/SolvePrepperVarb";
 import { AddChildOptions } from "../../StateUpdaters/UpdaterSection";
 import { Arr } from "../../utils/Arr";
 import { Merge } from "../../utils/Obj/merge";
+import { TopOperator } from "./../../StateSolvers/TopOperator";
 
 const sectionActionNames = [
   "addChild",
@@ -51,6 +51,7 @@ const sectionActionNames = [
   "incrementGetUserDataTry",
   "makeEmptyMain",
   "doDealCompare",
+  "solve",
 ] as const;
 export type SectionActionName = (typeof sectionActionNames)[number];
 
@@ -172,64 +173,66 @@ export const mainStateReducer: React.Reducer<MainState, StateAction> = (
   currentState,
   action
 ) => {
-  const solverSections = new SolverSections({
+  const topOperator = new TopOperator({
     sectionsShare: { sections: currentState.stateSections },
     solveShare: { solveState: currentState.solveState },
   });
+  const solvePrepper = topOperator.prepper;
+  const prepStore = topOperator.prepStore;
 
+  const prepperSection = <SN extends SectionName>(
+    props: FeSectionInfo<SN>
+  ): SolvePrepperSection<SN> => {
+    return solvePrepper.prepperSection(props);
+  };
+
+  const prepperVarb = <SN extends SectionName>(
+    props: FeVarbInfo<SN>
+  ): SolvePrepperVarb<SN> => {
+    return solvePrepper.prepperVarb(props);
+  };
+
+  // figure out which of these should be saved right away
   const reducerActions: ReducerActions = {
     makeEmptyMain: () => {
-      const main = solverSections.oneAndOnly("main");
-      main.loadSelfAndSolve(makeEmptyMain());
+      topOperator.makeEmptyMainAndSolve();
     },
     doLogin: () => {
-      const main = solverSections.oneAndOnly("main");
-      main.loadSelfAndSolve(defaultMaker.makeSectionPack("main"));
-      const feStore = main.onlyChild("feStore");
-      feStore.basic.updateValues({ userDataStatus: "loading" });
+      topOperator.doLoginAndSolve();
     },
-    loadUserData: ({ userData }) =>
-      solverSections.feStore.loadUserData(userData),
-    incrementGetUserDataTry: () =>
-      solverSections.feStore.incrementGetUserDataTry(),
-
-    onChangeIdle: () => solverSections.feStore.onChangeIdle(),
-    finishSave: (props) => solverSections.feStore.finishSave(props),
-
+    loadUserData: ({ userData }) => topOperator.loadUserDataAndSolve(userData),
+    incrementGetUserDataTry: () => topOperator.incrementGetUserDataTry(),
+    onChangeIdle: () => topOperator.onChangeIdle(),
+    finishSave: (props) => topOperator.prepStore.finishSave(props),
     addChild: ({ feInfo, childName, options }) => {
-      const section = solverSections.solverSection(feInfo);
-      section.addChildAndSolve(childName, options);
+      const section = prepperSection(feInfo);
+      section.addChild(childName, options);
     },
     removeSelf: (props) => {
-      const section = solverSections.solverSection(props);
-      section.removeSelfAndSolve();
+      const section = prepperSection(props);
+      section.removeSelf();
     },
     resetSelfToDefault: (props) => {
-      const section = solverSections.solverSection(props);
-      section.resetToDefaultAndSolve();
+      const section = prepperSection(props);
+      section.resetToDefault();
     },
-    loadSelfCopyFromStore: ({ dbId, sectionName, feId }) => {
-      const section = solverSections.solverSection({ sectionName, feId });
-      const { mainStoreName } = section.get;
-      const stored = solverSections.feStore.get.childByDbId({
-        childName: mainStoreName,
-        dbId,
-      });
-      section.loadSelfAndSolve(stored.makeSectionPack());
-      section.updater.newDbId();
+    loadSelfCopyFromStore: (props) => {
+      topOperator.loadCopyFromStore(props);
     },
     updateValues: (props) => {
-      const section = solverSections.solverSection(props);
+      const section = prepperSection(props);
       section.updateValues(props.values);
     },
     updateValue: (props) => {
-      const varb = solverSections.solverVarb(props);
-      varb.directUpdateAndSolve(props.value);
+      const varb = prepperVarb(props);
+      varb.directUpdate(props.value);
     },
     updateValueFromContent: (props) => {
       // Needed because previous value is required for new value
-      const varb = solverSections.solverVarb(props);
+      // Also, keeping this here so it's on the front-end
       const { contentState } = props;
+
+      const varb = prepperVarb(props);
       const editorVarb = new EditorUpdaterVarb(
         varb.getterVarbBase.getterVarbProps
       );
@@ -238,37 +241,34 @@ export const mainStateReducer: React.Reducer<MainState, StateAction> = (
       if (props.noSolve) {
         varb.updaterVarb.updateValue(value);
       } else {
-        varb.editorUpdateAndSolve(value);
+        varb.editorUpdate(value);
       }
     },
-
-    addToStore: (props) => solverSections.feStore.addToStore(props),
-    removeFromStore: (props) => solverSections.feStore.removeFromStore(props),
-    removeFromStoreByDbId: (props) =>
-      solverSections.feStore.removeFromStoreByDbId(props),
+    addToStore: (props) => prepStore.addToStore(props),
+    removeFromStore: (props) => prepStore.removeFromStore(props),
+    removeFromStoreByDbId: (props) => prepStore.removeFromStoreByDbId(props),
     saveAndOverwriteToStore: ({ feInfo }) =>
-      solverSections.saveAndOverwriteToStore(feInfo),
-    copyInStore: (props) => solverSections.feStore.copyInStore(props),
-    archiveDeal: ({ feId }) => solverSections.archiveDeal(feId),
+      topOperator.saveAndOverwriteToStore(feInfo),
+    copyInStore: (props) => prepStore.copyInStore(props),
+    archiveDeal: ({ feId }) => topOperator.archiveDeal(feId),
     loadAndShowArchivedDeals: ({ archivedDeals }) =>
-      solverSections.loadAndShowArchivedDeals(archivedDeals),
-    removeStoredDeal: ({ dbId }) => solverSections.removeStoredDeal(dbId),
-    activateDeal: (props) => solverSections.activateDealAndSolve(props),
-    addActiveDeal: ({ dealMode }) => solverSections.addActiveDeal(dealMode),
-    doDealCompare: () => solverSections.doDealCompare(),
+      topOperator.loadAndShowArchivedDeals(archivedDeals),
+    removeStoredDeal: ({ dbId }) => topOperator.removeStoredDealAndSolve(dbId),
+    activateDeal: (props) => topOperator.activateDealAndSolve(props),
+    addActiveDeal: ({ dealMode }) =>
+      topOperator.addActiveDealAndSolve(dealMode),
+    doDealCompare: () => topOperator.doDealCompareAndSolve(),
+    solve: () => topOperator.solve(),
   };
 
   if (isSavableAction(action)) {
     if (action.idOfSectionToSave) {
-      solverSections.feStore.addChangeToSave(action.idOfSectionToSave, {
+      prepStore.addChangeToSave(action.idOfSectionToSave, {
         changeName: "update",
       });
     }
   }
 
   reducerActions[action.type](action as any);
-  return new MainState({
-    stateSections: solverSections.stateSections,
-    solveState: solverSections.solveState,
-  });
+  return topOperator.makeMainState();
 };

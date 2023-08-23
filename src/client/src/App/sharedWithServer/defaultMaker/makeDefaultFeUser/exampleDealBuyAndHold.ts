@@ -1,7 +1,7 @@
 import { SectionPack } from "../../SectionsMeta/sectionChildrenDerived/SectionPack";
 import { numObj } from "../../SectionsMeta/values/StateValue/NumObj";
 import { numObjNext } from "../../SectionsMeta/values/StateValue/numObjNext";
-import { PackBuilderSection } from "../../StatePackers/PackBuilderSection";
+import { TopOperator } from "../../StateSolvers/TopOperator";
 import { timeS } from "../../utils/timeS";
 import { makeDefaultDealPack } from "../makeDefaultDeal";
 import { example20PercentDownFinancing } from "./example20PercentDownLoan";
@@ -10,8 +10,9 @@ import { avgHomeAdvisorNahbCapExProps } from "./makeExampleOngoingListsProps";
 import { makeExampleProperty } from "./makeExampleProperty";
 
 export function exampleDealBuyAndHold(displayName: string) {
-  const deal = PackBuilderSection.initAsOmniChild("deal");
-  deal.overwriteSelf(makeDefaultDealPack("buyAndHold"));
+  const topOperator = TopOperator.initWithDefaultActiveDealAndSolve();
+  const deal = topOperator.prepper.getActiveDeal();
+  deal.loadSelfSectionPack(makeDefaultDealPack("buyAndHold"));
   const now = timeS.now();
   deal.updateValues({
     dateTimeFirstSaved: now,
@@ -19,18 +20,20 @@ export function exampleDealBuyAndHold(displayName: string) {
   });
 
   const property = deal.onlyChild("property");
-  property.overwriteSelf(exampleDealBuyAndHoldProperty());
+  property.loadSelfSectionPack(exampleDealBuyAndHoldProperty());
 
   example20PercentDownFinancing(deal, "purchaseFinancing");
 
   const mgmt = deal.onlyChild("mgmtOngoing");
-  mgmt.overwriteSelf(exampleDealMgmt);
+  mgmt.loadSelfSectionPack(exampleDealMgmt);
 
   deal.updateValues({
     displayNameEditor: displayName,
     displayNameSource: "displayNameEditor",
   });
-  return deal.makeSectionPack();
+
+  topOperator.solve();
+  return deal.get.makeSectionPack();
 }
 
 function exampleDealBuyAndHoldProperty(): SectionPack<"property"> {

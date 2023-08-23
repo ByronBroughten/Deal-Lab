@@ -31,13 +31,15 @@ const apiPathFull = `${env.apiUrlBase}${apiPathBit}`;
 const isBeta = false;
 const maxSectionSaveLimit = 10000;
 const basicSectionSaveLimit = 5;
-const saveDelayInMs = 2000;
+const saveDelayInMs = 4000;
+const solveDelayInMs = 400;
 export const config = {
   ...env,
   compoundIdSpliter: ".",
   maxSectionSaveLimit,
   stripePrices,
   saveDelayInMs,
+  solveDelayInMs,
   supportEmail: "support@deallab.com", // doesn't work with custom name server
   feedbackEmail: "feedback@deallab.com",
   discordLink: "https://discord.gg/W6pxEXT8EV",

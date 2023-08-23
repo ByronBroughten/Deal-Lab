@@ -19,6 +19,7 @@ import {
   useAddDeal,
   useDoCompare,
   useEditDeal,
+  useSolve,
 } from "./App/sharedWithServer/stateClassHooks/useLoading";
 import { nativeTheme } from "./App/theme/nativeTheme";
 import { HandleAuth } from "./HandleAuth";
@@ -33,6 +34,7 @@ export function Main() {
   useAddDeal();
   useEditDeal();
   useDoCompare();
+  useSolve();
   return (
     <Styled className="App-root">
       <NavBar />

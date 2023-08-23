@@ -4,7 +4,7 @@ import { GetterSectionBase } from "../StateGetters/Bases/GetterSectionBase";
 import { GetterSectionsBase } from "../StateGetters/Bases/GetterSectionsBase";
 import { GetterSection } from "../StateGetters/GetterSection";
 import { PackMakerSection } from "../StatePackers/PackMakerSection";
-import { SolverSections } from "../StateSolvers/SolverSections";
+import { TopOperator } from "../StateSolvers/TopOperator";
 
 export class SectionArrReqMaker<
   SN extends DbSectionNameByType<"sectionQuery">
@@ -16,7 +16,8 @@ export class SectionArrReqMaker<
     return this.get.mainStoreName;
   }
   static init<SN extends DbSectionNameByType<"sectionQuery">>(sectionName: SN) {
-    const sections = SolverSections.initSectionsFromDefaultMain();
+    const sections =
+      TopOperator.initWithDefaultActiveDealAndSolve().stateSections;
     const section = sections.firstRawSection(sectionName);
     return new SectionArrReqMaker({
       ...section,

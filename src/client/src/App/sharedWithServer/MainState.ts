@@ -12,6 +12,9 @@ export class MainState {
     this.stateSections = props.stateSections;
     this.solveState = props.solveState;
   }
+  get varbsToSolveCount(): number {
+    return this.solveState.varbIdsToSolveFor.size;
+  }
   update(partial: Partial<MainStateProps>): MainState {
     return new MainState({
       stateSections: this.stateSections,

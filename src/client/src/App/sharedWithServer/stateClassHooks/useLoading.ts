@@ -1,8 +1,22 @@
 import React from "react";
 import { unstable_batchedUpdates } from "react-dom";
 import { useGoToPage } from "../../components/customHooks/useGoToPage";
+import { constants } from "../../Constants";
 import { useAction } from "./useAction";
 import { useGetterSectionOnlyOne } from "./useGetterSection";
+import { useMainStateContext } from "./useMainState";
+
+export function useSolve() {
+  const solve = useAction("solve");
+  const mainState = useMainStateContext();
+
+  React.useEffect(() => {
+    if (mainState.varbsToSolveCount > 0) {
+      let timerFunc = setTimeout(solve, constants.solveDelayInMs);
+      return () => clearTimeout(timerFunc);
+    }
+  }, [mainState, solve]);
+}
 
 export function useDoCompare() {
   const sessionStore = useGetterSectionOnlyOne("sessionStore");

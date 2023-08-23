@@ -1,15 +1,10 @@
 import { pick } from "lodash";
-import {
-  AddToStoreOptions,
-  SolverFeStore,
-} from "../../modules/FeStore/SolverFeStore";
+import { SolverFeStore } from "../../modules/FeStore/SolverFeStore";
 import { defaultMaker } from "../defaultMaker/defaultMaker";
-import { makeEmptyMain } from "../defaultMaker/makeEmptyMain";
 import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
 import { FeSectionInfo, FeVarbInfo } from "../SectionsMeta/SectionInfo/FeInfo";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { StoreSectionName } from "../SectionsMeta/sectionStores";
-import { DealMode } from "../SectionsMeta/values/StateValue/dealMode";
 import { GetterSections } from "../StateGetters/GetterSections";
 import { StoreId } from "../StateGetters/StoreId";
 import { PackBuilderSections } from "../StatePackers/PackBuilderSections";
@@ -66,15 +61,9 @@ export class SolverSections extends SolverSectionsBase {
       ...props,
     });
   }
-  static initSectionsFromEmptyMain() {
-    const mainPack = makeEmptyMain();
-    const solver = this.initSolverFromMainPack(mainPack);
-    return solver.solverSections;
-  }
   static initSectionsFromDefaultMain(): StateSections {
     return this.initDefault().stateSections;
   }
-
   static initDefault(): SolverSections {
     const defaultMainPack = defaultMaker.makeSectionPack("main");
     const solver = this.initSolverFromMainPack(defaultMainPack);
@@ -82,7 +71,6 @@ export class SolverSections extends SolverSectionsBase {
     solver.solverSections.activateDealAndSolve({ feId });
     return solver.solverSections;
   }
-
   static initRoot(): SolverSection<"root"> {
     const sections = StateSections.initWithRoot();
     const rootSection = sections.rawSectionList("root")[0];
@@ -103,25 +91,6 @@ export class SolverSections extends SolverSectionsBase {
     });
     return solver.onlyChild("main");
   }
-  getActiveDeal(): SolverSection<"deal"> {
-    const deal = this.solvePrepper.getActiveDeal();
-    return this.solverSection(deal.get.feInfo);
-  }
-  addActiveDeal(dealMode: DealMode, options?: AddToStoreOptions<"dealMain">) {
-    const { feStore } = this;
-    feStore.addToStore({ storeName: "dealMain", options }, false);
-    const newDeal = feStore.newestEntry("dealMain");
-    const property = newDeal.onlyChild("property");
-
-    newDeal.basic.updateValues({ dealMode });
-    property.basic.updateValues({ propertyMode: dealMode });
-
-    const sessionStore = this.oneAndOnly("sessionStore");
-    sessionStore.updateValues({ isCreatingDeal: false });
-
-    this.activateDealAndSolve({ feId: newDeal.get.feId });
-  }
-
   saveAndOverwriteToStore(feInfo: FeSectionInfo<StoreSectionName>) {
     const section = this.getterSections.section(feInfo);
     this.feStore.saveAndOverwriteToStore({

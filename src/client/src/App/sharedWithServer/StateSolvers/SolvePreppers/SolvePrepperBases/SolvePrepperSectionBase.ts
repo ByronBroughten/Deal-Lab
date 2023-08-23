@@ -21,4 +21,10 @@ export class SolvePrepperSectionBase<
   get getterSectionProps(): GetterSectionProps<SN> {
     return this.getterSectionBase.getterSectionProps;
   }
+  get prepperSectionProps(): SolvePrepperSectionProps<SN> {
+    return {
+      ...this.solverProps,
+      ...this.getterSectionProps,
+    };
+  }
 }

@@ -5,6 +5,7 @@ import { GetterSection } from "../StateGetters/GetterSection";
 import { SolverSectionBase } from "./SolverBases/SolverSectionBase";
 import { SolverSection } from "./SolverSection";
 import { SolverSections } from "./SolverSections";
+import { TopOperator } from "./TopOperator";
 
 export class SolverActiveDeal extends SolverSectionBase<"deal"> {
   get get() {
@@ -41,10 +42,14 @@ export class SolverActiveDeal extends SolverSectionBase<"deal"> {
     return this.solverSection(this.get.onlyChild("mgmtOngoing").feInfo);
   }
   static init(dealMode: DealMode) {
-    const deal = SolverSections.initDefault().getActiveDeal();
-    deal.updateValuesAndSolve({ dealMode });
+    const topOperator = TopOperator.initWithDefaultActiveDealAndSolve();
+
+    const deal = topOperator.prepper.getActiveDeal();
+    deal.updateValues({ dealMode });
     const property = deal.onlyChild("property");
-    property.updateValuesAndSolve({ propertyMode: dealMode });
-    return new SolverActiveDeal(deal.solverSectionProps);
+    property.updateValues({ propertyMode: dealMode });
+
+    topOperator.solve();
+    return new SolverActiveDeal(deal.prepperSectionProps);
   }
 }

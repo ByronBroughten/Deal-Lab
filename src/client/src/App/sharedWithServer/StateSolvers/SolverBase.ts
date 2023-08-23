@@ -1,5 +1,6 @@
 import { GetterSectionsBase } from "../StateGetters/Bases/GetterSectionsBase";
 import { SolveState } from "../StateSections/SolveState";
+import { StateSections } from "../StateSections/StateSections";
 import { SolverProps } from "./Solver";
 
 type SolveShare = { solveState: SolveState };
@@ -22,6 +23,9 @@ export class SolverBase {
   }
   get solveState(): SolveState {
     return this.solveShare.solveState;
+  }
+  get stateSections(): StateSections {
+    return this.getterSectionsBase.sectionsShare.sections;
   }
   get varbIdsToSolveFor(): Set<string> {
     return this.solveState.varbIdsToSolveFor;

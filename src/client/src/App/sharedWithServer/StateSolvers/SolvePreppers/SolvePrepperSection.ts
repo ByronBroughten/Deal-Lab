@@ -1,3 +1,4 @@
+import { makeEmptyMain } from "../../defaultMaker/makeEmptyMain";
 import { VarbName } from "../../SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
 import {
   ChildName,
@@ -15,9 +16,15 @@ import { GetterSection } from "../../StateGetters/GetterSection";
 import { OutVarbGetterSection } from "../../StateInOutVarbs/OutVarbGetterSection";
 import { ChildSectionPackArrs } from "../../StatePackers/ChildPackProps";
 import { AddChildWithPackOptions } from "../../StatePackers/PackBuilderSection";
+import { SolveState } from "../../StateSections/SolveState";
+import { StateSections } from "../../StateSections/StateSections";
 import { DefaultFamilyAdder } from "../../StateUpdaters/DefaultFamilyAdder";
-import { UpdaterSection } from "../../StateUpdaters/UpdaterSection";
+import {
+  AddChildOptions,
+  UpdaterSection,
+} from "../../StateUpdaters/UpdaterSection";
 import { Obj } from "../../utils/Obj";
+import { GetterSectionProps } from "./../../StateGetters/Bases/GetterSectionBase";
 import { EntityPrepperSection } from "./../EntityPreppers/EntityPrepperSection";
 import { SolvePrepper } from "./SolvePrepper";
 import { SolvePrepperSectionBase } from "./SolvePrepperBases/SolvePrepperSectionBase";
@@ -28,20 +35,28 @@ export class SolvePrepperSection<
   private get solvePrepper(): SolvePrepper {
     return new SolvePrepper(this.solverProps);
   }
+  get prepper(): SolvePrepper {
+    return this.solvePrepper;
+  }
   get get(): GetterSection<SN> {
     return new GetterSection(this.getterSectionProps);
   }
+  get updater(): UpdaterSection<SN> {
+    return new UpdaterSection(this.getterSectionProps);
+  }
   private get inOut(): OutVarbGetterSection<SN> {
     return new OutVarbGetterSection(this.getterSectionProps);
-  }
-  private get updater(): UpdaterSection<SN> {
-    return new UpdaterSection(this.getterSectionProps);
   }
   private get entity(): EntityPrepperSection<SN> {
     return new EntityPrepperSection(this.getterSectionProps);
   }
   private get defaultAdder() {
     return new DefaultFamilyAdder(this.getterSectionProps);
+  }
+  isOfSectionName<S extends SectionName>(
+    ...sectionNames: S[]
+  ): this is SolvePrepperSection<S> {
+    return this.get.isOfSectionName(...sectionNames);
   }
   get parent(): SolvePrepperSection<ParentNameSafe<SN>> {
     const { parentInfoSafe } = this.get;
@@ -55,9 +70,20 @@ export class SolvePrepperSection<
       ...info,
     });
   }
-  child(childInfo: FeChildInfo<SN>): SolvePrepperSection<ChildSectionName<SN>> {
+  child<CN extends ChildName<SN>>(
+    childInfo: FeChildInfo<SN, CN>
+  ): SolvePrepperSection<ChildSectionName<SN, CN>> {
     const feInfo = this.get.childInfoToFe(childInfo);
     return this.prepperSection(feInfo);
+  }
+  childByDbId<CN extends ChildName<SN>>(
+    dbInfo: DbChildInfo<SN, CN>
+  ): SolvePrepperSection<ChildSectionName<SN, CN>> {
+    const { feId } = this.get.childByDbId(dbInfo);
+    return this.child({
+      childName: dbInfo.childName,
+      feId,
+    });
   }
   onlyChild<CN extends ChildName<SN>>(
     childName: CN
@@ -199,6 +225,10 @@ export class SolvePrepperSection<
     // Temporary fix
     this.doNotThrowIfEntityToRemoveMissing();
 
+    // Why is there updateValues,
+    // directUpdateAndSolve,
+    // and editorUpdateAndSolve?
+
     this.updater.updateValues(values);
     this.addValueIdsToSolveFor(varbNames);
     this.doUpdateOutvarbsOnSolve();
@@ -206,5 +236,48 @@ export class SolvePrepperSection<
   private addValueIdsToSolveFor(varbNames: VarbName<SN>[]): void {
     const varbIds = varbNames.map((varbName) => this.get.varb(varbName).varbId);
     this.addVarbIdsToSolveFor(...varbIds);
+  }
+  static init<SN extends SectionName>(
+    props: GetterSectionProps<SN>
+  ): SolvePrepperSection<SN> {
+    return new SolvePrepperSection({
+      ...props,
+      solveShare: { solveState: SolveState.initEmpty() },
+    });
+  }
+  static initFromPackAsOmniChild<SN extends ChildName<"omniParent">>(
+    sectionPack: SectionPack<SN>
+  ): SolvePrepperSection<SN> {
+    const adder = DefaultFamilyAdder.loadAsOmniChild(sectionPack);
+    return SolvePrepperSection.init(adder.getterSectionProps);
+  }
+  static initAsOmniParent() {
+    return SolvePrepperSection.init(UpdaterSection.initOmniParentProps());
+  }
+
+  static initAsOmniChild<SN extends ChildName<"omniParent">>(
+    sectionName: SN,
+    options?: AddChildOptions<"omniParent", SN>
+  ): SolvePrepperSection<ChildSectionName<"omniParent", SN>> {
+    const solver = this.initAsOmniParent();
+    return solver.addAndGetChild(sectionName, options);
+  }
+  static initRoot(): SolvePrepperSection<"root"> {
+    const sections = StateSections.initWithRoot();
+    const rootRaw = sections.rawSectionList("root")[0];
+    return SolvePrepperSection.init({
+      sectionName: "root",
+      feId: rootRaw.feId,
+      sectionsShare: { sections },
+    });
+  }
+  static initMainFromPack(
+    sectionPack: SectionPack<"main">
+  ): SolvePrepperSection<"main"> {
+    const root = SolvePrepperSection.initRoot();
+    return root.addAndGetChild("main", { sectionPack });
+  }
+  static initEmptyMain() {
+    return this.initMainFromPack(makeEmptyMain());
   }
 }

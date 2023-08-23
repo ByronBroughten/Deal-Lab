@@ -1,18 +1,18 @@
 import { SectionPack } from "../../SectionsMeta/sectionChildrenDerived/SectionPack";
 import { numObj } from "../../SectionsMeta/values/StateValue/NumObj";
 import { stringObj } from "../../SectionsMeta/values/StateValue/StringObj";
-import { PackBuilderSection } from "../../StatePackers/PackBuilderSection";
+import { SolvePrepperSection } from "../../StateSolvers/SolvePreppers/SolvePrepperSection";
 import { makeExampleLoan } from "./makeExampleLoan";
 
 export function example20PercentDownFinancing(
-  deal: PackBuilderSection<"deal">,
+  deal: SolvePrepperSection<"deal">,
   financingName: "purchaseFinancing" | "refiFinancing"
 ) {
   const financing = deal.onlyChild(financingName);
   financing.updateValues({ financingMethod: "useLoan" });
 
   const loan = financing.onlyChild("loan");
-  loan.overwriteSelf(example20PercentDownLoan());
+  loan.loadSelfSectionPack(example20PercentDownLoan());
 }
 
 export function example20PercentDownLoan(): SectionPack<"loan"> {

@@ -1,16 +1,17 @@
 import { SectionPack } from "../../SectionsMeta/sectionChildrenDerived/SectionPack";
 import { numObj } from "../../SectionsMeta/values/StateValue/NumObj";
 import { numObjNext } from "../../SectionsMeta/values/StateValue/numObjNext";
-import { PackBuilderSection } from "../../StatePackers/PackBuilderSection";
 import { timeS } from "../../utils/timeS";
 import { makeDefaultDealPack } from "../makeDefaultDeal";
+import { TopOperator } from "./../../StateSolvers/TopOperator";
 import { example20PercentDownFinancing } from "./example20PercentDownLoan";
 import { avgHomeAdvisorNahbCapExProps } from "./makeExampleOngoingListsProps";
 import { makeExampleProperty } from "./makeExampleProperty";
 
 export function exampleDealHomebuyer(displayName: string): SectionPack<"deal"> {
-  const deal = PackBuilderSection.initAsOmniChild("deal");
-  deal.overwriteSelf(makeDefaultDealPack("homeBuyer"));
+  const topOperator = TopOperator.initWithDefaultActiveDealAndSolve();
+  const deal = topOperator.prepper.getActiveDeal();
+  deal.loadSelfSectionPack(makeDefaultDealPack("homeBuyer"));
   const now = timeS.now();
   deal.updateValues({
     dateTimeFirstSaved: now,
@@ -18,7 +19,7 @@ export function exampleDealHomebuyer(displayName: string): SectionPack<"deal"> {
   });
 
   const property = deal.onlyChild("property");
-  property.overwriteSelf(exampleHomebuyerProperty());
+  property.loadSelfSectionPack(exampleHomebuyerProperty());
 
   example20PercentDownFinancing(deal, "purchaseFinancing");
 
@@ -26,7 +27,9 @@ export function exampleDealHomebuyer(displayName: string): SectionPack<"deal"> {
     displayNameEditor: displayName,
     displayNameSource: "displayNameEditor",
   });
-  return deal.makeSectionPack();
+
+  topOperator.solve();
+  return deal.get.makeSectionPack();
 }
 
 function exampleHomebuyerProperty(): SectionPack<"property"> {

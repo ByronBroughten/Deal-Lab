@@ -3,7 +3,7 @@ import { react } from "../../utils/react";
 import { MainState } from "../MainState";
 import { SolveState } from "../StateSections/SolveState";
 import { StateSections } from "../StateSections/StateSections";
-import { SolverSections } from "../StateSolvers/SolverSections";
+import { TopOperator } from "../StateSolvers/TopOperator";
 import { mainStateReducer, StateAction } from "./useMainState/mainStateReducer";
 import {
   SectionsStore,
@@ -58,7 +58,7 @@ function initializeAnalyzerSections(prePopulatedSections?: StateSections) {
       return SectionsStore.getStoredSections();
     } catch (err) {
       if (err instanceof StateMissingFromStorageError) {
-        return SolverSections.initSectionsFromEmptyMain().stateSections;
+        return TopOperator.initWithEmptyMainAndSolve().stateSections;
       } else throw err;
     }
 }
@@ -66,21 +66,26 @@ function initializeAnalyzerSections(prePopulatedSections?: StateSections) {
 export const [MainDispatchContext, useMainDispatch] =
   react.makeContextUseContext("MainDispatchContext", {} as MainStateDispatch);
 
+export const [MainStateContext, useMainStateContext] =
+  react.makeContextUseContext("SectionContext", MainState.initEmpty());
+
 export const [SectionsContext, useSectionsContext] =
   react.makeContextUseContext("SectionContext", StateSections.initEmpty());
 
-export const [SolveIdsContext, useSolveIdsContext] =
+export const [SolveIdsContext, useSolveStateContext] =
   react.makeContextUseContext("SolveIdsContext", SolveState.initEmpty());
 
 export function MainStateProvider({ children }: { children: React.ReactNode }) {
   const { mainState, mainDispatch } = useMainState();
   return (
-    <SectionsContext.Provider value={mainState.stateSections}>
-      <SolveIdsContext.Provider value={mainState.solveState}>
-        <MainDispatchContext.Provider value={mainDispatch}>
-          {children}
-        </MainDispatchContext.Provider>
-      </SolveIdsContext.Provider>
-    </SectionsContext.Provider>
+    <MainStateContext.Provider value={mainState}>
+      <SectionsContext.Provider value={mainState.stateSections}>
+        <SolveIdsContext.Provider value={mainState.solveState}>
+          <MainDispatchContext.Provider value={mainDispatch}>
+            {children}
+          </MainDispatchContext.Provider>
+        </SolveIdsContext.Provider>
+      </SectionsContext.Provider>
+    </MainStateContext.Provider>
   );
 }

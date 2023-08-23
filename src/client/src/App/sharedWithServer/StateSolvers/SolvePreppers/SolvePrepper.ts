@@ -1,7 +1,11 @@
+import { defaultMaker } from "../../defaultMaker/defaultMaker";
 import { FeChildInfo } from "../../SectionsMeta/sectionChildrenDerived/ChildName";
 import { ChildSectionName } from "../../SectionsMeta/sectionChildrenDerived/ChildSectionName";
 import { SectionPack } from "../../SectionsMeta/sectionChildrenDerived/SectionPack";
-import { FeSectionInfo } from "../../SectionsMeta/SectionInfo/FeInfo";
+import {
+  FeSectionInfo,
+  FeVarbInfo,
+} from "../../SectionsMeta/SectionInfo/FeInfo";
 import { SectionName } from "../../SectionsMeta/SectionName";
 import {
   activeDealPathIdx,
@@ -13,6 +17,7 @@ import { GetterSections } from "../../StateGetters/GetterSections";
 import { AddChildOptions } from "../../StateUpdaters/UpdaterSection";
 import { SolvePrepperBase } from "./SolvePrepperBases/SolvePrepperBase";
 import { SolvePrepperSection } from "./SolvePrepperSection";
+import { SolvePrepperVarb } from "./SolvePrepperVarb";
 
 export class SolvePrepper extends SolvePrepperBase {
   get getterSections() {
@@ -24,10 +29,20 @@ export class SolvePrepper extends SolvePrepperBase {
       sectionName,
     });
   }
-  prepperSection<S extends SectionName>(feInfo: FeSectionInfo<S>) {
+  prepperSection<S extends SectionName>(
+    feInfo: FeSectionInfo<S>
+  ): SolvePrepperSection<S> {
     return new SolvePrepperSection({
       ...this.solverProps,
       ...feInfo,
+    });
+  }
+  prepperVarb<S extends SectionName>(
+    varbInfo: FeVarbInfo<S>
+  ): SolvePrepperVarb<S> {
+    return new SolvePrepperVarb({
+      ...this.solverProps,
+      ...varbInfo,
     });
   }
   oneAndOnly<SN extends SectionName>(sectionName: SN): SolvePrepperSection<SN> {
@@ -100,6 +115,11 @@ export class SolvePrepper extends SolvePrepperBase {
     this.removeActiveDealSystems();
     this.reAddOutputSection({ sectionContextName: "latentDealSystem" });
   }
+  deactivateDealIfActive(feId: string) {
+    if (this.getterSections.isActiveDeal(feId)) {
+      this.deactivateDealAndDealSystem();
+    }
+  }
   private removeActiveDealSystems() {
     const main = this.oneAndOnly("main");
     const systems = main.children("activeDealSystem");
@@ -161,5 +181,13 @@ export class SolvePrepper extends SolvePrepperBase {
       feId,
       idx,
     });
+  }
+
+  static initDefaultAndActiveDeal(): SolvePrepper {
+    const defaultMainPack = defaultMaker.makeSectionPack("main");
+    const main = SolvePrepperSection.initMainFromPack(defaultMainPack);
+    const { feId } = main.onlyChild("feStore").youngestChild("dealMain").get;
+    main.prepper.activateDeal(feId);
+    return main.prepper;
   }
 }
