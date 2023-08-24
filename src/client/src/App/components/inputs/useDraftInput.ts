@@ -1,6 +1,7 @@
 import { ContentState, EditorState } from "draft-js";
 import { isEqual } from "lodash";
 import React, { useEffect, useState } from "react";
+import { constants } from "../../Constants";
 import {
   CreateEditorProps,
   EditorUpdaterVarb,
@@ -100,12 +101,17 @@ function useUpdateValueFromEditor({ editorState, altUpdate, ...rest }: Props) {
   const contentState = editorState.getCurrentContent();
   const isFirstUpdateRef = React.useRef(true);
   const updateFn = altUpdate ?? updateFromContent;
-  useEffect(() => {
+
+  React.useEffect(() => {
     if (isFirstUpdateRef.current) {
       isFirstUpdateRef.current = false;
       return;
     }
-    updateFn({ contentState, ...rest });
+    let timerFunc = setTimeout(
+      () => updateFn({ contentState, ...rest }),
+      constants.editorValueUpdateDelayMs
+    );
+    return () => clearTimeout(timerFunc);
   }, [contentState, updateFn]);
 }
 

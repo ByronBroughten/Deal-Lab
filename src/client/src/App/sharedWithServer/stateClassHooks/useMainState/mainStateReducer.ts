@@ -243,6 +243,7 @@ export const mainStateReducer: React.Reducer<MainState, StateAction> = (
       } else {
         varb.editorUpdate(value);
       }
+      topOperator.solve();
     },
     addToStore: (props) => prepStore.addToStore(props),
     removeFromStore: (props) => prepStore.removeFromStore(props),

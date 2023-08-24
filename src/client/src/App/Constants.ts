@@ -32,7 +32,9 @@ const isBeta = false;
 const maxSectionSaveLimit = 10000;
 const basicSectionSaveLimit = 5;
 const saveDelayInMs = 4000;
-const solveDelayInMs = 400;
+const solveDelayInMs = 500;
+const editorValueUpdateDelayMs = 300;
+
 export const config = {
   ...env,
   compoundIdSpliter: ".",
@@ -40,6 +42,7 @@ export const config = {
   stripePrices,
   saveDelayInMs,
   solveDelayInMs,
+  editorValueUpdateDelayMs,
   supportEmail: "support@deallab.com", // doesn't work with custom name server
   feedbackEmail: "feedback@deallab.com",
   discordLink: "https://discord.gg/W6pxEXT8EV",
