@@ -43,6 +43,7 @@ export function MuiSelect<UVN extends UnionValueName, SN extends SectionName>({
     updateValue({
       ...feVarbInfo,
       value: validateStateValue(e.target.value, unionValueName),
+      solve: true,
     });
   };
 

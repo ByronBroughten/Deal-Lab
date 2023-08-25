@@ -104,10 +104,11 @@ type UpdateValuesProps = {
   [SN in SectionName]: {
     values: Partial<SectionValues<SN>>;
   } & FeSectionInfo<SN> &
-    IdOfSectionToSaveProp;
+    IdOfSectionToSaveProp & { solve?: boolean };
 }[SectionName];
 
-type UpdateValueProps = FeVarbValueInfo & IdOfSectionToSaveProp;
+type UpdateValueProps = FeVarbValueInfo &
+  IdOfSectionToSaveProp & { solve?: boolean };
 
 // type UpdateValueProps = {
 //   [SN in SectionName]: {
@@ -222,10 +223,16 @@ export const mainStateReducer: React.Reducer<MainState, StateAction> = (
     updateValues: (props) => {
       const section = prepperSection(props);
       section.updateValues(props.values);
+      if (props.solve) {
+        topOperator.solve();
+      }
     },
     updateValue: (props) => {
       const varb = prepperVarb(props);
       varb.directUpdate(props.value);
+      if (props.solve) {
+        topOperator.solve();
+      }
     },
     updateValueFromContent: (props) => {
       // Needed because previous value is required for new value

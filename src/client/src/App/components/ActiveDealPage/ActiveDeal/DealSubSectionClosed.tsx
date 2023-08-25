@@ -42,8 +42,9 @@ const propsByDealMode = {
       detailVarbNames: [
         "purchasePrice",
         "likability",
-        "pricePerLikability",
         "rehabCost",
+        "pricePerLikability",
+        "expensesOngoingMonthly",
       ] as const,
     },
     buyAndHold: {

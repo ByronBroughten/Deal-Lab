@@ -6,8 +6,32 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-// Zillow API
-// branding and display requirements - https://www.zillow.com/howto/api/BrandingRequirements.htm
+
+// Allow switching between month and year inputs
+// Display commas for outputs
+
+// It'd look nicer if New Deal took you to a page
+// where the dropdown still works and defaults to Homebuyer
+// (that would avoid confusion)
+
+// Options for addressing SolverSections/TopOperator in tests
+// 1. Edit it and SolverSection so they use TopOperator internally
+// 2. Slowly transition tests to TopOperator and call solve explicitely where
+//    needed
+
+// Speed objective: Update outVarbs for addChild and updateValue without updating all outvarbs throughout the app
+// This might reduce bugs by letting me put back the check
+// for trying to remove entities that aren't there.
+// - When a section is added, it has inVarbs. I can find
+//   those pretty easily and add them, no problem.
+// - However, it also has outVarbs. Presently, I can't find those
+//   without searching through the whole app
+
+// - I need to maintain a map of varbContextId—context.userVarbId/fixedVarbName
+//   - And they point to a list of varbIds (for varbs that have them as inVarbs)
+// - Then when I add or update a varb, I check its varbContextId, and assign
+//   - it as an outVarb accordingly
+// - This will effectively let you get rid of appWideAddEntities
 
 // The create deal page has a dropdown:
 // 1. create with data from Zillow - Address needed

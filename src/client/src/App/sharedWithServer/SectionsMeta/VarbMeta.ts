@@ -109,14 +109,15 @@ export class VarbMeta<SN extends SectionName> {
     return this.displayVarb.calculateRound;
   }
   roundForDisplay(value: number): string {
-    let num = `${round(value, this.displayRound)}`;
-    if (this.baseVarb.valueUnit === "dollars" && num.includes(".")) {
-      const [_beforeDecimal, afterDecimal] = num.split(".");
+    let num = round(value, this.displayRound);
+    let str = num.toLocaleString("en-US");
+    if (this.baseVarb.valueUnit === "dollars" && str.includes(".")) {
+      const [_beforeDecimal, afterDecimal] = str.split(".");
       if (afterDecimal.length === 1) {
-        num += "0";
+        str += "0";
       }
     }
-    return num;
+    return str;
   }
   get displayRound(): number {
     return this.displayVarb.displayRound;

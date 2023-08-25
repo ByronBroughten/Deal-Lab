@@ -181,8 +181,8 @@ export const varbLabels = checkAllVarbLabels({
       title: "Selling Costs",
       info: "These are the costs associated with selling a property, such as to pay real estate agents, the title company, government fees, etc. They are commonly about 6% of the selling price.",
     }),
-    ...simplePeriodic("expensesOngoing", "Ongoing expenses", {
-      variableLabel: "Property ongoing expenses",
+    ...simplePeriodic("expensesOngoing", "Average expenses", {
+      variableLabel: "Average property expenses",
     }),
     ...simplePeriodic("targetRent", "Rent"),
     ...simplePeriodic("homeInsOngoing", "Home insurance"),
@@ -294,10 +294,12 @@ export const varbLabels = checkAllVarbLabels({
       inputLabel: "Loan payment",
     }),
     loanExpensesMonthly: text({
-      inputLabel: "Loan expenses",
+      inputLabel: "Ongoing expenses",
+      variableLabel: "Loan expenses",
     }),
     loanExpensesYearly: text({
-      inputLabel: "Loan expenses",
+      inputLabel: "Ongoing epenses",
+      variableLabel: "Loan expenses",
     }),
     ...simplePeriodic("mortgageIns", "Total mortgage insurance"),
     mortgageInsUpfront: input("Total upfront mortgage insurance"),
