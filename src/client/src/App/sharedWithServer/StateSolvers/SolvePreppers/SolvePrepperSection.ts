@@ -218,16 +218,14 @@ export class SolvePrepperSection<
   }
   updateValues(values: Partial<SectionValues<SN>>): void {
     const varbNames = Obj.keys(values);
+
+    // Temporary fix
+    this.doNotThrowIfEntityToRemoveMissing();
+
     this.entity.removeOutEntitiesOfVarbNameInEntities(
       varbNames,
       this.throwIfEntityToRemoveMissing
     );
-    // Temporary fix
-    this.doNotThrowIfEntityToRemoveMissing();
-
-    // Why is there updateValues,
-    // directUpdateAndSolve,
-    // and editorUpdateAndSolve?
 
     this.updater.updateValues(values);
     this.addValueIdsToSolveFor(varbNames);
@@ -240,10 +238,12 @@ export class SolvePrepperSection<
   static init<SN extends SectionName>(
     props: GetterSectionProps<SN>
   ): SolvePrepperSection<SN> {
-    return new SolvePrepperSection({
+    const section = new SolvePrepperSection({
       ...props,
       solveShare: { solveState: SolveState.initEmpty() },
     });
+    section.doNotThrowIfEntityToRemoveMissing();
+    return section;
   }
   static initFromPackAsOmniChild<SN extends ChildName<"omniParent">>(
     sectionPack: SectionPack<SN>

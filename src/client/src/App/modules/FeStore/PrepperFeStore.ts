@@ -103,6 +103,9 @@ export class PrepperFeStore extends SolvePrepperSectionBase<"feStore"> {
 
     const originalPack = toCopy.packMaker.makeSectionPack();
 
+    // ok, basically what happened is, the sections are being added, but
+    // their entities aren't being updated
+
     const clone = SolvePrepperSection.initFromPackAsOmniChild(originalPack);
     clone.updater.newDbId();
     const name = clone.get.valueNext("displayName");
