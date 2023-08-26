@@ -91,6 +91,13 @@ export class SolvePrepper extends SolvePrepperBase {
       .map(({ feInfo }) => this.prepperSection(feInfo));
   }
   activateDeal(feId: string, finishEditLoading?: boolean): void {
+    if (finishEditLoading) {
+      // this should come first to ensure that dealDbIdToEdit
+      // is reset when it needs to be.
+      const session = this.oneAndOnly("sessionStore");
+      session.updateValues({ dealDbIdToEdit: "" });
+    }
+
     if (this.hasActiveDeal() && this.getActiveDeal().get.feId === feId) {
       return;
     }
@@ -104,11 +111,6 @@ export class SolvePrepper extends SolvePrepperBase {
       "activeDealSystem"
     );
     this.updateActiveSystems(feId);
-
-    if (finishEditLoading) {
-      const session = this.oneAndOnly("sessionStore");
-      session.updateValues({ dealDbIdToEdit: "" });
-    }
   }
   deactivateDealAndDealSystem(): void {
     this.deactivateDeals();

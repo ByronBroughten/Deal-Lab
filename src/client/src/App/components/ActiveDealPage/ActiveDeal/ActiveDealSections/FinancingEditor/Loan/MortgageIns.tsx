@@ -27,10 +27,16 @@ export function MortgageIns({ feId }: Props) {
               }}
               feVarbInfo={loan.varbInfo("mortgageInsUpfrontEditor")}
               label="Upfront"
+              {...{
+                editorType: "equation",
+              }}
             />
             <NumObjEntityEditor
               feVarbInfo={loan.varbInfo("mortgageInsPeriodicEditor")}
               label="Ongoing"
+              {...{
+                editorType: "equation",
+              }}
             />
           </MuiRow>
         ),
