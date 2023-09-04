@@ -17,11 +17,13 @@ import {
 import { GiHouseKeys } from "react-icons/gi";
 import { HiOutlineVariable } from "react-icons/hi";
 import { ImCheckmark } from "react-icons/im";
+import { IoIosCheckmarkCircleOutline } from "react-icons/io";
 import { MdDelete, MdOutlineHomeRepairService } from "react-icons/md";
 
 export interface IconProps extends IconBaseProps {}
 
 type IconName =
+  | "saved"
   | "compareDeals"
   | "addDeal"
   | "property"
@@ -40,7 +42,13 @@ type IconName =
   | "unArchive"
   | "doArchive"
   | "dealComponents";
+export function icon(iconName: IconName, props?: IconProps): React.ReactNode {
+  return icons[iconName](props);
+}
 export const icons: Record<IconName, (props?: IconProps) => React.ReactNode> = {
+  saved(props) {
+    return <IoIosCheckmarkCircleOutline {...props} />;
+  },
   compareDeals(props) {
     return <BsFillHousesFill {...props} />;
   },

@@ -28,6 +28,7 @@ const overrideMap: Overrides = {
       switchS.local("financingMode", "purchase"),
       switchS.valueSourceIs("purchaseLoanValue"),
     ],
+    // these need the switch to trigger the override
     basics.equationLR(
       "add",
       prop.onlyChild("purchaseLoanValue", "amountDollars"),

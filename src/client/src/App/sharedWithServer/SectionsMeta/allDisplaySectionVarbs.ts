@@ -115,7 +115,6 @@ export const allDisplaySectionVarbs = {
     closingCosts: varb("Closing Costs"),
 
     mortgageInsUpfront: varb("Upfront mortgage insurance"),
-    mortgageInsUpfrontEditor: varb("Upfront mortgage insurance"),
     ...editorDisplayGroup("periodicInput", "mortgageIns", "Mortgage insurance"),
   }),
   ...displaySectionVarbsProp("mgmtBasePayValue", {

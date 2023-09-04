@@ -43,7 +43,7 @@ export function MiscOnetimeValue({ feId, menuDisplayNames }: Props) {
           varbName: "valueSourceName",
         },
         items: [
-          ["valueDollarsEditor", "Amount"],
+          ["valueDollarsEditor", "Custom amount"],
           ["listTotal", "Itemize"],
         ],
         itemizeValue: "listTotal",

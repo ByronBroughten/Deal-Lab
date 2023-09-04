@@ -307,6 +307,18 @@ export const varbLabels = checkAllVarbLabels({
     loanBaseDollars: input("Total loan base"),
     closingCosts: input("Total closing costs"),
   }),
+  ...prop("mortgageInsUpfrontValue", {
+    valueSourceName: input("Upfront mortgage insurance"),
+    valueDollarsEditor: input("Upfront mortgage insurance"),
+    percentLoanEditor: input("Upfront mortgage insurance"),
+    decimalOfLoan: input("Upfront mortgage insurance decimal"),
+  }),
+  ...prop("mortgageInsPeriodicValue", {
+    valueSourceName: input("Periodic mortgage insurance"),
+    ...periodicInput("valueDollars", "Mortgage insurance"),
+    ...periodicInput("percentLoan", "Mortgage insurance"),
+    ...simplePeriodic("decimalOfLoan", "Mortgage insurance decimal"),
+  }),
   ...prop("loan", {
     ...simplePeriodic("loanPayment", "Loan payment"),
     ...simplePeriodic("expenses", "Total loan expenses"),
@@ -325,8 +337,7 @@ export const varbLabels = checkAllVarbLabels({
     ...simplePeriodic("averagePrincipal", "Average principal payment"),
     ...simplePeriodic("averageInterest", "Average interest payment"),
     mortgageInsUpfront: input("Upfront mortgage insurance"),
-    mortgageInsUpfrontEditor: input("Upfront mortgage insurance"),
-    ...periodicInput("mortgageIns", "Mortgage insurance"),
+    ...simplePeriodic("mortgageIns", "Mortgage insurance"),
     loanTotalDollars: input("Total loan amount"),
     fivePercentBaseLoan: input("5% base loan"),
   }),

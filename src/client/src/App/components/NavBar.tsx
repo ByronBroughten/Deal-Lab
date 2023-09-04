@@ -40,7 +40,7 @@ export function NavBar({ showMenu = true, ...props }: Props) {
             }}
             middle={
               <Box
-                sx={{ height: 50 }}
+                sx={{ height: 30 }} // this is needed for the logo to not be huge
                 component="img"
                 src={isPhone ? logo : logoAndName}
               />

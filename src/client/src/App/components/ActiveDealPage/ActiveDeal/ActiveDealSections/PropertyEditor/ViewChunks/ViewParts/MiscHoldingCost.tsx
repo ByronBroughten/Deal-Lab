@@ -46,7 +46,7 @@ export function MiscHoldingCost({ feId }: { feId: string }) {
           varbName: "valueSourceName",
         },
         items: [
-          ["valueDollarsPeriodicEditor", "Amount"],
+          ["valueDollarsPeriodicEditor", "Custom amount"],
           ["listTotal", "Itemize"],
         ],
         itemizeValue: "listTotal",

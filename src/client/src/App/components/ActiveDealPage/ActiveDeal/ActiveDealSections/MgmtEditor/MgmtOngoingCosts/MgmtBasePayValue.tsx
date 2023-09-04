@@ -77,7 +77,7 @@ export function BasePayValue({ feId }: { feId: string }) {
             }`,
           ],
           ["percentOfRentEditor", "Custom percent of rent"],
-          ["valueDollarsPeriodicEditor", "Custom dollar amount"],
+          ["valueDollarsPeriodicEditor", "Custom amount"],
         ],
         makeEditor: editorProps
           ? (props) => (

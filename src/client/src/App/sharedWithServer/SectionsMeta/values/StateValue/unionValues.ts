@@ -5,6 +5,7 @@ import { dealModes, getDealModes, isDealMode } from "./dealMode";
 import { financingModes } from "./financingMode";
 
 const valueSources = {
+  periodicSource: ["monthly", "yearly"],
   ongoingSwitch: ["monthly", "yearly"],
   monthsYearsSwitch: ["months", "years"],
 
@@ -38,6 +39,11 @@ const valueSources = {
     "tenPercentRent",
     "percentOfRentEditor",
     "valueDollarsPeriodicEditor",
+  ],
+  mortgageInsUpfrontSource: ["valueDollarsEditor", "percentLoanEditor"],
+  mortgageInsPeriodicSource: [
+    "valueDollarsPeriodicEditor",
+    "percentLoanPeriodicEditor",
   ],
   vacancyLossValueSource: [
     "none",
@@ -169,4 +175,4 @@ export function getFinancingTitle(
 const periodicMode = ["holding", "ongoing"] as const;
 export type PeriodicMode = (typeof periodicMode)[number];
 
-export const defaultCreatingDealModeOf = "homeBuyer";
+export const defaultCreateDealModeOf = "homeBuyer";

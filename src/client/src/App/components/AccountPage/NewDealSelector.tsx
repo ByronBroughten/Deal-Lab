@@ -1,40 +1,36 @@
-import { Box } from "@mui/material";
+import { Box, SxProps } from "@mui/material";
 import { unstable_batchedUpdates } from "react-dom";
 import { dealModeLabels } from "../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
-import { validateStateValue } from "../../sharedWithServer/SectionsMeta/values/valueMetas";
 import { useActionNoSave } from "../../sharedWithServer/stateClassHooks/useAction";
-import { useGetterFeStore } from "../../sharedWithServer/stateClassHooks/useFeStore";
 import { useGetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useGetterSection";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { HollowBtn } from "../appWide/HollowBtn";
-import { MuiRadioSelect } from "../appWide/MuiRadioSelect";
-import { useGoToPage } from "../customHooks/useGoToPage";
+import { MuiSelect } from "../appWide/MuiSelect";
+import { VarbStringLabel } from "../appWide/VarbStringLabel";
 import { MuiRow } from "../general/MuiRow";
 
-export function NewDealSelector() {
-  const { labSubscription } = useGetterFeStore();
-  return <NewDealSelectorAddDeal />;
+type Props = { sx?: SxProps };
+export function NewDealSelector(props: Props) {
+  return <NewDealSelectorAddDeal {...props} />;
 }
 
-function NewDealSelectorAddDeal() {
+function NewDealSelectorAddDeal({ sx }: Props) {
   const newDealMenu = useGetterSectionOnlyOne("newDealMenu");
   const session = useGetterSectionOnlyOne("sessionStore");
-  const goToActiveDeal = useGoToPage("activeDeal");
   const updateValue = useActionNoSave("updateValue");
-  const setCreatingDeal = () => {
+  const setCreateDeal = () => {
     unstable_batchedUpdates(() => {
       updateValue({
         ...session.varbInfo("isCreatingDeal"),
         value: true,
       });
-      goToActiveDeal();
     });
   };
 
   return (
-    <Box>
+    <Box sx={sx}>
       <MuiRow sx={{ paddingLeft: nativeTheme.s25 }}>
-        <MuiRadioSelect
+        {/* <MuiRadioSelect
           {...{
             value: newDealMenu.valueNext("dealMode"),
             onChange: (e) => {
@@ -50,33 +46,32 @@ function NewDealSelectorAddDeal() {
               ["brrrr", dealModeLabels.brrrr],
             ],
           }}
+        /> */}
+        <MuiSelect
+          {...{
+            sx: { width: "100%", mt: nativeTheme.s3 },
+            selectProps: { sx: { width: "100%" } },
+            label: (
+              <VarbStringLabel
+                {...{
+                  names: { sectionName: "deal", varbName: "dealMode" },
+                  id: "new-deal-select-deal-type",
+                }}
+              />
+            ),
+            unionValueName: "dealMode",
+            feVarbInfo: {
+              ...newDealMenu.feInfo,
+              varbName: "dealMode",
+            },
+            items: [
+              ["homeBuyer", dealModeLabels.homeBuyer],
+              ["buyAndHold", dealModeLabels.buyAndHold],
+              ["fixAndFlip", dealModeLabels.fixAndFlip],
+              ["brrrr", dealModeLabels.brrrr],
+            ],
+          }}
         />
-
-        {/* <MuiSelect
-        {...{
-          sx: { width: "100%", mt: nativeTheme.s3 },
-          selectProps: { sx: { width: "100%" } },
-          label: (
-            <VarbStringLabel
-              {...{
-                names: { sectionName: "deal", varbName: "dealMode" },
-                id: "new-deal-select-deal-type",
-              }}
-            />
-          ),
-          unionValueName: "dealMode",
-          feVarbInfo: {
-            ...newDealMenu.feInfo,
-            varbName: "dealMode",
-          },
-          items: [
-            ["homeBuyer", dealModeLabels.homeBuyer],
-            ["buyAndHold", dealModeLabels.buyAndHold],
-            ["fixAndFlip", dealModeLabels.fixAndFlip],
-            ["brrrr", dealModeLabels.brrrr],
-          ],
-        }}
-      /> */}
         <HollowBtn
           sx={{
             mt: nativeTheme.s4,
@@ -85,11 +80,9 @@ function NewDealSelectorAddDeal() {
             fontSize: nativeTheme.fs20,
           }}
           middle={"Create Deal"}
-          onClick={setCreatingDeal}
+          onClick={setCreateDeal}
         />
       </MuiRow>
     </Box>
   );
 }
-
-function NewDealSelectorUpgradeToPro() {}

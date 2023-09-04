@@ -57,7 +57,7 @@ export function makeAllBaseSectionVarbs() {
       compareDealStatus: baseVarb("compareDealStatus"),
       archivedAreLoaded: baseVarb("boolean"),
       showArchivedDeals: baseVarb("boolean"),
-      creatingDealOfMode: baseVarb("dealMode"),
+      CreateDealOfMode: baseVarb("dealMode"),
       isCreatingDeal: baseVarb("boolean"),
       dealDbIdToEdit: baseVarb("string"),
     }),
@@ -248,6 +248,18 @@ export function makeAllBaseSectionVarbs() {
       valueSourceName: baseVarb("dollarsOrListOngoing"),
       ...baseVarbsS.periodicDollarsInput("valueDollars"),
     }),
+    mortgageInsUpfrontValue: varbs({
+      valueSourceName: baseVarb("mortgageInsUpfrontSource"),
+      valueDollarsEditor: baseVarb("numObj", dollars),
+      percentLoanEditor: baseVarb("numObj", percent),
+      decimalOfLoan: baseVarb("numObj", decimal),
+    }),
+    mortgageInsPeriodicValue: varbs({
+      valueSourceName: baseVarb("mortgageInsPeriodicSource"),
+      ...baseVarbsS.periodicDollarsInput("valueDollars"),
+      ...baseVarbsS.periodicPercentInput("percentLoan"),
+      ...baseVarbsS.periodicDecimal("decimalOfLoan"),
+    }),
     costOverrunValue: varbs({
       valueDollars: baseVarb("numObj", dollars),
       valuePercent: baseVarb("numObj", percent),
@@ -304,11 +316,9 @@ export function makeAllBaseSectionVarbs() {
       ...baseVarbsS.periodicDollars("expenses"),
 
       piCalculationName: baseVarb("string"), // depreciated
-
       hasMortgageIns: baseVarb("boolean"),
       mortgageInsUpfront: baseVarb("numObj", dollars),
-      mortgageInsUpfrontEditor: baseVarb("numObj", dollars),
-      ...baseVarbsS.periodicDollarsInput("mortgageIns"),
+      ...baseVarbsS.periodicDollars("mortgageIns"),
       ...baseVarbs(
         "numObj",
         ["loanTotalDollars", "closingCosts", "fivePercentBaseLoan"] as const,

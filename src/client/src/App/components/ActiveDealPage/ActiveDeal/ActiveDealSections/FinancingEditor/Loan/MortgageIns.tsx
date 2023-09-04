@@ -2,13 +2,22 @@ import { useGetterSection } from "../../../../../../sharedWithServer/stateClassH
 import { nativeTheme } from "../../../../../../theme/nativeTheme";
 import { ToggledNode } from "../../../../../appWide/ToggledNode";
 import { MuiRow } from "../../../../../general/MuiRow";
-import { NumObjEntityEditor } from "../../../../../inputs/NumObjEntityEditor";
+import { MortgageInsPeriodicValue } from "./MortgageInsPeriodicValue";
+import { MortgageInsUpfrontValue } from "./MortgageInsUpfrontValue";
 
 interface Props {
   feId: string;
 }
 export function MortgageIns({ feId }: Props) {
   const loan = useGetterSection({ sectionName: "loan", feId });
+  const mortIns = loan.onlyChild("mortgageInsPeriodicValue");
+  const switchValue = mortIns.switchValue("percentLoan", "periodic");
+
+  const varbNames = {
+    monthly: "mortgageInsMonthly",
+    yearly: "mortgageInsYearly",
+  } as const;
+  const displayVarbName = varbNames[switchValue];
   return (
     <ToggledNode
       {...{
@@ -21,21 +30,17 @@ export function MortgageIns({ feId }: Props) {
               },
             }}
           >
-            <NumObjEntityEditor
-              sx={{
-                marginRight: nativeTheme.s3,
-              }}
-              feVarbInfo={loan.varbInfo("mortgageInsUpfrontEditor")}
-              label="Upfront"
+            <MortgageInsUpfrontValue
               {...{
-                editorType: "equation",
+                sx: { marginRight: nativeTheme.s3 },
+                feId: loan.oneChildFeId("mortgageInsUpfrontValue"),
+                totalDisplayVarb: loan.displayVarb("mortgageInsUpfront"),
               }}
             />
-            <NumObjEntityEditor
-              feVarbInfo={loan.varbInfo("mortgageInsPeriodicEditor")}
-              label="Ongoing"
+            <MortgageInsPeriodicValue
               {...{
-                editorType: "equation",
+                feId: loan.oneChildFeId("mortgageInsPeriodicValue"),
+                percentDisplayVarb: loan.displayVarb(displayVarbName),
               }}
             />
           </MuiRow>

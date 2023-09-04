@@ -13,6 +13,7 @@ import { UpdateFnProp } from "./UpdateFnProps";
 import {
   updateOverride,
   UpdateOverrides,
+  UpdateOverrideSwitches,
   UpdateOverrideSwitchInfo,
 } from "./UpdateOverrides";
 
@@ -70,7 +71,7 @@ export function dealModeOverrides(
   overrideMap: Record<StateValue<"dealMode">, UpdateBasics>,
   switchInfo?: UpdateOverrideSwitchInfo
 ): UpdateOverrides {
-  return unionSwitchOverride(
+  return unionOverrides(
     "dealMode",
     switchInfo ?? relVarbInfoS.local("dealMode"),
     overrideMap
@@ -81,7 +82,7 @@ export function financingMethodOverrides(
   overrideMap: Record<StateValue<"financingMethod">, UpdateBasics>,
   switchInfo?: UpdateOverrideSwitchInfo
 ): UpdateOverrides {
-  return unionSwitchOverride(
+  return unionOverrides(
     "financingMethod",
     switchInfo ?? relVarbInfoS.local("financingMethod"),
     overrideMap
@@ -90,12 +91,34 @@ export function financingMethodOverrides(
 
 export function valueSourceNumObj<VT extends ValueSourceType>(
   _valueSourceType: VT,
-  overrideMap: Record<ValueSource<VT>, UpdateBasics>
+  overrideMap: Record<ValueSource<VT>, UpdateBasics>,
+  switchInfo?: UpdateOverrideSwitchInfo
 ): UpdateVarb<"numObj"> {
   return updateVarb("numObj", {
     updateFnName: "throwIfReached",
-    updateOverrides: valueSourceOverrides(_valueSourceType, overrideMap),
+    updateOverrides: valueSourceOverrides(
+      _valueSourceType,
+      overrideMap,
+      switchInfo
+    ),
   });
+}
+
+type Options = {
+  switchInfo: UpdateOverrideSwitchInfo;
+  sharedSwitches?: UpdateOverrideSwitches;
+};
+export function vsOverridesNext<VT extends ValueSourceType>(
+  _valueSourceType: VT,
+  updateBasics: Record<ValueSource<VT>, UpdateBasics>,
+  options: Options
+): UpdateOverrides {
+  return unionOverrides(
+    _valueSourceType,
+    options.switchInfo ?? relVarbInfoS.local("valueSourceName"),
+    updateBasics,
+    options.sharedSwitches
+  );
 }
 
 export function valueSourceOverrides<VT extends ValueSourceType>(
@@ -103,22 +126,23 @@ export function valueSourceOverrides<VT extends ValueSourceType>(
   updateBasics: Record<ValueSource<VT>, UpdateBasics>,
   switchInfo?: UpdateOverrideSwitchInfo
 ): UpdateOverrides {
-  return unionSwitchOverride(
+  return unionOverrides(
     _valueSourceType,
     switchInfo ?? relVarbInfoS.local("valueSourceName"),
     updateBasics
   );
 }
 
-export function unionSwitchOverride<UVN extends UnionValueName>(
+export function unionOverrides<UVN extends UnionValueName>(
   _unionValueName: UVN,
   switchInfo: UpdateOverrideSwitchInfo,
-  updateBasics: Record<UnionValue<UVN>, UpdateBasics>
+  updateBasics: Record<UnionValue<UVN>, UpdateBasics>,
+  sharedSwitches: UpdateOverrideSwitches = []
 ) {
   return Obj.keys(updateBasics).reduce((overrides, unionValue) => {
     overrides.push(
       updateOverride(
-        [{ switchInfo, switchValues: [unionValue] }],
+        [{ switchInfo, switchValues: [unionValue] }, ...sharedSwitches],
         updateBasics[unionValue]
       )
     );

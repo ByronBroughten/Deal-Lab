@@ -9,29 +9,24 @@ import {
 } from "../sharedWithServer/stateClassHooks/useStorageLimitReached";
 import { nativeTheme } from "../theme/nativeTheme";
 import { arrSx } from "../utils/mui";
-import { NewDealSelector } from "./AccountPage/NewDealSelector";
 import { SavedDeals } from "./AccountPage/SavedDeals";
 import { HollowBtn } from "./appWide/HollowBtn";
-import { useMakeGoToPage } from "./customHooks/useGoToPage";
-import ChunkTitle from "./general/ChunkTitle";
+import { useGoToPage, useMakeGoToPage } from "./customHooks/useGoToPage";
 import { MuiRow } from "./general/MuiRow";
 import { Row } from "./general/Row";
 import { MuiBtnPropsNext } from "./general/StandardProps";
 import { icons } from "./Icons";
-import { useInputModal } from "./Modals/InputModalProvider";
 
 const iconSize = 40;
 export function AccountPage() {
-  const { setModal } = useInputModal();
   const isAtDealLimit = useIsAtDealLimit();
+
+  const goToCreateDeal = useGoToPage("createDeal");
   const openAddDeal = () => {
     if (isAtDealLimit) {
       showDealLimitReachedMessage();
     } else {
-      setModal({
-        title: <ChunkTitle>New Deal</ChunkTitle>,
-        children: <NewDealSelector />,
-      });
+      goToCreateDeal();
     }
   };
 

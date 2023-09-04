@@ -23,7 +23,7 @@ export function PropertyEditorBody({
           showControls: true,
         }}
       />
-      <MainSectionBody themeName="property">{children}</MainSectionBody>
+      <MainSectionBody>{children}</MainSectionBody>
     </div>
   );
 }

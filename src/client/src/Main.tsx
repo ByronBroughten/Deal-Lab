@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { getSuperTokensRoutesForReactRouterDom } from "supertokens-auth-react";
 import { ActiveDealRoutes } from "./ActiveDealRoutes";
 import { AccountPage } from "./App/components/AccountPage";
+import { CreateDeal } from "./App/components/ActiveDealPage/CreateDeal";
 import { PageContent } from "./App/components/appWide/GeneralSection/PageContent";
 import { AuthProtectedPage } from "./App/components/AuthProtectedPage";
 import { CompareDealsPage } from "./App/components/DealComparePage/CompareDealsPage";
@@ -47,6 +48,7 @@ export function Main() {
           <Route path={"/"} element={<AuthProtectedPage />}>
             <Route index element={<Navigate to={feRoutes.account} />} />
             <Route path={feRoutes.account} element={<AccountPage />} />
+            <Route path={feRoutes.createDeal} element={<CreateDeal />} />
             {ActiveDealRoutes}
             {UserComponentRoutes}
             <Route

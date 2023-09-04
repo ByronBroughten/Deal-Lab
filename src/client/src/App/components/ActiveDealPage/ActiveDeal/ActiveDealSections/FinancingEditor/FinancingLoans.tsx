@@ -26,19 +26,18 @@ export function FinancingLoans({ feId }: FeIdProp) {
         display: "flex",
         flexDirection: "column",
         flex: 1,
+        paddingTop: nativeTheme.s4,
       }}
     >
-      <div className={"Financing-loans"}>
-        {loanIds.map((feId, idx) => (
-          <Loan
-            key={feId}
-            feId={feId}
-            sx={idx !== 0 ? { mt: nativeTheme.s4 } : undefined}
-            showXBtn={loanIds.length > 1}
-            showTitleAppend={false}
-          />
-        ))}
-      </div>
+      {loanIds.map((feId, idx) => (
+        <Loan
+          key={feId}
+          feId={feId}
+          sx={idx !== 0 ? { mt: nativeTheme.s4 } : undefined}
+          showXBtn={loanIds.length > 1}
+          showTitleAppend={false}
+        />
+      ))}
       <SubSectionBtn
         sx={{
           fontSize: nativeTheme.chunkTitleFs,

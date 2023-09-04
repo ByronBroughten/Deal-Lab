@@ -6,9 +6,54 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
+// Make the page for creating a new deal look nicer.
+
+// Ok, so am I going to the ActiveDeal page?
+// I could, but I'd need some kind of boolean
+// Otherwise, I could make a new page called "Create new deal"
+
+// Editing the deal's name in Saved Deals causes the whole deal
+// to solve.
+// - Only use the sessionDeal in Saved Deals
+// - Make editing the sessionDeal's displayName trigger:
+// 1. Fetching the deal, updating its displayName, saving
+// 2. A new route that updates the deal's displayName, and then also updating
+//    feStore deal's displayName
+
+// Values to make for loading zillow data eventually:
+// yearBuilt
+// squareFeet
+// numBedrooms
+// interestRate
+// loanTerm
+
+// targetRent(?)
+// purchasePrice
+// taxes
+// homeInsurance
+
+// I would have to:
+// - make a separate sectionName for each of them
+//   - Each one for now would just have a valueSourceName and...
+//   - There would be many different types of valueEditor
+//     - valueDollarsEditor, valueEditor, etc...
+//     - maybe valueDollarsEditor should just be valueEditor
+//       - and valuePercentEditor can remain as such
+// - They'd all have valueEditor and valueSourceName
+// - Then their parent would have a value that just grabs the
+//   valueEditor value: boom
+// - More complex, larger properties
+// - make their current inputs draw from their values
+// - edit the defaults
+
+// Ongoing mortgage ins should have an option to be a percent
+// of the loan amount
+// - I made the mortgage ins value sections
+// -
+
+// Allow drawing in national averages from the api.
 
 // Allow switching between month and year inputs
-// Display commas for outputs
 
 // It'd look nicer if New Deal took you to a page
 // where the dropdown still works and defaults to Homebuyer
@@ -26,6 +71,9 @@ AppRegistry.runApplication("App", {
 //   those pretty easily and add them, no problem.
 // - However, it also has outVarbs. Presently, I can't find those
 //   without searching through the whole app
+
+// Redo how sections are saved and retrieved
+// - Actually save them to the db, and don't load them until you need to.
 
 // - I need to maintain a map of varbContextId—context.userVarbId/fixedVarbName
 //   - And they point to a list of varbIds (for varbs that have them as inVarbs)

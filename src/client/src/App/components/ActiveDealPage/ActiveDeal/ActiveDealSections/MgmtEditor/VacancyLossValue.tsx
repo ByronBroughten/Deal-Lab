@@ -83,7 +83,7 @@ export function VacancyLossValue({ feId }: { feId: string }) {
             }`,
           ],
           ["percentOfRentEditor", "Custom percent of rent"],
-          ["valueDollarsPeriodicEditor", "Custom dollar amount"],
+          ["valueDollarsPeriodicEditor", "Custom amount"],
         ],
         label: <VarbStringLabel names={feVarbInfo} />,
         equalsValue,

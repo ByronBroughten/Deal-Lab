@@ -157,7 +157,7 @@ export function setOnetimeList<SN extends OnetimeCostSN>(
   return total;
 }
 
-type OngoingSectionName =
+type PeriodicSectionName =
   | "miscPeriodicValue"
   | "maintenanceValue"
   | "utilityValue"
@@ -165,15 +165,16 @@ type OngoingSectionName =
   | "taxesValue"
   | "homeInsValue"
   | "vacancyLossValue"
-  | "mgmtBasePayValue";
+  | "mgmtBasePayValue"
+  | "mortgageInsPeriodicValue";
 
-export const setPeriodicEditor = <SN extends OngoingSectionName>(
+export const setPeriodicEditor = <SN extends PeriodicSectionName>(
   section: SolverSection<SN>,
   amount: number,
   switchVal: "yearly" | "monthly" = "monthly"
 ) => {
   (
-    section as SolverSection<any> as SolverSection<OngoingSectionName>
+    section as SolverSection<any> as SolverSection<PeriodicSectionName>
   ).updateValues({
     valueSourceName: "valueDollarsPeriodicEditor",
     valueDollarsPeriodicSwitch: switchVal,
@@ -181,7 +182,7 @@ export const setPeriodicEditor = <SN extends OngoingSectionName>(
   });
 };
 
-type PeriodicListSn = OngoingSectionName | "utilityValue";
+type PeriodicListSn = PeriodicSectionName | "utilityValue";
 export function setPeriodicList<SN extends PeriodicListSn>(
   section: SolverSection<SN>,
   items: number[],

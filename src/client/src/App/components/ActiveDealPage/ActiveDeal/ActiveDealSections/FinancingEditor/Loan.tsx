@@ -1,6 +1,5 @@
 import { SxProps } from "@mui/material";
 import React from "react";
-import { useWindowDimensions } from "react-native";
 import { StateValue } from "../../../../../sharedWithServer/SectionsMeta/values/StateValue";
 import { useGetterSection } from "../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { nativeTheme } from "../../../../../theme/nativeTheme";
@@ -8,6 +7,7 @@ import { arrSx } from "../../../../../utils/mui";
 import MainSectionBody from "../../../../appWide/GeneralSection/MainSection/MainSectionBody";
 import { MainSectionInner } from "../../../../appWide/GeneralSection/MainSectionInner";
 import { MainSectionTopRows } from "../../../../appWide/MainSectionTopRows";
+import { useIsDevices } from "./../../../../customHooks/useMediaQueries";
 import { LoanBaseValue } from "./Loan/LoanBaseValue";
 import { LoanTerms } from "./Loan/LoanTerms";
 
@@ -36,15 +36,16 @@ export function Loan({
     refinance: "Refinance",
   };
 
-  const dimensions = useWindowDimensions();
-  const { mediaPhone, s5, s15 } = nativeTheme;
-  const paddingLR = dimensions.width > mediaPhone ? s5 : s15;
-
+  const { isPhone } = useIsDevices();
+  const { s5, s15 } = nativeTheme;
+  const paddingLR = isPhone ? s15 : s5;
+  const minWidth = isPhone ? "auto" : "650px";
   return (
     <MainSectionInner
       className={className}
       sx={[
         {
+          minWidth,
           paddingTop: nativeTheme.s45,
           paddingLeft: paddingLR,
           paddingRight: paddingLR,

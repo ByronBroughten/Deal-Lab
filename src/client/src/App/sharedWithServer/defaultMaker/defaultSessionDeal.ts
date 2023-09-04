@@ -4,7 +4,7 @@ import { GetterSection } from "./../StateGetters/GetterSection";
 import { PackBuilderSection } from "./../StatePackers/PackBuilderSection";
 
 const outputPerDeal: Record<DealMode, VarbName<"deal">> = {
-  homeBuyer: "averageNonPrincipalOngoingMonthly",
+  homeBuyer: "expensesOngoingMonthly",
   buyAndHold: "cocRoiYearly",
   fixAndFlip: "valueAddRoiPercent",
   brrrr: "valueAddRoiPercent",

@@ -48,10 +48,15 @@ describe("homeBuyer output calculations", () => {
   it("should calculate ongoingPiti", () => {
     setPeriodicEditor(property.onlyChild("taxesOngoing"), 300, "monthly");
     setPeriodicEditor(property.onlyChild("homeInsOngoing"), 200, "monthly");
+
+    setPeriodicEditor(
+      firstLoan.onlyChild("mortgageInsPeriodicValue"),
+      100,
+      "monthly"
+    );
+
     firstLoan.updateValues({
       hasMortgageIns: true,
-      mortgageInsPeriodicEditor: numObj(100),
-      mortgageInsPeriodicSwitch: "monthly",
     });
     setFirstLoanFor912p6Monthly(financing, property);
 
@@ -66,12 +71,15 @@ describe("homeBuyer output calculations", () => {
     setPeriodicList(property.onlyChild("utilityOngoing"), [50], "monthly");
     setPeriodicEditor(property.onlyChild("maintenanceOngoing"), 30, "monthly");
     setPeriodicEditor(property.onlyChild("capExValueOngoing"), 80, "monthly");
+
+    setPeriodicEditor(
+      firstLoan.onlyChild("mortgageInsPeriodicValue"),
+      120,
+      "monthly"
+    );
+
     setFirstLoanFor912p6Monthly(financing, property);
-    firstLoan.updateValues({
-      hasMortgageIns: true,
-      mortgageInsPeriodicEditor: numObj(120),
-      mortgageInsPeriodicSwitch: "monthly",
-    });
+    firstLoan.updateValues({ hasMortgageIns: true });
 
     const amount = 300 + 200 + 100 + 50 + 30 + 80 + 912.6 + 120;
     expect(deal.numValue("expensesOngoingMonthly")).toBe(amount);

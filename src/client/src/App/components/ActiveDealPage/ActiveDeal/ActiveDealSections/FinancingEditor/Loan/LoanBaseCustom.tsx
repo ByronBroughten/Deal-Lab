@@ -32,7 +32,7 @@ export function LoanBaseCustom({ feId, sx }: Props) {
           ),
         }),
         items: [
-          ["valueDollarsEditor", "Amount"],
+          ["valueDollarsEditor", "Custom amount"],
           ["listTotal", "Itemize"],
         ],
         itemizedModalTitle: "Wrapped in loan",

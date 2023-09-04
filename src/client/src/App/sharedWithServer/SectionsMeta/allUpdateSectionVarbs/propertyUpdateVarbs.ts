@@ -10,7 +10,7 @@ import {
 import { overrideSwitchS } from "../updateSectionVarbs/updateVarb/UpdateOverrides";
 import {
   dealModeVarb,
-  unionSwitchOverride,
+  unionOverrides,
   valueSourceOverrides,
 } from "../updateSectionVarbs/updateVarb/updateVarbUtils";
 import { updateVarbsS } from "../updateSectionVarbs/updateVarbs";
@@ -150,7 +150,7 @@ export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
     numUnitsEditor: updateVarb("numObj"),
     numUnits: updateVarb("numObj", {
       updateFnName: "throwIfReached",
-      updateOverrides: unionSwitchOverride(
+      updateOverrides: unionOverrides(
         "dealMode",
         relVarbInfoS.local("propertyMode"),
         {
@@ -164,7 +164,7 @@ export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
     numBedroomsEditor: updateVarb("numObj"),
     numBedrooms: updateVarb("numObj", {
       updateFnName: "throwIfReached",
-      updateOverrides: unionSwitchOverride(
+      updateOverrides: unionOverrides(
         "dealMode",
         relVarbInfoS.local("propertyMode"),
         {
@@ -211,7 +211,7 @@ export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
       propS.local("holdingCostMonthly")
     ),
     upfrontExpenses: updateVarb("numObj", {
-      updateOverrides: unionSwitchOverride(
+      updateOverrides: unionOverrides(
         "dealMode",
         relVarbInfoS.local("propertyMode"),
         {

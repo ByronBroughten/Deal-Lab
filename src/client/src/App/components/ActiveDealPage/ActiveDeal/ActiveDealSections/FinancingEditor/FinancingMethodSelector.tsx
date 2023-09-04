@@ -22,6 +22,19 @@ export function FinancingMethodSelector({ feId }: { feId: string }) {
           m: 0,
           p: 0,
           mt: nativeTheme.s2,
+          marginLeft: nativeTheme.s25,
+          "& .Mui-checked": {
+            color: nativeTheme.primary.main,
+          },
+          "& .MuiFormLabel-root": {
+            fontSize: nativeTheme.inputEditor.fontSize,
+            color: nativeTheme.dark,
+          },
+          "& .MuiFormControlLabel-label": {
+            margin: 0,
+            marginTop: nativeTheme.s15,
+            marginLeft: nativeTheme.s25,
+          },
         }}
       >
         <RadioGroup

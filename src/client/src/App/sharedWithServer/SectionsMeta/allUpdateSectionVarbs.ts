@@ -19,6 +19,7 @@ import { sellingCostUpdateVarbs } from "./allUpdateSectionVarbs/sellingCostUpdat
 import { vacancyLossUpdateVarbs } from "./allUpdateSectionVarbs/vacancyLossUpdateVarbs";
 import { VarbName } from "./baseSectionsDerived/baseSectionsVarbsTypes";
 import { mixedInfoS } from "./SectionInfo/MixedSectionInfo";
+import { relVarbInfoS } from "./SectionInfo/RelVarbInfo";
 import { SectionName, sectionNames } from "./SectionName";
 import {
   defaultSectionUpdateVarbs,
@@ -45,7 +46,7 @@ import {
 } from "./updateSectionVarbs/updateVarb/updateVarbUtils";
 import { updateVarbsS } from "./updateSectionVarbs/updateVarbs";
 import { numObj } from "./values/StateValue/NumObj";
-import { defaultCreatingDealModeOf } from "./values/StateValue/unionValues";
+import { defaultCreateDealModeOf } from "./values/StateValue/unionValues";
 
 const propS = updateFnPropS;
 const propsS = updateFnPropsS;
@@ -83,8 +84,8 @@ function makeAllUpdateSections() {
   return checkAllUpdateSections({
     ...makeAllDefaultUpdateSections(),
     ...prop("sessionStore", {
-      creatingDealOfMode: varb("dealMode", {
-        initValue: defaultCreatingDealModeOf,
+      CreateDealOfMode: varb("dealMode", {
+        initValue: defaultCreateDealModeOf,
       }),
       compareDealStatus: varb("compareDealStatus", { initValue: "editing" }),
       archivedAreLoaded: varb("boolean", { initValue: false }),
@@ -408,6 +409,93 @@ function makeAllUpdateSections() {
           valueDollarsEditor:
             updateBasicsS.loadSolvableTextByVarbInfo("valueDollarsEditor"),
         }),
+      }),
+    }),
+    // mortgageInsUpfrontValue: varbs({
+    //   valueSourceName: baseVarb("mortgageInsUpfrontSource"),
+    //   valueDollarsEditor: baseVarb("numObj", dollars),
+    //   valueDollars: baseVarb("numObj", dollars),
+    //   percentLoanEditor: baseVarb("numObj", dollars),
+    // }),
+    // mortgageInsPeriodicValue: varbs({
+    //   valueSourceName: baseVarb("mortgageInsPeriodicSource"),
+    //   ...baseVarbsS.periodicDollarsInput("valueDollars"),
+    //   ...baseVarbsS.periodicPercentInput("percentLoan"),
+    // }),
+    ...prop("mortgageInsUpfrontValue", {
+      valueSourceName: updateVarb("mortgageInsUpfrontSource", {
+        initValue: "percentLoanEditor",
+      }),
+      valueDollarsEditor: updateVarb("numObj"),
+      percentLoanEditor: updateVarb("numObj"),
+      decimalOfLoan: updateVarb(
+        "numObj",
+        basics.equationSimple(
+          "percentToDecimal",
+          propS.local("percentLoanEditor")
+        )
+      ),
+    }),
+    ...prop("mortgageInsPeriodicValue", {
+      valueSourceName: updateVarb("mortgageInsPeriodicSource", {
+        initValue: "percentLoanPeriodicEditor",
+      }),
+      ...updateVarbsS.group("percentLoan", "periodicInput", "yearly", {
+        editor: { initValue: numObj(0) },
+        monthly: valueSourceNumObj(
+          "periodicSource",
+          {
+            monthly: basics.loadFromLocal("percentLoanPeriodicEditor"),
+            yearly: basics.yearlyToMonthly("percentLoan"),
+          },
+          relVarbInfoS.local("percentLoanPeriodicSwitch")
+        ),
+        yearly: valueSourceNumObj(
+          "periodicSource",
+          {
+            yearly: basics.loadFromLocal("percentLoanPeriodicEditor"),
+            monthly: basics.monthlyToYearly("percentLoan"),
+          },
+          relVarbInfoS.local("percentLoanPeriodicSwitch")
+        ),
+      }),
+      ...updateVarbsS.group("decimalOfLoan", "periodic", "yearly", {
+        monthly: basics.equationSimple(
+          "percentToDecimal",
+          propS.local("percentLoanMonthly")
+        ),
+        yearly: basics.equationSimple(
+          "percentToDecimal",
+          propS.local("percentLoanYearly")
+        ),
+      }),
+      ...updateVarbsS.group("valueDollars", "periodicInput", "monthly", {
+        editor: { initValue: numObj(0) },
+        monthly: {
+          updateFnName: "throwIfReached",
+          updateOverrides: [
+            updateOverride(
+              [switchS.local("valueDollarsPeriodicSwitch", "monthly")],
+              basics.loadFromLocal("valueDollarsPeriodicEditor")
+            ),
+            updateOverride(
+              [switchS.local("valueDollarsPeriodicSwitch", "yearly")],
+              basics.yearlyToMonthly("valueDollars")
+            ),
+          ],
+        },
+        yearly: {
+          updateOverrides: [
+            updateOverride(
+              [switchS.local("valueDollarsPeriodicSwitch", "yearly")],
+              basics.loadFromLocal("valueDollarsPeriodicEditor")
+            ),
+            updateOverride(
+              [switchS.local("valueDollarsPeriodicSwitch", "monthly")],
+              basics.monthlyToYearly("valueDollars")
+            ),
+          ],
+        },
       }),
     }),
     ...prop("miscPeriodicValue", miscPeriodicCostUpdateVarbs()),

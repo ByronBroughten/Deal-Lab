@@ -34,5 +34,8 @@ export function makeDefaultLoanPack(
 
   const closingCostValue = loan.addAndGetChild("closingCostValue");
   closingCostValue.addChild("onetimeList");
+
+  loan.addChild("mortgageInsUpfrontValue");
+  loan.addChild("mortgageInsPeriodicValue");
   return loan.makeSectionPack();
 }

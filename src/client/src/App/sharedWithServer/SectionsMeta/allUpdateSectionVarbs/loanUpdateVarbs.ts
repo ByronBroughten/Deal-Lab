@@ -1,3 +1,4 @@
+import { relVarbInfoS } from "../SectionInfo/RelVarbInfo";
 import { UpdateSectionVarbs } from "../updateSectionVarbs/updateSectionVarbs";
 import { updateVarb, updateVarbS } from "../updateSectionVarbs/updateVarb";
 import {
@@ -13,6 +14,7 @@ import {
   overrideSwitchS,
   updateOverride,
 } from "../updateSectionVarbs/updateVarb/UpdateOverrides";
+import { vsOverridesNext } from "../updateSectionVarbs/updateVarb/updateVarbUtils";
 import { updateVarbsS } from "../updateSectionVarbs/updateVarbs";
 import { numObj } from "../values/StateValue/NumObj";
 import { PiCalculationName } from "../values/StateValue/valuesShared/calculations/piCalculations";
@@ -45,43 +47,63 @@ export function loanUpdateVarbs(): UpdateSectionVarbs<"loan"> {
     hasMortgageIns: updateVarb("boolean", {
       initValue: false,
     }),
-    mortgageInsUpfrontEditor: updateVarb("numObj"),
     mortgageInsUpfront: updateVarb("numObj", {
       updateFnName: "throwIfReached",
       updateOverrides: [
         updateOverride([oSwitchS.localIsFalse("hasMortgageIns")], basicsS.zero),
-        updateOverride(
-          [oSwitchS.localIsTrue("hasMortgageIns")],
-          basicsS.loadFromLocal(
-            "mortgageInsUpfrontEditor"
-          ) as UpdateBasics<"numObj">
+        ...vsOverridesNext(
+          "mortgageInsUpfrontSource",
+          {
+            valueDollarsEditor: basicsS.loadFromChild(
+              "mortgageInsUpfrontValue",
+              "valueDollarsEditor"
+            ),
+            percentLoanEditor: basicsS.equationLR(
+              "multiply",
+              propS.local("loanTotalDollars"),
+              propS.onlyChild("mortgageInsUpfrontValue", "decimalOfLoan")
+            ),
+          },
+          {
+            sharedSwitches: [oSwitchS.localIsTrue("hasMortgageIns")],
+            switchInfo: relVarbInfoS.onlyChild(
+              "mortgageInsUpfrontValue",
+              "valueSourceName"
+            ),
+          }
         ),
       ],
     }),
-    ...updateVarbsS.periodicInput("mortgageIns", {
-      switchInit: "yearly",
-      editor: { updateFnName: "calcVarbs" },
+    ...updateVarbsS.group("mortgageIns", "periodic", "yearly", {
       monthly: {
         updateOverrides: [
           updateOverride(
             [oSwitchS.localIsFalse("hasMortgageIns")],
             basicsS.zero
           ),
-          updateOverride(
-            [
-              oSwitchS.localIsTrue("hasMortgageIns"),
-              oSwitchS.monthlyIsActive("mortgageIns"),
-            ],
-            basicsS.loadFromLocal(
-              "mortgageInsPeriodicEditor"
-            ) as UpdateBasics<"numObj">
-          ),
-          updateOverride(
-            [
-              oSwitchS.localIsTrue("hasMortgageIns"),
-              oSwitchS.yearlyIsActive("mortgageIns"),
-            ],
-            basicsS.yearlyToMonthly("mortgageIns")
+          ...vsOverridesNext(
+            "mortgageInsPeriodicSource",
+            {
+              valueDollarsPeriodicEditor: basicsS.loadFromChild(
+                "mortgageInsPeriodicValue",
+                "valueDollarsMonthly"
+              ),
+              percentLoanPeriodicEditor: basicsS.equationLR(
+                "multiply",
+                propS.onlyChild(
+                  "mortgageInsPeriodicValue",
+                  "decimalOfLoanMonthly"
+                ),
+                propS.local("loanTotalDollars")
+              ),
+            },
+            {
+              sharedSwitches: [oSwitchS.localIsTrue("hasMortgageIns")],
+              switchInfo: relVarbInfoS.onlyChild(
+                "mortgageInsPeriodicValue",
+                "valueSourceName"
+              ),
+            }
           ),
         ],
       },
@@ -91,21 +113,29 @@ export function loanUpdateVarbs(): UpdateSectionVarbs<"loan"> {
             [oSwitchS.localIsFalse("hasMortgageIns")],
             basicsS.zero
           ),
-          updateOverride(
-            [
-              oSwitchS.localIsTrue("hasMortgageIns"),
-              oSwitchS.yearlyIsActive("mortgageIns"),
-            ],
-            basicsS.loadFromLocal(
-              "mortgageInsPeriodicEditor"
-            ) as UpdateBasics<"numObj">
-          ),
-          updateOverride(
-            [
-              oSwitchS.localIsTrue("hasMortgageIns"),
-              oSwitchS.monthlyIsActive("mortgageIns"),
-            ],
-            basicsS.monthlyToYearly("mortgageIns")
+          ...vsOverridesNext(
+            "mortgageInsPeriodicSource",
+            {
+              valueDollarsPeriodicEditor: basicsS.loadFromChild(
+                "mortgageInsPeriodicValue",
+                "valueDollarsYearly"
+              ),
+              percentLoanPeriodicEditor: basicsS.equationLR(
+                "multiply",
+                propS.onlyChild(
+                  "mortgageInsPeriodicValue",
+                  "decimalOfLoanYearly"
+                ),
+                propS.local("loanTotalDollars")
+              ),
+            },
+            {
+              sharedSwitches: [oSwitchS.localIsTrue("hasMortgageIns")],
+              switchInfo: relVarbInfoS.onlyChild(
+                "mortgageInsPeriodicValue",
+                "valueSourceName"
+              ),
+            }
           ),
         ],
       },

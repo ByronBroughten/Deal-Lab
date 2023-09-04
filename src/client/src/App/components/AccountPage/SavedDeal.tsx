@@ -271,7 +271,7 @@ function DealActions({
   });
 
   const updateValueNoSave = useActionNoSave("updateValue");
-  const setCreatingDeal = () =>
+  const setCreateDeal = () =>
     updateValueNoSave({
       ...session.varbInfo("dealDbIdToEdit"),
       value: deal.dbId,
@@ -330,7 +330,7 @@ function DealActions({
                 minWidth: "64px",
               },
               left: icons.edit({ size: 20 }),
-              onClick: setCreatingDeal,
+              onClick: setCreateDeal,
               middle: "Edit",
               ...(isInactive && {
                 showAsDisabled: true,

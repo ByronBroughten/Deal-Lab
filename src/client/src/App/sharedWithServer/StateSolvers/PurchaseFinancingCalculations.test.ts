@@ -11,6 +11,7 @@ import {
   setFirstLoanFor912p6Monthly,
   setOnetimeEditor,
   setOnetimeList,
+  setPeriodicEditor,
 } from "./testUtils";
 
 describe("Purchase financing calculations", () => {
@@ -241,11 +242,7 @@ describe("Purchase financing calculations", () => {
     }
   });
   it("should calculate mortgage insurance", () => {
-    firstLoan.updateValues({
-      mortgageInsPeriodicSwitch: "monthly",
-      mortgageInsPeriodicEditor: numObj(30),
-      hasMortgageIns: true,
-    });
+    firstLoan.updateValues({ hasMortgageIns: true });
     expect(financing.numValue("mortgageInsMonthly")).toBe(30);
     expect(financing.numValue("mortgageInsYearly")).toBe(30 * 12);
 
@@ -279,11 +276,12 @@ describe("Purchase financing calculations", () => {
     expect(financing.numValue("loanPaymentMonthly")).toBe(paymentAmount);
     expect(financing.numValue("loanPaymentYearly")).toBe(paymentAmount * 12);
 
-    firstLoan.updateValues({
-      hasMortgageIns: true,
-      mortgageInsPeriodicSwitch: "monthly",
-      mortgageInsPeriodicEditor: numObj(100),
-    });
+    setPeriodicEditor(
+      firstLoan.onlyChild("mortgageInsPeriodicValue"),
+      100,
+      "monthly"
+    );
+    firstLoan.updateValues({ hasMortgageIns: true });
 
     const expensesAmount = paymentAmount + 100;
     expect(financing.numValue("loanExpensesMonthly")).toBe(expensesAmount);

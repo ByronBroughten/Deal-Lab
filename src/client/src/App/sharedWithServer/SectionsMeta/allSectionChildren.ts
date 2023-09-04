@@ -120,6 +120,8 @@ export const allSectionChildren = checkAllSectionChildren({
     loanBaseValue: "loanBaseValue",
     closingCostValue: "closingCostValue",
     customVarb: "customVarb",
+    mortgageInsUpfrontValue: "mortgageInsUpfrontValue",
+    mortgageInsPeriodicValue: "mortgageInsPeriodicValue",
   }),
   loanBaseValue: sectionChildren({
     customLoanBase: "customLoanBase",
