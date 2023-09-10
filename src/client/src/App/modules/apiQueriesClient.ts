@@ -1,4 +1,5 @@
 import { AxiosResponse } from "axios";
+import { constants } from "../Constants";
 import {
   ApiQueries,
   apiQueriesShared,
@@ -49,7 +50,7 @@ function makeApiQueries(): ApiQueries {
       },
     },
     getNewDeal: {
-      doingWhat: "creating a new deal",
+      doingWhat: `creating a new ${constants.appUnit.toLowerCase()}`,
       validateRes(res: AxiosResponse<unknown>): QueryRes<"getNewDeal"> {
         return { data: validateSectionPack(res.data, "deal") };
       },

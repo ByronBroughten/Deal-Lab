@@ -1,6 +1,7 @@
 import { Box } from "@mui/material";
 import { View } from "react-native";
 import { MoonLoader } from "react-spinners";
+import { constants } from "../../Constants";
 import { isDealMode } from "../../sharedWithServer/SectionsMeta/values/StateValue/dealMode";
 import { dealModeLabels } from "../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
 import { useGetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useGetterSection";
@@ -27,7 +28,7 @@ export function ActiveDealMain() {
   const session = useGetterSectionOnlyOne("sessionStore");
   const isCreatingDeal = session.valueNext("isCreatingDeal");
   return (
-    <BackBtnWrapper {...{ to: "account", label: "Deal Menu" }}>
+    <BackBtnWrapper {...{ to: "account", label: `${constants.appUnit} Menu` }}>
       <BackgroundContainer>
         {isCreatingDeal ? <CreatingActiveDeal /> : <CurrentActiveDeal />}
       </BackgroundContainer>

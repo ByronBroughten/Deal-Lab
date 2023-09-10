@@ -104,7 +104,7 @@ export function SavedDeals() {
       }}
     >
       <View style={{ alignItems: "center", flex: 1 }}>
-        <ChunkTitle>Saved Deals</ChunkTitle>
+        <ChunkTitle>{`Saved ${constants.appUnitPlural}`}</ChunkTitle>
         {loading && (
           <MoonLoader
             {...{

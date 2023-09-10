@@ -1,4 +1,5 @@
 import { MoonLoader } from "react-spinners";
+import { constants } from "../../Constants";
 import { useAction } from "../../sharedWithServer/stateClassHooks/useAction";
 import { useGetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useGetterSection";
 import { IdOfSectionToSaveProvider } from "../../sharedWithServer/stateClassHooks/useIdOfSectionToSave";
@@ -27,7 +28,11 @@ export function CompareDealsPage() {
 
   return (
     <BackBtnWrapper
-      {...{ label: "Deal Menu", to: "account", sx: { maxWidth: 900 } }}
+      {...{
+        label: `${constants.appUnit} Menu`,
+        to: "account",
+        sx: { maxWidth: 900 },
+      }}
     >
       <DealModeProvider dealMode={"mixed"}>
         <IdOfSectionToSaveProvider {...{ storeId: menu.mainStoreId }}>

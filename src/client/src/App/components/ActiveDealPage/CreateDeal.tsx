@@ -1,6 +1,7 @@
 import { Box } from "@mui/material";
 import React from "react";
 import { MoonLoader } from "react-spinners";
+import { constants } from "../../Constants";
 import { useGetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useGetterSection";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { NewDealSelector } from "../AccountPage/NewDealSelector";
@@ -31,7 +32,7 @@ export function CreateDeal() {
   }, [ref, isCreatingDeal]);
 
   return (
-    <BackBtnWrapper {...{ to: "account", label: "Deal Menu" }}>
+    <BackBtnWrapper {...{ to: "account", label: `${constants.appUnit} Menu` }}>
       <BackgroundContainer>
         {isCreatingDeal ? <CreatingActiveDeal /> : <CreateDealMenu />}
       </BackgroundContainer>
@@ -71,7 +72,10 @@ function CreatingActiveDeal() {
 function CreateDealMenu() {
   return (
     <MainSection>
-      <PageTitle sx={{ marginTop: nativeTheme.s35 }} text={`New Deal`} />
+      <PageTitle
+        sx={{ marginTop: nativeTheme.s35 }}
+        text={`New ${constants.appUnit}`}
+      />
       <NewDealSelector />
     </MainSection>
   );

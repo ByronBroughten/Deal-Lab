@@ -1,3 +1,4 @@
+import { constants } from "../../Constants";
 import { Arr } from "../../sharedWithServer/utils/Arr";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { BackBtnWrapper } from "../appWide/BackBtnWrapper";
@@ -18,7 +19,7 @@ const orderedNames = Arr.extractOrder(userComponentNames, [
 
 export function UserComponents() {
   return (
-    <BackBtnWrapper {...{ to: "account", label: "Deal Menu" }}>
+    <BackBtnWrapper {...{ to: "account", label: `${constants.appUnit} Menu` }}>
       <BackgroundContainer>
         <PageTitle
           {...{

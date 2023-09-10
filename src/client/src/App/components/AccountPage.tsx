@@ -2,6 +2,7 @@ import { Box } from "@mui/material";
 import React from "react";
 import { unstable_batchedUpdates } from "react-dom";
 import { View } from "react-native";
+import { constants } from "../Constants";
 import { FeRouteName } from "../Constants/feRoutes";
 import {
   showDealLimitReachedMessage,
@@ -36,12 +37,12 @@ export function AccountPage() {
         <Row style={{ flexWrap: "wrap" }}>
           <AccountBtn
             onClick={openAddDeal}
-            text={<Box>{`New Deal`}</Box>}
+            text={<Box>{`New ${constants.appUnit}`}</Box>}
             icon={icons.addDeal({ size: iconSize })}
           />
           <AccountBtn
             feRouteName="compare"
-            text={<Box>Compare Deals</Box>}
+            text={<Box>{`Compare ${constants.appUnitPlural}`}</Box>}
             icon={icons.compareDeals({ size: iconSize })}
           />
         </Row>

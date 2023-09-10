@@ -49,7 +49,7 @@ function NewDealSelectorAddDeal({ sx }: Props) {
         /> */}
         <MuiSelect
           {...{
-            sx: { width: "100%", mt: nativeTheme.s3 },
+            sx: { width: "100%", mt: nativeTheme.s4 },
             selectProps: { sx: { width: "100%" } },
             label: (
               <VarbStringLabel
