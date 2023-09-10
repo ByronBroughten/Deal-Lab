@@ -6,8 +6,8 @@ import { PlainIconBtn } from "./general/PlainIconBtn";
 export function DealLabIconBtn() {
   const goToMain = useGoToPage("mainPage");
   return (
-    <PlainIconBtn
-      middle={<Box sx={{ height: 40 }} component="img" src={logo} />}
+    <PlainIconBtn // with the DealLab logo, height was 40
+      middle={<Box sx={{ height: 23 }} component="img" src={logo} />}
       onClick={goToMain}
     />
   );
