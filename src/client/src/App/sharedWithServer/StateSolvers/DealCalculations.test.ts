@@ -4,7 +4,7 @@ import { ChildName } from "../SectionsMeta/sectionChildrenDerived/ChildName";
 import {
   DealMode,
   dealModes,
-  isDealMode,
+  isDealMode
 } from "../SectionsMeta/values/StateValue/dealMode";
 import { numObj, NumObjOutput } from "../SectionsMeta/values/StateValue/NumObj";
 import { roundS } from "../SectionsMeta/values/StateValue/valuesShared/calculations/numUnitParams";
@@ -17,7 +17,7 @@ import {
   addOngoingTaxesHomeInsYearly,
   setLoanValues,
   setOnetimeEditor,
-  setPeriodicEditor,
+  setPeriodicEditor
 } from "./testUtils";
 
 const refiHoldingSpan = (

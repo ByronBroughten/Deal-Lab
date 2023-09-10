@@ -37,7 +37,8 @@ describe("Property buy and hold calculations", () => {
     for (let i = 0; i < numUnits; i++) {
       property.addChildAndSolve("unit");
     }
-    expect(property.numValue("numUnits")).toBe(numUnits);
+    expect(property.numValue("numUnits")).toBe(numUnits + 1);
+    // 1 is the default
   });
   it("should calculate targetRent", () => {
     const total = addRents(property, [2000, 2100, 2300]);

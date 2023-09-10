@@ -14,6 +14,7 @@ export type RelInfoType =
   | "pibling" // niblingIfOfHasChildName
   // "nibling" — nibling might be hard
   | "children" // parent
+  | "firstChild"
   | "stepSiblingOfHasChildName"
   | "niblingIfOfHasChildName";
 
@@ -24,6 +25,7 @@ export type RelSectionInfo =
   | RelLocalInfo
   | RelParentInfo
   | RelChildrenInfo
+  | RelFirstChildInfo
   | RelStepSiblingInfo
   | RelPiblingInfo
   | RelStepSiblingOfChildInfo
@@ -37,6 +39,7 @@ interface RelInfoMixed extends MixedInfoProps<RelInfoType> {}
 export interface RelLocalInfo extends RelInfoMixed {
   infoType: "local";
 }
+
 export interface RelParentInfo<
   SN extends SectionName = SectionName,
   PN extends ParentName<SN> = ParentName<SN>
@@ -44,6 +47,15 @@ export interface RelParentInfo<
   infoType: "parent";
   parentName: PN;
 }
+
+export interface RelFirstChildInfo<
+  SN extends SectionName = SectionName,
+  CN extends ChildName<SN> = ChildName<SN>
+> extends RelInfoMixed {
+  infoType: "firstChild";
+  childName: CN;
+}
+
 export interface RelChildrenInfo<
   SN extends SectionName = SectionName,
   CN extends ChildName<SN> = ChildName<SN>

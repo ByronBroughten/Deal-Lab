@@ -115,7 +115,6 @@ export const propertyCompletionStatus = completionStatusVarb(
         validInputs: [
           ...propertySharedValidInputs(),
           ...hasOngoingValidInputs(),
-          propS.local("numBedroomsEditor"),
         ],
       }),
       buyAndHold: cBasics({

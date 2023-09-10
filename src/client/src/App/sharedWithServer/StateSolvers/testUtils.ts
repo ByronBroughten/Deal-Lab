@@ -79,15 +79,26 @@ export function setLoanValues(
     loanOptions;
 
   setLoanBaseValue(loan, loanAmount);
+
+  if (mortgageInsUpfront) {
+    const upfrontMortIns = loan.onlyChild("mortgageInsUpfrontValue");
+    upfrontMortIns.updateValues({
+      valueDollarsEditor: numObj(mortgageInsUpfront),
+      valueSourceName: "valueDollarsEditor",
+    });
+  }
+
+  if (mortgageInsMonthly) {
+    const periodicMortIns = loan.onlyChild("mortgageInsPeriodicValue");
+    periodicMortIns.updateValues({
+      valueDollarsPeriodicEditor: numObj(mortgageInsMonthly),
+      valueDollarsPeriodicSwitch: "monthly",
+      valueSourceName: "valueDollarsPeriodicEditor",
+    });
+  }
+
   loan.updateValues({
     ...(hasMortgageIns && { hasMortgageIns }),
-    ...(mortgageInsMonthly && {
-      mortgageInsPeriodicEditor: numObj(mortgageInsMonthly),
-      mortgageInsPeriodicSwitch: "monthly",
-    }),
-    ...(mortgageInsUpfront && {
-      mortgageInsUpfrontEditor: numObj(mortgageInsUpfront),
-    }),
     interestRatePercentPeriodicSwitch: "yearly",
     interestRatePercentPeriodicEditor: numObj(interestRateYearly),
     loanTermSpanEditor: numObj(loanTermYears),

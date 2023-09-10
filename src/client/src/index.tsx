@@ -6,14 +6,21 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-// Make the page for creating a new deal look nicer.
+// Add possible rental income and units to homebuyer
 
-// Ok, so am I going to the ActiveDeal page?
-// I could, but I'd need some kind of boolean
-// Otherwise, I could make a new page called "Create new deal"
+// Allow for loading from an existing deal
+// when creating a new deal(?)
+// There'd be a toggle, then a dropdown
+// loadDeal, dropDown of deal names
+// - That's how you'd be able to turn a homebuyer deal into
+//   a rental property
 
 // Editing the deal's name in Saved Deals causes the whole deal
 // to solve.
+// Two options
+// 1. Add a "don't solve" option to updateValue (easy)
+// 2. Transition to sessionDeals (eliminates technical debt)
+
 // - Only use the sessionDeal in Saved Deals
 // - Make editing the sessionDeal's displayName trigger:
 // 1. Fetching the deal, updating its displayName, saving

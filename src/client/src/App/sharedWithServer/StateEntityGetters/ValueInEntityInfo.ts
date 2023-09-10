@@ -31,6 +31,8 @@ const sharedOngoing = [
   "homeInsOngoingMonthly",
   "homeInsOngoingYearly",
   "utilitiesOngoingMonthly",
+  "dealNetExpensesOngoingMonthly",
+  "dealNetExpensesOngoingYearly",
 ] as const;
 
 const sharedUpfront = ["rehabCost", "rehabCostBase"] as const;
@@ -82,6 +84,8 @@ const fixAndFlip = [
 const hasOngoingOutputs = [
   "dealExpensesOngoingMonthly",
   "dealExpensesOngoingYearly",
+  "netNonPrincipalOngoingMonthly",
+  "netNonPrincipalOngoingYearly",
   "averageNonPrincipalOngoingMonthly",
   "averageNonPrincipalOngoingYearly",
 ] as const;

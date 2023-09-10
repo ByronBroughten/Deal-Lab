@@ -86,6 +86,7 @@ const allVarbPathParams = {
     ...targetNames("cashFlow", "periodic"),
     ...targetNames("cocRoi", "periodic"),
     ...targetNames("averageNonPrincipalOngoing", "periodic"),
+    ...targetNames("netNonPrincipalOngoing", "periodic"),
   ]),
   propertyExpensesOngoingMonthly: fixedVarbPathParams(
     "Property",
@@ -98,6 +99,16 @@ const allVarbPathParams = {
     "expensesOngoingYearly"
   ),
   dealMode: fixedVarbPathParams("Deal", "dealFocal", "dealMode"),
+  dealNetExpensesOngoingMonthly: fixedVarbPathParams(
+    "Deal",
+    "dealFocal",
+    "netExpensesOngoingMonthly"
+  ),
+  dealNetExpensesOngoingYearly: fixedVarbPathParams(
+    "Deal",
+    "dealFocal",
+    "netExpensesOngoingYearly"
+  ),
   dealExpensesOngoingMonthly: fixedVarbPathParams(
     "Deal",
     "dealFocal",

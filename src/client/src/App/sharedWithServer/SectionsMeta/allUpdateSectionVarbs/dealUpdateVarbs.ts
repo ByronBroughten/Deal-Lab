@@ -50,6 +50,17 @@ function nonPrincipal(
   );
 }
 
+function netNonPrincipal(
+  financingName: "purchaseFinancing" | "refiFinancing",
+  ending: "Monthly" | "Yearly"
+) {
+  return basicsS.equationLR(
+    "subtract",
+    propS.local(`netExpensesOngoing${ending}`),
+    propS.onlyChild(financingName, `averagePrincipal${ending}`)
+  );
+}
+
 export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
   return {
     ...updateVarbsS._typeUniformity,
@@ -58,6 +69,20 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
     isArchived: updateVarb("boolean", { initValue: false }),
     completionStatus: dealCompletionStatus,
     dealMode: updateVarb("dealMode", { initValue: "buyAndHold" }),
+    ...updateVarbsS.group("netNonPrincipalOngoing", "periodic", "monthly", {
+      monthly: dealModeVarb({
+        homeBuyer: netNonPrincipal("purchaseFinancing", "Monthly"),
+        buyAndHold: netNonPrincipal("purchaseFinancing", "Monthly"),
+        fixAndFlip: basicsS.notApplicable,
+        brrrr: netNonPrincipal("refiFinancing", "Monthly"),
+      }),
+      yearly: dealModeVarb({
+        homeBuyer: netNonPrincipal("purchaseFinancing", "Yearly"),
+        buyAndHold: netNonPrincipal("purchaseFinancing", "Yearly"),
+        fixAndFlip: basicsS.notApplicable,
+        brrrr: netNonPrincipal("refiFinancing", "Yearly"),
+      }),
+    }),
     ...updateVarbsS.group("averageNonPrincipalOngoing", "periodic", "monthly", {
       monthly: dealModeVarb({
         homeBuyer: nonPrincipal("purchaseFinancing", "Monthly"),
@@ -263,8 +288,8 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
       ),
       buyAndHold: basicsS.sumNums(
         propS.onlyChild("property", "expensesOngoingMonthly"),
-        propS.onlyChild("mgmtOngoing", "expensesMonthly"),
-        propS.onlyChild("purchaseFinancing", "loanExpensesMonthly")
+        propS.onlyChild("purchaseFinancing", "loanExpensesMonthly"),
+        propS.onlyChild("mgmtOngoing", "expensesMonthly")
       ),
       fixAndFlip: notApplicable(),
       brrrr: basicsS.sumNums(
@@ -280,18 +305,54 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
       ),
       buyAndHold: basicsS.sumNums(
         propS.onlyChild("property", "expensesOngoingYearly"),
-        propS.onlyChild("mgmtOngoing", "expensesYearly"),
-        propS.onlyChild("purchaseFinancing", "loanExpensesYearly")
+        propS.onlyChild("purchaseFinancing", "loanExpensesYearly"),
+        propS.onlyChild("mgmtOngoing", "expensesYearly")
       ),
       fixAndFlip: basicsS.notApplicable,
       brrrr: basicsS.sumNums(
         propS.onlyChild("property", "expensesOngoingYearly"),
-        propS.onlyChild("mgmtOngoing", "expensesYearly"),
-        propS.onlyChild("refiFinancing", "loanExpensesYearly")
+        propS.onlyChild("refiFinancing", "loanExpensesYearly"),
+        propS.onlyChild("mgmtOngoing", "expensesYearly")
       ),
     }),
     expensesOngoingPeriodicSwitch: updateVarb("ongoingSwitch", {
       initValue: "monthly",
+    }),
+    netExpensesOngoingMonthly: dealModeVarb({
+      homeBuyer: updateVarbS.equationLR(
+        "subtract",
+        propS.local("expensesOngoingMonthly"),
+        propS.onlyChild("property", "revenueOngoingMonthly")
+      ),
+      buyAndHold: updateVarbS.equationLR(
+        "subtract",
+        propS.local("expensesOngoingMonthly"),
+        propS.onlyChild("property", "revenueOngoingMonthly")
+      ),
+      fixAndFlip: notApplicable(),
+      brrrr: updateVarbS.equationLR(
+        "subtract",
+        propS.local("expensesOngoingMonthly"),
+        propS.onlyChild("property", "revenueOngoingMonthly")
+      ),
+    }),
+    netExpensesOngoingYearly: dealModeVarb({
+      homeBuyer: updateVarbS.equationLR(
+        "subtract",
+        propS.local("expensesOngoingYearly"),
+        propS.onlyChild("property", "revenueOngoingYearly")
+      ),
+      buyAndHold: updateVarbS.equationLR(
+        "subtract",
+        propS.local("expensesOngoingYearly"),
+        propS.onlyChild("property", "revenueOngoingYearly")
+      ),
+      fixAndFlip: notApplicable(),
+      brrrr: updateVarbS.equationLR(
+        "subtract",
+        propS.local("expensesOngoingYearly"),
+        propS.onlyChild("property", "revenueOngoingYearly")
+      ),
     }),
     cashFlowMonthly: dealModeVarb({
       homeBuyer: notApplicable(),

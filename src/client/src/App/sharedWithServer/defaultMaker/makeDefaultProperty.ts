@@ -27,6 +27,8 @@ export function makeDefaultProperty(
     },
   } as const;
 
+  property.addChild("unit");
+
   property.addChild("taxesHolding", taxesHomeInsOptions);
   property.addChild("homeInsHolding", taxesHomeInsOptions);
 

@@ -243,8 +243,17 @@ describe("Purchase financing calculations", () => {
   });
   it("should calculate mortgage insurance", () => {
     firstLoan.updateValues({ hasMortgageIns: true });
-    expect(financing.numValue("mortgageInsMonthly")).toBe(30);
-    expect(financing.numValue("mortgageInsYearly")).toBe(30 * 12);
+    const monthlyValue = 30;
+
+    const mortIns = firstLoan.onlyChild("mortgageInsPeriodicValue");
+    mortIns.updateValues({
+      valueSourceName: "valueDollarsPeriodicEditor",
+      valueDollarsPeriodicEditor: numObj(monthlyValue),
+      valueDollarsPeriodicSwitch: "monthly",
+    });
+
+    expect(financing.numValue("mortgageInsMonthly")).toBe(monthlyValue);
+    expect(financing.numValue("mortgageInsYearly")).toBe(monthlyValue * 12);
 
     firstLoan.updateValues({ hasMortgageIns: false });
     expect(financing.numValue("mortgageInsMonthly")).toBe(0);

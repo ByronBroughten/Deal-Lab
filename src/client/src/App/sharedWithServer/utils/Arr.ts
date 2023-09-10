@@ -12,6 +12,12 @@ function lastOrThrow<V extends any>(arr: readonly V[]): V {
   } else return arr[idx];
 }
 
+function firstOrThrow<V extends any>(arr: readonly V[]): V {
+  if (arr.length < 0) {
+    throw new Error("This array is empty.");
+  } else return arr[0];
+}
+
 export const Arr = {
   getOnlyOne<T extends any>(arr: T[], arrayOf?: string): T {
     const strArrayOf = arrayOf ?? "items";
@@ -101,6 +107,7 @@ export const Arr = {
   isLastIdx(arr: readonly any[], idx: number): boolean {
     return this.lastIdx(arr) === idx;
   },
+  firstOrThrow,
   lastOrThrow,
   includes<T, U extends T>(arr: readonly U[], elem: T): elem is U {
     return arr.includes(elem as any);

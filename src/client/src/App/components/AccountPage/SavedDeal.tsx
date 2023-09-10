@@ -180,15 +180,15 @@ function TabAndDeskVersion({ dbId, isInactive, sx }: SavedDealProps) {
     >
       <Row style={{ justifyContent: "space-between" }}>
         <Box sx={titleSx(strDisplayName, 400)}>
-          {/* {strDisplayName || "Untitled"} */}
-          <BareStringEditor
+          {strDisplayName || "Untitled"}
+          {/* <BareStringEditor
             {...{
               sx: titleSx(strDisplayName, 400),
               feVarbInfo: deal.varbInfoNext("displayNameEditor"),
               placeholder: "Untitled",
               noSolve: true,
             }}
-          />
+          /> */}
         </Box>
         {
           <Row

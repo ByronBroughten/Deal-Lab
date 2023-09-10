@@ -36,7 +36,7 @@ export function AccountPage() {
         <Row style={{ flexWrap: "wrap" }}>
           <AccountBtn
             onClick={openAddDeal}
-            text={<Box>New Deal</Box>}
+            text={<Box>{`New Deal`}</Box>}
             icon={icons.addDeal({ size: iconSize })}
           />
           <AccountBtn

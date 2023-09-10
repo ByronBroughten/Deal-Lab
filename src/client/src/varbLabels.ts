@@ -170,9 +170,20 @@ export const varbLabels = checkAllVarbLabels({
     purchasePrice: input("Purchase price"),
     sqft: input("Square feet"),
     yearBuilt: input("Year built"),
+    singleMultiBrCount: input("Bedroom count"),
+    singleMultiNumUnits: input("Unit count"),
+    isRenting: text({
+      inputLabel: "Rental income",
+      title: "Rental income",
+      info: "Rental income can help offset housing expenses. People sometimes rent out bedrooms, basements, or even whole additional units, in the case of multi-family properties.",
+    }),
+    isMultifamily: text({
+      inputLabel: "Multi family",
+      title: "Multi family properties",
+      info: "Multi family properties have more than one unit. Think duplexes, triplexes, and so on. Properties like these can help offset ongoing costs by providing extra rental income.",
+    }),
     numUnits: input("Unit count"),
     numUnitsEditor: input("Unit count"),
-    numBedroomsEditor: input("Bedroom count"),
     numBedrooms: input("Bedroom count", { variableLabel: "BR Count" }),
     likability: input("Likability"),
     pricePerLikability: input("Price per likability"),
@@ -185,6 +196,7 @@ export const varbLabels = checkAllVarbLabels({
       variableLabel: "Average property expenses",
     }),
     ...simplePeriodic("targetRent", "Rent"),
+    ...simplePeriodic("homebuyerRent", "Rent"),
     ...simplePeriodic("homeInsOngoing", "Home insurance"),
     ...simplePeriodic("taxesOngoing", "Taxes"),
     ...simplePeriodic("utilitiesOngoing", "Utilities"),
@@ -383,15 +395,27 @@ export const varbLabels = checkAllVarbLabels({
     dealMode: multis.dealMode,
     ...simplePeriodic(
       "averageNonPrincipalOngoing",
-      "Average non-principal costs",
+      "Average non-principal cost",
       {
         title: "Average Non-Principal Cost",
-        info: `The average cost of all ongoing expenses that would be associated with this deal—loan payments, taxes, property maintenance, etc.—minus the average principal portion of your loan payments over the duration of your loans.\n\nWhen you pay towards the loan principal, you gain equity in your property, so you don't really lose that money. Subtracting that from the rest of your expenses gives a better idea of how much money this deal would actually cost you per month, which you can compare to what you'd otherwise spend on rent and utilities as a renter.`,
+        info: `The average cost of all ongoing expenses that would be associated with this deal—loan payments, taxes, property maintenance, etc.—minus the average principal portion of your loan payments over the duration of your loan(s).\n\nWhen you pay towards the loan principal, you gain equity in your property, so you don't really lose that money. Subtracting that from the rest of your expenses gives a better idea of how much money this deal would actually cost you per month, which you can compare to what you'd otherwise spend on rent and utilities as a renter.`,
+      }
+    ),
+    ...simplePeriodic(
+      "netNonPrincipalOngoing",
+      "Average net non-principal costs",
+      {
+        title: "Average Net Non-Principal Cost",
+        info: `The average cost of all ongoing expenses that would be associated with this deal—loan payments, taxes, property maintenance, etc.—minus any income from the property, and minus the average principal portion of your loan payments over the duration of your loan(s).\n\nWhen you pay towards the loan principal, you gain equity in your property, so you don't really lose that money. Subtracting that from the rest of your expenses gives a better idea of how much money this deal would actually cost you per month, which you can compare to what you'd otherwise spend as a renter for rent and utilities.`,
       }
     ),
     ...simplePeriodic("ongoingPiti", "PITI payment", {
       title: "PITI",
       info: `"PITI" stands for "principal and interest, taxes, and insurance". Often, these are the things included in the payments that homebuyers send to the bank every month.`,
+    }),
+    ...simplePeriodic("netExpensesOngoing", "Net expenses", {
+      title: "Net expenses",
+      info: "Net expenses are just a home's total expenses (including financing and property expenses) minus any income that the property produces.",
     }),
     ...simpleSpan("timeTillValueAddProfit", "Time till value add profit"),
     ...simpleSpan("purchaseLoanHolding", "Purchase loan holding period"),

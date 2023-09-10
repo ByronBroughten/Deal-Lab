@@ -237,20 +237,20 @@ export const mainStateReducer: React.Reducer<MainState, StateAction> = (
     updateValueFromContent: (props) => {
       // Needed because previous value is required for new value
       // Also, keeping this here so it's on the front-end
-      const { contentState } = props;
+      const { contentState, noSolve, ...varbInfo } = props;
 
-      const varb = prepperVarb(props);
+      const varb = prepperVarb(varbInfo);
       const editorVarb = new EditorUpdaterVarb(
         varb.getterVarbBase.getterVarbProps
       );
 
       const value = editorVarb.valueFromContentState(contentState);
-      if (props.noSolve) {
+      if (noSolve) {
         varb.updaterVarb.updateValue(value);
       } else {
         varb.editorUpdate(value);
+        // topOperator.solve();
       }
-      topOperator.solve();
     },
     addToStore: (props) => prepStore.addToStore(props),
     removeFromStore: (props) => prepStore.removeFromStore(props),

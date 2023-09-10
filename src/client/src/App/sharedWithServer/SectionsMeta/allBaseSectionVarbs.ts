@@ -191,6 +191,11 @@ export function makeAllBaseSectionVarbs() {
       likability: baseVarb("numObj"),
       yearBuilt: baseVarb("numObj"),
 
+      isMultifamily: baseVarb("boolean"),
+      isRenting: baseVarb("boolean"),
+      singleMultiBrCount: baseVarb("numObj"),
+      singleMultiNumUnits: baseVarb("numObj"),
+      ...baseVarbsS.periodicDollars("homebuyerRent"),
       ...baseVarbs(
         "numObj",
         [
@@ -212,7 +217,6 @@ export function makeAllBaseSectionVarbs() {
       ...baseVarbs("numObj", [
         "sqft",
         "numBedrooms",
-        "numBedroomsEditor",
         "numUnits",
         "numUnitsEditor",
       ] as const),
@@ -389,6 +393,8 @@ export function makeAllBaseSectionVarbs() {
       ...baseVarbsS.periodicDollars("expensesOngoing"),
       ...baseVarbsS.periodicDollars("averageNonPrincipalOngoing"),
       ...baseVarbsS.periodicDollars("cashFlow"),
+      ...baseVarbsS.periodicDollars("netNonPrincipalOngoing"),
+      ...baseVarbsS.periodicDollars("netExpensesOngoing"),
       ...baseVarbsS.periodicDecimal("cocRoiDecimal"),
       ...baseVarbsS.periodicPercent("cocRoi"),
 

@@ -149,6 +149,16 @@ export const updateFnPropS = {
       andSwitches
     );
   },
+  firstChild(
+    childName: ChildName,
+    varbName: VarbNameWide,
+    andSwitches?: UpdateOverrideSwitch[]
+  ) {
+    return updateFnProp(
+      relVarbInfoS.firstChild(childName, varbName),
+      andSwitches
+    );
+  },
   onlyChildBase(
     childName: ChildName,
     varbName: string,

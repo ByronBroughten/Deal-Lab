@@ -1,3 +1,4 @@
+import { SxProps } from "@mui/material";
 import React from "react";
 import { unstable_batchedUpdates } from "react-dom";
 import { FeVarbInfo } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
@@ -12,6 +13,7 @@ export interface TogglerBooleanVarbProps {
   name?: string;
   onChange?: (nextValue?: boolean) => void;
   className?: string;
+  sx?: SxProps;
 }
 
 export function TogglerBooleanVarb({
@@ -26,6 +28,7 @@ export function TogglerBooleanVarb({
     <Toggler
       {...{
         ...rest,
+
         checked,
         onChange: () => {
           unstable_batchedUpdates(() => {

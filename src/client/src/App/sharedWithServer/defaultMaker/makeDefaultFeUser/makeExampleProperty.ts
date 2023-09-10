@@ -85,9 +85,9 @@ type NeededPropertyVarbs = CheckNeededPropertyVarbs<{
     OngoingSections & {
       dealMode: "homeBuyer";
       property: CommonProperty & {
-        numBedroomsEditor: NumObj;
         likability: NumObj;
       };
+      unit: { rentMonthly?: NumObj; numBedrooms: NumObj }[];
     };
   buyAndHold: SharedSections &
     OngoingSections & {
@@ -208,14 +208,22 @@ export function makeExampleProperty<DM extends StateValue<"dealMode">>(
   }
 
   switch (props.dealMode) {
+    case "homeBuyer":
     case "buyAndHold":
     case "brrrr": {
-      for (const { rentMonthly, ...rest } of props.unit) {
-        const unit = property.addAndGetChild("unit");
+      for (let i = 0; i < props.unit.length; i++) {
+        const { rentMonthly, ...rest } = props.unit[i];
+        let unit: PackBuilderSection<"unit">;
+        if (i === 0) {
+          unit = property.onlyChild("unit");
+        } else {
+          unit = property.addAndGetChild("unit");
+        }
+
         unit.updateValues({
           ...rest,
           targetRentPeriodicSwitch: "monthly",
-          targetRentPeriodicEditor: rentMonthly,
+          ...(rentMonthly && { targetRentPeriodicEditor: rentMonthly }),
         });
       }
     }

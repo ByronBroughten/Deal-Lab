@@ -228,6 +228,10 @@ export class GetterSection<
       this.oneOrThrowByPathNameError(sections, info.pathName);
     } else if (info.infoType === "children") {
       this.oneOrThrowChildError(sections, info.childName);
+    } else if (info.infoType === "firstChild") {
+      if (sections.length < 1) {
+        this.oneOrThrowChildError(sections, info.childName);
+      }
     } else {
       this.list.exactlyOneOrThrow(sections, info.infoType);
     }
@@ -325,6 +329,21 @@ export class GetterSection<
         return [this];
       case "parent":
         return [this.parent];
+      case "firstChild": {
+        const { childName } = info;
+        if (this.meta.isChildName(childName)) {
+          const children = this.children(childName);
+          if (children.length === 0) {
+            this.oneOrThrowChildError(children, childName);
+          } else {
+            return [children[0]];
+          }
+        } else {
+          throw new Error(
+            `"${childName}" is not a child of "${this.sectionName}"`
+          );
+        }
+      }
       case "children": {
         const { childName } = info;
         if (this.meta.isChildName(childName)) {
@@ -1058,6 +1077,12 @@ export class GetterSection<
   ): GetterSection<CT> {
     const children = this.childrenOldToYoung(childName) as GetterSection<CT>[];
     return Arr.lastOrThrow(children);
+  }
+  firstChild<CN extends ChildName<SN>, CT extends ChildSectionName<SN, CN>>(
+    childName: CN
+  ): GetterSection<CT> {
+    const children = this.childrenOldToYoung(childName) as GetterSection<CT>[];
+    return Arr.firstOrThrow(children);
   }
   isChildNameOrThrow(childName: any): childName is ChildName<SN> {
     if (!this.meta.isChildName(childName)) {

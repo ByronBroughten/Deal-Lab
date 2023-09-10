@@ -1,3 +1,4 @@
+import { getAppNameStuff } from "./Constants/appName";
 import { envName } from "./Constants/envName";
 import { feRoutes } from "./Constants/feRoutes";
 import { stripePrices } from "./Constants/stripePrices";
@@ -5,10 +6,12 @@ import { stripePrices } from "./Constants/stripePrices";
 const clientProdUrl = "https://the.deallab.app";
 const clientDevUrl = "http://localhost:3000";
 
+const { appName, devAppDisplayName, ...appNameStuff } = getAppNameStuff();
+
 const envConstants = {
   development: {
     environment: "development",
-    appName: "Deal Lab — Development",
+    appDisplayName: devAppDisplayName,
     apiUrlBase: "http://localhost:5000",
     clientUrlBase: clientDevUrl,
     paymentManagementLink:
@@ -16,7 +19,7 @@ const envConstants = {
   },
   production: {
     environment: "production",
-    appName: "Deal Lab",
+    appDisplayName: appName,
     apiUrlBase: clientProdUrl,
     clientUrlBase: clientProdUrl,
     paymentManagementLink:
@@ -30,13 +33,14 @@ const apiPathFull = `${env.apiUrlBase}${apiPathBit}`;
 
 const isBeta = false;
 const maxSectionSaveLimit = 10000;
-const basicSectionSaveLimit = 5;
+const basicSectionSaveLimit = 3;
 const saveDelayInMs = 4000;
 const solveDelayInMs = 500;
 const editorValueUpdateDelayMs = 300;
 
 export const config = {
   ...env,
+  ...appNameStuff,
   compoundIdSpliter: ".",
   maxSectionSaveLimit,
   stripePrices,
@@ -64,7 +68,7 @@ export const config = {
   superTokens: {
     appInfo: {
       // learn more about this on https://supertokens.com/docs/emailpassword/appinfo
-      appName: env.appName,
+      appName: env.appDisplayName,
       apiDomain: apiPathFull,
       websiteDomain: env.clientUrlBase,
 
@@ -97,7 +101,7 @@ export const config = {
   get superTokensAppInfo() {
     return {
       // learn more about this on https://supertokens.com/docs/emailpassword/appinfo
-      appName: this.appName,
+      appName: this.appDisplayName,
       apiDomain: this.apiPathFull,
       websiteDomain: this.clientUrlBase,
     } as const;

@@ -127,6 +127,11 @@ export const updateBasicsS = {
       varbInfo: updateFnPropS.onlyChild(childName, varbName),
     });
   },
+  loadFromFirstChild(childName: ChildName, varbName: VarbNameWide) {
+    return updateBasicsNext("loadSolvableTextByVarbInfo", {
+      varbInfo: updateFnPropS.firstChild(childName, varbName),
+    });
+  },
   loadByVarbPathName(varbPathName: VarbPathName) {
     return updateBasicsNext("loadSolvableTextByVarbInfo", {
       varbInfo: updateFnPropS.varbPathName(varbPathName),

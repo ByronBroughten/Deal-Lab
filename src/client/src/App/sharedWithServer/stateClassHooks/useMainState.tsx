@@ -22,12 +22,13 @@ interface MainStateAndDispatch {
   mainDispatch: MainStateDispatch;
 }
 
+const emptyMainState = MainState.initEmpty();
 function useMainStateCore(
   initMainState: () => MainState
 ): [MainState, MainStateDispatch] {
   const [mainState, mainDispatch] = React.useReducer(
     mainStateReducer,
-    MainState.initEmpty(),
+    emptyMainState,
     initMainState
   );
   return [mainState, mainDispatch];

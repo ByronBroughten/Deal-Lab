@@ -9,6 +9,7 @@ import {
 import { SectionName } from "../SectionName";
 import {
   RelChildrenInfo,
+  RelFirstChildInfo,
   RelInfoType,
   RelLocalInfo,
   RelNiblingOfChildInfo,
@@ -21,6 +22,7 @@ import { VarbProp } from "./VarbInfoBase";
 
 export type RelVarbInfo =
   | RelChildrenVarbInfo
+  | RelFirstChildVarbInfo
   | RelParentVarbInfo
   | RelLocalVarbInfo
   | RelStepSiblingVarbInfo
@@ -36,6 +38,12 @@ export interface RelParentVarbInfo<
   SN extends SectionName = SectionName,
   PN extends ParentName<SN> = ParentName<SN>
 > extends RelParentInfo<SN, PN>,
+    VarbProp {}
+
+export interface RelFirstChildVarbInfo<
+  SN extends SectionName = SectionName,
+  CN extends ChildName<SN> = ChildName<SN>
+> extends RelFirstChildInfo<SN, CN>,
     VarbProp {}
 
 export interface RelChildrenVarbInfo<
@@ -106,6 +114,16 @@ export const relVarbInfoS = {
   ): RelChildrenVarbInfo<SN, CN> {
     return {
       infoType: "children",
+      childName,
+      varbName,
+    };
+  },
+  firstChild<SN extends SectionName, CN extends ChildName<SN>>(
+    childName: CN,
+    varbName: string
+  ): RelFirstChildVarbInfo<SN, CN> {
+    return {
+      infoType: "firstChild",
       childName,
       varbName,
     };

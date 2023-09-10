@@ -1,6 +1,7 @@
 import { PathNameVarbInfoMixed } from "../SectionInfo/PathNameInfo";
 import {
   RelChildrenVarbInfo,
+  RelFirstChildVarbInfo,
   RelLocalVarbInfo,
   RelNiblingOfChildVarbInfo,
   RelParentVarbInfo,
@@ -17,6 +18,7 @@ export type PathInVarbInfo =
 
 type RelInVarbInfo =
   | RelLocalVarbInfo
+  | RelFirstChildVarbInfo
   | RelChildrenVarbInfo
   | RelStepSiblingVarbInfo
   | RelPiblingVarbInfo;

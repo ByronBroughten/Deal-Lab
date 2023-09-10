@@ -7,7 +7,10 @@ import {
   updateFnPropS,
   updateFnPropsS,
 } from "../updateSectionVarbs/updateVarb/UpdateFnProps";
-import { overrideSwitchS } from "../updateSectionVarbs/updateVarb/UpdateOverrides";
+import {
+  overrideSwitchS,
+  updateOverride,
+} from "../updateSectionVarbs/updateVarb/UpdateOverrides";
 import {
   dealModeVarb,
   unionOverrides,
@@ -15,6 +18,7 @@ import {
 } from "../updateSectionVarbs/updateVarb/updateVarbUtils";
 import { updateVarbsS } from "../updateSectionVarbs/updateVarbs";
 import { numObj } from "../values/StateValue/NumObj";
+import { UnionValue } from "../values/StateValue/unionValues";
 import { propertyCompletionStatus } from "./calculatedUpdateVarbs/completionStatusVarbs";
 
 const basicsS = updateBasicsS;
@@ -33,6 +37,37 @@ function propertyHoldingCosts(): UpdateFnProp[] {
 
 const varb = updateVarb;
 
+function homebuyerRentOverrides(periodicSwitch: UnionValue<"periodicSource">) {
+  const varbNames = {
+    monthly: "targetRentMonthly",
+    yearly: "targetRentYearly",
+  } as const;
+  const varbName = varbNames[periodicSwitch];
+  return [
+    updateOverride([oSwitchS.localIsFalse("isRenting")], basicsS.zero),
+    updateOverride(
+      [
+        oSwitchS.localIsTrue("isRenting"),
+        oSwitchS.localIsTrue("isMultifamily"),
+      ],
+      basicsS.sumChildren("unit", varbName)
+    ),
+    updateOverride(
+      [
+        oSwitchS.localIsTrue("isRenting"),
+        oSwitchS.localIsFalse("isMultifamily"),
+      ],
+      basicsS.loadFromFirstChild("unit", varbName)
+    ),
+  ];
+}
+// Should homeBuyer mode have ROI and whatnot then?
+// At the very least, it needs something that shows expenses minus
+// rent.
+
+// Should expensesMinusRent be on property?
+// Well, it could be. It could also be on deal.
+
 export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
   return {
     ...varbsS._typeUniformity,
@@ -40,6 +75,8 @@ export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
     propertyMode: varb("dealMode", {
       initValue: "buyAndHold",
     }),
+    isMultifamily: varb("boolean", { initValue: false }),
+    isRenting: varb("boolean", { initValue: false }),
     likability: varb("numObj", { initValue: numObj(5) }),
     yearBuilt: varb("numObj"),
     pricePerLikability: varb(
@@ -65,7 +102,6 @@ export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
       monthly: basicsS.loadFromChild("homeInsHolding", "valueDollarsMonthly"),
       yearly: basicsS.loadFromChild("homeInsHolding", "valueDollarsYearly"),
     }),
-
     ...varbsS.group("taxesOngoing", "periodic", "yearly", {
       monthly: {
         updateOverrides: valueSourceOverrides(
@@ -122,7 +158,6 @@ export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
         ),
       },
     }),
-
     ...varbsS.group("utilitiesOngoing", "periodic", "monthly", {
       monthly: basicsS.loadFromChild("utilityOngoing", "valueDollarsMonthly"),
       yearly: basicsS.loadFromChild("utilityOngoing", "valueDollarsYearly"),
@@ -154,21 +189,59 @@ export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
         "dealMode",
         relVarbInfoS.local("propertyMode"),
         {
-          homeBuyer: basicsS.one,
+          homeBuyer: basicsS.loadFromLocal("singleMultiNumUnits"),
           buyAndHold: basicsS.sumChildren("unit", "one"),
           fixAndFlip: basicsS.loadFromLocal("numUnitsEditor"),
           brrrr: basicsS.sumChildren("unit", "one"),
         }
       ),
     }),
-    numBedroomsEditor: updateVarb("numObj"),
+    singleMultiNumUnits: updateVarb("numObj", {
+      updateFnName: "throwIfReached",
+      updateOverrides: [
+        updateOverride(
+          [oSwitchS.localIsTrue("isMultifamily")],
+          basicsS.sumChildren("unit", "one")
+        ),
+        updateOverride([oSwitchS.localIsFalse("isMultifamily")], basicsS.one),
+      ],
+    }),
+    singleMultiBrCount: updateVarb("numObj", {
+      updateFnName: "throwIfReached",
+      updateOverrides: [
+        updateOverride(
+          [oSwitchS.localIsTrue("isMultifamily")],
+          basicsS.sumChildren("unit", "numBedrooms")
+        ),
+        updateOverride(
+          [oSwitchS.localIsFalse("isMultifamily")],
+          basicsS.loadFromFirstChild("unit", "numBedrooms")
+        ),
+      ],
+    }),
+    ...updateVarbsS.group("homebuyerRent", "periodic", "monthly", {
+      monthly: {
+        updateFnName: "throwIfReached",
+        updateOverrides: homebuyerRentOverrides("monthly"),
+      },
+      yearly: {
+        updateFnName: "throwIfReached",
+        updateOverrides: homebuyerRentOverrides("yearly"),
+      },
+    }),
+    // Ok, it's a good thing I'm redoing this
+    ...varbsS.ongoingSumNums(
+      "targetRent",
+      [propS.children("unit", "targetRent")],
+      "monthly"
+    ),
     numBedrooms: updateVarb("numObj", {
       updateFnName: "throwIfReached",
       updateOverrides: unionOverrides(
         "dealMode",
         relVarbInfoS.local("propertyMode"),
         {
-          homeBuyer: basicsS.loadFromLocal("numBedroomsEditor"),
+          homeBuyer: basicsS.loadFromLocal("singleMultiBrCount"),
           buyAndHold: basicsS.sumChildren("unit", "numBedrooms"),
           fixAndFlip: basicsS.notApplicable,
           brrrr: basicsS.sumChildren("unit", "numBedrooms"),
@@ -266,11 +339,6 @@ export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
       yearly: basicsS.loadFromChild("miscOngoingRevenue", "valueDollarsYearly"),
     }),
     ...varbsS.monthsYearsInput("holdingPeriod", "months"),
-    ...varbsS.ongoingSumNums(
-      "targetRent",
-      [propS.children("unit", "targetRent")],
-      "monthly"
-    ),
     ...varbsS.ongoingSumNums(
       "revenueOngoing",
       updateFnPropsS.localBaseNameArr(["targetRent", "miscOngoingRevenue"]),

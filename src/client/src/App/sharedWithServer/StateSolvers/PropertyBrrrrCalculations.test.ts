@@ -40,7 +40,7 @@ describe("PropertyBrrrrCalculations", () => {
     for (let i = 0; i < numUnits; i++) {
       property.addChildAndSolve("unit");
     }
-    testVarb("numUnits", numUnits);
+    testVarb("numUnits", numUnits + 1); // 1 is the default unit
   });
   it("should calculate targetRent", () => {
     const total = addRents(property, [2000, 2100, 2300]);

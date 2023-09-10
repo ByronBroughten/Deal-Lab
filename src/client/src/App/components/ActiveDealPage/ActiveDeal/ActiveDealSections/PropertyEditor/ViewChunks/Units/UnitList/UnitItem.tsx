@@ -5,8 +5,18 @@ import theme from "../../../../../../../../theme/Theme";
 import { RemoveSectionXBtn } from "../../../../../../../appWide/RemoveSectionXBtn";
 import { NumObjEntityEditor } from "../../../../../../../inputs/NumObjEntityEditor";
 
-type Props = { feId: string; unitNumber: number };
-export function UnitItem({ feId, unitNumber }: Props) {
+type Props = {
+  feId: string;
+  unitNumber: number;
+  showXBtn: boolean;
+  showRent: boolean;
+};
+export function UnitItem({
+  feId,
+  unitNumber,
+  showXBtn,
+  showRent = true,
+}: Props) {
   const feInfo = { sectionName: "unit", feId } as const;
   const unit = useGetterSection(feInfo);
   return (
@@ -14,12 +24,16 @@ export function UnitItem({ feId, unitNumber }: Props) {
       <div className="UnitItem-viewable">
         <div className="UnitItem-titleRow">
           <div className="UnitItem-titleText">Unit {unitNumber}</div>
-          <RemoveSectionXBtn className="UnitItem-xBtn" {...feInfo} />
+          {showXBtn && (
+            <RemoveSectionXBtn className="UnitItem-xBtn" {...feInfo} />
+          )}
         </div>
         <NumObjEntityEditor feVarbInfo={unit.varbInfo("numBedrooms")} />
-        <NumObjEntityEditor
-          feVarbInfo={unit.varbInfo("targetRentPeriodicEditor")}
-        />
+        {showRent && (
+          <NumObjEntityEditor
+            feVarbInfo={unit.varbInfo("targetRentPeriodicEditor")}
+          />
+        )}
       </div>
     </Styled>
   );

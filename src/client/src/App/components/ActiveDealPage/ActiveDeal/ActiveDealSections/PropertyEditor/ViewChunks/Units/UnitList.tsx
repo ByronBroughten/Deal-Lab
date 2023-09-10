@@ -9,8 +9,8 @@ import useHowMany from "../../../../../../customHooks/useHowMany";
 import { AddUnitBtn } from "./UnitList/AddUnitBtn";
 import { UnitItem } from "./UnitList/UnitItem";
 
-type Props = { feId: string; className?: string };
-export function UnitList({ feId, className }: Props) {
+type Props = { feId: string; showRent?: boolean; className?: string };
+export function UnitList({ feId, showRent = true, className }: Props) {
   const addChild = useAction("addChild");
   const numUnitsPerRow = 2;
   const unitParent = useGetterSection({
@@ -53,6 +53,8 @@ export function UnitList({ feId, className }: Props) {
                       key={unitId}
                       feId={unitId}
                       unitNumber={unitNumber}
+                      showXBtn={unitIds.length > 1}
+                      showRent={showRent}
                     />
                   );
                 })}

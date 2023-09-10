@@ -1,5 +1,8 @@
+import { SxProps } from "@mui/material";
+import { VarbName } from "../../../../../../../sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
 import { FeIdProp } from "../../../../../../../sharedWithServer/SectionsMeta/SectionInfo/NanoIdInfo";
 import { useGetterSection } from "../../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
+import { GetterSection } from "../../../../../../../sharedWithServer/StateGetters/GetterSection";
 import { nativeTheme } from "../../../../../../../theme/nativeTheme";
 import { SubSectionBtn } from "../../../../../../appWide/GeneralSection/GeneralSectionTitle/SubSectionBtn";
 import { StyledActionBtn } from "../../../../../../appWide/GeneralSection/MainSection/StyledActionBtn";
@@ -8,65 +11,93 @@ import { MuiRow } from "../../../../../../general/MuiRow";
 import { icons } from "../../../../../../Icons";
 import { useInputModalWithContext } from "../../../../../../Modals/InputModalProvider";
 import { UnitList } from "../Units/UnitList";
+import { arrSx } from "./../../../../../../../utils/mui";
 
-export function UnitsNext({ feId }: FeIdProp) {
+interface Props extends FeIdProp {
+  showRent?: boolean;
+  sx?: SxProps;
+}
+
+function useShowUnitInfo(property: GetterSection<"property">): boolean {
+  const units = property.children("unit");
+  const unitCount = units.length;
+  if (unitCount > 1) {
+    return true;
+  }
+
+  const firstUnit = units[0];
+  const brEditor = firstUnit.valueNext("numBedrooms").mainText;
+  const rentEditor = firstUnit.valueNext("targetRentPeriodicEditor").mainText;
+  if (brEditor || rentEditor) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+export function UnitsNext({ feId, sx, showRent = true }: Props) {
   const property = useGetterSection({ sectionName: "property", feId });
-  const hasUnits = property.childFeIds("unit").length > 0;
   const { setModal } = useInputModalWithContext();
   const openUnits = () =>
     setModal({
       title: "Units",
-      children: <UnitList {...{ feId }} />,
+      children: <UnitList {...{ feId, showRent }} />,
       showFinish: true,
     });
+
+  const varbsToShow: VarbName<"property">[] = ["numUnits", "numBedrooms"];
+
+  if (showRent) {
+    varbsToShow.push("targetRentMonthly");
+  }
+
+  const showUnitInfo = useShowUnitInfo(property);
   return (
-    <>
-      <MuiRow>
-        {hasUnits && (
-          <>
-            <StyledActionBtn
-              {...{
-                onClick: openUnits,
-                middle: "Edit Units",
-                left: icons.edit(),
-                sx: {
-                  fontSize: nativeTheme.inputLabel.fontSize,
-                  marginRight: nativeTheme.s35,
-                  border: `solid 1px ${nativeTheme["gray-300"]}`,
-                  height: "60px",
-                  borderRadius: nativeTheme.muiBr0,
-                },
-              }}
-            />
-            <LabeledVarbRow
-              {...{
-                varbPropArr: property.varbInfoArr(
-                  "numUnits",
-                  "numBedrooms",
-                  "targetRentYearly"
-                ),
-              }}
-            />
-          </>
-        )}
-        {!hasUnits && (
-          <SubSectionBtn
+    <MuiRow
+      sx={[
+        {
+          ...nativeTheme.editorMargins,
+        },
+        ...arrSx(sx),
+      ]}
+    >
+      {showUnitInfo && (
+        <>
+          <StyledActionBtn
             {...{
               onClick: openUnits,
-              left: icons.addUnit({ size: 22 }),
-              middle: "Add Units",
+              middle: "Edit Units",
+              left: icons.edit(),
               sx: {
                 fontSize: nativeTheme.inputLabel.fontSize,
+                marginRight: nativeTheme.s35,
+                border: `solid 1px ${nativeTheme["gray-300"]}`,
+                height: "60px",
                 borderRadius: nativeTheme.muiBr0,
-                lineHeight: "1.2rem",
-                height: 60,
-                width: 140,
-                ...nativeTheme.editorMargins,
               },
             }}
           />
-        )}
-      </MuiRow>
-    </>
+          <LabeledVarbRow
+            {...{ varbPropArr: property.varbInfoArr(...varbsToShow) }}
+          />
+        </>
+      )}
+      {!showUnitInfo && (
+        <SubSectionBtn
+          {...{
+            onClick: openUnits,
+            left: icons.addUnit({ size: 22 }),
+            middle: "Add Units",
+            sx: {
+              fontSize: nativeTheme.inputLabel.fontSize,
+              borderRadius: nativeTheme.muiBr0,
+              lineHeight: "1.2rem",
+              height: 60,
+              width: 140,
+            },
+          }}
+        />
+      )}
+    </MuiRow>
   );
 }
