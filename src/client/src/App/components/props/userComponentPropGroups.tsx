@@ -3,6 +3,7 @@ import { AiOutlineFieldTime } from "react-icons/ai";
 import { FaFaucet, FaHandHoldingUsd, FaMoneyCheckAlt } from "react-icons/fa";
 import { MdAttachMoney, MdOutlineRoofing, MdSell } from "react-icons/md";
 import { VscOutput } from "react-icons/vsc";
+import { constants } from "../../Constants";
 import { icons } from "../Icons";
 import { StoreName } from "./../../sharedWithServer/SectionsMeta/sectionStores";
 
@@ -50,7 +51,11 @@ export const componentProps: ComponentProps = {
     <AiOutlineFieldTime {...iconProps} />
   )),
 
-  dealMain: props("Deals", "deal", () => ""),
+  dealMain: props(
+    constants.appUnitPlural,
+    constants.appUnit.toLowerCase(),
+    () => ""
+  ),
   propertyMain: props("Properties", "property", () => ""),
   loanMain: props("Loans", "loan", () => ""),
   mgmtMain: props("Managements", "management", () => ""),
@@ -62,5 +67,9 @@ export const componentProps: ComponentProps = {
   )),
 
   outputSection: props("Output sections", "output sections", () => ""),
-  dealCompareMenu: props("Deal compare cache", "deal compare cache", () => ""),
+  dealCompareMenu: props(
+    `${constants.appUnit} compare cache`,
+    `${constants.appUnit.toLowerCase()} compare cache`,
+    () => ""
+  ),
 };

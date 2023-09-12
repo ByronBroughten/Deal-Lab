@@ -1,4 +1,5 @@
 import { fixedVariableLabel } from "../../../../varbLabels";
+import { constants } from "../../../Constants";
 import { ValidationError } from "../../utils/Error";
 import { Obj } from "../../utils/Obj";
 import { targetNames } from "../allBaseSectionVarbs/baseSwitchNames";
@@ -21,6 +22,8 @@ type MakeVarbPathParams<
   varbName: VN;
   collectionName: string;
 };
+
+const topLevelUnit = constants.appUnit;
 
 const allVarbPathParams = {
   ...sectionVarbNameParams("calculatedVarbsFocal", "Property", [
@@ -81,7 +84,7 @@ const allVarbPathParams = {
     ...targetNames("ongoingPiti", "periodic"),
     ...targetNames("ongoingLoanPayment", "periodic"),
   ]),
-  ...sectionVarbNameParams("dealFocal", "Deal", [
+  ...sectionVarbNameParams("dealFocal", topLevelUnit, [
     "totalInvestment",
     ...targetNames("cashFlow", "periodic"),
     ...targetNames("cocRoi", "periodic"),
@@ -98,24 +101,24 @@ const allVarbPathParams = {
     "propertyFocal",
     "expensesOngoingYearly"
   ),
-  dealMode: fixedVarbPathParams("Deal", "dealFocal", "dealMode"),
+  dealMode: fixedVarbPathParams(topLevelUnit, "dealFocal", "dealMode"),
   dealNetExpensesOngoingMonthly: fixedVarbPathParams(
-    "Deal",
+    topLevelUnit,
     "dealFocal",
     "netExpensesOngoingMonthly"
   ),
   dealNetExpensesOngoingYearly: fixedVarbPathParams(
-    "Deal",
+    topLevelUnit,
     "dealFocal",
     "netExpensesOngoingYearly"
   ),
   dealExpensesOngoingMonthly: fixedVarbPathParams(
-    "Deal",
+    topLevelUnit,
     "dealFocal",
     "expensesOngoingMonthly"
   ),
   dealExpensesOngoingYearly: fixedVarbPathParams(
-    "Deal",
+    topLevelUnit,
     "dealFocal",
     "expensesOngoingYearly"
   ),
@@ -137,26 +140,34 @@ const allVarbPathParams = {
   ),
   rehabCost: fixedVarbPathParams("Property", "propertyFocal", "rehabCost"),
 
-  valueAddProfit: fixedVarbPathParams("Deal", "dealFocal", "valueAddProfit"),
+  valueAddProfit: fixedVarbPathParams(
+    topLevelUnit,
+    "dealFocal",
+    "valueAddProfit"
+  ),
   valueAddRoiPercent: fixedVarbPathParams(
-    "Deal",
+    topLevelUnit,
     "dealFocal",
     "valueAddRoiPercent"
   ),
   valueAddRoiPercentAnnualized: fixedVarbPathParams(
-    "Deal",
+    topLevelUnit,
     "dealFocal",
     "valueAddRoiPercentAnnualized"
   ),
 
-  vaProfitOnSale: fixedVarbPathParams("Deal", "dealFocal", "vaProfitOnSale"),
+  vaProfitOnSale: fixedVarbPathParams(
+    topLevelUnit,
+    "dealFocal",
+    "vaProfitOnSale"
+  ),
   vaRoiOnSalePercent: fixedVarbPathParams(
-    "Deal",
+    topLevelUnit,
     "dealFocal",
     "vaRoiOnSalePercent"
   ),
   vaRoiOnSalePercentAnnualized: fixedVarbPathParams(
-    "Deal",
+    topLevelUnit,
     "dealFocal",
     "vaRoiOnSalePercentAnnualized"
   ),
@@ -243,7 +254,7 @@ type SectionVarbPathParams<
 
 export const collectionNamesFixed = [
   "Property",
-  "Deal",
+  topLevelUnit,
   "Financing",
   "Management",
 ] as const;

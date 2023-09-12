@@ -1,6 +1,6 @@
-### Deal Lab
+### HomeEstimator
 
-Deployed at [deallab.app](https://www.deallab.app/)
+Deployed at [homeestimator.net](https://www.homeestimator.net/)
 
 ## Functional Description
 

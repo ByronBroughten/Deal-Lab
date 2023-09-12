@@ -1,5 +1,6 @@
 import { Grid, Link } from "@mui/material";
 import React from "react";
+import { constants } from "../Constants";
 import { timeS } from "../sharedWithServer/utils/timeS";
 import { nativeTheme } from "../theme/nativeTheme";
 import { DealLabIconBtn } from "./DealLabIcon";
@@ -20,10 +21,8 @@ export function FooterNext() {
     >
       <Grid item sm={12} md={4}>
         <MuiRow sx={{ justifyContent: "center", flexWrap: "nowrap" }}>
-          <FooterLink href="https://deallab.app/">Why Deal Lab?</FooterLink>
-          <FooterLink href="https://deallab.app/contact/">
-            Contact
-          </FooterLink>{" "}
+          <FooterLink href="https://deallab.app/">{`Why ${constants.appName}`}</FooterLink>
+          <FooterLink href="https://deallab.app/contact/">Contact</FooterLink>{" "}
           <FooterLink href="https://deallab.app/pricing/">Pricing</FooterLink>
         </MuiRow>
       </Grid>
@@ -36,7 +35,7 @@ export function FooterNext() {
         <MuiRow
           sx={{ justifyContent: "center", color: nativeTheme.primary.dark }}
         >
-          {`©${timeS.currentYear()} Deal Lab. All right reserved.`}
+          {`©${timeS.currentYear()} ${constants.appName}. All right reserved.`}
         </MuiRow>
       </Grid>
     </Grid>

@@ -1,3 +1,4 @@
+import { constants } from "../../../Constants";
 import { FeRouteName } from "../../../Constants/feRoutes";
 import { ChildName } from "../../../sharedWithServer/SectionsMeta/sectionChildrenDerived/ChildName";
 import { StateValue } from "../../../sharedWithServer/SectionsMeta/values/StateValue";
@@ -47,7 +48,7 @@ export function useActiveDealSection(sectionName: ActiveDealChildName) {
     feId: deal.onlyChildFeId(sectionName),
     isComplete: completionStatus === "allValid",
     backBtnProps: {
-      backToWhat: "Deal",
+      backToWhat: constants.appUnit,
       onClick: goToIndex,
     },
   };

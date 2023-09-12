@@ -1,6 +1,6 @@
-### Deal Lab Client
+### HomeEstimator Client
 
-[Live Test Website](https://ultimate-property-analyzer.herokuapp.com/).
+[Live Test Website](https://wwww.homeestimator.net)
 
 ## Description:
 

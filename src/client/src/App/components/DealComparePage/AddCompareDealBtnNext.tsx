@@ -1,4 +1,5 @@
 import { SxProps } from "@mui/material";
+import { constants } from "../../Constants";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { arrSx } from "../../utils/mui";
 import { HollowBtn } from "../appWide/HollowBtn";
@@ -13,8 +14,9 @@ export function AddCompareDealBtnNext({ dealCount, sx }: Props) {
   const width = "100px";
 
   const areNone = dealCount === 0;
-
-  const text = areNone ? "Add Deal To Compare" : "+ Deal";
+  const text = areNone
+    ? `Add ${constants.appUnitPlural} To Compare`
+    : `+ ${constants.appUnit}`;
 
   const { setModal } = useInputModalWithContext();
   const openDealMenu = () =>

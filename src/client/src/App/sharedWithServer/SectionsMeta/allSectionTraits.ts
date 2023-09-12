@@ -1,3 +1,4 @@
+import { constants } from "../../Constants";
 import { SectionName, sectionNames } from "./SectionName";
 import {
   GeneralSectionTraits,
@@ -38,7 +39,7 @@ export const allSectionTraits = checkAllSectionTraits({
     defaultStoreName: "dealCompareMenu",
   }),
   deal: sectionTraits({
-    displayName: "Deal",
+    displayName: constants.appUnit,
     defaultStoreName: "dealMain",
   }),
   loan: sectionTraits({

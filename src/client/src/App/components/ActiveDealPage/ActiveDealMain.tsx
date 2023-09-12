@@ -41,7 +41,7 @@ function CreatingActiveDeal() {
     <Box>
       <PageTitle
         sx={{ marginTop: nativeTheme.s35 }}
-        text={`Initializing Deal...`}
+        text={`Initializing ${constants.appUnit}...`}
       />
       <Box>
         <MuiRow

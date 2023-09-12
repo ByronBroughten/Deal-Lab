@@ -4,6 +4,7 @@ import { HiOutlineVariable } from "react-icons/hi";
 import { IoIosGitCompare } from "react-icons/io";
 import { SiWebcomponentsdotorg } from "react-icons/si";
 import styled from "styled-components";
+import { constants } from "../../Constants";
 import theme from "../../theme/Theme";
 import { useMakeGoToPage } from "../customHooks/useGoToPage";
 import { StandardBtnProps } from "../general/StandardProps";
@@ -26,7 +27,7 @@ export function AppMenuDropdown({ activeBtnName }: AppMenuProps) {
       <AppMenuBtn
         {...props}
         onClick={makeGoToPage("activeDeal")}
-        text={"Deal"}
+        text={constants.appUnit}
         icon={<FaHandshake size={iconSize} />}
       />
     ),

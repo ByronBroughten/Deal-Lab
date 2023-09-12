@@ -1,5 +1,6 @@
 import { Box, SxProps } from "@mui/material";
 import { unstable_batchedUpdates } from "react-dom";
+import { constants } from "../../Constants";
 import { dealModeLabels } from "../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
 import { useActionNoSave } from "../../sharedWithServer/stateClassHooks/useAction";
 import { useGetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useGetterSection";
@@ -79,7 +80,7 @@ function NewDealSelectorAddDeal({ sx }: Props) {
             height: "50px",
             fontSize: nativeTheme.fs20,
           }}
-          middle={"Create Deal"}
+          middle={`Create ${constants.appUnit}`}
           onClick={setCreateDeal}
         />
       </MuiRow>

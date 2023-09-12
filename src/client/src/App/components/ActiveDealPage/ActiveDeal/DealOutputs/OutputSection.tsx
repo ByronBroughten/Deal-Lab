@@ -105,10 +105,10 @@ export function OutputSection({
             display: "flex",
             justifyContent: "center",
             fontSize: nativeTheme.fs18,
-            color: nativeTheme.darkBlue.main,
+            color: nativeTheme.notice.dark,
           }}
         >
-          {"(Incomplete Deal)"}
+          {`Incomplete`}
         </Box>
       )}
       <DealOutputListOrDetails

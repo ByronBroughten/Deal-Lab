@@ -10,7 +10,7 @@ export function CompareDealModeSelector() {
       {...{
         sx: { mt: nativeTheme.s3 },
         selectProps: { sx: { minWidth: 120 } },
-        label: "Deal Type",
+        label: `Deal Type`,
         unionValueName: "dealModePlusMixed",
         feVarbInfo: {
           ...menu.feInfo,

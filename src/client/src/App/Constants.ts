@@ -3,10 +3,8 @@ import { envName } from "./Constants/envName";
 import { feRoutes } from "./Constants/feRoutes";
 import { stripePrices } from "./Constants/stripePrices";
 
-const clientProdUrl = "https://the.deallab.app";
 const clientDevUrl = "http://localhost:3000";
-
-const { appName, devAppDisplayName, ...appNameStuff } = getAppNameStuff();
+const { devAppDisplayName, clientProdUrl, ...appNameStuff } = getAppNameStuff();
 
 const envConstants = {
   development: {
@@ -19,7 +17,7 @@ const envConstants = {
   },
   production: {
     environment: "production",
-    appDisplayName: appName,
+    appDisplayName: appNameStuff.appName,
     apiUrlBase: clientProdUrl,
     clientUrlBase: clientProdUrl,
     paymentManagementLink:
