@@ -70,7 +70,7 @@ export function NavBarBtns() {
 function GiveFeedbackBtn() {
   return (
     <NavBtn
-      href="https://deallab.app/contact"
+      href="https://homeestimator.net/contact"
       target="_blank"
       text={
         <MuiRow sx={{ justifyContent: "center" }}>

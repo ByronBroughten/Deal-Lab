@@ -20,8 +20,10 @@ export function useRoutes(app: express.Application) {
     cors({
       origin: [
         "http://localhost:3000",
-        "https://ultimate-property-analyzer.herokuapp.com",
-        "https://www.ultimatepropertyanalyzer.com",
+        // "https://ultimate-property-analyzer.herokuapp.com",
+        // "https://www.ultimatepropertyanalyzer.com",
+        "https://www.homeestimator.net",
+        "https://the.homeestimator.net",
         "https://www.deallab.app",
         "https://the.deallab.app",
       ],

@@ -1,6 +1,6 @@
 const externalLinks = {
-  capEx: "https://deallab.app/capital-expenses",
-  contact: "https://deallab.app/contact",
+  capEx: "https://homeestimator.net/capital-expenses",
+  contact: "https://homeestimator.net/contact",
 } as const;
 
 type ExternalLinks = typeof externalLinks;

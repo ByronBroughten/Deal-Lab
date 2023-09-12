@@ -21,9 +21,13 @@ export function FooterNext() {
     >
       <Grid item sm={12} md={4}>
         <MuiRow sx={{ justifyContent: "center", flexWrap: "nowrap" }}>
-          <FooterLink href="https://deallab.app/">{`Why ${constants.appName}`}</FooterLink>
-          <FooterLink href="https://deallab.app/contact/">Contact</FooterLink>{" "}
-          <FooterLink href="https://deallab.app/pricing/">Pricing</FooterLink>
+          <FooterLink href="https://homeestimator.net/">{`Why ${constants.appName}`}</FooterLink>
+          <FooterLink href="https://homeestimator.net/contact/">
+            Contact
+          </FooterLink>{" "}
+          <FooterLink href="https://homeestimator.net/pricing/">
+            Pricing
+          </FooterLink>
         </MuiRow>
       </Grid>
       <Grid item sm={12} md={4}>
