@@ -106,7 +106,7 @@ export function ComparedDealDisplay({ feId, sx }: Props) {
             </View>
             <View style={{ alignItems: "center" }}>
               <Text numberOfLines={1} style={{ fontSize: 16 }}>
-                {varb.displayVarb()}
+                {varb.displayValue === "N/A" ? "N/A" : varb.displayVarb()}
               </Text>
             </View>
           </View>

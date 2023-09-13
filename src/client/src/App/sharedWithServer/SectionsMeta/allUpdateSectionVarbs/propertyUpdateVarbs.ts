@@ -12,6 +12,7 @@ import {
   updateOverride,
 } from "../updateSectionVarbs/updateVarb/UpdateOverrides";
 import {
+  dealModeOverrides,
   dealModeVarb,
   unionOverrides,
   valueSourceOverrides,
@@ -77,7 +78,19 @@ export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
     }),
     isMultifamily: varb("boolean", { initValue: false }),
     isRenting: varb("boolean", { initValue: false }),
-    likability: varb("numObj", { initValue: numObj(5) }),
+    likability: varb("numObj", {
+      initValue: numObj(5),
+      updateFnName: "throwIfReached",
+      updateOverrides: dealModeOverrides(
+        {
+          homeBuyer: basicsS.manualUpdateOnly(),
+          buyAndHold: basicsS.notApplicable,
+          fixAndFlip: basicsS.notApplicable,
+          brrrr: basicsS.notApplicable,
+        },
+        relVarbInfoS.local("propertyMode")
+      ),
+    }),
     yearBuilt: varb("numObj"),
     pricePerLikability: varb(
       "numObj",

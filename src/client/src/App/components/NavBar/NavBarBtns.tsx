@@ -30,7 +30,7 @@ export function NavBarBtns() {
     ),
     basicUser: () => (
       <>
-        <GiveFeedbackBtn />
+        {/* <GiveFeedbackBtn /> */}
         <NavDropDown
           className="NavBar-upgradeToProDropdown"
           btnIcon={
@@ -56,7 +56,7 @@ export function NavBarBtns() {
     ),
     proUser: () => (
       <>
-        <GiveFeedbackBtn />
+        {/* <GiveFeedbackBtn /> */}
         <NavUserMenu />
       </>
     ),

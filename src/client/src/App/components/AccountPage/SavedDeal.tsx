@@ -282,7 +282,7 @@ function DealActions({
   const { setModal } = useConfirmationModal();
   const warnAndDelete = () =>
     setModal({
-      title: "Are you sure you want to delete this deal?",
+      title: "Are you sure you want to delete this home?",
       description: "It will be deleted permanently.",
       handleSubmit: deleteDeal,
     });

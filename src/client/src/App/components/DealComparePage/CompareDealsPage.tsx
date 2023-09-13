@@ -44,7 +44,7 @@ export function CompareDealsPage() {
             }}
           >
             <MuiRow>
-              <PageTitle text={"Compare Deals"} />
+              <PageTitle text={`Compare ${constants.appUnitPlural}`} />
               {status === "comparing" && (
                 <StyledActionBtn
                   {...{
