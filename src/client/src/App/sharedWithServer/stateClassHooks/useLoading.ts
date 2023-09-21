@@ -18,18 +18,6 @@ export function useSolve() {
   }, [mainState, solve]);
 }
 
-export function useDoCompare() {
-  const sessionStore = useGetterSectionOnlyOne("sessionStore");
-  const status = sessionStore.valueNext("compareDealStatus");
-  const doCompare = useAction("doDealCompare");
-
-  React.useEffect(() => {
-    if (status === "buildingCompare") {
-      doCompare({});
-    }
-  }, [status, doCompare]);
-}
-
 export function useAddDeal() {
   const addActiveDeal = useAction("addActiveDeal");
   const sessionStore = useGetterSectionOnlyOne("sessionStore");

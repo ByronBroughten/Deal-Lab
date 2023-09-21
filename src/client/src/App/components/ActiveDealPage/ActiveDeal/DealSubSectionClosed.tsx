@@ -43,7 +43,6 @@ const propsByDealMode = {
         "purchasePrice",
         "likability",
         "rehabCost",
-        "pricePerLikability",
         "expensesOngoingMonthly",
       ] as const,
     },

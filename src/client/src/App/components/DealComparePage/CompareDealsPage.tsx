@@ -1,4 +1,3 @@
-import { MoonLoader } from "react-spinners";
 import { constants } from "../../Constants";
 import { useAction } from "../../sharedWithServer/stateClassHooks/useAction";
 import { useGetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useGetterSection";
@@ -57,24 +56,6 @@ export function CompareDealsPage() {
               )}
             </MuiRow>
             {status === "editing" && <CompareDealsEditBody />}
-            {status === "buildingCompare" && (
-              <MuiRow
-                sx={{
-                  justifyContent: "center",
-                  padding: nativeTheme.s45,
-                }}
-              >
-                <MoonLoader
-                  {...{
-                    loading: status === "buildingCompare",
-                    color: nativeTheme.primary.main,
-                    size: 100,
-                    speedMultiplier: 0.8,
-                    cssOverride: { marginTop: nativeTheme.s3 },
-                  }}
-                />
-              </MuiRow>
-            )}
             {status === "comparing" && <CompareDealsDisplayBody />}
           </SubSectionOpen>
         </IdOfSectionToSaveProvider>

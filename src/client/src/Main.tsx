@@ -18,7 +18,6 @@ import { useSubscriptions } from "./App/modules/customHooks/useSubscriptions";
 import { useAutoSave } from "./App/sharedWithServer/stateClassHooks/useAutoSave";
 import {
   useAddDeal,
-  useDoCompare,
   useEditDeal,
   useSolve,
 } from "./App/sharedWithServer/stateClassHooks/useLoading";
@@ -34,7 +33,6 @@ export function Main() {
   useAutoSave();
   useAddDeal();
   useEditDeal();
-  useDoCompare();
   useSolve();
   return (
     <Styled className="App-root">

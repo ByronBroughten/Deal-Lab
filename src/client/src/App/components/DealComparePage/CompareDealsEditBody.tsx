@@ -18,7 +18,7 @@ export function CompareDealsEditBody() {
   const buildCompare = () =>
     updateValue({
       ...session.varbInfo("compareDealStatus"),
-      value: "buildingCompare",
+      value: "comparing",
     });
 
   return (

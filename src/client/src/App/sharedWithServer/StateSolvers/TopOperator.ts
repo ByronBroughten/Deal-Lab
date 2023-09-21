@@ -87,7 +87,7 @@ export class TopOperator extends SolverBase {
   }
   onChangeIdle(): void {
     const feStore = this.prepper.oneAndOnly("feStore");
-    feStore.updateValues({
+    feStore.updater.updateValues({
       timeOfChangeIdle: timeS.now(),
     });
 
@@ -130,16 +130,6 @@ export class TopOperator extends SolverBase {
   }
   private doDealUpdate(dbId: string) {
     const deal = this.getStore.get.childByDbId({ childName: "dealMain", dbId });
-
-    const cache = this.prepper.oneAndOnly("dealCompareCache");
-    const dealSystems = cache.children("comparedDealSystem");
-    for (const system of dealSystems) {
-      if (system.get.dbId === dbId) {
-        const systemDeal = system.onlyChild("deal");
-        systemDeal.loadSelfSectionPack(deal.makeSectionPack());
-      }
-    }
-
     const session = this.prepper.oneAndOnly("sessionStore");
     const sessionDeal = session.childByDbId({ childName: "dealMain", dbId });
     sessionDeal.loadSelfSectionPack(makeDefaultSessionDeal(deal));
@@ -282,7 +272,7 @@ export class TopOperator extends SolverBase {
     }
 
     const session = this.prepper.oneAndOnly("sessionStore");
-    session.updateValues({ compareDealStatus: "comparing" });
+    session.updateValues({ compareDealTimeReady: timeS.now() });
     this.solve();
   }
   private addDealSystemToCompareCache(dbId: string) {

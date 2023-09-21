@@ -87,6 +87,7 @@ function makeAllUpdateSections() {
       CreateDealOfMode: varb("dealMode", {
         initValue: defaultCreateDealModeOf,
       }),
+      compareDealTimeReady: varb("dateTime", { initValue: 0 }),
       compareDealStatus: varb("compareDealStatus", { initValue: "editing" }),
       archivedAreLoaded: varb("boolean", { initValue: false }),
       showArchivedDeals: varb("boolean", { initValue: false }),

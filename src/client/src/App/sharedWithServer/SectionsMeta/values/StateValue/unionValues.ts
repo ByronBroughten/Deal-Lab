@@ -98,7 +98,7 @@ export type ValueSource<VT extends ValueSourceType = ValueSourceType> =
 
 const unionValueArrs = {
   ...valueSources,
-  compareDealStatus: ["comparing", "editing", "buildingCompare"],
+  compareDealStatus: ["comparing", "editing"],
   appSaveStatus: ["unsaved", "saving", "saved", "saveFailed"],
   dealSort: ["dateCreated", "dateUpdated"],
   authStatus: ["guest", "user"],
