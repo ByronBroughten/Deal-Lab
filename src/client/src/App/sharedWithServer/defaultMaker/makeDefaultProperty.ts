@@ -3,8 +3,8 @@ import { StateValue } from "../SectionsMeta/values/StateValue";
 import { getDealModes } from "../SectionsMeta/values/StateValue/dealMode";
 import { PackBuilderSection } from "../StatePackers/PackBuilderSection";
 import { numObj } from "./../SectionsMeta/values/StateValue/NumObj";
-import { makeExampleCapExList } from "./makeDefaultFeUser/makeExampleCapEx";
-import { avgHomeAdvisorNahbCapExProps } from "./makeDefaultFeUser/makeExampleOngoingListsProps";
+import { makeHomeAdvisorNahbCapExList } from "./makeDefaultFeUser/makeExampleCapEx";
+import { makeNationalUtilityAverageList } from "./makeDefaultFeUser/makeExampleOngoingLists";
 
 export function makeDefaultProperty(
   propertyMode: StateValue<"dealMode"> = "buyAndHold"
@@ -50,7 +50,9 @@ export function makeDefaultProperty(
   const miscOngoingRevenue = property.addAndGetChild("miscOngoingRevenue");
   miscOngoingRevenue.addChild("periodicList");
 
-  const miscOngoingCost = property.addAndGetChild("miscOngoingCost");
+  const miscOngoingCost = property.addAndGetChild("miscOngoingCost", {
+    sectionValues: { valueSourceName: "listTotal" },
+  });
   miscOngoingCost.addChild("periodicList");
 
   const miscHoldingCost = property.addAndGetChild("miscHoldingCost");
@@ -65,29 +67,19 @@ export function makeDefaultProperty(
   const utilityHolding = property.addAndGetChild("utilityHolding");
   utilityHolding.addChild("periodicList");
 
-  const utilityOngoing = property.addAndGetChild("utilityOngoing");
-  utilityOngoing.addChild("periodicList");
+  const utilityOngoing = property.addAndGetChild("utilityOngoing", {
+    sectionValues: { valueSourceName: "listTotal" },
+  });
+
+  const utilityList = utilityOngoing.addAndGetChild("periodicList");
+  utilityList.overwriteSelf(makeNationalUtilityAverageList());
 
   property.addChild("maintenanceOngoing");
 
-  const capExValue = property.addAndGetChild("capExValueOngoing");
+  const capExValue = property.addAndGetChild("capExValueOngoing", {
+    sectionValues: { valueSourceName: "listTotal" },
+  });
   const capExList = capExValue.addAndGetChild("capExList");
-
-  if (propertyMode === "homeBuyer") {
-    capExList.overwriteSelf(
-      makeExampleCapExList(
-        "Homebuyer Example CapEx",
-        avgHomeAdvisorNahbCapExProps
-      )
-    );
-  } else {
-    capExList.overwriteSelf(
-      makeExampleCapExList(
-        "Homebuyer Example CapEx",
-        avgHomeAdvisorNahbCapExProps
-      )
-    );
-  }
-
+  capExList.overwriteSelf(makeHomeAdvisorNahbCapExList());
   return property.makeSectionPack();
 }

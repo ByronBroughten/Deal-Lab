@@ -5,10 +5,11 @@ import { stringObj } from "../SectionsMeta/values/StateValue/StringObj";
 import { PackBuilderSection } from "../StatePackers/PackBuilderSection";
 import { timeS } from "../utils/timeS";
 import { makeDefaultDealCompareMenu } from "./makeDefaultDealCompareMenu";
-import { makeExampleCapExList } from "./makeDefaultFeUser/makeExampleCapEx";
+import { makeHomeAdvisorNahbCapExList } from "./makeDefaultFeUser/makeExampleCapEx";
 import { makeExampleDeal } from "./makeDefaultFeUser/makeExampleDeal";
 import { makeExampleLoan } from "./makeDefaultFeUser/makeExampleLoan";
 import { makeExampleMgmt } from "./makeDefaultFeUser/makeExampleMgmt";
+import { makeNationalUtilityAverageList } from "./makeDefaultFeUser/makeExampleOngoingLists";
 import {
   avgHomeAdvisorNahbCapExProps,
   examplePropertyRepairProps,
@@ -78,13 +79,13 @@ export function makeDefaultDbStoreArrs({
     sectionPacks: [exampleHomeBuyer, exampleBuyAndHold],
   });
   dbStore.loadChildren({
+    childName: "utilitiesListMain",
+    sectionPacks: [makeNationalUtilityAverageList()],
+  });
+  dbStore.loadChildren({
     childName: "capExListMain",
     sectionPacks: [
-      makeExampleCapExList(
-        "HomeAdvisor & NAHB Averages",
-        avgHomeAdvisorNahbCapExProps,
-        timeS.now()
-      ),
+      makeHomeAdvisorNahbCapExList(),
       // makeExampleCapExList(
       //   "Advanced CapEx Example",
       //   exampleAdvancedCapExProps,
@@ -110,14 +111,14 @@ function makeExampleStoreMgmt() {
 function makeExampleStoreLoan(): SectionPack<"loan"> {
   return makeExampleLoan({
     loan: {
-      displayName: stringObj("30Y Fifteen Percent Down"),
-      interestRatePercentPeriodicEditor: numObj(6),
+      displayName: stringObj("National Average 2023"),
+      interestRatePercentPeriodicEditor: numObj(7.58),
       loanTermSpanEditor: numObj(30),
-      hasMortgageIns: false,
+      hasMortgageIns: true,
     },
     baseLoan: { valueSourceName: "purchaseLoanValue" },
     closingCosts: { valueSourceName: "fivePercentLoan" },
-    purchaseLoanValue: { offPercentEditor: numObj(15) },
+    purchaseLoanValue: { offPercentEditor: numObj(14) },
   });
 }
 

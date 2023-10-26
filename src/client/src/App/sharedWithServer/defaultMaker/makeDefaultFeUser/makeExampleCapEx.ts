@@ -2,7 +2,19 @@ import { SectionPack } from "../../SectionsMeta/sectionChildrenDerived/SectionPa
 import { numToObj } from "../../SectionsMeta/values/StateValue/NumObj";
 import { stringObj } from "../../SectionsMeta/values/StateValue/StringObj";
 import { PackBuilderSection } from "../../StatePackers/PackBuilderSection";
-import { ExampleCapExProps } from "./makeExampleOngoingListsProps";
+import { timeS } from "./../../utils/timeS";
+import {
+  avgHomeAdvisorNahbCapExProps,
+  ExampleCapExProps,
+} from "./makeExampleOngoingListsProps";
+
+export function makeHomeAdvisorNahbCapExList() {
+  return makeExampleCapExList(
+    "HomeAdvisor & NAHB Averages",
+    avgHomeAdvisorNahbCapExProps,
+    timeS.now()
+  );
+}
 
 export function makeExampleCapExList(
   displayName: string,

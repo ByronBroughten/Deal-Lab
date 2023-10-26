@@ -4,21 +4,33 @@ import {
   NumObj,
   numToObj,
 } from "../../SectionsMeta/values/StateValue/NumObj";
+import { numObjNext } from "../../SectionsMeta/values/StateValue/numObjNext";
 import { stringObj } from "../../SectionsMeta/values/StateValue/StringObj";
 import { PackBuilderSection } from "../../StatePackers/PackBuilderSection";
 
+export function makeNationalUtilityAverageList() {
+  return makeExampleUtilityList("National utility averages", [
+    ["Natural gas", numObjNext(["sqft"], "*0.019855")],
+    ["Electricity", numObjNext("95.47+(", ["sqft"], "*0.0226446)")],
+    ["Water/sewer", numObj(37.38)],
+    ["Garbage", numObj(37.37)],
+  ]);
+}
+
 type UtilityItemProp = [string, number | NumObj];
-export function makeUtilityList(itemPropArr: UtilityItemProp[], dbId?: string) {
+export function makeExampleUtilityList(
+  displayName: string,
+  itemPropArr: UtilityItemProp[]
+) {
   const feStore = PackBuilderSection.initAsOmniChild("feStore");
 
   const valueSource = "valueDollarsPeriodicEditor";
   const utilityList = feStore.addAndGetChild("ongoingListMain", {
-    dbId,
     sectionValues: {
       itemValueSource: valueSource,
       itemPeriodicSwitch: "monthly",
       totalPeriodicSwitch: "monthly",
-      displayName: stringObj("Utility Examples"),
+      displayName: stringObj(displayName),
     },
   });
   for (const itemProps of itemPropArr) {
