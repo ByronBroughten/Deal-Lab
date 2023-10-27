@@ -27,19 +27,15 @@ export function CapExValue({ feId }: { feId: string }) {
         feVarbInfo,
         total: valueVarb.displayVarb(),
         items: [
-          [
-            "fivePercentRent",
-            `5% of rent${
-              valueSourceName === "fivePercentRent" ? "" : " (simplest)"
-            }`,
-          ],
+          // [
+          //   "fivePercentRent",
+          //   `5% of rent${
+          //     valueSourceName === "fivePercentRent" ? "" : " (simplest)"
+          //   }`,
+          // ],
           [
             "listTotal",
-            `Itemize${
-              valueSourceName === "listTotal"
-                ? ""
-                : " (more precise, recommended)"
-            }`,
+            `Itemize${valueSourceName === "listTotal" ? "" : " (recommended)"}`,
           ],
           ["valueDollarsPeriodicEditor", "Custom amount"],
         ],
