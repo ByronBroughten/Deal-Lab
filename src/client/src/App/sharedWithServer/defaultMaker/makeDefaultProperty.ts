@@ -4,7 +4,6 @@ import { getDealModes } from "../SectionsMeta/values/StateValue/dealMode";
 import { PackBuilderSection } from "../StatePackers/PackBuilderSection";
 import { numObj } from "./../SectionsMeta/values/StateValue/NumObj";
 import { makeHomeAdvisorNahbCapExList } from "./makeDefaultFeUser/makeExampleCapEx";
-import { makeNationalUtilityAverageList } from "./makeDefaultFeUser/makeExampleOngoingLists";
 
 export function makeDefaultProperty(
   propertyMode: StateValue<"dealMode"> = "buyAndHold"
@@ -68,17 +67,17 @@ export function makeDefaultProperty(
   utilityHolding.addChild("periodicList");
 
   const utilityOngoing = property.addAndGetChild("utilityOngoing", {
-    sectionValues: { valueSourceName: "listTotal" },
+    // sectionValues: { valueSourceName: "listTotal" },
   });
 
   const utilityList = utilityOngoing.addAndGetChild("periodicList");
-  utilityList.overwriteSelf(makeNationalUtilityAverageList());
+  // utilityList.overwriteSelf(makeNationalUtilityAverageList());
 
   property.addChild("maintenanceOngoing");
 
-  const capExValue = property.addAndGetChild("capExValueOngoing", {
-    sectionValues: { valueSourceName: "listTotal" },
-  });
+  const capExValue = property.addAndGetChild("capExValueOngoing");
+  // sectionValues: { valueSourceName: "listTotal" },
+
   const capExList = capExValue.addAndGetChild("capExList");
   capExList.overwriteSelf(makeHomeAdvisorNahbCapExList());
   return property.makeSectionPack();
