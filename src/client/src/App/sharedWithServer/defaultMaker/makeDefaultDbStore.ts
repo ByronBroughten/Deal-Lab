@@ -76,7 +76,10 @@ export function makeDefaultDbStoreArrs({
   });
   dbStore.loadChildren({
     childName: "dealMain",
-    sectionPacks: [exampleHomeBuyer, exampleBuyAndHold],
+    sectionPacks: [
+      exampleHomeBuyer,
+      // exampleBuyAndHold
+    ],
   });
   dbStore.loadChildren({
     childName: "utilitiesListMain",

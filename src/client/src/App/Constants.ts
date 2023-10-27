@@ -53,6 +53,7 @@ export const config = {
   isBeta,
   apiPathBit,
   apiPathFull,
+  basicStorageLimit: basicSectionSaveLimit,
   plans: {
     basicPlan: {
       sectionSaveLimit: basicSectionSaveLimit,
@@ -80,7 +81,6 @@ export const config = {
       return `${env.clientUrlBase}${config.feRoutes.handleAuth}`;
     },
   },
-  basicStorageLimit: 5,
   apiQueryNames: [
     "getArchivedDeals",
     "addSection",
