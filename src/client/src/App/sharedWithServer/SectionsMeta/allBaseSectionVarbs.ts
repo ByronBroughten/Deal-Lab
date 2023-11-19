@@ -278,6 +278,11 @@ export function makeAllBaseSectionVarbs() {
       valueSourceName: baseVarb("repairValueSource"),
       valueDollarsEditor: baseVarb("numObj", dollars),
     }),
+    delayedCostValue: varbs({
+      valueDollars: baseVarb("numObj", dollars),
+      valueSourceName: baseVarb("repairValueSource"),
+      valueDollarsEditor: baseVarb("numObj", dollars),
+    }),
     taxesValue: varbs({
       ...baseVarbsS.periodicDollarsInput("valueDollars"),
       valueSourceName: baseVarb("taxesAndHomeInsSource"),
@@ -308,6 +313,7 @@ export function makeAllBaseSectionVarbs() {
       completionStatus: baseVarb("completionStatus"),
       financingMode: baseVarb("financingMode"),
       loanBaseDollars: baseVarb("numObj", dollars),
+      firstInterestPayment: baseVarb("numObj", dollars),
       ...varbsS.periodicPercentInput("interestRatePercent"),
       ...baseVarbsS.periodicDecimal("interestRateDecimal"),
       ...varbsS.monthsYearsInput("loanTerm"),
@@ -350,7 +356,24 @@ export function makeAllBaseSectionVarbs() {
     purchaseLoanValue: baseVarbsS.loanValue,
     repairLoanValue: baseVarbsS.loanValue,
     arvLoanValue: baseVarbsS.loanValue,
-
+    prepaidTaxes: varbs({
+      valueSourceName: baseVarb("spanOrDollars"),
+      valueDollarsEditor: baseVarb("numObj"),
+      valueDollars: baseVarb("numObj"),
+      ...baseVarbsS.monthsYearsInput("value"),
+    }),
+    prepaidHomeIns: varbs({
+      valueSourceName: baseVarb("spanOrDollars"),
+      valueDollarsEditor: baseVarb("numObj"),
+      valueDollars: baseVarb("numObj"),
+      ...baseVarbsS.monthsYearsInput("value"),
+    }),
+    prepaidInterest: varbs({
+      valueSourceName: baseVarb("spanOrDollars"),
+      valueDollarsEditor: baseVarb("numObj"),
+      valueDollars: baseVarb("numObj"),
+      valueSpanEditor: baseVarb("numObj"),
+    }),
     mgmt: varbs({
       ...baseVarbsS.savableSection,
       completionStatus: baseVarb("completionStatus"),

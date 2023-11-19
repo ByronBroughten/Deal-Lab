@@ -56,7 +56,8 @@ export function UnitsNext({ feId, sx, showRent = true }: Props) {
     <MuiRow
       sx={[
         {
-          ...nativeTheme.editorMargins,
+          marginTop: nativeTheme.s2,
+          marginBottom: nativeTheme.editorMargins,
         },
         ...arrSx(sx),
       ]}

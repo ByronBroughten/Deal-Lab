@@ -10,8 +10,9 @@ import { VarbStringLabel } from "./VarbStringLabel";
 type Props = {
   feVarbInfo: FeVarbInfo;
   toggledNode: React.ReactNode;
+  editorMargins?: boolean;
 };
-export function ToggledNode({ feVarbInfo, toggledNode }: Props) {
+export function ToggledNode({ feVarbInfo, toggledNode, editorMargins }: Props) {
   const varb = useGetterVarb(feVarbInfo);
   const value = varb.value("boolean");
   return (
@@ -27,6 +28,7 @@ export function ToggledNode({ feVarbInfo, toggledNode }: Props) {
         {...{
           feVarbInfo,
           label: <VarbStringLabel names={feVarbInfo as FeVarbInfoNext} />,
+          editorMargins,
         }}
       />
       {value && toggledNode}

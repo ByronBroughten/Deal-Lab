@@ -15,6 +15,7 @@ import {
 } from "./allUpdateSectionVarbs/ongoingItemUpdateVarbs";
 import { taxesAndHomeInsValueUpdateVarbs } from "./allUpdateSectionVarbs/ongoingValueUpdateVarb";
 import { propertyUpdateVarbs } from "./allUpdateSectionVarbs/propertyUpdateVarbs";
+import { repairValueUpdateVarbs } from "./allUpdateSectionVarbs/repairValueUpdateVarbs";
 import { sellingCostUpdateVarbs } from "./allUpdateSectionVarbs/sellingCostUpdateVarbs";
 import { vacancyLossUpdateVarbs } from "./allUpdateSectionVarbs/vacancyLossUpdateVarbs";
 import { VarbName } from "./baseSectionsDerived/baseSectionsVarbsTypes";
@@ -350,30 +351,8 @@ function makeAllUpdateSections() {
         },
       }),
     }),
-    ...prop("repairValue", {
-      valueSourceName: updateVarb("repairValueSource", { initValue: "none" }),
-      valueDollars: updateVarb("numObj", {
-        updateFnName: "throwIfReached",
-        updateOverrides: [
-          updateOverride(
-            [switchS.local("valueSourceName", "none")],
-            updateBasics("emptyNumObj")
-          ),
-          updateOverride(
-            [switchS.local("valueSourceName", "zero")],
-            updateBasicsS.zero
-          ),
-          updateOverride(
-            [switchS.local("valueSourceName", "valueDollarsEditor")],
-            updateBasicsS.loadFromLocal("valueDollarsEditor")
-          ),
-          updateOverride(
-            [switchS.local("valueSourceName", "listTotal")],
-            updateBasicsS.loadFromChild("onetimeList", "total")
-          ),
-        ],
-      }),
-    }),
+    repairValue: repairValueUpdateVarbs("listTotal"),
+    delayedCostValue: repairValueUpdateVarbs("listTotal"),
     ...prop("feStore", {
       authStatus: updateVarb("authStatus", { initValue: "guest" }),
       labSubscription: updateVarb("labSubscription", {
@@ -501,6 +480,7 @@ function makeAllUpdateSections() {
     }),
     ...prop("miscPeriodicValue", miscPeriodicCostUpdateVarbs()),
     ...prop("miscOnetimeValue", {
+      valueSourceName: updateVarb("dollarsOrList", { initValue: "listTotal" }),
       valueDollars: updateVarb("numObj", {
         updateFnName: "throwIfReached",
         updateOverrides: valueSourceOverrides("dollarsOrList", {

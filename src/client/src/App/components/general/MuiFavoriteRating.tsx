@@ -18,10 +18,12 @@ export function MuiFavoriteRating(feVarbInfo: Props) {
   return (
     <Styled
       sx={{
+        marginTop: nativeTheme.s2,
         ...nativeTheme.subSection.border,
+        borderRadius: nativeTheme.muiBr0,
         paddingX: nativeTheme.s3,
         paddingY: nativeTheme.s2,
-        width: "275px",
+        width: "260px",
       }}
     >
       <VarbStringLabel

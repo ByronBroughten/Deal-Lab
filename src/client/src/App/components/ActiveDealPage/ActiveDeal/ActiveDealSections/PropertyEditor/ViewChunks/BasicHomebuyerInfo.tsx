@@ -1,6 +1,5 @@
 import { useGetterSection } from "../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
-import { nativeTheme } from "../../../../../../theme/nativeTheme";
-import { FormSectionLabeled } from "../../../../../appWide/FormSectionLabeled";
+import { FormSectionNext } from "../../../../../appWide/FormSectionNext";
 import { TogglerBooleanVarb } from "../../../../../appWide/TogglerBooleanVarb";
 import { VarbStringLabel } from "../../../../../appWide/VarbStringLabel";
 import { MuiFavoriteRating } from "../../../../../general/MuiFavoriteRating";
@@ -17,7 +16,7 @@ export function BasicHomebuyerInfo({ feId }: Props) {
   const firstUnit = property.firstChild("unit");
 
   return (
-    <FormSectionLabeled {...{ label: "Basics" }}>
+    <FormSectionNext>
       <MuiRow>
         <NumObjEntityEditor
           inputMargins
@@ -77,13 +76,10 @@ export function BasicHomebuyerInfo({ feId }: Props) {
           {...{
             feId: property.feId,
             showRent: isRenting,
-            sx: {
-              marginBottom: nativeTheme.s2,
-            },
           }}
         />
       )}
       <MuiFavoriteRating {...property.varbInfo("likability")} />
-    </FormSectionLabeled>
+    </FormSectionNext>
   );
 }

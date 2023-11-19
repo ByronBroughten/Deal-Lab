@@ -19,8 +19,8 @@ export function MiscOnetimeValue({ feId, menuDisplayNames }: Props) {
     <SelectAndItemizeEditor
       inputMargins
       {...{
-        label: "Misc onetime costs",
-        itemizedModalTitle: "Misc onetime costs",
+        label: "Misc upfront costs",
+        itemizedModalTitle: "Misc upfront costs",
         makeEditor:
           sourceName === "valueDollarsEditor"
             ? (props) => (

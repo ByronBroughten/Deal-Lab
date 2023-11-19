@@ -63,7 +63,9 @@ const valueSources = {
   dollarsOrList: ["valueDollarsEditor", "listTotal"],
   dollarsListOrZero: ["zero", "valueDollarsEditor", "listTotal"],
   dollarsOrListOngoing: ["valueDollarsPeriodicEditor", "listTotal"],
-
+  spanOrDollars: ["valueSpanEditor", "valueDollarsEditor"],
+  // monthsOrDollars: ["valueMonthsEditor", "valueDollarsEditor"],
+  // daysOrDollars: ["valueDaysEditor", "valueDollarsEditor"],
   sellingCostSource: [
     "sixPercent",
     "valuePercentEditor",

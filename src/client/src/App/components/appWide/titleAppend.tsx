@@ -9,7 +9,8 @@ export function TitleAppend({ children, sx }: Props) {
       sx={[
         {
           fontSize: nativeTheme.fs18,
-          color: nativeTheme["gray-700"],
+          color: nativeTheme.primary.main,
+          // fontStyle: "italic",
         },
         ...arrSx(sx),
       ]}

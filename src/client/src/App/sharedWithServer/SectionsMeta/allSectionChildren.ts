@@ -122,6 +122,9 @@ export const allSectionChildren = checkAllSectionChildren({
     customVarb: "customVarb",
     mortgageInsUpfrontValue: "mortgageInsUpfrontValue",
     mortgageInsPeriodicValue: "mortgageInsPeriodicValue",
+    prepaidTaxes: "prepaidTaxes",
+    prepaidHomeIns: "prepaidHomeIns",
+    prepaidInterest: "prepaidInterest",
   }),
   loanBaseValue: sectionChildren({
     customLoanBase: "customLoanBase",
@@ -138,6 +141,8 @@ export const allSectionChildren = checkAllSectionChildren({
     miscOngoingRevenue: "miscPeriodicValue",
 
     repairValue: "repairValue",
+    delayedCostValue: "delayedCostValue",
+
     costOverrunValue: "costOverrunValue",
     sellingCostValue: "sellingCostValue",
     miscOnetimeCost: "miscOnetimeValue",
@@ -166,6 +171,9 @@ export const allSectionChildren = checkAllSectionChildren({
     onetimeList: "onetimeList",
   }),
   repairValue: sectionChildren({
+    onetimeList: "onetimeList",
+  }),
+  delayedCostValue: sectionChildren({
     onetimeList: "onetimeList",
   }),
   utilityValue: sectionChildren({

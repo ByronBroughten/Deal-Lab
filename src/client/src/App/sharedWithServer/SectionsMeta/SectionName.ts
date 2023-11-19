@@ -52,6 +52,7 @@ export const sectionNames = [
 
   "property",
   "repairValue",
+  "delayedCostValue",
   "costOverrunValue",
   "sellingCostValue",
   "utilityValue",
@@ -75,6 +76,9 @@ export const sectionNames = [
   "purchaseLoanValue",
   "repairLoanValue",
   "arvLoanValue",
+  "prepaidTaxes",
+  "prepaidHomeIns",
+  "prepaidInterest",
 
   "mortgageInsUpfrontValue",
   "mortgageInsPeriodicValue",

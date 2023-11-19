@@ -6,14 +6,15 @@ import { ToggledNode } from "../../../../../appWide/ToggledNode";
 import { NumObjEntityEditor } from "../../../../../inputs/NumObjEntityEditor";
 import { ListEditorOneTime } from "../../PropertyEditor/ValueShared/ListEditorOneTime";
 
-type Props = { feId: string; sx?: SxProps };
-export function LoanBaseExtra({ feId, sx }: Props) {
+type Props = { feId: string; sx?: SxProps; editorMargins?: boolean };
+export function LoanBaseExtra({ feId, sx, editorMargins }: Props) {
   const feInfo = { sectionName: "loanBaseExtra", feId } as const;
   const loanExtra = useGetterSection(feInfo);
   const valueSourceName = loanExtra.valueNext("valueSourceName");
   const valueVarb = loanExtra.varb("valueDollars");
   return (
     <ToggledNode
+      editorMargins={editorMargins}
       feVarbInfo={loanExtra.varbInfo("hasLoanExtra")}
       toggledNode={
         <SelectAndItemizeEditor

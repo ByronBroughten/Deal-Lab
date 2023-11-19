@@ -9,6 +9,7 @@ import { BackBtnWrapper } from "../appWide/BackBtnWrapper";
 import { BackgroundContainer } from "../appWide/BackgroundContainter";
 import { PageTitle } from "../appWide/PageTitle";
 import { useGoToPage } from "../customHooks/useGoToPage";
+import { useIsDevices } from "../customHooks/useMediaQueries";
 import { MuiRow } from "../general/MuiRow";
 import { BigStringEditor } from "../inputs/BigStringEditor";
 import { nativeTheme } from "./../../theme/nativeTheme";
@@ -70,8 +71,9 @@ function CurrentActiveDeal() {
   const { deal, feStore } = useActiveDealPage();
   const dealMode = deal.valueNext("dealMode");
   const completionStatus = deal.valueNext("completionStatus");
+  const { isPhone } = useIsDevices();
   return (
-    <Box>
+    <Box sx={{ ...(!isPhone && { minWidth: "700px" }) }}>
       <PageTitle
         sx={{ marginTop: nativeTheme.s35 }}
         text={`${dealModeLabels[dealMode]}`}

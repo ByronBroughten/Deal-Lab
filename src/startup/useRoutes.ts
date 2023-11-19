@@ -24,6 +24,7 @@ export function useRoutes(app: express.Application) {
         // "https://www.ultimatepropertyanalyzer.com",
         "https://www.homeestimator.net",
         "https://the.homeestimator.net",
+        "https://app.homeestimator.net",
         "https://www.deallab.app",
         "https://the.deallab.app",
       ],

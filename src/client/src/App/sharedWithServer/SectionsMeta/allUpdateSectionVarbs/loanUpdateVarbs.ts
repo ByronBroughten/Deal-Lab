@@ -140,6 +140,13 @@ export function loanUpdateVarbs(): UpdateSectionVarbs<"loan"> {
         ],
       },
     }),
+    firstInterestPayment: updateVarb("numObj", {
+      ...basicsS.equationLR(
+        "multiply",
+        propS.local("interestRateDecimalMonthly"),
+        propS.local("loanTotalDollars")
+      ),
+    }),
     loanTotalDollars: updateVarbS.sumNums([propS.local("loanBaseDollars")]),
     ...updateVarbsS.ongoingSumNums(
       "expenses",

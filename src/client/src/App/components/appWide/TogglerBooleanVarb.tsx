@@ -12,6 +12,7 @@ export interface TogglerBooleanVarbProps {
   label: React.ReactNode;
   name?: string;
   onChange?: (nextValue?: boolean) => void;
+  editorMargins?: boolean;
   className?: string;
   sx?: SxProps;
 }
@@ -19,6 +20,7 @@ export interface TogglerBooleanVarbProps {
 export function TogglerBooleanVarb({
   feVarbInfo,
   onChange,
+  editorMargins,
   ...rest
 }: TogglerBooleanVarbProps) {
   const updateValue = useAction("updateValue");
@@ -28,7 +30,7 @@ export function TogglerBooleanVarb({
     <Toggler
       {...{
         ...rest,
-
+        editorMargins,
         checked,
         onChange: () => {
           unstable_batchedUpdates(() => {

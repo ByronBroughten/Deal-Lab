@@ -1,5 +1,5 @@
 import { useGetterSection } from "../../../../../sharedWithServer/stateClassHooks/useGetterSection";
-import { FormSectionLabeled } from "../../../../appWide/FormSectionLabeled";
+import { FormSectionNext } from "../../../../appWide/FormSectionNext";
 import { MuiRow } from "../../../../general/MuiRow";
 import { MiscOnetimeValue } from "../PropertyEditor/ViewChunks/ViewParts/MiscOnetimeValue";
 import { MiscOngoingCost } from "../PropertyEditor/ViewChunks/ViewParts/MiscOngoingCost";
@@ -11,7 +11,7 @@ export function BasicMgmtInfo({ feId }: Props) {
   const feInfo = { sectionName: "mgmt", feId } as const;
   const mgmt = useGetterSection(feInfo);
   return (
-    <FormSectionLabeled label={"Basics"}>
+    <FormSectionNext>
       <MuiRow>
         <BasePayValue {...{ feId: mgmt.onlyChildFeId("mgmtBasePayValue") }} />
         <VacancyLossValue
@@ -23,6 +23,6 @@ export function BasicMgmtInfo({ feId }: Props) {
           menuDisplayNames={["Advertising", "Unit turnover", "Maintenance"]}
         />
       </MuiRow>
-    </FormSectionLabeled>
+    </FormSectionNext>
   );
 }

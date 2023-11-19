@@ -34,7 +34,7 @@ export function LoanTerms({ feId }: FeIdProp) {
 
   return (
     <FormSectionLabeled
-      label={"Other Parameters"}
+      label={"Parameters"}
       className="BasicLoanInfo-otherInfo"
     >
       <MuiRow>
@@ -56,7 +56,7 @@ export function LoanTerms({ feId }: FeIdProp) {
             name: "interest only toggle",
           }}
         />
-        <MortgageIns feId={feId} />
+        <MortgageIns feId={feId} editorMargins={true} />
         {showLoanPayments && (
           <LabeledVarbRow
             {...{

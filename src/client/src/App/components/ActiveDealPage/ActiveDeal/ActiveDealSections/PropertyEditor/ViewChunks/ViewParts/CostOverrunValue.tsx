@@ -21,8 +21,8 @@ export function CostOverrunValue({ feId, sx }: Props) {
         label: <VarbStringLabel names={feVarbInfo} />,
         unionValueName: "overrunValueSource",
         items: [
-          ["valueDollarsEditor", "Custom amount"],
-          ["valuePercentEditor", "Custom percent"],
+          ["valueDollarsEditor", "Amount"],
+          ["valuePercentEditor", "Percent"],
         ],
         makeEditor: (props) => (
           <NumObjEntityEditor

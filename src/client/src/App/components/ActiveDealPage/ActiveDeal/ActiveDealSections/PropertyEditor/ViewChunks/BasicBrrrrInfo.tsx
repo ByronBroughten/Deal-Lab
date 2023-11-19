@@ -1,5 +1,5 @@
 import { useGetterSection } from "../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
-import { FormSectionLabeled } from "../../../../../appWide/FormSectionLabeled";
+import { FormSectionNext } from "../../../../../appWide/FormSectionNext";
 import { MuiRow } from "../../../../../general/MuiRow";
 import { NumObjEntityEditor } from "../../../../../inputs/NumObjEntityEditor";
 import { ArvEditor } from "./ViewParts/ArvEditor";
@@ -10,7 +10,7 @@ type Props = { feId: string };
 export function BasicBrrrrInfo({ feId }: Props) {
   const property = useGetterSection({ sectionName: "property", feId });
   return (
-    <FormSectionLabeled {...{ label: "Basics" }}>
+    <FormSectionNext>
       <MuiRow>
         <NumObjEntityEditor
           inputMargins
@@ -28,6 +28,6 @@ export function BasicBrrrrInfo({ feId }: Props) {
         <UnitsNext feId={feId} />
         <MiscIncomeValue feId={property.onlyChildFeId("miscOngoingRevenue")} />
       </MuiRow>
-    </FormSectionLabeled>
+    </FormSectionNext>
   );
 }

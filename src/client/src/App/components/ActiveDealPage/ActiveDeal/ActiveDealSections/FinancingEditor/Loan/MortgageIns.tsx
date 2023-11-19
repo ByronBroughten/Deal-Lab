@@ -7,8 +7,9 @@ import { MortgageInsUpfrontValue } from "./MortgageInsUpfrontValue";
 
 interface Props {
   feId: string;
+  editorMargins?: boolean;
 }
-export function MortgageIns({ feId }: Props) {
+export function MortgageIns({ feId, editorMargins }: Props) {
   const loan = useGetterSection({ sectionName: "loan", feId });
   const mortIns = loan.onlyChild("mortgageInsPeriodicValue");
   const switchValue = mortIns.switchValue("percentLoan", "periodic");
@@ -21,6 +22,7 @@ export function MortgageIns({ feId }: Props) {
   return (
     <ToggledNode
       {...{
+        editorMargins,
         feVarbInfo: loan.varbInfo("hasMortgageIns"),
         toggledNode: (
           <MuiRow

@@ -23,7 +23,7 @@ export function LoanBaseValue({ feId }: { feId: string }) {
   return (
     <FormSectionLabeled
       {...{
-        label: "Loan Amount",
+        label: "Amount",
       }}
     >
       <Box
@@ -51,7 +51,7 @@ export function LoanBaseValue({ feId }: { feId: string }) {
       {(sectionNameS.is(valueSource, "loanBaseSubValue") ||
         valueSource === "priceAndRepairValues") && (
         <LoanBaseExtra
-          sx={{ marginTop: nativeTheme.s2 }}
+          editorMargins={true}
           feId={baseValue.onlyChildFeId("loanBaseExtra")}
         />
       )}

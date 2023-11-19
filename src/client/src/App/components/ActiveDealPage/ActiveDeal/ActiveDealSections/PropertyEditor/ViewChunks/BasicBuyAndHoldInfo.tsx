@@ -1,5 +1,5 @@
 import { useGetterSection } from "../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
-import { FormSectionLabeled } from "../../../../../appWide/FormSectionLabeled";
+import { FormSectionNext } from "../../../../../appWide/FormSectionNext";
 import { MuiRow } from "../../../../../general/MuiRow";
 import { NumObjEntityEditor } from "../../../../../inputs/NumObjEntityEditor";
 import { MiscIncomeValue } from "./ViewParts/MiscIncomeValue";
@@ -9,7 +9,7 @@ type Props = { feId: string };
 export function BasicBuyAndHoldInfo({ feId }: Props) {
   const property = useGetterSection({ sectionName: "property", feId });
   return (
-    <FormSectionLabeled {...{ label: "Basics" }}>
+    <FormSectionNext>
       <MuiRow>
         <NumObjEntityEditor
           inputMargins
@@ -26,6 +26,6 @@ export function BasicBuyAndHoldInfo({ feId }: Props) {
       </MuiRow>
       <UnitsNext feId={feId} />
       <MiscIncomeValue feId={property.onlyChildFeId("miscOngoingRevenue")} />
-    </FormSectionLabeled>
+    </FormSectionNext>
   );
 }

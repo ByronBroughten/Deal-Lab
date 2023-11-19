@@ -121,6 +121,23 @@ export const varbLabels = checkAllVarbLabels({
       title: "Cost Overrun",
       info: `Cost overrun is the sum of costs over the entirety of a project that were not anticipated upfront. Cost overrun is common, especially for larger projects.\n\nFor sizable rehab projects, it's common to factor in an extra 10-15% of the base rehab estimate for cost overrun. That may not be necessary for turnkey properties or light rehab.`,
     }),
+    valueDollars: text({
+      inputLabel: "Cost overrun",
+      variableLabel: "Upfront cost overrun",
+    }),
+    valueDollarsEditor: text({
+      inputLabel: "Cost overrun",
+      variableLabel: "Upfront cost overrun",
+    }),
+    valuePercent: text({
+      inputLabel: "Cost overrun",
+      variableLabel: "Upfront cost overrun",
+    }),
+    valuePercentEditor: text({
+      inputLabel: "Cost overrun %",
+      variableLabel: "Upfront cost overrun %",
+    }),
+    valueDecimal: input("Cost overrun percent as decimal"),
   }),
   ...prop("calculatedVarbs", {
     currentYear: input("Current year"),
@@ -212,8 +229,8 @@ export const varbLabels = checkAllVarbLabels({
       variableLabel: "Property holding costs",
     }),
     miscOnetimeCosts: text({
-      inputLabel: "Misc onetime costs",
-      variableLabel: "Misc onetime property costs",
+      inputLabel: "Misc upfront costs",
+      variableLabel: "Misc upfront property costs",
     }),
     upfrontExpenses: text({
       inputLabel: "Upfront expenses",
@@ -251,26 +268,6 @@ export const varbLabels = checkAllVarbLabels({
       inputLabel: "Repair cost",
       variableLabel: "Upfront repair cost",
     }),
-  }),
-  ...prop("costOverrunValue", {
-    valueSourceName: input("Cost overrun"),
-    valueDollars: text({
-      inputLabel: "Cost overrun",
-      variableLabel: "Upfront cost overrun",
-    }),
-    valueDollarsEditor: text({
-      inputLabel: "Cost overrun",
-      variableLabel: "Upfront cost overrun",
-    }),
-    valuePercent: text({
-      inputLabel: "Cost overrun",
-      variableLabel: "Upfront cost overrun",
-    }),
-    valuePercentEditor: text({
-      inputLabel: "Cost overrun %",
-      variableLabel: "Upfront cost overrun %",
-    }),
-    valueDecimal: input("Cost overrun percent as decimal"),
   }),
   ...prop("sellingCostValue", {
     valueSourceName: input("Selling costs"),
@@ -368,9 +365,9 @@ export const varbLabels = checkAllVarbLabels({
   }),
   ...prop("miscPeriodicValue", periodicInputAndSource("valueDollars", "Misc")),
   ...prop("miscOnetimeValue", {
-    valueSourceName: input("Misc onetime costs"),
-    valueDollars: input("Misc onetime costs"),
-    valueDollarsEditor: input("Misc onetime costs"),
+    valueSourceName: input("Misc upfront costs"),
+    valueDollars: input("Misc upfront costs"),
+    valueDollarsEditor: input("Misc upfront costs"),
   }),
   ...prop("mgmtBasePayValue", {
     ...periodicInputAndSource("valueDollars", "Base pay", {
@@ -452,11 +449,14 @@ export const varbLabels = checkAllVarbLabels({
       title: "Annualized Return on Investment from Value Add",
       info: `The total profit from increasing a property's value after purchase, as a percent of the cash that was invested to do so, divided by the number of years—or by the fraction of years—that the holding period lasted.\n\nThis can be used to compare ROI from onetime windfall income with ongoing income from other types of investments.`,
     }),
-    vaProfitOnSale: input("VA profit on sale"),
+    vaProfitOnSale: input("VA profit on sale", {
+      title: "Value Add Profit on Sale",
+      info: "The total profit from increasing a property's value, at the projected time of sale.",
+    }),
     valueAddRoiOnSaleDecimal: input("VA ROI on sale decimal"),
     vaRoiOnSalePercent: text({
       inputLabel: "VA ROI on sale",
-      title: "Value Add ROI on sale",
+      title: "Value Add ROI on Sale",
       info: "The total profit from increasing a property's value after purchase, as a percent of the cash that was invested to do so, including selling costs.\n\nThis is useful if you plan on accessing the value added to a property by selling it, as opposed to by using a HELOC or something else.",
     }),
     valueAddRoiOnSalePercentPerMonth: input("VA ROI on sale per month"),

@@ -6,14 +6,12 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-// Add possible rental income and units to homebuyer
+// Make it so clicking "New Home" gives an error right off the bat if the storage limit
+// is already reached.
 
-// Allow for loading from an existing deal
-// when creating a new deal(?)
-// There'd be a toggle, then a dropdown
-// loadDeal, dropDown of deal names
-// - That's how you'd be able to turn a homebuyer deal into
-//   a rental property
+
+// Make it so editing a deal does not directly update the sessionDeals
+// Rather, the affected session deals reload at the home screen...?
 
 // Editing the deal's name in Saved Deals causes the whole deal
 // to solve.
@@ -26,6 +24,13 @@ AppRegistry.runApplication("App", {
 // 1. Fetching the deal, updating its displayName, saving
 // 2. A new route that updates the deal's displayName, and then also updating
 //    feStore deal's displayName
+
+// Allow for loading from an existing deal
+// when creating a new deal(?)
+// There'd be a toggle, then a dropdown
+// loadDeal, dropDown of deal names
+// - That's how you'd be able to turn a homebuyer deal into
+//   a rental property
 
 // Values to make for loading zillow data eventually:
 // yearBuilt
@@ -156,8 +161,6 @@ AppRegistry.runApplication("App", {
 
 // Should I get rid of displayNameEditor? I should either get rid of it, or
 // give it to all the stored sections.
-
-// Ask for Marina, Ed, Kate(?), and Dave(?) to give feedback
 
 // * Marketing *
 // - Consult marketing people

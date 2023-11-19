@@ -33,7 +33,7 @@ export function RepairValue({ feId, dealMode, sx }: Props) {
           ...feInfo,
           varbName: "valueSourceName",
         },
-        label: "Repair cost",
+        label: "Upfront repairs",
         items: items.filter((item) => hasZeroMode || item[0] !== "zero"),
         selectProps: { sx: { minWidth: 160 } },
         makeEditor:

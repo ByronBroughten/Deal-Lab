@@ -96,21 +96,21 @@ export function OutputSection({
           />
         )}
       </MuiRow>
-      {!dealIsComplete && (
+      {/* {!dealIsComplete && (
         <Box
           sx={{
             paddingTop: nativeTheme.s3,
             paddingBottom: nativeTheme.s3,
             paddingX: nativeTheme.s5,
             display: "flex",
-            justifyContent: "center",
+            // justifyContent: "center",
             fontSize: nativeTheme.fs18,
             color: nativeTheme.notice.dark,
           }}
         >
           {`Incomplete`}
         </Box>
-      )}
+      )} */}
       <DealOutputListOrDetails
         {...{
           detailsIsOpen,
