@@ -1,11 +1,11 @@
 import { UpdateSectionVarbs } from "../updateSectionVarbs/updateSectionVarbs";
 import { updateVarb } from "../updateSectionVarbs/updateVarb";
 import { updateBasicsS } from "../updateSectionVarbs/updateVarb/UpdateBasics";
-import { updateFnPropS } from "../updateSectionVarbs/updateVarb/UpdateFnProps";
-import { valueSourceOverrides } from "../updateSectionVarbs/updateVarb/updateVarbUtils";
+import { updatePropS } from "../updateSectionVarbs/updateVarb/UpdateFnProps";
+import { uosS } from "../updateSectionVarbs/updateVarb/UpdateOverrides";
 import { updateVarbsS } from "../updateSectionVarbs/updateVarbs";
 
-const fnProp = updateFnPropS;
+const fnProp = updatePropS;
 const basics = updateBasicsS;
 export function costOverrunUpdateVarbs(): UpdateSectionVarbs<"costOverrunValue"> {
   return {
@@ -17,8 +17,8 @@ export function costOverrunUpdateVarbs(): UpdateSectionVarbs<"costOverrunValue">
     }),
     valueDollars: updateVarb("numObj", {
       ...basics.throw,
-      updateOverrides: valueSourceOverrides("overrunValueSource", {
-        valueDollarsEditor: basics.loadFromLocal("valueDollarsEditor"),
+      updateOverrides: uosS.valueSource("overrunValueSource", {
+        valueDollarsEditor: basics.loadLocal("valueDollarsEditor"),
         valuePercentEditor: basics.equationLR(
           "multiply",
           fnProp.local("valueDecimal"),
@@ -28,7 +28,7 @@ export function costOverrunUpdateVarbs(): UpdateSectionVarbs<"costOverrunValue">
     }),
     valueDecimal: updateVarb("numObj", {
       ...basics.throw,
-      updateOverrides: valueSourceOverrides("overrunValueSource", {
+      updateOverrides: uosS.valueSource("overrunValueSource", {
         valueDollarsEditor: basics.equationLR(
           "divide",
           fnProp.local("valueDollarsEditor"),
@@ -42,8 +42,8 @@ export function costOverrunUpdateVarbs(): UpdateSectionVarbs<"costOverrunValue">
     }),
     valuePercent: updateVarb("numObj", {
       ...basics.throw,
-      updateOverrides: valueSourceOverrides("overrunValueSource", {
-        valuePercentEditor: basics.loadFromLocal("valuePercentEditor"),
+      updateOverrides: uosS.valueSource("overrunValueSource", {
+        valuePercentEditor: basics.loadLocal("valuePercentEditor"),
         valueDollarsEditor: basics.equationSimple(
           "decimalToPercent",
           fnProp.local("valueDecimal")

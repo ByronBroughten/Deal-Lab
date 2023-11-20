@@ -6,9 +6,14 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-// Make it so clicking "New Home" gives an error right off the bat if the storage limit
-// is already reached.
+// Add prepaids section to loan for taxes (months), home insurance (months), and mortgage interest (days)
 
+// Prepaids will be a switch that opens a modal.
+// The modal will show the three prepaid values, and maybe a list table for custom ones.
+// Maybe upfront costs and delayed costs will work the same way.
+// Nice, I like it.
+
+// Add delayedRepairs section to property
 
 // Make it so editing a deal does not directly update the sessionDeals
 // Rather, the affected session deals reload at the home screen...?

@@ -1,76 +1,76 @@
 import { UpdateSectionVarbs } from "../updateSectionVarbs/updateSectionVarbs";
-import { updateVarb } from "../updateSectionVarbs/updateVarb";
+import { updateVarb, uvS } from "../updateSectionVarbs/updateVarb";
 import {
+  ubS,
   updateBasics,
-  updateBasicsS,
 } from "../updateSectionVarbs/updateVarb/UpdateBasics";
-import { updateFnPropS } from "../updateSectionVarbs/updateVarb/UpdateFnProps";
+import {
+  updatePropS,
+  upS,
+} from "../updateSectionVarbs/updateVarb/UpdateFnProps";
+import {
+  UpdateOverride,
+  updateOverride,
+} from "../updateSectionVarbs/updateVarb/UpdateOverride";
+import { uosS } from "../updateSectionVarbs/updateVarb/UpdateOverrides";
+import { osS } from "../updateSectionVarbs/updateVarb/UpdateOverrideSwitch";
 import { updateVarbsS } from "../updateSectionVarbs/updateVarbs";
 import { StateValue } from "../values/StateValue";
 import { financingModes } from "../values/StateValue/financingMode";
 import { Obj } from "./../../utils/Obj";
-import {
-  overrideSwitchS,
-  UpdateOverride,
-  updateOverride,
-} from "./../updateSectionVarbs/updateVarb/UpdateOverrides";
-import { baseLoanCompletionStatus } from "./calculatedUpdateVarbs/completionStatusVarbs";
 
 const oRide = updateOverride;
-const switchS = overrideSwitchS;
-const basics = updateBasicsS;
-const prop = updateFnPropS;
 
 type Overrides = Record<StateValue<"loanBaseValueSource">, UpdateOverride>;
 const overrideMap: Overrides = {
   purchaseLoanValue: oRide(
     [
-      switchS.local("financingMode", "purchase"),
-      switchS.valueSourceIs("purchaseLoanValue"),
+      osS.local("financingMode", "purchase"),
+      osS.valueSourceIs("purchaseLoanValue"),
     ],
     // these need the switch to trigger the override
-    basics.equationLR(
+    ubS.equationLR(
       "add",
-      prop.onlyChild("purchaseLoanValue", "amountDollars"),
-      prop.onlyChild("loanBaseExtra", "valueDollars")
+      upS.onlyChild("purchaseLoanValue", "amountDollars"),
+      upS.onlyChild("loanBaseExtra", "valueDollars")
     )
   ),
   repairLoanValue: oRide(
     [
-      switchS.local("financingMode", "purchase"),
-      switchS.valueSourceIs("repairLoanValue"),
+      osS.local("financingMode", "purchase"),
+      osS.valueSourceIs("repairLoanValue"),
     ],
-    basics.equationLR(
+    ubS.equationLR(
       "add",
-      prop.onlyChild("repairLoanValue", "amountDollars"),
-      prop.onlyChild("loanBaseExtra", "valueDollars")
+      upS.onlyChild("repairLoanValue", "amountDollars"),
+      upS.onlyChild("loanBaseExtra", "valueDollars")
     )
   ),
   priceAndRepairValues: oRide(
     [
-      switchS.local("financingMode", "purchase"),
-      switchS.valueSourceIs("priceAndRepairValues"),
+      osS.local("financingMode", "purchase"),
+      osS.valueSourceIs("priceAndRepairValues"),
     ],
-    basics.sumNums(
-      updateFnPropS.onlyChild("purchaseLoanValue", "amountDollars"),
-      updateFnPropS.onlyChild("repairLoanValue", "amountDollars"),
-      prop.onlyChild("loanBaseExtra", "valueDollars")
+    ubS.sumNums(
+      updatePropS.onlyChild("purchaseLoanValue", "amountDollars"),
+      updatePropS.onlyChild("repairLoanValue", "amountDollars"),
+      upS.onlyChild("loanBaseExtra", "valueDollars")
     )
   ),
   arvLoanValue: oRide(
     [
-      switchS.local("financingMode", "refinance"),
-      switchS.valueSourceIs("arvLoanValue"),
+      osS.local("financingMode", "refinance"),
+      osS.valueSourceIs("arvLoanValue"),
     ],
-    basics.equationLR(
+    ubS.equationLR(
       "add",
-      prop.onlyChild("arvLoanValue", "amountDollars"),
-      prop.onlyChild("loanBaseExtra", "valueDollars")
+      upS.onlyChild("arvLoanValue", "amountDollars"),
+      upS.onlyChild("loanBaseExtra", "valueDollars")
     )
   ),
   customAmountEditor: oRide(
-    [switchS.valueSourceIs("customAmountEditor")],
-    basics.loadFromChild("customLoanBase", "valueDollars")
+    [osS.valueSourceIs("customAmountEditor")],
+    ubS.loadFromChild("customLoanBase", "valueDollars")
   ),
 };
 
@@ -79,7 +79,7 @@ const overrides = Obj.values(overrideMap);
 export function loanBaseUpdateVarbs(): UpdateSectionVarbs<"loanBaseValue"> {
   return {
     ...updateVarbsS._typeUniformity,
-    completionStatus: baseLoanCompletionStatus(),
+    completionStatus: loanBaseCompletionStatus(),
     valueSourceName: updateVarb("loanBaseValueSource", {
       initValue: "purchaseLoanValue",
     }),
@@ -89,10 +89,35 @@ export function loanBaseUpdateVarbs(): UpdateSectionVarbs<"loanBaseValue"> {
       updateOverrides: [
         ...overrides,
         oRide(
-          [switchS.local("financingMode", ...financingModes)],
+          [osS.local("financingMode", ...financingModes)],
           updateBasics("emptyNumObj")
         ),
       ],
     }),
   };
+}
+
+export function loanBaseCompletionStatus() {
+  return uvS.completionStatusO(
+    ...uosS.valueSource("loanBaseValueSource", {
+      purchaseLoanValue: ubS.completionStatus({
+        othersValid: [upS.onlyChild("purchaseLoanValue", "completionStatus")],
+      }),
+      repairLoanValue: ubS.completionStatus({
+        othersValid: [upS.onlyChild("repairLoanValue", "completionStatus")],
+      }),
+      arvLoanValue: ubS.completionStatus({
+        othersValid: [upS.onlyChild("arvLoanValue", "completionStatus")],
+      }),
+      priceAndRepairValues: ubS.completionStatus({
+        othersValid: [
+          upS.onlyChild("purchaseLoanValue", "completionStatus"),
+          upS.onlyChild("repairLoanValue", "completionStatus"),
+        ],
+      }),
+      customAmountEditor: ubS.completionStatus({
+        validInputs: [upS.onlyChild("customLoanBase", "valueDollarsEditor")],
+      }),
+    })
+  );
 }

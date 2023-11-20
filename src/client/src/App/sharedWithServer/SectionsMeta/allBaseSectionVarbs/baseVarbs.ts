@@ -1,5 +1,13 @@
 import { Obj } from "../../utils/Obj";
-import { Merge, merge } from "../../utils/Obj/merge";
+import { merge } from "../../utils/Obj/merge";
+import {
+  GroupKey,
+  groupKeys,
+  GroupName,
+  GroupRecord,
+  groupVarbName,
+  GroupVarbName,
+} from "../groupedNames";
 import { ValueName, valueNames } from "../values/ValueName";
 import { baseSectionVarbs } from "./baseSectionVarbs";
 import {
@@ -56,7 +64,7 @@ type DefaultBaseVarb<VN extends ValueName> = {
   valueTimespan: "oneTime";
 };
 
-export type SimpleBaseVarb<VN extends ValueName> = {
+export type BaseVarb<VN extends ValueName> = {
   valueName: VN;
   valueUnit: ValueUnit;
   valueTimespan: ValueTimespan;
@@ -72,20 +80,18 @@ function defaultBaseVarb<VN extends ValueName>(
   });
 }
 type Options = Partial<Omit<GeneralBaseVarb, "valueName">>;
-export type BaseVarb<VN extends ValueName, O extends Options = {}> = Merge<
-  DefaultBaseVarb<VN>,
-  O
->;
 
 export function baseVarb<VN extends ValueName, O extends Options = {}>(
   valueName: VN,
   options?: O
-): SimpleBaseVarb<VN> {
+): BaseVarb<VN> {
   return merge(
     defaultBaseVarb(valueName),
     options ?? ({} as O)
-  ) as any as SimpleBaseVarb<VN>;
+  ) as any as BaseVarb<VN>;
 }
+export const bv = baseVarb;
+
 export const baseVarbS = {
   dollarsMonthly() {
     return baseVarb("numObj", {
@@ -101,33 +107,29 @@ export const baseVarbS = {
   },
 };
 
-type BaseVarbs<VN extends ValueName, VNS extends string, O extends Options> = {
-  [Prop in VNS]: BaseVarb<VN, O>;
-};
-
-type SimpleBaseVarbs<VN extends ValueName, VNS extends string> = {
-  [Prop in VNS]: SimpleBaseVarb<VN>;
+type BaseVarbs<VN extends ValueName, VNS extends string> = {
+  [Prop in VNS]: BaseVarb<VN>;
 };
 
 export function baseVarbs<
   VN extends ValueName,
   VNS extends string,
   O extends Options = {}
->(
-  valueName: VN,
-  varbNames: readonly VNS[],
-  options?: O
-): SimpleBaseVarbs<VN, VNS> {
+>(valueName: VN, varbNames: readonly VNS[], options?: O): BaseVarbs<VN, VNS> {
   return varbNames.reduce((varbs, varbName) => {
     varbs[varbName] = baseVarb(valueName, options ?? ({} as O));
     return varbs;
-  }, {} as SimpleBaseVarbs<VN, VNS>);
+  }, {} as BaseVarbs<VN, VNS>);
 }
 
 type SimpleBaseSwitchVarbs<BN extends string, SN extends SwitchName> = {
   [SK in SwitchKey<SN> as SwitchVarbName<BN, SN, SK>]: SK extends "switch"
-    ? SimpleBaseVarb<SwitchValueName<SN>>
-    : SimpleBaseVarb<"numObj">;
+    ? BaseVarb<SwitchValueName<SN>>
+    : BaseVarb<"numObj">;
+};
+
+type BaseVarbGroup<BN extends string, GN extends GroupName> = {
+  [GK in GroupKey<GN> as GroupVarbName<BN, GN, GK>]: BaseVarb<"numObj">;
 };
 
 const ongoingOptions = {
@@ -150,9 +152,46 @@ const monthsYearsOptions = {
   years: { valueUnit: "years" },
 } as const;
 
+function groupNext<BN extends string, GN extends GroupName>(
+  baseName: BN,
+  groupName: GN,
+  options?: GroupRecord<GN, Options>
+): BaseVarbGroup<BN, GN> {
+  const keys = groupKeys(groupName);
+  return keys.reduce((group, key) => {
+    const varbName = groupVarbName(baseName, groupName, key);
+    group[varbName] = baseVarb("numObj", options && options[key]);
+    return group;
+  }, {} as BaseVarbGroup<BN, GN>);
+}
+
 export const baseVarbsS = {
   get typeUniformity() {
     return { _typeUniformity: "string" } as const;
+  },
+  groupNext<BN extends string, GN extends GroupName>(
+    baseName: BN,
+    groupName: GN,
+    options?: GroupRecord<GN, Options>
+  ): BaseVarbGroup<BN, GN> {
+    const keys = groupKeys(groupName);
+    return keys.reduce((group, key) => {
+      const varbName = groupVarbName(baseName, groupName, key);
+      group[varbName] = baseVarb("numObj", options && options[key]);
+      return group;
+    }, {} as BaseVarbGroup<BN, GN>);
+  },
+  timespan<BN extends string>(
+    baseName: BN,
+    options?: GroupRecord<"timespan", Options>
+  ): BaseVarbGroup<BN, "timespan"> {
+    return groupNext(baseName, "timespan", options);
+  },
+  periodicNext<BN extends string>(
+    baseName: BN,
+    options?: GroupRecord<"periodic", Options>
+  ): BaseVarbGroup<BN, "periodic"> {
+    return groupNext(baseName, "periodic", options);
   },
   group: <
     BN extends string,

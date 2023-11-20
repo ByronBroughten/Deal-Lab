@@ -16,7 +16,7 @@ export function MortgageInsPeriodicValue({ feId, percentDisplayVarb }: Props) {
     <SelectEditor
       inputMargins
       {...{
-        unionValueName: "mortgageInsPeriodicSource",
+        unionValueName: "mortgageInsperiodic",
         label: "Ongoing",
         makeEditor: (props) => (
           <NumObjEntityEditor

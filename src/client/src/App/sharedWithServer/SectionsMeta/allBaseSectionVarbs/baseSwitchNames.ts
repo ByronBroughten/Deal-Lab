@@ -17,10 +17,10 @@ type SwitchValueNamesGeneric = Record<SwitchName, UnionValueName>;
 const checkSwitchValueNames = <T extends SwitchValueNamesGeneric>(t: T) => t;
 
 const switchValueNames = checkSwitchValueNames({
-  periodic: "ongoingSwitch",
-  periodicInput: "ongoingSwitch",
-  monthsYears: "monthsYearsSwitch",
-  monthsYearsInput: "monthsYearsSwitch",
+  periodic: "periodic",
+  periodicInput: "periodic",
+  monthsYears: "timespan",
+  monthsYearsInput: "timespan",
 });
 type SwitchValueNames = typeof switchValueNames;
 export type SwitchValueName<SN extends SwitchName> = SwitchValueNames[SN];

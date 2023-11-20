@@ -2,12 +2,12 @@ import { updateGroupS } from "../updateSectionVarbs/switchUpdateVarbs";
 import { UpdateSectionVarbs } from "../updateSectionVarbs/updateSectionVarbs";
 import { updateVarb } from "../updateSectionVarbs/updateVarb";
 import { updateBasicsS } from "../updateSectionVarbs/updateVarb/UpdateBasics";
-import { updateFnPropS } from "../updateSectionVarbs/updateVarb/UpdateFnProps";
+import { updatePropS } from "../updateSectionVarbs/updateVarb/UpdateFnProps";
 import {
-  overrideSwitchS,
   updateOverride,
   updateOverrideS,
-} from "../updateSectionVarbs/updateVarb/UpdateOverrides";
+} from "../updateSectionVarbs/updateVarb/UpdateOverride";
+import { overrideSwitchS } from "../updateSectionVarbs/updateVarb/UpdateOverrideSwitch";
 import { updateVarbsS } from "../updateSectionVarbs/updateVarbs";
 
 export function mgmtBasePayValueVarbs(): UpdateSectionVarbs<"mgmtBasePayValue"> {
@@ -30,14 +30,14 @@ export function mgmtBasePayValueVarbs(): UpdateSectionVarbs<"mgmtBasePayValue"> 
           [overrideSwitchS.valueSourceIs("tenPercentRent")],
           updateBasicsS.equationSimple(
             "decimalToPercent",
-            updateFnPropS.local("valueDecimal")
+            updatePropS.local("valueDecimal")
           )
         ),
         updateOverride(
           [overrideSwitchS.valueSourceIs("valueDollarsPeriodicEditor")],
           updateBasicsS.equationSimple(
             "decimalToPercent",
-            updateFnPropS.local("valueDecimal")
+            updatePropS.local("valueDecimal")
           )
         ),
       ],
@@ -51,7 +51,7 @@ export function mgmtBasePayValueVarbs(): UpdateSectionVarbs<"mgmtBasePayValue"> 
           [overrideSwitchS.valueSourceIs("percentOfRentEditor")],
           updateBasicsS.equationSimple(
             "percentToDecimal",
-            updateFnPropS.local("valuePercentEditor")
+            updatePropS.local("valuePercentEditor")
           )
         ),
         updateOverride(
@@ -65,8 +65,8 @@ export function mgmtBasePayValueVarbs(): UpdateSectionVarbs<"mgmtBasePayValue"> 
           ],
           updateBasicsS.equationLR(
             "divide",
-            updateFnPropS.local("valueDollarsPeriodicEditor"),
-            updateFnPropS.pathNameBase("propertyFocal", "targetRentMonthly")
+            updatePropS.local("valueDollarsPeriodicEditor"),
+            updatePropS.pathNameBase("propertyFocal", "targetRentMonthly")
           )
         ),
         updateOverride(
@@ -76,8 +76,8 @@ export function mgmtBasePayValueVarbs(): UpdateSectionVarbs<"mgmtBasePayValue"> 
           ],
           updateBasicsS.equationLR(
             "divide",
-            updateFnPropS.local("valueDollarsPeriodicEditor"),
-            updateFnPropS.pathNameBase("propertyFocal", "targetRentYearly")
+            updatePropS.local("valueDollarsPeriodicEditor"),
+            updatePropS.pathNameBase("propertyFocal", "targetRentYearly")
           )
         ),
       ],
@@ -96,8 +96,8 @@ export function mgmtBasePayValueVarbs(): UpdateSectionVarbs<"mgmtBasePayValue"> 
             [overrideSwitchS.valueSourceIs("percentOfRentEditor")],
             updateBasicsS.equationLR(
               "multiply",
-              updateFnPropS.local("valueDecimal"),
-              updateFnPropS.pathNameBase("propertyFocal", "targetRentMonthly")
+              updatePropS.local("valueDecimal"),
+              updatePropS.pathNameBase("propertyFocal", "targetRentMonthly")
             )
           ),
           updateOverride(
@@ -105,7 +105,7 @@ export function mgmtBasePayValueVarbs(): UpdateSectionVarbs<"mgmtBasePayValue"> 
               overrideSwitchS.valueSourceIs("valueDollarsPeriodicEditor"),
               overrideSwitchS.monthlyIsActive("valueDollars"),
             ],
-            updateBasicsS.loadFromLocal("valueDollarsPeriodicEditor")
+            updateBasicsS.loadLocal("valueDollarsPeriodicEditor")
           ),
           updateOverride(
             [
@@ -129,8 +129,8 @@ export function mgmtBasePayValueVarbs(): UpdateSectionVarbs<"mgmtBasePayValue"> 
             [overrideSwitchS.valueSourceIs("percentOfRentEditor")],
             updateBasicsS.equationLR(
               "multiply",
-              updateFnPropS.local("valueDecimal"),
-              updateFnPropS.pathNameBase("propertyFocal", "targetRentYearly")
+              updatePropS.local("valueDecimal"),
+              updatePropS.pathNameBase("propertyFocal", "targetRentYearly")
             )
           ),
           updateOverride(
@@ -145,7 +145,7 @@ export function mgmtBasePayValueVarbs(): UpdateSectionVarbs<"mgmtBasePayValue"> 
               overrideSwitchS.valueSourceIs("valueDollarsPeriodicEditor"),
               overrideSwitchS.yearlyIsActive("valueDollars"),
             ],
-            updateBasicsS.loadFromLocal("valueDollarsPeriodicEditor")
+            updateBasicsS.loadLocal("valueDollarsPeriodicEditor")
           ),
         ],
       },

@@ -10,7 +10,7 @@ import {
   SectionPathName,
   SectionPathVarbName,
 } from "../../sectionPathContexts/sectionPathNames";
-import { UpdateOverrideSwitch } from "./UpdateOverrides";
+import { UpdateOverrideSwitch } from "./UpdateOverrideSwitch";
 
 export type UpdateFnProps = {
   [propName: string]: UpdateFnProp | UpdateFnProp[];
@@ -61,7 +61,7 @@ export function collectUpdateFnSwitchProps(
 
 export const updateFnPropsS = {
   varbPathArr(...varbPathNames: VarbPathName[]): UpdateFnProp[] {
-    return varbPathNames.map((name) => updateFnPropS.varbPathName(name));
+    return varbPathNames.map((name) => updatePropS.varbPathName(name));
   },
   namedChildren(
     childName: ChildName,
@@ -69,7 +69,7 @@ export const updateFnPropsS = {
   ): UpdateFnProps {
     return Obj.keys(kwargToVarbNames).reduce((namedChildren, kwarg) => {
       const varbName = kwargToVarbNames[kwarg];
-      namedChildren[kwarg] = updateFnPropS.children(childName, varbName);
+      namedChildren[kwarg] = updatePropS.children(childName, varbName);
       return namedChildren;
     }, {} as UpdateFnProps);
   },
@@ -78,26 +78,27 @@ export const updateFnPropsS = {
     varbNames: string[]
   ): UpdateFnProp[] {
     return varbNames.map((varbName) =>
-      updateFnPropS.children(childName, varbName)
+      updatePropS.children(childName, varbName)
     );
   },
   localByVarbName(varbNames: VarbNameWide[]): UpdateFnProps {
     return varbNames.reduce((localInfos, varbName) => {
-      localInfos[varbName] = updateFnPropS.local(varbName);
+      localInfos[varbName] = updatePropS.local(varbName);
       return localInfos;
     }, {} as UpdateFnProps);
   },
   localArr(...varbNames: VarbNameWide[]): UpdateFnProp[] {
     return varbNames.map((varbName) => {
-      return updateFnPropS.local(varbName);
+      return updatePropS.local(varbName);
     });
   },
   localBaseNameArr(varbNames: string[]): UpdateFnProp[] {
     return varbNames.map((varbName) => {
-      return updateFnPropS.localBaseName(varbName);
+      return updatePropS.localBaseName(varbName);
     });
   },
 };
+export const upsS = updateFnPropsS;
 
 export function updateFnProp(
   varbInfo: PathInVarbInfo,
@@ -114,7 +115,7 @@ export type UpdateFnProp = PathInVarbInfo & {
   entityId: string;
   andSwitches: UpdateOverrideSwitch[];
 };
-export const updateFnPropS = {
+export const updatePropS = {
   local(
     varbName: VarbNameWide,
     andSwitches?: UpdateOverrideSwitch[]
@@ -195,4 +196,26 @@ export const updateFnPropS = {
   varbPathBase(varbPathName: string) {
     return updateFnProp(mixedInfoS.varbPathName(varbPathName as VarbPathName));
   },
+  completionStatus(
+    props: Partial<CompletionStatusProps>
+  ): CompletionStatusProps {
+    return {
+      nonZeros: [],
+      nonNone: [],
+      notFalse: [],
+      validInputs: [],
+      othersValid: [],
+      ...props,
+    };
+  },
+};
+
+export const upS = updatePropS;
+
+export type CompletionStatusProps = {
+  nonZeros: UpdateFnProp[];
+  nonNone: UpdateFnProp[];
+  notFalse: UpdateFnProp[];
+  validInputs: UpdateFnProp[];
+  othersValid: UpdateFnProp[];
 };

@@ -31,6 +31,7 @@ const allVarbPathParams = {
     "currentYear",
     "two",
     "twelve",
+    "thirty",
     "onePercentPrice",
     "twoPercentPrice",
     "onePercentArv",

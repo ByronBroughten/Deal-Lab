@@ -5,9 +5,9 @@ import { dealModes, getDealModes, isDealMode } from "./dealMode";
 import { financingModes } from "./financingMode";
 
 const valueSources = {
-  periodicSource: ["monthly", "yearly"],
-  ongoingSwitch: ["monthly", "yearly"],
-  monthsYearsSwitch: ["months", "years"],
+  periodic: ["monthly", "yearly"],
+  timespan: ["months", "years"],
+  days: ["days"],
 
   dealDisplayNameSource: ["displayNameEditor", "defaultDisplayName"],
   percentDollarsSource: [
@@ -41,7 +41,7 @@ const valueSources = {
     "valueDollarsPeriodicEditor",
   ],
   mortgageInsUpfrontSource: ["valueDollarsEditor", "percentLoanEditor"],
-  mortgageInsPeriodicSource: [
+  mortgageInsperiodic: [
     "valueDollarsPeriodicEditor",
     "percentLoanPeriodicEditor",
   ],
@@ -57,7 +57,6 @@ const valueSources = {
   valueDollarsPeriodicEditor: ["valueDollarsPeriodicEditor"],
 
   customValueSource: ["none", "valueEditor", "listTotal"],
-
   repairValueSource: ["none", "zero", "valueDollarsEditor", "listTotal"],
   overrunValueSource: ["valueDollarsEditor", "valuePercentEditor"],
   dollarsOrList: ["valueDollarsEditor", "listTotal"],
@@ -147,8 +146,8 @@ export function isLabSubscription(
 }
 
 export const switchValueNames = Arr.extractStrict(unionValueNames, [
-  "ongoingSwitch",
-  "monthsYearsSwitch",
+  "periodic",
+  "timespan",
 ] as const);
 
 export const dealModeLabels: Record<UnionValue<"dealMode">, string> = {

@@ -17,10 +17,8 @@ import { SectionName } from "./SectionName";
 import { GeneralUpdateVarb } from "./updateSectionVarbs/updateVarb";
 import { UpdateBasics } from "./updateSectionVarbs/updateVarb/UpdateBasics";
 import { UpdateFnProps } from "./updateSectionVarbs/updateVarb/UpdateFnProps";
-import {
-  UpdateOverrides,
-  UpdateOverrideSwitches,
-} from "./updateSectionVarbs/updateVarb/UpdateOverrides";
+import { UpdateOverrides } from "./updateSectionVarbs/updateVarb/UpdateOverrides";
+import { UpdateOverrideSwitches } from "./updateSectionVarbs/updateVarb/UpdateOverrideSwitch";
 import { FixedInEntity } from "./values/StateValue/valuesShared/entities";
 import { valueMetas } from "./values/valueMetas";
 import { ValueName } from "./values/ValueName";

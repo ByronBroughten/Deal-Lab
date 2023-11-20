@@ -71,6 +71,11 @@ export const Obj = {
   isEmpty(obj: any) {
     return Object.keys(obj).length === 0;
   },
+  removeUndefined(obj: any) {
+    return Object.fromEntries(
+      Object.entries(obj).filter(([_, v]) => v !== undefined)
+    );
+  },
   shallowEqual(a: any, b: any): boolean {
     return shallowEqualObjects(a, b);
   },
@@ -108,7 +113,9 @@ export const Obj = {
   },
   validateObjToAny(value: any): any {
     if (this.isObjToAny(value)) return value;
-    else throw new ValidationError(`"${value}" is not an Object`);
+    else {
+      throw new ValidationError(`"${value}" is not an Object`);
+    }
   },
   strictPick<O extends object, KS extends keyof O>(
     obj: O,

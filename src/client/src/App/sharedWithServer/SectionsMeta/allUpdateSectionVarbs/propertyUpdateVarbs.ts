@@ -1,234 +1,221 @@
 import { relVarbInfoS } from "../SectionInfo/RelVarbInfo";
 import { UpdateSectionVarbs } from "../updateSectionVarbs/updateSectionVarbs";
-import { updateVarb, updateVarbS } from "../updateSectionVarbs/updateVarb";
-import { updateBasicsS } from "../updateSectionVarbs/updateVarb/UpdateBasics";
+import { updateVarb, updateVarbS, uvS } from "../updateSectionVarbs/updateVarb";
+import { ubS } from "../updateSectionVarbs/updateVarb/UpdateBasics";
 import {
   UpdateFnProp,
-  updateFnPropS,
   updateFnPropsS,
+  upS,
 } from "../updateSectionVarbs/updateVarb/UpdateFnProps";
+import { updateOverride } from "../updateSectionVarbs/updateVarb/UpdateOverride";
 import {
-  overrideSwitchS,
-  updateOverride,
+  DealModeBasics,
+  uosS,
 } from "../updateSectionVarbs/updateVarb/UpdateOverrides";
 import {
-  dealModeOverrides,
-  dealModeVarb,
-  unionOverrides,
-  valueSourceOverrides,
-} from "../updateSectionVarbs/updateVarb/updateVarbUtils";
-import { updateVarbsS } from "../updateSectionVarbs/updateVarbs";
-import { numObj } from "../values/StateValue/NumObj";
+  osS,
+  overrideSwitchS,
+} from "../updateSectionVarbs/updateVarb/UpdateOverrideSwitch";
+import { updateVarbsS, uvsS } from "../updateSectionVarbs/updateVarbs";
+import { NumObj, numObj } from "../values/StateValue/NumObj";
 import { UnionValue } from "../values/StateValue/unionValues";
-import { propertyCompletionStatus } from "./calculatedUpdateVarbs/completionStatusVarbs";
 
-const basicsS = updateBasicsS;
-const propS = updateFnPropS;
-const varbsS = updateVarbsS;
-const oSwitchS = overrideSwitchS;
+type Options = { initValue?: NumObj };
+function propertyModeVarb(
+  dealModeToBasics: DealModeBasics,
+  options: Options = {}
+) {
+  return uvS.dealMode(dealModeToBasics, {
+    ...options,
+    switchInfo: relVarbInfoS.local("propertyMode"),
+  });
+}
 
 function propertyHoldingCosts(): UpdateFnProp[] {
   return [
-    propS.localBaseName("taxesHolding"),
-    propS.localBaseName("homeInsHolding"),
-    propS.onlyChildBase("utilityHolding", "valueDollars"),
-    propS.onlyChildBase("miscHoldingCost", "valueDollars"),
+    upS.localBaseName("taxesHolding"),
+    upS.localBaseName("homeInsHolding"),
+    upS.onlyChildBase("utilityHolding", "valueDollars"),
+    upS.onlyChildBase("miscHoldingCost", "valueDollars"),
   ];
 }
 
-const varb = updateVarb;
-
-function homebuyerRentOverrides(periodicSwitch: UnionValue<"periodicSource">) {
+function homebuyerRentOverrides(periodicSwitch: UnionValue<"periodic">) {
   const varbNames = {
     monthly: "targetRentMonthly",
     yearly: "targetRentYearly",
   } as const;
   const varbName = varbNames[periodicSwitch];
   return [
-    updateOverride([oSwitchS.localIsFalse("isRenting")], basicsS.zero),
+    updateOverride([osS.localIsFalse("isRenting")], ubS.zero),
     updateOverride(
-      [
-        oSwitchS.localIsTrue("isRenting"),
-        oSwitchS.localIsTrue("isMultifamily"),
-      ],
-      basicsS.sumChildren("unit", varbName)
+      [osS.localIsTrue("isRenting"), osS.localIsTrue("isMultifamily")],
+      ubS.sumChildren("unit", varbName)
     ),
     updateOverride(
-      [
-        oSwitchS.localIsTrue("isRenting"),
-        oSwitchS.localIsFalse("isMultifamily"),
-      ],
-      basicsS.loadFromFirstChild("unit", varbName)
+      [osS.localIsTrue("isRenting"), osS.localIsFalse("isMultifamily")],
+      ubS.loadFromFirstChild("unit", varbName)
     ),
   ];
 }
-// Should homeBuyer mode have ROI and whatnot then?
-// At the very least, it needs something that shows expenses minus
-// rent.
-
-// Should expensesMinusRent be on property?
-// Well, it could be. It could also be on deal.
 
 export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
   return {
-    ...varbsS._typeUniformity,
-    ...varbsS.savableSection,
-    propertyMode: varb("dealMode", {
-      initValue: "buyAndHold",
-    }),
-    isMultifamily: varb("boolean", { initValue: false }),
-    isRenting: varb("boolean", { initValue: false }),
-    likability: varb("numObj", {
-      initValue: numObj(5),
-      updateFnName: "throwIfReached",
-      updateOverrides: dealModeOverrides(
-        {
-          homeBuyer: basicsS.manualUpdateOnly(),
-          buyAndHold: basicsS.notApplicable,
-          fixAndFlip: basicsS.notApplicable,
-          brrrr: basicsS.notApplicable,
-        },
-        relVarbInfoS.local("propertyMode")
-      ),
-    }),
-    yearBuilt: varb("numObj"),
-    pricePerLikability: varb(
-      "numObj",
-      basicsS.equationLR(
-        "divide",
-        propS.local("purchasePrice"),
-        propS.local("likability")
-      )
+    ...uvsS._typeUniformity,
+    ...uvsS.savableSection,
+    completionStatus: propertyCompletionStatus(),
+    propertyMode: uvS.input("dealMode", { initValue: "buyAndHold" }),
+    isMultifamily: uvS.input("boolean", { initValue: false }),
+    isRenting: uvS.input("boolean", { initValue: false }),
+    likability: propertyModeVarb(
+      {
+        homeBuyer: ubS.manualUpdateOnly(),
+        buyAndHold: ubS.notApplicable,
+        fixAndFlip: ubS.notApplicable,
+        brrrr: ubS.notApplicable,
+      },
+      { initValue: numObj(5) }
     ),
-    completionStatus: propertyCompletionStatus,
-    streetAddress: varb("string"),
-    city: varb("string"),
-    state: varb("string"),
-    zipCode: varb("string"),
-    one: updateVarbS.one(),
+    yearBuilt: uvS.input("numObj"),
+    pricePerLikability: uvS.divide("purchasePrice", "likability"),
+    streetAddress: uvS.input("string"),
+    city: uvS.input("string"),
+    state: uvS.input("string"),
+    zipCode: uvS.input("string"),
+    one: uvS.one(),
 
-    ...varbsS.group("taxesHolding", "periodic", "yearly", {
-      monthly: basicsS.loadFromChild("taxesHolding", "valueDollarsMonthly"),
-      yearly: basicsS.loadFromChild("taxesHolding", "valueDollarsYearly"),
+    ...uvsS.group("taxesHolding", "periodic", "yearly", {
+      monthly: ubS.loadFromChild("taxesHolding", "valueDollarsMonthly"),
+      yearly: ubS.loadFromChild("taxesHolding", "valueDollarsYearly"),
     }),
-    ...varbsS.group("homeInsHolding", "periodic", "yearly", {
-      monthly: basicsS.loadFromChild("homeInsHolding", "valueDollarsMonthly"),
-      yearly: basicsS.loadFromChild("homeInsHolding", "valueDollarsYearly"),
+    ...uvsS.group("homeInsHolding", "periodic", "yearly", {
+      monthly: ubS.loadFromChild("homeInsHolding", "valueDollarsMonthly"),
+      yearly: ubS.loadFromChild("homeInsHolding", "valueDollarsYearly"),
     }),
-    ...varbsS.group("taxesOngoing", "periodic", "yearly", {
+    ...uvsS.group("taxesOngoing", "periodic", "yearly", {
       monthly: {
-        updateOverrides: valueSourceOverrides(
+        updateOverrides: uosS.valueSource(
           "taxesAndHomeInsSource",
           {
-            sameAsHoldingPhase: basicsS.loadFromLocal("taxesHoldingMonthly"),
-            valueDollarsPeriodicEditor: basicsS.loadFromChild(
+            sameAsHoldingPhase: ubS.loadLocal("taxesHoldingMonthly"),
+            valueDollarsPeriodicEditor: ubS.loadFromChild(
               "taxesOngoing",
               "valueDollarsMonthly"
             ),
           },
-          relVarbInfoS.onlyChild("taxesOngoing", "valueSourceName")
+          {
+            switchInfo: relVarbInfoS.onlyChild(
+              "taxesOngoing",
+              "valueSourceName"
+            ),
+          }
         ),
       },
       yearly: {
-        updateOverrides: valueSourceOverrides(
+        updateOverrides: uosS.valueSource(
           "taxesAndHomeInsSource",
           {
-            sameAsHoldingPhase: basicsS.loadFromLocal("taxesHoldingYearly"),
-            valueDollarsPeriodicEditor: basicsS.loadFromChild(
+            sameAsHoldingPhase: ubS.loadLocal("taxesHoldingYearly"),
+            valueDollarsPeriodicEditor: ubS.loadFromChild(
               "taxesOngoing",
               "valueDollarsYearly"
             ),
           },
-          relVarbInfoS.onlyChild("taxesOngoing", "valueSourceName")
+          {
+            switchInfo: relVarbInfoS.onlyChild(
+              "taxesOngoing",
+              "valueSourceName"
+            ),
+          }
         ),
       },
     }),
-    ...varbsS.group("homeInsOngoing", "periodic", "yearly", {
+    ...uvsS.group("homeInsOngoing", "periodic", "yearly", {
       monthly: {
-        updateOverrides: valueSourceOverrides(
+        updateOverrides: uosS.valueSource(
           "taxesAndHomeInsSource",
           {
-            sameAsHoldingPhase: basicsS.loadFromLocal("homeInsHoldingMonthly"),
-            valueDollarsPeriodicEditor: basicsS.loadFromChild(
+            sameAsHoldingPhase: ubS.loadLocal("homeInsHoldingMonthly"),
+            valueDollarsPeriodicEditor: ubS.loadFromChild(
               "homeInsOngoing",
               "valueDollarsMonthly"
             ),
           },
-          relVarbInfoS.onlyChild("homeInsOngoing", "valueSourceName")
+          {
+            switchInfo: relVarbInfoS.onlyChild(
+              "homeInsOngoing",
+              "valueSourceName"
+            ),
+          }
         ),
       },
       yearly: {
-        updateOverrides: valueSourceOverrides(
+        updateOverrides: uosS.valueSource(
           "taxesAndHomeInsSource",
           {
-            sameAsHoldingPhase: basicsS.loadFromLocal("homeInsHoldingYearly"),
-            valueDollarsPeriodicEditor: basicsS.loadFromChild(
+            sameAsHoldingPhase: ubS.loadLocal("homeInsHoldingYearly"),
+            valueDollarsPeriodicEditor: ubS.loadFromChild(
               "homeInsOngoing",
               "valueDollarsYearly"
             ),
           },
-          relVarbInfoS.onlyChild("homeInsOngoing", "valueSourceName")
+          {
+            switchInfo: relVarbInfoS.onlyChild(
+              "homeInsOngoing",
+              "valueSourceName"
+            ),
+          }
         ),
       },
     }),
-    ...varbsS.group("utilitiesOngoing", "periodic", "monthly", {
-      monthly: basicsS.loadFromChild("utilityOngoing", "valueDollarsMonthly"),
-      yearly: basicsS.loadFromChild("utilityOngoing", "valueDollarsYearly"),
+    ...uvsS.group("utilitiesOngoing", "periodic", "monthly", {
+      monthly: ubS.loadFromChild("utilityOngoing", "valueDollarsMonthly"),
+      yearly: ubS.loadFromChild("utilityOngoing", "valueDollarsYearly"),
     }),
-    ...varbsS.group("utilitiesHolding", "periodic", "monthly", {
-      monthly: basicsS.loadFromChild("utilityHolding", "valueDollarsMonthly"),
-      yearly: basicsS.loadFromChild("utilityHolding", "valueDollarsYearly"),
+    ...uvsS.group("utilitiesHolding", "periodic", "monthly", {
+      monthly: ubS.loadFromChild("utilityHolding", "valueDollarsMonthly"),
+      yearly: ubS.loadFromChild("utilityHolding", "valueDollarsYearly"),
     }),
     purchasePrice: updateVarb("numObj"),
     sqft: updateVarb("numObj"),
-    afterRepairValue: dealModeVarb(
-      {
-        homeBuyer: basicsS.loadFromLocal("purchasePrice"),
-        buyAndHold: basicsS.loadFromLocal("purchasePrice"),
-        fixAndFlip: basicsS.loadFromLocal("afterRepairValueEditor"),
-        brrrr: basicsS.loadFromLocal("afterRepairValueEditor"),
-      },
-      relVarbInfoS.local("propertyMode")
-    ),
+    afterRepairValue: propertyModeVarb({
+      homeBuyer: ubS.loadLocal("purchasePrice"),
+      buyAndHold: ubS.loadLocal("purchasePrice"),
+      fixAndFlip: ubS.loadLocal("afterRepairValueEditor"),
+      brrrr: ubS.loadLocal("afterRepairValueEditor"),
+    }),
     afterRepairValueEditor: updateVarb("numObj"),
     sellingCosts: updateVarb(
       "numObj",
-      basicsS.loadFromChild("sellingCostValue", "valueDollars")
+      ubS.loadFromChild("sellingCostValue", "valueDollars")
     ),
     numUnitsEditor: updateVarb("numObj"),
-    numUnits: updateVarb("numObj", {
-      updateFnName: "throwIfReached",
-      updateOverrides: unionOverrides(
-        "dealMode",
-        relVarbInfoS.local("propertyMode"),
-        {
-          homeBuyer: basicsS.loadFromLocal("singleMultiNumUnits"),
-          buyAndHold: basicsS.sumChildren("unit", "one"),
-          fixAndFlip: basicsS.loadFromLocal("numUnitsEditor"),
-          brrrr: basicsS.sumChildren("unit", "one"),
-        }
-      ),
+    numUnits: propertyModeVarb({
+      homeBuyer: ubS.loadLocal("singleMultiNumUnits"),
+      buyAndHold: ubS.sumChildren("unit", "one"),
+      fixAndFlip: ubS.loadLocal("numUnitsEditor"),
+      brrrr: ubS.sumChildren("unit", "one"),
     }),
     singleMultiNumUnits: updateVarb("numObj", {
       updateFnName: "throwIfReached",
       updateOverrides: [
         updateOverride(
-          [oSwitchS.localIsTrue("isMultifamily")],
-          basicsS.sumChildren("unit", "one")
+          [osS.localIsTrue("isMultifamily")],
+          ubS.sumChildren("unit", "one")
         ),
-        updateOverride([oSwitchS.localIsFalse("isMultifamily")], basicsS.one),
+        updateOverride([osS.localIsFalse("isMultifamily")], ubS.one),
       ],
     }),
     singleMultiBrCount: updateVarb("numObj", {
       updateFnName: "throwIfReached",
       updateOverrides: [
         updateOverride(
-          [oSwitchS.localIsTrue("isMultifamily")],
-          basicsS.sumChildren("unit", "numBedrooms")
+          [osS.localIsTrue("isMultifamily")],
+          ubS.sumChildren("unit", "numBedrooms")
         ),
         updateOverride(
-          [oSwitchS.localIsFalse("isMultifamily")],
-          basicsS.loadFromFirstChild("unit", "numBedrooms")
+          [osS.localIsFalse("isMultifamily")],
+          ubS.loadFromFirstChild("unit", "numBedrooms")
         ),
       ],
     }),
@@ -243,43 +230,36 @@ export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
       },
     }),
     // Ok, it's a good thing I'm redoing this
-    ...varbsS.ongoingSumNums(
+    ...uvsS.ongoingSumNums(
       "targetRent",
-      [propS.children("unit", "targetRent")],
+      [upS.children("unit", "targetRent")],
       "monthly"
     ),
-    numBedrooms: updateVarb("numObj", {
-      updateFnName: "throwIfReached",
-      updateOverrides: unionOverrides(
-        "dealMode",
-        relVarbInfoS.local("propertyMode"),
-        {
-          homeBuyer: basicsS.loadFromLocal("singleMultiBrCount"),
-          buyAndHold: basicsS.sumChildren("unit", "numBedrooms"),
-          fixAndFlip: basicsS.notApplicable,
-          brrrr: basicsS.sumChildren("unit", "numBedrooms"),
-        }
-      ),
+    numBedrooms: propertyModeVarb({
+      homeBuyer: ubS.loadLocal("singleMultiBrCount"),
+      buyAndHold: ubS.sumChildren("unit", "numBedrooms"),
+      fixAndFlip: ubS.notApplicable,
+      brrrr: ubS.sumChildren("unit", "numBedrooms"),
     }),
     rehabCostBase: updateVarbS.sumNums([
-      propS.children("repairValue", "valueDollars"),
-      propS.children("miscOnetimeCost", "valueDollars"),
+      upS.children("repairValue", "valueDollars"),
+      upS.children("miscOnetimeCost", "valueDollars"),
     ]),
     rehabCost: updateVarbS.sumNums([
-      propS.children("repairValue", "valueDollars"),
-      propS.children("miscOnetimeCost", "valueDollars"),
-      propS.children("costOverrunValue", "valueDollars"),
+      upS.children("repairValue", "valueDollars"),
+      upS.children("miscOnetimeCost", "valueDollars"),
+      upS.children("costOverrunValue", "valueDollars"),
     ]),
-    ...varbsS.ongoingSumNumsNext("holdingCost", "monthly", {
+    ...uvsS.ongoingSumNumsNext("holdingCost", "monthly", {
       updateBasics: { updateFnName: "throwIfReached", updateFnProps: {} },
       updateOverrides: [
         {
           switches: [overrideSwitchS.local("propertyMode", "homeBuyer")],
-          updateBasics: basicsS.notApplicable,
+          updateBasics: ubS.notApplicable,
         },
         {
           switches: [overrideSwitchS.local("propertyMode", "buyAndHold")],
-          updateBasics: basicsS.notApplicable,
+          updateBasics: ubS.notApplicable,
         },
         {
           switches: [overrideSwitchS.local("propertyMode", "fixAndFlip")],
@@ -293,69 +273,149 @@ export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
     }),
     holdingCostTotal: updateVarbS.equationLR(
       "multiply",
-      propS.local("holdingPeriodMonths"),
-      propS.local("holdingCostMonthly")
+      upS.local("holdingPeriodMonths"),
+      upS.local("holdingCostMonthly")
     ),
-    upfrontExpenses: updateVarb("numObj", {
-      updateOverrides: unionOverrides(
-        "dealMode",
-        relVarbInfoS.local("propertyMode"),
-        {
-          homeBuyer: updateVarbS.sumNums([
-            propS.local("purchasePrice"),
-            propS.local("rehabCost"),
-          ]),
-          buyAndHold: updateVarbS.sumNums([
-            propS.local("purchasePrice"),
-            propS.local("rehabCost"),
-          ]),
-          fixAndFlip: updateVarbS.sumNums([
-            propS.local("purchasePrice"),
-            propS.local("rehabCost"),
-            propS.local("sellingCosts"),
-            propS.local("holdingCostTotal"),
-          ]),
-          brrrr: updateVarbS.sumNums([
-            propS.local("purchasePrice"),
-            propS.local("rehabCost"),
-            propS.local("holdingCostTotal"),
-          ]),
-        }
-      ),
+    upfrontExpenses: propertyModeVarb({
+      homeBuyer: updateVarbS.sumNums([
+        upS.local("purchasePrice"),
+        upS.local("rehabCost"),
+      ]),
+      buyAndHold: updateVarbS.sumNums([
+        upS.local("purchasePrice"),
+        upS.local("rehabCost"),
+      ]),
+      fixAndFlip: updateVarbS.sumNums([
+        upS.local("purchasePrice"),
+        upS.local("rehabCost"),
+        upS.local("sellingCosts"),
+        upS.local("holdingCostTotal"),
+      ]),
+      brrrr: updateVarbS.sumNums([
+        upS.local("purchasePrice"),
+        upS.local("rehabCost"),
+        upS.local("holdingCostTotal"),
+      ]),
     }),
-    ...varbsS.ongoingSumNums(
+    ...uvsS.ongoingSumNums(
       "expensesOngoing",
       [
-        propS.localBaseName("taxesOngoing"),
-        propS.localBaseName("homeInsOngoing"),
-        propS.localBaseName("miscOngoingCosts"),
-        propS.onlyChild("utilityOngoing", "valueDollars"),
-        propS.onlyChild("maintenanceOngoing", "valueDollars"),
-        propS.onlyChild("capExValueOngoing", "valueDollars"),
+        upS.localBaseName("taxesOngoing"),
+        upS.localBaseName("homeInsOngoing"),
+        upS.localBaseName("miscOngoingCosts"),
+        upS.onlyChild("utilityOngoing", "valueDollars"),
+        upS.onlyChild("maintenanceOngoing", "valueDollars"),
+        upS.onlyChild("capExValueOngoing", "valueDollars"),
       ],
       "monthly"
     ),
     miscOnetimeCosts: updateVarb(
       "numObj",
-      basicsS.loadFromChild("miscOnetimeCost", "valueDollars")
+      ubS.loadFromChild("miscOnetimeCost", "valueDollars")
     ),
 
-    ...varbsS.group("miscOngoingCosts", "periodic", "monthly", {
-      monthly: basicsS.loadFromChild("miscOngoingCost", "valueDollarsMonthly"),
-      yearly: basicsS.loadFromChild("miscOngoingCost", "valueDollarsYearly"),
+    ...uvsS.group("miscOngoingCosts", "periodic", "monthly", {
+      monthly: ubS.loadFromChild("miscOngoingCost", "valueDollarsMonthly"),
+      yearly: ubS.loadFromChild("miscOngoingCost", "valueDollarsYearly"),
     }),
-    ...varbsS.group("miscOngoingRevenue", "periodic", "monthly", {
-      monthly: basicsS.loadFromChild(
-        "miscOngoingRevenue",
-        "valueDollarsMonthly"
-      ),
-      yearly: basicsS.loadFromChild("miscOngoingRevenue", "valueDollarsYearly"),
+    ...uvsS.group("miscOngoingRevenue", "periodic", "monthly", {
+      monthly: ubS.loadFromChild("miscOngoingRevenue", "valueDollarsMonthly"),
+      yearly: ubS.loadFromChild("miscOngoingRevenue", "valueDollarsYearly"),
     }),
-    ...varbsS.monthsYearsInput("holdingPeriod", "months"),
-    ...varbsS.ongoingSumNums(
+    ...uvsS.monthsYearsInput("holdingPeriod", "months"),
+    ...uvsS.ongoingSumNums(
       "revenueOngoing",
       updateFnPropsS.localBaseNameArr(["targetRent", "miscOngoingRevenue"]),
       "monthly"
     ),
   };
+}
+
+function propertyCompletionStatus() {
+  return uvS.completionStatusO(
+    ...uosS.dealMode(
+      {
+        homeBuyer: ubS.completionStatus({
+          nonNone: hasOngoingNoneNones(),
+          validInputs: [
+            ...propertySharedValidInputs(),
+            ...hasOngoingValidInputs(),
+          ],
+        }),
+        buyAndHold: ubS.completionStatus({
+          nonZeros: [upS.local("numUnits")],
+          nonNone: hasOngoingNoneNones(),
+          validInputs: [
+            ...propertySharedValidInputs(),
+            ...hasOngoingValidInputs(),
+          ],
+        }),
+        fixAndFlip: ubS.completionStatus({
+          nonNone: [upS.onlyChild("repairValue", "valueSourceName")],
+          validInputs: [
+            ...propertySharedValidInputs(),
+            ...hasHoldingValidInputs(),
+            upS.local("numUnitsEditor"),
+          ],
+        }),
+        brrrr: ubS.completionStatus({
+          nonZeros: [upS.local("numUnits")],
+          nonNone: [
+            upS.onlyChild("repairValue", "valueSourceName"),
+            ...hasOngoingNoneNones(),
+          ],
+          validInputs: [
+            ...propertySharedValidInputs(),
+            ...hasOngoingValidInputs(),
+            ...hasHoldingValidInputs(),
+          ],
+        }),
+      },
+      { switchInfo: relVarbInfoS.local("propertyMode") }
+    )
+  );
+}
+
+function hasOngoingNoneNones(): UpdateFnProp[] {
+  return [
+    upS.onlyChild("repairValue", "valueSourceName"),
+    upS.onlyChild("utilityOngoing", "valueSourceName"),
+    upS.onlyChild("maintenanceOngoing", "valueSourceName"),
+    upS.onlyChild("capExValueOngoing", "valueSourceName"),
+  ];
+}
+function hasOngoingValidInputs(): UpdateFnProp[] {
+  return [
+    upS.onlyChild("taxesOngoing", "valueDollarsPeriodicEditor"),
+    upS.onlyChild("homeInsOngoing", "valueDollarsPeriodicEditor"),
+    upS.onlyChild("capExValueOngoing", "valueDollarsPeriodicEditor", [
+      osS.valueSourceIs("valueDollarsPeriodicEditor"),
+    ]),
+    upS.onlyChild("maintenanceOngoing", "valueDollarsPeriodicEditor", [
+      osS.valueSourceIs("valueDollarsPeriodicEditor"),
+    ]),
+  ];
+}
+
+function propertySharedValidInputs(): UpdateFnProp[] {
+  return [
+    ...upS.localArr("purchasePrice", "sqft"),
+    upS.onlyChild("repairValue", "valueDollarsEditor", [
+      osS.valueSourceIs("valueDollarsEditor"),
+    ]),
+    upS.onlyChild("costOverrunValue", "valueDollarsEditor", [
+      osS.valueSourceIs("valueDollarsEditor"),
+    ]),
+    upS.onlyChild("costOverrunValue", "valuePercentEditor", [
+      osS.valueSourceIs("valuePercentEditor"),
+    ]),
+  ];
+}
+
+function hasHoldingValidInputs(): UpdateFnProp[] {
+  return [
+    upS.onlyChild("taxesHolding", "valueDollarsPeriodicEditor"),
+    upS.onlyChild("homeInsHolding", "valueDollarsPeriodicEditor"),
+    upS.local("holdingPeriodSpanEditor"),
+  ];
 }

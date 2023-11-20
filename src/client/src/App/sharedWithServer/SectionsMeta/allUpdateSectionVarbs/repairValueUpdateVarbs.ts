@@ -4,10 +4,8 @@ import {
   updateBasics,
   updateBasicsS,
 } from "../updateSectionVarbs/updateVarb/UpdateBasics";
-import {
-  overrideSwitchS,
-  updateOverride,
-} from "../updateSectionVarbs/updateVarb/UpdateOverrides";
+import { updateOverride } from "../updateSectionVarbs/updateVarb/UpdateOverride";
+import { overrideSwitchS } from "../updateSectionVarbs/updateVarb/UpdateOverrideSwitch";
 import { updateVarbsS } from "../updateSectionVarbs/updateVarbs";
 import { UnionValue } from "../values/StateValue/unionValues";
 
@@ -35,7 +33,7 @@ export function repairValueUpdateVarbs(
         ),
         updateOverride(
           [switchS.local("valueSourceName", "valueDollarsEditor")],
-          updateBasicsS.loadFromLocal("valueDollarsEditor")
+          updateBasicsS.loadLocal("valueDollarsEditor")
         ),
         updateOverride(
           [switchS.local("valueSourceName", "listTotal")],

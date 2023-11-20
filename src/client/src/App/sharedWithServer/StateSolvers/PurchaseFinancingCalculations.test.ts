@@ -264,12 +264,16 @@ describe("Purchase financing calculations", () => {
     closingCosts.updateValues({ valueSourceName: "fivePercentLoan" });
 
     firstBaseValue.updateValues({ valueSourceName: "customAmountEditor" });
-    const custom = firstBaseValue.onlyChild("customLoanBase");
-    custom.updateValues({
+    const customLoanBase = firstBaseValue.onlyChild("customLoanBase");
+    customLoanBase.updateValues({
       valueSourceName: "valueDollarsEditor",
       valueDollarsEditor: numObj(100000),
     });
 
+    expect(customLoanBase.numValue("valueDollars")).toBe(100000);
+    expect(firstLoan.numValue("loanBaseDollars")).toBe(100000);
+    expect(firstLoan.numValue("fivePercentBaseLoan")).toBe(5000);
+    expect(firstLoan.numValue("closingCosts")).toBe(5000);
     expect(financing.numValue("closingCosts")).toBe(5000);
 
     setOnetimeEditor(closingCosts, 500);

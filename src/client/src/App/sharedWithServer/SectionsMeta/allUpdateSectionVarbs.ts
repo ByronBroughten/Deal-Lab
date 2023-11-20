@@ -14,6 +14,7 @@ import {
   ongoingItemUpdateVarbs,
 } from "./allUpdateSectionVarbs/ongoingItemUpdateVarbs";
 import { taxesAndHomeInsValueUpdateVarbs } from "./allUpdateSectionVarbs/ongoingValueUpdateVarb";
+import { prepaidInterestUpdateVarbs } from "./allUpdateSectionVarbs/prepaidUpdateVarbs";
 import { propertyUpdateVarbs } from "./allUpdateSectionVarbs/propertyUpdateVarbs";
 import { repairValueUpdateVarbs } from "./allUpdateSectionVarbs/repairValueUpdateVarbs";
 import { sellingCostUpdateVarbs } from "./allUpdateSectionVarbs/sellingCostUpdateVarbs";
@@ -27,33 +28,23 @@ import {
   updateSectionProp,
   UpdateSectionVarbs,
 } from "./updateSectionVarbs/updateSectionVarbs";
-import { updateVarb, updateVarbS } from "./updateSectionVarbs/updateVarb";
+import { updateVarb, updateVarbS, uvS } from "./updateSectionVarbs/updateVarb";
 import {
+  ubS,
   updateBasics,
   updateBasicsS,
 } from "./updateSectionVarbs/updateVarb/UpdateBasics";
+import { upS, upsS } from "./updateSectionVarbs/updateVarb/UpdateFnProps";
 import {
-  updateFnPropS,
-  updateFnPropsS,
-} from "./updateSectionVarbs/updateVarb/UpdateFnProps";
-import {
-  overrideSwitchS,
   updateOverride,
   updateOverrideS,
-} from "./updateSectionVarbs/updateVarb/UpdateOverrides";
-import {
-  valueSourceNumObj,
-  valueSourceOverrides,
-} from "./updateSectionVarbs/updateVarb/updateVarbUtils";
-import { updateVarbsS } from "./updateSectionVarbs/updateVarbs";
+} from "./updateSectionVarbs/updateVarb/UpdateOverride";
+import { uosS } from "./updateSectionVarbs/updateVarb/UpdateOverrides";
+import { osS } from "./updateSectionVarbs/updateVarb/UpdateOverrideSwitch";
+import { updateVarbsS, uvsS } from "./updateSectionVarbs/updateVarbs";
 import { numObj } from "./values/StateValue/NumObj";
 import { defaultCreateDealModeOf } from "./values/StateValue/unionValues";
 
-const propS = updateFnPropS;
-const propsS = updateFnPropsS;
-const varbsS = updateVarbsS;
-const switchS = overrideSwitchS;
-const basics = updateBasicsS;
 const varb = updateVarb;
 
 type GenericAllUpdateSections = {
@@ -106,10 +97,10 @@ function makeAllUpdateSections() {
       valueDollars: varb("numObj", {
         updateFnName: "throwIfReached",
         updateOverrides: [
-          updateOverride([switchS.localIsFalse("hasLoanExtra")], basics.zero),
-          ...valueSourceOverrides("dollarsOrList", {
-            valueDollarsEditor: basics.loadFromLocal("valueDollarsEditor"),
-            listTotal: basics.loadFromChild("onetimeList", "total"),
+          updateOverride([osS.localIsFalse("hasLoanExtra")], ubS.zero),
+          ...uosS.valueSource("dollarsOrList", {
+            valueDollarsEditor: ubS.loadLocal("valueDollarsEditor"),
+            listTotal: ubS.loadFromChild("onetimeList", "total"),
           }),
         ],
       }),
@@ -118,11 +109,11 @@ function makeAllUpdateSections() {
       valueSourceName: varb("dollarsOrList", {
         initValue: "valueDollarsEditor",
       }),
-      valueDollars: valueSourceNumObj("dollarsOrList", {
-        valueDollarsEditor: basics.loadFromLocal("valueDollarsEditor"),
-        listTotal: basics.loadFromChild("onetimeList", "total"),
+      valueDollars: uvS.vsNumObj("dollarsOrList", {
+        valueDollarsEditor: ubS.loadLocal("valueDollarsEditor"),
+        listTotal: ubS.loadFromChild("onetimeList", "total"),
       }),
-      valueDollarsEditor: varb("numObj"),
+      valueDollarsEditor: uvS.input("numObj"),
     }),
     ...prop(
       "purchaseLoanValue",
@@ -147,18 +138,18 @@ function makeAllUpdateSections() {
     ...prop("unit", {
       one: updateVarbS.one(),
       numBedrooms: updateVarb("numObj"),
-      ...varbsS.periodicInput("targetRent"),
+      ...uvsS.periodicInput("targetRent"),
     }),
     ...prop("taxesValue", taxesAndHomeInsValueUpdateVarbs()),
     ...prop("homeInsValue", taxesAndHomeInsValueUpdateVarbs()),
     ...prop("utilityValue", {
       valueSourceName: updateVarb("utilityValueSource", { initValue: "none" }),
-      ...varbsS.group("valueDollars", "periodic", "monthly", {
+      ...uvsS.group("valueDollars", "periodic", "monthly", {
         targets: { updateFnName: "throwIfReached" },
         monthly: {
           updateOverrides: [
             updateOverrideS.activeYearlyToMonthly("valueDollars"),
-            ...valueSourceOverrides("utilityValueSource", {
+            ...uosS.valueSource("utilityValueSource", {
               none: updateBasics("emptyNumObj"),
               zero: updateBasicsS.zero,
               sameAsHoldingPhase: updateBasicsS.loadByVarbPathName(
@@ -167,7 +158,7 @@ function makeAllUpdateSections() {
               threeHundredPerUnit: updateBasicsS.loadByVarbPathName(
                 "threeHundredPerUnit"
               ),
-              valueDollarsPeriodicEditor: updateBasicsS.loadFromLocal(
+              valueDollarsPeriodicEditor: updateBasicsS.loadLocal(
                 "valueDollarsPeriodicEditor"
               ),
               listTotal: updateBasicsS.loadFromChild(
@@ -180,7 +171,7 @@ function makeAllUpdateSections() {
         yearly: {
           updateOverrides: [
             updateOverrideS.activeMonthlyToYearly("valueDollars"),
-            ...valueSourceOverrides("utilityValueSource", {
+            ...uosS.valueSource("utilityValueSource", {
               none: updateBasics("emptyNumObj"),
               zero: updateBasicsS.zero,
               sameAsHoldingPhase: updateBasicsS.loadByVarbPathName(
@@ -189,7 +180,7 @@ function makeAllUpdateSections() {
               threeHundredPerUnit: updateBasicsS.loadByVarbPathName(
                 "threeHundredPerUnitTimesTwelve"
               ),
-              valueDollarsPeriodicEditor: updateBasicsS.loadFromLocal(
+              valueDollarsPeriodicEditor: updateBasicsS.loadLocal(
                 "valueDollarsPeriodicEditor"
               ),
               listTotal: updateBasicsS.loadFromChild(
@@ -203,33 +194,33 @@ function makeAllUpdateSections() {
     }),
     ...prop("capExValue", {
       valueSourceName: updateVarb("capExValueSource", { initValue: "none" }),
-      ...varbsS.group("valueDollars", "periodic", "monthly", {
+      ...uvsS.group("valueDollars", "periodic", "monthly", {
         targets: { updateFnName: "throwIfReached" },
         monthly: {
           updateOverrides: [
             updateOverride(
-              [switchS.local("valueSourceName", "none")],
+              [osS.local("valueSourceName", "none")],
               updateBasics("emptyNumObj")
             ),
             updateOverride(
-              [switchS.local("valueSourceName", "fivePercentRent")],
+              [osS.local("valueSourceName", "fivePercentRent")],
               updateBasicsS.loadByVarbPathName("fivePercentRentMonthly")
             ),
             updateOverride(
-              [switchS.local("valueSourceName", "listTotal")],
+              [osS.local("valueSourceName", "listTotal")],
               updateBasicsS.loadFromChild("capExList", "totalMonthly")
             ),
             updateOverride(
               [
-                switchS.local("valueSourceName", "valueDollarsPeriodicEditor"),
-                switchS.switchIsActive("valueDollars", "periodic", "monthly"),
+                osS.local("valueSourceName", "valueDollarsPeriodicEditor"),
+                osS.switchIsActive("valueDollars", "periodic", "monthly"),
               ],
-              updateBasicsS.loadFromLocal("valueDollarsPeriodicEditor")
+              updateBasicsS.loadLocal("valueDollarsPeriodicEditor")
             ),
             updateOverride(
               [
-                switchS.local("valueSourceName", "valueDollarsPeriodicEditor"),
-                switchS.switchIsActive("valueDollars", "periodic", "yearly"),
+                osS.local("valueSourceName", "valueDollarsPeriodicEditor"),
+                osS.switchIsActive("valueDollars", "periodic", "yearly"),
               ],
               updateBasicsS.yearlyToMonthly("valueDollars")
             ),
@@ -238,28 +229,28 @@ function makeAllUpdateSections() {
         yearly: {
           updateOverrides: [
             updateOverride(
-              [switchS.local("valueSourceName", "none")],
+              [osS.local("valueSourceName", "none")],
               updateBasics("emptyNumObj")
             ),
             updateOverride(
-              [switchS.local("valueSourceName", "fivePercentRent")],
+              [osS.local("valueSourceName", "fivePercentRent")],
               updateBasicsS.loadByVarbPathName("fivePercentRentYearly")
             ),
             updateOverride(
-              [switchS.local("valueSourceName", "listTotal")],
+              [osS.local("valueSourceName", "listTotal")],
               updateBasicsS.loadFromChild("capExList", "totalYearly")
             ),
             updateOverride(
               [
-                switchS.local("valueSourceName", "valueDollarsPeriodicEditor"),
-                switchS.switchIsActive("valueDollars", "periodic", "yearly"),
+                osS.local("valueSourceName", "valueDollarsPeriodicEditor"),
+                osS.switchIsActive("valueDollars", "periodic", "yearly"),
               ],
-              updateBasicsS.loadFromLocal("valueDollarsPeriodicEditor")
+              updateBasicsS.loadLocal("valueDollarsPeriodicEditor")
             ),
             updateOverride(
               [
-                switchS.local("valueSourceName", "valueDollarsPeriodicEditor"),
-                switchS.switchIsActive("valueDollars", "periodic", "monthly"),
+                osS.local("valueSourceName", "valueDollarsPeriodicEditor"),
+                osS.switchIsActive("valueDollars", "periodic", "monthly"),
               ],
               updateBasicsS.monthlyToYearly("valueDollars")
             ),
@@ -268,43 +259,43 @@ function makeAllUpdateSections() {
       }),
     }),
     ...prop("capExList", {
-      ...varbsS.savableSection,
-      ...varbsS.group("total", "periodic", "monthly", {
+      ...uvsS.savableSection,
+      ...uvsS.group("total", "periodic", "monthly", {
         monthly: updateBasicsS.sumChildren("capExItem", "valueDollarsMonthly"),
         yearly: updateBasicsS.sumChildren("capExItem", "valueDollarsYearly"),
       }),
-      itemPeriodicSwitch: updateVarb("ongoingSwitch", { initValue: "monthly" }),
+      itemPeriodicSwitch: updateVarb("periodic", { initValue: "monthly" }),
     }),
     ...prop("capExItem", capExItemUpdateVarbs()),
     ...prop("maintenanceValue", {
       valueSourceName: updateVarb("maintainanceValueSource", {
         initValue: "none",
       }),
-      ...varbsS.group("valueDollars", "periodic", "monthly", {
+      ...uvsS.group("valueDollars", "periodic", "monthly", {
         targets: { updateFnName: "throwIfReached" },
         monthly: {
           updateOverrides: [
             updateOverride(
-              [switchS.local("valueSourceName", "none")],
+              [osS.local("valueSourceName", "none")],
               updateBasics("emptyNumObj")
             ),
             updateOverride(
               [
-                switchS.local("valueSourceName", "valueDollarsPeriodicEditor"),
-                switchS.switchIsActive("valueDollars", "periodic", "monthly"),
+                osS.local("valueSourceName", "valueDollarsPeriodicEditor"),
+                osS.switchIsActive("valueDollars", "periodic", "monthly"),
               ],
-              updateBasicsS.loadFromLocal("valueDollarsPeriodicEditor")
+              updateBasicsS.loadLocal("valueDollarsPeriodicEditor")
             ),
             updateOverride(
               [
-                switchS.local("valueSourceName", "valueDollarsPeriodicEditor"),
-                switchS.yearlyIsActive("valueDollars"),
+                osS.local("valueSourceName", "valueDollarsPeriodicEditor"),
+                osS.yearlyIsActive("valueDollars"),
               ],
               updateBasicsS.yearlyToMonthly("valueDollars")
             ),
             updateOverride(
               [
-                switchS.local(
+                osS.local(
                   "valueSourceName",
                   "onePercentArv",
                   "sqft",
@@ -318,33 +309,33 @@ function makeAllUpdateSections() {
         yearly: {
           updateOverrides: [
             updateOverride(
-              [switchS.local("valueSourceName", "none")],
+              [osS.local("valueSourceName", "none")],
               updateBasics("emptyNumObj")
             ),
             updateOverride(
               [
-                switchS.local("valueSourceName", "valueDollarsPeriodicEditor"),
-                switchS.yearlyIsActive("valueDollars"),
+                osS.local("valueSourceName", "valueDollarsPeriodicEditor"),
+                osS.yearlyIsActive("valueDollars"),
               ],
-              updateBasicsS.loadFromLocal("valueDollarsPeriodicEditor")
+              updateBasicsS.loadLocal("valueDollarsPeriodicEditor")
             ),
             updateOverride(
               [
-                switchS.local("valueSourceName", "valueDollarsPeriodicEditor"),
-                switchS.monthlyIsActive("valueDollars"),
+                osS.local("valueSourceName", "valueDollarsPeriodicEditor"),
+                osS.monthlyIsActive("valueDollars"),
               ],
               updateBasicsS.monthlyToYearly("valueDollars")
             ),
             updateOverride(
-              [switchS.local("valueSourceName", "onePercentArv")],
+              [osS.local("valueSourceName", "onePercentArv")],
               updateBasicsS.loadByVarbPathName("onePercentArv")
             ),
             updateOverride(
-              [switchS.local("valueSourceName", "sqft")],
+              [osS.local("valueSourceName", "sqft")],
               updateBasicsS.loadByVarbPathName("sqft")
             ),
             updateOverride(
-              [switchS.local("valueSourceName", "onePercentArvAndSqft")],
+              [osS.local("valueSourceName", "onePercentArvAndSqft")],
               updateBasicsS.loadByVarbPathName("onePercentArvSqftAverage")
             ),
           ],
@@ -370,11 +361,12 @@ function makeAllUpdateSections() {
     }),
     ...prop("outputList", updateVarbsS.savableSection),
     ...prop("onetimeList", {
-      total: updateVarbS.sumNums([
-        propS.children("onetimeItem", "valueDollars"),
-      ]),
+      total: updateVarbS.sumNums([upS.children("onetimeItem", "valueDollars")]),
       itemValueSource: updateVarb("valueDollarsEditor"),
     }),
+    // prepaidTaxes: standardPrepaidUpdateVarbs(),
+    // prepaidHomeIns: standardPrepaidUpdateVarbs(),
+    prepaidInterest: prepaidInterestUpdateVarbs(),
     ...prop("closingCostValue", {
       valueSourceName: updateVarb("closingCostValueSource", {
         initValue: "none",
@@ -382,7 +374,7 @@ function makeAllUpdateSections() {
       valueDollarsEditor: updateVarb("numObj"),
       valueDollars: updateVarb("numObj", {
         updateFnName: "throwIfReached",
-        updateOverrides: valueSourceOverrides("closingCostValueSource", {
+        updateOverrides: uosS.valueSource("closingCostValueSource", {
           none: updateBasics("emptyNumObj"),
           fivePercentLoan: updateBasics("emptyNumObj"),
           listTotal: updateBasicsS.loadFromChild("onetimeList", "total"),
@@ -398,7 +390,7 @@ function makeAllUpdateSections() {
     //   percentLoanEditor: baseVarb("numObj", dollars),
     // }),
     // mortgageInsPeriodicValue: varbs({
-    //   valueSourceName: baseVarb("mortgageInsPeriodicSource"),
+    //   valueSourceName: baseVarb("mortgageInsperiodic"),
     //   ...baseVarbsS.periodicDollarsInput("valueDollars"),
     //   ...baseVarbsS.periodicPercentInput("percentLoan"),
     // }),
@@ -410,43 +402,40 @@ function makeAllUpdateSections() {
       percentLoanEditor: updateVarb("numObj"),
       decimalOfLoan: updateVarb(
         "numObj",
-        basics.equationSimple(
-          "percentToDecimal",
-          propS.local("percentLoanEditor")
-        )
+        ubS.equationSimple("percentToDecimal", upS.local("percentLoanEditor"))
       ),
     }),
     ...prop("mortgageInsPeriodicValue", {
-      valueSourceName: updateVarb("mortgageInsPeriodicSource", {
+      valueSourceName: updateVarb("mortgageInsperiodic", {
         initValue: "percentLoanPeriodicEditor",
       }),
       ...updateVarbsS.group("percentLoan", "periodicInput", "yearly", {
         editor: { initValue: numObj(0) },
-        monthly: valueSourceNumObj(
-          "periodicSource",
+        monthly: uvS.vsNumObj(
+          "periodic",
           {
-            monthly: basics.loadFromLocal("percentLoanPeriodicEditor"),
-            yearly: basics.yearlyToMonthly("percentLoan"),
+            monthly: ubS.loadLocal("percentLoanPeriodicEditor"),
+            yearly: ubS.yearlyToMonthly("percentLoan"),
           },
-          relVarbInfoS.local("percentLoanPeriodicSwitch")
+          { switchInfo: relVarbInfoS.local("percentLoanPeriodicSwitch") }
         ),
-        yearly: valueSourceNumObj(
-          "periodicSource",
+        yearly: uvS.vsNumObj(
+          "periodic",
           {
-            yearly: basics.loadFromLocal("percentLoanPeriodicEditor"),
-            monthly: basics.monthlyToYearly("percentLoan"),
+            yearly: ubS.loadLocal("percentLoanPeriodicEditor"),
+            monthly: ubS.monthlyToYearly("percentLoan"),
           },
-          relVarbInfoS.local("percentLoanPeriodicSwitch")
+          { switchInfo: relVarbInfoS.local("percentLoanPeriodicSwitch") }
         ),
       }),
       ...updateVarbsS.group("decimalOfLoan", "periodic", "yearly", {
-        monthly: basics.equationSimple(
+        monthly: ubS.equationSimple(
           "percentToDecimal",
-          propS.local("percentLoanMonthly")
+          upS.local("percentLoanMonthly")
         ),
-        yearly: basics.equationSimple(
+        yearly: ubS.equationSimple(
           "percentToDecimal",
-          propS.local("percentLoanYearly")
+          upS.local("percentLoanYearly")
         ),
       }),
       ...updateVarbsS.group("valueDollars", "periodicInput", "monthly", {
@@ -455,24 +444,24 @@ function makeAllUpdateSections() {
           updateFnName: "throwIfReached",
           updateOverrides: [
             updateOverride(
-              [switchS.local("valueDollarsPeriodicSwitch", "monthly")],
-              basics.loadFromLocal("valueDollarsPeriodicEditor")
+              [osS.local("valueDollarsPeriodicSwitch", "monthly")],
+              ubS.loadLocal("valueDollarsPeriodicEditor")
             ),
             updateOverride(
-              [switchS.local("valueDollarsPeriodicSwitch", "yearly")],
-              basics.yearlyToMonthly("valueDollars")
+              [osS.local("valueDollarsPeriodicSwitch", "yearly")],
+              ubS.yearlyToMonthly("valueDollars")
             ),
           ],
         },
         yearly: {
           updateOverrides: [
             updateOverride(
-              [switchS.local("valueDollarsPeriodicSwitch", "yearly")],
-              basics.loadFromLocal("valueDollarsPeriodicEditor")
+              [osS.local("valueDollarsPeriodicSwitch", "yearly")],
+              ubS.loadLocal("valueDollarsPeriodicEditor")
             ),
             updateOverride(
-              [switchS.local("valueDollarsPeriodicSwitch", "monthly")],
-              basics.monthlyToYearly("valueDollars")
+              [osS.local("valueDollarsPeriodicSwitch", "monthly")],
+              ubS.monthlyToYearly("valueDollars")
             ),
           ],
         },
@@ -483,8 +472,8 @@ function makeAllUpdateSections() {
       valueSourceName: updateVarb("dollarsOrList", { initValue: "listTotal" }),
       valueDollars: updateVarb("numObj", {
         updateFnName: "throwIfReached",
-        updateOverrides: valueSourceOverrides("dollarsOrList", {
-          valueDollarsEditor: updateBasicsS.loadFromLocal("valueDollarsEditor"),
+        updateOverrides: uosS.valueSource("dollarsOrList", {
+          valueDollarsEditor: updateBasicsS.loadLocal("valueDollarsEditor"),
           listTotal: updateBasicsS.loadFromChild("onetimeList", "total"),
         }),
       }),
@@ -500,15 +489,15 @@ function makeAllUpdateSections() {
     }),
 
     ...prop("periodicList", {
-      ...varbsS.ongoingSumNums(
+      ...uvsS.ongoingSumNums(
         "total",
-        [propS.children("periodicItem", "valueDollars")],
+        [upS.children("periodicItem", "valueDollars")],
         "monthly"
       ),
       itemValueSource: updateVarb("valueDollarsPeriodicEditor", {
         initValue: "valueDollarsPeriodicEditor",
       }),
-      itemPeriodicSwitch: updateVarb("ongoingSwitch", {
+      itemPeriodicSwitch: updateVarb("periodic", {
         initValue: "monthly",
       }),
     }),
@@ -525,7 +514,7 @@ function makeAllUpdateSections() {
       value: updateVarb("numObj", {
         updateFnName: "virtualNumObj",
         updateFnProps: {
-          varbInfo: propS.local("valueEntityInfo"),
+          varbInfo: upS.local("valueEntityInfo"),
         },
       }),
       displayName: updateVarb("stringObj", {
@@ -542,29 +531,29 @@ function makeAllUpdateSections() {
       }),
     }),
     ...prop("onetimeItem", {
-      ...varbsS._typeUniformity,
-      ...varbsS.displayNameAndEditor,
+      ...uvsS._typeUniformity,
+      ...uvsS.displayNameAndEditor,
       valueSourceName: updateVarb("valueDollarsEditor"),
       valueDollarsEditor: updateVarb("numObj"),
       valueDollars: updateVarb("numObj", {
         updateFnName: "throwIfReached",
         updateOverrides: [
           updateOverride(
-            [switchS.local("valueSourceName", "valueDollarsEditor")],
-            updateBasicsS.loadFromLocal("valueDollarsEditor")
+            [osS.local("valueSourceName", "valueDollarsEditor")],
+            updateBasicsS.loadLocal("valueDollarsEditor")
           ),
         ],
       }),
     }),
     ...prop("periodicItem", ongoingItemUpdateVarbs()),
     ...prop("numVarbItem", {
-      ...varbsS.displayNameAndEditor,
+      ...uvsS.displayNameAndEditor,
       value: updateVarb("numObj", {
         initValue: numObj(0),
         updateFnName: "userVarb",
         updateFnProps: {
-          ...propsS.localByVarbName(["valueSourceName", "valueEditor"]),
-          conditionalValue: propS.children("conditionalRowList", "value"),
+          ...upsS.localByVarbName(["valueSourceName", "valueEditor"]),
+          conditionalValue: upS.children("conditionalRowList", "value"),
         },
       }),
       valueSourceName: updateVarb("editorValueSource", {
@@ -573,7 +562,7 @@ function makeAllUpdateSections() {
     }),
     ...prop("conditionalRowList", {
       value: updateVarb("numObj", {
-        updateFnProps: propsS.namedChildren("conditionalRow", {
+        updateFnProps: upsS.namedChildren("conditionalRow", {
           rowLevel: "level",
           rowType: "type",
           rowLeft: "left",

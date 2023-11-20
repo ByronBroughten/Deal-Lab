@@ -15,10 +15,13 @@ export const sectionNames = [
   "sessionVarb",
 
   "feStore",
-
   "dbStore",
   "proxyStoreItem",
   "omniParent",
+
+  "timespanEditor",
+  "periodicEditor",
+
   "column",
   "cell",
   "conditionalRow",

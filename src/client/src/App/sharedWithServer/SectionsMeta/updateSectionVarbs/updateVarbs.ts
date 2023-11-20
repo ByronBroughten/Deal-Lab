@@ -4,8 +4,8 @@ import {
   updateGroupS,
 } from "./switchUpdateVarbs";
 import { UpdateVarb, updateVarb, updateVarbS } from "./updateVarb";
-import { updateFnPropS } from "./updateVarb/UpdateFnProps";
-import { updateOverrideS } from "./updateVarb/UpdateOverrides";
+import { updatePropS } from "./updateVarb/UpdateFnProps";
+import { updateOverrideS } from "./updateVarb/UpdateOverride";
 
 export const updateVarbsS = {
   ...updateGroupS,
@@ -29,19 +29,19 @@ export const updateVarbsS = {
       displayName: updateVarb("stringObj", {
         updateFnName: "loadDisplayName",
         updateFnProps: {
-          varbInfo: updateFnPropS.local("valueEntityInfo"),
+          varbInfo: updatePropS.local("valueEntityInfo"),
         },
       }),
       startAdornment: updateVarb("stringObj", {
         updateFnName: "loadStartAdornment",
         updateFnProps: {
-          varbInfo: updateFnPropS.local("valueEntityInfo"),
+          varbInfo: updatePropS.local("valueEntityInfo"),
         },
       }),
       endAdornment: updateVarb("stringObj", {
         updateFnName: "loadEndAdornment",
         updateFnProps: {
-          varbInfo: updateFnPropS.local("valueEntityInfo"),
+          varbInfo: updatePropS.local("valueEntityInfo"),
         },
       }),
     } as const;
@@ -55,7 +55,7 @@ export const updateVarbsS = {
       displayName: updateVarb("stringObj", {
         updateFnName: "localStringToStringObj",
         updateFnProps: {
-          localString: updateFnPropS.local("displayNameEditor"),
+          localString: updatePropS.local("displayNameEditor"),
         },
       }),
     };
@@ -66,7 +66,7 @@ export const updateVarbsS = {
       value: updateVarb("numObj", {
         updateFnName: "virtualNumObj",
         updateFnProps: {
-          varbInfo: updateFnPropS.local("valueEntityInfo"),
+          varbInfo: updatePropS.local("valueEntityInfo"),
         },
       }),
       displayName: updateVarb("stringObj", {
@@ -84,3 +84,5 @@ export const updateVarbsS = {
     } as const;
   },
 };
+
+export const uvsS = updateVarbsS;

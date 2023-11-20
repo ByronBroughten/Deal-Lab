@@ -1,12 +1,12 @@
 import { UpdateSectionVarbs } from "../updateSectionVarbs/updateSectionVarbs";
 import { updateVarb } from "../updateSectionVarbs/updateVarb";
 import { updateBasicsS } from "../updateSectionVarbs/updateVarb/UpdateBasics";
-import { updateFnPropS } from "../updateSectionVarbs/updateVarb/UpdateFnProps";
+import { updatePropS } from "../updateSectionVarbs/updateVarb/UpdateFnProps";
 import {
-  overrideSwitchS,
   updateOverride,
   updateOverrideS,
-} from "../updateSectionVarbs/updateVarb/UpdateOverrides";
+} from "../updateSectionVarbs/updateVarb/UpdateOverride";
+import { overrideSwitchS } from "../updateSectionVarbs/updateVarb/UpdateOverrideSwitch";
 import { updateVarbsS } from "../updateSectionVarbs/updateVarbs";
 
 const valueNameBase = "valueDollars";
@@ -21,7 +21,7 @@ export function ongoingItemUpdateVarbs(): UpdateSectionVarbs<"periodicItem"> {
         updateOverrides: [
           updateOverride(
             [overrideSwitchS.monthlyIsActive(valueNameBase)],
-            updateBasicsS.loadFromLocal("valueDollarsPeriodicEditor")
+            updateBasicsS.loadLocal("valueDollarsPeriodicEditor")
           ),
           updateOverrideS.activeYearlyToMonthly(valueNameBase),
         ],
@@ -31,7 +31,7 @@ export function ongoingItemUpdateVarbs(): UpdateSectionVarbs<"periodicItem"> {
         updateOverrides: [
           updateOverride(
             [overrideSwitchS.yearlyIsActive(valueNameBase)],
-            updateBasicsS.loadFromLocal("valueDollarsPeriodicEditor")
+            updateBasicsS.loadLocal("valueDollarsPeriodicEditor")
           ),
           updateOverrideS.activeMonthlyToYearly(valueNameBase),
         ],
@@ -47,13 +47,13 @@ export function capExItemUpdateVarbs(): UpdateSectionVarbs<"capExItem"> {
     ...updateVarbsS.group("valueDollars", "periodic", "monthly", {
       yearly: updateBasicsS.equationLR(
         "divide",
-        updateFnPropS.local("costToReplace"),
-        updateFnPropS.local("lifespanYears")
+        updatePropS.local("costToReplace"),
+        updatePropS.local("lifespanYears")
       ),
       monthly: updateBasicsS.equationLR(
         "divide",
-        updateFnPropS.local("costToReplace"),
-        updateFnPropS.local("lifespanMonths")
+        updatePropS.local("costToReplace"),
+        updatePropS.local("lifespanMonths")
       ),
     }),
     costToReplace: updateVarb("numObj"),
@@ -64,7 +64,7 @@ export function capExItemUpdateVarbs(): UpdateSectionVarbs<"capExItem"> {
         updateOverrides: [
           updateOverride(
             [overrideSwitchS.monthsIsActive("lifespan")],
-            updateBasicsS.loadFromLocal("lifespanSpanEditor")
+            updateBasicsS.loadLocal("lifespanSpanEditor")
           ),
           updateOverride(
             [overrideSwitchS.yearsIsActive("lifespan")],
@@ -76,7 +76,7 @@ export function capExItemUpdateVarbs(): UpdateSectionVarbs<"capExItem"> {
         updateOverrides: [
           updateOverride(
             [overrideSwitchS.yearsIsActive("lifespan")],
-            updateBasicsS.loadFromLocal("lifespanSpanEditor")
+            updateBasicsS.loadLocal("lifespanSpanEditor")
           ),
           updateOverride(
             [overrideSwitchS.monthsIsActive("lifespan")],

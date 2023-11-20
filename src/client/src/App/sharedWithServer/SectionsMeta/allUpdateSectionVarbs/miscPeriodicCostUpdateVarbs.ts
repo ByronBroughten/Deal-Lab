@@ -1,10 +1,8 @@
 import { UpdateSectionVarbs } from "../updateSectionVarbs/updateSectionVarbs";
 import { updateVarb } from "../updateSectionVarbs/updateVarb";
 import { updateBasicsS } from "../updateSectionVarbs/updateVarb/UpdateBasics";
-import {
-  overrideSwitchS,
-  updateOverride,
-} from "../updateSectionVarbs/updateVarb/UpdateOverrides";
+import { updateOverride } from "../updateSectionVarbs/updateVarb/UpdateOverride";
+import { overrideSwitchS } from "../updateSectionVarbs/updateVarb/UpdateOverrideSwitch";
 import { updateVarbsS } from "../updateSectionVarbs/updateVarbs";
 import { numObj } from "../values/StateValue/NumObj";
 
@@ -28,7 +26,7 @@ export function miscPeriodicCostUpdateVarbs(): UpdateSectionVarbs<"miscPeriodicV
           ),
           updateOverride(
             [switchS.local("valueDollarsPeriodicSwitch", "monthly")],
-            basicsS.loadFromLocal("valueDollarsPeriodicEditor")
+            basicsS.loadLocal("valueDollarsPeriodicEditor")
           ),
           updateOverride(
             [switchS.local("valueDollarsPeriodicSwitch", "yearly")],
@@ -44,7 +42,7 @@ export function miscPeriodicCostUpdateVarbs(): UpdateSectionVarbs<"miscPeriodicV
           ),
           updateOverride(
             [switchS.local("valueDollarsPeriodicSwitch", "yearly")],
-            basicsS.loadFromLocal("valueDollarsPeriodicEditor")
+            basicsS.loadLocal("valueDollarsPeriodicEditor")
           ),
           updateOverride(
             [switchS.local("valueDollarsPeriodicSwitch", "monthly")],

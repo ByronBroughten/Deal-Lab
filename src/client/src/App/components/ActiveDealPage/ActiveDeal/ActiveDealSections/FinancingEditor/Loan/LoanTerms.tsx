@@ -2,12 +2,11 @@ import { Box } from "@mui/material";
 import { FeIdProp } from "../../../../../../sharedWithServer/SectionsMeta/SectionInfo/NanoIdInfo";
 import { useGetterSection } from "../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { nativeTheme } from "../../../../../../theme/nativeTheme";
-import { FormSectionLabeled } from "../../../../../appWide/FormSectionLabeled";
+import { FormSectionNext } from "../../../../../appWide/FormSectionNext";
 import { LabeledVarbRow } from "../../../../../appWide/LabeledVarbRow";
 import { TogglerBooleanVarb } from "../../../../../appWide/TogglerBooleanVarb";
 import { MuiRow } from "../../../../../general/MuiRow";
 import { NumObjEntityEditor } from "../../../../../inputs/NumObjEntityEditor";
-import { ClosingCostValue } from "./ClostingCostValue";
 import { MortgageIns } from "./MortgageIns";
 
 export function LoanTerms({ feId }: FeIdProp) {
@@ -33,10 +32,7 @@ export function LoanTerms({ feId }: FeIdProp) {
   }
 
   return (
-    <FormSectionLabeled
-      label={"Parameters"}
-      className="BasicLoanInfo-otherInfo"
-    >
+    <FormSectionNext label={"Parameters"}>
       <MuiRow>
         <NumObjEntityEditor
           inputMargins
@@ -65,15 +61,7 @@ export function LoanTerms({ feId }: FeIdProp) {
             }}
           />
         )}
-        <ClosingCostValue
-          {...{
-            feId: loan.onlyChildFeId("closingCostValue"),
-            fivePercentLoanDisplay: loan
-              .varbNext("fivePercentBaseLoan")
-              .displayVarb(),
-          }}
-        />
       </Box>
-    </FormSectionLabeled>
+    </FormSectionNext>
   );
 }

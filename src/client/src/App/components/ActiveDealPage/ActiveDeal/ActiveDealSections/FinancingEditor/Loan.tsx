@@ -9,6 +9,7 @@ import { MainSectionInner } from "../../../../appWide/GeneralSection/MainSection
 import { MainSectionTopRows } from "../../../../appWide/MainSectionTopRows";
 import { useIsDevices } from "./../../../../customHooks/useMediaQueries";
 import { LoanBaseValue } from "./Loan/LoanBaseValue";
+import { LoanCosts } from "./Loan/LoanCosts";
 import { LoanTerms } from "./Loan/LoanTerms";
 
 export function Loan({
@@ -72,6 +73,7 @@ export function Loan({
       <MainSectionBody themeName="loan">
         <LoanBaseValue feId={loan.onlyChildFeId("loanBaseValue")} />
         <LoanTerms feId={loan.feId} />
+        <LoanCosts feId={loan.feId} />
       </MainSectionBody>
     </MainSectionInner>
   );

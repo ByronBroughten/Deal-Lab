@@ -1,20 +1,35 @@
+import { Obj } from "../../utils/Obj";
+import { StrictOmit } from "../../utils/types";
+import { VarbNameWide } from "../baseSectionsDerived/baseSectionsVarbsTypes";
 import { ChildName } from "../sectionChildrenDerived/ChildName";
 import { SectionName } from "../SectionName";
 import { StateValue } from "../values/StateValue";
+import { NumObj } from "../values/StateValue/NumObj";
+import { ValueSource, ValueSourceType } from "../values/StateValue/unionValues";
 import {
   LeftRightPropCalcName,
   NumPropCalcName,
 } from "../values/StateValue/valuesShared/calculations";
 import { valueMetas } from "../values/valueMetas";
 import { ValueName } from "../values/ValueName";
-import { getUpdateFnNames } from "./updateVarb/UpdateFnName";
+import { StandardUP, ubS, UpdateBasics } from "./updateVarb/UpdateBasics";
+import { getUpdateFnNames, UpdateFnName } from "./updateVarb/UpdateFnName";
 import {
   collectUpdateFnSwitchProps,
+  CompletionStatusProps,
   UpdateFnProp,
-  updateFnPropS,
+  updatePropS,
+  upS,
 } from "./updateVarb/UpdateFnProps";
-import { collectOverrideSwitchProps } from "./updateVarb/UpdateOverrides";
-import { UpdateProps, updatePropsS } from "./updateVarb/UpdateProps";
+import {
+  collectOverrideSwitchProps,
+  DealModeBasics,
+  uosS,
+  UpdateOverrides,
+  ValueSourceOptions,
+} from "./updateVarb/UpdateOverrides";
+import { UpdateOverrideSwitchInfo } from "./updateVarb/UpdateOverrideSwitch";
+import { UpdateProps } from "./updateVarb/UpdateProps";
 
 export interface GeneralUpdateVarb extends UpdateProps {
   valueName: ValueName;
@@ -51,7 +66,7 @@ export function updateVarb<VN extends ValueName>(
 ): UpdateVarb<VN> {
   const { updateFnProps, updateOverrides, ...rest }: UpdateVarb<VN> = {
     ...defaultUpdateVarb(valueName),
-    ...partial,
+    ...Obj.removeUndefined(partial),
   };
   return {
     ...rest,
@@ -61,25 +76,104 @@ export function updateVarb<VN extends ValueName>(
 }
 
 export type UpdateVarbOptions<VN extends ValueName> = Partial<UpdateVarb<VN>>;
+export type NumObjOverrideVarbOptions = {
+  switchInfo?: UpdateOverrideSwitchInfo;
+  initValue?: NumObj;
+};
+
+type Extras<VN extends ValueName> = StrictOmit<
+  UpdateVarb<VN>,
+  "updateFnName" | "updateOverrides"
+>;
+type Options<VN extends ValueName> = Partial<Extras<VN>>;
 
 export type LeftRightUpdateProps = [UpdateFnProp, UpdateFnProp];
 export const updateVarbS = {
+  input<VN extends ValueName>(
+    valueName: VN,
+    options?: Options<VN>
+  ): UpdateVarb<VN> {
+    return this.basic(valueName, "manualUpdateOnly", options);
+  },
+  override<VN extends ValueName>(
+    valueName: VN,
+    updateOverrides: UpdateOverrides,
+    options?: Options<VN>
+  ): UpdateVarb<VN> {
+    return updateVarb(valueName, {
+      ...options,
+      updateFnName: "throwIfReached",
+      updateOverrides,
+    });
+  },
+  basic<VN extends ValueName>(
+    valueName: VN,
+    updateFnName: UpdateFnName,
+    options?: Options<VN>
+  ) {
+    return updateVarb(valueName, {
+      ...options,
+      updateFnName,
+      updateOverrides: [],
+    });
+  },
+  basic2<VN extends ValueName>(
+    valueName: VN,
+    basics: UpdateBasics<VN>,
+    options?: Options<VN>
+  ) {
+    return updateVarb(valueName, { ...options, ...basics });
+  },
+  numObjO(
+    updateOverrides: UpdateOverrides,
+    options?: Options<"numObj">
+  ): UpdateVarb<"numObj"> {
+    return this.override("numObj", updateOverrides, options);
+  },
+  numObjB(
+    updateFnName: UpdateFnName<"numObj">,
+    options?: Options<"numObj">
+  ): UpdateVarb<"numObj"> {
+    return this.basic("numObj", updateFnName, options);
+  },
+  numObjB2(basics: UpdateBasics<"numObj">, options?: Options<"numObj">) {
+    return this.basic2("numObj", basics, options);
+  },
+  loadNumObjChild(childName: ChildName, varbName: VarbNameWide) {
+    return this.numObjB2(ubS.loadFromChild(childName, varbName));
+  },
+  vsNumObj<VT extends ValueSourceType>(
+    _valueSourceType: VT,
+    overrideMap: Record<ValueSource<VT>, UpdateBasics>,
+    options?: ValueSourceOptions
+  ): UpdateVarb<"numObj"> {
+    return this.numObjO(
+      uosS.valueSource(
+        _valueSourceType,
+        overrideMap,
+        options
+      ) as UpdateOverrides<any>
+    );
+  },
+  dealMode(
+    overrideMap: DealModeBasics,
+    { switchInfo, ...rest }: NumObjOverrideVarbOptions = {}
+  ): UpdateVarb<"numObj"> {
+    return this.numObjO(uosS.dealMode(overrideMap, { switchInfo }), rest);
+  },
   get displayNameEditor() {
-    return updateVarb("string", updatePropsS.simple("manualUpdateOnly"));
+    return this.basic("string", "manualUpdateOnly");
   },
   one() {
-    return updateVarb("number", {
-      updateFnName: "numberOne",
-      initValue: 1,
-    });
+    return this.basic("number", "numberOne", { initValue: 1 });
   },
   sumNums(
     nums: UpdateFnProp[],
     options?: UpdateVarbOptions<"numObj">
   ): UpdateVarb<"numObj"> {
-    return updateVarb("numObj", {
-      ...updatePropsS.sumNums(nums),
+    return this.numObjB("sumNums", {
       ...options,
+      ...ubS.sumNums(...nums),
     });
   },
   sumChildNums<SN extends SectionName, CN extends ChildName<SN>>(
@@ -87,28 +181,72 @@ export const updateVarbS = {
     varbName: string
   ) {
     return this.sumNums([
-      updateFnPropS.children(childName as ChildName, varbName),
+      updatePropS.children(childName as ChildName, varbName),
     ]);
   },
-  singlePropFn(
+  numEquation(
     updateFnName: NumPropCalcName,
     num: UpdateFnProp,
     options?: UpdateVarbOptions<"numObj">
   ): UpdateVarb<"numObj"> {
-    return updateVarb("numObj", {
-      ...updatePropsS.singlePropCalc(updateFnName, num),
+    return this.numObjB(updateFnName, {
       ...options,
+      ...ubS.equationSimple(updateFnName, num),
     });
+  },
+  divide(
+    left: StandardUP,
+    right: StandardUP,
+    options?: UpdateVarbOptions<"numObj">
+  ): UpdateVarb<"numObj"> {
+    return this.equationLR("divide", left, right, options);
+  },
+  multiply(
+    left: StandardUP,
+    right: StandardUP,
+    options?: UpdateVarbOptions<"numObj">
+  ): UpdateVarb<"numObj"> {
+    return this.equationLR("multiply", left, right, options);
+  },
+  add(
+    left: StandardUP,
+    right: StandardUP,
+    options?: UpdateVarbOptions<"numObj">
+  ): UpdateVarb<"numObj"> {
+    return this.equationLR("add", left, right, options);
+  },
+  subtract(
+    left: StandardUP,
+    right: StandardUP,
+    options?: UpdateVarbOptions<"numObj">
+  ): UpdateVarb<"numObj"> {
+    return this.equationLR("subtract", left, right, options);
   },
   equationLR(
     updateFnName: LeftRightPropCalcName,
-    left: UpdateFnProp,
-    right: UpdateFnProp,
+    left: StandardUP,
+    right: StandardUP,
     options?: UpdateVarbOptions<"numObj">
   ): UpdateVarb<"numObj"> {
-    return updateVarb("numObj", {
-      ...updatePropsS.leftRightPropCalc(updateFnName, left, right),
+    return this.numObjB(updateFnName, {
       ...options,
+      ...ubS.equationLR(updateFnName, left, right),
+    });
+  },
+  completionStatusB(
+    partialProps: Partial<CompletionStatusProps>
+  ): UpdateVarb<"completionStatus"> {
+    return this.basic("completionStatus", "completionStatus", {
+      updateFnProps: upS.completionStatus(partialProps),
+    });
+  },
+  completionStatusO(
+    ...overrides: UpdateOverrides
+  ): UpdateVarb<"completionStatus"> {
+    return this.override("completionStatus", overrides, {
+      initValue: "allEmpty",
     });
   },
 };
+
+export const uvS = updateVarbS;

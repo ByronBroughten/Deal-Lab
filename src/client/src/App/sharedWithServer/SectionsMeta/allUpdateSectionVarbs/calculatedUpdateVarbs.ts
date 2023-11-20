@@ -1,153 +1,134 @@
 import { UpdateSectionVarbs } from "../updateSectionVarbs/updateSectionVarbs";
-import { updateVarb, updateVarbS } from "../updateSectionVarbs/updateVarb";
+import { updateVarb, uvS } from "../updateSectionVarbs/updateVarb";
 import {
+  ubS,
   updateBasics,
-  updateBasicsS,
 } from "../updateSectionVarbs/updateVarb/UpdateBasics";
-import { updateFnPropS } from "../updateSectionVarbs/updateVarb/UpdateFnProps";
+import { upS } from "../updateSectionVarbs/updateVarb/UpdateFnProps";
 import { updateVarbsS } from "../updateSectionVarbs/updateVarbs";
 
-const propS = updateFnPropS;
-const varbS = updateVarbS;
-const basics = updateBasicsS;
 export function calculatedUpdateVarbs(): UpdateSectionVarbs<"calculatedVarbs"> {
   return {
     ...updateVarbsS._typeUniformity,
     currentYear: updateVarb("numObj", updateBasics("currentYear")),
-    propertyAge: varbS.equationLR(
+    propertyAge: uvS.equationLR(
       "subtract",
-      propS.varbPathName("currentYear"),
-      propS.varbPathName("yearBuilt")
+      upS.varbPathName("currentYear"),
+      upS.varbPathName("yearBuilt")
     ),
-    pricePerUnit: varbS.equationLR(
+    pricePerUnit: uvS.equationLR(
       "divide",
-      propS.varbPathName("purchasePrice"),
-      propS.varbPathName("numUnits")
+      upS.varbPathName("purchasePrice"),
+      upS.varbPathName("numUnits")
     ),
-    pricePerSqft: varbS.equationLR(
+    pricePerSqft: uvS.equationLR(
       "divide",
-      propS.varbPathName("purchasePrice"),
-      propS.varbPathName("sqft")
+      upS.varbPathName("purchasePrice"),
+      upS.varbPathName("sqft")
     ),
-    arvPerSqft: varbS.equationLR(
+    arvPerSqft: uvS.equationLR(
       "divide",
-      propS.varbPathName("afterRepairValue"),
-      propS.varbPathName("sqft")
+      upS.varbPathName("afterRepairValue"),
+      upS.varbPathName("sqft")
     ),
-    rehabPerSqft: varbS.equationLR(
-      "divide",
-      propS.varbPathName("rehabCost"),
-      propS.varbPathName("sqft")
+    rehabPerSqft: uvS.divide(
+      upS.varbPathName("rehabCost"),
+      upS.varbPathName("sqft")
     ),
     // Property
-    two: updateVarb("numObj", updateBasics("two")),
-    twelve: updateVarb("numObj", updateBasics("twelve")),
-    onePercentPrice: updateVarb(
-      "numObj",
-      basics.equationSimple("onePercent", propS.varbPathName("purchasePrice"))
+    two: uvS.numObjB("two"),
+    twelve: uvS.numObjB("twelve"),
+    thirty: uvS.numObjB("thirty"),
+    onePercentPrice: uvS.numEquation(
+      "onePercent",
+      upS.varbPathName("purchasePrice")
     ),
-    twoPercentPrice: updateVarb(
-      "numObj",
-      basics.equationSimple(
-        "twoPercent",
-        propS.pathNameBase("propertyFocal", "purchasePrice")
-      )
+    twoPercentPrice: uvS.numEquation(
+      "twoPercent",
+      upS.varbPathName("purchasePrice")
     ),
-    onePercentArv: updateVarb(
-      "numObj",
-      basics.equationSimple(
-        "onePercent",
-        propS.pathNameBase("propertyFocal", "afterRepairValue")
-      )
+    onePercentArv: uvS.numEquation(
+      "onePercent",
+      upS.varbPathName("afterRepairValue")
     ),
-    twoPercentArv: updateVarb(
-      "numObj",
-      basics.equationSimple(
-        "twoPercent",
-        propS.varbPathName("afterRepairValue")
-      )
+    twoPercentArv: uvS.numEquation(
+      "twoPercent",
+      upS.varbPathName("afterRepairValue")
     ),
     fivePercentRentMonthly: updateVarb("numObj", {
-      ...basics.equationSimple(
+      ...ubS.equationSimple(
         "fivePercent",
-        propS.varbPathName("targetRentMonthly")
+        upS.varbPathName("targetRentMonthly")
       ),
     }),
     fivePercentRentYearly: updateVarb("numObj", {
-      ...basics.equationSimple(
+      ...ubS.equationSimple(
         "fivePercent",
-        propS.varbPathName("targetRentYearly")
+        upS.varbPathName("targetRentYearly")
       ),
     }),
     tenPercentRentMonthly: updateVarb("numObj", {
-      ...basics.equationSimple(
+      ...ubS.equationSimple(
         "tenPercent",
-        propS.varbPathName("targetRentMonthly")
+        upS.varbPathName("targetRentMonthly")
       ),
     }),
     tenPercentRentYearly: updateVarb("numObj", {
-      ...basics.equationSimple(
-        "tenPercent",
-        propS.varbPathName("targetRentYearly")
-      ),
+      ...ubS.equationSimple("tenPercent", upS.varbPathName("targetRentYearly")),
     }),
     onePercentArvPlusSqft: updateVarb(
       "numObj",
-      basics.equationLR(
+      ubS.equationLR(
         "add",
-        propS.local("onePercentArv"),
-        propS.varbPathName("sqft")
+        upS.local("onePercentArv"),
+        upS.varbPathName("sqft")
       )
     ),
     onePercentPricePlusSqft: updateVarb(
       "numObj",
-      basics.varbPathLeftRight("add", "onePercentPrice", "sqft")
+      ubS.varbPathLeftRight("add", "onePercentPrice", "sqft")
     ),
     onePercentArvSqftAverage: updateVarb(
       "numObj",
-      basics.equationLR(
+      ubS.equationLR(
         "divide",
-        propS.local("onePercentArvPlusSqft"),
-        propS.local("two")
+        upS.local("onePercentArvPlusSqft"),
+        upS.local("two")
       )
     ),
     onePercentPriceSqftAverage: updateVarb(
       "numObj",
-      basics.equationLR(
-        "divide",
-        propS.local("onePercentArv"),
-        propS.local("two")
-      )
+      ubS.equationLR("divide", upS.local("onePercentArv"), upS.local("two"))
     ),
     threeHundred: updateVarb("numObj", updateBasics("solvableText300")),
     threeHundredPerUnit: updateVarb(
       "numObj",
-      basics.equationLR(
+      ubS.equationLR(
         "multiply",
-        propS.local("threeHundred"),
-        propS.varbPathName("numUnits")
+        upS.local("threeHundred"),
+        upS.varbPathName("numUnits")
       )
     ),
     threeHundredPerUnitTimesTwelve: updateVarb(
       "numObj",
-      basics.equationLR(
+      ubS.equationLR(
         "multiply",
-        propS.local("threeHundredPerUnit"),
-        propS.local("twelve")
+        upS.local("threeHundredPerUnit"),
+        upS.local("twelve")
       )
     ),
     propertyExists: updateVarb("boolean", {
       initValue: false,
       updateFnName: "varbExists",
       updateFnProps: {
-        varbInfo: propS.pathName("propertyFocal", "one"),
+        varbInfo: upS.pathName("propertyFocal", "one"),
       },
     }),
 
     mgmtExists: updateVarb("boolean", {
       initValue: false,
       updateFnName: "varbExists",
-      updateFnProps: { varbInfo: propS.pathName("mgmtFocal", "one") },
+      updateFnProps: { varbInfo: upS.pathName("mgmtFocal", "one") },
     }),
   };
 }

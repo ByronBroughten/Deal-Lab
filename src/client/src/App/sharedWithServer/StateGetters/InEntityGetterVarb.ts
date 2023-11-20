@@ -1,7 +1,7 @@
 import { cloneDeep } from "lodash";
 import { FeVarbInfo } from "../SectionsMeta/SectionInfo/FeInfo";
 import { SectionName } from "../SectionsMeta/SectionName";
-import { UpdateOverrideSwitch } from "../SectionsMeta/updateSectionVarbs/updateVarb/UpdateOverrides";
+import { UpdateOverrideSwitch } from "../SectionsMeta/updateSectionVarbs/updateVarb/UpdateOverrideSwitch";
 import {
   FixedInEntity,
   InEntity,

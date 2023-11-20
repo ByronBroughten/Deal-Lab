@@ -17,9 +17,7 @@ export function VarbListOngoing({ feId, ...rest }: Props) {
   const addChild = useAction("addChild");
   const list = useGetterSection({ sectionName: "periodicList", feId });
   const totalVarbName = list.activeSwitchTargetName("total", "periodic");
-  const itemPeriodicSwitch = list
-    .varb("itemPeriodicSwitch")
-    .value("ongoingSwitch");
+  const itemPeriodicSwitch = list.varb("itemPeriodicSwitch").value("periodic");
 
   const addItem = () => {
     const itemValueSource = list.valueNext("itemValueSource");

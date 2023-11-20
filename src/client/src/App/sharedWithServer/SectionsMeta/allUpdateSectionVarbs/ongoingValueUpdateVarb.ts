@@ -4,11 +4,9 @@ import {
   updateBasics,
   updateBasicsS,
 } from "../updateSectionVarbs/updateVarb/UpdateBasics";
-import {
-  overrideSwitchS,
-  updateOverride,
-} from "../updateSectionVarbs/updateVarb/UpdateOverrides";
-import { valueSourceOverrides } from "../updateSectionVarbs/updateVarb/updateVarbUtils";
+import { updateOverride } from "../updateSectionVarbs/updateVarb/UpdateOverride";
+import { uosS } from "../updateSectionVarbs/updateVarb/UpdateOverrides";
+import { overrideSwitchS } from "../updateSectionVarbs/updateVarb/UpdateOverrideSwitch";
 import { updateVarbsS } from "../updateSectionVarbs/updateVarbs";
 
 const varbsS = updateVarbsS;
@@ -27,10 +25,10 @@ export function taxesAndHomeInsValueUpdateVarbs(): UpdateSectionVarbs<"taxesValu
             [overrideSwitchS.yearlyIsActive("valueDollars")],
             updateBasicsS.yearlyToMonthly("valueDollars")
           ),
-          ...valueSourceOverrides("taxesAndHomeInsSource", {
+          ...uosS.valueSource("taxesAndHomeInsSource", {
             // property accesses the varbSwitchName and accesses holdingPhase
             sameAsHoldingPhase: updateBasics("emptyNumObj"),
-            valueDollarsPeriodicEditor: updateBasicsS.loadFromLocal(
+            valueDollarsPeriodicEditor: updateBasicsS.loadLocal(
               "valueDollarsPeriodicEditor"
             ),
           }),
@@ -42,9 +40,9 @@ export function taxesAndHomeInsValueUpdateVarbs(): UpdateSectionVarbs<"taxesValu
             [overrideSwitchS.monthlyIsActive("valueDollars")],
             updateBasicsS.monthlyToYearly("valueDollars")
           ),
-          ...valueSourceOverrides("taxesAndHomeInsSource", {
+          ...uosS.valueSource("taxesAndHomeInsSource", {
             sameAsHoldingPhase: updateBasics("emptyNumObj"),
-            valueDollarsPeriodicEditor: updateBasicsS.loadFromLocal(
+            valueDollarsPeriodicEditor: updateBasicsS.loadLocal(
               "valueDollarsPeriodicEditor"
             ),
           }),

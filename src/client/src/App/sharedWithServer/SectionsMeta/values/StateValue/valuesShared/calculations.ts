@@ -99,6 +99,7 @@ const calculations = {
   two: (_: any) => "2",
   six: (_: any) => "6",
   twelve: (_: any) => "12",
+  thirty: (_: any) => "30",
   portionToDecimal: ({
     base,
     portionOfBase,

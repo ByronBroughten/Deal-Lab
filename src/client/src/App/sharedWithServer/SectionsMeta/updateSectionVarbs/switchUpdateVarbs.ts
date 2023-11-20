@@ -25,15 +25,14 @@ import {
 } from "./updateVarb/UpdateBasics";
 import {
   UpdateFnProp,
-  updateFnPropS,
   UpdateFnProps,
+  updatePropS,
 } from "./updateVarb/UpdateFnProps";
+import { updateOverride, updateOverrideS } from "./updateVarb/UpdateOverride";
 import {
   overrideSwitchS,
-  updateOverride,
-  updateOverrideS,
   UpdateOverrideSwitches,
-} from "./updateVarb/UpdateOverrides";
+} from "./updateVarb/UpdateOverrideSwitch";
 import { updateVarbsS } from "./updateVarbs";
 
 export type UpdateGroup<
@@ -301,7 +300,7 @@ export function monthsYearsInput<BN extends string>(
             ),
           ],
           updateBasics("yearsToMonths", {
-            num: updateFnPropS.local(validateAnyVarbName(varbNames.years)),
+            num: updatePropS.local(validateAnyVarbName(varbNames.years)),
           })
         ),
         updateOverride(
@@ -331,7 +330,7 @@ export function monthsYearsInput<BN extends string>(
             ),
           ],
           updateBasics("monthsToYears", {
-            num: updateFnPropS.local(validateAnyVarbName(varbNames.months)),
+            num: updatePropS.local(validateAnyVarbName(varbNames.months)),
           })
         ),
         updateOverride(

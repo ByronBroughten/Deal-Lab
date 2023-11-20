@@ -19,9 +19,7 @@ export function VarbListCapEx({ feId, ...rest }: Props) {
   const feInfo = { sectionName: "capExList", feId } as const;
   const list = useGetterSection(feInfo);
   const totalVarbName = list.activeSwitchTargetName("total", "periodic");
-  const itemPeriodicSwitch = list
-    .varb("itemPeriodicSwitch")
-    .value("ongoingSwitch");
+  const itemPeriodicSwitch = list.varb("itemPeriodicSwitch").value("periodic");
 
   const sectionValues: Partial<SectionValues<"capExItem">> = {
     valueDollarsPeriodicSwitch: itemPeriodicSwitch,

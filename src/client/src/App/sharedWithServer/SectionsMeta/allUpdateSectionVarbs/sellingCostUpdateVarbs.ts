@@ -4,11 +4,11 @@ import {
   updateBasics,
   updateBasicsS,
 } from "../updateSectionVarbs/updateVarb/UpdateBasics";
-import { updateFnPropS } from "../updateSectionVarbs/updateVarb/UpdateFnProps";
-import { valueSourceOverrides } from "../updateSectionVarbs/updateVarb/updateVarbUtils";
+import { updatePropS } from "../updateSectionVarbs/updateVarb/UpdateFnProps";
+import { uosS } from "../updateSectionVarbs/updateVarb/UpdateOverrides";
 import { updateVarbsS } from "../updateSectionVarbs/updateVarbs";
 
-const fnProp = updateFnPropS;
+const fnProp = updatePropS;
 const basics = updateBasicsS;
 export function sellingCostUpdateVarbs(): UpdateSectionVarbs<"sellingCostValue"> {
   return {
@@ -20,9 +20,9 @@ export function sellingCostUpdateVarbs(): UpdateSectionVarbs<"sellingCostValue">
     }),
     valueDollars: updateVarb("numObj", {
       ...basics.throw,
-      updateOverrides: valueSourceOverrides("sellingCostSource", {
+      updateOverrides: uosS.valueSource("sellingCostSource", {
         listTotal: basics.loadFromChild("onetimeList", "total"),
-        valueDollarsEditor: basics.loadFromLocal("valueDollarsEditor"),
+        valueDollarsEditor: basics.loadLocal("valueDollarsEditor"),
         valuePercentEditor: basics.equationLR(
           "multiply",
           fnProp.local("valueDecimal"),
@@ -37,7 +37,7 @@ export function sellingCostUpdateVarbs(): UpdateSectionVarbs<"sellingCostValue">
     }),
     valueDecimal: updateVarb("numObj", {
       ...basics.throw,
-      updateOverrides: valueSourceOverrides("sellingCostSource", {
+      updateOverrides: uosS.valueSource("sellingCostSource", {
         valueDollarsEditor: basics.equationLR(
           "divide",
           fnProp.local("valueDollarsEditor"),
@@ -60,9 +60,9 @@ export function sellingCostUpdateVarbs(): UpdateSectionVarbs<"sellingCostValue">
     }),
     valuePercent: updateVarb("numObj", {
       ...basics.throw,
-      updateOverrides: valueSourceOverrides("sellingCostSource", {
+      updateOverrides: uosS.valueSource("sellingCostSource", {
         sixPercent: updateBasics("six"),
-        valuePercentEditor: basics.loadFromLocal("valuePercentEditor"),
+        valuePercentEditor: basics.loadLocal("valuePercentEditor"),
         valueDollarsEditor: basics.equationSimple(
           "decimalToPercent",
           fnProp.local("valueDecimal")
