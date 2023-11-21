@@ -16,7 +16,7 @@ type Props = {
 export function VarbListOngoing({ feId, ...rest }: Props) {
   const addChild = useAction("addChild");
   const list = useGetterSection({ sectionName: "periodicList", feId });
-  const totalVarbName = list.activeSwitchTargetName("total", "periodic");
+  const totalVarbName = "totalMonthly";
   const itemPeriodicSwitch = list.varb("itemPeriodicSwitch").value("periodic");
 
   const addItem = () => {

@@ -14,6 +14,12 @@ export function makeDefaultLoanPack(
     },
   });
 
+  loan.addChild("prepaidInterest");
+  (["prepaidTaxes", "prepaidHomeIns"] as const).forEach((childName) => {
+    const child = loan.addAndGetChild(childName);
+    child.addChild("timespanEditor");
+  });
+
   financingMode = loan.get.valueNext("financingMode");
   const baseValue = loan.addAndGetChild("loanBaseValue", {
     sectionValues: {

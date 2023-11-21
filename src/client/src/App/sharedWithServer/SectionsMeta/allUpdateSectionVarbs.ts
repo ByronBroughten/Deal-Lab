@@ -14,10 +14,14 @@ import {
   ongoingItemUpdateVarbs,
 } from "./allUpdateSectionVarbs/ongoingItemUpdateVarbs";
 import { taxesAndHomeInsValueUpdateVarbs } from "./allUpdateSectionVarbs/ongoingValueUpdateVarb";
-import { prepaidInterestUpdateVarbs } from "./allUpdateSectionVarbs/prepaidUpdateVarbs";
+import {
+  prepaidDailyUpdateVarbs,
+  prepaidPeriodicUpdateVarbs,
+} from "./allUpdateSectionVarbs/prepaidUpdateVarbs";
 import { propertyUpdateVarbs } from "./allUpdateSectionVarbs/propertyUpdateVarbs";
 import { repairValueUpdateVarbs } from "./allUpdateSectionVarbs/repairValueUpdateVarbs";
 import { sellingCostUpdateVarbs } from "./allUpdateSectionVarbs/sellingCostUpdateVarbs";
+import { timespanEditorUpdateVarbs } from "./allUpdateSectionVarbs/timespanEditorUpdateVarbs";
 import { vacancyLossUpdateVarbs } from "./allUpdateSectionVarbs/vacancyLossUpdateVarbs";
 import { VarbName } from "./baseSectionsDerived/baseSectionsVarbsTypes";
 import { mixedInfoS } from "./SectionInfo/MixedSectionInfo";
@@ -86,6 +90,7 @@ function makeAllUpdateSections() {
       isStartingDealEdit: varb("string", { initValue: "" }),
       isCreatingDeal: varb("boolean", { initValue: false }),
     }),
+    timespan: timespanEditorUpdateVarbs(),
     ...prop("loan", loanUpdateVarbs()),
     ...prop("loanBaseValue", loanBaseUpdateVarbs()),
     ...prop("loanBaseExtra", {
@@ -100,7 +105,7 @@ function makeAllUpdateSections() {
           updateOverride([osS.localIsFalse("hasLoanExtra")], ubS.zero),
           ...uosS.valueSource("dollarsOrList", {
             valueDollarsEditor: ubS.loadLocal("valueDollarsEditor"),
-            listTotal: ubS.loadFromChild("onetimeList", "total"),
+            listTotal: ubS.loadChild("onetimeList", "total"),
           }),
         ],
       }),
@@ -111,7 +116,7 @@ function makeAllUpdateSections() {
       }),
       valueDollars: uvS.vsNumObj("dollarsOrList", {
         valueDollarsEditor: ubS.loadLocal("valueDollarsEditor"),
-        listTotal: ubS.loadFromChild("onetimeList", "total"),
+        listTotal: ubS.loadChild("onetimeList", "total"),
       }),
       valueDollarsEditor: uvS.input("numObj"),
     }),
@@ -161,7 +166,7 @@ function makeAllUpdateSections() {
               valueDollarsPeriodicEditor: updateBasicsS.loadLocal(
                 "valueDollarsPeriodicEditor"
               ),
-              listTotal: updateBasicsS.loadFromChild(
+              listTotal: updateBasicsS.loadChild(
                 "periodicList",
                 "totalMonthly"
               ),
@@ -183,10 +188,7 @@ function makeAllUpdateSections() {
               valueDollarsPeriodicEditor: updateBasicsS.loadLocal(
                 "valueDollarsPeriodicEditor"
               ),
-              listTotal: updateBasicsS.loadFromChild(
-                "periodicList",
-                "totalYearly"
-              ),
+              listTotal: updateBasicsS.loadChild("periodicList", "totalYearly"),
             }),
           ],
         },
@@ -208,7 +210,7 @@ function makeAllUpdateSections() {
             ),
             updateOverride(
               [osS.local("valueSourceName", "listTotal")],
-              updateBasicsS.loadFromChild("capExList", "totalMonthly")
+              updateBasicsS.loadChild("capExList", "totalMonthly")
             ),
             updateOverride(
               [
@@ -238,7 +240,7 @@ function makeAllUpdateSections() {
             ),
             updateOverride(
               [osS.local("valueSourceName", "listTotal")],
-              updateBasicsS.loadFromChild("capExList", "totalYearly")
+              updateBasicsS.loadChild("capExList", "totalYearly")
             ),
             updateOverride(
               [
@@ -260,7 +262,7 @@ function makeAllUpdateSections() {
     }),
     ...prop("capExList", {
       ...uvsS.savableSection,
-      ...uvsS.group("total", "periodic", "monthly", {
+      ...uvsS.periodic2("total", {
         monthly: updateBasicsS.sumChildren("capExItem", "valueDollarsMonthly"),
         yearly: updateBasicsS.sumChildren("capExItem", "valueDollarsYearly"),
       }),
@@ -364,9 +366,8 @@ function makeAllUpdateSections() {
       total: updateVarbS.sumNums([upS.children("onetimeItem", "valueDollars")]),
       itemValueSource: updateVarb("valueDollarsEditor"),
     }),
-    // prepaidTaxes: standardPrepaidUpdateVarbs(),
-    // prepaidHomeIns: standardPrepaidUpdateVarbs(),
-    prepaidInterest: prepaidInterestUpdateVarbs(),
+    prepaidPeriodic: prepaidPeriodicUpdateVarbs(),
+    prepaidDaily: prepaidDailyUpdateVarbs(),
     ...prop("closingCostValue", {
       valueSourceName: updateVarb("closingCostValueSource", {
         initValue: "none",
@@ -377,7 +378,7 @@ function makeAllUpdateSections() {
         updateOverrides: uosS.valueSource("closingCostValueSource", {
           none: updateBasics("emptyNumObj"),
           fivePercentLoan: updateBasics("emptyNumObj"),
-          listTotal: updateBasicsS.loadFromChild("onetimeList", "total"),
+          listTotal: updateBasicsS.loadChild("onetimeList", "total"),
           valueDollarsEditor:
             updateBasicsS.loadSolvableTextByVarbInfo("valueDollarsEditor"),
         }),
@@ -474,7 +475,7 @@ function makeAllUpdateSections() {
         updateFnName: "throwIfReached",
         updateOverrides: uosS.valueSource("dollarsOrList", {
           valueDollarsEditor: updateBasicsS.loadLocal("valueDollarsEditor"),
-          listTotal: updateBasicsS.loadFromChild("onetimeList", "total"),
+          listTotal: updateBasicsS.loadChild("onetimeList", "total"),
         }),
       }),
       valueDollarsEditor: updateVarb("numObj", {
@@ -487,13 +488,11 @@ function makeAllUpdateSections() {
         initValue: false,
       }),
     }),
-
     ...prop("periodicList", {
-      ...uvsS.ongoingSumNums(
-        "total",
-        [upS.children("periodicItem", "valueDollars")],
-        "monthly"
-      ),
+      ...uvsS.periodic2("total", {
+        monthly: ubS.sumChildren("periodicItem", "valueDollarsMonthly"),
+        yearly: ubS.sumChildren("periodicItem", "valueDollarsYearly"),
+      }),
       itemValueSource: updateVarb("valueDollarsPeriodicEditor", {
         initValue: "valueDollarsPeriodicEditor",
       }),

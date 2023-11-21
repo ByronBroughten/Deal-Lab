@@ -5,6 +5,7 @@ import {
   groupKeys,
   GroupName,
   GroupRecord,
+  GroupRecordAndAll,
   groupVarbName,
   GroupVarbName,
 } from "../groupedNames";
@@ -80,6 +81,9 @@ function defaultBaseVarb<VN extends ValueName>(
   });
 }
 type Options = Partial<Omit<GeneralBaseVarb, "valueName">>;
+type GroupOptions<GN extends GroupName> = Partial<
+  GroupRecordAndAll<GN, Options>
+>;
 
 export function baseVarb<VN extends ValueName, O extends Options = {}>(
   valueName: VN,
@@ -152,17 +156,19 @@ const monthsYearsOptions = {
   years: { valueUnit: "years" },
 } as const;
 
-function groupNext<BN extends string, GN extends GroupName>(
-  baseName: BN,
-  groupName: GN,
-  options?: GroupRecord<GN, Options>
-): BaseVarbGroup<BN, GN> {
-  const keys = groupKeys(groupName);
-  return keys.reduce((group, key) => {
-    const varbName = groupVarbName(baseName, groupName, key);
-    group[varbName] = baseVarb("numObj", options && options[key]);
-    return group;
-  }, {} as BaseVarbGroup<BN, GN>);
+const periodicOptions: GroupRecord<
+  "periodic",
+  { valueTimespan: ValueTimespan }
+> = {
+  monthly: { valueTimespan: "monthly" },
+  yearly: { valueTimespan: "yearly" },
+};
+const timespanOptions: GroupRecord<"timespan", { valueUnit: ValueUnit }> = {
+  months: { valueUnit: "months" },
+  years: { valueUnit: "years" },
+};
+function allValueUnit(valueUnit: ValueUnit): { all: { valueUnit: ValueUnit } } {
+  return { all: { valueUnit } };
 }
 
 export const baseVarbsS = {
@@ -172,27 +178,57 @@ export const baseVarbsS = {
   groupNext<BN extends string, GN extends GroupName>(
     baseName: BN,
     groupName: GN,
-    options?: GroupRecord<GN, Options>
+    options?: GroupOptions<GN>
   ): BaseVarbGroup<BN, GN> {
     const keys = groupKeys(groupName);
     return keys.reduce((group, key) => {
       const varbName = groupVarbName(baseName, groupName, key);
-      group[varbName] = baseVarb("numObj", options && options[key]);
+      group[varbName] = baseVarb(
+        "numObj",
+        options && {
+          ...options.all,
+          ...options[key],
+        }
+      );
       return group;
     }, {} as BaseVarbGroup<BN, GN>);
   },
   timespan<BN extends string>(
     baseName: BN,
-    options?: GroupRecord<"timespan", Options>
+    options?: GroupOptions<"timespan">
   ): BaseVarbGroup<BN, "timespan"> {
-    return groupNext(baseName, "timespan", options);
+    return this.groupNext(baseName, "timespan", {
+      all: options?.all,
+      months: { ...timespanOptions.months, ...options?.months },
+      years: { ...timespanOptions.years, ...options?.years },
+    });
   },
-  periodicNext<BN extends string>(
+  periodic2<BN extends string>(
     baseName: BN,
-    options?: GroupRecord<"periodic", Options>
+    options?: GroupOptions<"periodic">
   ): BaseVarbGroup<BN, "periodic"> {
-    return groupNext(baseName, "periodic", options);
+    return this.groupNext(baseName, "periodic", {
+      all: options?.all,
+      monthly: { ...periodicOptions.monthly, ...options?.monthly },
+      yearly: { ...periodicOptions.yearly, ...options?.yearly },
+    });
   },
+  periodicDollars2<BN extends string>(
+    baseName: BN
+  ): BaseVarbGroup<BN, "periodic"> {
+    return this.periodic2(baseName, allValueUnit("dollars"));
+  },
+  periodicPercent2<BN extends string>(
+    baseName: BN
+  ): BaseVarbGroup<BN, "periodic"> {
+    return this.periodic2(baseName, allValueUnit("percent"));
+  },
+  periodicDecimal2<BN extends string>(
+    baseName: BN
+  ): BaseVarbGroup<BN, "periodic"> {
+    return this.periodic2(baseName, allValueUnit("decimal"));
+  },
+
   group: <
     BN extends string,
     SN extends SwitchName,

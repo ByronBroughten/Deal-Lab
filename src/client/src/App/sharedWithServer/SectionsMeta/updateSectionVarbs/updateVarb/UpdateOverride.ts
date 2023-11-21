@@ -21,6 +21,7 @@ export function updateOverride<
     ...updateBasics,
   };
 }
+export const uO = updateOverride;
 
 export const updateOverrideS = {
   get emptyNumObjIfSourceIsNone() {

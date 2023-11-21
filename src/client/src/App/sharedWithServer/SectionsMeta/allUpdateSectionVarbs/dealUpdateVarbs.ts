@@ -142,24 +142,21 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
     }),
     ...updateVarbsS.group("ongoingLoanPayment", "periodic", "monthly", {
       monthly: uvS.dealMode({
-        homeBuyer: ubS.loadFromChild("purchaseFinancing", "loanPaymentMonthly"),
-        buyAndHold: ubS.loadFromChild(
-          "purchaseFinancing",
-          "loanPaymentMonthly"
-        ),
+        homeBuyer: ubS.loadChild("purchaseFinancing", "loanPaymentMonthly"),
+        buyAndHold: ubS.loadChild("purchaseFinancing", "loanPaymentMonthly"),
         fixAndFlip: ubS.notApplicable,
-        brrrr: ubS.loadFromChild("refiFinancing", "loanPaymentMonthly"),
+        brrrr: ubS.loadChild("refiFinancing", "loanPaymentMonthly"),
       }),
       yearly: uvS.dealMode({
-        homeBuyer: ubS.loadFromChild("purchaseFinancing", "loanPaymentYearly"),
-        buyAndHold: ubS.loadFromChild("purchaseFinancing", "loanPaymentYearly"),
+        homeBuyer: ubS.loadChild("purchaseFinancing", "loanPaymentYearly"),
+        buyAndHold: ubS.loadChild("purchaseFinancing", "loanPaymentYearly"),
         fixAndFlip: ubS.notApplicable,
-        brrrr: ubS.loadFromChild("refiFinancing", "loanPaymentYearly"),
+        brrrr: ubS.loadChild("refiFinancing", "loanPaymentYearly"),
       }),
     }),
     ...updateVarbsS.group("timeTillValueAddProfit", "monthsYears", "months", {
       months: uvS.dealMode({
-        fixAndFlip: ubS.loadFromChild("property", "holdingPeriodMonths"),
+        fixAndFlip: ubS.loadChild("property", "holdingPeriodMonths"),
         brrrr: ubS.equationLR(
           "larger",
           upS.onlyChild("property", "holdingPeriodMonths"),
@@ -169,7 +166,7 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
         buyAndHold: ubS.notApplicable,
       }),
       years: uvS.dealMode({
-        fixAndFlip: ubS.loadFromChild("property", "holdingPeriodYears"),
+        fixAndFlip: ubS.loadChild("property", "holdingPeriodYears"),
         brrrr: ubS.equationLR(
           "larger",
           upS.onlyChild("property", "holdingPeriodYears"),
@@ -208,7 +205,7 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
           upS.onlyChild("property", "holdingPeriodMonths"),
           upS.local("refiLoanHoldingMonths")
         ),
-        fixAndFlip: ubS.loadFromChild("property", "holdingPeriodMonths"),
+        fixAndFlip: ubS.loadChild("property", "holdingPeriodMonths"),
         homeBuyer: ubS.notApplicable,
         buyAndHold: ubS.notApplicable,
       }),
@@ -218,7 +215,7 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
           upS.onlyChild("property", "holdingPeriodYears"),
           upS.local("refiLoanHoldingYears")
         ),
-        fixAndFlip: ubS.loadFromChild("property", "holdingPeriodYears"),
+        fixAndFlip: ubS.loadChild("property", "holdingPeriodYears"),
         homeBuyer: ubS.notApplicable,
         buyAndHold: ubS.notApplicable,
       }),

@@ -1,6 +1,6 @@
 import { round } from "lodash";
 //@ts-ignore
-import { create, evaluateDependencies } from "mathjs/lib/ems/number"; // esm or cjs
+import { create, evaluateDependencies } from "mathjs/lib/esm/number"; // esm or cjs
 import { ValidationError } from "./Error";
 import { isStringRationalNumber } from "./Str";
 // // @ts-ignore

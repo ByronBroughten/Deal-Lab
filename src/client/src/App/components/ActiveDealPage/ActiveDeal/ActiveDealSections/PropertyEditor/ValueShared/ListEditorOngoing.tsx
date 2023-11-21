@@ -33,7 +33,7 @@ export function ListEditorOngoing({
   );
 
   const itemPeriodicSwitch = periodicList.valueNext("itemPeriodicSwitch");
-  const totalVarb = periodicList.activeSwitchTarget("total", "periodic");
+  const totalVarb = periodicList.varbNext("totalMonthly");
 
   const onChange = (displayName?: string) => {
     const sectionValues: Partial<SectionValues<"periodicItem">> = {

@@ -16,7 +16,6 @@ describe("PackBuilderSection", () => {
   const propertyVarbs: Partial<SectionValues<"property">> = {
     displayName: stringObj("Some string"),
     purchasePrice: numObj(200000),
-    expensesOngoingPeriodicSwitch: "yearly",
   };
 
   it("should make a sectionPack with the added values and children", () => {

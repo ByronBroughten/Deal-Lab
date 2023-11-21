@@ -29,7 +29,6 @@ export function makeExampleUtilityList(
     sectionValues: {
       itemValueSource: valueSource,
       itemPeriodicSwitch: "monthly",
-      totalPeriodicSwitch: "monthly",
       displayName: stringObj(displayName),
     },
   });
@@ -78,16 +77,12 @@ export function makeCapExList(
   const itemPeriodicSwitch = "yearly";
   const capExList = feStore.addAndGetChild("capExListMain", {
     dbId,
-    sectionValues: {
-      itemPeriodicSwitch,
-      totalPeriodicSwitch: "yearly",
-    },
+    sectionValues: { itemPeriodicSwitch },
   });
   for (const itemProps of itemPropArr) {
     capExList.addChild("capExItem", {
       sectionValues: {
         displayNameEditor: itemProps[0],
-        valueDollarsPeriodicSwitch: itemPeriodicSwitch,
         lifespanSpanEditor: numToObj(itemProps[1]),
         lifespanSpanSwitch: "years",
         costToReplace: numToObj(itemProps[2]),

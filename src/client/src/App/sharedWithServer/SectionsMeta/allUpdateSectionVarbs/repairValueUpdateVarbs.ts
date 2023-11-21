@@ -37,7 +37,7 @@ export function repairValueUpdateVarbs(
         ),
         updateOverride(
           [switchS.local("valueSourceName", "listTotal")],
-          updateBasicsS.loadFromChild("onetimeList", "total")
+          updateBasicsS.loadChild("onetimeList", "total")
         ),
       ],
     }),

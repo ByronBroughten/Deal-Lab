@@ -17,11 +17,8 @@ import {
   CompletionStatusProps,
   UpdateFnProp,
   UpdateFnProps,
-  updatePropS,
   upS,
 } from "./UpdateFnProps";
-
-const p = updatePropS;
 
 export type UpdateBasics<VN extends ValueName = ValueName> = {
   updateFnName: UpdateFnName<VN>;
@@ -88,14 +85,15 @@ export const updateBasicsS = {
   },
   sumVarbPathName(...names: VarbPathName[]): UpdateBasics<"numObj"> {
     return updateBasicsNext("sumNums", {
-      nums: names.map((name) => updatePropS.varbPathName(name)),
+      nums: names.map((name) => upS.varbPathName(name)),
     });
   },
-  sumNums(...nums: UpdateFnProp[]): UpdateBasics<"numObj"> {
+  sumNums(...inits: StandardUP[]): UpdateBasics<"numObj"> {
+    const nums = inits.map((init) => (isString(init) ? upS.local(init) : init));
     return updateBasicsNext("sumNums", { nums });
   },
   sumChildren(childName: ChildName, varbName: string): UpdateBasics<"numObj"> {
-    return this.sumNums(updatePropS.children(childName, varbName));
+    return this.sumNums(upS.children(childName, varbName));
   },
   varbPathLeftRight(
     updateFnName: LeftRightPropCalcName,
@@ -104,8 +102,8 @@ export const updateBasicsS = {
   ): UpdateBasics<"numObj"> {
     return this.equationLR(
       updateFnName,
-      updatePropS.varbPathName(leftSide),
-      updatePropS.varbPathName(rightSide)
+      upS.varbPathName(leftSide),
+      upS.varbPathName(rightSide)
     );
   },
   multiply(left: StandardUP, right: StandardUP): UpdateBasics<"numObj"> {
@@ -119,8 +117,8 @@ export const updateBasicsS = {
     left: StandardUP,
     right: StandardUP
   ): UpdateBasics<"numObj"> {
-    const leftSide = isVarbName(left) ? p.local(left) : left;
-    const rightSide = isString(right) ? p.local(right) : right;
+    const leftSide = isVarbName(left) ? upS.local(left) : left;
+    const rightSide = isString(right) ? upS.local(right) : right;
     return updateBasicsNext(updateFnName, { leftSide, rightSide });
   },
   equationSimple(
@@ -134,27 +132,27 @@ export const updateBasicsS = {
   },
   localStringToStringObj(varbName: VarbNameWide): UpdateBasics<"stringObj"> {
     return updateBasics("localStringToStringObj", {
-      localString: updatePropS.local(varbName),
+      localString: upS.local(varbName),
     });
   },
   loadLocal(varbName: VarbNameWide) {
     return updateBasicsNext("loadSolvableTextByVarbInfo", {
-      varbInfo: updatePropS.local(varbName),
+      varbInfo: upS.local(varbName),
     });
   },
-  loadFromChild(childName: ChildName, varbName: VarbNameWide) {
+  loadChild(childName: ChildName, varbName: VarbNameWide) {
     return updateBasicsNext("loadSolvableTextByVarbInfo", {
-      varbInfo: updatePropS.onlyChild(childName, varbName),
+      varbInfo: upS.onlyChild(childName, varbName),
     });
   },
   loadFromFirstChild(childName: ChildName, varbName: VarbNameWide) {
     return updateBasicsNext("loadSolvableTextByVarbInfo", {
-      varbInfo: updatePropS.firstChild(childName, varbName),
+      varbInfo: upS.firstChild(childName, varbName),
     });
   },
   loadByVarbPathName(varbPathName: VarbPathName) {
     return updateBasicsNext("loadSolvableTextByVarbInfo", {
-      varbInfo: updatePropS.varbPathName(varbPathName),
+      varbInfo: upS.varbPathName(varbPathName),
     });
   },
   loadLocalValueEditor(): UpdateBasics<"numObj"> {
@@ -164,19 +162,19 @@ export const updateBasicsS = {
     varbInfoName: VarbNameWide
   ): UpdateBasics<"numObj"> {
     return updateBasicsNext("loadSolvableTextByVarbInfo", {
-      varbInfo: updatePropS.local(varbInfoName),
+      varbInfo: upS.local(varbInfoName),
     });
   },
   monthsToYears<Base extends string>(base: Base) {
     const varbNames = switchKeyToVarbNames(base, "monthsYears");
     return updateBasicsNext("monthsToYears", {
-      num: updatePropS.local(validateAnyVarbName(varbNames.months)),
+      num: upS.local(validateAnyVarbName(varbNames.months)),
     });
   },
   yearsToMonths<Base extends string>(base: Base) {
     const varbNames = switchKeyToVarbNames(base, "monthsYears");
     return updateBasicsNext("yearsToMonths", {
-      num: updatePropS.local(validateAnyVarbName(varbNames.years)),
+      num: upS.local(validateAnyVarbName(varbNames.years)),
     });
   },
   yearlyToMonthly<Base extends string>(
@@ -184,8 +182,8 @@ export const updateBasicsS = {
   ): UpdateBasics<"numObj"> {
     const varbNames = switchKeyToVarbNames(baseVarbName, "periodic");
     return updateBasicsNext("yearlyToMonthly", {
-      num: updatePropS.local(validateAnyVarbName(varbNames.yearly)),
-      switch: updatePropS.local(validateAnyVarbName(varbNames.switch)),
+      num: upS.local(validateAnyVarbName(varbNames.yearly)),
+      switch: upS.local(validateAnyVarbName(varbNames.switch)),
     });
   },
   monthlyToYearly<Base extends string>(
@@ -193,7 +191,7 @@ export const updateBasicsS = {
   ): UpdateBasics<"numObj"> {
     const varbNames = switchKeyToVarbNames(baseVarbName, "periodic");
     return updateBasicsNext("monthlyToYearly", {
-      num: updatePropS.local(validateAnyVarbName(varbNames.monthly)),
+      num: upS.local(validateAnyVarbName(varbNames.monthly)),
     });
   },
   completionStatus(

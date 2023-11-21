@@ -19,12 +19,9 @@ export function CapExValueList({ feId, menuType }: Props) {
     (item) => item.valueNext("displayName").mainText
   );
 
-  const itemPeriodicSwitch = capExList.valueNext("itemPeriodicSwitch");
-  const totalVarb = capExList.activeSwitchTarget("total", "periodic");
-
+  const totalVarb = capExList.varbNext("totalMonthly");
   const onChange = (displayName?: string) => {
     const sectionValues: Partial<SectionValues<"capExItem">> = {
-      valueDollarsPeriodicSwitch: itemPeriodicSwitch,
       ...(displayName && { displayNameEditor: displayName }),
     };
     addChild({ feInfo, childName: "capExItem", options: { sectionValues } });

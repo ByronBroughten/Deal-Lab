@@ -122,9 +122,12 @@ export const allSectionChildren = checkAllSectionChildren({
     customVarb: "customVarb",
     mortgageInsUpfrontValue: "mortgageInsUpfrontValue",
     mortgageInsPeriodicValue: "mortgageInsPeriodicValue",
-    prepaidTaxes: "prepaidTaxes",
-    prepaidHomeIns: "prepaidHomeIns",
-    prepaidInterest: "prepaidInterest",
+    prepaidTaxes: "prepaidPeriodic",
+    prepaidHomeIns: "prepaidPeriodic",
+    prepaidInterest: "prepaidDaily",
+  }),
+  prepaidPeriodic: sectionChildren({
+    timespanEditor: "timespanEditor",
   }),
   loanBaseValue: sectionChildren({
     customLoanBase: "customLoanBase",

@@ -19,7 +19,7 @@ const multis = {
   loanExtras: text({
     inputLabel: "Loan extras",
     title: "Loan extras",
-    info: "This is for any additional costs that you intend to wrap into this loan, such as a portion of closing costs, for example.",
+    info: "This is for any additional upfront costs you intend to wrap into the loan. For example, You might wrap in closing costs.",
   }),
   dealMode: text({
     inputLabel: "Select type",

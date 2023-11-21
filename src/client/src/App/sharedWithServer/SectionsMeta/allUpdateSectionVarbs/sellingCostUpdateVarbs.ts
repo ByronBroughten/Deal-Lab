@@ -21,7 +21,7 @@ export function sellingCostUpdateVarbs(): UpdateSectionVarbs<"sellingCostValue">
     valueDollars: updateVarb("numObj", {
       ...basics.throw,
       updateOverrides: uosS.valueSource("sellingCostSource", {
-        listTotal: basics.loadFromChild("onetimeList", "total"),
+        listTotal: basics.loadChild("onetimeList", "total"),
         valueDollarsEditor: basics.loadLocal("valueDollarsEditor"),
         valuePercentEditor: basics.equationLR(
           "multiply",

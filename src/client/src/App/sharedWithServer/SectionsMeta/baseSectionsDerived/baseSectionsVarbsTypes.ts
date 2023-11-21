@@ -4,6 +4,7 @@ import {
   AllBaseSectionVarbs,
   allBaseSectionVarbs,
 } from "../allBaseSectionVarbs";
+import { GroupKey, GroupName, groupVarbName } from "../groupedNames";
 import { SectionName, sectionNames } from "../SectionName";
 
 export type BaseSectionVarbs<SN extends SectionName> = AllBaseSectionVarbs[SN];
@@ -30,6 +31,14 @@ export function validateAnyVarbName(value: any): VarbNameWide {
     throw new Error(`value "${value}" is not a varbName`);
   }
 }
+export function safeGroupVarbName<
+  BN extends string,
+  GN extends GroupName,
+  GK extends GroupKey<GN>
+>(baseName: BN, groupName: GN, groupKey: GK): VarbNameWide {
+  return validateAnyVarbName(groupVarbName(baseName, groupName, groupKey));
+}
+
 export function validateAnyVarbNames(value: any): VarbNameWide[] {
   if (Array.isArray(value) && value.every((vn) => isVarbName(vn))) {
     return value;

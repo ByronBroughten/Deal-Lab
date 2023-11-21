@@ -2,6 +2,7 @@ import { Obj } from "../../utils/Obj";
 import { StrictOmit } from "../../utils/types";
 import { VarbNameWide } from "../baseSectionsDerived/baseSectionsVarbsTypes";
 import { ChildName } from "../sectionChildrenDerived/ChildName";
+import { relVarbInfoS } from "../SectionInfo/RelVarbInfo";
 import { SectionName } from "../SectionName";
 import { StateValue } from "../values/StateValue";
 import { NumObj } from "../values/StateValue/NumObj";
@@ -12,6 +13,7 @@ import {
 } from "../values/StateValue/valuesShared/calculations";
 import { valueMetas } from "../values/valueMetas";
 import { ValueName } from "../values/ValueName";
+import { uosB } from "./updateVarb/OverrideBasics";
 import { StandardUP, ubS, UpdateBasics } from "./updateVarb/UpdateBasics";
 import { getUpdateFnNames, UpdateFnName } from "./updateVarb/UpdateFnName";
 import {
@@ -76,6 +78,10 @@ export function updateVarb<VN extends ValueName>(
 }
 
 export type UpdateVarbOptions<VN extends ValueName> = Partial<UpdateVarb<VN>>;
+export type SafeUpdateOptions<VN extends ValueName> =
+  | StrictOmit<UpdateVarbOptions<VN>, "updateFnName">
+  | StrictOmit<UpdateVarbOptions<"numObj">, "updateOverrides">;
+
 export type NumObjOverrideVarbOptions = {
   switchInfo?: UpdateOverrideSwitchInfo;
   initValue?: NumObj;
@@ -102,8 +108,7 @@ export const updateVarbS = {
   ): UpdateVarb<VN> {
     return updateVarb(valueName, {
       ...options,
-      updateFnName: "throwIfReached",
-      updateOverrides,
+      ...uosB(updateOverrides),
     });
   },
   basic<VN extends ValueName>(
@@ -140,7 +145,7 @@ export const updateVarbS = {
     return this.basic2("numObj", basics, options);
   },
   loadNumObjChild(childName: ChildName, varbName: VarbNameWide) {
-    return this.numObjB2(ubS.loadFromChild(childName, varbName));
+    return this.numObjB2(ubS.loadChild(childName, varbName));
   },
   vsNumObj<VT extends ValueSourceType>(
     _valueSourceType: VT,
@@ -155,6 +160,17 @@ export const updateVarbS = {
       ) as UpdateOverrides<any>
     );
   },
+  vsChildNumObj<VT extends ValueSourceType>(
+    childName: ChildName,
+    _valueSourceType: VT,
+    overrideMap: Record<ValueSource<VT>, UpdateBasics>,
+    options?: ValueSourceOptions
+  ) {
+    return this.vsNumObj(_valueSourceType, overrideMap, {
+      switchInfo: relVarbInfoS.children(childName, "valueSourceName"),
+      ...options,
+    });
+  },
   dealMode(
     overrideMap: DealModeBasics,
     { switchInfo, ...rest }: NumObjOverrideVarbOptions = {}
@@ -168,7 +184,7 @@ export const updateVarbS = {
     return this.basic("number", "numberOne", { initValue: 1 });
   },
   sumNums(
-    nums: UpdateFnProp[],
+    nums: StandardUP[],
     options?: UpdateVarbOptions<"numObj">
   ): UpdateVarb<"numObj"> {
     return this.numObjB("sumNums", {

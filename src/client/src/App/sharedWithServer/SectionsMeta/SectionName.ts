@@ -79,9 +79,8 @@ export const sectionNames = [
   "purchaseLoanValue",
   "repairLoanValue",
   "arvLoanValue",
-  "prepaidTaxes",
-  "prepaidHomeIns",
-  "prepaidInterest",
+  "prepaidPeriodic",
+  "prepaidDaily",
 
   "mortgageInsUpfrontValue",
   "mortgageInsPeriodicValue",

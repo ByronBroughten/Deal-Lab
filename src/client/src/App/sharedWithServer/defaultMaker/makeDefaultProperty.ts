@@ -9,15 +9,7 @@ export function makeDefaultProperty(
   propertyMode: StateValue<"dealMode"> = "buyAndHold"
 ): SectionPack<"property"> {
   const property = PackBuilderSection.initAsOmniChild("property");
-  property.updateValues({
-    propertyMode,
-    taxesHoldingPeriodicSwitch: "yearly",
-    homeInsHoldingPeriodicSwitch: "yearly",
-    expensesOngoingPeriodicSwitch: "yearly",
-    targetRentPeriodicSwitch: "monthly",
-    miscOngoingRevenuePeriodicSwitch: "monthly",
-    revenueOngoingPeriodicSwitch: "monthly",
-  });
+  property.updateValues({ propertyMode });
 
   const taxesHomeInsOptions = {
     sectionValues: {

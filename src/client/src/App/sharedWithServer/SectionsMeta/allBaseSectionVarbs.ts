@@ -59,6 +59,7 @@ export function makeAllBaseSectionVarbs() {
       isCreatingDeal: bv("boolean"),
       dealDbIdToEdit: bv("string"),
     }),
+
     timespanEditor: varbs({
       valueSourceName: bv("timespan"),
       valueEditor: bv("numObj"),
@@ -67,7 +68,7 @@ export function makeAllBaseSectionVarbs() {
     periodicEditor: varbs({
       valueSourceName: bv("periodic"),
       valueEditor: bv("numObj"),
-      ...baseVarbsS.periodicNext("value"),
+      ...baseVarbsS.periodic2("value"),
     }),
     newDealMenu: varbs({ dealMode: bv("dealMode") }),
     mainDealMenu: varbs({
@@ -130,7 +131,7 @@ export function makeAllBaseSectionVarbs() {
     }),
     periodicList: varbs({
       ...baseVarbsS.savableSection,
-      ...baseVarbsS.periodicDollars("total"),
+      ...baseVarbsS.periodicDollars2("total"),
       itemValueSource: bv("valueDollarsPeriodicEditor"),
       itemPeriodicSwitch: bv("periodic"),
     }),
@@ -141,12 +142,12 @@ export function makeAllBaseSectionVarbs() {
     }),
     capExList: varbs({
       ...baseVarbsS.savableSection,
-      ...baseVarbsS.periodicDollars("total"),
+      ...baseVarbsS.periodicDollars2("total"),
       itemPeriodicSwitch: bv("periodic"),
     }),
     capExItem: baseSectionVarbs({
       ...baseVarbsS.displayNameAndEditor,
-      ...baseVarbsS.periodicDollars("valueDollars"),
+      ...baseVarbsS.periodicDollars2("valueDollars"),
       ...baseVarbsS.monthsYearsInput("lifespan"),
       costToReplace: bv("numObj", baseOptions.dollars),
     }),
@@ -203,7 +204,7 @@ export function makeAllBaseSectionVarbs() {
       isRenting: bv("boolean"),
       singleMultiBrCount: bv("numObj"),
       singleMultiNumUnits: bv("numObj"),
-      ...baseVarbsS.periodicDollars("homebuyerRent"),
+      ...baseVarbsS.periodicDollars2("homebuyerRent"),
       ...baseVarbs(
         "numObj",
         [
@@ -229,22 +230,22 @@ export function makeAllBaseSectionVarbs() {
         "numUnitsEditor",
       ] as const),
 
-      ...baseVarbsS.periodicDollars("taxesHolding"),
-      ...baseVarbsS.periodicDollars("homeInsHolding"),
-      ...baseVarbsS.periodicDollars("utilitiesHolding"),
+      ...baseVarbsS.periodicDollars2("taxesHolding"),
+      ...baseVarbsS.periodicDollars2("homeInsHolding"),
+      ...baseVarbsS.periodicDollars2("utilitiesHolding"),
 
-      ...baseVarbsS.periodicDollars("taxesOngoing"),
-      ...baseVarbsS.periodicDollars("homeInsOngoing"),
-      ...baseVarbsS.periodicDollars("utilitiesOngoing"),
+      ...baseVarbsS.periodicDollars2("taxesOngoing"),
+      ...baseVarbsS.periodicDollars2("homeInsOngoing"),
+      ...baseVarbsS.periodicDollars2("utilitiesOngoing"),
 
       ...baseVarbsS.monthsYearsInput("holdingPeriod"),
 
-      ...baseVarbsS.periodicDollars("targetRent"),
-      ...baseVarbsS.periodicDollars("miscOngoingRevenue"),
-      ...baseVarbsS.periodicDollars("miscOngoingCosts"),
-      ...baseVarbsS.periodicDollars("holdingCost"),
-      ...baseVarbsS.periodicDollars("revenueOngoing"),
-      ...baseVarbsS.periodicDollars("expensesOngoing"),
+      ...baseVarbsS.periodicDollars2("targetRent"),
+      ...baseVarbsS.periodicDollars2("miscOngoingRevenue"),
+      ...baseVarbsS.periodicDollars2("miscOngoingCosts"),
+      ...baseVarbsS.periodicDollars2("holdingCost"),
+      ...baseVarbsS.periodicDollars2("revenueOngoing"),
+      ...baseVarbsS.periodicDollars2("expensesOngoing"),
     }),
     unit: varbs({
       one: bv("number"),
@@ -326,6 +327,11 @@ export function makeAllBaseSectionVarbs() {
       ...baseVarbsS.periodicDecimal("interestRateDecimal"),
       ...varbsS.monthsYearsInput("loanTerm"),
 
+      prepaidInterest: bv("numObj", dollars),
+      prepaidTaxes: bv("numObj", dollars),
+      prepaidHomeIns: bv("numObj", dollars),
+      prepaidTotal: bv("numObj", dollars),
+
       isInterestOnly: bv("boolean"),
       ...baseVarbsS.periodicDollars("interestOnlySimple"),
       ...baseVarbsS.periodicDollars("piFixedStandard"),
@@ -364,23 +370,23 @@ export function makeAllBaseSectionVarbs() {
     purchaseLoanValue: baseVarbsS.loanValue,
     repairLoanValue: baseVarbsS.loanValue,
     arvLoanValue: baseVarbsS.loanValue,
-    prepaidTaxes: varbs({
+    prepaidPeriodic: varbs({
       valueSourceName: bv("spanOrDollars"),
       valueDollarsEditor: bv("numObj"),
-      valueDollars: bv("numObj"),
-      ...baseVarbsS.monthsYearsInput("value"),
+      ...baseVarbsS.timespan("value"),
     }),
-    prepaidHomeIns: varbs({
-      valueSourceName: bv("spanOrDollars"),
-      valueDollarsEditor: bv("numObj"),
-      valueDollars: bv("numObj"),
-      ...baseVarbsS.monthsYearsInput("value"),
-    }),
-    prepaidInterest: varbs({
+
+    // What if prepaids are wrapped into the loan?
+    // That's fine, I can add another loan extras thing for prepaids.
+
+    // What about delayed repairs?
+    // Those are treated a bit differently
+    // That will lower cash needed but not upfrontInvestment
+
+    prepaidDaily: varbs({
       valueSourceName: bv("spanOrDollars"),
       valueDollarsEditor: bv("numObj"),
       valueSpanEditor: bv("numObj"),
-      valueSpanSwitch: bv("days"),
     }),
     mgmt: varbs({
       ...baseVarbsS.savableSection,

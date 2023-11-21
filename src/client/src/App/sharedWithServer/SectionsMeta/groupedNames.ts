@@ -9,13 +9,20 @@ const timespanEndings = {
 } as const;
 checkTimespanEndings(timespanEndings);
 
-type PeriodicEndings = Record<UnionValue<"periodic">, string>;
-const checkPeriodicEndings = <T extends PeriodicEndings>(t: T) => t;
-const periodicEndings = {
+type PeriodicEndingsGen = Record<UnionValue<"periodic">, string>;
+const checkPeriodicEndings = <T extends PeriodicEndingsGen>(t: T) => t;
+const periodicEndings = checkPeriodicEndings({
   monthly: "Monthly",
   yearly: "Yearly",
-} as const;
-checkPeriodicEndings(periodicEndings);
+} as const);
+
+type PeriodicEndings = typeof periodicEndings;
+type PeriodicEnding<GK extends GroupKey<"periodic">> = PeriodicEndings[GK];
+export function periodicEnding<GK extends GroupKey<"periodic">>(
+  groupKey: GK
+): PeriodicEnding<GK> {
+  return periodicEndings[groupKey];
+}
 
 const groupNamesToEndings = {
   timespan: timespanEndings,
@@ -38,6 +45,10 @@ export type GroupRecord<GN extends GroupName, O extends any> = Record<
   GroupKey<GN>,
   O
 >;
+export type GroupRecordAndAll<GN extends GroupName, O extends any> = Record<
+  GroupKey<GN> | "all",
+  O
+>;
 
 export function groupKeys<GN extends GroupName>(groupName: GN): GroupKey<GN>[] {
   return Obj.keys(groupNamesToEndings[groupName]);
@@ -53,6 +64,18 @@ export function groupVarbName<
     GN,
     GK
   >;
+}
+export function periodicName<
+  BN extends string,
+  GK extends GroupKey<"periodic">
+>(baseName: BN, groupKey: GK): GroupVarbName<BN, "periodic", GK> {
+  return groupVarbName(baseName, "periodic", groupKey);
+}
+export function timespanName<
+  BN extends string,
+  GK extends GroupKey<"timespan">
+>(baseName: BN, groupKey: GK): GroupVarbName<BN, "timespan", GK> {
+  return groupVarbName(baseName, "timespan", groupKey);
 }
 
 // export function groupKeyToVarbNames<BN extends string, GN extends GroupName>(

@@ -70,7 +70,7 @@ const overrideMap: Overrides = {
   ),
   customAmountEditor: oRide(
     [osS.valueSourceIs("customAmountEditor")],
-    ubS.loadFromChild("customLoanBase", "valueDollars")
+    ubS.loadChild("customLoanBase", "valueDollars")
   ),
 };
 

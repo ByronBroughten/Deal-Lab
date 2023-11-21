@@ -22,7 +22,7 @@ export function miscPeriodicCostUpdateVarbs(): UpdateSectionVarbs<"miscPeriodicV
         updateOverrides: [
           updateOverride(
             [switchS.valueSourceIs("listTotal")],
-            basicsS.loadFromChild("periodicList", "totalMonthly")
+            basicsS.loadChild("periodicList", "totalMonthly")
           ),
           updateOverride(
             [switchS.local("valueDollarsPeriodicSwitch", "monthly")],
@@ -38,7 +38,7 @@ export function miscPeriodicCostUpdateVarbs(): UpdateSectionVarbs<"miscPeriodicV
         updateOverrides: [
           updateOverride(
             [switchS.valueSourceIs("listTotal")],
-            basicsS.loadFromChild("periodicList", "totalYearly")
+            basicsS.loadChild("periodicList", "totalYearly")
           ),
           updateOverride(
             [switchS.local("valueDollarsPeriodicSwitch", "yearly")],

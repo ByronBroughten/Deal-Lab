@@ -7,7 +7,10 @@ import {
   updateBasics,
 } from "../updateSectionVarbs/updateVarb/UpdateBasics";
 import { updateFnPropsS } from "../updateSectionVarbs/updateVarb/UpdateFnProps";
-import { updateOverride } from "../updateSectionVarbs/updateVarb/UpdateOverride";
+import {
+  uO,
+  updateOverride,
+} from "../updateSectionVarbs/updateVarb/UpdateOverride";
 import { uosS } from "../updateSectionVarbs/updateVarb/UpdateOverrides";
 import { osS } from "../updateSectionVarbs/updateVarb/UpdateOverrideSwitch";
 import { updateVarbsS } from "../updateSectionVarbs/updateVarbs";
@@ -20,7 +23,6 @@ export function loanUpdateVarbs(): UpdateSectionVarbs<"loan"> {
   return {
     ...updateVarbsS._typeUniformity,
     completionStatus: loanCompletionStatus(),
-
     ...updateVarbsS.savableSection,
     financingMode: updateVarb("financingMode"),
     loanBaseDollars: uvS.loadNumObjChild("loanBaseValue", "valueDollars"),
@@ -30,6 +32,24 @@ export function loanUpdateVarbs(): UpdateSectionVarbs<"loan"> {
     ...updateVarbsS.monthsYearsInput("loanTerm", "years", {
       years: { initValue: numObj(30) },
     }),
+    // investmentExpenses = upfrontExpenses, delayedExpenses
+    // cashExpenses = upfrontExpenses, prepaidExpenses
+
+    prepaidTaxes: loanPrepaidPeriodic("taxes"),
+    prepaidHomeIns: loanPrepaidPeriodic("homeIns"),
+    prepaidInterest: uvS.vsChildNumObj("prepaidInterest", "spanOrDollars", {
+      valueDollarsEditor: ubS.loadChild(
+        "prepaidInterest",
+        "valueDollarsEditor"
+      ),
+      valueSpanEditor: ubS.multiply(
+        "firstInterestPayment",
+        upS.children("prepaidInterest", "valueSpanEditor")
+      ),
+    }),
+    prepaidTotal: uvS.numObjB2(
+      ubS.sumNums("prepaidTaxes", "prepaidHomeIns", "prepaidInterest")
+    ),
     isInterestOnly: updateVarb("boolean", {
       initValue: false,
     }),
@@ -41,7 +61,7 @@ export function loanUpdateVarbs(): UpdateSectionVarbs<"loan"> {
       ...uosS.valueSource(
         "mortgageInsUpfrontSource",
         {
-          valueDollarsEditor: ubS.loadFromChild(
+          valueDollarsEditor: ubS.loadChild(
             "mortgageInsUpfrontValue",
             "valueDollarsEditor"
           ),
@@ -67,7 +87,7 @@ export function loanUpdateVarbs(): UpdateSectionVarbs<"loan"> {
           ...uosS.valueSource(
             "mortgageInsperiodic",
             {
-              valueDollarsPeriodicEditor: ubS.loadFromChild(
+              valueDollarsPeriodicEditor: ubS.loadChild(
                 "mortgageInsPeriodicValue",
                 "valueDollarsMonthly"
               ),
@@ -96,7 +116,7 @@ export function loanUpdateVarbs(): UpdateSectionVarbs<"loan"> {
           ...uosS.valueSource(
             "mortgageInsperiodic",
             {
-              valueDollarsPeriodicEditor: ubS.loadFromChild(
+              valueDollarsPeriodicEditor: ubS.loadChild(
                 "mortgageInsPeriodicValue",
                 "valueDollarsYearly"
               ),
@@ -125,7 +145,7 @@ export function loanUpdateVarbs(): UpdateSectionVarbs<"loan"> {
       "firstInterestPayment",
       upS.varbPathName("thirty")
     ),
-    // prepaidInterest: uvS.numObj({
+    // prepaidDaily: uvS.numObj({
     //   updateOverrides: updateOver
     // }),
     loanTotalDollars: uvS.sumNums([upS.local("loanBaseDollars")]),
@@ -277,6 +297,38 @@ export function loanUpdateVarbs(): UpdateSectionVarbs<"loan"> {
       },
     }),
   };
+}
+
+function loanPrepaidPeriodic(baseName: "taxes" | "homeIns") {
+  const childNames = {
+    taxes: "prepaidTaxes",
+    homeIns: "prepaidHomeIns",
+  } as const;
+  const childName = childNames[baseName];
+  return uvS.numObjO([
+    uO(
+      [
+        osS.childValueSourceIs(childName, "valueSpanEditor"),
+        osS.local("financingMode", "purchase"),
+        osS.varbIsValue("dealMode", "brrrr", "fixAndFlip"),
+      ],
+      ubS.multiply(
+        upS.children(childName, "valueMonths"),
+        upS.varbPathName(`${baseName}HoldingMonthly`)
+      )
+    ),
+    uO(
+      [osS.childValueSourceIs(childName, "valueSpanEditor")],
+      ubS.multiply(
+        upS.children(childName, "valueMonths"),
+        upS.varbPathName(`${baseName}OngoingMonthly`)
+      )
+    ),
+    uO(
+      [osS.childValueSourceIs(childName, "valueDollarsEditor")],
+      ubS.loadChild(childName, "valueDollarsEditor")
+    ),
+  ]);
 }
 
 function loanCompletionStatus() {

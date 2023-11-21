@@ -21,29 +21,29 @@ export function mgmtRelVarbs(): UpdateSectionVarbs<"mgmt"> {
     completionStatus: mgmtCompletionStatus(),
     one: updateVarbS.one(),
     ...updateGroupS.group("basePayDollars", "periodic", "monthly", {
-      monthly: ubS.loadFromChild("mgmtBasePayValue", "valueDollarsMonthly"),
-      yearly: ubS.loadFromChild("mgmtBasePayValue", "valueDollarsYearly"),
+      monthly: ubS.loadChild("mgmtBasePayValue", "valueDollarsMonthly"),
+      yearly: ubS.loadChild("mgmtBasePayValue", "valueDollarsYearly"),
     }),
     basePayPercent: updateVarb(
       "numObj",
-      ubS.loadFromChild("mgmtBasePayValue", "valuePercent")
+      ubS.loadChild("mgmtBasePayValue", "valuePercent")
     ),
     ...updateGroupS.group("vacancyLossDollars", "periodic", "monthly", {
-      monthly: ubS.loadFromChild("vacancyLossValue", "valueDollarsMonthly"),
-      yearly: ubS.loadFromChild("vacancyLossValue", "valueDollarsYearly"),
+      monthly: ubS.loadChild("vacancyLossValue", "valueDollarsMonthly"),
+      yearly: ubS.loadChild("vacancyLossValue", "valueDollarsYearly"),
     }),
     vacancyLossPercent: updateVarb(
       "numObj",
-      ubS.loadFromChild("vacancyLossValue", "valuePercent")
+      ubS.loadChild("vacancyLossValue", "valuePercent")
     ),
     ...updateVarbsS.group("miscCosts", "periodic", "monthly", {
-      monthly: ubS.loadFromChild("miscOngoingCost", "valueDollarsMonthly"),
-      yearly: ubS.loadFromChild("miscOngoingCost", "valueDollarsYearly"),
+      monthly: ubS.loadChild("miscOngoingCost", "valueDollarsMonthly"),
+      yearly: ubS.loadChild("miscOngoingCost", "valueDollarsYearly"),
     }),
 
     miscOnetimeCosts: updateVarb(
       "numObj",
-      ubS.loadFromChild("miscOnetimeCost", "valueDollars")
+      ubS.loadChild("miscOnetimeCost", "valueDollars")
     ),
 
     ...updateVarbsS.ongoingSumNums(

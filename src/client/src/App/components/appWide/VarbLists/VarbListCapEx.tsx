@@ -1,4 +1,3 @@
-import { SectionValues } from "../../../sharedWithServer/SectionsMeta/values/StateValue";
 import { useAction } from "../../../sharedWithServer/stateClassHooks/useAction";
 import { useGetterSection } from "../../../sharedWithServer/stateClassHooks/useGetterSection";
 import {
@@ -18,18 +17,12 @@ export function VarbListCapEx({ feId, ...rest }: Props) {
 
   const feInfo = { sectionName: "capExList", feId } as const;
   const list = useGetterSection(feInfo);
-  const totalVarbName = list.activeSwitchTargetName("total", "periodic");
-  const itemPeriodicSwitch = list.varb("itemPeriodicSwitch").value("periodic");
-
-  const sectionValues: Partial<SectionValues<"capExItem">> = {
-    valueDollarsPeriodicSwitch: itemPeriodicSwitch,
-  };
+  const totalVarbName = "totalMonthly";
 
   const addItem = () => {
     addChild({
       feInfo,
       childName: "capExItem",
-      options: { sectionValues },
     });
   };
   return (

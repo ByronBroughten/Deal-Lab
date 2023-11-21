@@ -76,10 +76,7 @@ const ListItemOngoingMemo = React.memo(function ListItemOngoingMemo({
 type Props = { feId: string };
 export function ListItemCapEx({ feId }: Props) {
   const section = useGetterSection({ sectionName: "capExItem", feId });
-  const valueVarbName = section.activeSwitchTargetName(
-    "valueDollars",
-    "periodic"
-  ) as "valueDollarsMonthly";
+  const valueVarbName = "valueDollarsMonthly";
   const valueVarb = section.varbNext(valueVarbName);
   return (
     <ListItemOngoingMemo

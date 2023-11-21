@@ -274,6 +274,44 @@ function getSwitchUpdateFnProps<SN extends SwitchName>(
   }, {} as SwitchUpdateFnProps<SN>);
 }
 
+// function basePropsToUpdate<
+//   GN extends GroupName,
+//   GK extends GroupKey<GN>
+// >(
+//   baseProps: UpdateFnProps,
+//   groupName: GN,
+//   groupKey: GK
+// ) {
+//   const baseNames = Obj.keys(baseProps);
+//   return baseNames.reduce((updateProps, baseName) => {
+//     const varbName = groupVarbName(baseName, groupName, groupKey);
+//     updateProps[varbName] = baseProps[baseName];
+//     return updateProps;
+//   }, {} as UpdateFnProps)
+// }
+// type GroupUpdateProps<GN extends GroupName> = GroupRecord<GN, UpdateFnProps>;
+// function getGroupUpdateProps<GN extends GroupName>(
+//   baseProps: UpdateFnProps,
+//   groupName: GN
+// ): GroupUpdateProps<GN> {
+//   const keys = groupKeys(groupName);
+//   return keys.reduce((updateProps, key) => {
+//     updateProps[key] =
+//     return updateProps
+//   }, {} as GroupUpdateProps<GN>)
+
+//   const targetKeys = switchTargetKeys(switchName);
+//   return targetKeys.reduce((switchUpdateProps, switchKey) => {
+//     switchUpdateProps[switchKey] = {};
+//     for (const propName of Obj.keys(updateFnProps)) {
+//       const props = updateFnProps[propName];
+//       (switchUpdateProps as any)[switchKey][propName] =
+//         updatePropsPlusGroupEnding(props, switchName, switchKey);
+//     }
+//     return switchUpdateProps;
+//   }, {} as SwitchUpdateFnProps<SN>);
+// }
+
 type OngoingUpdatePacks = {
   monthly: UpdateVarbOptions<"numObj">;
   yearly: UpdateVarbOptions<"numObj">;
