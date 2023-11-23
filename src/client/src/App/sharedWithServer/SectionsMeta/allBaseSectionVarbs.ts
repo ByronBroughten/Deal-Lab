@@ -6,7 +6,7 @@ import {
 } from "./allBaseSectionVarbs/baseSectionVarbs";
 import { baseOptions } from "./allBaseSectionVarbs/baseUnits";
 import { baseVarbs, baseVarbsS, bv } from "./allBaseSectionVarbs/baseVarbs";
-import { SectionName, sectionNames } from "./SectionName";
+import { SectionName } from "./SectionName";
 
 const checkTypeUniformityVarbs = <
   TUVS extends Record<SectionName, TypeUniformityVarbProp>
@@ -29,11 +29,6 @@ type DefaultSectionsVarbs = {
 
 const varbs = baseSectionVarbs;
 
-const defaults = sectionNames.reduce((defaults, sectionName) => {
-  defaults[sectionName] = varbs();
-  return defaults;
-}, {} as DefaultSectionsVarbs);
-
 const dollars = baseOptions.dollars;
 const percent = baseOptions.percent;
 const decimal = baseOptions.decimal;
@@ -41,10 +36,14 @@ const varbsS = baseVarbsS;
 export function makeAllBaseSectionVarbs() {
   return checkTypeUniformityVarbs(
     checkAllBaseSectionVarbs({
-      ...defaults,
-      editorControls: varbs({
-        editedDealDbId: bv("string"),
-      }),
+      root: varbs(),
+      omniParent: varbs(),
+      main: varbs(),
+      dbStore: varbs(),
+      dealCompareCache: varbs(),
+      dealSystem: varbs(),
+      comparedDeal: varbs(),
+      editorControls: varbs({ editedDealDbId: bv("string") }),
       sessionSection: varbs({
         dateTimeCreated: bv("dateTime"),
         displayName: bv("string"),
