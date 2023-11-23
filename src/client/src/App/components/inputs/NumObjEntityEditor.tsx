@@ -5,7 +5,11 @@ import { useOnOutsideClickEffect } from "../../modules/customHooks/useOnOutsideC
 import { useToggleView } from "../../modules/customHooks/useToggleView";
 import { SetEditorState } from "../../modules/draftjs/draftUtils";
 import { insertChars } from "../../modules/draftjs/insert";
-import { FeVarbInfo } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
+import { VarbName } from "../../sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
+import {
+  FeVarbInfo,
+  SnVarbNames,
+} from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { useGetterVarb } from "../../sharedWithServer/stateClassHooks/useGetterVarb";
 import { SectionInfoContextProvider } from "../../sharedWithServer/stateClassHooks/useSectionContext";
 import { ValueFixedVarbPathName } from "../../sharedWithServer/StateEntityGetters/ValueInEntityInfo";
@@ -13,6 +17,7 @@ import { GetterVarb } from "../../sharedWithServer/StateGetters/GetterVarb";
 import { EditorTextStatus } from "../../sharedWithServer/StateGetters/GetterVarbNumObj";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { arrSx } from "../../utils/mui";
+import { VarbStringLabel } from "../appWide/VarbStringLabel";
 import { useShowEqualsContext } from "../customContexts/showEquals";
 import { MaterialDraftEditor } from "./MaterialDraftEditor";
 import { NumObjVarbSelector } from "./NumObjEditor/NumObjVarbSelector";
@@ -32,6 +37,8 @@ type Props = PropAdornments & {
   className?: string;
   label?: any;
   labeled?: boolean;
+  labelNames?: SnVarbNames;
+
   bypassNumeric?: boolean;
   editorType?: NumEditorType;
   quickViewVarbNames?: ValueFixedVarbPathName[];
@@ -40,23 +47,17 @@ type Props = PropAdornments & {
 };
 
 const seperator = ".";
-
-// I have to completely divorce the entityEditor from the
-// Varb Selector
-// For the same editorState to be used, I must pass the same editorState
-
-// NumObjEntityEditor > MemoEntityEditor (editorState, etc) >
-
 export function NumObjEntityEditor({
-  editorType = "numeric",
   feVarbInfo,
-  className,
+  labelNames,
+  label,
   labeled = true,
+  className,
+  editorType = "numeric",
   bypassNumeric = false,
   inputMargins = false,
   hideVarbSelector,
   quickViewVarbNames,
-  label,
   sx,
   ...props
 }: Props) {
@@ -69,7 +70,12 @@ export function NumObjEntityEditor({
 
   const showEqualsStatus = useShowEqualsContext();
   const doEquals = showEqualsStatus === "showAll" ? true : varb.isPureUserVarb;
-
+  const displayName = useDisplayName({
+    labeled,
+    label,
+    labelNames,
+    feVarbInfo,
+  });
   return (
     <MemoNumObjEntityEditor
       {...{
@@ -86,7 +92,7 @@ export function NumObjEntityEditor({
         editorType,
         displayValue: varb.displayValue,
         editorTextStatus: varb.numObj.editorTextStatus,
-        displayName: varb.inputLabel,
+        displayName,
         startAdornment: props.startAdornment ?? varb.startAdornment,
         endAdornment: props.endAdornment ?? varb.endAdornment,
         quickViewVarbNameString: quickViewVarbNames
@@ -94,8 +100,6 @@ export function NumObjEntityEditor({
           : undefined,
 
         className,
-        labeled,
-        label,
         doEquals,
         bypassNumeric,
 
@@ -107,32 +111,74 @@ export function NumObjEntityEditor({
   );
 }
 
+interface UseLabelProps {
+  labeled: boolean;
+  label?: string;
+  labelNames?: SnVarbNames;
+  feVarbInfo: FeVarbInfo;
+}
+function useDisplayName({
+  labeled,
+  label,
+  labelNames,
+  feVarbInfo,
+}: UseLabelProps): string | JSX.Element | undefined {
+  const { sectionName, varbName } = feVarbInfo;
+  const labelSn = labelNames?.sectionName;
+  const labelVn = labelNames?.varbName;
+  return React.useMemo(() => {
+    if (!labeled) {
+      return undefined;
+    } else if (label) {
+      return label;
+    } else if (labelSn && labelVn) {
+      return (
+        <VarbStringLabel
+          sx={{ marginTop: nativeTheme.s2 }}
+          names={{
+            sectionName: labelSn,
+            varbName: labelVn as VarbName<typeof labelSn>,
+          }}
+        />
+      );
+    } else {
+      return (
+        <VarbStringLabel
+          sx={{ marginTop: nativeTheme.s2 }}
+          names={{
+            sectionName,
+            varbName: varbName as VarbName<typeof sectionName>,
+          }}
+        />
+      );
+    }
+  }, [labeled, label, sectionName, varbName, labelSn, labelVn]);
+}
+
 interface MemoProps extends Adornments, FeVarbInfo {
   sx?: SxProps;
   displayValue: string;
   editorTextStatus: EditorTextStatus;
-  displayName: string;
   editorType: NumEditorType;
   quickViewVarbNameString?: string;
   hideVarbSelector?: boolean;
+  displayName: string | JSX.Element | undefined;
 
   inputMargins?: boolean;
 
   className?: string;
-  labeled?: boolean;
-  label?: string;
   doEquals: boolean;
   bypassNumeric: boolean;
 
   editorState: EditorState;
   setEditorState: SetEditorState;
 }
+
 const MemoNumObjEntityEditor = React.memo(function MemoNumObjEntityEditor({
   sx,
   editorType,
   displayValue,
   className,
-  labeled,
   displayName,
   setEditorState,
   editorState,
@@ -146,8 +192,6 @@ const MemoNumObjEntityEditor = React.memo(function MemoNumObjEntityEditor({
     ...rest,
     displayValue,
   });
-
-  const label = labeled ? rest.label ?? displayName : undefined;
 
   const { varbSelectorIsOpen, openVarbSelector, closeVarbSelector } =
     useToggleView("varbSelector", false);
@@ -202,7 +246,7 @@ const MemoNumObjEntityEditor = React.memo(function MemoNumObjEntityEditor({
             className={"NumObjEditor-materialDraftEditor"}
             id={GetterVarb.feVarbInfoToVarbId(rest)}
             {...{
-              label,
+              label: displayName,
               setEditorState,
               editorState,
               startAdornment,
@@ -227,7 +271,7 @@ const MemoNumObjEntityEditor = React.memo(function MemoNumObjEntityEditor({
                       className={"NumObjEditor-materialDraftEditor"}
                       id={`${GetterVarb.feVarbInfoToVarbId(rest)}-modal`}
                       {...{
-                        label,
+                        label: displayName,
                         setEditorState: props.setEditorState,
                         editorState: props.editorState,
                         startAdornment,

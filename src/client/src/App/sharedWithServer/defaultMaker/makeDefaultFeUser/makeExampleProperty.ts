@@ -234,10 +234,10 @@ export function makeExampleProperty<DM extends StateValue<"dealMode">>(
     case "brrrr": {
       addUtilities(property, "utilityHolding", props.utilityHolding);
       const { afterRepairValueEditor, holdingPeriodMonths } = props.property;
-      property.updateValues({
-        afterRepairValueEditor,
-        holdingPeriodSpanEditor: holdingPeriodMonths,
-        holdingPeriodSpanSwitch: "months",
+      property.updateValues({ afterRepairValueEditor });
+      property.onlyChild("holdingPeriod").updateValues({
+        valueEditor: holdingPeriodMonths,
+        valueEditorUnit: "months",
       });
     }
   }

@@ -50,11 +50,11 @@ const valueUnits = valueNames.reduce((units, valueName) => {
 export type ValueUnit<VN extends ValueName = ValueName> =
   ValueUnits[VN][number];
 
-export type ValueTimespan = "oneTime" | "monthly" | "yearly";
+export type ValueFrequency = "oneTime" | "monthly" | "yearly";
 export type GeneralBaseVarb = {
   valueName: ValueName;
   valueUnit: ValueUnit;
-  valueTimespan: ValueTimespan;
+  valueFrequency: ValueFrequency;
 };
 function checkBaseVarb<BV extends GeneralBaseVarb>(baseVarb: BV): BV {
   return baseVarb;
@@ -62,13 +62,13 @@ function checkBaseVarb<BV extends GeneralBaseVarb>(baseVarb: BV): BV {
 type DefaultBaseVarb<VN extends ValueName> = {
   valueName: VN;
   valueUnit: ValueUnits[VN][0];
-  valueTimespan: "oneTime";
+  valueFrequency: "oneTime";
 };
 
 export type BaseVarb<VN extends ValueName> = {
   valueName: VN;
   valueUnit: ValueUnit;
-  valueTimespan: ValueTimespan;
+  valueFrequency: ValueFrequency;
 };
 
 function defaultBaseVarb<VN extends ValueName>(
@@ -77,7 +77,7 @@ function defaultBaseVarb<VN extends ValueName>(
   return checkBaseVarb({
     valueName,
     valueUnit: valueUnits[valueName][0],
-    valueTimespan: "oneTime",
+    valueFrequency: "oneTime",
   });
 }
 type Options = Partial<Omit<GeneralBaseVarb, "valueName">>;
@@ -100,13 +100,13 @@ export const baseVarbS = {
   dollarsMonthly() {
     return baseVarb("numObj", {
       valueUnit: "dollars",
-      valueTimespan: "monthly",
+      valueFrequency: "monthly",
     });
   },
   dollarsYearly() {
     return baseVarb("numObj", {
       valueUnit: "dollars",
-      valueTimespan: "yearly",
+      valueFrequency: "yearly",
     });
   },
 };
@@ -137,8 +137,8 @@ type BaseVarbGroup<BN extends string, GN extends GroupName> = {
 };
 
 const ongoingOptions = {
-  monthly: { valueTimespan: "monthly" },
-  yearly: { valueTimespan: "yearly" },
+  monthly: { valueFrequency: "monthly" },
+  yearly: { valueFrequency: "yearly" },
 } as const;
 
 const ongoingDollarsOptions = {
@@ -158,10 +158,10 @@ const monthsYearsOptions = {
 
 const periodicOptions: GroupRecord<
   "periodic",
-  { valueTimespan: ValueTimespan }
+  { valueFrequency: ValueFrequency }
 > = {
-  monthly: { valueTimespan: "monthly" },
-  yearly: { valueTimespan: "yearly" },
+  monthly: { valueFrequency: "monthly" },
+  yearly: { valueFrequency: "yearly" },
 };
 const timespanOptions: GroupRecord<"timespan", { valueUnit: ValueUnit }> = {
   months: { valueUnit: "months" },

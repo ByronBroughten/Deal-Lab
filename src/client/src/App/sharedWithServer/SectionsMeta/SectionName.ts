@@ -54,6 +54,7 @@ export const sectionNames = [
   "dealSystem",
 
   "property",
+  "afterRepairValue",
   "repairValue",
   "delayedCostValue",
   "costOverrunValue",

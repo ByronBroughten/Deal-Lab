@@ -26,6 +26,7 @@ const valueSources = {
     "threeHundredPerUnit",
     "sameAsHoldingPhase",
   ],
+  arvValueSource: ["purchasePrice", "valueDollarsEditor"],
   loanBaseValueSource: [
     "purchaseLoanValue",
     "repairLoanValue",

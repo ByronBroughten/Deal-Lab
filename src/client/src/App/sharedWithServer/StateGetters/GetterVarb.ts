@@ -35,7 +35,7 @@ import { ValueName } from "../SectionsMeta/values/ValueName";
 import { VarbMeta } from "../SectionsMeta/VarbMeta";
 import { StateVarb } from "../StateSections/StateSectionsTypes";
 import { mathS, NotANumberError } from "../utils/math";
-import { GetterVarbBase } from "./Bases/GetterVarbBase";
+import { GetterVarbBase, NotAVarbNameError } from "./Bases/GetterVarbBase";
 import { GetterSection } from "./GetterSection";
 import { GetterSections } from "./GetterSections";
 import { GetterVarbNumObj } from "./GetterVarbNumObj";
@@ -355,7 +355,17 @@ export class GetterVarb<
     });
   }
   varbsByFocalMixed(multiVarbInfo: VarbInfoMixedFocal): GetterVarb[] {
-    return this.section.varbsByFocalMixed(multiVarbInfo);
+    try {
+      return this.section.varbsByFocalMixed(multiVarbInfo);
+    } catch (err) {
+      if (err instanceof NotAVarbNameError) {
+        throw new NotAVarbNameError(
+          `GetterVarb ${this.sectionName}.${this.varbName} got message "${err.message}" when searching for varb of type ${multiVarbInfo.infoType}`
+        );
+      } else {
+        throw err;
+      }
+    }
   }
   inputProps(valueName?: ValueNameOrAny): {
     id: string;

@@ -1,3 +1,4 @@
+import { StrictOmit } from "../../utils/types";
 import {
   sectionVarbNames,
   VarbName,
@@ -7,19 +8,33 @@ import {
   VarbValueName,
 } from "../baseSectionsDerived/baseSectionValues";
 import { SectionName } from "../SectionName";
-import { GeneralUpdateVarb, UpdateVarb, updateVarb } from "./updateVarb";
+import { GeneralUpdateVarb, UpdateVarb, updateVarb, uvS } from "./updateVarb";
 
 export type GeneralUpdateSectionVarbs = Record<string, GeneralUpdateVarb>;
 
 export type UpdateSectionVarbs<SN extends SectionName> = {
   [VN in VarbName<SN>]: UpdateVarb<VarbValueName<SN, VN>>;
 };
+export type USVS<SN extends SectionName> = UpdateSectionVarbs<SN>;
+
 function checkUpdateSectionVarbs<
   SN extends SectionName,
   UVS extends UpdateSectionVarbs<SN>
 >(value: UVS): UVS {
   return value;
 }
+
+function updateSectionVarbs<SN extends SectionName>(
+  _sectionName: SN,
+  value: StrictOmit<UpdateSectionVarbs<SN>, "_typeUniformity">
+): UpdateSectionVarbs<SN> {
+  return {
+    ...value,
+    _typeUniformity: uvS.basic("string", "manualUpdateOnly"),
+  } as UpdateSectionVarbs<SN>;
+}
+
+export const usvs = updateSectionVarbs;
 
 type Options<SN extends SectionName> = Partial<UpdateSectionVarbs<SN>>;
 

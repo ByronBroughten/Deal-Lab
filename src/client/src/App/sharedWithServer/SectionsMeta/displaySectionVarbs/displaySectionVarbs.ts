@@ -1,6 +1,6 @@
 import {
   GeneralBaseVarb,
-  ValueTimespan,
+  ValueFrequency,
   ValueUnit,
 } from "../allBaseSectionVarbs/baseVarbs";
 import {
@@ -47,7 +47,7 @@ const years = { ...timeRound, endAdornment: " years" };
 
 const displayByUnitAndSpan: Record<
   ValueUnit,
-  Record<ValueTimespan, DisplayVarbOptions>
+  Record<ValueFrequency, DisplayVarbOptions>
 > = {
   dollars: {
     monthly: { ...dollars, ...monthly },
@@ -93,12 +93,12 @@ export function displaySectionVarbs<SN extends SectionName>(
 ): DisplaySectionVarbs<SN> {
   const varbNames = sectionVarbNames(sectionName);
   return varbNames.reduce((sectionVarbs, varbName) => {
-    const { valueUnit, valueTimespan } = getBaseVarb(
+    const { valueUnit, valueFrequency } = getBaseVarb(
       sectionName,
       varbName
     ) as any as GeneralBaseVarb;
     sectionVarbs[varbName] = displayVarb({
-      ...displayByUnitAndSpan[valueUnit][valueTimespan],
+      ...displayByUnitAndSpan[valueUnit][valueFrequency],
       ...(options[varbName] ?? {}),
     });
     return sectionVarbs;

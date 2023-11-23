@@ -1,4 +1,5 @@
 import { timeS } from "../utils/timeS";
+import { afterRepairValueUpdateVarbs } from "./allUpdateSectionVarbs/afterRepairValueUpdateVarbs";
 import { calculatedUpdateVarbs } from "./allUpdateSectionVarbs/calculatedUpdateVarbs";
 import { costOverrunUpdateVarbs } from "./allUpdateSectionVarbs/costOverrunUpdateVarbs";
 import { dealUpdateVarbs } from "./allUpdateSectionVarbs/dealUpdateVarbs";
@@ -14,6 +15,7 @@ import {
   ongoingItemUpdateVarbs,
 } from "./allUpdateSectionVarbs/ongoingItemUpdateVarbs";
 import { taxesAndHomeInsValueUpdateVarbs } from "./allUpdateSectionVarbs/ongoingValueUpdateVarb";
+import { periodicEditorUpdateVarbs } from "./allUpdateSectionVarbs/periodicEditorUpdateVarbs";
 import {
   prepaidDailyUpdateVarbs,
   prepaidPeriodicUpdateVarbs,
@@ -90,7 +92,8 @@ function makeAllUpdateSections() {
       isStartingDealEdit: varb("string", { initValue: "" }),
       isCreatingDeal: varb("boolean", { initValue: false }),
     }),
-    timespan: timespanEditorUpdateVarbs(),
+    timespanEditor: timespanEditorUpdateVarbs(),
+    periodicEditor: periodicEditorUpdateVarbs(),
     ...prop("loan", loanUpdateVarbs()),
     ...prop("loanBaseValue", loanBaseUpdateVarbs()),
     ...prop("loanBaseExtra", {
@@ -138,7 +141,10 @@ function makeAllUpdateSections() {
     ...prop("mgmtBasePayValue", mgmtBasePayValueVarbs()),
     ...prop("deal", dealUpdateVarbs()),
     ...prop("financing", financingUpdateVarbs()),
-    ...prop("property", propertyUpdateVarbs()),
+
+    property: propertyUpdateVarbs(),
+    afterRepairValue: afterRepairValueUpdateVarbs(),
+
     ...prop("costOverrunValue", costOverrunUpdateVarbs()),
     ...prop("unit", {
       one: updateVarbS.one(),

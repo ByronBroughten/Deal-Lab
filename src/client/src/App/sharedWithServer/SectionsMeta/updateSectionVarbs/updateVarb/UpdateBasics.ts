@@ -1,6 +1,7 @@
 import { isString } from "lodash";
 import { switchKeyToVarbNames } from "../../allBaseSectionVarbs/baseSwitchNames";
 import {
+  safeGroupVarbName,
   validateAnyVarbName,
   VarbNameWide,
 } from "../../baseSectionsDerived/baseSectionsVarbsTypes";
@@ -176,6 +177,35 @@ export const updateBasicsS = {
     return updateBasicsNext("yearsToMonths", {
       num: upS.local(validateAnyVarbName(varbNames.years)),
     });
+  },
+  yearsToMonths2(base: string): UpdateBasics<"numObj"> {
+    const yearsVarbName = safeGroupVarbName(base, "timespan", "years");
+    return {
+      updateFnName: "yearsToMonths",
+      updateFnProps: { num: upS.local(yearsVarbName) },
+    };
+  },
+  monthsToYears2(base: string): UpdateBasics<"numObj"> {
+    const monthsVarbName = safeGroupVarbName(base, "timespan", "months");
+    return {
+      updateFnName: "monthsToYears",
+      updateFnProps: { num: upS.local(monthsVarbName) },
+    };
+  },
+
+  yearlyToMonthly2(base: string): UpdateBasics<"numObj"> {
+    const yearlyVarbName = safeGroupVarbName(base, "periodic", "yearly");
+    return {
+      updateFnName: "yearlyToMonthly",
+      updateFnProps: { num: upS.local(yearlyVarbName) },
+    };
+  },
+  monthlyToYearly2(base: string): UpdateBasics<"numObj"> {
+    const monthlyVarb = safeGroupVarbName(base, "periodic", "monthly");
+    return {
+      updateFnName: "monthlyToYearly",
+      updateFnProps: { num: upS.local(monthlyVarb) },
+    };
   },
   yearlyToMonthly<Base extends string>(
     baseVarbName: Base

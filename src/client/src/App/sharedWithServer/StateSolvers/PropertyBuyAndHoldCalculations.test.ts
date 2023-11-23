@@ -113,11 +113,11 @@ describe("Property buy and hold calculations", () => {
     setOnetimeEditor(property.onlyChild("costOverrunValue"), 200);
     setOnetimeEditor(property.onlyChild("sellingCostValue"), 10000);
     addOngoingTaxesHomeInsYearly(property, 2400, 1200);
-
-    property.updateValues({
-      holdingPeriodSpanEditor: numObj(12),
-      holdingPeriodSpanSwitch: "months",
+    property.onlyChild("holdingPeriod").updateValues({
+      valueEditor: numObj(12),
+      valueEditorUnit: "months",
     });
+
     expect(property.numValue("upfrontExpenses")).toBe(201000);
   });
   it("should calculate miscOngoingCosts periodic", () => {

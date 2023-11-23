@@ -19,6 +19,7 @@ export function makeDefaultProperty(
   } as const;
 
   property.addChild("unit");
+  property.addChild("holdingPeriod");
 
   property.addChild("taxesHolding", taxesHomeInsOptions);
   property.addChild("homeInsHolding", taxesHomeInsOptions);

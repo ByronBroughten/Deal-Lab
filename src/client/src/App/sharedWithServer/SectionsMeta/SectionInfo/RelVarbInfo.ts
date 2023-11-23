@@ -145,3 +145,5 @@ export const relVarbInfoS = {
     };
   },
 };
+
+export const rviS = relVarbInfoS;

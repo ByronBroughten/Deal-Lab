@@ -70,10 +70,9 @@ describe("Property fix and flip calculations", () => {
     setOnetimeEditor(property.onlyChild("costOverrunValue"), 200);
     setOnetimeEditor(property.onlyChild("sellingCostValue"), 10000);
     addHoldingTaxesHomeInsYearly(property, 2400, 1200);
-
-    property.updateValues({
-      holdingPeriodSpanEditor: numObj(12),
-      holdingPeriodSpanSwitch: "months",
+    property.onlyChild("holdingPeriod").updateValues({
+      valueEditor: numObj(12),
+      valueEditorUnit: "months",
     });
 
     expect(property.numValue("upfrontExpenses")).toBe(214600);
@@ -107,9 +106,9 @@ describe("Property fix and flip calculations", () => {
     };
     add4200YearlyHoldingCosts();
     const holdingPeriod = 6;
-    property.updateValues({
-      holdingPeriodSpanEditor: numObj(holdingPeriod),
-      holdingPeriodSpanSwitch: "months",
+    property.onlyChild("holdingPeriod").updateValues({
+      valueEditor: numObj(holdingPeriod),
+      valueEditorUnit: "months",
     });
 
     const holdingCostsMonthly = 4200 / 12;

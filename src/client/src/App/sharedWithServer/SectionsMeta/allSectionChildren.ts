@@ -150,6 +150,8 @@ export const allSectionChildren = checkAllSectionChildren({
     sellingCostValue: "sellingCostValue",
     miscOnetimeCost: "miscOnetimeValue",
 
+    holdingPeriod: "timespanEditor",
+
     taxesOngoing: "taxesValue",
     homeInsOngoing: "homeInsValue",
     utilityOngoing: "utilityValue",

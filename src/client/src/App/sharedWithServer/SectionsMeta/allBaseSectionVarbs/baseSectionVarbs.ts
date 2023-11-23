@@ -6,7 +6,7 @@ export type GeneralBaseSectionVarbs = { [varbName: string]: GeneralBaseVarb };
 const typeUniformityVarbProp: TypeUniformityVarbProp = {
   _typeUniformity: baseVarb("string"),
 };
-type TypeUniformityVarbProp = { _typeUniformity: BaseVarb<"string"> };
+export type TypeUniformityVarbProp = { _typeUniformity: BaseVarb<"string"> };
 
 export type BaseSectionVarbs<V extends GeneralBaseSectionVarbs = {}> = Merge<
   V,

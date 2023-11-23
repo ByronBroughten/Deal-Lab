@@ -96,11 +96,10 @@ describe("PropertyBrrrrCalculations", () => {
     200000 + 500 + 300 + 200 + 2400 + 1200;
 
     addHoldingTaxesHomeInsYearly(property, 2400, 1200);
-    property.updateValues({
-      holdingPeriodSpanEditor: numObj(12),
-      holdingPeriodSpanSwitch: "months",
+    property.onlyChild("holdingPeriod").updateValues({
+      valueEditor: numObj(12),
+      valueEditorUnit: "months",
     });
-
     testVarb("upfrontExpenses", 204600);
   });
 });

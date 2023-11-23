@@ -1,5 +1,7 @@
+import { isString } from "lodash";
 import { Obj } from "../../../utils/Obj";
-import { relVarbInfoS } from "../../SectionInfo/RelVarbInfo";
+import { VarbNameWide } from "../../baseSectionsDerived/baseSectionsVarbsTypes";
+import { relVarbInfoS, rviS } from "../../SectionInfo/RelVarbInfo";
 import {
   UnionValue,
   UnionValueName,
@@ -23,7 +25,7 @@ export type UpdateOverrides<VN extends ValueName = ValueName> =
   UpdateOverride<VN>[];
 
 export type ValueSourceOptions = {
-  switchInfo?: UpdateOverrideSwitchInfo;
+  switchInfo?: VarbNameWide | UpdateOverrideSwitchInfo;
   sharedSwitches?: UpdateOverrideSwitches;
 };
 
@@ -54,14 +56,22 @@ const updateOverridesS = {
   },
   union<UVN extends UnionValueName>(
     _unionValueName: UVN,
-    switchInfo: UpdateOverrideSwitchInfo,
+    switchInfo: VarbNameWide | UpdateOverrideSwitchInfo,
     valueToBasics: Record<UnionValue<UVN>, UpdateBasics>,
     sharedSwitches: UpdateOverrideSwitches = []
   ) {
     return Obj.keys(valueToBasics).reduce((overrides, unionValue) => {
       overrides.push(
         updateOverride(
-          [{ switchInfo, switchValues: [unionValue] }, ...sharedSwitches],
+          [
+            {
+              switchInfo: isString(switchInfo)
+                ? rviS.local(switchInfo)
+                : switchInfo,
+              switchValues: [unionValue],
+            },
+            ...sharedSwitches,
+          ],
           valueToBasics[unionValue]
         )
       );

@@ -1,9 +1,9 @@
 import { FeIdProp } from "../../../../../../sharedWithServer/SectionsMeta/SectionInfo/NanoIdInfo";
 import { useGetterSection } from "../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { FormSectionLabeled } from "../../../../../appWide/FormSectionLabeled";
-import { VarbStringLabel } from "../../../../../appWide/VarbStringLabel";
 import { MuiRow } from "../../../../../general/MuiRow";
 import { NumObjEntityEditor } from "../../../../../inputs/NumObjEntityEditor";
+import { TimespanEditor } from "../../../../../inputs/TimespanEditor";
 import { MiscHoldingCost } from "./ViewParts/MiscHoldingCost";
 import { UtilityValue } from "./ViewParts/UtilityValue";
 
@@ -12,14 +12,16 @@ export function PropertyHoldingCosts({ feId }: FeIdProp) {
   const property = useGetterSection(feInfo);
   const taxes = property.onlyChild("taxesHolding");
   const homeIns = property.onlyChild("homeInsHolding");
-  const holdingPeriodInfo = property.varbInfoNext("holdingPeriodSpanEditor");
+  const holdingPeriodInfo = property.varbInfoNext("holdingPeriodMonths");
   return (
     <FormSectionLabeled label="Holding Costs">
       <MuiRow>
-        <NumObjEntityEditor
+        <TimespanEditor
           inputMargins
-          label={<VarbStringLabel names={holdingPeriodInfo} />}
-          feVarbInfo={holdingPeriodInfo}
+          {...{
+            feId: property.onlyChildFeId("holdingPeriod"),
+            labelNames: property.varbInfoNext("holdingPeriodMonths"),
+          }}
         />
         <NumObjEntityEditor
           inputMargins

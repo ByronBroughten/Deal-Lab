@@ -42,7 +42,9 @@ export function SellingCostValue({ feId, sx }: Props) {
       {...{
         sx,
         feVarbInfo,
-        label: <VarbStringLabel names={feVarbInfo} />,
+        label: (
+          <VarbStringLabel sx={{ marginBottom: "1px" }} names={feVarbInfo} />
+        ),
         selectProps: { sx: { minWidth: 160 } },
         itemizedModalTitle: "Selling costs",
         unionValueName: "sellingCostSource",

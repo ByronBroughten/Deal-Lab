@@ -1,14 +1,10 @@
-import {
-  safeGroupVarbName,
-  validateAnyVarbName,
-} from "../baseSectionsDerived/baseSectionsVarbsTypes";
+import { safeGroupVarbName } from "../baseSectionsDerived/baseSectionsVarbsTypes";
 import {
   groupKeys,
   GroupName,
   GroupRecordAndAll,
   groupVarbName,
   GroupVarbName,
-  periodicName,
 } from "../groupedNames";
 import { ChildName } from "../sectionChildrenDerived/ChildName";
 import {
@@ -82,27 +78,40 @@ export const updateVarbsS = {
       return varbs;
     }, {} as GroupUpdateVarbs<BN, "periodic">);
   },
+  loadChildGroup<BN extends string, GN extends GroupName, CBN extends string>(
+    baseName: BN,
+    groupName: GN,
+    childName: ChildName,
+    childBaseName: CBN
+  ): GroupUpdateVarbs<BN, GN> {
+    const keys = groupKeys(groupName);
+    const groupOptions = keys.reduce((options, key) => {
+      const varbName = safeGroupVarbName(childBaseName, groupName, key);
+      options[key] = ubS.loadChild(childName, varbName);
+      return options;
+    }, {} as GroupOptions<GN>);
+    return this.groupNext(baseName, groupName, groupOptions);
+  },
+
   loadChildPeriodic<BN extends string, CBN extends string>(
     baseName: BN,
     childName: ChildName,
     childBaseName: CBN
   ): GroupUpdateVarbs<BN, "periodic"> {
-    const monthlyName = validateAnyVarbName(
-      periodicName(childBaseName, "monthly")
-    );
-    const yearlyName = validateAnyVarbName(
-      periodicName(childBaseName, "yearly")
-    );
-    return this.periodic2(baseName, {
-      monthly: ubS.loadChild(childName, monthlyName),
-      yearly: ubS.loadChild(childName, yearlyName),
-    });
+    return this.loadChildGroup(baseName, "periodic", childName, childBaseName);
   },
   timespan<BN extends string>(
     baseName: BN,
     options?: GroupOptions<"timespan">
   ): GroupUpdateVarbs<BN, "timespan"> {
     return this.groupNext(baseName, "timespan", options);
+  },
+  loadChildTimespan<BN extends string, CBN extends string>(
+    baseName: BN,
+    childName: ChildName,
+    childBaseName: CBN
+  ) {
+    return this.loadChildGroup(baseName, "timespan", childName, childBaseName);
   },
   get _typeUniformity() {
     return { _typeUniformity: updateVarb("string") };

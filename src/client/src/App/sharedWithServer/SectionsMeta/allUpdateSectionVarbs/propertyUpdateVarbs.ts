@@ -1,6 +1,6 @@
 import { GroupKey } from "../groupedNames";
 import { relVarbInfoS } from "../SectionInfo/RelVarbInfo";
-import { UpdateSectionVarbs } from "../updateSectionVarbs/updateSectionVarbs";
+import { USVS, usvs } from "../updateSectionVarbs/updateSectionVarbs";
 import { updateVarb, uvS } from "../updateSectionVarbs/updateVarb";
 import {
   OverrideBasics,
@@ -26,25 +26,8 @@ import { NumObj, numObj } from "../values/StateValue/NumObj";
 import { UnionValue } from "../values/StateValue/unionValues";
 import { periodicEnding } from "./../groupedNames";
 
-type Options = { initValue?: NumObj };
-function propertyModeVarb(
-  dealModeToBasics: DealModeBasics,
-  options: Options = {}
-) {
-  return uvS.dealMode(dealModeToBasics, {
-    ...options,
-    switchInfo: relVarbInfoS.local("propertyMode"),
-  });
-}
-function propertyModeOverrides(dealModeToBasics: DealModeBasics) {
-  return uosS.dealMode(dealModeToBasics, {
-    switchInfo: relVarbInfoS.local("propertyMode"),
-  });
-}
-
-export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
-  return {
-    ...uvsS._typeUniformity,
+export function propertyUpdateVarbs(): USVS<"property"> {
+  return usvs("property", {
     ...uvsS.savableSection,
     completionStatus: propertyCompletionStatus(),
     propertyMode: uvS.input("dealMode", { initValue: "buyAndHold" }),
@@ -184,8 +167,24 @@ export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
       "miscOngoingCost",
       "valueDollars"
     ),
-    ...uvsS.monthsYearsInput("holdingPeriod", "months"),
-  };
+    ...uvsS.loadChildTimespan("holdingPeriod", "holdingPeriod", "value"),
+  });
+}
+
+type Options = { initValue?: NumObj };
+function propertyModeVarb(
+  dealModeToBasics: DealModeBasics,
+  options: Options = {}
+) {
+  return uvS.dealMode(dealModeToBasics, {
+    ...options,
+    switchInfo: relVarbInfoS.local("propertyMode"),
+  });
+}
+function propertyModeOverrides(dealModeToBasics: DealModeBasics) {
+  return uosS.dealMode(dealModeToBasics, {
+    switchInfo: relVarbInfoS.local("propertyMode"),
+  });
 }
 
 function holdingCostPeriodic(groupKey: GroupKey<"periodic">): OverrideBasics {
@@ -358,6 +357,7 @@ function hasHoldingValidInputs(): UpdateFnProp[] {
   return [
     upS.onlyChild("taxesHolding", "valueDollarsPeriodicEditor"),
     upS.onlyChild("homeInsHolding", "valueDollarsPeriodicEditor"),
-    upS.local("holdingPeriodSpanEditor"),
+    upS.onlyChild("holdingPeriod", "valueEditorUnit"),
+    upS.onlyChild("holdingPeriod", "valueEditor"),
   ];
 }

@@ -6,7 +6,23 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
+
+// 1. Replace the group inputs.
+// Do it only for the new section, first.
+// - change the baseVarb
+// - add childSection
+// - addChild as default
+// - fix the updateVarb
+// - swap out the front-end editor
+// what about labels?
+// - for the input, let it take the varbInfo of another varb to use
+//   the inputLabel of ("taxesOngoing", etc).
+
+// 2. Get rid of unnecessary switches.
+
 // Add prepaids section to loan for taxes (months), home insurance (months), and mortgage interest (days)
+
+// Get rid of 5% baseLoan varb?
 
 // Prepaids will be a switch that opens a modal.
 // The modal will show the three prepaid values, and maybe a list table for custom ones.

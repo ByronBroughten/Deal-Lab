@@ -9,17 +9,25 @@ export function timespanEditorUpdateVarbs(
 ): UpdateSectionVarbs<"timespanEditor"> {
   return {
     ...uvsS._typeUniformity,
-    valueSourceName: uvS.input("timespan", {
+    valueEditor: uvS.input("numObj"),
+    valueEditorUnit: uvS.input("timespan", {
       initValue: initValue ?? "months",
     }),
-    valueEditor: uvS.input("numObj"),
-    valueMonths: uvS.vsNumObj("timespan", {
-      months: ubS.loadLocal("valueEditor"),
-      years: ubS.yearsToMonths("value"),
-    }),
-    valueYears: uvS.vsNumObj("timespan", {
-      years: ubS.loadLocal("valueEditor"),
-      months: ubS.monthsToYears("value"),
-    }),
+    valueMonths: uvS.vsNumObj(
+      "timespan",
+      {
+        months: ubS.loadLocal("valueEditor"),
+        years: ubS.yearsToMonths2("value"),
+      },
+      { switchInfo: "valueEditorUnit" }
+    ),
+    valueYears: uvS.vsNumObj(
+      "timespan",
+      {
+        years: ubS.loadLocal("valueEditor"),
+        months: ubS.monthsToYears2("value"),
+      },
+      { switchInfo: "valueEditorUnit" }
+    ),
   };
 }

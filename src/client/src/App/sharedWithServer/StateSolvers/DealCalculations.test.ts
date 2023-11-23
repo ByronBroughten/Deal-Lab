@@ -4,7 +4,7 @@ import { ChildName } from "../SectionsMeta/sectionChildrenDerived/ChildName";
 import {
   DealMode,
   dealModes,
-  isDealMode
+  isDealMode,
 } from "../SectionsMeta/values/StateValue/dealMode";
 import { numObj, NumObjOutput } from "../SectionsMeta/values/StateValue/NumObj";
 import { roundS } from "../SectionsMeta/values/StateValue/valuesShared/calculations/numUnitParams";
@@ -17,7 +17,7 @@ import {
   addOngoingTaxesHomeInsYearly,
   setLoanValues,
   setOnetimeEditor,
-  setPeriodicEditor
+  setPeriodicEditor,
 } from "./testUtils";
 
 const refiHoldingSpan = (
@@ -171,10 +171,12 @@ describe("DealCalculations", () => {
     holdingMonths: number,
     monthsTillRefi: number
   ) => {
-    property.updateValues({
-      holdingPeriodSpanEditor: numObj(holdingMonths),
-      holdingPeriodSpanSwitch: "months",
+    const holdingPeriod = property.onlyChild("holdingPeriod");
+    holdingPeriod.updateValues({
+      valueEditor: numObj(holdingMonths),
+      valueEditorUnit: "months",
     });
+
     refiFinancing.updateValues({
       timeTillRefinanceSpanEditor: numObj(monthsTillRefi),
       timeTillRefinanceSpanSwitch: "months",
@@ -337,9 +339,11 @@ describe("DealCalculations", () => {
           refiHoldingSpan(dealMode, holdingMonths, monthsTillRefi)
         );
         holdingMonths = 7;
-        property.updateValues({
-          holdingPeriodSpanEditor: numObj(holdingMonths),
+        property.onlyChild("holdingPeriod").updateValues({
+          valueEditor: numObj(holdingMonths),
+          valueEditorUnit: "months",
         });
+
         testSpanVarb(
           "refiLoanHolding",
           refiHoldingSpan(dealMode, holdingMonths, monthsTillRefi)
@@ -473,9 +477,9 @@ describe("DealCalculations", () => {
 
     perDealModeDeal((dealMode) => {
       let holdingPeriod = 4;
-      property.updateValues({
-        holdingPeriodSpanEditor: numObj(holdingPeriod),
-        holdingPeriodSpanSwitch: "months",
+      property.onlyChild("holdingPeriod").updateValues({
+        valueEditor: numObj(holdingPeriod),
+        valueEditorUnit: "months",
       });
 
       if (dealMode === "fixAndFlip") {
@@ -483,9 +487,10 @@ describe("DealCalculations", () => {
       } else if (dealMode === "brrrr") {
         testSpanVarb("timeTillValueAddProfit", tillRefi);
         holdingPeriod = 7;
-        property.updateValues({
-          holdingPeriodSpanEditor: numObj(holdingPeriod),
+        property.onlyChild("holdingPeriod").updateValues({
+          valueEditor: numObj(holdingPeriod),
         });
+
         testSpanVarb("timeTillValueAddProfit", holdingPeriod);
       } else {
         testSpanVarb("timeTillValueAddProfit", "N/A");
