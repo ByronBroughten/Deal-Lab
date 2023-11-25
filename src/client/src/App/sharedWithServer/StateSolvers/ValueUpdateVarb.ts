@@ -132,8 +132,14 @@ export class SolveValueVarb<
     },
     completionStatus: (): UnionValue<"completionStatus"> => {
       const { updateFnProps } = this.inEntityVarb;
-      const { nonZeros, validInputs, othersValid, nonNone, notFalse } =
-        updateFnProps as CompletionStatusProps;
+      const {
+        nonZeros,
+        validInputs,
+        othersValid,
+        nonNone,
+        notFalse,
+        notEmptySolvable,
+      } = updateFnProps as CompletionStatusProps;
 
       let allEmpty = true;
       let allValid = true;
@@ -176,6 +182,18 @@ export class SolveValueVarb<
         for (const varb of varbs) {
           if (varb.value("boolean") === false) {
             updateBools({ isEmpty: false, isValid: false });
+          } else {
+            updateBools({ isEmpty: false, isValid: true });
+          }
+        }
+      }
+
+      for (const prop of notEmptySolvable) {
+        const varbs = this.activePropVarbs(prop);
+        for (const varb of varbs) {
+          const isEmpty = varb.value("numObj").solvableText === "";
+          if (isEmpty) {
+            updateBools({ isEmpty: true, isValid: false });
           } else {
             updateBools({ isEmpty: false, isValid: true });
           }

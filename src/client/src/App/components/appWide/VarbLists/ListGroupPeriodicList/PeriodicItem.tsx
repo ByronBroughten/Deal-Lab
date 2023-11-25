@@ -1,4 +1,5 @@
 import React from "react";
+import { groupAdornment } from "../../../../../varbLabelUtils";
 import { useGetterSection } from "../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { VarbListItemSimple } from "../../ListGroup/ListGroupShared/VarbListItemSimple";
 
@@ -6,13 +7,20 @@ interface MemoProps {
   feId: string;
   displayValueVarb: string;
 }
-const ListItemOngoingMemo = React.memo(function ListItemOngoingMemo({
+const PeriodicItemMemo = React.memo(function PeriodicItemMemo({
   feId,
 }: MemoProps) {
   const feInfo = { sectionName: "periodicItem", feId } as const;
+  const periodicItem = useGetterSection(feInfo);
+  const periodicEditor = periodicItem.onlyChild("valueDollarsEditor");
+  const frequency = periodicEditor.valueNext("valueEditorFrequency");
   return (
     <VarbListItemSimple
       {...{
+        ...periodicEditor.varbInfo2("valueEditor"),
+        valueEditorProps: {
+          endAdornment: groupAdornment("periodic", frequency),
+        },
         sx: {
           "& .VarbListItemSimple-editorCell": {
             ".DraftEditor-root": {
@@ -20,20 +28,18 @@ const ListItemOngoingMemo = React.memo(function ListItemOngoingMemo({
             },
           },
         },
-        ...feInfo,
-        valueEditorName: "valueDollarsPeriodicEditor",
       }}
     />
   );
 });
 
 type Props = { feId: string };
-export function ListItemOngoing({ feId }: Props) {
+export function PeriodicItem({ feId }: Props) {
   const section = useGetterSection({ sectionName: "periodicItem", feId });
   const valueVarbName = "valueDollarsMonthly";
   const valueVarb = section.varbNext(valueVarbName);
   return (
-    <ListItemOngoingMemo
+    <PeriodicItemMemo
       {...{
         feId,
         displayValueVarb: valueVarb.displayVarb(),

@@ -1,14 +1,16 @@
 import { useGetterSection } from "../../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { nativeTheme } from "../../../../../../../theme/nativeTheme";
 import { SelectAndItemizeEditor } from "../../../../../../appWide/SelectAndItemizeEditor";
-import { NumObjEntityEditor } from "../../../../../../inputs/NumObjEntityEditor";
-import { ListEditorOngoing } from "../../ValueShared/ListEditorOngoing";
+import { PeriodicEditor } from "../../../../../../inputs/PeriodicEditor";
+import { PeriodicList } from "../../ValueShared/PeriodicList";
 
 export function MiscHoldingCost({ feId }: { feId: string }) {
   const feInfo = { sectionName: "miscPeriodicValue", feId } as const;
   const holdingCost = useGetterSection(feInfo);
+  const editor = holdingCost.onlyChild("periodicEditor");
+  const freq = editor.valueNext("valueEditorFrequency");
+  const valueVarb = holdingCost.periodicVarb("valueDollars", freq);
 
-  const valueVarb = holdingCost.switchVarb("valueDollars", "periodic");
   const sourceName = holdingCost.valueNext("valueSourceName");
 
   const menuDisplayNames = [
@@ -26,14 +28,15 @@ export function MiscHoldingCost({ feId }: { feId: string }) {
         label: "Misc holding costs",
         itemizedModalTitle: "Misc holding costs",
         makeEditor:
-          sourceName === "valueDollarsPeriodicEditor"
+          sourceName === "valueDollarsEditor"
             ? (props) => (
-                <NumObjEntityEditor
+                <PeriodicEditor
                   {...{
                     ...props,
-                    feVarbInfo: {
-                      ...feInfo,
-                      varbName: "valueDollarsPeriodicEditor",
+                    feId: editor.feId,
+                    labelNames: {
+                      sectionName: "miscPeriodicValue",
+                      varbBaseName: "valueDollars",
                     },
                   }}
                 />
@@ -46,13 +49,13 @@ export function MiscHoldingCost({ feId }: { feId: string }) {
           varbName: "valueSourceName",
         },
         items: [
-          ["valueDollarsPeriodicEditor", "Custom amount"],
+          ["valueDollarsEditor", "Custom amount"],
           ["listTotal", "Itemize"],
         ],
         itemizeValue: "listTotal",
         total: valueVarb.displayVarb(),
         itemsComponent: (
-          <ListEditorOngoing
+          <PeriodicList
             {...{
               menuDisplayNames,
               feId: holdingCost.oneChildFeId("periodicList"),

@@ -4,7 +4,7 @@ import {
   AllBaseSectionVarbs,
   allBaseSectionVarbs,
 } from "../allBaseSectionVarbs";
-import { GroupKey, GroupName, groupVarbName } from "../groupedNames";
+import { GroupKey, GroupName, groupVarbName } from "../GroupName";
 import { SectionName, sectionNames } from "../SectionName";
 
 export type BaseSectionVarbs<SN extends SectionName> = AllBaseSectionVarbs[SN];
@@ -49,6 +49,13 @@ export function validateAnyVarbNames(value: any): VarbNameWide[] {
 
 export type VarbNameWide<SN extends SectionName = SectionName> =
   SectionVarbNames[SN];
+
+export interface VnProp<
+  SN extends SectionName = SectionName,
+  VN extends VarbNameWide<SN> = VarbNameWide<SN>
+> {
+  varbName: VN;
+}
 
 type GetBaseVarb<
   SN extends SectionName,

@@ -14,16 +14,16 @@ export function BasicBrrrrInfo({ feId }: Props) {
       <MuiRow>
         <NumObjEntityEditor
           inputMargins
-          feVarbInfo={property.varbInfo("purchasePrice")}
+          feVarbInfo={property.varbInfo2("purchasePrice")}
         />
         <ArvEditor feId={feId} />
         <NumObjEntityEditor
           inputMargins
-          feVarbInfo={property.varbInfo("sqft")}
+          feVarbInfo={property.varbInfo2("sqft")}
         />
         <NumObjEntityEditor
           inputMargins
-          feVarbInfo={property.varbInfo("yearBuilt")}
+          feVarbInfo={property.varbInfo2("yearBuilt")}
         />
         <UnitsNext feId={feId} />
         <MiscIncomeValue feId={property.onlyChildFeId("miscOngoingRevenue")} />

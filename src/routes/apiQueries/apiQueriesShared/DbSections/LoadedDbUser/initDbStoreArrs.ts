@@ -1,24 +1,24 @@
-import { dbStoreNames } from "../SectionsMeta/sectionChildrenDerived/DbStoreName";
-import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
-import { numObj } from "../SectionsMeta/values/StateValue/NumObj";
-import { stringObj } from "../SectionsMeta/values/StateValue/StringObj";
-import { PackBuilderSection } from "../StatePackers/PackBuilderSection";
-import { timeS } from "../utils/timeS";
-import { makeDefaultDealCompareMenu } from "./makeDefaultDealCompareMenu";
-import { makeHomeAdvisorNahbCapExList } from "./makeDefaultFeUser/makeExampleCapEx";
-import { makeExampleDeal } from "./makeDefaultFeUser/makeExampleDeal";
-import { makeExampleLoan } from "./makeDefaultFeUser/makeExampleLoan";
-import { makeExampleMgmt } from "./makeDefaultFeUser/makeExampleMgmt";
-import { makeNationalUtilityAverageList } from "./makeDefaultFeUser/makeExampleOngoingLists";
+import { makeDefaultDealCompareMenu } from "../../../../../client/src/App/sharedWithServer/defaultMaker/makeDefaultDealCompareMenu";
+import { makeDefaultOutputList } from "../../../../../client/src/App/sharedWithServer/defaultMaker/makeDefaultOutputList";
+import { makeDefaultOutputSection } from "../../../../../client/src/App/sharedWithServer/defaultMaker/makeDefaultOutputSection";
+import { makeHomeAdvisorNahbCapExList } from "../../../../../client/src/App/sharedWithServer/exampleMakers/makeExampleCapEx";
+import { makeExampleDeal } from "../../../../../client/src/App/sharedWithServer/exampleMakers/makeExampleDeal";
+import { makeExampleLoan } from "../../../../../client/src/App/sharedWithServer/exampleMakers/makeExampleLoan";
+import { makeExampleMgmt } from "../../../../../client/src/App/sharedWithServer/exampleMakers/makeExampleMgmt";
 import {
   avgHomeAdvisorNahbCapExProps,
   examplePropertyRepairProps,
   examplePropertyUtilityProps,
-} from "./makeDefaultFeUser/makeExampleOngoingListsProps";
-import { makeExampleProperty } from "./makeDefaultFeUser/makeExampleProperty";
-import { makeExampleUserVarbLists } from "./makeDefaultFeUser/makeExampleUserVarbLists";
-import { makeDefaultOutputList } from "./makeDefaultOutputList";
-import { makeDefaultOutputSection } from "./makeDefaultOutputSection";
+} from "../../../../../client/src/App/sharedWithServer/exampleMakers/makeExamplePeriodicListProps";
+import { makeNationalUtilityAverageList } from "../../../../../client/src/App/sharedWithServer/exampleMakers/makeExamplePeriodicLists";
+import { makeExampleProperty } from "../../../../../client/src/App/sharedWithServer/exampleMakers/makeExampleProperty";
+import { makeExampleUserVarbLists } from "../../../../../client/src/App/sharedWithServer/exampleMakers/makeExampleUserVarbLists";
+import { dbStoreNames } from "../../../../../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/DbStoreName";
+import { SectionPack } from "../../../../../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/SectionPack";
+import { numObj } from "../../../../../client/src/App/sharedWithServer/SectionsMeta/values/StateValue/NumObj";
+import { stringObj } from "../../../../../client/src/App/sharedWithServer/SectionsMeta/values/StateValue/StringObj";
+import { PackBuilderSection } from "../../../../../client/src/App/sharedWithServer/StatePackers/PackBuilderSection";
+import { timeS } from "../../../../../client/src/App/sharedWithServer/utils/timeS";
 
 export type DbStoreSeed = {
   authId: string;
@@ -27,13 +27,7 @@ export type DbStoreSeed = {
   timeJoined: number;
 };
 
-const exampleBuyAndHold = makeExampleDeal(
-  "buyAndHold",
-  "Rental Property Example"
-);
-const exampleHomeBuyer = makeExampleDeal("homeBuyer", "Homebuyer Example");
-
-export function makeDefaultDbStoreArrs({
+export function initDbStoreArrs({
   authId,
   userName,
   email,
@@ -74,27 +68,14 @@ export function makeDefaultDbStoreArrs({
     childName: "numVarbListMain",
     sectionPacks: makeExampleUserVarbLists(),
   });
-  dbStore.loadChildren({
-    childName: "dealMain",
-    sectionPacks: [
-      exampleHomeBuyer,
-      // exampleBuyAndHold
-    ],
+  dbStore.addChild("dealMain", {
+    sectionPack: makeExampleDeal("homeBuyer", "Homebuyer Example"),
   });
-  dbStore.loadChildren({
-    childName: "utilitiesListMain",
-    sectionPacks: [makeNationalUtilityAverageList()],
+  dbStore.addChild("utilitiesListMain", {
+    sectionPack: makeNationalUtilityAverageList(),
   });
-  dbStore.loadChildren({
-    childName: "capExListMain",
-    sectionPacks: [
-      makeHomeAdvisorNahbCapExList(),
-      // makeExampleCapExList(
-      //   "Advanced CapEx Example",
-      //   exampleAdvancedCapExProps,
-      //   timeS.now()
-      // ),
-    ],
+  dbStore.addChild("capExListMain", {
+    sectionPack: makeHomeAdvisorNahbCapExList(),
   });
   dbStore.addChild("propertyMain", { sectionPack: makeExampleStoreProperty() });
   dbStore.addChild("loanMain", { sectionPack: makeExampleStoreLoan() });

@@ -24,7 +24,7 @@ import {
 } from "../StatePackers/PackBuilderSection";
 import { PackMakerSection } from "../StatePackers/PackMakerSection";
 import { StateSections } from "../StateSections/StateSections";
-import { DefaultFamilyAdder } from "../StateUpdaters/DefaultFamilyAdder";
+import { DefaultUpdaterSection } from "../StateUpdaters/DefaultUpdaterSection";
 import {
   AddChildOptions,
   UpdaterSection,
@@ -65,7 +65,7 @@ export class SolverSection<
   static initFromPackAsOmniChild<SN extends ChildName<"omniParent">>(
     sectionPack: SectionPack<SN>
   ): SolverSection<SN> {
-    const adder = DefaultFamilyAdder.loadAsOmniChild(sectionPack);
+    const adder = DefaultUpdaterSection.loadAsOmniChild(sectionPack);
     return SolverSection.init(adder.getterSectionProps);
   }
   static initAsOmniParent() {

@@ -21,8 +21,11 @@ export class UpdaterVarb<
     });
   }
   updateValue(value: StateValue): void {
-    this.get.meta.validateValue(value);
+    this.meta.validateValue(value);
     this.update({ value });
+  }
+  setValueToInit(): void {
+    this.update({ value: this.meta.initValue });
   }
   update(props: Partial<StateVarb<SN>>): void {
     this.sectionsShare.sections = this.sectionsShare.sections.updateVarb({

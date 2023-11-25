@@ -2,6 +2,7 @@ import { Box } from "@mui/material";
 import React from "react";
 import { useGetterSection } from "../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { NumObjEntityEditor } from "../../../inputs/NumObjEntityEditor";
+import { PeriodicEditor } from "../../../inputs/PeriodicEditor";
 import { NameEditorCell } from "../../ListGroup/ListGroupShared/NameEditorCell";
 import { FirstContentCell } from "../../ListGroup/ListGroupShared/VarbListGeneric/FirstContentCellAndHeader";
 import { VarbListItemStyled } from "../../ListGroup/ListGroupShared/VarbListItemStyled";
@@ -18,19 +19,15 @@ const ListItemOngoingMemo = React.memo(function ListItemOngoingMemo({
 }: MemoProps) {
   const feInfo = { sectionName: "capExItem", feId } as const;
   const capExItem = useGetterSection(feInfo);
-  const lifespan = capExItem.valueNext("lifespanSpanEditor").mainText;
+  const lifespanEditor = capExItem.onlyChild("lifespanEditor");
+  const lifespan = lifespanEditor.valueNext("valueEditor").mainText;
   const costToReplace = capExItem.valueNext("costToReplace").mainText;
   return (
     <VarbListItemStyled
       {...{
-        className: "ListItemCapEx-root",
+        className: "CapExItem-root",
         sx: {
-          "& .ListItemCapEx-lifespan": {
-            "& .DraftEditor-root": {
-              minWidth: "28px",
-            },
-          },
-          "& .ListItemCapEx-costToReplace": {
+          "& .CapExItem-costToReplace": {
             "& .DraftEditor-root": {
               minWidth: "93px",
             },
@@ -41,7 +38,7 @@ const ListItemOngoingMemo = React.memo(function ListItemOngoingMemo({
       <NameEditorCell {...{ displayName, ...feInfo }} />
       <FirstContentCell>
         <NumObjEntityEditor
-          className="ListItemCapEx-costToReplace"
+          className="CapExItem-costToReplace"
           labeled={false}
           feVarbInfo={{
             ...feInfo,
@@ -52,13 +49,14 @@ const ListItemOngoingMemo = React.memo(function ListItemOngoingMemo({
         />
       </FirstContentCell>
       <td>
-        <NumObjEntityEditor
-          className="ListItemCapEx-lifespan"
+        <PeriodicEditor
+          feId={capExItem.onlyChildFeId("lifespanEditor")}
+          labelNames={null}
           editorType="equation"
-          labeled={false}
-          feVarbInfo={{
-            ...feInfo,
-            varbName: "lifespanSpanEditor",
+          sx={{
+            "& .DraftEditor-root": {
+              minWidth: "28px",
+            },
           }}
         />
       </td>
@@ -74,7 +72,7 @@ const ListItemOngoingMemo = React.memo(function ListItemOngoingMemo({
 });
 
 type Props = { feId: string };
-export function ListItemCapEx({ feId }: Props) {
+export function CapExItem({ feId }: Props) {
   const section = useGetterSection({ sectionName: "capExItem", feId });
   const valueVarbName = "valueDollarsMonthly";
   const valueVarb = section.varbNext(valueVarbName);

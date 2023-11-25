@@ -25,7 +25,7 @@ export function RefiFinancingEditor({ feId, dealMode }: Props) {
             minWidth: "135px",
           },
         }}
-        feVarbInfo={financing.varbInfo("timeTillRefinanceSpanEditor")}
+        feVarbInfo={financing.varbInfo2("timeTillRefinanceSpanEditor")}
       />
       <FinancingLoans feId={feId} />
     </FinancingEditorBody>

@@ -5,6 +5,7 @@ import { VarbStringLabel } from "../../../../../appWide/VarbStringLabel";
 import { MuiFavoriteRating } from "../../../../../general/MuiFavoriteRating";
 import { MuiRow } from "../../../../../general/MuiRow";
 import { NumObjEntityEditor } from "../../../../../inputs/NumObjEntityEditor";
+import { PeriodicEditor } from "../../../../../inputs/PeriodicEditor";
 import { UnitsNext } from "./ViewParts/UnitsNext";
 
 type Props = { feId: string };
@@ -20,15 +21,15 @@ export function BasicHomebuyerInfo({ feId }: Props) {
       <MuiRow>
         <NumObjEntityEditor
           inputMargins
-          feVarbInfo={property.varbInfo("purchasePrice")}
+          feVarbInfo={property.varbInfo2("purchasePrice")}
         />
         <NumObjEntityEditor
           inputMargins
-          feVarbInfo={property.varbInfo("sqft")}
+          feVarbInfo={property.varbInfo2("sqft")}
         />
         <NumObjEntityEditor
           inputMargins
-          feVarbInfo={property.varbInfo("yearBuilt")}
+          feVarbInfo={property.varbInfo2("yearBuilt")}
         />
       </MuiRow>
       <MuiRow>
@@ -37,7 +38,7 @@ export function BasicHomebuyerInfo({ feId }: Props) {
             feVarbInfo: property.varbInfo("isMultifamily"),
             label: (
               <VarbStringLabel
-                {...{ names: property.varbInfoNext("isMultifamily") }}
+                {...{ names: property.varbInfo2("isMultifamily") }}
               />
             ),
             name: "multi-family toggle",
@@ -49,7 +50,7 @@ export function BasicHomebuyerInfo({ feId }: Props) {
             feVarbInfo: property.varbInfo("isRenting"),
             label: (
               <VarbStringLabel
-                {...{ names: property.varbInfoNext("isRenting") }}
+                {...{ names: property.varbInfo2("isRenting") }}
               />
             ),
             name: "rent toggle",
@@ -61,12 +62,15 @@ export function BasicHomebuyerInfo({ feId }: Props) {
         <MuiRow>
           <NumObjEntityEditor
             inputMargins
-            feVarbInfo={firstUnit.varbInfo("numBedrooms")}
+            feVarbInfo={firstUnit.varbInfo2("numBedrooms")}
           />
           {isRenting && (
-            <NumObjEntityEditor
+            <PeriodicEditor
               inputMargins
-              feVarbInfo={firstUnit.varbInfo("targetRentPeriodicEditor")}
+              {...{
+                feId: firstUnit.oneChildFeId("targetRentEditor"),
+                labelNames: { sectionName: "unit", varbBaseName: "targetRent" },
+              }}
             />
           )}
         </MuiRow>
@@ -79,7 +83,7 @@ export function BasicHomebuyerInfo({ feId }: Props) {
           }}
         />
       )}
-      <MuiFavoriteRating {...property.varbInfo("likability")} />
+      <MuiFavoriteRating {...property.varbInfo2("likability")} />
     </FormSectionNext>
   );
 }

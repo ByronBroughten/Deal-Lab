@@ -24,7 +24,7 @@ export default function IfLogic({ rowId }: { rowId: string }) {
   return (
     <Styled>
       <NumObjEntityEditor
-        feVarbInfo={row.varbInfo("left")}
+        feVarbInfo={row.varbInfo2("left")}
         className="logic-left"
         bypassNumeric={true}
       />
@@ -48,7 +48,7 @@ export default function IfLogic({ rowId }: { rowId: string }) {
       {logicType === "valueLogic" && (
         <NumObjEntityEditor
           className="logic-right"
-          feVarbInfo={row.varbInfo("rightValue")}
+          feVarbInfo={row.varbInfo2("rightValue")}
           labeled={false}
         />
       )}

@@ -10,6 +10,12 @@ import { makeDefaultMgmt } from "./makeDefaultMgmt";
 import { makeDefaultOutputSection } from "./makeDefaultOutputSection";
 import { makeDefaultProperty } from "./makeDefaultProperty";
 import { makeDefaultUserVarbItem } from "./makeDefaultUserVarbItem";
+import {
+  makeDefaultCapExItem,
+  makeDefaultMiscPeriodicValue,
+  makeDefaultPeriodicItem,
+  makeDefaultUnit,
+} from "./makeSimpleDefaults";
 
 type FunctionsMakeDefault<SN extends SectionName> = {
   [S in SN]: () => SectionPack<S>;
@@ -34,8 +40,12 @@ class DefaultSectionPackMaker<SN extends SectionName> {
 // necessary for the section to function and display correctly.
 export const defaultMaker = new DefaultSectionPackMaker({
   main: makeDefaultMain,
-  numVarbItem: makeDefaultUserVarbItem,
+  miscPeriodicValue: makeDefaultMiscPeriodicValue,
+  periodicItem: makeDefaultPeriodicItem,
+  capExItem: makeDefaultCapExItem,
   property: makeDefaultProperty,
+  unit: makeDefaultUnit,
+  numVarbItem: makeDefaultUserVarbItem,
   dealCompareMenu: makeDefaultDealCompareMenu,
   outputSection: makeDefaultOutputSection,
   mgmt: makeDefaultMgmt,

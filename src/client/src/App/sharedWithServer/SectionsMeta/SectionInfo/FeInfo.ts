@@ -59,7 +59,7 @@ export interface SnVarbNames<
 export interface FeVI<
   SN extends SectionName = SectionName,
   VN extends VarbNameWide<SN> = VarbNameWide<SN>
-> extends SectionNameProp<SN> {
+> extends FeSectionInfo<SN> {
   varbName: VN;
 }
 

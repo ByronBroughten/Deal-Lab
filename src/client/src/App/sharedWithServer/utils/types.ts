@@ -72,3 +72,12 @@ export type RemoveNotStrings<O extends object> = SubType<
 export type NeversToSomething<O extends object, S extends any> = {
   [Prop in keyof O]: O[Prop] extends never ? S : O[Prop];
 };
+
+export type Replace<
+  T extends string,
+  S extends string,
+  D extends string,
+  A extends string = ""
+> = T extends `${infer L}${S}${infer R}`
+  ? Replace<R, S, D, `${A}${L}${D}`>
+  : `${A}${T}`;

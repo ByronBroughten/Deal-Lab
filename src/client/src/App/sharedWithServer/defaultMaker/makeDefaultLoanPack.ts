@@ -1,5 +1,6 @@
 import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
 import { FinancingMode } from "../SectionsMeta/values/StateValue/financingMode";
+import { numObj } from "../SectionsMeta/values/StateValue/NumObj";
 import { PackBuilderSection } from "../StatePackers/PackBuilderSection";
 
 export function makeDefaultLoanPack(
@@ -9,7 +10,6 @@ export function makeDefaultLoanPack(
     sectionValues: {
       interestRatePercentPeriodicSwitch: "yearly",
       loanTermSpanSwitch: "years",
-      mortgageInsPeriodicSwitch: "yearly",
       ...(financingMode && { financingMode }),
     },
   });
@@ -42,6 +42,15 @@ export function makeDefaultLoanPack(
   closingCostValue.addChild("onetimeList");
 
   loan.addChild("mortgageInsUpfrontValue");
-  loan.addChild("mortgageInsPeriodicValue");
+  const mortIns = loan.addAndGetChild("mortgageInsPeriodicValue", {
+    sectionValues: { valueSourceName: "percentEditor" },
+  });
+  mortIns.addChild("dollarsEditor");
+  mortIns.addChild("percentEditor", {
+    sectionValues: {
+      valueEditorFrequency: "yearly",
+      valueEditor: numObj(0),
+    },
+  });
   return loan.makeSectionPack();
 }

@@ -1,4 +1,4 @@
-import { FeVarbInfo } from "../../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
+import { FeVI } from "../../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { useGetterSection } from "../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { ValueFixedVarbPathName } from "../../../../../sharedWithServer/StateEntityGetters/ValueInEntityInfo";
 import { GetterSection } from "../../../../../sharedWithServer/StateGetters/GetterSection";
@@ -6,16 +6,19 @@ import { SelectEditor } from "../../../../appWide/SelectEditor";
 import { VarbStringLabel } from "../../../../appWide/VarbStringLabel";
 import { NumObjEntityEditor } from "../../../../inputs/NumObjEntityEditor";
 
-function getProps(getter: GetterSection<"vacancyLossValue">): {
+function getProps(vacancyLoss: GetterSection<"vacancyLossValue">): {
   equalsValue?: string;
   editorProps?: {
     quickViewVarbNames: ValueFixedVarbPathName[];
-    feVarbInfo: FeVarbInfo;
+    feVarbInfo: FeVI;
   };
 } {
-  const valueSourceName = getter.valueNext("valueSourceName");
-  const dollarsVarb = getter.activeSwitchTarget("valueDollars", "periodic");
-  const dollarsSwitch = getter.switchValue("valueDollars", "periodic");
+  const valueSourceName = vacancyLoss.valueNext("valueSourceName");
+  const dollarsVarb = vacancyLoss.activeSwitchTarget(
+    "valueDollars",
+    "periodic"
+  );
+  const dollarsSwitch = vacancyLoss.switchValue("valueDollars", "periodic");
 
   const commonQuickAccess = ["sqft", "numUnits"] as const;
   const dollarsQuickAccess = {
@@ -33,15 +36,15 @@ function getProps(getter: GetterSection<"vacancyLossValue">): {
       return {
         equalsValue: dollarsVarb.displayVarb(),
         editorProps: {
-          feVarbInfo: getter.varbNext("valuePercentEditor").feVarbInfo,
+          feVarbInfo: vacancyLoss.varbInfo2("valuePercentEditor"),
           quickViewVarbNames: [...commonQuickAccess],
         },
       };
     case "valueDollarsPeriodicEditor": {
       return {
-        equalsValue: `${getter.displayVarb("valuePercent")} of rent`,
+        equalsValue: `${vacancyLoss.displayVarb("valuePercent")} of rent`,
         editorProps: {
-          feVarbInfo: getter.varbNext("valueDollarsPeriodicEditor").feVarbInfo,
+          feVarbInfo: vacancyLoss.varbInfo2("valueDollarsPeriodicEditor"),
           quickViewVarbNames: [
             dollarsQuickAccess[dollarsSwitch],
             ...commonQuickAccess,

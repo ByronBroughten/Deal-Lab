@@ -2,7 +2,7 @@ import { StateValue } from "../../../../../../../sharedWithServer/SectionsMeta/v
 import { useGetterSection } from "../../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { SelectEditor } from "../../../../../../appWide/SelectEditor";
 import { VarbStringLabel } from "../../../../../../appWide/VarbStringLabel";
-import { NumObjEntityEditor } from "../../../../../../inputs/NumObjEntityEditor";
+import { PeriodicEditor } from "../../../../../../inputs/PeriodicEditor";
 import {
   DealMode,
   isDealMode,
@@ -17,8 +17,12 @@ export function MaintenanceValue({
 }) {
   const feInfo = { sectionName: "maintenanceValue", feId } as const;
   const maintenanceValue = useGetterSection(feInfo);
+  const editor = maintenanceValue.onlyChild("valueDollarsEditor");
+  const freq = editor.valueNext("valueEditorFrequency");
+
   const valueSourceName = maintenanceValue.valueNext("valueSourceName");
-  const valueVarb = maintenanceValue.switchVarb("valueDollars", "periodic");
+  const valueVarb = maintenanceValue.periodicVarb("valueDollars", freq);
+
   const showEquals: StateValue<"maintainanceValueSource">[] = [
     "onePercentArvAndSqft",
     "onePercentArv",
@@ -36,7 +40,7 @@ export function MaintenanceValue({
     ["onePercentArv", `1% ${onePercentWhat}`],
     ["sqft", "$1 per sqft"],
     ["onePercentArvAndSqft", `1% ${onePercentWhat}, $1 sqft, average`],
-    ["valueDollarsPeriodicEditor", "Custom amount"],
+    ["valueDollarsEditor", "Custom amount"],
   ];
 
   if (valueSourceName === "none") {
@@ -57,14 +61,16 @@ export function MaintenanceValue({
         equalsValue,
         label: <VarbStringLabel names={feVarbInfo} />,
         makeEditor:
-          valueSourceName === "valueDollarsPeriodicEditor"
+          valueSourceName === "valueDollarsEditor"
             ? (props) => (
-                <NumObjEntityEditor
+                <PeriodicEditor
                   {...{
                     ...props,
-                    feVarbInfo: maintenanceValue.varbInfo(
-                      "valueDollarsPeriodicEditor"
-                    ),
+                    feId: maintenanceValue.onlyChildFeId("valueDollarsEditor"),
+                    labelNames: {
+                      sectionName: "capExValue",
+                      varbBaseName: "valueDollars",
+                    },
                     quickViewVarbNames: ["sqft", "numUnits", "numBedrooms"],
                   }}
                 />

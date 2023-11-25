@@ -17,20 +17,20 @@ export function BasicFixAndFlipInfo({ feId }: Props) {
           inputMargins
           {...{
             label: "Purchase price",
-            feVarbInfo: property.varbInfo("purchasePrice"),
+            feVarbInfo: property.varbInfo2("purchasePrice"),
           }}
         />
         <NumObjEntityEditor
           inputMargins
-          feVarbInfo={property.varbInfo("numUnitsEditor")}
+          feVarbInfo={property.varbInfo2("numUnitsEditor")}
         />
         <NumObjEntityEditor
           inputMargins
-          feVarbInfo={property.varbInfo("sqft")}
+          feVarbInfo={property.varbInfo2("sqft")}
         />
         <NumObjEntityEditor
           inputMargins
-          feVarbInfo={property.varbInfo("yearBuilt")}
+          feVarbInfo={property.varbInfo2("yearBuilt")}
         />
         <ArvEditor feId={feId} />
         <SellingCostValue feId={property.onlyChildFeId("sellingCostValue")} />

@@ -7,6 +7,10 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
+// fix the PeriodicEditor adornments
+
+// *fix testUtils "as any" after periodics have been swapped out*
+
 // 1. Replace the group inputs.
 // Do it only for the new section, first.
 // - change the baseVarb

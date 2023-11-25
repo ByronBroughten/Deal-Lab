@@ -11,7 +11,7 @@ const ListItemOneTimeMemo = React.memo(function ListItemOneTimeMemo({
     <VarbListItemSimple
       {...{
         ...feInfo,
-        valueEditorName: "valueDollarsEditor",
+        varbName: "valueDollarsEditor",
         sx: {
           "& .VarbListItemSimple-editorCell": {
             ".DraftEditor-root": {

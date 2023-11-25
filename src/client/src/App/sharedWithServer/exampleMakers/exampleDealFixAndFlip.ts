@@ -1,6 +1,6 @@
-import { SectionPack } from "../../SectionsMeta/sectionChildrenDerived/SectionPack";
-import { numObj } from "../../SectionsMeta/values/StateValue/NumObj";
-import { numObjNext } from "../../SectionsMeta/values/StateValue/numObjNext";
+import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
+import { numObj } from "../SectionsMeta/values/StateValue/NumObj";
+import { numObjNext } from "../SectionsMeta/values/StateValue/numObjNext";
 import { makeExampleProperty } from "./makeExampleProperty";
 
 export function exampleDealFixAndFlipProperty(): SectionPack<"property"> {

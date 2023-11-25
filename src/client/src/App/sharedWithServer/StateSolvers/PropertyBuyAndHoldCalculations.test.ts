@@ -49,10 +49,10 @@ describe("Property buy and hold calculations", () => {
       const rentTotal = addRents(property, [2000, 2100, 2300]);
       const miscTotal = 1200;
       const misc = property.onlyChild("miscOngoingRevenue");
-      misc.updateValues({
-        valueSourceName: "valueDollarsPeriodicEditor",
-        valueDollarsPeriodicSwitch: "monthly",
-        valueDollarsPeriodicEditor: numObj(miscTotal),
+      misc.updateValues({ valueSourceName: "valueDollarsEditor" });
+      misc.onlyChild("periodicEditor").updateValues({
+        valueEditor: numObj(miscTotal),
+        valueEditorFrequency: "monthly",
       });
 
       const total = rentTotal + miscTotal;

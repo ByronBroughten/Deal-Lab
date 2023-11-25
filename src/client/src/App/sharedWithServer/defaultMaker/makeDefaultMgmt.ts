@@ -1,19 +1,19 @@
-import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
-import { PackBuilderSection } from "../StatePackers/PackBuilderSection";
+import { makeDefaultMaker } from "./makeDefault";
+import { makeDefaultMiscPeriodicValue } from "./makeSimpleDefaults";
 
-export function makeDefaultMgmt(): SectionPack<"mgmt"> {
-  const mgmt = PackBuilderSection.initAsOmniChild("mgmt", {
-    sectionValues: {
-      basePayDollarsPeriodicSwitch: "monthly",
-      vacancyLossDollarsPeriodicSwitch: "monthly",
-      expensesPeriodicSwitch: "monthly",
-    },
+export const makeDefaultMgmt = makeDefaultMaker("mgmt", (mgmt) => {
+  mgmt.updateValues({
+    basePayDollarsPeriodicSwitch: "monthly",
+    vacancyLossDollarsPeriodicSwitch: "monthly",
+    expensesPeriodicSwitch: "monthly",
   });
   mgmt.addChild("mgmtBasePayValue");
   mgmt.addChild("vacancyLossValue");
-  const ongoingCost = mgmt.addAndGetChild("miscOngoingCost");
-  ongoingCost.addChild("periodicList");
+  mgmt.addChild("miscOngoingCost", {
+    sectionPack: makeDefaultMiscPeriodicValue(),
+  });
+
   const oneTimeCost = mgmt.addAndGetChild("miscOnetimeCost");
   oneTimeCost.addChild("onetimeList");
   return mgmt.makeSectionPack();
-}
+});

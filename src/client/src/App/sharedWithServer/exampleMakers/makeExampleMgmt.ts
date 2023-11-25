@@ -1,11 +1,8 @@
-import {
-  SectionValues,
-  StateValue,
-} from "../../SectionsMeta/values/StateValue";
-import { stringObj } from "../../SectionsMeta/values/StateValue/StringObj";
-import { PackBuilderSection } from "../../StatePackers/PackBuilderSection";
-import { StrictPick } from "../../utils/types";
-import { makeDefaultMgmt } from "../makeDefaultMgmt";
+import { makeDefaultMgmt } from "../defaultMaker/makeDefaultMgmt";
+import { SectionValues, StateValue } from "../SectionsMeta/values/StateValue";
+import { stringObj } from "../SectionsMeta/values/StateValue/StringObj";
+import { PackBuilderSection } from "../StatePackers/PackBuilderSection";
+import { StrictPick } from "../utils/types";
 
 type ExampleMgmtProps = {
   mgmt: StrictPick<SectionValues<"mgmt">, "displayName">;

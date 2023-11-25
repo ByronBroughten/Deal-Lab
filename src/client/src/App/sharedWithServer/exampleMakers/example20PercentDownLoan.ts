@@ -1,7 +1,7 @@
-import { SectionPack } from "../../SectionsMeta/sectionChildrenDerived/SectionPack";
-import { numObj } from "../../SectionsMeta/values/StateValue/NumObj";
-import { stringObj } from "../../SectionsMeta/values/StateValue/StringObj";
-import { SolvePrepperSection } from "../../StateSolvers/SolvePreppers/SolvePrepperSection";
+import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
+import { numObj } from "../SectionsMeta/values/StateValue/NumObj";
+import { stringObj } from "../SectionsMeta/values/StateValue/StringObj";
+import { SolvePrepperSection } from "../StateSolvers/SolvePreppers/SolvePrepperSection";
 import { makeExampleLoan } from "./makeExampleLoan";
 
 export function example20PercentDownFinancing(

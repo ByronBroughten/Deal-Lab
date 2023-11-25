@@ -18,7 +18,7 @@ import { ChildSectionPackArrs } from "../../StatePackers/ChildPackProps";
 import { AddChildWithPackOptions } from "../../StatePackers/PackBuilderSection";
 import { SolveState } from "../../StateSections/SolveState";
 import { StateSections } from "../../StateSections/StateSections";
-import { DefaultFamilyAdder } from "../../StateUpdaters/DefaultFamilyAdder";
+import { DefaultUpdaterSection } from "../../StateUpdaters/DefaultUpdaterSection";
 import {
   AddChildOptions,
   UpdaterSection,
@@ -41,17 +41,17 @@ export class SolvePrepperSection<
   get get(): GetterSection<SN> {
     return new GetterSection(this.getterSectionProps);
   }
-  get updater(): UpdaterSection<SN> {
-    return new UpdaterSection(this.getterSectionProps);
-  }
   private get inOut(): OutVarbGetterSection<SN> {
     return new OutVarbGetterSection(this.getterSectionProps);
   }
   private get entity(): EntityPrepperSection<SN> {
     return new EntityPrepperSection(this.getterSectionProps);
   }
-  private get defaultAdder() {
-    return new DefaultFamilyAdder(this.getterSectionProps);
+  private get defaultUpdater() {
+    return new DefaultUpdaterSection(this.getterSectionProps);
+  }
+  get updater(): UpdaterSection<SN> {
+    return new UpdaterSection(this.getterSectionProps);
   }
   isOfSectionName<S extends SectionName>(
     ...sectionNames: S[]
@@ -105,7 +105,7 @@ export class SolvePrepperSection<
   }
   removeSelf() {
     this.prepForRemoveSelf();
-    this.updater.removeSelf();
+    this.defaultUpdater.removeSelf();
   }
   prepForRemoveSelf() {
     const { selfAndDescendantActiveOutVarbIds } = this.inOut;
@@ -150,7 +150,7 @@ export class SolvePrepperSection<
     childName: CN,
     options?: AddChildWithPackOptions<SN, CN>
   ) {
-    this.defaultAdder.addChild(childName, options);
+    this.defaultUpdater.addChild(childName, options);
     this.finalizeNewChild(childName);
   }
   addAndGetChild<CN extends ChildName<SN>>(
@@ -199,7 +199,7 @@ export class SolvePrepperSection<
   }
   loadSelfSectionPack(sectionPack: SectionPack<SN>): void {
     this.prepForRemoveSelf();
-    this.defaultAdder.loadSelfSectionPack(sectionPack);
+    this.defaultUpdater.loadSelfSectionPack(sectionPack);
     this.finalizeAddedThis();
   }
   resetToDefault(): void {
@@ -227,7 +227,7 @@ export class SolvePrepperSection<
       this.throwIfEntityToRemoveMissing
     );
 
-    this.updater.updateValues(values);
+    this.defaultUpdater.updateValues(values);
     this.addValueIdsToSolveFor(varbNames);
     this.doUpdateOutvarbsOnSolve();
   }
@@ -248,7 +248,7 @@ export class SolvePrepperSection<
   static initFromPackAsOmniChild<SN extends ChildName<"omniParent">>(
     sectionPack: SectionPack<SN>
   ): SolvePrepperSection<SN> {
-    const adder = DefaultFamilyAdder.loadAsOmniChild(sectionPack);
+    const adder = DefaultUpdaterSection.loadAsOmniChild(sectionPack);
     return SolvePrepperSection.init(adder.getterSectionProps);
   }
   static initAsOmniParent() {

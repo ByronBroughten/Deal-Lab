@@ -30,7 +30,8 @@ export function ClosingCostValue({ feId, fivePercentLoanDisplay }: Props) {
                 <NumObjEntityEditor
                   {...{
                     ...props,
-                    feVarbInfo: closingCostValue.varbInfo("valueDollarsEditor"),
+                    feVarbInfo:
+                      closingCostValue.varbInfo2("valueDollarsEditor"),
                     quickViewVarbNames: ["numUnits"],
                   }}
                 />

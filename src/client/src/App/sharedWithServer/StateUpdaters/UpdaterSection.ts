@@ -26,6 +26,7 @@ import { Arr } from "../utils/Arr";
 import { Obj } from "../utils/Obj";
 import { StrictOmit } from "../utils/types";
 import { GetterSections } from "./../StateGetters/GetterSections";
+import { ValidationError } from "./../utils/Error";
 import { UpdaterSectionBase } from "./bases/updaterSectionBase";
 import { UpdaterList } from "./UpdaterList";
 import { UpdaterVarb } from "./UpdaterVarb";
@@ -261,6 +262,9 @@ export class UpdaterSection<
       } catch (err) {
         if (err instanceof NotAVarbNameError) {
           continue;
+        } else if (err instanceof ValidationError) {
+          const varb = this.varbNext(varbName);
+          varb.updateValue(varb.meta.initValue);
         } else {
           throw err;
         }

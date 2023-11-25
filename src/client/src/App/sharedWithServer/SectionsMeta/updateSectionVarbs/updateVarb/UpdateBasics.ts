@@ -57,6 +57,12 @@ export function updateBasics<VN extends ValueName>(
 export type StandardUP = UpdateFnProp | VarbNameWide;
 
 export const updateBasicsS = {
+  fnName(updateFnName: UpdateFnName) {
+    return updateBasicsNext(updateFnName);
+  },
+  get emptyNumObj() {
+    return this.fnName("emptyNumObj");
+  },
   get calcVarbs() {
     return updateBasicsNext("calcVarbs");
   },
@@ -113,6 +119,9 @@ export const updateBasicsS = {
   divide(left: StandardUP, right: StandardUP): UpdateBasics<"numObj"> {
     return this.equationLR("divide", left, right);
   },
+  subtract(left: StandardUP, right: StandardUP): UpdateBasics<"numObj"> {
+    return this.equationLR("subtract", left, right);
+  },
   equationLR(
     updateFnName: LeftRightPropCalcName,
     left: StandardUP,
@@ -124,8 +133,9 @@ export const updateBasicsS = {
   },
   equationSimple(
     updateFnName: NumPropCalcName,
-    num: UpdateFnProp
+    num: StandardUP
   ): UpdateBasics<"numObj"> {
+    num = isVarbName(num) ? upS.local(num) : num;
     return updateBasicsNext(updateFnName, { num });
   },
   manualUpdateOnly() {

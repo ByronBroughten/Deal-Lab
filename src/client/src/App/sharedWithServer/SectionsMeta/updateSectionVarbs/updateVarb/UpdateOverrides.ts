@@ -17,6 +17,7 @@ import {
 } from "./UpdateFnProps";
 import { updateOverride, UpdateOverride } from "./UpdateOverride";
 import {
+  osS,
   UpdateOverrideSwitches,
   UpdateOverrideSwitchInfo,
 } from "./UpdateOverrideSwitch";
@@ -54,20 +55,33 @@ const updateOverridesS = {
       options.sharedSwitches
     );
   },
+  boolean(
+    localVarbName: VarbNameWide,
+    basics: {
+      true: UpdateBasics;
+      false: UpdateBasics;
+    }
+  ) {
+    return [
+      updateOverride([osS.localIsTrue(localVarbName)], basics.true),
+      updateOverride([osS.localIsFalse(localVarbName)], basics.false),
+    ];
+  },
   union<UVN extends UnionValueName>(
     _unionValueName: UVN,
-    switchInfo: VarbNameWide | UpdateOverrideSwitchInfo,
+    switchProp: VarbNameWide | UpdateOverrideSwitchInfo,
     valueToBasics: Record<UnionValue<UVN>, UpdateBasics>,
     sharedSwitches: UpdateOverrideSwitches = []
   ) {
+    const switchInfo = isString(switchProp)
+      ? rviS.local(switchProp)
+      : switchProp;
     return Obj.keys(valueToBasics).reduce((overrides, unionValue) => {
       overrides.push(
         updateOverride(
           [
             {
-              switchInfo: isString(switchInfo)
-                ? rviS.local(switchInfo)
-                : switchInfo,
+              switchInfo,
               switchValues: [unionValue],
             },
             ...sharedSwitches,

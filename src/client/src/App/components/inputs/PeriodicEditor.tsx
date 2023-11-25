@@ -1,20 +1,48 @@
-import { SnVarbNames } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
+import { SxProps } from "@mui/material";
+import { groupAdornment } from "../../../varbLabelUtils";
+import { SectionGroupBaseNames } from "../../sharedWithServer/SectionsMeta/baseSectionsDerived/baseGroupNames";
+import { groupVarbName } from "../../sharedWithServer/SectionsMeta/GroupName";
+import { SectionName } from "../../sharedWithServer/SectionsMeta/SectionName";
 import { useGetterSection } from "../../sharedWithServer/stateClassHooks/useGetterSection";
-import { NumObjEntityEditor } from "./NumObjEntityEditor";
+import { ValueFixedVarbPathName } from "../../sharedWithServer/StateEntityGetters/ValueInEntityInfo";
+import { NumEditorType, NumObjEntityEditor } from "./NumObjEntityEditor";
 
-type Props = {
+type Props<LN extends SectionName = SectionName> = {
   feId: string;
-  labelNames: SnVarbNames;
+  className?: string;
+  labeled?: boolean;
+  labelNames: SectionGroupBaseNames<"periodic", LN> | null;
   inputMargins?: boolean;
+  editorType?: NumEditorType;
+  quickViewVarbNames?: ValueFixedVarbPathName[];
+  sx?: SxProps;
 };
-export function PeriodicEditor({ feId, ...rest }: Props) {
+
+export function PeriodicEditor<LN extends SectionName = SectionName>({
+  feId,
+  labelNames,
+  ...rest
+}: Props<LN>) {
   const feInfo = { sectionName: "periodicEditor", feId } as const;
-  const timespanEditor = useGetterSection(feInfo);
+  const periodicEditor = useGetterSection(feInfo);
+  const frequency = periodicEditor.valueNext("valueEditorFrequency");
   return (
     <NumObjEntityEditor
       {...{
-        feVarbInfo: timespanEditor.varbInfo("valueEditor"),
-        endAdornment: ` ${timespanEditor.valueNext("valueEditorFrequency")}`,
+        ...(labelNames
+          ? {
+              labelNames: {
+                sectionName: labelNames.sectionName,
+                varbName: groupVarbName(
+                  labelNames.varbBaseName,
+                  "periodic",
+                  frequency
+                ),
+              },
+            }
+          : { labeled: false }),
+        feVarbInfo: periodicEditor.varbInfo2("valueEditor"),
+        endAdornment: groupAdornment("periodic", frequency),
         ...rest,
       }}
     />

@@ -1,9 +1,9 @@
-import { Id } from "../../SectionsMeta/IdS";
-import { SectionPack } from "../../SectionsMeta/sectionChildrenDerived/SectionPack";
-import { numObj } from "../../SectionsMeta/values/StateValue/NumObj";
-import { numObjNext } from "../../SectionsMeta/values/StateValue/numObjNext";
-import { stringObj } from "../../SectionsMeta/values/StateValue/StringObj";
-import { PackBuilderSection } from "../../StatePackers/PackBuilderSection";
+import { Id } from "../SectionsMeta/IdS";
+import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
+import { numObj } from "../SectionsMeta/values/StateValue/NumObj";
+import { numObjNext } from "../SectionsMeta/values/StateValue/numObjNext";
+import { stringObj } from "../SectionsMeta/values/StateValue/StringObj";
+import { PackBuilderSection } from "../StatePackers/PackBuilderSection";
 
 const userVarbNames = [
   "btusPerSqft",

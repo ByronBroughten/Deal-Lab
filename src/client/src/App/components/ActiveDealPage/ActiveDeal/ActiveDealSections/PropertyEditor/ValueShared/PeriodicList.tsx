@@ -4,7 +4,7 @@ import { useGetterSection } from "../../../../../../sharedWithServer/stateClassH
 import { VarbListGenericMenuType } from "../../../../../appWide/ListGroup/ListGroupShared/VarbListGeneric";
 import { VarbListStandardHeaders } from "../../../../../appWide/ListGroup/ListGroupShared/VarbListGeneric/VarbListStandardHeaders";
 import { VarbListTableSectionGeneric } from "../../../../../appWide/ListGroup/ListGroupShared/VarbListGeneric/VarbListTableSectionGeneric";
-import { ListItemOngoing } from "../../../../../appWide/VarbLists/VarbListOngoing/ListItemOngoing";
+import { PeriodicItem } from "../../../../../appWide/VarbLists/ListGroupPeriodicList/PeriodicItem";
 import { ListRouteName } from "../../../../../UserListEditorPage/UserComponentClosed";
 import { ValueListGeneral } from "./ValueListGeneral";
 
@@ -17,7 +17,7 @@ type Props = {
     routeName: ListRouteName;
   };
 };
-export function ListEditorOngoing({
+export function PeriodicList({
   feId,
   menuType,
   menuDisplayNames,
@@ -32,12 +32,9 @@ export function ListEditorOngoing({
     (item) => item.valueNext("displayName").mainText
   );
 
-  const itemPeriodicSwitch = periodicList.valueNext("itemPeriodicSwitch");
   const totalVarb = periodicList.varbNext("totalMonthly");
-
   const onChange = (displayName?: string) => {
     const sectionValues: Partial<SectionValues<"periodicItem">> = {
-      valueDollarsPeriodicSwitch: itemPeriodicSwitch,
       ...(displayName && { displayNameEditor: displayName }),
     };
     addChild({
@@ -65,7 +62,7 @@ export function ListEditorOngoing({
             }}
           >
             {ongoingItems.map((item) => (
-              <ListItemOngoing {...{ feId: item.feId, key: item.feId }} />
+              <PeriodicItem {...{ feId: item.feId, key: item.feId }} />
             ))}
           </VarbListTableSectionGeneric>
         ),

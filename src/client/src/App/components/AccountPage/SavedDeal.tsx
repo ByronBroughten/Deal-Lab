@@ -128,7 +128,7 @@ function PhoneVersion({ dbId, isInactive, sx }: SavedDealProps) {
                 marginLeft: nativeTheme.s2,
                 ...titleSx(strDisplayName, "auto"),
               },
-              feVarbInfo: deal.varbInfoNext("displayNameEditor"),
+              feVarbInfo: deal.varbInfo2("displayNameEditor"),
               placeholder: "Untitled",
               noSolve: true,
             }}
@@ -184,7 +184,7 @@ function TabAndDeskVersion({ dbId, isInactive, sx }: SavedDealProps) {
           {/* <BareStringEditor
             {...{
               sx: titleSx(strDisplayName, 400),
-              feVarbInfo: deal.varbInfoNext("displayNameEditor"),
+              feVarbInfo: deal.varbInfo2("displayNameEditor"),
               placeholder: "Untitled",
               noSolve: true,
             }}

@@ -1,6 +1,6 @@
-import { SectionPack } from "../../SectionsMeta/sectionChildrenDerived/SectionPack";
-import { DealMode } from "../../SectionsMeta/values/StateValue/dealMode";
-import { StrictExclude } from "../../utils/types";
+import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
+import { DealMode } from "../SectionsMeta/values/StateValue/dealMode";
+import { StrictExclude } from "../utils/types";
 import { exampleDealBuyAndHold } from "./exampleDealBuyAndHold";
 import { exampleDealHomebuyer } from "./exampleDealHomebuyer";
 

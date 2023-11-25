@@ -7,17 +7,32 @@ import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack"
 import { FeSectionInfo } from "../SectionsMeta/SectionInfo/FeInfo";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
+import { SectionValues } from "../SectionsMeta/values/StateValue";
 import { AddChildWithPackOptions } from "../StatePackers/PackBuilderSection";
 import { DefaultSelfPackLoader } from "../StatePackers/PackLoaderSection/DefaultSelfPackLoader";
 import { DefaultStateLoader } from "../StatePackers/PackLoaderSection/DefaultStateLoader";
 import { UpdaterSectionBase } from "./bases/updaterSectionBase";
 import { UpdaterSection } from "./UpdaterSection";
 
-export class DefaultFamilyAdder<
+export class DefaultUpdaterSection<
   SN extends SectionName
 > extends UpdaterSectionBase<SN> {
   get updater(): UpdaterSection<SN> {
     return new UpdaterSection(this.getterSectionProps);
+  }
+  defaultUpdater<SN extends SectionNameByType>(
+    feInfo: FeSectionInfo<SN>
+  ): DefaultUpdaterSection<SN> {
+    return new DefaultUpdaterSection({
+      ...feInfo,
+      ...this.getterSectionsProps,
+    });
+  }
+  removeSelf() {
+    this.updater.removeSelf();
+  }
+  updateValues(values: Partial<SectionValues<SN>>) {
+    this.updater.updateValues(values);
   }
   get defaultStateLoader(): DefaultStateLoader<SN> {
     return new DefaultStateLoader(this.getterSectionProps);
@@ -28,8 +43,14 @@ export class DefaultFamilyAdder<
       sectionPack,
     });
   }
+  loadSelfSectionPack(sectionPack: SectionPack<SN>) {
+    this.defaultPackLoader(sectionPack).integrateSectionPack();
+  }
+  overwriteSelf(sectionPack: SectionPack<SN>) {
+    this.defaultPackLoader(sectionPack).overwriteSelf();
+  }
   youngestChild<CN extends ChildName<SN>>(childName: CN) {
-    return this.newAdder(this.get.youngestChild(childName).feInfo);
+    return this.defaultUpdater(this.get.youngestChild(childName).feInfo);
   }
   addChild<CN extends ChildName<SN>>(
     childName: CN,
@@ -59,44 +80,40 @@ export class DefaultFamilyAdder<
   addAndGetChild<CN extends ChildName<SN>>(
     childName: CN,
     options?: AddChildWithPackOptions<SN, CN>
-  ): DefaultFamilyAdder<ChildSectionName<SN, CN>> {
+  ): DefaultUpdaterSection<ChildSectionName<SN, CN>> {
     this.addChild(childName, options);
     return this.youngestChild(childName);
   }
   static loadAsOmniChild<SN extends ChildSectionName<"omniParent">>(
     sectionPack: SectionPack<SN>
-  ): DefaultFamilyAdder<SN> {
+  ): DefaultUpdaterSection<SN> {
     const adder = this.initAsOmniChild(
       sectionPack.sectionName
-    ) as DefaultFamilyAdder<SN>;
+    ) as DefaultUpdaterSection<SN>;
     adder.loadSelfSectionPack(sectionPack);
     return adder;
   }
-  loadSelfSectionPack(sectionPack: SectionPack<SN>) {
-    this.defaultPackLoader(sectionPack).integrateSectionPack();
-  }
   child<CN extends ChildName<SN>>(
     info: FeChildInfo<SN, CN>
-  ): DefaultFamilyAdder<ChildSectionName<SN, CN>> {
-    return this.newAdder(this.get.child(info).feInfo);
+  ): DefaultUpdaterSection<ChildSectionName<SN, CN>> {
+    return this.defaultUpdater(this.get.child(info).feInfo);
   }
-
-  newAdder<SN extends SectionNameByType>(
-    feInfo: FeSectionInfo<SN>
-  ): DefaultFamilyAdder<SN> {
-    return new DefaultFamilyAdder({
-      ...feInfo,
-      ...this.getterSectionsProps,
-    });
+  onlyChild<CN extends ChildName<SN>>(
+    childName: CN
+  ): DefaultUpdaterSection<ChildSectionName<SN, CN>> {
+    return this.defaultUpdater(this.get.onlyChild(childName).feInfo);
+  }
+  makeSectionPack() {
+    return this.get.makeSectionPack();
   }
   static initAsOmniChild<CN extends ChildName<"omniParent">>(
     childName: CN,
     options?: AddChildWithPackOptions<"omniParent", CN>
-  ): DefaultFamilyAdder<ChildSectionName<"omniParent", CN>> {
+  ): DefaultUpdaterSection<ChildSectionName<"omniParent", CN>> {
     const adder = this.initAsOmniParent();
     return adder.addAndGetChild(childName, options);
   }
-  static initAsOmniParent(): DefaultFamilyAdder<"omniParent"> {
-    return new DefaultFamilyAdder(UpdaterSection.initOmniParentProps());
+  static initAsOmniParent(): DefaultUpdaterSection<"omniParent"> {
+    return new DefaultUpdaterSection(UpdaterSection.initOmniParentProps());
   }
 }

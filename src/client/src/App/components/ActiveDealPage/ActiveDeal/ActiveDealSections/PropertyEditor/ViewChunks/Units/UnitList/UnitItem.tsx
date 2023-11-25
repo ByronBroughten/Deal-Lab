@@ -4,6 +4,7 @@ import { useGetterSection } from "../../../../../../../../sharedWithServer/state
 import theme from "../../../../../../../../theme/Theme";
 import { RemoveSectionXBtn } from "../../../../../../../appWide/RemoveSectionXBtn";
 import { NumObjEntityEditor } from "../../../../../../../inputs/NumObjEntityEditor";
+import { PeriodicEditor } from "../../../../../../../inputs/PeriodicEditor";
 
 type Props = {
   feId: string;
@@ -28,10 +29,11 @@ export function UnitItem({
             <RemoveSectionXBtn className="UnitItem-xBtn" {...feInfo} />
           )}
         </div>
-        <NumObjEntityEditor feVarbInfo={unit.varbInfo("numBedrooms")} />
+        <NumObjEntityEditor feVarbInfo={unit.varbInfo2("numBedrooms")} />
         {showRent && (
-          <NumObjEntityEditor
-            feVarbInfo={unit.varbInfo("targetRentPeriodicEditor")}
+          <PeriodicEditor
+            feId={unit.onlyChildFeId("targetRentEditor")}
+            labelNames={{ sectionName: "unit", varbBaseName: "targetRent" }}
           />
         )}
       </div>

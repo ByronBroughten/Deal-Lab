@@ -19,16 +19,14 @@ export function addHoldingTaxesHomeInsYearly(
   homeInsVal: number
 ): number {
   const taxes = property.onlyChild("taxesHolding");
-  taxes.updateValues({
-    valueDollarsPeriodicEditor: numObj(taxesVal),
-    valueDollarsPeriodicSwitch: "yearly",
-    valueSourceName: "valueDollarsPeriodicEditor",
+  taxes.onlyChild("valueDollarsEditor").updateValues({
+    valueEditor: numObj(taxesVal),
+    valueEditorFrequency: "yearly",
   });
   const homeIns = property.onlyChild("homeInsHolding");
-  homeIns.updateValues({
-    valueDollarsPeriodicEditor: numObj(homeInsVal),
-    valueDollarsPeriodicSwitch: "yearly",
-    valueSourceName: "valueDollarsPeriodicEditor",
+  homeIns.onlyChild("valueDollarsEditor").updateValues({
+    valueEditor: numObj(homeInsVal),
+    valueEditorFrequency: "yearly",
   });
   return taxesVal + homeInsVal;
 }
@@ -39,14 +37,14 @@ export function addOngoingTaxesHomeInsYearly(
   homeInsVal: number
 ) {
   const taxes = property.onlyChild("taxesOngoing");
-  taxes.updateValues({
-    valueDollarsPeriodicEditor: numObj(taxesVal),
-    valueDollarsPeriodicSwitch: "yearly",
+  taxes.onlyChild("valueDollarsEditor").updateValues({
+    valueEditor: numObj(taxesVal),
+    valueEditorFrequency: "yearly",
   });
   const homeIns = property.onlyChild("homeInsOngoing");
-  homeIns.updateValues({
-    valueDollarsPeriodicEditor: numObj(homeInsVal),
-    valueDollarsPeriodicSwitch: "yearly",
+  homeIns.onlyChild("valueDollarsEditor").updateValues({
+    valueEditor: numObj(homeInsVal),
+    valueEditorFrequency: "yearly",
   });
   return {
     taxesMonthly: taxesVal / 12,
@@ -90,10 +88,10 @@ export function setLoanValues(
 
   if (mortgageInsMonthly) {
     const periodicMortIns = loan.onlyChild("mortgageInsPeriodicValue");
-    periodicMortIns.updateValues({
-      valueDollarsPeriodicEditor: numObj(mortgageInsMonthly),
-      valueDollarsPeriodicSwitch: "monthly",
-      valueSourceName: "valueDollarsPeriodicEditor",
+    periodicMortIns.updateValues({ valueSourceName: "dollarsEditor" });
+    periodicMortIns.onlyChild("dollarsEditor").updateValues({
+      valueEditor: numObj(mortgageInsMonthly),
+      valueEditorFrequency: "monthly",
     });
   }
 
@@ -115,11 +113,10 @@ export function addRents(
   let total = 0;
   for (const rent of rents) {
     total += rent;
-    property.addChildAndSolve("unit", {
-      sectionValues: {
-        targetRentPeriodicEditor: numObj(rent),
-        targetRentPeriodicSwitch: periodicSwitch,
-      },
+    const unit = property.addAndGetChild("unit");
+    unit.onlyChild("targetRentEditor").updateValues({
+      valueEditor: numObj(rent),
+      valueEditorFrequency: periodicSwitch,
     });
   }
   return total;
@@ -190,7 +187,7 @@ export const setPeriodicEditor = <SN extends PeriodicSectionName>(
     valueSourceName: "valueDollarsPeriodicEditor",
     valueDollarsPeriodicSwitch: switchVal,
     valueDollarsPeriodicEditor: numObj(amount),
-  });
+  } as any);
 };
 
 type PeriodicListSn = PeriodicSectionName | "utilityValue";
@@ -203,7 +200,7 @@ export function setPeriodicList<SN extends PeriodicListSn>(
   value.updateValues({
     valueSourceName: "listTotal",
     valueDollarsPeriodicSwitch: switchVal,
-  });
+  } as any);
   const list = value.onlyChild("periodicList");
   list.removeChildrenAndSolve("periodicItem");
   for (const item of items) {
@@ -212,7 +209,7 @@ export function setPeriodicList<SN extends PeriodicListSn>(
         valueSourceName: "valueDollarsPeriodicEditor",
         valueDollarsPeriodicSwitch: switchVal,
         valueDollarsPeriodicEditor: numObj(item),
-      },
+      } as any,
     });
   }
 }

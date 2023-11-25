@@ -8,7 +8,9 @@ import {
 } from "../SectionsMeta/allBaseSectionVarbs/baseSwitchNames";
 import { DbSectionInfo } from "../SectionsMeta/allBaseSectionVarbs/DbSectionInfo";
 import { GenericChildTraits } from "../SectionsMeta/allChildrenTraits";
+import { GroupVarbNameBase } from "../SectionsMeta/baseSectionsDerived/baseGroupNames";
 import { VarbName } from "../SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
+import { GroupKey, periodicName } from "../SectionsMeta/GroupName";
 import {
   ChildIdArrsWide,
   ChildName,
@@ -698,6 +700,12 @@ export class GetterSection<
   varbNext<VN extends VarbName<SN>>(varbName: VN): GetterVarb<SN> {
     return this.varb(varbName as string);
   }
+  periodicVarb<
+    BN extends GroupVarbNameBase<SN, "periodic">,
+    GK extends GroupKey<"periodic">
+  >(baseName: BN, groupKey: GK): GetterVarb<SN> {
+    return this.varb(periodicName(baseName, groupKey) as string);
+  }
   stringValue<VN extends VarbName<SN>>(varbName: VN): string {
     return this.varbNext(varbName).stringValue;
   }
@@ -707,7 +715,7 @@ export class GetterSection<
   varbInfo(varbName: VarbName<SN>): FeVarbInfo<SN> {
     return this.varb(varbName as string).feVarbInfo;
   }
-  varbInfoNext<VN extends VarbName<SN>>(varbName: VN): FeVarbInfoNext<SN, VN> {
+  varbInfo2<VN extends VarbName<SN>>(varbName: VN): FeVarbInfoNext<SN, VN> {
     return this.varb(varbName).feVarbInfo as FeVarbInfoNext<SN, VN>;
   }
   varbInfoArr(...varbNames: VarbName<SN>[]): FeVarbInfo<SN>[] {

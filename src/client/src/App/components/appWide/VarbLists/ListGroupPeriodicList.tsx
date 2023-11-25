@@ -6,24 +6,22 @@ import {
   VarbListGenericMenuType,
 } from "../ListGroup/ListGroupShared/VarbListGeneric";
 import { VarbListStandardHeaders } from "../ListGroup/ListGroupShared/VarbListGeneric/VarbListStandardHeaders";
-import { ListItemOngoing } from "./VarbListOngoing/ListItemOngoing";
+import { PeriodicItem } from "./ListGroupPeriodicList/PeriodicItem";
 
 type Props = {
   feId: string;
   className?: string;
   menuType?: VarbListGenericMenuType;
 };
-export function VarbListOngoing({ feId, ...rest }: Props) {
+export function ListGroupPeriodicList({ feId, ...rest }: Props) {
   const addChild = useAction("addChild");
   const list = useGetterSection({ sectionName: "periodicList", feId });
   const totalVarbName = "totalMonthly";
-  const itemPeriodicSwitch = list.varb("itemPeriodicSwitch").value("periodic");
 
   const addItem = () => {
     const itemValueSource = list.valueNext("itemValueSource");
     const sectionValues: Partial<SectionValues<"periodicItem">> = {
       valueSourceName: itemValueSource,
-      valueDollarsPeriodicSwitch: itemPeriodicSwitch,
     };
     addChild({
       feInfo: list.feInfo,
@@ -41,9 +39,7 @@ export function VarbListOngoing({ feId, ...rest }: Props) {
         itemName: "periodicItem",
         totalVarbName,
         addItem,
-        makeItemNode: ({ feId }) => (
-          <ListItemOngoing {...{ feId, key: feId }} />
-        ),
+        makeItemNode: ({ feId }) => <PeriodicItem {...{ feId, key: feId }} />,
       }}
     />
   );

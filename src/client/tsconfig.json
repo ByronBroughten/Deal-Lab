@@ -16,6 +16,9 @@
     "jsx": "react-jsx",
     "noEmit": true
   },
-  "include": ["src"],
+  "include": [
+    "src",
+    "../routes/apiQueries/apiQueriesShared/DbSections/LoadedDbUser/initDbStoreArrs.ts"
+  ],
   "exclude": ["node_modules", ".vscode", "*.json"]
 }

@@ -2,7 +2,7 @@ import { FeIdProp } from "../../../../../../sharedWithServer/SectionsMeta/Sectio
 import { useGetterSection } from "../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { FormSectionLabeled } from "../../../../../appWide/FormSectionLabeled";
 import { MuiRow } from "../../../../../general/MuiRow";
-import { NumObjEntityEditor } from "../../../../../inputs/NumObjEntityEditor";
+import { PeriodicEditor } from "../../../../../inputs/PeriodicEditor";
 import { CapExValue } from "./ViewParts/CapExValue";
 import { MaintenanceValue } from "./ViewParts/MaintenanceValue";
 import { MiscOngoingCost } from "./ViewParts/MiscOngoingCost";
@@ -17,14 +17,22 @@ export function PropertyOngoingCosts({ feId }: FeIdProp) {
   return (
     <FormSectionLabeled label="Ongoing Costs">
       <MuiRow>
-        <NumObjEntityEditor
+        <PeriodicEditor
           inputMargins
-          feVarbInfo={taxes.varbInfo("valueDollarsPeriodicEditor")}
+          feId={taxes.onlyChildFeId("valueDollarsEditor")}
+          labelNames={{
+            sectionName: "taxesValue",
+            varbBaseName: "valueDollars",
+          }}
         />
-        <NumObjEntityEditor
+        <PeriodicEditor
           inputMargins
           editorType="equation"
-          feVarbInfo={homeIns.varbInfo("valueDollarsPeriodicEditor")}
+          feId={homeIns.onlyChildFeId("valueDollarsEditor")}
+          labelNames={{
+            sectionName: "homeInsValue",
+            varbBaseName: "valueDollars",
+          }}
           quickViewVarbNames={["purchasePrice", "sqft", "numUnits"]}
         />
         <UtilityValue

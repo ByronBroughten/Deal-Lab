@@ -7,8 +7,8 @@ import {
   GroupRecord,
   GroupRecordAndAll,
   groupVarbName,
-  GroupVarbName,
-} from "../groupedNames";
+  GroupVarbNameBase,
+} from "../GroupName";
 import { ValueName, valueNames } from "../values/ValueName";
 import { baseSectionVarbs } from "./baseSectionVarbs";
 import {
@@ -133,7 +133,7 @@ type SimpleBaseSwitchVarbs<BN extends string, SN extends SwitchName> = {
 };
 
 type BaseVarbGroup<BN extends string, GN extends GroupName> = {
-  [GK in GroupKey<GN> as GroupVarbName<BN, GN, GK>]: BaseVarb<"numObj">;
+  [GK in GroupKey<GN> as GroupVarbNameBase<BN, GN, GK>]: BaseVarb<"numObj">;
 };
 
 const ongoingOptions = {
@@ -343,20 +343,22 @@ export const baseVarbsS = {
   },
   get loanValue() {
     return baseSectionVarbs({
-      valueSourceName: baseVarb("percentDollarsSource"),
-      completionStatus: baseVarb("completionStatus"),
+      valueSourceName: bv("percentDollarsSource"),
+      completionStatus: bv("completionStatus"),
 
-      offPercentEditor: baseVarb("numObj", percent), // Down payment percent
-      offDollarsEditor: baseVarb("numObj", dollars), // Down payment amount
-      amountPercentEditor: baseVarb("numObj", percent), // Loan percent
-      amountDollarsEditor: baseVarb("numObj", dollars), //Loan Amount
+      offPercentEditor: bv("numObj", percent), // Down payment percent
+      offDollarsEditor: bv("numObj", dollars), // Down payment amount
+      amountPercentEditor: bv("numObj", percent), // Loan percent
+      amountDollarsEditor: bv("numObj", dollars), //Loan Amount
 
-      offPercent: baseVarb("numObj", percent),
-      offDollars: baseVarb("numObj", dollars),
-      offDecimal: baseVarb("numObj", decimal),
-      amountDollars: baseVarb("numObj", dollars),
-      amountPercent: baseVarb("numObj", percent),
-      amountDecimal: baseVarb("numObj", decimal),
+      offPercent: bv("numObj", percent),
+      offDollars: bv("numObj", dollars),
+      offDecimal: bv("numObj", decimal),
+      amountDollars: bv("numObj", dollars),
+      amountPercent: bv("numObj", percent),
+      amountDecimal: bv("numObj", decimal),
     });
   },
 } as const;
+
+export const bvsS = baseVarbsS;

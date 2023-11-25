@@ -1,14 +1,17 @@
+import { periodicName } from "../../../../../../../sharedWithServer/SectionsMeta/GroupName";
 import { useGetterSection } from "../../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { nativeTheme } from "../../../../../../../theme/nativeTheme";
 import { SelectAndItemizeEditor } from "../../../../../../appWide/SelectAndItemizeEditor";
-import { NumObjEntityEditor } from "../../../../../../inputs/NumObjEntityEditor";
-import { ListEditorOngoing } from "../../ValueShared/ListEditorOngoing";
+import { PeriodicEditor } from "../../../../../../inputs/PeriodicEditor";
+import { PeriodicList } from "../../ValueShared/PeriodicList";
 
 export function MiscIncomeValue({ feId }: { feId: string }) {
   const feInfo = { sectionName: "miscPeriodicValue", feId } as const;
   const incomeValue = useGetterSection(feInfo);
 
-  const valueVarb = incomeValue.switchVarb("valueDollars", "periodic");
+  const editor = incomeValue.onlyChild("periodicEditor");
+  const freq = editor.valueNext("valueEditorFrequency");
+  const valueVarb = incomeValue.varbNext(periodicName("valueDollars", freq));
   const sourceName = incomeValue.valueNext("valueSourceName");
   const menuDisplayNames = ["Laundry", "Parking", "Storage"] as const;
   return (
@@ -18,14 +21,15 @@ export function MiscIncomeValue({ feId }: { feId: string }) {
         label: "Misc income",
         itemizedModalTitle: "Misc Income",
         makeEditor:
-          sourceName === "valueDollarsPeriodicEditor"
+          sourceName === "valueDollarsEditor"
             ? (props) => (
-                <NumObjEntityEditor
+                <PeriodicEditor
                   {...{
                     ...props,
-                    feVarbInfo: {
-                      ...feInfo,
-                      varbName: "valueDollarsPeriodicEditor",
+                    feId: incomeValue.onlyChildFeId("periodicEditor"),
+                    labelNames: {
+                      sectionName: "miscPeriodicValue",
+                      varbBaseName: "valueDollars",
                     },
                   }}
                 />
@@ -38,13 +42,13 @@ export function MiscIncomeValue({ feId }: { feId: string }) {
           varbName: "valueSourceName",
         },
         items: [
-          ["valueDollarsPeriodicEditor", "Custom amount"],
+          ["valueDollarsEditor", "Custom amount"],
           ["listTotal", "Itemize"],
         ],
         itemizeValue: "listTotal",
         total: valueVarb.displayVarb(),
         itemsComponent: (
-          <ListEditorOngoing
+          <PeriodicList
             {...{
               menuDisplayNames,
               feId: incomeValue.oneChildFeId("periodicList"),

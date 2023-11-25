@@ -1,77 +1,80 @@
+import { makeHomeAdvisorNahbCapExList } from "../exampleMakers/makeExampleCapEx";
 import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
 import { StateValue } from "../SectionsMeta/values/StateValue";
 import { getDealModes } from "../SectionsMeta/values/StateValue/dealMode";
-import { PackBuilderSection } from "../StatePackers/PackBuilderSection";
 import { numObj } from "./../SectionsMeta/values/StateValue/NumObj";
-import { makeHomeAdvisorNahbCapExList } from "./makeDefaultFeUser/makeExampleCapEx";
+import { makeDefault } from "./makeDefault";
+import {
+  makeDefaultHomeInsValue,
+  makeDefaultMiscPeriodicValue,
+  makeDefaultTaxesValue,
+  makeDefaultUnit,
+} from "./makeSimpleDefaults";
 
 export function makeDefaultProperty(
   propertyMode: StateValue<"dealMode"> = "buyAndHold"
 ): SectionPack<"property"> {
-  const property = PackBuilderSection.initAsOmniChild("property");
-  property.updateValues({ propertyMode });
+  return makeDefault("property", (property) => {
+    property.updateValues({ propertyMode });
 
-  const taxesHomeInsOptions = {
-    sectionValues: {
-      valueSourceName: "valueDollarsPeriodicEditor",
-      valueDollarsPeriodicSwitch: "yearly",
-    },
-  } as const;
+    property.addChild("unit", { sectionPack: makeDefaultUnit() });
+    property.addChild("holdingPeriod");
 
-  property.addChild("unit");
-  property.addChild("holdingPeriod");
+    property.addChild("taxesHolding", { sectionPack: makeDefaultTaxesValue() });
+    property.addChild("homeInsHolding", {
+      sectionPack: makeDefaultHomeInsValue(),
+    });
 
-  property.addChild("taxesHolding", taxesHomeInsOptions);
-  property.addChild("homeInsHolding", taxesHomeInsOptions);
+    property.addChild("taxesOngoing", { sectionPack: makeDefaultTaxesValue() });
+    property.addChild("homeInsOngoing", {
+      sectionPack: makeDefaultHomeInsValue(),
+    });
 
-  property.addChild("taxesOngoing", taxesHomeInsOptions);
-  property.addChild("homeInsOngoing", taxesHomeInsOptions);
+    const utilityHolding = property.addAndGetChild("utilityHolding");
+    utilityHolding.addChild("valueDollarsEditor");
+    utilityHolding.addChild("periodicList");
 
-  const costOverrunPercent = getDealModes("maybeNoRehab").includes(propertyMode)
-    ? 0
-    : 10;
-  const overrun = property.addAndGetChild("costOverrunValue");
-  overrun.updateValues({
-    valuePercentEditor: numObj(costOverrunPercent),
-    valueSourceName: "valuePercentEditor",
+    const utilityOngoing = property.addAndGetChild("utilityOngoing");
+    utilityOngoing.addChild("valueDollarsEditor");
+    utilityOngoing.addChild("periodicList");
+
+    const maintenanceOngoing = property.addAndGetChild("maintenanceOngoing");
+    maintenanceOngoing.addChild("valueDollarsEditor");
+
+    const capExValue = property.addAndGetChild("capExValueOngoing");
+    capExValue.addChild("valueDollarsEditor");
+    const capExList = capExValue.addAndGetChild("capExList");
+    capExList.overwriteSelf(makeHomeAdvisorNahbCapExList());
+
+    const repairValue = property.addAndGetChild("repairValue");
+    repairValue.addChild("onetimeList");
+
+    const costOverrunPercent = getDealModes("maybeNoRehab").includes(
+      propertyMode
+    )
+      ? 0
+      : 10;
+    const overrun = property.addAndGetChild("costOverrunValue");
+    overrun.updateValues({
+      valuePercentEditor: numObj(costOverrunPercent),
+      valueSourceName: "valuePercentEditor",
+    });
+
+    const sellingCost = property.addAndGetChild("sellingCostValue");
+    sellingCost.addChild("onetimeList");
+
+    const miscPeriodics = [
+      "miscOngoingRevenue",
+      "miscOngoingCost",
+      "miscHoldingCost",
+    ] as const;
+    miscPeriodics.forEach((childName) => {
+      property.addChild(childName, {
+        sectionPack: makeDefaultMiscPeriodicValue(),
+      });
+    });
+
+    const miscOnetimeValue = property.addAndGetChild("miscOnetimeCost");
+    miscOnetimeValue.addChild("onetimeList");
   });
-
-  const sellingCost = property.addAndGetChild("sellingCostValue");
-  sellingCost.addChild("onetimeList");
-
-  const miscOngoingRevenue = property.addAndGetChild("miscOngoingRevenue");
-  miscOngoingRevenue.addChild("periodicList");
-
-  const miscOngoingCost = property.addAndGetChild("miscOngoingCost", {
-    sectionValues: { valueSourceName: "listTotal" },
-  });
-  miscOngoingCost.addChild("periodicList");
-
-  const miscHoldingCost = property.addAndGetChild("miscHoldingCost");
-  miscHoldingCost.addChild("periodicList");
-
-  const MiscOnetimeValue = property.addAndGetChild("miscOnetimeCost");
-  MiscOnetimeValue.addChild("onetimeList");
-
-  const repairValue = property.addAndGetChild("repairValue");
-  repairValue.addChild("onetimeList");
-
-  const utilityHolding = property.addAndGetChild("utilityHolding");
-  utilityHolding.addChild("periodicList");
-
-  const utilityOngoing = property.addAndGetChild("utilityOngoing", {
-    // sectionValues: { valueSourceName: "listTotal" },
-  });
-
-  const utilityList = utilityOngoing.addAndGetChild("periodicList");
-  // utilityList.overwriteSelf(makeNationalUtilityAverageList());
-
-  property.addChild("maintenanceOngoing");
-
-  const capExValue = property.addAndGetChild("capExValueOngoing");
-  // sectionValues: { valueSourceName: "listTotal" },
-
-  const capExList = capExValue.addAndGetChild("capExList");
-  capExList.overwriteSelf(makeHomeAdvisorNahbCapExList());
-  return property.makeSectionPack();
 }

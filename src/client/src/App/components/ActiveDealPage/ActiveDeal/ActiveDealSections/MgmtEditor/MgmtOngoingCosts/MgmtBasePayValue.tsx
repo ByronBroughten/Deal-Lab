@@ -1,20 +1,23 @@
-import { FeVarbInfo } from "../../../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
+import { FeVI } from "../../../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { useGetterSection } from "../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { ValueFixedVarbPathName } from "../../../../../../sharedWithServer/StateEntityGetters/ValueInEntityInfo";
 import { GetterSection } from "../../../../../../sharedWithServer/StateGetters/GetterSection";
 import { SelectEditor } from "../../../../../appWide/SelectEditor";
 import { NumObjEntityEditor } from "../../../../../inputs/NumObjEntityEditor";
 
-function getProps(getter: GetterSection<"mgmtBasePayValue">): {
+function getProps(mgmtBasePay: GetterSection<"mgmtBasePayValue">): {
   equalsValue?: string;
   editorProps?: {
     quickViewVarbNames: ValueFixedVarbPathName[];
-    feVarbInfo: FeVarbInfo;
+    feVarbInfo: FeVI;
   };
 } {
-  const valueSourceName = getter.valueNext("valueSourceName");
-  const dollarsVarb = getter.activeSwitchTarget("valueDollars", "periodic");
-  const dollarsSwitch = getter.switchValue("valueDollars", "periodic");
+  const valueSourceName = mgmtBasePay.valueNext("valueSourceName");
+  const dollarsVarb = mgmtBasePay.activeSwitchTarget(
+    "valueDollars",
+    "periodic"
+  );
+  const dollarsSwitch = mgmtBasePay.switchValue("valueDollars", "periodic");
 
   const commonQuickAccess = ["sqft", "numUnits"] as const;
   const dollarsQuickAccess = {
@@ -33,15 +36,15 @@ function getProps(getter: GetterSection<"mgmtBasePayValue">): {
       return {
         equalsValue: dollarsVarb.displayVarb(),
         editorProps: {
-          feVarbInfo: getter.varbNext("valuePercentEditor").feVarbInfo,
+          feVarbInfo: mgmtBasePay.varbInfo2("valuePercentEditor"),
           quickViewVarbNames: [...commonQuickAccess],
         },
       };
     case "valueDollarsPeriodicEditor": {
       return {
-        equalsValue: `${getter.displayVarb("valuePercent")} of rent`,
+        equalsValue: `${mgmtBasePay.displayVarb("valuePercent")} of rent`,
         editorProps: {
-          feVarbInfo: getter.varbNext("valueDollarsPeriodicEditor").feVarbInfo,
+          feVarbInfo: mgmtBasePay.varbInfo2("valueDollarsPeriodicEditor"),
           quickViewVarbNames: [
             dollarsQuickAccess[dollarsSwitch],
             ...commonQuickAccess,

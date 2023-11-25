@@ -4,14 +4,17 @@ import { useGetterSection } from "../../../../../../../sharedWithServer/stateCla
 import { LabelWithInfo } from "../../../../../../appWide/LabelWithInfo";
 import { SelectAndItemizeEditor } from "../../../../../../appWide/SelectAndItemizeEditor";
 import { VarbStringLabel } from "../../../../../../appWide/VarbStringLabel";
-import { NumObjEntityEditor } from "../../../../../../inputs/NumObjEntityEditor";
+import { PeriodicEditor } from "../../../../../../inputs/PeriodicEditor";
 import { CapExValueList } from "../../ValueShared/CapExListEditor";
 
 export function CapExValue({ feId }: { feId: string }) {
   const feInfo = { sectionName: "capExValue", feId } as const;
   const capExValue = useGetterSection(feInfo);
+  const editor = capExValue.onlyChild("valueDollarsEditor");
+  const freq = editor.valueNext("valueEditorFrequency");
+
   const valueSourceName = capExValue.valueNext("valueSourceName");
-  const valueVarb = capExValue.switchVarb("valueDollars", "periodic");
+  const valueVarb = capExValue.periodicVarb("valueDollars", freq);
 
   const showEquals: StateValue<"capExValueSource">[] = ["fivePercentRent"];
   const equalsValue = showEquals.includes(valueSourceName)
@@ -37,17 +40,21 @@ export function CapExValue({ feId }: { feId: string }) {
             "listTotal",
             `Itemize${valueSourceName === "listTotal" ? "" : " (recommended)"}`,
           ],
-          ["valueDollarsPeriodicEditor", "Custom amount"],
+          ["valueDollarsEditor", "Custom amount"],
         ],
         label: <VarbStringLabel names={feVarbInfo} />,
         selectValue: valueSourceName,
         makeEditor:
-          valueSourceName === "valueDollarsPeriodicEditor"
+          valueSourceName === "valueDollarsEditor"
             ? (props) => (
-                <NumObjEntityEditor
+                <PeriodicEditor
                   {...{
                     ...props,
-                    feVarbInfo: capExValue.varbInfo(valueSourceName),
+                    feId: capExValue.onlyChildFeId("valueDollarsEditor"),
+                    labelNames: {
+                      sectionName: "capExValue",
+                      varbBaseName: "valueDollars",
+                    },
                   }}
                 />
               )

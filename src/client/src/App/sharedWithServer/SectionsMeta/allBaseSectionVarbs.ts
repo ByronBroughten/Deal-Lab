@@ -1,13 +1,20 @@
 import {
-  BaseSectionVarbs,
   baseSectionVarbs,
   GeneralBaseSectionVarbs,
   TypeUniformityVarbProp,
 } from "./allBaseSectionVarbs/baseSectionVarbs";
 import { baseOptions } from "./allBaseSectionVarbs/baseUnits";
-import { baseVarbs, baseVarbsS, bv } from "./allBaseSectionVarbs/baseVarbs";
+import {
+  baseVarbs,
+  baseVarbsS,
+  bv,
+  bvsS,
+} from "./allBaseSectionVarbs/baseVarbs";
 import { SectionName } from "./SectionName";
 
+type GeneralAllBaseSectionVarbs = {
+  [SN in SectionName]: GeneralBaseSectionVarbs;
+};
 const checkTypeUniformityVarbs = <
   TUVS extends Record<SectionName, TypeUniformityVarbProp>
 >(
@@ -19,20 +26,11 @@ const checkAllBaseSectionVarbs = <BSV extends GeneralAllBaseSectionVarbs>(
   return bsv;
 };
 
-type GeneralAllBaseSectionVarbs = {
-  [SN in SectionName]: GeneralBaseSectionVarbs;
-};
-
-type DefaultSectionsVarbs = {
-  [SN in SectionName]: BaseSectionVarbs;
-};
-
 const varbs = baseSectionVarbs;
-
 const dollars = baseOptions.dollars;
 const percent = baseOptions.percent;
 const decimal = baseOptions.decimal;
-const varbsS = baseVarbsS;
+
 export function makeAllBaseSectionVarbs() {
   return checkTypeUniformityVarbs(
     checkAllBaseSectionVarbs({
@@ -63,7 +61,7 @@ export function makeAllBaseSectionVarbs() {
         compareDealTimeReady: bv("dateTime"),
         archivedAreLoaded: bv("boolean"),
         showArchivedDeals: bv("boolean"),
-        CreateDealOfMode: bv("dealMode"),
+        createDealOfMode: bv("dealMode"),
         isCreatingDeal: bv("boolean"),
         dealDbIdToEdit: bv("string"),
       }),
@@ -95,12 +93,8 @@ export function makeAllBaseSectionVarbs() {
         nameFilter: bv("string"),
         defaultViewEditor: bv("string"),
       }),
-      proxyStoreItem: varbs({
-        dbId: bv("string"),
-      }),
-      column: varbs({
-        varbInfo: bv("inEntityValue"),
-      }),
+      proxyStoreItem: varbs({ dbId: bv("string") }),
+      column: varbs({ varbInfo: bv("inEntityValue") }),
       cell: varbs({
         columnFeId: bv("string"),
         valueEntityInfo: bv("inEntityValue"),
@@ -126,7 +120,7 @@ export function makeAllBaseSectionVarbs() {
         valueDecimal: bv("numObj", decimal),
       }),
       onetimeList: varbs({
-        ...varbsS.savableSection,
+        ...bvsS.savableSection,
         total: bv("numObj", dollars),
         itemValueSource: bv("valueDollarsEditor"),
       }),
@@ -140,12 +134,12 @@ export function makeAllBaseSectionVarbs() {
       periodicList: varbs({
         ...baseVarbsS.savableSection,
         ...baseVarbsS.periodicDollars2("total"),
-        itemValueSource: bv("valueDollarsPeriodicEditor"),
+        itemValueSource: bv("valueDollarsEditor"),
         itemPeriodicSwitch: bv("periodic"),
       }),
       periodicItem: varbs({
-        valueSourceName: bv("valueDollarsPeriodicEditor"),
-        ...baseVarbsS.periodicDollarsInput("valueDollars"),
+        valueSourceName: bv("valueDollarsEditor"),
+        ...baseVarbsS.periodicDollars2("valueDollars"),
         ...baseVarbsS.displayNameAndEditor,
       }),
       capExList: varbs({
@@ -156,7 +150,7 @@ export function makeAllBaseSectionVarbs() {
       capExItem: varbs({
         ...baseVarbsS.displayNameAndEditor,
         ...baseVarbsS.periodicDollars2("valueDollars"),
-        ...baseVarbsS.monthsYearsInput("lifespan"),
+        ...baseVarbsS.timespan("lifespan"),
         costToReplace: bv("numObj", baseOptions.dollars),
       }),
       numVarbList: varbs({
@@ -236,8 +230,6 @@ export function makeAllBaseSectionVarbs() {
           "numUnits",
           "numUnitsEditor",
         ] as const),
-
-        ...baseVarbsS.periodicDollars2("homebuyerRent"),
         ...baseVarbsS.periodicDollars2("taxesHolding"),
         ...baseVarbsS.periodicDollars2("homeInsHolding"),
         ...baseVarbsS.periodicDollars2("utilitiesHolding"),
@@ -263,7 +255,7 @@ export function makeAllBaseSectionVarbs() {
       unit: varbs({
         one: bv("number"),
         numBedrooms: bv("numObj"),
-        ...baseVarbsS.periodicDollarsInput("targetRent"),
+        ...bvsS.periodicDollars2("targetRent"),
       }),
       miscOnetimeValue: varbs({
         valueSourceName: bv("dollarsOrList"),
@@ -272,7 +264,7 @@ export function makeAllBaseSectionVarbs() {
       }),
       miscPeriodicValue: varbs({
         valueSourceName: bv("dollarsOrListOngoing"),
-        ...baseVarbsS.periodicDollarsInput("valueDollars"),
+        ...baseVarbsS.periodicDollars2("valueDollars"),
       }),
       mortgageInsUpfrontValue: varbs({
         valueSourceName: bv("mortgageInsUpfrontSource"),
@@ -281,10 +273,10 @@ export function makeAllBaseSectionVarbs() {
         decimalOfLoan: bv("numObj", decimal),
       }),
       mortgageInsPeriodicValue: varbs({
-        valueSourceName: bv("mortgageInsperiodic"),
-        ...baseVarbsS.periodicDollarsInput("valueDollars"),
-        ...baseVarbsS.periodicPercentInput("percentLoan"),
-        ...baseVarbsS.periodicDecimal("decimalOfLoan"),
+        valueSourceName: bv("mortgageInsPeriodic"),
+        ...bvsS.periodicDollars2("valueDollars"),
+        ...bvsS.periodicPercent2("percentLoan"),
+        ...bvsS.periodicDecimal2("decimalOfLoan"),
       }),
       costOverrunValue: varbs({
         valueDollars: bv("numObj", dollars),
@@ -305,23 +297,23 @@ export function makeAllBaseSectionVarbs() {
         valueDollarsEditor: bv("numObj", dollars),
       }),
       taxesValue: varbs({
-        ...baseVarbsS.periodicDollarsInput("valueDollars"),
+        ...baseVarbsS.periodicDollars2("valueDollars"),
         valueSourceName: bv("taxesAndHomeInsSource"),
       }),
       homeInsValue: varbs({
-        ...baseVarbsS.periodicDollarsInput("valueDollars"),
+        ...baseVarbsS.periodicDollars2("valueDollars"),
         valueSourceName: bv("taxesAndHomeInsSource"),
       }),
       utilityValue: varbs({
-        ...baseVarbsS.periodicDollarsInput("valueDollars"),
+        ...baseVarbsS.periodicDollars2("valueDollars"),
         valueSourceName: bv("utilityValueSource"),
       }),
       maintenanceValue: varbs({
-        ...baseVarbsS.periodicDollarsInput("valueDollars"),
+        ...baseVarbsS.periodicDollars2("valueDollars"),
         valueSourceName: bv("maintainanceValueSource"),
       }),
       capExValue: varbs({
-        ...baseVarbsS.periodicDollarsInput("valueDollars"),
+        ...baseVarbsS.periodicDollars2("valueDollars"),
         valueSourceName: bv("capExValueSource"),
       }),
       closingCostValue: varbs({
@@ -336,9 +328,9 @@ export function makeAllBaseSectionVarbs() {
         loanBaseDollars: bv("numObj", dollars),
         firstInterestPayment: bv("numObj", dollars),
         firstInterestPaymentOneDay: bv("numObj", dollars),
-        ...varbsS.periodicPercentInput("interestRatePercent"),
+        ...bvsS.periodicPercentInput("interestRatePercent"),
         ...baseVarbsS.periodicDecimal("interestRateDecimal"),
-        ...varbsS.monthsYearsInput("loanTerm"),
+        ...bvsS.monthsYearsInput("loanTerm"),
 
         prepaidInterest: bv("numObj", dollars),
         prepaidTaxes: bv("numObj", dollars),
@@ -356,7 +348,7 @@ export function makeAllBaseSectionVarbs() {
         piCalculationName: bv("string"), // depreciated
         hasMortgageIns: bv("boolean"),
         mortgageInsUpfront: bv("numObj", dollars),
-        ...baseVarbsS.periodicDollars("mortgageIns"),
+        ...baseVarbsS.periodicDollars2("mortgageIns"),
         ...baseVarbs(
           "numObj",
           ["loanTotalDollars", "closingCosts", "fivePercentBaseLoan"] as const,

@@ -4,8 +4,8 @@ import {
   GroupName,
   GroupRecordAndAll,
   groupVarbName,
-  GroupVarbName,
-} from "../groupedNames";
+  GroupVarbNameBase,
+} from "../GroupName";
 import { ChildName } from "../sectionChildrenDerived/ChildName";
 import {
   ongoingPureCalc,
@@ -28,7 +28,7 @@ type GroupOptions<GN extends GroupName> = Partial<
 >;
 
 export type GroupUpdateVarbs<BN extends string, GN extends GroupName> = {
-  [VN in GroupVarbName<BN, GN>]: UpdateVarb<"numObj">;
+  [VN in GroupVarbNameBase<BN, GN>]: UpdateVarb<"numObj">;
 };
 
 export const updateVarbsS = {
@@ -99,6 +99,9 @@ export const updateVarbsS = {
     childBaseName: CBN
   ): GroupUpdateVarbs<BN, "periodic"> {
     return this.loadChildGroup(baseName, "periodic", childName, childBaseName);
+  },
+  childPeriodicEditor<BN extends string>(baseName: BN, childName: ChildName) {
+    return this.loadChildPeriodic(baseName, childName, "value");
   },
   timespan<BN extends string>(
     baseName: BN,

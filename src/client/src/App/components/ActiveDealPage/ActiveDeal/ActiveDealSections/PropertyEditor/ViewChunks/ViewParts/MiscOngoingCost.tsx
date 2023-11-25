@@ -2,18 +2,18 @@ import { FeIdProp } from "../../../../../../../sharedWithServer/SectionsMeta/Sec
 import { useGetterSection } from "../../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { nativeTheme } from "../../../../../../../theme/nativeTheme";
 import { SelectAndItemizeEditor } from "../../../../../../appWide/SelectAndItemizeEditor";
-import { NumObjEntityEditor } from "../../../../../../inputs/NumObjEntityEditor";
-import { ListEditorOngoing } from "../../ValueShared/ListEditorOngoing";
+import { PeriodicEditor } from "../../../../../../inputs/PeriodicEditor";
+import { PeriodicList } from "../../ValueShared/PeriodicList";
 
 interface Props extends FeIdProp {
   menuDisplayNames: string[];
 }
 export function MiscOngoingCost({ feId, menuDisplayNames }: Props) {
   const feInfo = { sectionName: "miscPeriodicValue", feId } as const;
-  const ongoingCost = useGetterSection(feInfo);
-
-  const valueVarb = ongoingCost.switchVarb("valueDollars", "periodic");
-  const sourceName = ongoingCost.valueNext("valueSourceName");
+  const miscValue = useGetterSection(feInfo);
+  const editor = miscValue.onlyChild("periodicEditor");
+  const valueVarb = miscValue.varbNext("valueDollarsMonthly");
+  const sourceName = miscValue.valueNext("valueSourceName");
   return (
     <SelectAndItemizeEditor
       inputMargins
@@ -22,14 +22,15 @@ export function MiscOngoingCost({ feId, menuDisplayNames }: Props) {
         label: "Misc ongoing costs",
         itemizedModalTitle: "Misc ongoing costs",
         makeEditor:
-          sourceName === "valueDollarsPeriodicEditor"
+          sourceName === "valueDollarsEditor"
             ? (props) => (
-                <NumObjEntityEditor
+                <PeriodicEditor
                   {...{
                     ...props,
-                    feVarbInfo: {
-                      ...feInfo,
-                      varbName: "valueDollarsPeriodicEditor",
+                    feId: editor.feId,
+                    labelNames: {
+                      sectionName: "miscPeriodicValue",
+                      varbBaseName: "valueDollars",
                     },
                   }}
                 />
@@ -42,16 +43,16 @@ export function MiscOngoingCost({ feId, menuDisplayNames }: Props) {
           varbName: "valueSourceName",
         },
         items: [
-          ["valueDollarsPeriodicEditor", "Custom amount"],
+          ["valueDollarsEditor", "Custom amount"],
           ["listTotal", "Itemize"],
         ],
         itemizeValue: "listTotal",
         total: valueVarb.displayVarb(),
         itemsComponent: (
-          <ListEditorOngoing
+          <PeriodicList
             {...{
               menuDisplayNames,
-              feId: ongoingCost.oneChildFeId("periodicList"),
+              feId: miscValue.oneChildFeId("periodicList"),
               menuType: "value",
               routeBtnProps: {
                 title: "Misc Ongoing Lists",

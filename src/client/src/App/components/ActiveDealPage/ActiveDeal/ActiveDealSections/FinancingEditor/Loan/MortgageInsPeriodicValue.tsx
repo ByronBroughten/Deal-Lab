@@ -2,35 +2,32 @@ import { FeIdProp } from "../../../../../../sharedWithServer/SectionsMeta/Sectio
 import { useGetterSection } from "../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { nativeTheme } from "../../../../../../theme/nativeTheme";
 import { SelectEditor } from "../../../../../appWide/SelectEditor";
-import { NumObjEntityEditor } from "../../../../../inputs/NumObjEntityEditor";
+import { PeriodicEditor } from "../../../../../inputs/PeriodicEditor";
 
 interface Props extends FeIdProp {
-  percentDisplayVarb: string;
+  dollarsDisplay: string;
 }
-export function MortgageInsPeriodicValue({ feId, percentDisplayVarb }: Props) {
+export function MortgageInsPeriodicValue({ feId, dollarsDisplay }: Props) {
   const feInfo = { sectionName: "mortgageInsPeriodicValue", feId } as const;
   const mortgageInsPeriodic = useGetterSection(feInfo);
-
   const sourceName = mortgageInsPeriodic.valueNext("valueSourceName");
   return (
     <SelectEditor
       inputMargins
       {...{
-        unionValueName: "mortgageInsperiodic",
+        unionValueName: "mortgageInsPeriodic",
         label: "Ongoing",
         makeEditor: (props) => (
-          <NumObjEntityEditor
+          <PeriodicEditor
             {...{
               ...props,
-              feVarbInfo: {
-                ...feInfo,
-                varbName: sourceName,
-              },
+              feId: mortgageInsPeriodic.onlyChildFeId(sourceName),
+              labelNames: { sectionName: "loan", varbBaseName: "mortgageIns" },
             }}
           />
         ),
-        ...(sourceName === "percentLoanPeriodicEditor" && {
-          equalsValue: percentDisplayVarb,
+        ...(sourceName === "percentEditor" && {
+          equalsValue: dollarsDisplay,
         }),
         sx: { ...nativeTheme.editorMargins },
         selectProps: { sx: { minWidth: 170 } },
@@ -39,8 +36,8 @@ export function MortgageInsPeriodicValue({ feId, percentDisplayVarb }: Props) {
           varbName: "valueSourceName",
         },
         items: [
-          ["percentLoanPeriodicEditor", "Percent of loan"],
-          ["valueDollarsPeriodicEditor", "Custom amount"],
+          ["percentEditor", "Percent of loan"],
+          ["dollarsEditor", "Custom amount"],
         ],
       }}
     />

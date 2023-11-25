@@ -1,30 +1,24 @@
-import { GroupKey } from "../groupedNames";
+import { GroupKey, periodicEnding } from "../GroupName";
 import { relVarbInfoS } from "../SectionInfo/RelVarbInfo";
 import { USVS, usvs } from "../updateSectionVarbs/updateSectionVarbs";
 import { updateVarb, uvS } from "../updateSectionVarbs/updateVarb";
 import {
   OverrideBasics,
-  uosB,
+  uosb,
+  uosbS,
 } from "../updateSectionVarbs/updateVarb/OverrideBasics";
 import { ubS } from "../updateSectionVarbs/updateVarb/UpdateBasics";
 import {
   UpdateFnProp,
   upS,
 } from "../updateSectionVarbs/updateVarb/UpdateFnProps";
-import { updateOverride } from "../updateSectionVarbs/updateVarb/UpdateOverride";
 import {
   DealModeBasics,
   uosS,
 } from "../updateSectionVarbs/updateVarb/UpdateOverrides";
 import { osS } from "../updateSectionVarbs/updateVarb/UpdateOverrideSwitch";
-import {
-  GroupUpdateVarbs,
-  updateVarbsS,
-  uvsS,
-} from "../updateSectionVarbs/updateVarbs";
+import { GroupUpdateVarbs, uvsS } from "../updateSectionVarbs/updateVarbs";
 import { NumObj, numObj } from "../values/StateValue/NumObj";
-import { UnionValue } from "../values/StateValue/unionValues";
-import { periodicEnding } from "./../groupedNames";
 
 export function propertyUpdateVarbs(): USVS<"property"> {
   return usvs("property", {
@@ -87,27 +81,18 @@ export function propertyUpdateVarbs(): USVS<"property"> {
       fixAndFlip: ubS.loadLocal("numUnitsEditor"),
       brrrr: ubS.sumChildren("unit", "one"),
     }),
-    singleMultiNumUnits: uvS.numObjO([
-      updateOverride(
-        [osS.localIsTrue("isMultifamily")],
-        ubS.sumChildren("unit", "one")
-      ),
-      updateOverride([osS.localIsFalse("isMultifamily")], ubS.one),
-    ]),
-    singleMultiBrCount: uvS.numObjO([
-      updateOverride(
-        [osS.localIsTrue("isMultifamily")],
-        ubS.sumChildren("unit", "numBedrooms")
-      ),
-      updateOverride(
-        [osS.localIsFalse("isMultifamily")],
-        ubS.loadFromFirstChild("unit", "numBedrooms")
-      ),
-    ]),
-    ...updateVarbsS.periodic2("homebuyerRent", {
-      monthly: uosB(homebuyerRentOverrides("monthly")),
-      yearly: uosB(homebuyerRentOverrides("yearly")),
-    }),
+    singleMultiNumUnits: uvS.numObjO(
+      uosS.boolean("isMultifamily", {
+        true: ubS.sumChildren("unit", "one"),
+        false: ubS.one,
+      })
+    ),
+    singleMultiBrCount: uvS.numObjO(
+      uosS.boolean("isMultifamily", {
+        true: ubS.sumChildren("unit", "numBedrooms"),
+        false: ubS.loadFromFirstChild("unit", "numBedrooms"),
+      })
+    ),
     ...uvsS.periodic2("targetRent", {
       monthly: ubS.sumChildren("unit", "targetRentMonthly"),
       yearly: ubS.sumChildren("unit", "targetRentYearly"),
@@ -188,7 +173,7 @@ function propertyModeOverrides(dealModeToBasics: DealModeBasics) {
 }
 
 function holdingCostPeriodic(groupKey: GroupKey<"periodic">): OverrideBasics {
-  return uosB(
+  return uosb(
     propertyModeOverrides({
       homeBuyer: ubS.notApplicable,
       buyAndHold: ubS.notApplicable,
@@ -208,66 +193,37 @@ function propertyHoldingCosts(groupKey: GroupKey<"periodic">): UpdateFnProp[] {
   ];
 }
 
-function homebuyerRentOverrides(periodicSwitch: UnionValue<"periodic">) {
-  const varbNames = {
-    monthly: "targetRentMonthly",
-    yearly: "targetRentYearly",
-  } as const;
-  const varbName = varbNames[periodicSwitch];
-  return [
-    updateOverride([osS.localIsFalse("isRenting")], ubS.zero),
-    updateOverride(
-      [osS.localIsTrue("isRenting"), osS.localIsTrue("isMultifamily")],
-      ubS.sumChildren("unit", varbName)
-    ),
-    updateOverride(
-      [osS.localIsTrue("isRenting"), osS.localIsFalse("isMultifamily")],
-      ubS.loadFromFirstChild("unit", varbName)
-    ),
-  ];
-}
-
 type OngoingBaseName<BN extends "taxes" | "homeIns"> = `${BN}Ongoing`;
 function ongoingVarbs<BN extends "taxes" | "homeIns">(
   base: BN
 ): GroupUpdateVarbs<OngoingBaseName<BN>, "periodic"> {
   const baseName = `${base}Ongoing`;
   return uvsS.periodic2(baseName, {
-    monthly: uosB(
-      uosS.valueSource(
-        "taxesAndHomeInsSource",
-        {
-          sameAsHoldingPhase: ubS.loadLocal(`${base}HoldingMonthly`),
-          valueDollarsPeriodicEditor: ubS.loadChild(
-            `${base}Ongoing`,
-            "valueDollarsMonthly"
-          ),
-        },
-        {
-          switchInfo: relVarbInfoS.onlyChild(
-            `${base}Ongoing`,
-            "valueSourceName"
-          ),
-        }
-      )
+    monthly: uosbS.valueSource(
+      "taxesAndHomeInsSource",
+      {
+        sameAsHoldingPhase: ubS.loadLocal(`${base}HoldingMonthly`),
+        valueDollarsEditor: ubS.loadChild(
+          `${base}Ongoing`,
+          "valueDollarsMonthly"
+        ),
+      },
+      {
+        switchInfo: relVarbInfoS.onlyChild(`${base}Ongoing`, "valueSourceName"),
+      }
     ),
-    yearly: uosB(
-      uosS.valueSource(
-        "taxesAndHomeInsSource",
-        {
-          sameAsHoldingPhase: ubS.loadLocal(`${base}HoldingYearly`),
-          valueDollarsPeriodicEditor: ubS.loadChild(
-            `${base}Ongoing`,
-            "valueDollarsYearly"
-          ),
-        },
-        {
-          switchInfo: relVarbInfoS.onlyChild(
-            `${base}Ongoing`,
-            "valueSourceName"
-          ),
-        }
-      )
+    yearly: uosbS.valueSource(
+      "taxesAndHomeInsSource",
+      {
+        sameAsHoldingPhase: ubS.loadLocal(`${base}HoldingYearly`),
+        valueDollarsEditor: ubS.loadChild(
+          `${base}Ongoing`,
+          "valueDollarsYearly"
+        ),
+      },
+      {
+        switchInfo: relVarbInfoS.onlyChild(`${base}Ongoing`, "valueSourceName"),
+      }
     ),
   });
 }
@@ -278,24 +234,20 @@ function propertyCompletionStatus() {
       {
         homeBuyer: ubS.completionStatus({
           nonNone: hasOngoingNoneNones(),
-          validInputs: [
-            ...propertySharedValidInputs(),
-            ...hasOngoingValidInputs(),
-          ],
+          notEmptySolvable: hasOngoingNotEmpty(),
+          validInputs: propertySharedValidInputs(),
         }),
         buyAndHold: ubS.completionStatus({
           nonZeros: [upS.local("numUnits")],
           nonNone: hasOngoingNoneNones(),
-          validInputs: [
-            ...propertySharedValidInputs(),
-            ...hasOngoingValidInputs(),
-          ],
+          notEmptySolvable: hasOngoingNotEmpty(),
+          validInputs: propertySharedValidInputs(),
         }),
         fixAndFlip: ubS.completionStatus({
           nonNone: [upS.onlyChild("repairValue", "valueSourceName")],
+          notEmptySolvable: hasHoldingNotEmpty(),
           validInputs: [
             ...propertySharedValidInputs(),
-            ...hasHoldingValidInputs(),
             upS.local("numUnitsEditor"),
           ],
         }),
@@ -305,11 +257,8 @@ function propertyCompletionStatus() {
             upS.onlyChild("repairValue", "valueSourceName"),
             ...hasOngoingNoneNones(),
           ],
-          validInputs: [
-            ...propertySharedValidInputs(),
-            ...hasOngoingValidInputs(),
-            ...hasHoldingValidInputs(),
-          ],
+          notEmptySolvable: [...hasOngoingNotEmpty(), ...hasHoldingNotEmpty()],
+          validInputs: propertySharedValidInputs(),
         }),
       },
       { switchInfo: relVarbInfoS.local("propertyMode") }
@@ -323,18 +272,6 @@ function hasOngoingNoneNones(): UpdateFnProp[] {
     upS.onlyChild("utilityOngoing", "valueSourceName"),
     upS.onlyChild("maintenanceOngoing", "valueSourceName"),
     upS.onlyChild("capExValueOngoing", "valueSourceName"),
-  ];
-}
-function hasOngoingValidInputs(): UpdateFnProp[] {
-  return [
-    upS.onlyChild("taxesOngoing", "valueDollarsPeriodicEditor"),
-    upS.onlyChild("homeInsOngoing", "valueDollarsPeriodicEditor"),
-    upS.onlyChild("capExValueOngoing", "valueDollarsPeriodicEditor", [
-      osS.valueSourceIs("valueDollarsPeriodicEditor"),
-    ]),
-    upS.onlyChild("maintenanceOngoing", "valueDollarsPeriodicEditor", [
-      osS.valueSourceIs("valueDollarsPeriodicEditor"),
-    ]),
   ];
 }
 
@@ -353,11 +290,31 @@ function propertySharedValidInputs(): UpdateFnProp[] {
   ];
 }
 
-function hasHoldingValidInputs(): UpdateFnProp[] {
+function hasOngoingNotEmpty(): UpdateFnProp[] {
   return [
-    upS.onlyChild("taxesHolding", "valueDollarsPeriodicEditor"),
-    upS.onlyChild("homeInsHolding", "valueDollarsPeriodicEditor"),
-    upS.onlyChild("holdingPeriod", "valueEditorUnit"),
-    upS.onlyChild("holdingPeriod", "valueEditor"),
+    upS.onlyChild("taxesOngoing", "valueDollarsMonthly"),
+    upS.onlyChild("taxesOngoing", "valueDollarsYearly"),
+
+    upS.onlyChild("homeInsOngoing", "valueDollarsMonthly"),
+    upS.onlyChild("homeInsOngoing", "valueDollarsYearly"),
+
+    upS.onlyChild("capExValueOngoing", "valueDollarsMonthly"),
+    upS.onlyChild("capExValueOngoing", "valueDollarsYearly"),
+
+    upS.onlyChild("maintenanceOngoing", "valueDollarsMonthly"),
+    upS.onlyChild("maintenanceOngoing", "valueDollarsYearly"),
+  ];
+}
+
+function hasHoldingNotEmpty(): UpdateFnProp[] {
+  return [
+    upS.onlyChild("taxesHolding", "valueDollarsMonthly"),
+    upS.onlyChild("taxesHolding", "valueDollarsYearly"),
+
+    upS.onlyChild("homeInsHolding", "valueDollarsMonthly"),
+    upS.onlyChild("homeInsHolding", "valueDollarsYearly"),
+
+    upS.onlyChild("holdingPeriod", "valueMonths"),
+    upS.onlyChild("holdingPeriod", "valueYears"),
   ];
 }

@@ -1,11 +1,11 @@
-import { SectionPack } from "../../SectionsMeta/sectionChildrenDerived/SectionPack";
-import { numObj } from "../../SectionsMeta/values/StateValue/NumObj";
-import { numObjNext } from "../../SectionsMeta/values/StateValue/numObjNext";
-import { timeS } from "../../utils/timeS";
-import { makeDefaultDealPack } from "../makeDefaultDeal";
-import { TopOperator } from "./../../StateSolvers/TopOperator";
+import { makeDefaultDealPack } from "../defaultMaker/makeDefaultDeal";
+import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
+import { numObj } from "../SectionsMeta/values/StateValue/NumObj";
+import { numObjNext } from "../SectionsMeta/values/StateValue/numObjNext";
+import { TopOperator } from "../StateSolvers/TopOperator";
+import { timeS } from "../utils/timeS";
 import { example20PercentDownFinancing } from "./example20PercentDownLoan";
-import { avgHomeAdvisorNahbCapExProps } from "./makeExampleOngoingListsProps";
+import { avgHomeAdvisorNahbCapExProps } from "./makeExamplePeriodicListProps";
 import { makeExampleProperty } from "./makeExampleProperty";
 
 export function exampleDealHomebuyer(displayName: string): SectionPack<"deal"> {

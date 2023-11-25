@@ -50,11 +50,13 @@ describe("PropertyBrrrrCalculations", () => {
     const rentTotal = addRents(property, [2000, 2100, 2300]);
     const miscTotal = 1200;
     const misc = property.onlyChild("miscOngoingRevenue");
-    misc.updateValues({
-      valueSourceName: "valueDollarsPeriodicEditor",
-      valueDollarsPeriodicSwitch: "monthly",
-      valueDollarsPeriodicEditor: numObj(miscTotal),
+    misc.updateValues({ valueSourceName: "valueDollarsEditor" });
+    const miscEditor = misc.onlyChild("periodicEditor");
+    miscEditor.updateValues({
+      valueEditorFrequency: "monthly",
+      valueEditor: numObj(miscTotal),
     });
+
     const total = rentTotal + miscTotal;
     testPeriodicVarb("revenueOngoing", total);
   });

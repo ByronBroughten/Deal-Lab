@@ -26,9 +26,10 @@ function useShowUnitInfo(property: GetterSection<"property">): boolean {
   }
 
   const firstUnit = units[0];
-  const brEditor = firstUnit.valueNext("numBedrooms").mainText;
-  const rentEditor = firstUnit.valueNext("targetRentPeriodicEditor").mainText;
-  if (brEditor || rentEditor) {
+  const brText = firstUnit.valueNext("numBedrooms").mainText;
+  const rentEditor = firstUnit.onlyChild("targetRentEditor");
+  const rentText = rentEditor.valueNext("valueEditor").mainText;
+  if (brText || rentText) {
     return true;
   } else {
     return false;

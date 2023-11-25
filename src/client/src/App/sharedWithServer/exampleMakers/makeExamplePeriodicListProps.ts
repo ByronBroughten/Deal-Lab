@@ -1,6 +1,6 @@
-import { NumObj, numObj } from "../../SectionsMeta/values/StateValue/NumObj";
-import { numObjNext } from "../../SectionsMeta/values/StateValue/numObjNext";
-import { Obj } from "./../../utils/Obj";
+import { NumObj, numObj } from "../SectionsMeta/values/StateValue/NumObj";
+import { numObjNext } from "../SectionsMeta/values/StateValue/numObjNext";
+import { Obj } from "../utils/Obj";
 
 export type ExampleCapExProps = [string, number | NumObj, number | NumObj][];
 

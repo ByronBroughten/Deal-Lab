@@ -1,55 +1,26 @@
-import { UpdateSectionVarbs } from "../updateSectionVarbs/updateSectionVarbs";
+import {
+  UpdateSectionVarbs,
+  usvs,
+} from "../updateSectionVarbs/updateSectionVarbs";
 import { updateVarb } from "../updateSectionVarbs/updateVarb";
-import { updateBasicsS } from "../updateSectionVarbs/updateVarb/UpdateBasics";
-import { updateOverride } from "../updateSectionVarbs/updateVarb/UpdateOverride";
-import { overrideSwitchS } from "../updateSectionVarbs/updateVarb/UpdateOverrideSwitch";
-import { updateVarbsS } from "../updateSectionVarbs/updateVarbs";
-import { numObj } from "../values/StateValue/NumObj";
-
-const switchS = overrideSwitchS;
-const basicsS = updateBasicsS;
+import { uosbS } from "../updateSectionVarbs/updateVarb/OverrideBasics";
+import { ubS } from "../updateSectionVarbs/updateVarb/UpdateBasics";
+import { uvsS } from "../updateSectionVarbs/updateVarbs";
 
 export function miscPeriodicCostUpdateVarbs(): UpdateSectionVarbs<"miscPeriodicValue"> {
-  return {
+  return usvs("miscPeriodicValue", {
     valueSourceName: updateVarb("dollarsOrListOngoing", {
-      initValue: "valueDollarsPeriodicEditor",
+      initValue: "valueDollarsEditor",
     }),
-    ...updateVarbsS._typeUniformity,
-    ...updateVarbsS.group("valueDollars", "periodicInput", "monthly", {
-      editor: { initValue: numObj(0) },
-      monthly: {
-        updateFnName: "throwIfReached",
-        updateOverrides: [
-          updateOverride(
-            [switchS.valueSourceIs("listTotal")],
-            basicsS.loadChild("periodicList", "totalMonthly")
-          ),
-          updateOverride(
-            [switchS.local("valueDollarsPeriodicSwitch", "monthly")],
-            basicsS.loadLocal("valueDollarsPeriodicEditor")
-          ),
-          updateOverride(
-            [switchS.local("valueDollarsPeriodicSwitch", "yearly")],
-            basicsS.yearlyToMonthly("valueDollars")
-          ),
-        ],
-      },
-      yearly: {
-        updateOverrides: [
-          updateOverride(
-            [switchS.valueSourceIs("listTotal")],
-            basicsS.loadChild("periodicList", "totalYearly")
-          ),
-          updateOverride(
-            [switchS.local("valueDollarsPeriodicSwitch", "yearly")],
-            basicsS.loadLocal("valueDollarsPeriodicEditor")
-          ),
-          updateOverride(
-            [switchS.local("valueDollarsPeriodicSwitch", "monthly")],
-            basicsS.monthlyToYearly("valueDollars")
-          ),
-        ],
-      },
+    ...uvsS.periodic2("valueDollars", {
+      monthly: uosbS.valueSource("dollarsOrListOngoing", {
+        listTotal: ubS.loadChild("periodicList", "totalMonthly"),
+        valueDollarsEditor: ubS.loadChild("periodicEditor", "valueMonthly"),
+      }),
+      yearly: uosbS.valueSource("dollarsOrListOngoing", {
+        listTotal: ubS.loadChild("periodicList", "totalYearly"),
+        valueDollarsEditor: ubS.loadChild("periodicEditor", "valueYearly"),
+      }),
     }),
-  };
+  });
 }

@@ -31,7 +31,7 @@ export function LoanBaseExtra({ feId, sx, editorMargins }: Props) {
               makeEditor: (props) => (
                 <NumObjEntityEditor
                   {...props}
-                  feVarbInfo={loanExtra.varbInfo("valueDollarsEditor")}
+                  feVarbInfo={loanExtra.varbInfo2("valueDollarsEditor")}
                 />
               ),
             }),

@@ -58,6 +58,9 @@ export class DefaultSelfPackLoader<
       sectionPack,
     });
   }
+  overwriteSelf(): void {
+    this.selfPackLoader(this.sectionPack).overwriteSelfWithPack();
+  }
   private get headRawSection(): OneRawSection<SN> {
     return this.sectionPack.rawSections[this.sectionName][0];
   }

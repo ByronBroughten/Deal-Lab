@@ -2,12 +2,13 @@ import { VarbListItemSimple } from "../../ListGroup/ListGroupShared/VarbListItem
 
 type Props = { feId: string };
 export function UserVarbItem({ feId }: Props) {
-  const feInfo = {
-    sectionName: "numVarbItem",
-    feId,
-  } as const;
   return (
-    <VarbListItemSimple {...{ ...feInfo, valueEditorName: "valueEditor" }} />
-    // doEquals: varb.isPureUserVarb
+    <VarbListItemSimple
+      {...{
+        sectionName: "numVarbItem",
+        varbName: "valueEditor",
+        feId,
+      }}
+    />
   );
 }

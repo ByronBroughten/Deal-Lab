@@ -1,11 +1,8 @@
-import {
-  SectionValues,
-  StateValue,
-} from "../../SectionsMeta/values/StateValue";
-import { NumObj } from "../../SectionsMeta/values/StateValue/NumObj";
-import { PackBuilderSection } from "../../StatePackers/PackBuilderSection";
-import { StrictPick } from "../../utils/types";
-import { makeDefaultLoanPack } from "../makeDefaultLoanPack";
+import { makeDefaultLoanPack } from "../defaultMaker/makeDefaultLoanPack";
+import { SectionValues, StateValue } from "../SectionsMeta/values/StateValue";
+import { NumObj } from "../SectionsMeta/values/StateValue/NumObj";
+import { PackBuilderSection } from "../StatePackers/PackBuilderSection";
+import { StrictPick } from "../utils/types";
 
 type ExampleLoanProps = {
   loan: StrictPick<

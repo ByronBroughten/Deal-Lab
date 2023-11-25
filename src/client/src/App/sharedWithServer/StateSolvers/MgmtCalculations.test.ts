@@ -19,13 +19,13 @@ describe("MgmtCalculations", () => {
     mgmt = deal.mgmt;
   });
 
-  const add1000Rent = () =>
-    property.addChildAndSolve("unit", {
-      sectionValues: {
-        targetRentPeriodicSwitch: "monthly",
-        targetRentPeriodicEditor: numObj(1000),
-      },
+  const add1000Rent = () => {
+    const unit = property.addAndGetChild("unit");
+    unit.onlyChild("targetRentEditor").updateValuesAndSolve({
+      valueEditor: numObj(1000),
+      valueEditorFrequency: "monthly",
     });
+  };
 
   it("should calculate vacancy loss", () => {
     add1000Rent();
@@ -138,10 +138,11 @@ describe("MgmtCalculations", () => {
     vacancyLoss.updateValues({ valueSourceName: "fivePercentRent" });
 
     const miscOngoing = mgmt.onlyChild("miscOngoingCost");
-    miscOngoing.updateValues({
-      valueSourceName: "valueDollarsPeriodicEditor",
-      valueDollarsPeriodicSwitch: "monthly",
-      valueDollarsPeriodicEditor: numObj(200),
+    miscOngoing.updateValues({ valueSourceName: "valueDollarsPeriodicEditor" });
+    const editor = miscOngoing.onlyChild("periodicEditor");
+    editor.updateValues({
+      valueEditorFrequency: "monthly",
+      valueEditor: numObj(200),
     });
 
     test(100 + 50 + 200);

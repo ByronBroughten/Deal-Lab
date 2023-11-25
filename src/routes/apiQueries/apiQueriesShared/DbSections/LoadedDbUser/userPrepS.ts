@@ -1,14 +1,11 @@
 import ThirdPartyEmailPassword from "supertokens-node/recipe/thirdpartyemailpassword";
 import {
-  DbStoreSeed,
-  makeDefaultDbStoreArrs,
-} from "../../../../../client/src/App/sharedWithServer/defaultMaker/makeDefaultDbStore";
-import {
   DbStoreName,
   dbStoreNames,
 } from "../../../../../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/DbStoreName";
 import { StrictPick } from "../../../../../client/src/App/sharedWithServer/utils/types";
 import { DbUserModel } from "../../../../routesShared/DbUserModel";
+import { DbStoreSeed, initDbStoreArrs } from "./initDbStoreArrs";
 
 export function getSignUpData(
   user: ThirdPartyEmailPassword.User
@@ -26,7 +23,7 @@ export async function initUserInDb(props: DbStoreSeed) {
     authId: props.authId,
     email: props.email,
     childDbIds: initChildDbIds(),
-    ...makeDefaultDbStoreArrs(props),
+    ...initDbStoreArrs(props),
   });
   await dbUserModel.save();
 }

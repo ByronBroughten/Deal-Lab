@@ -44,7 +44,7 @@ export default function LogicRow({ feId, idx = "" }: Props) {
       {["if", "or if"].includes(type) && <IfLogic rowId={row.feId} />}
       {["then", "or else"].includes(type) && (
         <NumObjEntityEditor
-          feVarbInfo={row.varbInfo("then")}
+          feVarbInfo={row.varbInfo2("then")}
           className={"then-content"}
           labeled={false}
         />

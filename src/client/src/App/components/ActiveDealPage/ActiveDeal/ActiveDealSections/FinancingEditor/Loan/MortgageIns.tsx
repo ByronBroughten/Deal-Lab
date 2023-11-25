@@ -1,3 +1,4 @@
+import { periodicName } from "../../../../../../sharedWithServer/SectionsMeta/GroupName";
 import { useGetterSection } from "../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { nativeTheme } from "../../../../../../theme/nativeTheme";
 import { ToggledNode } from "../../../../../appWide/ToggledNode";
@@ -12,13 +13,10 @@ interface Props {
 export function MortgageIns({ feId, editorMargins }: Props) {
   const loan = useGetterSection({ sectionName: "loan", feId });
   const mortIns = loan.onlyChild("mortgageInsPeriodicValue");
-  const switchValue = mortIns.switchValue("percentLoan", "periodic");
-
-  const varbNames = {
-    monthly: "mortgageInsMonthly",
-    yearly: "mortgageInsYearly",
-  } as const;
-  const displayVarbName = varbNames[switchValue];
+  const percentFreq = mortIns
+    .onlyChild("percentEditor")
+    .valueNext("valueEditorFrequency");
+  const displayVarbName = periodicName("mortgageIns", percentFreq);
   return (
     <ToggledNode
       {...{
@@ -42,7 +40,7 @@ export function MortgageIns({ feId, editorMargins }: Props) {
             <MortgageInsPeriodicValue
               {...{
                 feId: loan.oneChildFeId("mortgageInsPeriodicValue"),
-                percentDisplayVarb: loan.displayVarb(displayVarbName),
+                dollarsDisplay: loan.displayVarb(displayVarbName),
               }}
             />
           </MuiRow>

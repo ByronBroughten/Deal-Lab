@@ -213,7 +213,6 @@ export const varbLabels = checkAllVarbLabels({
       variableLabel: "Average property expenses",
     }),
     ...simplePeriodic("targetRent", "Rent"),
-    ...simplePeriodic("homebuyerRent", "Rent"),
     ...simplePeriodic("homeInsOngoing", "Home insurance"),
     ...simplePeriodic("taxesOngoing", "Taxes"),
     ...simplePeriodic("utilitiesOngoing", "Utilities"),

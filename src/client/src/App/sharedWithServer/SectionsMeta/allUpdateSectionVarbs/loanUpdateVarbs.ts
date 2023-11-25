@@ -1,6 +1,11 @@
+import { GroupKey, groupNameEnding } from "../GroupName";
 import { relVarbInfoS } from "../SectionInfo/RelVarbInfo";
 import { UpdateSectionVarbs } from "../updateSectionVarbs/updateSectionVarbs";
 import { updateVarb, uvS } from "../updateSectionVarbs/updateVarb";
+import {
+  OverrideBasics,
+  uosb,
+} from "../updateSectionVarbs/updateVarb/OverrideBasics";
 import {
   ubS,
   UpdateBasics,
@@ -13,7 +18,7 @@ import {
 } from "../updateSectionVarbs/updateVarb/UpdateOverride";
 import { uosS } from "../updateSectionVarbs/updateVarb/UpdateOverrides";
 import { osS } from "../updateSectionVarbs/updateVarb/UpdateOverrideSwitch";
-import { updateVarbsS } from "../updateSectionVarbs/updateVarbs";
+import { updateVarbsS, uvsS } from "../updateSectionVarbs/updateVarbs";
 import { numObj } from "../values/StateValue/NumObj";
 import { unionValueArr } from "../values/StateValue/unionValues";
 import { PiCalculationName } from "../values/StateValue/valuesShared/calculations/piCalculations";
@@ -80,62 +85,9 @@ export function loanUpdateVarbs(): UpdateSectionVarbs<"loan"> {
         }
       ),
     ]),
-    ...updateVarbsS.group("mortgageIns", "periodic", "yearly", {
-      monthly: {
-        updateOverrides: [
-          updateOverride([osS.localIsFalse("hasMortgageIns")], ubS.zero),
-          ...uosS.valueSource(
-            "mortgageInsperiodic",
-            {
-              valueDollarsPeriodicEditor: ubS.loadChild(
-                "mortgageInsPeriodicValue",
-                "valueDollarsMonthly"
-              ),
-              percentLoanPeriodicEditor: ubS.equationLR(
-                "multiply",
-                upS.onlyChild(
-                  "mortgageInsPeriodicValue",
-                  "decimalOfLoanMonthly"
-                ),
-                upS.local("loanTotalDollars")
-              ),
-            },
-            {
-              sharedSwitches: [osS.localIsTrue("hasMortgageIns")],
-              switchInfo: relVarbInfoS.onlyChild(
-                "mortgageInsPeriodicValue",
-                "valueSourceName"
-              ),
-            }
-          ),
-        ],
-      },
-      yearly: {
-        updateOverrides: [
-          updateOverride([osS.localIsFalse("hasMortgageIns")], ubS.zero),
-          ...uosS.valueSource(
-            "mortgageInsperiodic",
-            {
-              valueDollarsPeriodicEditor: ubS.loadChild(
-                "mortgageInsPeriodicValue",
-                "valueDollarsYearly"
-              ),
-              percentLoanPeriodicEditor: ubS.equationLR(
-                "multiply",
-                "loanTotalDollars",
-                upS.onlyChild("mortgageInsPeriodicValue", "decimalOfLoanYearly")
-              ),
-            },
-            {
-              sharedSwitches: [osS.localIsTrue("hasMortgageIns")],
-              switchInfo: relVarbInfoS.onlyChild(
-                "mortgageInsPeriodicValue",
-                "valueSourceName"
-              ),
-            }
-          ),
-        ],
-      },
+    ...uvsS.periodic2("mortgageIns", {
+      monthly: mortgageInsPeriodicOverrides("monthly"),
+      yearly: mortgageInsPeriodicOverrides("yearly"),
     }),
     firstInterestPayment: uvS.multiply(
       "interestRateDecimalMonthly",
@@ -209,46 +161,22 @@ export function loanUpdateVarbs(): UpdateSectionVarbs<"loan"> {
     }),
 
     ...updateVarbsS.ongoingPureCalc("averagePrincipal", {
-      monthly: {
-        updateFnName: "throwIfReached",
-        updateOverrides: [
-          updateOverride([osS.localIsTrue("isInterestOnly")], ubS.zero),
-          updateOverride(
-            [osS.localIsFalse("isInterestOnly")],
-            ubS.equationLR(
-              "divide",
-              upS.local("loanTotalDollars"),
-              upS.local("loanTermMonths")
-            )
-          ),
-        ],
-      },
-      yearly: {
-        updateFnName: "throwIfReached",
-        updateOverrides: [
-          updateOverride([osS.localIsTrue("isInterestOnly")], ubS.zero),
-          updateOverride(
-            [osS.localIsFalse("isInterestOnly")],
-            ubS.equationLR(
-              "divide",
-              upS.local("loanTotalDollars"),
-              upS.local("loanTermYears")
-            )
-          ),
-        ],
-      },
+      monthly: uvS.numObjO(
+        uosS.boolean("isInterestOnly", {
+          true: ubS.zero,
+          false: ubS.divide("loanTotalDollars", "loanTermMonths"),
+        })
+      ),
+      yearly: uvS.numObjO(
+        uosS.boolean("isInterestOnly", {
+          true: ubS.zero,
+          false: ubS.divide("loanTotalDollars", "loanTermYears"),
+        })
+      ),
     }),
     ...updateVarbsS.ongoingPureCalc("averageInterest", {
-      monthly: ubS.equationLR(
-        "subtract",
-        upS.local("loanPaymentMonthly"),
-        upS.local("averagePrincipalMonthly")
-      ),
-      yearly: ubS.equationLR(
-        "subtract",
-        upS.local("loanPaymentYearly"),
-        upS.local("averagePrincipalYearly")
-      ),
+      monthly: ubS.subtract("loanPaymentMonthly", "averagePrincipalMonthly"),
+      yearly: ubS.subtract("loanPaymentYearly", "averagePrincipalYearly"),
     }),
     ...updateVarbsS.ongoingPureCalc("piFixedStandard", {
       monthly: {
@@ -327,6 +255,35 @@ function loanPrepaidPeriodic(baseName: "taxes" | "homeIns") {
     uO(
       [osS.childValueSourceIs(childName, "valueDollarsEditor")],
       ubS.loadChild(childName, "valueDollarsEditor")
+    ),
+  ]);
+}
+
+function mortgageInsPeriodicOverrides(
+  groupKey: GroupKey<"periodic">
+): OverrideBasics {
+  const ending = groupNameEnding("periodic", groupKey);
+  return uosb([
+    updateOverride([osS.localIsFalse("hasMortgageIns")], ubS.zero),
+    ...uosS.valueSource(
+      "mortgageInsPeriodic",
+      {
+        dollarsEditor: ubS.loadChild(
+          "mortgageInsPeriodicValue",
+          `valueDollars${ending}`
+        ),
+        percentEditor: ubS.multiply(
+          "loanTotalDollars",
+          upS.onlyChild("mortgageInsPeriodicValue", `decimalOfLoan${ending}`)
+        ),
+      },
+      {
+        sharedSwitches: [osS.localIsTrue("hasMortgageIns")],
+        switchInfo: relVarbInfoS.onlyChild(
+          "mortgageInsPeriodicValue",
+          "valueSourceName"
+        ),
+      }
     ),
   ]);
 }

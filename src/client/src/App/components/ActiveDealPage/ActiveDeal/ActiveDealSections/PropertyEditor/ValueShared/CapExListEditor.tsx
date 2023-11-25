@@ -1,10 +1,10 @@
-import { capExDisplayNames } from "../../../../../../sharedWithServer/defaultMaker/makeDefaultFeUser/makeExampleOngoingListsProps";
+import { capExDisplayNames } from "../../../../../../sharedWithServer/exampleMakers/makeExamplePeriodicListProps";
 import { SectionValues } from "../../../../../../sharedWithServer/SectionsMeta/values/StateValue";
 import { useAction } from "../../../../../../sharedWithServer/stateClassHooks/useAction";
 import { useGetterSection } from "../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { VarbListGenericMenuType } from "../../../../../appWide/ListGroup/ListGroupShared/VarbListGeneric";
 import { VarbListTableCapEx } from "../../../../../appWide/ListGroup/ListGroupShared/VarbListGeneric/VarbListTableCapEx";
-import { ListItemCapEx } from "../../../../../appWide/VarbLists/VarbListOngoing/ListItemCapEx";
+import { CapExItem } from "../../../../../appWide/VarbLists/ListGroupPeriodicList/CapExItem";
 import { ValueListGeneral } from "./ValueListGeneral";
 
 type Props = { feId: string; menuType: VarbListGenericMenuType };
@@ -47,7 +47,7 @@ export function CapExValueList({ feId, menuType }: Props) {
             }}
           >
             {capExItems.map((item) => (
-              <ListItemCapEx
+              <CapExItem
                 {...{
                   sectionName: "capExItem",
                   feId: item.feId,

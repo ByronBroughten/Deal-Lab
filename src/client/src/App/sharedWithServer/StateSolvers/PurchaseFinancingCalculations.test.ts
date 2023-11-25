@@ -246,10 +246,9 @@ describe("Purchase financing calculations", () => {
     const monthlyValue = 30;
 
     const mortIns = firstLoan.onlyChild("mortgageInsPeriodicValue");
-    mortIns.updateValues({
-      valueSourceName: "valueDollarsPeriodicEditor",
-      valueDollarsPeriodicEditor: numObj(monthlyValue),
-      valueDollarsPeriodicSwitch: "monthly",
+    mortIns.onlyChild("dollarsEditor").updateValues({
+      valueEditor: numObj(monthlyValue),
+      valueEditorFrequency: "monthly",
     });
 
     expect(financing.numValue("mortgageInsMonthly")).toBe(monthlyValue);

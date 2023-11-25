@@ -1,31 +1,23 @@
-import { FeSectionInfo } from "../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
+import { FeVI } from "../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { MuiRow } from "../../../general/MuiRow";
 import { NumObjEntityEditor } from "../../../inputs/NumObjEntityEditor";
 import { FirstContentCell } from "./VarbListGeneric/FirstContentCellAndHeader";
 
-interface Props extends FeSectionInfo {
+interface Props extends FeVI {
   className?: string;
   endAdornment?: string;
-  valueEditorName:
-    | "valueEditor"
-    | "valueDollarsEditor"
-    | "valueDollarsPeriodicEditor";
 }
 export function FirstValueEditorCell({
   className,
   endAdornment,
-  valueEditorName,
-  ...feInfo
+  ...feVI
 }: Props) {
   return (
     <FirstContentCell className={className}>
       <MuiRow sx={{ alignItems: "flex-end", flexWrap: "nowrap" }}>
         <NumObjEntityEditor
           editorType="equation"
-          feVarbInfo={{
-            ...feInfo,
-            varbName: valueEditorName,
-          }}
+          feVarbInfo={feVI}
           labeled={false}
           endAdornment={endAdornment}
         />

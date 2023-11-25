@@ -36,11 +36,11 @@ export function LoanTerms({ feId }: FeIdProp) {
       <MuiRow>
         <NumObjEntityEditor
           inputMargins
-          feVarbInfo={loan.varbInfo("interestRatePercentPeriodicEditor")}
+          feVarbInfo={loan.varbInfo2("interestRatePercentPeriodicEditor")}
         />
         <NumObjEntityEditor
           inputMargins
-          feVarbInfo={loan.varbInfo("loanTermSpanEditor")}
+          feVarbInfo={loan.varbInfo2("loanTermSpanEditor")}
           label="Loan term"
         />
       </MuiRow>

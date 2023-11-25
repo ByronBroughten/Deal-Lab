@@ -27,15 +27,15 @@ function checkAllSectionChildren<CS extends GenericChildSections>(
 ) {
   return allSectionChildren;
 }
-
+const sCdn = sectionChildren;
 export const allSectionChildren = checkAllSectionChildren({
   ...defaults,
-  root: sectionChildren({
+  root: sCdn({
     omniParent: "omniParent",
     main: "main",
   }),
   omniParent: relOmniParentChildren,
-  main: sectionChildren({
+  main: sCdn({
     // This has all the saved user data
     feStore: "feStore",
 
@@ -53,17 +53,17 @@ export const allSectionChildren = checkAllSectionChildren({
     latentDealSystem: "dealSystem",
     activeDealSystem: "dealSystem",
   }),
-  sessionStore: sectionChildren({
+  sessionStore: sCdn({
     dealMain: "sessionDeal",
   }),
-  sessionDeal: sectionChildren({
+  sessionDeal: sCdn({
     sessionVarb: "sessionVarb",
   }),
-  sessionSection: sectionChildren({
+  sessionSection: sCdn({
     sessionVarb: "sessionVarb",
   }),
-  feStore: sectionChildren(sectionStores),
-  dbStore: sectionChildren({
+  feStore: sCdn(sectionStores),
+  dbStore: sCdn({
     // these are mimicked by the front-end
     ...sectionStores,
     // these are unique to the db
@@ -74,21 +74,19 @@ export const allSectionChildren = checkAllSectionChildren({
     stripeSubscription: "stripeSubscription",
   }),
 
-  dealSystem: sectionChildren({
+  dealSystem: sCdn({
     deal: "deal",
     calculatedVarbs: "calculatedVarbs",
     numVarbList: "numVarbList",
     boolVarbList: "boolVarbList",
   }),
-  dealCompareMenu: sectionChildren({
+  dealCompareMenu: sCdn({
     comparedDeal: "comparedDeal",
     outputList: "outputList",
   }),
-  dealCompareCache: sectionChildren({ comparedDealSystem: "dealSystem" }),
-  outputList: {
-    outputItem: sectionChild("outputItem"),
-  },
-  outputSection: sectionChildren({
+  dealCompareCache: sCdn({ comparedDealSystem: "dealSystem" }),
+  outputList: sCdn({ outputItem: "outputItem" }),
+  outputSection: sCdn({
     homeBuyerOutputList: "outputList",
     buyAndHoldOutputList: "outputList",
     fixAndFlipOutputList: "outputList",
@@ -99,13 +97,14 @@ export const allSectionChildren = checkAllSectionChildren({
   periodicList: {
     periodicItem: sectionChild("periodicItem", { isListItem: true }),
   },
+  periodicItem: sCdn({ valueDollarsEditor: "periodicEditor" }),
   numVarbList: { numVarbItem: sectionChild("numVarbItem") },
   boolVarbList: { boolVarbItem: sectionChild("boolVarbItem") },
   numVarbItem: {
     conditionalRowList: sectionChild("conditionalRowList"),
   },
   conditionalRowList: { conditionalRow: sectionChild("conditionalRow") },
-  deal: sectionChildren({
+  deal: sCdn({
     property: "property",
     purchaseFinancing: "financing",
     refiFinancing: "financing",
@@ -116,7 +115,7 @@ export const allSectionChildren = checkAllSectionChildren({
     purchaseLoan: sectionChild("loan"),
     refinanceLoan: sectionChild("loan"),
   },
-  loan: sectionChildren({
+  loan: sCdn({
     loanBaseValue: "loanBaseValue",
     closingCostValue: "closingCostValue",
     customVarb: "customVarb",
@@ -126,20 +125,24 @@ export const allSectionChildren = checkAllSectionChildren({
     prepaidHomeIns: "prepaidPeriodic",
     prepaidInterest: "prepaidDaily",
   }),
-  prepaidPeriodic: sectionChildren({
+  mortgageInsPeriodicValue: sCdn({
+    dollarsEditor: "periodicEditor",
+    percentEditor: "periodicEditor",
+  }),
+  prepaidPeriodic: sCdn({
     timespanEditor: "timespanEditor",
   }),
-  loanBaseValue: sectionChildren({
+  loanBaseValue: sCdn({
     customLoanBase: "customLoanBase",
     loanBaseExtra: "loanBaseExtra",
     purchaseLoanValue: "purchaseLoanValue",
     repairLoanValue: "repairLoanValue",
     arvLoanValue: "arvLoanValue",
   }),
-  loanBaseExtra: sectionChildren({ onetimeList: "onetimeList" }),
-  customLoanBase: sectionChildren({ onetimeList: "onetimeList" }),
+  loanBaseExtra: sCdn({ onetimeList: "onetimeList" }),
+  customLoanBase: sCdn({ onetimeList: "onetimeList" }),
   closingCostValue: { onetimeList: sectionChild("onetimeList") },
-  property: sectionChildren({
+  property: sCdn({
     unit: "unit",
     miscOngoingRevenue: "miscPeriodicValue",
 
@@ -166,31 +169,40 @@ export const allSectionChildren = checkAllSectionChildren({
 
     customVarb: "customVarb",
   }),
-  miscPeriodicValue: sectionChildren({
+  unit: sCdn({ targetRentEditor: "periodicEditor" }),
+  taxesValue: sCdn({ valueDollarsEditor: "periodicEditor" }),
+  homeInsValue: sCdn({ valueDollarsEditor: "periodicEditor" }),
+  utilityValue: sCdn({
+    valueDollarsEditor: "periodicEditor",
     periodicList: "periodicList",
   }),
-  miscOnetimeValue: sectionChildren({
-    onetimeList: "onetimeList",
-  }),
-  sellingCostValue: sectionChildren({
-    onetimeList: "onetimeList",
-  }),
-  repairValue: sectionChildren({
-    onetimeList: "onetimeList",
-  }),
-  delayedCostValue: sectionChildren({
-    onetimeList: "onetimeList",
-  }),
-  utilityValue: sectionChildren({
-    periodicList: "periodicList",
-  }),
-  capExValue: sectionChildren({
+  maintenanceValue: sCdn({ valueDollarsEditor: "periodicEditor" }),
+  capExValue: sCdn({
+    valueDollarsEditor: "periodicEditor",
     capExList: "capExList",
   }),
-  capExList: sectionChildren({
+  capExList: sCdn({
     capExItem: "capExItem",
   }),
-  mgmt: sectionChildren({
+
+  miscPeriodicValue: sCdn({
+    periodicList: "periodicList",
+    periodicEditor: "periodicEditor",
+  }),
+  miscOnetimeValue: sCdn({
+    onetimeList: "onetimeList",
+  }),
+  sellingCostValue: sCdn({
+    onetimeList: "onetimeList",
+  }),
+  repairValue: sCdn({
+    onetimeList: "onetimeList",
+  }),
+  delayedCostValue: sCdn({
+    onetimeList: "onetimeList",
+  }),
+  capExItem: sCdn({ lifespanEditor: "timespanEditor" }),
+  mgmt: sCdn({
     mgmtBasePayValue: "mgmtBasePayValue",
     vacancyLossValue: "vacancyLossValue",
     miscOngoingCost: "miscPeriodicValue",

@@ -200,6 +200,7 @@ export const updatePropS = {
     props: Partial<CompletionStatusProps>
   ): CompletionStatusProps {
     return {
+      notEmptySolvable: [],
       nonZeros: [],
       nonNone: [],
       notFalse: [],
@@ -213,6 +214,7 @@ export const updatePropS = {
 export const upS = updatePropS;
 
 export type CompletionStatusProps = {
+  notEmptySolvable: UpdateFnProp[];
   nonZeros: UpdateFnProp[];
   nonNone: UpdateFnProp[];
   notFalse: UpdateFnProp[];

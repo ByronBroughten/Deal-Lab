@@ -10,8 +10,8 @@ import { VarbListOneTime } from "../appWide/ListGroup/ListGroupOneTime/VarbListO
 import { ListGroupGeneric } from "../appWide/ListGroup/ListGroupShared/ListGroupGeneric";
 import { MakeListNode } from "../appWide/ListGroup/ListGroupShared/ListGroupGeneric/ListGroupLists";
 import { SectionTitle } from "../appWide/SectionTitle";
+import { ListGroupPeriodicList } from "../appWide/VarbLists/ListGroupPeriodicList";
 import { VarbListCapEx } from "../appWide/VarbLists/VarbListCapEx";
-import { VarbListOngoing } from "../appWide/VarbLists/VarbListOngoing";
 import { Row } from "../general/Row";
 import { componentProps } from "../props/userComponentPropGroups";
 
@@ -48,7 +48,7 @@ function useListNodeMakers(
       <IdOfSectionToSaveProvider
         storeId={StoreId.make(listName, nodeProps.feId)}
       >
-        <VarbListOngoing {...{ ...nodeProps, menuType: "editorPage" }} />
+        <ListGroupPeriodicList {...{ ...nodeProps, menuType: "editorPage" }} />
       </IdOfSectionToSaveProvider>
     ),
     capEx: (nodeProps) => (

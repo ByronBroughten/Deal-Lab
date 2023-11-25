@@ -1,6 +1,6 @@
 import { useGetterSection } from "../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { FormSectionNext } from "../../../../../appWide/FormSectionNext";
-import { ClosingCostValue } from "./ClostingCostValue";
+import { ClosingCostValue } from "./ClosingCostValue";
 
 type Props = { feId: string };
 export function LoanCosts({ feId }: Props) {

@@ -13,7 +13,7 @@ import {
 } from "../values/StateValue/valuesShared/calculations";
 import { valueMetas } from "../values/valueMetas";
 import { ValueName } from "../values/ValueName";
-import { uosB } from "./updateVarb/OverrideBasics";
+import { uosb } from "./updateVarb/OverrideBasics";
 import { StandardUP, ubS, UpdateBasics } from "./updateVarb/UpdateBasics";
 import { getUpdateFnNames, UpdateFnName } from "./updateVarb/UpdateFnName";
 import {
@@ -108,7 +108,7 @@ export const updateVarbS = {
   ): UpdateVarb<VN> {
     return updateVarb(valueName, {
       ...options,
-      ...uosB(updateOverrides),
+      ...uosb(updateOverrides),
     });
   },
   basic<VN extends ValueName>(

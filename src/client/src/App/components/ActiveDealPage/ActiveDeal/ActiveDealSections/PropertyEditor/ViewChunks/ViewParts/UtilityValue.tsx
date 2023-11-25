@@ -1,10 +1,11 @@
+import { periodicName } from "../../../../../../../sharedWithServer/SectionsMeta/GroupName";
 import { StateValue } from "../../../../../../../sharedWithServer/SectionsMeta/values/StateValue";
 import { DealMode } from "../../../../../../../sharedWithServer/SectionsMeta/values/StateValue/dealMode";
 import { PeriodicMode } from "../../../../../../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
 import { useGetterSection } from "../../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { SelectAndItemizeEditor } from "../../../../../../appWide/SelectAndItemizeEditor";
-import { NumObjEntityEditor } from "../../../../../../inputs/NumObjEntityEditor";
-import { ListEditorOngoing } from "../../ValueShared/ListEditorOngoing";
+import { PeriodicEditor } from "../../../../../../inputs/PeriodicEditor";
+import { PeriodicList } from "../../ValueShared/PeriodicList";
 import { MuiSelectItems } from "./../../../../../../appWide/MuiSelect";
 
 function getItems(
@@ -19,21 +20,21 @@ function getItems(
     return [
       ["zero", "Choose method"],
       ["threeHundredPerUnit", "$300 per month"],
-      ["valueDollarsPeriodicEditor", "Custom amount"],
+      ["valueDollarsEditor", "Custom amount"],
       ["listTotal", itemizeLabel],
     ];
   } else if (periodicMode === "holding") {
     return [
       ["zero", "None"],
       ["threeHundredPerUnit", "$300 per unit per month"],
-      ["valueDollarsPeriodicEditor", "Custom amount"],
+      ["valueDollarsEditor", "Custom amount"],
       ["listTotal", itemizeLabel],
     ];
   } else {
     return [
       ["zero", "Tenant pays all utilities"],
       ["threeHundredPerUnit", "Three hundred per unit"],
-      ["valueDollarsPeriodicEditor", "Custom amount"],
+      ["valueDollarsEditor", "Custom amount"],
       ["listTotal", itemizeLabel],
     ];
   }
@@ -47,8 +48,12 @@ type Props = {
 export function UtilityValue({ feId, propertyMode, periodicMode }: Props) {
   const feInfo = { sectionName: "utilityValue", feId } as const;
   const utilityValue = useGetterSection(feInfo);
+  const editor = utilityValue.onlyChild("valueDollarsEditor");
+  const freq = editor.valueNext("valueEditorFrequency");
+
   const valueSourceName = utilityValue.valueNext("valueSourceName");
-  const valueVarb = utilityValue.switchVarb("valueDollars", "periodic");
+
+  const valueVarb = utilityValue.varbNext(periodicName("valueDollars", freq));
   const equalsValue = valueSourceName === "zero" ? "$0" : undefined;
   return (
     <SelectAndItemizeEditor
@@ -63,12 +68,18 @@ export function UtilityValue({ feId, propertyMode, periodicMode }: Props) {
         },
         items: getItems(propertyMode, periodicMode, valueSourceName),
 
-        ...(valueSourceName === "valueDollarsPeriodicEditor" && {
+        ...(valueSourceName === "valueDollarsEditor" && {
           makeEditor: (props) => (
-            <NumObjEntityEditor
+            <PeriodicEditor
               {...{
                 ...props,
-                feVarbInfo: utilityValue.varbInfo("valueDollarsPeriodicEditor"),
+                feId: utilityValue.onlyChildFeId("valueDollarsEditor"),
+                labelNames: {
+                  sectionName: "utilityValue",
+                  varbBaseName: "valueDollars",
+                },
+                // I think I'll need the actual varb.
+                // And I should get the adornments at the same time as the varb
               }}
             />
           ),
@@ -78,7 +89,7 @@ export function UtilityValue({ feId, propertyMode, periodicMode }: Props) {
         itemizeValue: "listTotal",
         total: valueVarb.displayVarb(),
         itemsComponent: (
-          <ListEditorOngoing
+          <PeriodicList
             {...{
               feId: utilityValue.oneChildFeId("periodicList"),
               menuType: "value",

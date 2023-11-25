@@ -8,8 +8,10 @@ import { insertChars } from "../../modules/draftjs/insert";
 import { VarbName } from "../../sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
 import {
   FeVarbInfo,
+  FeVI,
   SnVarbNames,
 } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
+import { SectionName } from "../../sharedWithServer/SectionsMeta/SectionName";
 import { useGetterVarb } from "../../sharedWithServer/stateClassHooks/useGetterVarb";
 import { SectionInfoContextProvider } from "../../sharedWithServer/stateClassHooks/useSectionContext";
 import { ValueFixedVarbPathName } from "../../sharedWithServer/StateEntityGetters/ValueInEntityInfo";
@@ -31,13 +33,16 @@ import { useDraftInput } from "./useDraftInput";
 
 export type NumEditorType = "numeric" | "equation";
 
-type Props = PropAdornments & {
+type Props<
+  SN extends SectionName = SectionName,
+  LN extends SectionName = SectionName
+> = PropAdornments & {
   sx?: SxProps;
-  feVarbInfo: FeVarbInfo;
+  feVarbInfo: FeVI<SN>;
   className?: string;
   label?: any;
   labeled?: boolean;
-  labelNames?: SnVarbNames;
+  labelNames?: SnVarbNames<LN>;
 
   bypassNumeric?: boolean;
   editorType?: NumEditorType;
@@ -47,7 +52,10 @@ type Props = PropAdornments & {
 };
 
 const seperator = ".";
-export function NumObjEntityEditor({
+export function NumObjEntityEditor<
+  SN extends SectionName,
+  LN extends SectionName
+>({
   feVarbInfo,
   labelNames,
   label,
@@ -60,7 +68,7 @@ export function NumObjEntityEditor({
   quickViewVarbNames,
   sx,
   ...props
-}: Props) {
+}: Props<SN, LN>) {
   let { editorState, setEditorState } = useDraftInput({
     ...feVarbInfo,
     compositeDecorator: varSpanDecorator,
