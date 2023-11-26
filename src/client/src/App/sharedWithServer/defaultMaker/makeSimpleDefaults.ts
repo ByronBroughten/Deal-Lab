@@ -13,7 +13,7 @@ export const makeDefaultPeriodicItem = mdm("periodicItem", (periodicItem) =>
 export const makeDefaultMiscPeriodicValue = mdm(
   "miscPeriodicValue",
   (periodicValue) => {
-    periodicValue.addChild("periodicEditor");
+    periodicValue.addChild("valueDollarsEditor");
     periodicValue.addChild("periodicList");
   }
 );
@@ -35,11 +35,3 @@ export const makeDefaultCapExItem = mdm("capExItem", (capExItem) =>
     sectionValues: { valueEditorUnit: "years" },
   })
 );
-
-// export const makeDefaultMortgageInsPeriodicValue = mdm(
-//   "mortgageInsPeriodicValue",
-//   (periodicValue) => {
-//     periodicValue.addChild("dollarsEditor");
-//     periodicValue.addChild("percentEditor");
-//   }
-// )

@@ -15,11 +15,11 @@ export function miscPeriodicCostUpdateVarbs(): UpdateSectionVarbs<"miscPeriodicV
     ...uvsS.periodic2("valueDollars", {
       monthly: uosbS.valueSource("dollarsOrListOngoing", {
         listTotal: ubS.loadChild("periodicList", "totalMonthly"),
-        valueDollarsEditor: ubS.loadChild("periodicEditor", "valueMonthly"),
+        valueDollarsEditor: ubS.loadChild("valueDollarsEditor", "valueMonthly"),
       }),
       yearly: uosbS.valueSource("dollarsOrListOngoing", {
         listTotal: ubS.loadChild("periodicList", "totalYearly"),
-        valueDollarsEditor: ubS.loadChild("periodicEditor", "valueYearly"),
+        valueDollarsEditor: ubS.loadChild("valueDollarsEditor", "valueYearly"),
       }),
     }),
   });

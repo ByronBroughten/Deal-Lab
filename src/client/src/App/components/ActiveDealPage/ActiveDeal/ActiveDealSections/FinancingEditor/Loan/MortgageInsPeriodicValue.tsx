@@ -13,8 +13,8 @@ export function MortgageInsPeriodicValue({ feId, dollarsDisplay }: Props) {
   const sourceName = mortIns.valueNext("valueSourceName");
 
   const labelInfos = {
-    dollarsEditor: mortIns.periodicVBI("valueDollars"),
-    percentEditor: mortIns.periodicVBI("percentLoan"),
+    valueDollarsEditor: mortIns.periodicVBI("valueDollars"),
+    valuePercentEditor: mortIns.periodicVBI("percentLoan"),
   } as const;
 
   return (
@@ -33,7 +33,7 @@ export function MortgageInsPeriodicValue({ feId, dollarsDisplay }: Props) {
             }}
           />
         ),
-        ...(sourceName === "percentEditor" && {
+        ...(sourceName === "valuePercentEditor" && {
           equalsValue: dollarsDisplay,
         }),
         sx: { ...nativeTheme.editorMargins },
@@ -43,8 +43,8 @@ export function MortgageInsPeriodicValue({ feId, dollarsDisplay }: Props) {
           varbName: "valueSourceName",
         },
         items: [
-          ["percentEditor", "Percent of loan"],
-          ["dollarsEditor", "Custom amount"],
+          ["valuePercentEditor", "Percent of loan"],
+          ["valueDollarsEditor", "Enter amount"],
         ],
       }}
     />

@@ -198,10 +198,10 @@ function makeAllUpdateSections() {
     }),
     mortgageInsPeriodicValue: usvs("mortgageInsPeriodicValue", {
       valueSourceName: updateVarb("mortgageInsPeriodic", {
-        initValue: "percentEditor",
+        initValue: "valuePercentEditor",
       }),
-      ...uvsS.childPeriodicEditor("valueDollars", "dollarsEditor"),
-      ...uvsS.childPeriodicEditor("percentLoan", "percentEditor"),
+      ...uvsS.childPeriodicEditor("valueDollars", "valueDollarsEditor"),
+      ...uvsS.childPeriodicEditor("percentLoan", "valuePercentEditor"),
       ...uvsS.periodic2("decimalOfLoan", {
         monthly: ubS.equationSimple("percentToDecimal", "percentLoanMonthly"),
         yearly: ubS.equationSimple("percentToDecimal", "percentLoanYearly"),

@@ -11,7 +11,7 @@ interface Props extends FeIdProp {
 export function MiscOngoingCost({ feId, menuDisplayNames }: Props) {
   const feInfo = { sectionName: "miscPeriodicValue", feId } as const;
   const miscValue = useGetterSection(feInfo);
-  const editor = miscValue.onlyChild("periodicEditor");
+  const editor = miscValue.onlyChild("valueDollarsEditor");
   const valueVarb = miscValue.varbNext("valueDollarsMonthly");
   const sourceName = miscValue.valueNext("valueSourceName");
   return (

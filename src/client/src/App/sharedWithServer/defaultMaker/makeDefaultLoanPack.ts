@@ -48,10 +48,10 @@ export function makeDefaultLoanPack(
 
   loan.addChild("mortgageInsUpfrontValue");
   const mortIns = loan.addAndGetChild("mortgageInsPeriodicValue", {
-    sectionValues: { valueSourceName: "percentEditor" },
+    sectionValues: { valueSourceName: "valuePercentEditor" },
   });
-  mortIns.addChild("dollarsEditor");
-  mortIns.addChild("percentEditor", {
+  mortIns.addChild("valueDollarsEditor");
+  mortIns.addChild("valuePercentEditor", {
     sectionValues: {
       valueEditorFrequency: "yearly",
       valueEditor: numObj(0),

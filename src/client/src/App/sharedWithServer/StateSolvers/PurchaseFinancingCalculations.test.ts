@@ -246,7 +246,7 @@ describe("Purchase financing calculations", () => {
     const monthlyValue = 30;
 
     const mortIns = firstLoan.onlyChild("mortgageInsPeriodicValue");
-    mortIns.onlyChild("dollarsEditor").updateValues({
+    mortIns.onlyChild("valueDollarsEditor").updateValues({
       valueEditor: numObj(monthlyValue),
       valueEditorFrequency: "monthly",
     });

@@ -176,10 +176,9 @@ describe("DealCalculations", () => {
       valueEditor: numObj(holdingMonths),
       valueEditorUnit: "months",
     });
-
-    refiFinancing.updateValues({
-      timeTillRefinanceSpanEditor: numObj(monthsTillRefi),
-      timeTillRefinanceSpanSwitch: "months",
+    refiFinancing.onlyChild("timeTillRefinance").updateValues({
+      valueEditor: numObj(monthsTillRefi),
+      valueEditorUnit: "months",
     });
   };
 
@@ -416,8 +415,7 @@ describe("DealCalculations", () => {
     setHoldingAndTillRefiMonths(holdingMonths, monthsTillRefi);
     setPeriodicEditor(
       property.onlyChild("miscHoldingCost"),
-      propertyHoldingMonthly,
-      "monthly"
+      propertyHoldingMonthly
     );
 
     perDealModeDeal((dealMode) => {
@@ -470,9 +468,9 @@ describe("DealCalculations", () => {
   });
   it("should calculate timeTillValueAddProfit", () => {
     const tillRefi = 6;
-    refiFinancing.updateValues({
-      timeTillRefinanceSpanEditor: numObj(tillRefi),
-      timeTillRefinanceSpanSwitch: "months",
+    refiFinancing.onlyChild("timeTillRefinance").updateValues({
+      valueEditor: numObj(tillRefi),
+      valueEditorUnit: "months",
     });
 
     perDealModeDeal((dealMode) => {

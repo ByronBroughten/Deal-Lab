@@ -127,8 +127,8 @@ export const allSectionChildren = checkAllSectionChildren({
     prepaidInterest: "prepaidDaily",
   }),
   mortgageInsPeriodicValue: sCdn({
-    dollarsEditor: "periodicEditor",
-    percentEditor: "periodicEditor",
+    valueDollarsEditor: "periodicEditor",
+    valuePercentEditor: "periodicEditor",
   }),
   prepaidPeriodic: sCdn({
     timespanEditor: "timespanEditor",
@@ -188,7 +188,7 @@ export const allSectionChildren = checkAllSectionChildren({
 
   miscPeriodicValue: sCdn({
     periodicList: "periodicList",
-    periodicEditor: "periodicEditor",
+    valueDollarsEditor: "periodicEditor",
   }),
   miscOnetimeValue: sCdn({
     onetimeList: "onetimeList",

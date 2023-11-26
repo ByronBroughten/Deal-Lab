@@ -14,7 +14,7 @@ export function MortgageIns({ feId, editorMargins }: Props) {
   const loan = useGetterSection({ sectionName: "loan", feId });
   const mortIns = loan.onlyChild("mortgageInsPeriodicValue");
   const percentFreq = mortIns
-    .onlyChild("percentEditor")
+    .onlyChild("valuePercentEditor")
     .valueNext("valueEditorFrequency");
   const displayVarbName = periodicName("mortgageIns", percentFreq);
   return (

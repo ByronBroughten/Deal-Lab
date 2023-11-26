@@ -9,7 +9,7 @@ export function MiscIncomeValue({ feId }: { feId: string }) {
   const feInfo = { sectionName: "miscPeriodicValue", feId } as const;
   const incomeValue = useGetterSection(feInfo);
 
-  const editor = incomeValue.onlyChild("periodicEditor");
+  const editor = incomeValue.onlyChild("valueDollarsEditor");
   const freq = editor.valueNext("valueEditorFrequency");
   const valueVarb = incomeValue.varbNext(periodicName("valueDollars", freq));
   const sourceName = incomeValue.valueNext("valueSourceName");
@@ -26,7 +26,7 @@ export function MiscIncomeValue({ feId }: { feId: string }) {
                 <PeriodicEditor
                   {...{
                     ...props,
-                    feId: incomeValue.onlyChildFeId("periodicEditor"),
+                    feId: incomeValue.onlyChildFeId("valueDollarsEditor"),
                     labelProps: { showLabel: false },
                     labelInfo: incomeValue.periodicVBI("valueDollars"),
                   }}

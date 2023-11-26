@@ -208,11 +208,11 @@ function mortgageInsPeriodicOverrides(
     ...uosS.valueSource(
       "mortgageInsPeriodic",
       {
-        dollarsEditor: ubS.loadChild(
+        valueDollarsEditor: ubS.loadChild(
           "mortgageInsPeriodicValue",
           `valueDollars${ending}`
         ),
-        percentEditor: ubS.multiply(
+        valuePercentEditor: ubS.multiply(
           "loanTotalDollars",
           upS.onlyChild("mortgageInsPeriodicValue", `decimalOfLoan${ending}`)
         ),

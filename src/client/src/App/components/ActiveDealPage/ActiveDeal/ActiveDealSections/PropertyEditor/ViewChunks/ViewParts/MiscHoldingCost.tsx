@@ -7,7 +7,7 @@ import { PeriodicList } from "../../ValueShared/PeriodicList";
 export function MiscHoldingCost({ feId }: { feId: string }) {
   const feInfo = { sectionName: "miscPeriodicValue", feId } as const;
   const holdingCost = useGetterSection(feInfo);
-  const editor = holdingCost.onlyChild("periodicEditor");
+  const editor = holdingCost.onlyChild("valueDollarsEditor");
   const freq = editor.valueNext("valueEditorFrequency");
   const valueVarb = holdingCost.periodicVarb("valueDollars", freq);
 

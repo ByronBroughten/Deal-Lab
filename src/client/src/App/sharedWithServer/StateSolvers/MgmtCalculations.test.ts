@@ -140,7 +140,7 @@ describe("MgmtCalculations", () => {
 
     const miscOngoing = mgmt.onlyChild("miscOngoingCost");
     miscOngoing.updateValues({ valueSourceName: "valueDollarsEditor" });
-    const editor = miscOngoing.onlyChild("periodicEditor");
+    const editor = miscOngoing.onlyChild("valueDollarsEditor");
     editor.updateValues({
       valueEditorFrequency: "monthly",
       valueEditor: numObj(200),

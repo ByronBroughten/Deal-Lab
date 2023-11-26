@@ -56,7 +56,7 @@ const valueSources = {
     "valueDollarsEditor",
   ],
   mortgageInsUpfrontSource: ["valueDollarsEditor", "percentLoanEditor"],
-  mortgageInsPeriodic: ["dollarsEditor", "percentEditor"],
+  mortgageInsPeriodic: ["valueDollarsEditor", "valuePercentEditor"],
   vacancyLossValueSource: [
     "none",
     "fivePercentRent",

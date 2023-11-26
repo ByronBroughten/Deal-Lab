@@ -1,6 +1,7 @@
+import { GroupKey } from "../SectionsMeta/GroupName";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { numObj } from "../SectionsMeta/values/StateValue/NumObj";
-import { StrictExtract } from "../utils/types";
+import { StrictExclude, StrictExtract } from "../utils/types";
 import { DealMode } from "./../SectionsMeta/values/StateValue/dealMode";
 import { SolverActiveDeal } from "./SolverActiveDeal";
 import { SolverSection } from "./SolverSection";
@@ -88,8 +89,8 @@ export function setLoanValues(
 
   if (mortgageInsMonthly) {
     const periodicMortIns = loan.onlyChild("mortgageInsPeriodicValue");
-    periodicMortIns.updateValues({ valueSourceName: "dollarsEditor" });
-    periodicMortIns.onlyChild("dollarsEditor").updateValues({
+    periodicMortIns.updateValues({ valueSourceName: "valueDollarsEditor" });
+    periodicMortIns.onlyChild("valueDollarsEditor").updateValues({
       valueEditor: numObj(mortgageInsMonthly),
       valueEditorFrequency: "monthly",
     });
@@ -177,43 +178,42 @@ type PeriodicSectionName =
   | "homeInsValue"
   | "vacancyLossValue"
   | "mgmtBasePayValue"
-  | "mortgageInsPeriodicValue";
+  | "mortgageInsPeriodicValue"
+  | "periodicItem";
 
 export const setPeriodicEditor = <SN extends PeriodicSectionName>(
   section: SolverSection<SN>,
   amount: number,
-  switchVal: "yearly" | "monthly" = "monthly"
+  groupKey: GroupKey<"periodic"> = "monthly"
 ) => {
-  (
-    section as SolverSection<any> as SolverSection<PeriodicSectionName>
-  ).updateValues({
-    valueSourceName: "valueDollarsPeriodicEditor",
-    valueDollarsPeriodicSwitch: switchVal,
-    valueDollarsPeriodicEditor: numObj(amount),
-  } as any);
+  const typeSection =
+    section as SolverSection<any> as SolverSection<PeriodicSectionName>;
+  typeSection.updateValues({
+    valueSourceName: "valueDollarsEditor",
+  });
+  const child = typeSection.onlyChild("valueDollarsEditor");
+  child.updateValues({
+    valueEditor: numObj(amount),
+    valueEditorFrequency: groupKey,
+  });
 };
 
-type PeriodicListSn = PeriodicSectionName | "utilityValue";
+type PeriodicListSn = StrictExclude<PeriodicSectionName, "periodicItem">;
 export function setPeriodicList<SN extends PeriodicListSn>(
   section: SolverSection<SN>,
   items: number[],
-  switchVal: "yearly" | "monthly"
+  groupKey: GroupKey<"periodic">
 ) {
   const value = section as SolverSection<any> as SolverSection<PeriodicListSn>;
   value.updateValues({
     valueSourceName: "listTotal",
-    valueDollarsPeriodicSwitch: switchVal,
+    valueDollarsPeriodicSwitch: groupKey,
   } as any);
   const list = value.onlyChild("periodicList");
   list.removeChildrenAndSolve("periodicItem");
   for (const item of items) {
-    list.addAndGetChild("periodicItem", {
-      sectionValues: {
-        valueSourceName: "valueDollarsPeriodicEditor",
-        valueDollarsPeriodicSwitch: switchVal,
-        valueDollarsPeriodicEditor: numObj(item),
-      } as any,
-    });
+    const pItem = list.addAndGetChild("periodicItem");
+    setPeriodicEditor(pItem, item, groupKey);
   }
 }
 
