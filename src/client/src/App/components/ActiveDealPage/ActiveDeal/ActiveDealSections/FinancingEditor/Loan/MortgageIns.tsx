@@ -41,7 +41,6 @@ export function MortgageIns({ feId, editorMargins }: Props) {
               {...{
                 feId: loan.oneChildFeId("mortgageInsPeriodicValue"),
                 dollarsDisplay: loan.displayVarb(displayVarbName),
-                editorBaseInfo: loan.periodicVBI("mortgageIns"),
               }}
             />
           </MuiRow>

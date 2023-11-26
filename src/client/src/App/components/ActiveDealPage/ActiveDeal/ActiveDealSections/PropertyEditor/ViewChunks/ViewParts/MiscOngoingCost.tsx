@@ -29,7 +29,7 @@ export function MiscOngoingCost({ feId, menuDisplayNames }: Props) {
                     ...props,
                     feId: editor.feId,
                     labelProps: { showLabel: false },
-                    labelInfo: null,
+                    labelInfo: miscValue.periodicVBI("valueDollars"),
                   }}
                 />
               )

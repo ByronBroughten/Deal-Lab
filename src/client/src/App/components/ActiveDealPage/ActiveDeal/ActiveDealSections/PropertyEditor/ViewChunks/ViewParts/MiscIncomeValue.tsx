@@ -28,7 +28,7 @@ export function MiscIncomeValue({ feId }: { feId: string }) {
                     ...props,
                     feId: incomeValue.onlyChildFeId("periodicEditor"),
                     labelProps: { showLabel: false },
-                    labelInfo: null,
+                    labelInfo: incomeValue.periodicVBI("valueDollars"),
                   }}
                 />
               )

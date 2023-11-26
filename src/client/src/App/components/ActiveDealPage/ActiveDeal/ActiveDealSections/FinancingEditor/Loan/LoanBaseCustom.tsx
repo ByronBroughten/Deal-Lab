@@ -28,6 +28,7 @@ export function LoanBaseCustom({ feId, sx }: Props) {
             <NumObjEntityEditor
               {...props}
               feVarbInfo={customBase.varbInfo2("valueDollarsEditor")}
+              labelProps={{ showLabel: false }}
             />
           ),
         }),

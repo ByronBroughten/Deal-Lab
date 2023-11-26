@@ -39,6 +39,7 @@ export function LoanBaseSubValue<SN extends SName>({
           <NumObjEntityEditor
             {...{
               ...editorProps,
+              labelProps: { showLabel: false },
               feVarbInfo: {
                 ...props,
                 varbName: selectValue,

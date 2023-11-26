@@ -33,6 +33,7 @@ export function ClosingCostValue({ feId, fivePercentLoanDisplay }: Props) {
                     feVarbInfo:
                       closingCostValue.varbInfo2("valueDollarsEditor"),
                     quickViewVarbNames: ["numUnits"],
+                    labelProps: { showLabel: props.labeled ?? false },
                   }}
                 />
               )

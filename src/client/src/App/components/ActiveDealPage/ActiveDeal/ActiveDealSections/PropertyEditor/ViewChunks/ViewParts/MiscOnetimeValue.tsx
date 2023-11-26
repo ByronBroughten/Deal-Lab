@@ -27,6 +27,7 @@ export function MiscOnetimeValue({ feId, menuDisplayNames }: Props) {
                 <NumObjEntityEditor
                   {...{
                     ...props,
+                    labelProps: { showLabel: false },
                     feVarbInfo: {
                       ...feInfo,
                       varbName: "valueDollarsEditor",

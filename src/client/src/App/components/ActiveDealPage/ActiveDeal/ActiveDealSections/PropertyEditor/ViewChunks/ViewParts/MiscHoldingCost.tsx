@@ -35,7 +35,7 @@ export function MiscHoldingCost({ feId }: { feId: string }) {
                     ...props,
                     feId: editor.feId,
                     labelProps: { showLabel: false },
-                    labelInfo: null,
+                    labelInfo: holdingCost.periodicVBI("valueDollars"),
                   }}
                 />
               )

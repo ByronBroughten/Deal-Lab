@@ -67,7 +67,7 @@ export function MaintenanceValue({
                   {...{
                     ...props,
                     feId: maintenanceValue.onlyChildFeId("valueDollarsEditor"),
-                    labelInfo: null,
+                    labelInfo: maintenanceValue.periodicVBI("valueDollars"),
                     labelProps: { showLabel: false },
                     quickViewVarbNames: ["sqft", "numUnits", "numBedrooms"],
                   }}

@@ -21,6 +21,7 @@ export function MortgageInsUpfrontValue({ feId, totalDisplayVarb }: Props) {
           <NumObjEntityEditor
             {...{
               ...props,
+              labelProps: { showLabel: false },
               feVarbInfo: mortInsValue.varbInfo2(sourceName),
               quickViewVarbNames: ["numUnits"],
             }}

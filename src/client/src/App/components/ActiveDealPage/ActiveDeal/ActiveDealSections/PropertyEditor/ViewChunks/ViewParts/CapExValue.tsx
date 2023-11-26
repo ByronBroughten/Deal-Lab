@@ -51,8 +51,8 @@ export function CapExValue({ feId }: { feId: string }) {
                   {...{
                     ...props,
                     feId: capExValue.onlyChildFeId("valueDollarsEditor"),
+                    labelInfo: capExValue.periodicVBI("valueDollars"),
                     labelProps: { showLabel: false },
-                    labelInfo: null,
                   }}
                 />
               )

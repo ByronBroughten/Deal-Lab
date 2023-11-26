@@ -74,7 +74,7 @@ export function UtilityValue({ feId, propertyMode, periodicMode }: Props) {
               {...{
                 ...props,
                 feId: utilityValue.onlyChildFeId("valueDollarsEditor"),
-                labelInfo: null,
+                labelInfo: utilityValue.periodicVBI("valueDollars"),
                 labelProps: { showLabel: false },
               }}
             />

@@ -139,7 +139,7 @@ function useLabel({
   varbInfo,
 }: UseLabelProps): LabelProp {
   const getters = useGetterSections();
-  if (!showLabel) {
+  if (!showLabel && labelName === "inputLabel") {
     return "";
   } else if (value) {
     return value;
@@ -169,11 +169,13 @@ function useLabels(
   });
   const startAdornment = useLabel({
     labelName: "startAdornment",
+    ...labelProps,
     value: lps.startAdornment,
     varbInfo,
   });
   const endAdornment = useLabel({
     labelName: "endAdornment",
+    ...labelProps,
     value: lps.endAdornment,
     varbInfo,
   });

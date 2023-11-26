@@ -28,6 +28,7 @@ export function CostOverrunValue({ feId, sx }: Props) {
           <NumObjEntityEditor
             {...{
               ...props,
+              labelProps: { showLabel: false },
               feVarbInfo: {
                 ...feInfo,
                 varbName: valueSource,

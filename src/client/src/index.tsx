@@ -6,8 +6,7 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-
-// fix the PeriodicEditor adornments
+// Fix the nested loan completion status stuff.
 
 // *fix testUtils "as any" after periodics have been swapped out*
 
