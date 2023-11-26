@@ -211,6 +211,12 @@ export const allSectionChildren = checkAllSectionChildren({
     miscOnetimeCost: "miscOnetimeValue",
     customVarb: "customVarb",
   }),
+  mgmtBasePayValue: sCdn({
+    periodicEditor: "periodicEditor",
+  }),
+  vacancyLossValue: sCdn({
+    periodicEditor: "periodicEditor",
+  }),
 });
 
 export type AllSectionChildren = typeof allSectionChildren;

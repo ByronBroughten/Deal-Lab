@@ -2,18 +2,19 @@ import { makeDefaultMaker } from "./makeDefault";
 import { makeDefaultMiscPeriodicValue } from "./makeSimpleDefaults";
 
 export const makeDefaultMgmt = makeDefaultMaker("mgmt", (mgmt) => {
-  mgmt.updateValues({
-    basePayDollarsPeriodicSwitch: "monthly",
-    vacancyLossDollarsPeriodicSwitch: "monthly",
-    expensesPeriodicSwitch: "monthly",
+  const basePay = mgmt.addAndGetChild("mgmtBasePayValue");
+  basePay.addChild("periodicEditor", {
+    sectionValues: { valueEditorFrequency: "monthly" },
   });
-  mgmt.addChild("mgmtBasePayValue");
-  mgmt.addChild("vacancyLossValue");
+  const vacancyLoss = mgmt.addAndGetChild("vacancyLossValue");
+  vacancyLoss.addChild("periodicEditor", {
+    sectionValues: { valueEditorFrequency: "monthly" },
+  });
+
   mgmt.addChild("miscOngoingCost", {
     sectionPack: makeDefaultMiscPeriodicValue(),
   });
 
   const oneTimeCost = mgmt.addAndGetChild("miscOnetimeCost");
   oneTimeCost.addChild("onetimeList");
-  return mgmt.makeSectionPack();
 });

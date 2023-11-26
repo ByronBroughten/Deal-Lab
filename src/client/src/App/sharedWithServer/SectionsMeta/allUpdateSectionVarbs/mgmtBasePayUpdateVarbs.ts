@@ -1,154 +1,54 @@
-import { updateGroupS } from "../updateSectionVarbs/switchUpdateVarbs";
-import { UpdateSectionVarbs } from "../updateSectionVarbs/updateSectionVarbs";
-import { updateVarb } from "../updateSectionVarbs/updateVarb";
-import { updateBasicsS } from "../updateSectionVarbs/updateVarb/UpdateBasics";
-import { updatePropS } from "../updateSectionVarbs/updateVarb/UpdateFnProps";
+import { GroupKey, groupNameEnding } from "../GroupName";
+import { USVS, usvs } from "../updateSectionVarbs/updateSectionVarbs";
+import { uvS } from "../updateSectionVarbs/updateVarb";
 import {
-  updateOverride,
-  updateOverrideS,
-} from "../updateSectionVarbs/updateVarb/UpdateOverride";
-import { overrideSwitchS } from "../updateSectionVarbs/updateVarb/UpdateOverrideSwitch";
-import { updateVarbsS } from "../updateSectionVarbs/updateVarbs";
+  OverrideBasics,
+  uosbS,
+} from "../updateSectionVarbs/updateVarb/OverrideBasics";
+import { ubS } from "../updateSectionVarbs/updateVarb/UpdateBasics";
+import { upS } from "../updateSectionVarbs/updateVarb/UpdateFnProps";
+import { uvsS } from "../updateSectionVarbs/updateVarbs";
 
-export function mgmtBasePayValueVarbs(): UpdateSectionVarbs<"mgmtBasePayValue"> {
-  return {
-    ...updateVarbsS._typeUniformity,
-    valueSourceName: updateVarb("mgmtBasePayValueSource", {
+export function mgmtBasePayValueVarbs(): USVS<"mgmtBasePayValue"> {
+  return usvs("mgmtBasePayValue", {
+    valueSourceName: uvS.input("mgmtBasePayValueSource", {
       initValue: "none",
     }),
-    valuePercentEditor: updateVarb("numObj"),
-    valuePercent: updateVarb("numObj", {
-      updateFnName: "throwIfReached",
-      updateOverrides: [
-        updateOverrideS.emptyNumObjIfSourceIsNone,
-        updateOverrideS.zeroIfSourceIsZero,
-        updateOverride(
-          [overrideSwitchS.valueSourceIs("percentOfRentEditor")],
-          updateBasicsS.loadLocal("valuePercentEditor")
-        ),
-        updateOverride(
-          [overrideSwitchS.valueSourceIs("tenPercentRent")],
-          updateBasicsS.equationSimple(
-            "decimalToPercent",
-            updatePropS.local("valueDecimal")
-          )
-        ),
-        updateOverride(
-          [overrideSwitchS.valueSourceIs("valueDollarsPeriodicEditor")],
-          updateBasicsS.equationSimple(
-            "decimalToPercent",
-            updatePropS.local("valueDecimal")
-          )
-        ),
-      ],
+    valuePercentEditor: uvS.input("numObj"),
+    valuePercent: uvS.vsNumObj("mgmtBasePayValueSource", {
+      none: ubS.emptyNumObj,
+      zero: ubS.zero,
+      tenPercentRent: ubS.decimalToPercent("valueDecimal"),
+      valuePercentEditor: ubS.loadLocal("valuePercentEditor"),
+      valueDollarsEditor: ubS.decimalToPercent("valueDecimal"),
     }),
-    valueDecimal: updateVarb("numObj", {
-      updateFnName: "throwIfReached",
-      updateOverrides: [
-        updateOverrideS.emptyNumObjIfSourceIsNone,
-        updateOverrideS.zeroIfSourceIsZero,
-        updateOverride(
-          [overrideSwitchS.valueSourceIs("percentOfRentEditor")],
-          updateBasicsS.equationSimple(
-            "percentToDecimal",
-            updatePropS.local("valuePercentEditor")
-          )
-        ),
-        updateOverride(
-          [overrideSwitchS.valueSourceIs("tenPercentRent")],
-          updateBasicsS.pointOne
-        ),
-        updateOverride(
-          [
-            overrideSwitchS.valueSourceIs("valueDollarsPeriodicEditor"),
-            overrideSwitchS.periodic("valueDollars", "monthly"),
-          ],
-          updateBasicsS.equationLR(
-            "divide",
-            updatePropS.local("valueDollarsPeriodicEditor"),
-            updatePropS.pathNameBase("propertyFocal", "targetRentMonthly")
-          )
-        ),
-        updateOverride(
-          [
-            overrideSwitchS.valueSourceIs("valueDollarsPeriodicEditor"),
-            overrideSwitchS.periodic("valueDollars", "yearly"),
-          ],
-          updateBasicsS.equationLR(
-            "divide",
-            updatePropS.local("valueDollarsPeriodicEditor"),
-            updatePropS.pathNameBase("propertyFocal", "targetRentYearly")
-          )
-        ),
-      ],
+    valueDecimal: uvS.vsNumObj("mgmtBasePayValueSource", {
+      none: ubS.emptyNumObj,
+      zero: ubS.zero,
+      tenPercentRent: ubS.pointOne,
+      valuePercentEditor: ubS.percentToDecimal("valuePercentEditor"),
+      valueDollarsEditor: ubS.divide(
+        "valueDollarsMonthly",
+        upS.varbPathName("targetRentMonthly")
+      ),
     }),
-    ...updateGroupS.group("valueDollars", "periodicInput", "monthly", {
-      monthly: {
-        updateFnName: "throwIfReached",
-        updateOverrides: [
-          updateOverrideS.emptyNumObjIfSourceIsNone,
-          updateOverrideS.zeroIfSourceIsZero,
-          updateOverride(
-            [overrideSwitchS.valueSourceIs("tenPercentRent")],
-            updateBasicsS.loadByVarbPathName("tenPercentRentMonthly")
-          ),
-          updateOverride(
-            [overrideSwitchS.valueSourceIs("percentOfRentEditor")],
-            updateBasicsS.equationLR(
-              "multiply",
-              updatePropS.local("valueDecimal"),
-              updatePropS.pathNameBase("propertyFocal", "targetRentMonthly")
-            )
-          ),
-          updateOverride(
-            [
-              overrideSwitchS.valueSourceIs("valueDollarsPeriodicEditor"),
-              overrideSwitchS.monthlyIsActive("valueDollars"),
-            ],
-            updateBasicsS.loadLocal("valueDollarsPeriodicEditor")
-          ),
-          updateOverride(
-            [
-              overrideSwitchS.valueSourceIs("valueDollarsPeriodicEditor"),
-              overrideSwitchS.yearlyIsActive("valueDollars"),
-            ],
-            updateBasicsS.yearlyToMonthly("valueDollars")
-          ),
-        ],
-      },
-      yearly: {
-        updateFnName: "throwIfReached",
-        updateOverrides: [
-          updateOverrideS.emptyNumObjIfSourceIsNone,
-          updateOverrideS.zeroIfSourceIsZero,
-          updateOverride(
-            [overrideSwitchS.valueSourceIs("tenPercentRent")],
-            updateBasicsS.loadByVarbPathName("tenPercentRentYearly")
-          ),
-          updateOverride(
-            [overrideSwitchS.valueSourceIs("percentOfRentEditor")],
-            updateBasicsS.equationLR(
-              "multiply",
-              updatePropS.local("valueDecimal"),
-              updatePropS.pathNameBase("propertyFocal", "targetRentYearly")
-            )
-          ),
-          updateOverride(
-            [
-              overrideSwitchS.valueSourceIs("valueDollarsPeriodicEditor"),
-              overrideSwitchS.monthlyIsActive("valueDollars"),
-            ],
-            updateBasicsS.monthlyToYearly("valueDollars")
-          ),
-          updateOverride(
-            [
-              overrideSwitchS.valueSourceIs("valueDollarsPeriodicEditor"),
-              overrideSwitchS.yearlyIsActive("valueDollars"),
-            ],
-            updateBasicsS.loadLocal("valueDollarsPeriodicEditor")
-          ),
-        ],
-      },
+    ...uvsS.periodic2("valueDollars", {
+      monthly: valueDollars("monthly"),
+      yearly: valueDollars("yearly"),
     }),
-  };
+  });
+}
+
+function valueDollars(groupKey: GroupKey<"periodic">): OverrideBasics {
+  const ending = groupNameEnding("periodic", groupKey);
+  return uosbS.valueSource("mgmtBasePayValueSource", {
+    none: ubS.emptyNumObj,
+    zero: ubS.zero,
+    tenPercentRent: ubS.varbPathName(`tenPercentRent${ending}`),
+    valuePercentEditor: ubS.multiply(
+      "valueDecimal",
+      upS.varbPathName(`targetRent${ending}`)
+    ),
+    valueDollarsEditor: ubS.loadChild("periodicEditor", `value${ending}`),
+  });
 }

@@ -365,13 +365,6 @@ export function makeAllBaseSectionVarbs() {
         valueDollarsEditor: bv("numObj"),
         ...bvsS.timespan("value"),
       }),
-      // What if prepaids are wrapped into the loan?
-      // That's fine, I can add another loan extras thing for prepaids.
-
-      // What about delayed repairs?
-      // Those are treated a bit differently
-      // That will lower cash needed but not upfrontInvestment
-
       prepaidDaily: varbs({
         valueSourceName: bv("spanOrDollars"),
         valueDollarsEditor: bv("numObj"),
@@ -380,25 +373,25 @@ export function makeAllBaseSectionVarbs() {
       mgmt: varbs({
         ...bvsS.savableSection,
         completionStatus: bv("completionStatus"),
-        ...bvsS.periodicDollars("basePayDollars"),
-        ...bvsS.periodicDollars("vacancyLossDollars"),
-        ...bvsS.periodicDollars("miscCosts"),
+        ...bvsS.periodicDollars2("basePayDollars"),
+        ...bvsS.periodicDollars2("vacancyLossDollars"),
+        ...bvsS.periodicDollars2("miscCosts"),
         miscOnetimeCosts: bv("numObj", dollars),
         one: bv("number"),
         basePayPercent: bv("numObj", percent),
         vacancyLossPercent: bv("numObj", percent),
-        ...bvsS.periodicDollars("expenses"),
+        ...bvsS.periodicDollars2("expenses"),
       } as const),
       mgmtBasePayValue: varbs({
         valueSourceName: bv("mgmtBasePayValueSource"),
-        ...bvsS.periodicDollarsInput("valueDollars"),
+        ...bvsS.periodicDollars2("valueDollars"),
         valuePercentEditor: bv("numObj", percent),
         valuePercent: bv("numObj", percent),
         valueDecimal: bv("numObj", decimal),
       }),
       vacancyLossValue: varbs({
         valueSourceName: bv("vacancyLossValueSource"),
-        ...bvsS.periodicDollarsInput("valueDollars"),
+        ...bvsS.periodicDollars2("valueDollars"),
         valuePercentEditor: bv("numObj", percent),
         valuePercent: bv("numObj", percent),
         valueDecimal: bv("numObj", decimal),

@@ -1,23 +1,18 @@
-import { FeVI } from "../../../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { useGetterSection } from "../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
-import { ValueFixedVarbPathName } from "../../../../../../sharedWithServer/StateEntityGetters/ValueInEntityInfo";
 import { GetterSection } from "../../../../../../sharedWithServer/StateGetters/GetterSection";
-import { SelectEditor } from "../../../../../appWide/SelectEditor";
+import { MakeEditor, SelectEditor } from "../../../../../appWide/SelectEditor";
 import { NumObjEntityEditor } from "../../../../../inputs/NumObjEntityEditor";
+import { PeriodicEditor } from "../../../../../inputs/PeriodicEditor";
 
 function getProps(mgmtBasePay: GetterSection<"mgmtBasePayValue">): {
   equalsValue?: string;
-  editorProps?: {
-    quickViewVarbNames: ValueFixedVarbPathName[];
-    feVarbInfo: FeVI;
-  };
+  makeEditor?: MakeEditor;
 } {
   const valueSourceName = mgmtBasePay.valueNext("valueSourceName");
-  const dollarsVarb = mgmtBasePay.activeSwitchTarget(
-    "valueDollars",
-    "periodic"
-  );
-  const dollarsSwitch = mgmtBasePay.switchValue("valueDollars", "periodic");
+  const dollarsVarb = mgmtBasePay.varbNext("valueDollarsMonthly");
+
+  const dollarsEditor = mgmtBasePay.onlyChild("periodicEditor");
+  const freq = dollarsEditor.valueNext("valueEditorFrequency");
 
   const commonQuickAccess = ["sqft", "numUnits"] as const;
   const dollarsQuickAccess = {
@@ -32,24 +27,37 @@ function getProps(mgmtBasePay: GetterSection<"mgmtBasePayValue">): {
       return { equalsValue: "$0" };
     case "tenPercentRent":
       return { equalsValue: dollarsVarb.displayVarb() };
-    case "percentOfRentEditor":
+    case "valuePercentEditor":
       return {
         equalsValue: dollarsVarb.displayVarb(),
-        editorProps: {
-          feVarbInfo: mgmtBasePay.varbInfo2("valuePercentEditor"),
-          quickViewVarbNames: [...commonQuickAccess],
-        },
+        makeEditor: (props) => (
+          <NumObjEntityEditor
+            {...{
+              ...props,
+              labelProps: { showLabel: false },
+              feVarbInfo: mgmtBasePay.varbInfo2("valuePercentEditor"),
+              quickViewVarbNames: commonQuickAccess,
+            }}
+          />
+        ),
       };
-    case "valueDollarsPeriodicEditor": {
+    case "valueDollarsEditor": {
       return {
         equalsValue: `${mgmtBasePay.displayVarb("valuePercent")} of rent`,
-        editorProps: {
-          feVarbInfo: mgmtBasePay.varbInfo2("valueDollarsPeriodicEditor"),
-          quickViewVarbNames: [
-            dollarsQuickAccess[dollarsSwitch],
-            ...commonQuickAccess,
-          ],
-        },
+        makeEditor: (props) => (
+          <PeriodicEditor
+            {...{
+              ...props,
+              feId: mgmtBasePay.oneChildFeId("periodicEditor"),
+              labelInfo: mgmtBasePay.periodicVBI("valueDollars"),
+              labelProps: { showLabel: false },
+              quickViewVarbNames: [
+                dollarsQuickAccess[freq],
+                ...commonQuickAccess,
+              ],
+            }}
+          />
+        ),
       };
     }
   }
@@ -58,7 +66,7 @@ function getProps(mgmtBasePay: GetterSection<"mgmtBasePayValue">): {
 export function BasePayValue({ feId }: { feId: string }) {
   const feInfo = { sectionName: "mgmtBasePayValue", feId } as const;
   const basePayValue = useGetterSection(feInfo);
-  const { editorProps, equalsValue } = getProps(basePayValue);
+  const { makeEditor, equalsValue } = getProps(basePayValue);
   const valueSourceName = basePayValue.valueNext("valueSourceName");
   return (
     <SelectEditor
@@ -79,24 +87,10 @@ export function BasePayValue({ feId }: { feId: string }) {
               valueSourceName === "tenPercentRent" ? "" : " (common estimate)"
             }`,
           ],
-          ["percentOfRentEditor", "Custom percent of rent"],
-          ["valueDollarsPeriodicEditor", "Custom amount"],
+          ["valuePercentEditor", "Enter percent of rent"],
+          ["valueDollarsEditor", "Custom amount"],
         ],
-        makeEditor: editorProps
-          ? (props) => (
-              <NumObjEntityEditor
-                {...{
-                  ...props,
-                  ...editorProps,
-                  quickViewVarbNames: [
-                    "numUnits",
-                    "targetRentMonthly",
-                    "targetRentYearly",
-                  ],
-                }}
-              />
-            )
-          : undefined,
+        makeEditor,
         selectValue: valueSourceName,
         equalsValue,
       }}

@@ -25,8 +25,8 @@ function valueDollars(groupKey: GroupKey<"periodic">) {
   return uosbS.valueSource("utilityValueSource", {
     none: ubS.emptyNumObj,
     zero: ubS.emptyNumObj,
-    sameAsHoldingPhase: ubS.loadByVarbPathName(`utilitiesHolding${ending}`),
-    threeHundredPerUnit: ubS.loadByVarbPathName(threeHundredFn[groupKey]),
+    sameAsHoldingPhase: ubS.varbPathName(`utilitiesHolding${ending}`),
+    threeHundredPerUnit: ubS.varbPathName(threeHundredFn[groupKey]),
     valueDollarsEditor: ubS.loadChild("valueDollarsEditor", `value${ending}`),
     listTotal: ubS.loadChild("periodicList", `total${ending}`),
   });

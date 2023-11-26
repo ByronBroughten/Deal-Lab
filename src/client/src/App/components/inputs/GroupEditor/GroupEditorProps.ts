@@ -21,7 +21,7 @@ export type GroupEditorProps<
   labelProps?: BaseProps<LN>;
   inputMargins?: boolean;
   editorType?: NumEditorType;
-  quickViewVarbNames?: ValueFixedVarbPathName[];
+  quickViewVarbNames?: readonly ValueFixedVarbPathName[];
   sx?: SxProps;
 };
 

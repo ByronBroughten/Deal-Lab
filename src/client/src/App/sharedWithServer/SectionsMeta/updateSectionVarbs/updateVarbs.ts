@@ -60,7 +60,10 @@ export const updateVarbsS = {
     {
       localBaseNames = [],
       childBaseNames = [],
-    }: { localBaseNames?: string[]; childBaseNames?: [ChildName, string][] }
+    }: {
+      localBaseNames?: GroupVarbNameBase<"periodic">[];
+      childBaseNames?: [ChildName, GroupVarbNameBase<"periodic">][];
+    }
   ): GroupUpdateVarbs<"periodic", BN> {
     const keys = groupKeys("periodic");
     return keys.reduce((varbs, key) => {
@@ -96,7 +99,7 @@ export const updateVarbsS = {
 
   loadChildPeriodic<
     BN extends GroupVarbNameBase<"periodic">,
-    CBN extends string
+    CBN extends GroupVarbNameBase<"periodic">
   >(
     baseName: BN,
     childName: ChildName,

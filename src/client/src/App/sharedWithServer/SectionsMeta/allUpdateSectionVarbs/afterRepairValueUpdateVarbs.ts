@@ -6,7 +6,7 @@ export function afterRepairValueUpdateVarbs(): USVS<"afterRepairValue"> {
   return usvs("afterRepairValue", {
     valueDollars: uvS.vsNumObj("arvValueSource", {
       valueDollarsEditor: ubS.loadLocal("valueDollarsEditor"),
-      purchasePrice: ubS.loadByVarbPathName("purchasePrice"),
+      purchasePrice: ubS.varbPathName("purchasePrice"),
     }),
     valueDollarsEditor: uvS.input("numObj"),
     valueSourceName: uvS.input("arvValueSource"),

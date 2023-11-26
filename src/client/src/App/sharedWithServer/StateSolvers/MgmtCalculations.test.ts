@@ -41,20 +41,21 @@ describe("MgmtCalculations", () => {
     vacancyLoss.updateValues({ valueSourceName: "tenPercentRent" });
     test(100);
 
-    vacancyLoss.updateValues({
-      valueSourceName: "valueDollarsPeriodicEditor",
-      valueDollarsPeriodicSwitch: "monthly",
-      valueDollarsPeriodicEditor: numObj(17),
+    vacancyLoss.updateValues({ valueSourceName: "valueDollarsEditor" });
+    vacancyLoss.onlyChild("periodicEditor").updateValues({
+      valueEditor: numObj(17),
+      valueEditorFrequency: "monthly",
     });
     test(17);
-    vacancyLoss.updateValues({
-      valueDollarsPeriodicSwitch: "yearly",
-      valueDollarsPeriodicEditor: numObj(120),
+
+    vacancyLoss.onlyChild("periodicEditor").updateValues({
+      valueEditorFrequency: "yearly",
+      valueEditor: numObj(120),
     });
     test(10);
 
     vacancyLoss.updateValues({
-      valueSourceName: "percentOfRentEditor",
+      valueSourceName: "valuePercentEditor",
       valuePercentEditor: numObj(20),
     });
     test(200);
@@ -71,21 +72,21 @@ describe("MgmtCalculations", () => {
     test(100);
 
     basePay.updateValues({
-      valueSourceName: "percentOfRentEditor",
+      valueSourceName: "valuePercentEditor",
       valuePercentEditor: numObj(30),
     });
     test(300);
 
-    basePay.updateValues({
-      valueSourceName: "valueDollarsPeriodicEditor",
-      valueDollarsPeriodicEditor: numObj(10),
-      valueDollarsPeriodicSwitch: "monthly",
+    basePay.updateValues({ valueSourceName: "valueDollarsEditor" });
+    basePay.onlyChild("periodicEditor").updateValues({
+      valueEditor: numObj(10),
+      valueEditorFrequency: "monthly",
     });
     test(10);
 
-    basePay.updateValues({
-      valueDollarsPeriodicEditor: numObj(2400),
-      valueDollarsPeriodicSwitch: "yearly",
+    basePay.onlyChild("periodicEditor").updateValues({
+      valueEditor: numObj(200),
+      valueEditorFrequency: "yearly",
     });
     test(200);
 

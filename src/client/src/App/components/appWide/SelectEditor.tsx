@@ -7,7 +7,7 @@ import { arrSx } from "../../utils/mui";
 import { NumEditorType } from "../inputs/NumObjEntityEditor";
 import { MuiSelect, MuiSelectProps } from "./MuiSelect";
 
-type MakeEditor = (props: {
+export type MakeEditor = (props: {
   sx: SxProps;
   labeled: boolean;
   editorType: NumEditorType;

@@ -20,11 +20,9 @@ export function maintenanceValueUpdateVarbs(): USVS<"maintenanceValue"> {
       yearly: uosbS.valueSource("maintainanceValueSource", {
         none: ubS.emptyNumObj,
         valueDollarsEditor: ubS.loadChild("valueDollarsEditor", "valueYearly"),
-        onePercentArv: ubS.loadByVarbPathName("onePercentArv"),
-        sqft: ubS.loadByVarbPathName("sqft"),
-        onePercentArvAndSqft: ubS.loadByVarbPathName(
-          "onePercentArvSqftAverage"
-        ),
+        onePercentArv: ubS.varbPathName("onePercentArv"),
+        sqft: ubS.varbPathName("sqft"),
+        onePercentArvAndSqft: ubS.varbPathName("onePercentArvSqftAverage"),
       }),
     }),
   });

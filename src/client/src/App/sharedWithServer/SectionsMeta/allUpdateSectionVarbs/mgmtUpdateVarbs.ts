@@ -1,18 +1,7 @@
-import { updateGroupS } from "../updateSectionVarbs/switchUpdateVarbs";
 import { UpdateSectionVarbs } from "../updateSectionVarbs/updateSectionVarbs";
-import {
-  UpdateVarb,
-  updateVarb,
-  updateVarbS,
-  uvS,
-} from "../updateSectionVarbs/updateVarb";
-import { ubS } from "../updateSectionVarbs/updateVarb/UpdateBasics";
-import {
-  updateFnPropsS,
-  upS,
-} from "../updateSectionVarbs/updateVarb/UpdateFnProps";
-import { osS } from "../updateSectionVarbs/updateVarb/UpdateOverrideSwitch";
-import { updateVarbsS } from "../updateSectionVarbs/updateVarbs";
+import { UpdateVarb, updateVarbS, uvS } from "../updateSectionVarbs/updateVarb";
+import { upS } from "../updateSectionVarbs/updateVarb/UpdateFnProps";
+import { updateVarbsS, uvsS } from "../updateSectionVarbs/updateVarbs";
 
 export function mgmtRelVarbs(): UpdateSectionVarbs<"mgmt"> {
   return {
@@ -20,41 +9,23 @@ export function mgmtRelVarbs(): UpdateSectionVarbs<"mgmt"> {
     ...updateVarbsS.savableSection,
     completionStatus: mgmtCompletionStatus(),
     one: updateVarbS.one(),
-    ...updateGroupS.group("basePayDollars", "periodic", "monthly", {
-      monthly: ubS.loadChild("mgmtBasePayValue", "valueDollarsMonthly"),
-      yearly: ubS.loadChild("mgmtBasePayValue", "valueDollarsYearly"),
+    ...uvsS.loadChildPeriodic(
+      "basePayDollars",
+      "mgmtBasePayValue",
+      "valueDollars"
+    ),
+    basePayPercent: uvS.loadNumObjChild("mgmtBasePayValue", "valuePercent"),
+    miscOnetimeCosts: uvS.loadNumObjChild("miscOnetimeCost", "valueDollars"),
+    vacancyLossPercent: uvS.loadNumObjChild("vacancyLossValue", "valuePercent"),
+    ...uvsS.loadChildPeriodic(
+      "vacancyLossDollars",
+      "vacancyLossValue",
+      "valueDollars"
+    ),
+    ...uvsS.loadChildPeriodic("miscCosts", "miscOngoingCost", "valueDollars"),
+    ...uvsS.periodicSumNums("expenses", {
+      localBaseNames: ["basePayDollars", "vacancyLossDollars", "miscCosts"],
     }),
-    basePayPercent: updateVarb(
-      "numObj",
-      ubS.loadChild("mgmtBasePayValue", "valuePercent")
-    ),
-    ...updateGroupS.group("vacancyLossDollars", "periodic", "monthly", {
-      monthly: ubS.loadChild("vacancyLossValue", "valueDollarsMonthly"),
-      yearly: ubS.loadChild("vacancyLossValue", "valueDollarsYearly"),
-    }),
-    vacancyLossPercent: updateVarb(
-      "numObj",
-      ubS.loadChild("vacancyLossValue", "valuePercent")
-    ),
-    ...updateVarbsS.group("miscCosts", "periodic", "monthly", {
-      monthly: ubS.loadChild("miscOngoingCost", "valueDollarsMonthly"),
-      yearly: ubS.loadChild("miscOngoingCost", "valueDollarsYearly"),
-    }),
-
-    miscOnetimeCosts: updateVarb(
-      "numObj",
-      ubS.loadChild("miscOnetimeCost", "valueDollars")
-    ),
-
-    ...updateVarbsS.ongoingSumNums(
-      "expenses",
-      updateFnPropsS.localBaseNameArr([
-        "basePayDollars",
-        "vacancyLossDollars",
-        "miscCosts",
-      ]),
-      "monthly"
-    ),
   };
 }
 
@@ -64,19 +35,11 @@ function mgmtCompletionStatus(): UpdateVarb<"completionStatus"> {
       upS.onlyChild("mgmtBasePayValue", "valueSourceName"),
       upS.onlyChild("vacancyLossValue", "valueSourceName"),
     ],
-    validInputs: [
-      upS.onlyChild("mgmtBasePayValue", "valueDollarsPeriodicEditor", [
-        osS.valueSourceIs("valueDollarsPeriodicEditor"),
-      ]),
-      upS.onlyChild("mgmtBasePayValue", "valuePercentEditor", [
-        osS.valueSourceIs("percentOfRentEditor"),
-      ]),
-      upS.onlyChild("vacancyLossValue", "valueDollarsPeriodicEditor", [
-        osS.valueSourceIs("valueDollarsPeriodicEditor"),
-      ]),
-      upS.onlyChild("vacancyLossValue", "valuePercentEditor", [
-        osS.valueSourceIs("percentOfRentEditor"),
-      ]),
+    notEmptySolvable: [
+      upS.local("basePayDollarsMonthly"),
+      upS.local("basePayDollarsYearly"),
+      upS.local("vacancyLossDollarsMonthly"),
+      upS.local("vacancyLossDollarsYearly"),
     ],
   });
 }

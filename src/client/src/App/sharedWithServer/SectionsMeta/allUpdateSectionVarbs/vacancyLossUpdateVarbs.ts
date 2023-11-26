@@ -1,170 +1,55 @@
-import { updateGroupS } from "../updateSectionVarbs/switchUpdateVarbs";
+import { GroupKey, groupNameEnding } from "../GroupName";
 import { UpdateSectionVarbs } from "../updateSectionVarbs/updateSectionVarbs";
-import { updateVarb } from "../updateSectionVarbs/updateVarb";
-import { updateBasicsS } from "../updateSectionVarbs/updateVarb/UpdateBasics";
-import { updatePropS } from "../updateSectionVarbs/updateVarb/UpdateFnProps";
+import { uvS } from "../updateSectionVarbs/updateVarb";
 import {
-  updateOverride,
-  updateOverrideS,
-} from "../updateSectionVarbs/updateVarb/UpdateOverride";
-import { overrideSwitchS } from "../updateSectionVarbs/updateVarb/UpdateOverrideSwitch";
-import { updateVarbsS } from "../updateSectionVarbs/updateVarbs";
+  OverrideBasics,
+  uosbS,
+} from "../updateSectionVarbs/updateVarb/OverrideBasics";
+import { ubS } from "../updateSectionVarbs/updateVarb/UpdateBasics";
+import { upS } from "../updateSectionVarbs/updateVarb/UpdateFnProps";
+import { uvsS } from "../updateSectionVarbs/updateVarbs";
+import { usvs } from "./../updateSectionVarbs/updateSectionVarbs";
 
 export function vacancyLossUpdateVarbs(): UpdateSectionVarbs<"vacancyLossValue"> {
-  return {
-    ...updateVarbsS._typeUniformity,
-    valueSourceName: updateVarb("vacancyLossValueSource", {
+  return usvs("vacancyLossValue", {
+    valueSourceName: uvS.input("vacancyLossValueSource", {
       initValue: "none",
     }),
-    valuePercentEditor: updateVarb("numObj"),
-    valuePercent: updateVarb("numObj", {
-      updateFnName: "throwIfReached",
-      updateOverrides: [
-        updateOverrideS.emptyNumObjIfSourceIsNone,
-        updateOverride(
-          [overrideSwitchS.valueSourceIs("percentOfRentEditor")],
-          updateBasicsS.loadLocal("valuePercentEditor")
-        ),
-        updateOverride(
-          [overrideSwitchS.valueSourceIs("fivePercentRent")],
-          updateBasicsS.equationSimple(
-            "decimalToPercent",
-            updatePropS.local("valueDecimal")
-          )
-        ),
-        updateOverride(
-          [overrideSwitchS.valueSourceIs("tenPercentRent")],
-          updateBasicsS.equationSimple(
-            "decimalToPercent",
-            updatePropS.local("valueDecimal")
-          )
-        ),
-        updateOverride(
-          [overrideSwitchS.valueSourceIs("valueDollarsPeriodicEditor")],
-          updateBasicsS.equationSimple(
-            "decimalToPercent",
-            updatePropS.local("valueDecimal")
-          )
-        ),
-      ],
+    valuePercentEditor: uvS.input("numObj"),
+    valuePercent: uvS.vsNumObj("vacancyLossValueSource", {
+      none: ubS.emptyNumObj,
+      fivePercentRent: ubS.decimalToPercent("valueDecimal"),
+      tenPercentRent: ubS.decimalToPercent("valueDecimal"),
+      valuePercentEditor: ubS.loadLocal("valuePercentEditor"),
+      valueDollarsEditor: ubS.decimalToPercent("valueDecimal"),
     }),
-    valueDecimal: updateVarb("numObj", {
-      updateFnName: "throwIfReached",
-      updateOverrides: [
-        updateOverrideS.emptyNumObjIfSourceIsNone,
-        updateOverride(
-          [overrideSwitchS.valueSourceIs("percentOfRentEditor")],
-          updateBasicsS.equationSimple(
-            "percentToDecimal",
-            updatePropS.local("valuePercentEditor")
-          )
-        ),
-        updateOverride(
-          [overrideSwitchS.valueSourceIs("fivePercentRent")],
-          updateBasicsS.pointZeroFive
-        ),
-        updateOverride(
-          [overrideSwitchS.valueSourceIs("tenPercentRent")],
-          updateBasicsS.pointOne
-        ),
-        updateOverride(
-          [
-            overrideSwitchS.valueSourceIs("valueDollarsPeriodicEditor"),
-            overrideSwitchS.periodic("valueDollars", "monthly"),
-          ],
-          updateBasicsS.equationLR(
-            "divide",
-            updatePropS.local("valueDollarsPeriodicEditor"),
-            updatePropS.pathNameBase("propertyFocal", "targetRentMonthly")
-          )
-        ),
-        updateOverride(
-          [
-            overrideSwitchS.valueSourceIs("valueDollarsPeriodicEditor"),
-            overrideSwitchS.periodic("valueDollars", "yearly"),
-          ],
-          updateBasicsS.equationLR(
-            "divide",
-            updatePropS.local("valueDollarsPeriodicEditor"),
-            updatePropS.pathNameBase("propertyFocal", "targetRentYearly")
-          )
-        ),
-      ],
+    valueDecimal: uvS.vsNumObj("vacancyLossValueSource", {
+      none: ubS.emptyNumObj,
+      fivePercentRent: ubS.pointZeroFive,
+      tenPercentRent: ubS.pointOne,
+      valuePercentEditor: ubS.percentToDecimal("valuePercentEditor"),
+      valueDollarsEditor: ubS.divide(
+        "valueDollarsMonthly",
+        upS.varbPathName("targetRentMonthly")
+      ),
     }),
-    ...updateGroupS.group("valueDollars", "periodicInput", "monthly", {
-      switch: { initValue: "monthly" },
-      monthly: {
-        updateFnName: "throwIfReached",
-        updateOverrides: [
-          updateOverrideS.emptyNumObjIfSourceIsNone,
-          updateOverride(
-            [overrideSwitchS.valueSourceIs("fivePercentRent")],
-            updateBasicsS.loadByVarbPathName("fivePercentRentMonthly")
-          ),
-          updateOverride(
-            [overrideSwitchS.valueSourceIs("tenPercentRent")],
-            updateBasicsS.loadByVarbPathName("tenPercentRentMonthly")
-          ),
-          updateOverride(
-            [overrideSwitchS.valueSourceIs("percentOfRentEditor")],
-            updateBasicsS.equationLR(
-              "multiply",
-              updatePropS.local("valueDecimal"),
-              updatePropS.pathNameBase("propertyFocal", "targetRentMonthly")
-            )
-          ),
-          updateOverride(
-            [
-              overrideSwitchS.valueSourceIs("valueDollarsPeriodicEditor"),
-              overrideSwitchS.monthlyIsActive("valueDollars"),
-            ],
-            updateBasicsS.loadLocal("valueDollarsPeriodicEditor")
-          ),
-          updateOverride(
-            [
-              overrideSwitchS.valueSourceIs("valueDollarsPeriodicEditor"),
-              overrideSwitchS.yearlyIsActive("valueDollars"),
-            ],
-            updateBasicsS.yearlyToMonthly("valueDollars")
-          ),
-        ],
-      },
-      yearly: {
-        updateFnName: "throwIfReached",
-        updateOverrides: [
-          updateOverrideS.emptyNumObjIfSourceIsNone,
-          updateOverride(
-            [overrideSwitchS.valueSourceIs("fivePercentRent")],
-            updateBasicsS.loadByVarbPathName("fivePercentRentYearly")
-          ),
-          updateOverride(
-            [overrideSwitchS.valueSourceIs("tenPercentRent")],
-            updateBasicsS.loadByVarbPathName("tenPercentRentYearly")
-          ),
-          updateOverride(
-            [overrideSwitchS.valueSourceIs("percentOfRentEditor")],
-            updateBasicsS.equationLR(
-              "multiply",
-              updatePropS.local("valueDecimal"),
-              updatePropS.pathNameBase("propertyFocal", "targetRentYearly")
-            )
-          ),
-          updateOverride(
-            [
-              overrideSwitchS.valueSourceIs("valueDollarsPeriodicEditor"),
-              overrideSwitchS.monthlyIsActive("valueDollars"),
-            ],
-            updateBasicsS.monthlyToYearly("valueDollars")
-          ),
-          updateOverride(
-            [
-              overrideSwitchS.valueSourceIs("valueDollarsPeriodicEditor"),
-              overrideSwitchS.yearlyIsActive("valueDollars"),
-            ],
-            updateBasicsS.loadLocal("valueDollarsPeriodicEditor")
-          ),
-        ],
-      },
+    ...uvsS.periodic2("valueDollars", {
+      monthly: valueDollars("monthly"),
+      yearly: valueDollars("yearly"),
     }),
-  };
+  });
+}
+
+function valueDollars(groupKey: GroupKey<"periodic">): OverrideBasics {
+  const ending = groupNameEnding("periodic", groupKey);
+  return uosbS.valueSource("vacancyLossValueSource", {
+    none: ubS.emptyNumObj,
+    fivePercentRent: ubS.varbPathName(`fivePercentRent${ending}`),
+    tenPercentRent: ubS.varbPathName(`tenPercentRent${ending}`),
+    valuePercentEditor: ubS.multiply(
+      "valueDecimal",
+      upS.varbPathName(`targetRent${ending}`)
+    ),
+    valueDollarsEditor: ubS.loadChild("periodicEditor", `value${ending}`),
+  });
 }

@@ -48,7 +48,7 @@ type Props<
   sx?: SxProps;
   editorType?: NumEditorType;
   bypassNumeric?: boolean;
-  quickViewVarbNames?: ValueFixedVarbPathName[];
+  quickViewVarbNames?: readonly ValueFixedVarbPathName[];
   inputMargins?: boolean;
   hideVarbSelector?: boolean;
 };

@@ -174,7 +174,7 @@ export const updateBasicsS = {
       varbInfo: upS.firstChild(childName, varbName),
     });
   },
-  loadByVarbPathName(varbPathName: VarbPathName) {
+  varbPathName(varbPathName: VarbPathName) {
     return updateBasicsNext("loadSolvableTextByVarbInfo", {
       varbInfo: upS.varbPathName(varbPathName),
     });

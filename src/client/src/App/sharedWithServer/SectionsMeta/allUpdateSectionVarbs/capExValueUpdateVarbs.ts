@@ -19,7 +19,7 @@ function valueDollars(groupKey: GroupKey<"periodic">) {
   const ending = groupNameEnding("periodic", groupKey);
   return uosbS.valueSource("capExValueSource", {
     none: ubS.emptyNumObj,
-    fivePercentRent: ubS.loadByVarbPathName(`fivePercentRent${ending}`),
+    fivePercentRent: ubS.varbPathName(`fivePercentRent${ending}`),
     listTotal: ubS.loadChild("capExList", `total${ending}`),
     valueDollarsEditor: ubS.loadChild("valueDollarsEditor", `value${ending}`),
   });
