@@ -196,8 +196,8 @@ function propertyHoldingCosts(groupKey: GroupKey<"periodic">): UpdateFnProp[] {
 type OngoingBaseName<BN extends "taxes" | "homeIns"> = `${BN}Ongoing`;
 function ongoingVarbs<BN extends "taxes" | "homeIns">(
   base: BN
-): GroupUpdateVarbs<OngoingBaseName<BN>, "periodic"> {
-  const baseName = `${base}Ongoing`;
+): GroupUpdateVarbs<"periodic", OngoingBaseName<BN>> {
+  const baseName: OngoingBaseName<BN> = `${base}Ongoing`;
   return uvsS.periodic2(baseName, {
     monthly: uosbS.valueSource(
       "taxesAndHomeInsSource",

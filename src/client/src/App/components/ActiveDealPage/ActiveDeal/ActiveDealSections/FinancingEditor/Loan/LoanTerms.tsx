@@ -6,7 +6,8 @@ import { FormSectionNext } from "../../../../../appWide/FormSectionNext";
 import { LabeledVarbRow } from "../../../../../appWide/LabeledVarbRow";
 import { TogglerBooleanVarb } from "../../../../../appWide/TogglerBooleanVarb";
 import { MuiRow } from "../../../../../general/MuiRow";
-import { NumObjEntityEditor } from "../../../../../inputs/NumObjEntityEditor";
+import { PeriodicEditor } from "./../../../../../inputs/PeriodicEditor";
+import { TimespanEditor } from "./../../../../../inputs/TimespanEditor";
 import { MortgageIns } from "./MortgageIns";
 
 export function LoanTerms({ feId }: FeIdProp) {
@@ -14,9 +15,12 @@ export function LoanTerms({ feId }: FeIdProp) {
   const loan = useGetterSection(feInfo);
   const isInterestOnlyVarb = loan.varbNext("isInterestOnly");
 
+  const loanTerm = loan.onlyChild("loanTermEditor");
+  const interestRate = loan.onlyChild("interestRateEditor");
+
   const showLoanPayments =
-    loan.valueNext("interestRatePercentPeriodicEditor").mainText &&
-    loan.valueNext("loanTermSpanEditor").mainText;
+    loanTerm.valueNext("valueEditor").mainText &&
+    interestRate.valueNext("valueEditor").mainText;
 
   const showLoanExpenses =
     showLoanPayments &&
@@ -34,14 +38,15 @@ export function LoanTerms({ feId }: FeIdProp) {
   return (
     <FormSectionNext label={"Parameters"}>
       <MuiRow>
-        <NumObjEntityEditor
+        <PeriodicEditor
+          feId={interestRate.feId}
+          labelInfo={loan.periodicVBI("interestRatePercent")}
           inputMargins
-          feVarbInfo={loan.varbInfo2("interestRatePercentPeriodicEditor")}
         />
-        <NumObjEntityEditor
+        <TimespanEditor
+          feId={loanTerm.feId}
+          labelInfo={loan.timespanVBI("loanTerm")}
           inputMargins
-          feVarbInfo={loan.varbInfo2("loanTermSpanEditor")}
-          label="Loan term"
         />
       </MuiRow>
       <Box sx={{ pb: nativeTheme.s3 }}>

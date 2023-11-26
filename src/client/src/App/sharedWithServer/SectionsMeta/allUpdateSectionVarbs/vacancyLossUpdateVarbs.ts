@@ -23,7 +23,7 @@ export function vacancyLossUpdateVarbs(): UpdateSectionVarbs<"vacancyLossValue">
         updateOverrideS.emptyNumObjIfSourceIsNone,
         updateOverride(
           [overrideSwitchS.valueSourceIs("percentOfRentEditor")],
-          updateBasicsS.loadSolvableTextByVarbInfo("valuePercentEditor")
+          updateBasicsS.loadLocal("valuePercentEditor")
         ),
         updateOverride(
           [overrideSwitchS.valueSourceIs("fivePercentRent")],

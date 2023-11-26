@@ -15,6 +15,7 @@ import {
   RelLocalVarbInfo,
   relVarbInfoS,
 } from "../../SectionInfo/RelVarbInfo";
+import { isVarbName } from "../../SectionInfo/VarbInfoBase";
 import {
   VarbPathName,
   VarbPathNameInfoMixed,
@@ -51,6 +52,13 @@ export function overrideSwitch(
   };
 }
 
+export type StandardSP = UpdateOverrideSwitchInfo | VarbNameWide;
+export function standardToOsInfo(
+  standard: StandardSP
+): UpdateOverrideSwitchInfo {
+  return isVarbName(standard) ? relVarbInfoS.local(standard) : standard;
+}
+
 export const overrideSwitchS = {
   switchIsActive<SN extends SwitchName, SK extends SwitchTargetKey<SN>>(
     baseName: string,
@@ -63,14 +71,20 @@ export const overrideSwitchS = {
       ...(switchValues as string[])
     );
   },
+  general(
+    switchInfo: StandardSP,
+    ...switchValues: OverrideSwitchValue[]
+  ): UpdateOverrideSwitch {
+    return {
+      switchInfo: standardToOsInfo(switchInfo),
+      switchValues,
+    };
+  },
   local(
     varbName: VarbNameWide,
     ...switchValues: OverrideSwitchValue[]
   ): UpdateOverrideSwitch {
-    return {
-      switchInfo: relVarbInfoS.local(varbName),
-      switchValues,
-    } as const;
+    return this.general(varbName, ...switchValues);
   },
   child(
     childName: ChildName,
@@ -120,14 +134,17 @@ export const overrideSwitchS = {
       switchValues,
     };
   },
-  localIsTrue(varbName: VarbNameWide): UpdateOverrideSwitch {
-    return this.local(varbName, true);
+  isTrue(prop: StandardSP): UpdateOverrideSwitch {
+    return this.general(prop, true);
   },
-  localIsFalse(varbName: VarbNameWide): UpdateOverrideSwitch {
-    return this.local(varbName, false);
+  isFalse(prop: StandardSP): UpdateOverrideSwitch {
+    return this.general(prop, false);
   },
-  valueSourceIs(valueSource: ValueSource): UpdateOverrideSwitch {
-    return this.local("valueSourceName", valueSource);
+  valueSourceIs(
+    valueSource: ValueSource,
+    prop?: StandardSP
+  ): UpdateOverrideSwitch {
+    return this.general(prop ?? "valueSourceName", valueSource);
   },
 
   childValueSourceIs(childName: ChildName, ...valueSource: ValueSource[]) {

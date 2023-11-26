@@ -138,7 +138,7 @@ describe("MgmtCalculations", () => {
     vacancyLoss.updateValues({ valueSourceName: "fivePercentRent" });
 
     const miscOngoing = mgmt.onlyChild("miscOngoingCost");
-    miscOngoing.updateValues({ valueSourceName: "valueDollarsPeriodicEditor" });
+    miscOngoing.updateValues({ valueSourceName: "valueDollarsEditor" });
     const editor = miscOngoing.onlyChild("periodicEditor");
     editor.updateValues({
       valueEditorFrequency: "monthly",

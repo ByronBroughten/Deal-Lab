@@ -51,10 +51,8 @@ export function CapExValue({ feId }: { feId: string }) {
                   {...{
                     ...props,
                     feId: capExValue.onlyChildFeId("valueDollarsEditor"),
-                    labelNames: {
-                      sectionName: "capExValue",
-                      varbBaseName: "valueDollars",
-                    },
+                    labelProps: { showLabel: false },
+                    labelInfo: null,
                   }}
                 />
               )

@@ -63,6 +63,32 @@ export interface FeVI<
   varbName: VN;
 }
 
+export const feInfoS = {
+  isVarbInfo(value: any): value is FeVarbInfo {
+    return (
+      Id.is(value.feId) &&
+      sectionNameS.is(value.sectionName) &&
+      typeof value.varbName === "string"
+    );
+  },
+};
+
+export function varbInfoToId(info: FeVarbInfo | FeVI): string {
+  const { sectionName, varbName, feId } = info;
+  return [sectionName, varbName, feId].join(".");
+}
+
+export function varbIdToInfo(varbId: string): FeVarbInfo {
+  const [sectionName, varbName, feId] = varbId.split(".") as [
+    SectionNameByType,
+    string,
+    string
+  ];
+  const info = { sectionName, varbName, feId };
+  if (feInfoS.isVarbInfo(info)) return info;
+  else throw new Error(`Was passed an invalid varbId: ${varbId}`);
+}
+
 export interface SectionVarbNames<
   SN extends SectionName = SectionName,
   VN extends VarbName<SN> = VarbName<SN>
@@ -80,13 +106,3 @@ export interface FeVarbValueInfo<
 > extends FeVarbInfo<SN> {
   value: StateValue;
 }
-
-export const FeInfoS = {
-  isVarbInfo(value: any): value is FeVarbInfo {
-    return (
-      Id.is(value.feId) &&
-      sectionNameS.is(value.sectionName) &&
-      typeof value.varbName === "string"
-    );
-  },
-};

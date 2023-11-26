@@ -19,25 +19,19 @@ export function PropertyHoldingCosts({ feId }: FeIdProp) {
           inputMargins
           {...{
             feId: property.onlyChildFeId("holdingPeriod"),
-            labelNames: property.varbInfo2("holdingPeriodMonths"),
+            labelInfo: property.timespanVBI("holdingPeriod"),
           }}
         />
         <PeriodicEditor
           inputMargins
           feId={taxes.onlyChildFeId("valueDollarsEditor")}
-          labelNames={{
-            sectionName: "taxesValue",
-            varbBaseName: "valueDollars",
-          }}
+          labelInfo={taxes.periodicVBI("valueDollars")}
         />
         <PeriodicEditor
           inputMargins
           editorType="equation"
           feId={homeIns.onlyChildFeId("valueDollarsEditor")}
-          labelNames={{
-            sectionName: "homeInsValue",
-            varbBaseName: "valueDollars",
-          }}
+          labelInfo={homeIns.periodicVBI("valueDollars")}
           quickViewVarbNames={["purchasePrice", "sqft", "numUnits"]}
         />
         <UtilityValue

@@ -326,11 +326,14 @@ describe("Purchase financing calculations", () => {
     });
 
     firstBaseValue.updateValues({ valueSourceName: "customAmountEditor" });
-    firstLoan.updateValues({
-      loanTermSpanEditor: numObj(30),
-      loanTermSpanSwitch: "years",
-      interestRatePercentPeriodicEditor: numObj(7),
-      interestRateDecimalPeriodicSwitch: "yearly",
+
+    firstLoan.onlyChild("loanTermEditor").updateValues({
+      valueEditor: numObj(30),
+      valueEditorUnit: "years",
+    });
+    firstLoan.onlyChild("interestRateEditor").updateValues({
+      valueEditor: numObj(7),
+      valueEditorFrequency: "yearly",
     });
 
     test(roundToCents(100000 / 30));
@@ -340,12 +343,18 @@ describe("Purchase financing calculations", () => {
 function addInterestOnlyLoan(financing: SolverSection<"financing">): void {
   const loan = financing.addAndGetChild("loan", {
     sectionValues: {
-      interestRatePercentPeriodicSwitch: "yearly",
-      interestRatePercentPeriodicEditor: numObj(6),
       isInterestOnly: true,
       hasMortgageIns: false,
     },
   });
+  loan.onlyChild("loanTermEditor").updateValues({
+    valueEditorUnit: "years",
+  });
+  loan.onlyChild("interestRateEditor").updateValues({
+    valueEditor: numObj(6),
+    valueEditorFrequency: "yearly",
+  });
+
   const baseValue = loan.onlyChild("loanBaseValue");
   baseValue.updateValues({ valueSourceName: "customAmountEditor" });
   const custom = baseValue.onlyChild("customLoanBase");

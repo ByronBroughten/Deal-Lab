@@ -1,5 +1,4 @@
 import { makeDefaultDealDisplayName } from "../defaultMaker/makeDefaultDeal";
-import { VirtualVarbName } from "../SectionsMeta/baseSectionsDerived/baseVarbNames";
 import { PathInVarbInfo } from "../SectionsMeta/sectionChildrenDerived/RelInOutVarbInfo";
 import { RelVarbInfo } from "../SectionsMeta/SectionInfo/RelVarbInfo";
 import { DbVarbInfoMixed } from "../SectionsMeta/SectionInfo/VarbInfoBase";
@@ -419,35 +418,7 @@ export class SolveValueVarb<
     emptyStringObj: (): StringObj => {
       return stringObj("");
     },
-    loadDisplayName: (): StringObj => {
-      return this.valueEntityVarbProp("displayName", "Variable not found");
-    },
-    loadStartAdornment: (): StringObj => {
-      return this.valueEntityVarbProp("startAdornment", "");
-    },
-    loadEndAdornment: (): StringObj => {
-      return this.valueEntityVarbProp("endAdornment", "");
-    },
   };
-  private valueEntityVarbProp(
-    varbPropName: VirtualVarbName,
-    notFoundString: string
-  ): StringObj {
-    const section = this.getterSection;
-    const entityInfo = this.getterSection.value(
-      "valueEntityInfo",
-      "inEntityValue"
-    );
-    if (!entityInfo) {
-      return stringObj("");
-    }
-    if (section.hasSectionByFocalMixed(entityInfo)) {
-      const varb = section.varbByFocalMixed(entityInfo);
-      return stringObj(varb[varbPropName]);
-    } else {
-      return stringObj(notFoundString);
-    }
-  }
   solveValue(): StateValue {
     const { updateFnName } = this.inEntityVarb;
     if (isCalculationName(updateFnName)) return this.updateFns.calculation();

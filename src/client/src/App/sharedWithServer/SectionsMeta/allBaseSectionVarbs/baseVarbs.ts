@@ -1,13 +1,13 @@
 import { Obj } from "../../utils/Obj";
 import { merge } from "../../utils/Obj/merge";
 import {
+  GroupBaseVarbName,
   GroupKey,
   groupKeys,
   GroupName,
   GroupRecord,
   GroupRecordAndAll,
   groupVarbName,
-  GroupVarbNameBase,
 } from "../GroupName";
 import { ValueName, valueNames } from "../values/ValueName";
 import { baseSectionVarbs } from "./baseSectionVarbs";
@@ -133,7 +133,7 @@ type SimpleBaseSwitchVarbs<BN extends string, SN extends SwitchName> = {
 };
 
 type BaseVarbGroup<BN extends string, GN extends GroupName> = {
-  [GK in GroupKey<GN> as GroupVarbNameBase<BN, GN, GK>]: BaseVarb<"numObj">;
+  [GK in GroupKey<GN> as GroupBaseVarbName<BN, GN, GK>]: BaseVarb<"numObj">;
 };
 
 const ongoingOptions = {
@@ -321,19 +321,6 @@ export const baseVarbsS = {
       dateTimeFirstSaved: baseVarb("dateTime"),
       dateTimeLastSaved: baseVarb("dateTime"),
       autoSyncControl: baseVarb("autoSyncControl"),
-    } as const;
-  },
-  get virtualVarb() {
-    return baseVarbs("stringObj", [
-      "displayName",
-      "startAdornment",
-      "endAdornment",
-    ] as const);
-  },
-  get singleValueVirtualVarb() {
-    return {
-      ...this.virtualVarb,
-      value: baseVarb("numObj"),
     } as const;
   },
   get loadableVarb() {

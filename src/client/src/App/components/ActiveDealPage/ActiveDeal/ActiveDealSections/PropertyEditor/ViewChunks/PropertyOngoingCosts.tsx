@@ -20,19 +20,13 @@ export function PropertyOngoingCosts({ feId }: FeIdProp) {
         <PeriodicEditor
           inputMargins
           feId={taxes.onlyChildFeId("valueDollarsEditor")}
-          labelNames={{
-            sectionName: "taxesValue",
-            varbBaseName: "valueDollars",
-          }}
+          labelInfo={taxes.periodicVBI("valueDollars")}
         />
         <PeriodicEditor
           inputMargins
           editorType="equation"
           feId={homeIns.onlyChildFeId("valueDollarsEditor")}
-          labelNames={{
-            sectionName: "homeInsValue",
-            varbBaseName: "valueDollars",
-          }}
+          labelInfo={homeIns.periodicVBI("valueDollars")}
           quickViewVarbNames={["purchasePrice", "sqft", "numUnits"]}
         />
         <UtilityValue

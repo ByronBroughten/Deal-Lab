@@ -6,7 +6,13 @@ import {
   VarbLabel,
 } from "../../../varbLabels";
 import { DisplayOverrideSwitches } from "../SectionsMeta/displaySectionVarbs/displayVarb";
-import { FeInfoS, FeVarbInfo } from "../SectionsMeta/SectionInfo/FeInfo";
+import {
+  FeVarbInfo,
+  FeVI,
+  SectionVarbNames,
+  varbIdToInfo,
+  varbInfoToId,
+} from "../SectionsMeta/SectionInfo/FeInfo";
 import {
   mixedInfoS,
   VarbInfoMixedFocal,
@@ -66,6 +72,18 @@ export class GetterVarb<
       ...this.feSectionInfo,
       varbName: this.varbName,
     };
+  }
+  get sectionVarbNames(): SectionVarbNames<SN> {
+    return {
+      sectionName: this.sectionName,
+      varbName: this.varbName,
+    } as SectionVarbNames<SN>;
+  }
+  get varbInfo(): FeVI<SN> {
+    return {
+      ...this.feInfo,
+      varbName: this.varbName,
+    } as FeVI<SN>;
   }
   varbByFocalMixed(varbInfo: VarbInfoMixedFocal): GetterVarb {
     return this.section.varbByFocalMixed(varbInfo);
@@ -388,8 +406,7 @@ export class GetterVarb<
     return anscestor.varb(varbName);
   }
   static feVarbInfoToVarbId(info: FeVarbInfo): string {
-    const { sectionName, varbName, feId } = info;
-    return [sectionName, varbName, feId].join(".");
+    return varbInfoToId(info);
   }
   static varbInfosToVarbIds(varbInfos: FeVarbInfo[]): string[] {
     return varbInfos.map((varbInfo) => {
@@ -397,13 +414,6 @@ export class GetterVarb<
     });
   }
   static varbIdToVarbInfo(varbId: string): FeVarbInfo {
-    const [sectionName, varbName, feId] = varbId.split(".") as [
-      SectionNameByType,
-      string,
-      string
-    ];
-    const info = { sectionName, varbName, feId };
-    if (FeInfoS.isVarbInfo(info)) return info;
-    else throw new Error(`Was passed an invalid varbId: ${varbId}`);
+    return varbIdToInfo(varbId);
   }
 }

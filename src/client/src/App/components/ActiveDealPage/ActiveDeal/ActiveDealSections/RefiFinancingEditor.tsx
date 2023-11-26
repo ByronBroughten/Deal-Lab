@@ -19,13 +19,13 @@ export function RefiFinancingEditor({ feId, dealMode }: Props) {
   return (
     <FinancingEditorBody {...{ feId, dealMode }}>
       <NumObjEntityEditor
-        label="Time till refinance"
+        feVarbInfo={financing.varbInfo2("timeTillRefinanceSpanEditor")}
+        // labelProps={{ label: "Time till refinance" }}
         sx={{
           "& .DraftEditor-root": {
             minWidth: "135px",
           },
         }}
-        feVarbInfo={financing.varbInfo2("timeTillRefinanceSpanEditor")}
       />
       <FinancingLoans feId={feId} />
     </FinancingEditorBody>

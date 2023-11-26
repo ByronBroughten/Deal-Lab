@@ -67,10 +67,8 @@ export function MaintenanceValue({
                   {...{
                     ...props,
                     feId: maintenanceValue.onlyChildFeId("valueDollarsEditor"),
-                    labelNames: {
-                      sectionName: "capExValue",
-                      varbBaseName: "valueDollars",
-                    },
+                    labelInfo: null,
+                    labelProps: { showLabel: false },
                     quickViewVarbNames: ["sqft", "numUnits", "numBedrooms"],
                   }}
                 />

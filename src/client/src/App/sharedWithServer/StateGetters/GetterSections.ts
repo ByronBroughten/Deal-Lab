@@ -1,6 +1,10 @@
 import { sectionsMeta, SectionsMeta } from "../SectionsMeta";
 import { DbSectionInfo } from "../SectionsMeta/allBaseSectionVarbs/DbSectionInfo";
-import { FeSectionInfo, FeVarbInfo } from "../SectionsMeta/SectionInfo/FeInfo";
+import {
+  FeSectionInfo,
+  FeVarbInfo,
+  varbIdToInfo,
+} from "../SectionsMeta/SectionInfo/FeInfo";
 import {
   IdInfoMixedMulti,
   SectionInfoMixed,
@@ -73,11 +77,15 @@ export class GetterSections extends GetterSectionsBase {
     return this.section(feInfo);
   }
 
-  varb<SN extends SectionNameByType>({
+  varb<SN extends SectionName>({
     varbName,
     ...info
   }: FeVarbInfo<SN>): GetterVarb<SN> {
     return this.section(info).varb(varbName);
+  }
+  varbById(varbId: string): GetterVarb {
+    const { varbName, ...feInfo } = varbIdToInfo(varbId);
+    return this.section(feInfo).varb(varbName);
   }
   sectionsByMixed<SN extends SectionName>(
     infoMixed: SectionInfoMixed<SN>

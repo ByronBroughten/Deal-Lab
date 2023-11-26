@@ -18,6 +18,7 @@ import {
 import { updateOverride, UpdateOverride } from "./UpdateOverride";
 import {
   osS,
+  StandardSP,
   UpdateOverrideSwitches,
   UpdateOverrideSwitchInfo,
 } from "./UpdateOverrideSwitch";
@@ -56,15 +57,15 @@ const updateOverridesS = {
     );
   },
   boolean(
-    localVarbName: VarbNameWide,
+    finder: StandardSP,
     basics: {
       true: UpdateBasics;
       false: UpdateBasics;
     }
   ) {
     return [
-      updateOverride([osS.localIsTrue(localVarbName)], basics.true),
-      updateOverride([osS.localIsFalse(localVarbName)], basics.false),
+      updateOverride([osS.isTrue(finder)], basics.true),
+      updateOverride([osS.isFalse(finder)], basics.false),
     ];
   },
   union<UVN extends UnionValueName>(

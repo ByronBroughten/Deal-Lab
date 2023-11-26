@@ -6,6 +6,7 @@ import {
 import { UpdateBasics } from "./UpdateBasics";
 import { UpdateFnName } from "./UpdateFnName";
 import { uosS, UpdateOverrides, ValueSourceOptions } from "./UpdateOverrides";
+import { StandardSP } from "./UpdateOverrideSwitch";
 
 type ThrowIfReached = StrictExtract<UpdateFnName, "throwIfReached">;
 export type OverrideBasics = {
@@ -27,5 +28,14 @@ export const uosbS = {
     options?: ValueSourceOptions
   ) {
     return uosb(uosS.valueSource(_valueSourceType, updateBasics, options));
+  },
+  boolean(
+    finder: StandardSP,
+    basics: {
+      true: UpdateBasics;
+      false: UpdateBasics;
+    }
+  ) {
+    return uosb(uosS.boolean(finder, basics));
   },
 } as const;

@@ -1,17 +1,17 @@
 import { GroupKey, groupNameEnding } from "../GroupName";
 import { relVarbInfoS } from "../SectionInfo/RelVarbInfo";
-import { UpdateSectionVarbs } from "../updateSectionVarbs/updateSectionVarbs";
+import { USVS, usvs } from "../updateSectionVarbs/updateSectionVarbs";
 import { updateVarb, uvS } from "../updateSectionVarbs/updateVarb";
 import {
   OverrideBasics,
   uosb,
+  uosbS,
 } from "../updateSectionVarbs/updateVarb/OverrideBasics";
+import { ubS } from "../updateSectionVarbs/updateVarb/UpdateBasics";
 import {
-  ubS,
-  UpdateBasics,
-  updateBasics,
-} from "../updateSectionVarbs/updateVarb/UpdateBasics";
-import { updateFnPropsS } from "../updateSectionVarbs/updateVarb/UpdateFnProps";
+  updateFnPropsS,
+  upsS,
+} from "../updateSectionVarbs/updateVarb/UpdateFnProps";
 import {
   uO,
   updateOverride,
@@ -19,26 +19,18 @@ import {
 import { uosS } from "../updateSectionVarbs/updateVarb/UpdateOverrides";
 import { osS } from "../updateSectionVarbs/updateVarb/UpdateOverrideSwitch";
 import { updateVarbsS, uvsS } from "../updateSectionVarbs/updateVarbs";
-import { numObj } from "../values/StateValue/NumObj";
-import { unionValueArr } from "../values/StateValue/unionValues";
-import { PiCalculationName } from "../values/StateValue/valuesShared/calculations/piCalculations";
 import { upS } from "./../updateSectionVarbs/updateVarb/UpdateFnProps";
 
-export function loanUpdateVarbs(): UpdateSectionVarbs<"loan"> {
-  return {
-    ...updateVarbsS._typeUniformity,
+export function loanUpdateVarbs(): USVS<"loan"> {
+  return usvs("loan", {
+    ...uvsS.savableSection,
     completionStatus: loanCompletionStatus(),
-    ...updateVarbsS.savableSection,
-    financingMode: updateVarb("financingMode"),
+    financingMode: uvS.input("financingMode"),
     loanBaseDollars: uvS.loadNumObjChild("loanBaseValue", "valueDollars"),
-    ...updateVarbsS.periodicInput("interestRatePercent", {
-      switchInit: "yearly",
-    }),
-    ...updateVarbsS.monthsYearsInput("loanTerm", "years", {
-      years: { initValue: numObj(30) },
-    }),
-    // investmentExpenses = upfrontExpenses, delayedExpenses
-    // cashExpenses = upfrontExpenses, prepaidExpenses
+    ...uvsS.periodic2("interestRatePercent"),
+    ...uvsS.timespan("loanTerm"),
+    // investmentExpenses = upfrontExpenses + delayedExpenses
+    // cashExpenses = upfrontExpenses + prepaidExpenses
 
     prepaidTaxes: loanPrepaidPeriodic("taxes"),
     prepaidHomeIns: loanPrepaidPeriodic("homeIns"),
@@ -62,7 +54,7 @@ export function loanUpdateVarbs(): UpdateSectionVarbs<"loan"> {
       initValue: false,
     }),
     mortgageInsUpfront: uvS.numObjO([
-      updateOverride([osS.localIsFalse("hasMortgageIns")], ubS.zero),
+      updateOverride([osS.isFalse("hasMortgageIns")], ubS.zero),
       ...uosS.valueSource(
         "mortgageInsUpfrontSource",
         {
@@ -77,7 +69,7 @@ export function loanUpdateVarbs(): UpdateSectionVarbs<"loan"> {
           ),
         },
         {
-          sharedSwitches: [osS.localIsTrue("hasMortgageIns")],
+          sharedSwitches: [osS.isTrue("hasMortgageIns")],
           switchInfo: relVarbInfoS.onlyChild(
             "mortgageInsUpfrontValue",
             "valueSourceName"
@@ -110,121 +102,72 @@ export function loanUpdateVarbs(): UpdateSectionVarbs<"loan"> {
       "fivePercent",
       upS.local("loanBaseDollars")
     ),
-    closingCosts: uvS.numObjO([
-      updateOverride(
-        [osS.childValueSourceIs("closingCostValue", "fivePercentLoan")],
-        ubS.loadSolvableTextByVarbInfo("fivePercentBaseLoan")
-      ),
-      updateOverride(
-        [
-          osS.childValueSourceIs(
-            "closingCostValue",
-            ...unionValueArr("closingCostValueSource")
-          ),
-        ],
-        ubS.sumNums(upS.children("closingCostValue", "valueDollars"))
-      ),
-    ]),
-    piCalculationName: updateVarb("string", {
-      initValue: "piFixedStandard" as PiCalculationName,
+    closingCosts: uvS.vsNumObj(
+      "closingCostValueSource",
+      {
+        none: ubS.emptyNumObj,
+        fivePercentLoan: ubS.loadLocal("fivePercentBaseLoan"),
+        listTotal: ubS.sumNums(
+          upS.children("closingCostValue", "valueDollars")
+        ),
+        valueDollarsEditor: ubS.sumNums(
+          upS.children("closingCostValue", "valueDollars")
+        ),
+      },
+      {
+        switchInfo: relVarbInfoS.children(
+          "closingCostValue",
+          "valueSourceName"
+        ),
+      }
+    ),
+    ...uvsS.periodic2("interestRateDecimal", {
+      monthly: ubS.percentToDecimal("interestRatePercentMonthly"),
+      yearly: ubS.percentToDecimal("interestRatePercentYearly"),
     }),
-    ...updateVarbsS.ongoingPureCalc("interestRateDecimal", {
-      monthly: {
-        updateFnName: "percentToDecimal",
-        updateFnProps: {
-          num: upS.local("interestRatePercentMonthly"),
-        },
-      },
-      yearly: {
-        updateFnName: "percentToDecimal",
-        updateFnProps: {
-          num: upS.local("interestRatePercentYearly"),
-        },
-      },
-    }),
-    ...updateVarbsS.ongoingPureCalc("interestOnlySimple", {
-      monthly: {
-        updateFnName: "yearlyToMonthly",
-        updateFnProps: {
-          num: upS.local("interestOnlySimpleYearly"),
-        },
-      },
-      yearly: {
-        updateFnName: "piInterestOnlySimpleYearly",
-        updateFnProps: {
-          ...updateFnPropsS.localByVarbName([
-            "interestRateDecimalYearly",
-            "loanTotalDollars",
-          ]),
-        },
-      },
-    }),
-
-    ...updateVarbsS.ongoingPureCalc("averagePrincipal", {
-      monthly: uvS.numObjO(
-        uosS.boolean("isInterestOnly", {
-          true: ubS.zero,
-          false: ubS.divide("loanTotalDollars", "loanTermMonths"),
-        })
-      ),
-      yearly: uvS.numObjO(
-        uosS.boolean("isInterestOnly", {
-          true: ubS.zero,
-          false: ubS.divide("loanTotalDollars", "loanTermYears"),
-        })
+    ...uvsS.periodic2("interestOnlySimple", {
+      monthly: ubS.yearlyToMonthly2("interestOnlySimple"),
+      yearly: ubS.fnName(
+        "piInterestOnlySimpleYearly",
+        upsS.localByVarbName("interestRateDecimalYearly", "loanTotalDollars")
       ),
     }),
-    ...updateVarbsS.ongoingPureCalc("averageInterest", {
+    ...uvsS.periodic2("piFixedStandard", {
+      monthly: ubS.fnName(
+        "piFixedStandardMonthly",
+        updateFnPropsS.localByVarbName(
+          "loanTotalDollars",
+          "interestRateDecimalMonthly",
+          "loanTermMonths"
+        )
+      ),
+      yearly: ubS.monthlyToYearly2("piFixedStandard"),
+    }),
+    ...uvsS.periodic2("averagePrincipal", {
+      monthly: uosbS.boolean("isInterestOnly", {
+        true: ubS.zero,
+        false: ubS.divide("loanTotalDollars", "loanTermMonths"),
+      }),
+      yearly: uosbS.boolean("isInterestOnly", {
+        true: ubS.zero,
+        false: ubS.divide("loanTotalDollars", "loanTermYears"),
+      }),
+    }),
+    ...uvsS.periodic2("averageInterest", {
       monthly: ubS.subtract("loanPaymentMonthly", "averagePrincipalMonthly"),
       yearly: ubS.subtract("loanPaymentYearly", "averagePrincipalYearly"),
     }),
-    ...updateVarbsS.ongoingPureCalc("piFixedStandard", {
-      monthly: {
-        updateFnName: "piFixedStandardMonthly",
-        updateFnProps: updateFnPropsS.localByVarbName([
-          "loanTotalDollars",
-          "interestRateDecimalMonthly",
-          "loanTermMonths",
-        ]),
-      },
-      yearly: {
-        updateFnName: "monthlyToYearly",
-        updateFnProps: { num: upS.local("piFixedStandardMonthly") },
-      },
+    ...uvsS.periodic2("loanPayment", {
+      monthly: uosbS.boolean("isInterestOnly", {
+        true: ubS.loadLocal("interestOnlySimpleMonthly"),
+        false: ubS.loadLocal("piFixedStandardMonthly"),
+      }),
+      yearly: uosbS.boolean("isInterestOnly", {
+        true: ubS.loadLocal("interestOnlySimpleYearly"),
+        false: ubS.loadLocal("piFixedStandardYearly"),
+      }),
     }),
-    ...updateVarbsS.ongoingPureCalc("loanPayment", {
-      monthly: {
-        updateFnName: "throwIfReached",
-        updateOverrides: [
-          updateOverride(
-            [osS.local("isInterestOnly", false)],
-            ubS.loadLocal("piFixedStandardMonthly") as UpdateBasics<"numObj">
-          ),
-          updateOverride(
-            [osS.local("isInterestOnly", true)],
-            updateBasics("loadNumObj", {
-              varbInfo: upS.local("interestOnlySimpleMonthly"),
-            })
-          ),
-        ],
-      },
-      yearly: {
-        updateFnName: "throwIfReached",
-        updateOverrides: [
-          updateOverride(
-            [osS.local("isInterestOnly", false)],
-            ubS.loadLocal("piFixedStandardYearly") as UpdateBasics<"numObj">
-          ),
-          updateOverride(
-            [osS.local("isInterestOnly", true)],
-            updateBasics("loadNumObj", {
-              varbInfo: upS.local("interestOnlySimpleYearly"),
-            })
-          ),
-        ],
-      },
-    }),
-  };
+  });
 }
 
 function loanPrepaidPeriodic(baseName: "taxes" | "homeIns") {
@@ -264,7 +207,7 @@ function mortgageInsPeriodicOverrides(
 ): OverrideBasics {
   const ending = groupNameEnding("periodic", groupKey);
   return uosb([
-    updateOverride([osS.localIsFalse("hasMortgageIns")], ubS.zero),
+    updateOverride([osS.isFalse("hasMortgageIns")], ubS.zero),
     ...uosS.valueSource(
       "mortgageInsPeriodic",
       {
@@ -278,7 +221,7 @@ function mortgageInsPeriodicOverrides(
         ),
       },
       {
-        sharedSwitches: [osS.localIsTrue("hasMortgageIns")],
+        sharedSwitches: [osS.isTrue("hasMortgageIns")],
         switchInfo: relVarbInfoS.onlyChild(
           "mortgageInsPeriodicValue",
           "valueSourceName"
@@ -295,9 +238,13 @@ function loanCompletionStatus() {
     ubS.completionStatus({
       othersValid: [upS.onlyChild("loanBaseValue", "completionStatus")],
       nonNone: [upS.onlyChild("closingCostValue", "valueSourceName")],
+      notEmptySolvable: [
+        upS.local("interestRatePercentMonthly"),
+        upS.local("interestRatePercentYearly"),
+        upS.local("loanTermMonths"),
+        upS.local("loanTermYears"),
+      ],
       validInputs: [
-        upS.local("interestRatePercentPeriodicEditor"),
-        upS.local("loanTermSpanEditor"),
         upS.onlyChild("closingCostValue", "valueDollarsEditor", [
           osS.valueSourceIs("valueDollarsEditor"),
         ]),

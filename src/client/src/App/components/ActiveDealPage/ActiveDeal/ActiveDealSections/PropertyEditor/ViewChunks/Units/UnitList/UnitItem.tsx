@@ -33,7 +33,7 @@ export function UnitItem({
         {showRent && (
           <PeriodicEditor
             feId={unit.onlyChildFeId("targetRentEditor")}
-            labelNames={{ sectionName: "unit", varbBaseName: "targetRent" }}
+            labelInfo={unit.periodicVBI("targetRent")}
           />
         )}
       </div>

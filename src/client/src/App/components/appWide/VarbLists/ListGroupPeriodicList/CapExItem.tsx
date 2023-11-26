@@ -39,7 +39,7 @@ const ListItemOngoingMemo = React.memo(function ListItemOngoingMemo({
       <FirstContentCell>
         <NumObjEntityEditor
           className="CapExItem-costToReplace"
-          labeled={false}
+          labelProps={{ showLabel: false }}
           feVarbInfo={{
             ...feInfo,
             varbName: "costToReplace",
@@ -51,7 +51,8 @@ const ListItemOngoingMemo = React.memo(function ListItemOngoingMemo({
       <td>
         <PeriodicEditor
           feId={capExItem.onlyChildFeId("lifespanEditor")}
-          labelNames={null}
+          labelInfo={null}
+          labelProps={{ showLabel: false }}
           editorType="equation"
           sx={{
             "& .DraftEditor-root": {

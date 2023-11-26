@@ -81,7 +81,7 @@ export const updateFnPropsS = {
       updatePropS.children(childName, varbName)
     );
   },
-  localByVarbName(varbNames: VarbNameWide[]): UpdateFnProps {
+  localByVarbName(...varbNames: VarbNameWide[]): UpdateFnProps {
     return varbNames.reduce((localInfos, varbName) => {
       localInfos[varbName] = updatePropS.local(varbName);
       return localInfos;

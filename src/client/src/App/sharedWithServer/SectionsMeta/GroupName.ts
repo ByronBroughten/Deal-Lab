@@ -34,7 +34,7 @@ export function periodicEnding<GK extends GroupKey<"periodic">>(
 
 const _test: "Monthly" = groupNameEnding("periodic", "monthly");
 
-export type GroupVarbNameBase<
+export type GroupBaseVarbName<
   BN extends string,
   GN extends GroupName,
   GK extends GroupKey<GN> = GroupKey<GN>
@@ -60,22 +60,22 @@ export function groupVarbName<
   BN extends string,
   GN extends GroupName,
   GK extends GroupKey<GN> = GroupKey<GN>
->(baseName: BN, groupName: GN, groupKey: GK): GroupVarbNameBase<BN, GN, GK> {
+>(baseName: BN, groupName: GN, groupKey: GK): GroupBaseVarbName<BN, GN, GK> {
   return `${baseName}${groupNameEnding(
     groupName,
     groupKey
-  )}` as GroupVarbNameBase<BN, GN, GK>;
+  )}` as GroupBaseVarbName<BN, GN, GK>;
 }
 export function periodicName<
   BN extends string,
   GK extends GroupKey<"periodic">
->(baseName: BN, groupKey: GK): GroupVarbNameBase<BN, "periodic", GK> {
+>(baseName: BN, groupKey: GK): GroupBaseVarbName<BN, "periodic", GK> {
   return groupVarbName(baseName, "periodic", groupKey);
 }
 export function timespanName<
   BN extends string,
   GK extends GroupKey<"timespan">
->(baseName: BN, groupKey: GK): GroupVarbNameBase<BN, "timespan", GK> {
+>(baseName: BN, groupKey: GK): GroupBaseVarbName<BN, "timespan", GK> {
   return groupVarbName(baseName, "timespan", groupKey);
 }
 
@@ -93,7 +93,7 @@ export function timespanName<
 // export function groupVarbNames<BN extends string, GN extends GroupName>(
 //   baseName: BN,
 //   groupName: GN
-// ): GroupVarbNameBase<BN, GN>[] {
+// ): GroupBaseVarbName<BN, GN>[] {
 //   const keys = groupKeys(groupName);
 //   return keys.map((key) => groupVarbName(baseName, groupName, key));
 // }

@@ -49,7 +49,7 @@ export default function IfLogic({ rowId }: { rowId: string }) {
         <NumObjEntityEditor
           className="logic-right"
           feVarbInfo={row.varbInfo2("rightValue")}
-          labeled={false}
+          labelProps={{ showLabel: false }}
         />
       )}
     </Styled>

@@ -8,10 +8,15 @@ export function makeDefaultLoanPack(
 ): SectionPack<"loan"> {
   const loan = PackBuilderSection.initAsOmniChild("loan", {
     sectionValues: {
-      interestRatePercentPeriodicSwitch: "yearly",
-      loanTermSpanSwitch: "years",
       ...(financingMode && { financingMode }),
     },
+  });
+
+  loan.addChild("interestRateEditor", {
+    sectionValues: { valueEditorFrequency: "yearly" },
+  });
+  loan.addChild("loanTermEditor", {
+    sectionValues: { valueEditorUnit: "years", valueEditor: numObj(30) },
   });
 
   loan.addChild("prepaidInterest");

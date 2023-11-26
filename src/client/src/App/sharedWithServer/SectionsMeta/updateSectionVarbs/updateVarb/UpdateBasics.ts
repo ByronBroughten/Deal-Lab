@@ -1,5 +1,6 @@
 import { isString } from "lodash";
 import { switchKeyToVarbNames } from "../../allBaseSectionVarbs/baseSwitchNames";
+import { GroupVarbNameBase } from "../../baseSectionsDerived/baseGroupNames";
 import {
   safeGroupVarbName,
   validateAnyVarbName,
@@ -55,10 +56,16 @@ export function updateBasics<VN extends ValueName>(
 }
 
 export type StandardUP = UpdateFnProp | VarbNameWide;
+export function standardToProp(standard: StandardUP): UpdateFnProp {
+  return isVarbName(standard) ? upS.local(standard) : standard;
+}
 
 export const updateBasicsS = {
-  fnName(updateFnName: UpdateFnName) {
-    return updateBasicsNext(updateFnName);
+  fnName<UN extends UpdateFnName>(
+    updateFnName: UN,
+    updateFnProps?: UpdateFnProps
+  ): UpdateBasicsNext<UN> {
+    return updateBasicsNext(updateFnName, updateFnProps);
   },
   get emptyNumObj() {
     return this.fnName("emptyNumObj");
@@ -127,8 +134,8 @@ export const updateBasicsS = {
     left: StandardUP,
     right: StandardUP
   ): UpdateBasics<"numObj"> {
-    const leftSide = isVarbName(left) ? upS.local(left) : left;
-    const rightSide = isString(right) ? upS.local(right) : right;
+    const leftSide = standardToProp(left);
+    const rightSide = standardToProp(right);
     return updateBasicsNext(updateFnName, { leftSide, rightSide });
   },
   equationSimple(
@@ -137,6 +144,12 @@ export const updateBasicsS = {
   ): UpdateBasics<"numObj"> {
     num = isVarbName(num) ? upS.local(num) : num;
     return updateBasicsNext(updateFnName, { num });
+  },
+  percentToDecimal(num: StandardUP): UpdateBasics<"numObj"> {
+    return this.equationSimple("percentToDecimal", num);
+  },
+  decimalToPercent(num: StandardUP): UpdateBasics<"numObj"> {
+    return this.equationSimple("decimalToPercent", num);
   },
   manualUpdateOnly() {
     return updateBasicsNext("manualUpdateOnly");
@@ -167,14 +180,7 @@ export const updateBasicsS = {
     });
   },
   loadLocalValueEditor(): UpdateBasics<"numObj"> {
-    return this.loadSolvableTextByVarbInfo("valueEditor");
-  },
-  loadSolvableTextByVarbInfo(
-    varbInfoName: VarbNameWide
-  ): UpdateBasics<"numObj"> {
-    return updateBasicsNext("loadSolvableTextByVarbInfo", {
-      varbInfo: upS.local(varbInfoName),
-    });
+    return this.loadLocal("valueEditor");
   },
   monthsToYears<Base extends string>(base: Base) {
     const varbNames = switchKeyToVarbNames(base, "monthsYears");
@@ -203,14 +209,18 @@ export const updateBasicsS = {
     };
   },
 
-  yearlyToMonthly2(base: string): UpdateBasics<"numObj"> {
+  yearlyToMonthly2(
+    base: GroupVarbNameBase<"periodic">
+  ): UpdateBasics<"numObj"> {
     const yearlyVarbName = safeGroupVarbName(base, "periodic", "yearly");
     return {
       updateFnName: "yearlyToMonthly",
       updateFnProps: { num: upS.local(yearlyVarbName) },
     };
   },
-  monthlyToYearly2(base: string): UpdateBasics<"numObj"> {
+  monthlyToYearly2(
+    base: GroupVarbNameBase<"periodic">
+  ): UpdateBasics<"numObj"> {
     const monthlyVarb = safeGroupVarbName(base, "periodic", "monthly");
     return {
       updateFnName: "monthlyToYearly",

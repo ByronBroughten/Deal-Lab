@@ -69,7 +69,7 @@ export function BasicHomebuyerInfo({ feId }: Props) {
               inputMargins
               {...{
                 feId: firstUnit.oneChildFeId("targetRentEditor"),
-                labelNames: { sectionName: "unit", varbBaseName: "targetRent" },
+                labelInfo: firstUnit.periodicVBI("targetRent"),
               }}
             />
           )}

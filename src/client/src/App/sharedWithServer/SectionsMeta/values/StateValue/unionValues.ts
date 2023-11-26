@@ -3,8 +3,10 @@ import { ValidationError } from "../../../utils/Error";
 import { Obj } from "../../../utils/Obj";
 import { dealModes, getDealModes, isDealMode } from "./dealMode";
 import { financingModes } from "./financingMode";
+import { piCalculationNames } from "./valuesShared/calculations/piCalculations";
 
 const valueSources = {
+  piCalculation: piCalculationNames,
   periodic: ["monthly", "yearly"],
   timespan: ["months", "years"],
   days: ["days"],
@@ -17,7 +19,6 @@ const valueSources = {
     "amountDollarsEditor",
   ],
   taxesAndHomeInsSource: ["valueDollarsEditor", "sameAsHoldingPhase"],
-  ongoingPhaseSource: ["sameAsHoldingPhase", "valueDollarsEditor"],
   utilityValueSource: [
     "none",
     "zero",

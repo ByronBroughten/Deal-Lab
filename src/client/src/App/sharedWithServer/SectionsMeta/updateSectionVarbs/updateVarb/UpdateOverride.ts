@@ -1,7 +1,5 @@
 import { ValueName } from "../../values/ValueName";
 import { updateBasics, UpdateBasics, updateBasicsS } from "./UpdateBasics";
-import { UpdateFnName } from "./UpdateFnName";
-import { updateFnPropsS } from "./UpdateFnProps";
 import {
   overrideSwitchS,
   UpdateOverrideSwitches,
@@ -35,15 +33,6 @@ export const updateOverrideS = {
       [overrideSwitchS.valueSourceIs("zero")],
       updateBasicsS.zero
     );
-  },
-  loadedVarbProp(updateFnName: UpdateFnName<"stringObj">) {
-    return updateOverride(
-      [overrideSwitchS.local("valueSourceName", "loadedVarb")],
-      updateBasics(
-        updateFnName,
-        updateFnPropsS.localByVarbName(["valueEntityInfo"])
-      )
-    ) as UpdateOverride<"stringObj">;
   },
   activeYearlyToMonthly<Base extends string>(
     baseVarbName: Base

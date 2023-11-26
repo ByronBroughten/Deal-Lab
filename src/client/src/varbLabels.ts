@@ -487,7 +487,6 @@ export const varbLabels = checkAllVarbLabels({
     leftOperandi: input(""),
     rightOperandi: input(""),
   }),
-  ...prop("virtualVarb", { value: input("") }),
   ...prop("conditionalRowList", { value: input("") }),
   ...prop("conditionalRow", {
     left: input(""),

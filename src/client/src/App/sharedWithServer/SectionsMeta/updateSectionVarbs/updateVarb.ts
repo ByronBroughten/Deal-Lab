@@ -99,7 +99,9 @@ export const updateVarbS = {
     valueName: VN,
     options?: Options<VN>
   ): UpdateVarb<VN> {
-    return this.basic(valueName, "manualUpdateOnly", options);
+    const updateName =
+      valueName === "numObj" ? "calcVarbs" : "manualUpdateOnly";
+    return this.basic(valueName, updateName, options);
   },
   override<VN extends ValueName>(
     valueName: VN,
@@ -128,6 +130,9 @@ export const updateVarbS = {
     options?: Options<VN>
   ) {
     return updateVarb(valueName, { ...options, ...basics });
+  },
+  manualUpdate<VN extends ValueName>(valueName: VN, options?: Options<VN>) {
+    return this.basic(valueName, "manualUpdateOnly", options);
   },
   numObjO(
     updateOverrides: UpdateOverrides,
@@ -237,6 +242,18 @@ export const updateVarbS = {
     options?: UpdateVarbOptions<"numObj">
   ): UpdateVarb<"numObj"> {
     return this.equationLR("subtract", left, right, options);
+  },
+  decimalToPercent(
+    decimal: StandardUP,
+    options?: UpdateVarbOptions<"numObj">
+  ): UpdateVarb<"numObj"> {
+    return this.numObjB2(ubS.decimalToPercent(decimal), options);
+  },
+  percentToDecimal(
+    percent: StandardUP,
+    options?: UpdateVarbOptions<"numObj">
+  ): UpdateVarb<"numObj"> {
+    return this.numObjB2(ubS.percentToDecimal(percent), options);
   },
   equationLR(
     updateFnName: LeftRightPropCalcName,

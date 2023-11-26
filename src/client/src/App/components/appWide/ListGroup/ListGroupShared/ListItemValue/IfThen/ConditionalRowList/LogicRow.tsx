@@ -46,7 +46,7 @@ export default function LogicRow({ feId, idx = "" }: Props) {
         <NumObjEntityEditor
           feVarbInfo={row.varbInfo2("then")}
           className={"then-content"}
-          labeled={false}
+          labelProps={{ showLabel: false }}
         />
       )}
     </Styled>

@@ -1,12 +1,8 @@
 import { Box, SxProps } from "@mui/material";
 import React from "react";
 import { getVarbLabels } from "../../../varbLabels";
-import {
-  FeSectionInfo,
-  FeVarbInfo,
-} from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
+import { FeVarbInfo } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { VarbNames } from "../../sharedWithServer/SectionsMeta/SectionInfo/VarbInfoBase";
-import { useGetterSection } from "../../sharedWithServer/stateClassHooks/useGetterSection";
 import { useGetterSections } from "../../sharedWithServer/stateClassHooks/useGetterSections";
 import { useGetterVarb } from "../../sharedWithServer/stateClassHooks/useGetterVarb";
 import { nativeTheme } from "../../theme/nativeTheme";
@@ -102,25 +98,6 @@ export function LabeledVarbNotFound({ ...rest }: LabeledVarbNotFoundProps) {
         labelId: "variable not found",
         labelText: "Variable not found",
         displayVarb: "?",
-        ...rest,
-      }}
-    />
-  );
-}
-
-export interface LoadedVarbProps extends LabeledVarbNotFoundProps {
-  feInfo: FeSectionInfo;
-}
-export function LoadedVarb({ feInfo, ...rest }: LoadedVarbProps) {
-  const section = useGetterSection(feInfo);
-  const { virtualVarb } = section;
-  const { entityId } = section.valueEntityInfo();
-  return (
-    <StyledLabeledVarb
-      {...{
-        labelText: virtualVarb.displayName,
-        displayVarb: virtualVarb.displayVarb(),
-        labelId: entityId,
         ...rest,
       }}
     />

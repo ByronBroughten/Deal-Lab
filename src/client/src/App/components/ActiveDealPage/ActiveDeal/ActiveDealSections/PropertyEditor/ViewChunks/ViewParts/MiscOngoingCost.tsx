@@ -28,10 +28,8 @@ export function MiscOngoingCost({ feId, menuDisplayNames }: Props) {
                   {...{
                     ...props,
                     feId: editor.feId,
-                    labelNames: {
-                      sectionName: "miscPeriodicValue",
-                      varbBaseName: "valueDollars",
-                    },
+                    labelProps: { showLabel: false },
+                    labelInfo: null,
                   }}
                 />
               )

@@ -8,9 +8,16 @@ import {
 } from "../SectionsMeta/allBaseSectionVarbs/baseSwitchNames";
 import { DbSectionInfo } from "../SectionsMeta/allBaseSectionVarbs/DbSectionInfo";
 import { GenericChildTraits } from "../SectionsMeta/allChildrenTraits";
-import { GroupVarbNameBase } from "../SectionsMeta/baseSectionsDerived/baseGroupNames";
+import {
+  GroupBaseVI,
+  GroupVarbNameBase,
+} from "../SectionsMeta/baseSectionsDerived/baseGroupNames";
 import { VarbName } from "../SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
-import { GroupKey, periodicName } from "../SectionsMeta/GroupName";
+import {
+  GroupKey,
+  periodicName,
+  timespanName,
+} from "../SectionsMeta/GroupName";
 import {
   ChildIdArrsWide,
   ChildName,
@@ -97,7 +104,6 @@ import { GetterSectionsRequiredProps } from "./Bases/GetterSectionsBase";
 import { GetterList } from "./GetterList";
 import { GetterSections } from "./GetterSections";
 import { GetterVarb } from "./GetterVarb";
-import { GetterVirtualVarb } from "./GetterVirtualVarb";
 import { SectionId } from "./SectionId";
 import { StoreId } from "./StoreId";
 
@@ -700,8 +706,30 @@ export class GetterSection<
   varbNext<VN extends VarbName<SN>>(varbName: VN): GetterVarb<SN> {
     return this.varb(varbName as string);
   }
+  timespanVBI<BN extends GroupVarbNameBase<"timespan", SN>>(
+    varbBaseName: BN
+  ): GroupBaseVI<"timespan", SN> {
+    return {
+      ...this.feInfo,
+      varbBaseName,
+    };
+  }
+  timespanVarb<
+    BN extends GroupVarbNameBase<"timespan", SN>,
+    GK extends GroupKey<"timespan">
+  >(baseName: BN, groupKey: GK): GetterVarb<SN> {
+    return this.varb(timespanName(baseName, groupKey) as string);
+  }
+  periodicVBI<BN extends GroupVarbNameBase<"periodic", SN>>(
+    varbBaseName: BN
+  ): GroupBaseVI<"periodic", SN> {
+    return {
+      ...this.feInfo,
+      varbBaseName,
+    };
+  }
   periodicVarb<
-    BN extends GroupVarbNameBase<SN, "periodic">,
+    BN extends GroupVarbNameBase<"periodic", SN>,
     GK extends GroupKey<"periodic">
   >(baseName: BN, groupKey: GK): GetterVarb<SN> {
     return this.varb(periodicName(baseName, groupKey) as string);
@@ -737,9 +765,6 @@ export class GetterSection<
       values[varbName] = this.value(varbName, varbToValuesNames[varbName]);
       return values;
     }, {} as SectionValuesRes<VNS>);
-  }
-  get virtualVarb(): GetterVirtualVarb<SN> {
-    return new GetterVirtualVarb(this.getterSectionProps);
   }
   valueEntityInfo(): Exclude<InEntityValue, null> {
     const value = this.value("valueEntityInfo", "inEntityValue");

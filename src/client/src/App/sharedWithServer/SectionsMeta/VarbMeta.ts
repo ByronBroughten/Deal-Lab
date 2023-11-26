@@ -36,6 +36,9 @@ export class VarbMeta<SN extends SectionName> {
     this.sectionName = sectionName;
     this.varbName = varbName;
     const updateVarb = getUpdateVarb(sectionName, varbName as any);
+    if (!updateVarb) {
+      throw new Error(`updateVarb missing at ${sectionName}.${varbName}`);
+    }
     if (!Array.isArray(updateVarb.updateOverrides)) {
       throw new Error(
         `updateOverrides of ${sectionName}.${varbName} not valid`

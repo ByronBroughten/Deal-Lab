@@ -11,7 +11,7 @@ import { uvsS } from "../updateSectionVarbs/updateVarbs";
 export function taxesAndHomeInsValueUpdateVarbs(): UpdateSectionVarbs<"taxesValue"> {
   return usvs("taxesValue", {
     valueSourceName: updateVarb("taxesAndHomeInsSource", {
-      initValue: "sameAsHoldingPhase",
+      initValue: "valueDollarsEditor",
     }),
     ...uvsS.periodic2("valueDollars", {
       monthly: valueDollarsBasics("monthly"),

@@ -1,10 +1,11 @@
+import { GroupVarbNameBase } from "../baseSectionsDerived/baseGroupNames";
 import { safeGroupVarbName } from "../baseSectionsDerived/baseSectionsVarbsTypes";
 import {
+  GroupBaseVarbName,
   groupKeys,
   GroupName,
   GroupRecordAndAll,
   groupVarbName,
-  GroupVarbNameBase,
 } from "../GroupName";
 import { ChildName } from "../sectionChildrenDerived/ChildName";
 import {
@@ -12,32 +13,28 @@ import {
   ongoingSumNums,
   updateGroupS,
 } from "./switchUpdateVarbs";
-import {
-  SafeUpdateOptions,
-  UpdateVarb,
-  updateVarb,
-  updateVarbS,
-  uvS,
-} from "./updateVarb";
+import { SafeUpdateOptions, UpdateVarb, updateVarb, uvS } from "./updateVarb";
 import { ubS } from "./updateVarb/UpdateBasics";
 import { updatePropS, upS } from "./updateVarb/UpdateFnProps";
-import { updateOverrideS } from "./updateVarb/UpdateOverride";
 
 type GroupOptions<GN extends GroupName> = Partial<
   GroupRecordAndAll<GN, SafeUpdateOptions<"numObj">>
 >;
 
-export type GroupUpdateVarbs<BN extends string, GN extends GroupName> = {
-  [VN in GroupVarbNameBase<BN, GN>]: UpdateVarb<"numObj">;
+export type GroupUpdateVarbs<
+  GN extends GroupName,
+  BN extends GroupVarbNameBase<GN>
+> = {
+  [VN in GroupBaseVarbName<BN, GN>]: UpdateVarb<"numObj">;
 };
 
 export const updateVarbsS = {
   ...updateGroupS,
-  groupNext<BN extends string, GN extends GroupName>(
-    baseName: BN,
+  groupNext<GN extends GroupName, BN extends GroupVarbNameBase<GN>>(
     groupName: GN,
+    baseName: BN,
     options?: GroupOptions<GN>
-  ): GroupUpdateVarbs<BN, GN> {
+  ): GroupUpdateVarbs<GN, BN> {
     const keys = groupKeys(groupName);
     return keys.reduce((varbs, key) => {
       const varbName = groupVarbName(baseName, groupName, key);
@@ -50,21 +47,21 @@ export const updateVarbsS = {
         }
       );
       return varbs;
-    }, {} as GroupUpdateVarbs<BN, GN>);
+    }, {} as GroupUpdateVarbs<GN, BN>);
   },
-  periodic2<BN extends string>(
+  periodic2<BN extends GroupVarbNameBase<"periodic">>(
     baseName: BN,
     options?: GroupOptions<"periodic">
-  ): GroupUpdateVarbs<BN, "periodic"> {
-    return this.groupNext(baseName, "periodic", options);
+  ): GroupUpdateVarbs<"periodic", BN> {
+    return this.groupNext("periodic", baseName, options);
   },
-  periodicSumNums<BN extends string>(
+  periodicSumNums<BN extends GroupVarbNameBase<"periodic">>(
     baseName: BN,
     {
       localBaseNames = [],
       childBaseNames = [],
     }: { localBaseNames?: string[]; childBaseNames?: [ChildName, string][] }
-  ): GroupUpdateVarbs<BN, "periodic"> {
+  ): GroupUpdateVarbs<"periodic", BN> {
     const keys = groupKeys("periodic");
     return keys.reduce((varbs, key) => {
       const varbName = groupVarbName(baseName, "periodic", key);
@@ -76,119 +73,83 @@ export const updateVarbsS = {
       );
       varbs[varbName] = uvS.sumNums([...localNames, ...childInfos]);
       return varbs;
-    }, {} as GroupUpdateVarbs<BN, "periodic">);
+    }, {} as GroupUpdateVarbs<"periodic", BN>);
   },
-  loadChildGroup<BN extends string, GN extends GroupName, CBN extends string>(
-    baseName: BN,
+  loadChildGroup<
+    GN extends GroupName,
+    BN extends GroupVarbNameBase<GN>,
+    CBN extends string
+  >(
     groupName: GN,
+    baseName: BN,
     childName: ChildName,
     childBaseName: CBN
-  ): GroupUpdateVarbs<BN, GN> {
+  ): GroupUpdateVarbs<GN, BN> {
     const keys = groupKeys(groupName);
     const groupOptions = keys.reduce((options, key) => {
       const varbName = safeGroupVarbName(childBaseName, groupName, key);
       options[key] = ubS.loadChild(childName, varbName);
       return options;
     }, {} as GroupOptions<GN>);
-    return this.groupNext(baseName, groupName, groupOptions);
+    return this.groupNext(groupName, baseName, groupOptions);
   },
 
-  loadChildPeriodic<BN extends string, CBN extends string>(
+  loadChildPeriodic<
+    BN extends GroupVarbNameBase<"periodic">,
+    CBN extends string
+  >(
     baseName: BN,
     childName: ChildName,
     childBaseName: CBN
-  ): GroupUpdateVarbs<BN, "periodic"> {
-    return this.loadChildGroup(baseName, "periodic", childName, childBaseName);
+  ): GroupUpdateVarbs<"periodic", BN> {
+    return this.loadChildGroup("periodic", baseName, childName, childBaseName);
   },
-  childPeriodicEditor<BN extends string>(baseName: BN, childName: ChildName) {
+  childPeriodicEditor<BN extends GroupVarbNameBase<"periodic">>(
+    baseName: BN,
+    childName: ChildName
+  ) {
     return this.loadChildPeriodic(baseName, childName, "value");
   },
-  timespan<BN extends string>(
+  timespan<BN extends GroupVarbNameBase<"timespan">>(
     baseName: BN,
     options?: GroupOptions<"timespan">
-  ): GroupUpdateVarbs<BN, "timespan"> {
-    return this.groupNext(baseName, "timespan", options);
+  ): GroupUpdateVarbs<"timespan", BN> {
+    return this.groupNext("timespan", baseName, options);
   },
-  loadChildTimespan<BN extends string, CBN extends string>(
-    baseName: BN,
-    childName: ChildName,
-    childBaseName: CBN
-  ) {
-    return this.loadChildGroup(baseName, "timespan", childName, childBaseName);
+  loadChildTimespan<
+    BN extends GroupVarbNameBase<"timespan">,
+    CBN extends string
+  >(baseName: BN, childName: ChildName, childBaseName: CBN) {
+    return this.loadChildGroup("timespan", baseName, childName, childBaseName);
   },
   get _typeUniformity() {
-    return { _typeUniformity: updateVarb("string") };
+    return { _typeUniformity: uvS.manualUpdate("string") };
   },
   get savableSection() {
     return {
-      displayName: updateVarb("stringObj"),
-      dateTimeFirstSaved: updateVarb("dateTime"),
-      dateTimeLastSaved: updateVarb("dateTime"),
-      autoSyncControl: updateVarb("autoSyncControl", {
+      displayName: uvS.manualUpdate("stringObj"),
+      dateTimeFirstSaved: uvS.manualUpdate("dateTime"),
+      dateTimeLastSaved: uvS.manualUpdate("dateTime"),
+      autoSyncControl: uvS.manualUpdate("autoSyncControl", {
         initValue: "autoSyncOff",
       }),
     } as const;
   },
   ongoingPureCalc,
   ongoingSumNums,
-  get basicVirtualVarb() {
-    return {
-      displayName: updateVarb("stringObj", {
-        updateFnName: "loadDisplayName",
-        updateFnProps: {
-          varbInfo: updatePropS.local("valueEntityInfo"),
-        },
-      }),
-      startAdornment: updateVarb("stringObj", {
-        updateFnName: "loadStartAdornment",
-        updateFnProps: {
-          varbInfo: updatePropS.local("valueEntityInfo"),
-        },
-      }),
-      endAdornment: updateVarb("stringObj", {
-        updateFnName: "loadEndAdornment",
-        updateFnProps: {
-          varbInfo: updatePropS.local("valueEntityInfo"),
-        },
-      }),
-    } as const;
-  },
   get displayNameAndEditor(): {
     displayNameEditor: UpdateVarb<"string">;
     displayName: UpdateVarb<"stringObj">;
   } {
     return {
-      displayNameEditor: updateVarbS.displayNameEditor,
-      displayName: updateVarb("stringObj", {
+      displayNameEditor: uvS.displayNameEditor,
+      displayName: uvS.basic2("stringObj", {
         updateFnName: "localStringToStringObj",
         updateFnProps: {
           localString: updatePropS.local("displayNameEditor"),
         },
       }),
     };
-  },
-  get virtualVarb() {
-    return {
-      valueEntityInfo: updateVarb("inEntityValue"),
-      value: updateVarb("numObj", {
-        updateFnName: "virtualNumObj",
-        updateFnProps: {
-          varbInfo: updatePropS.local("valueEntityInfo"),
-        },
-      }),
-      displayName: updateVarb("stringObj", {
-        updateFnName: "emptyStringObj",
-        updateOverrides: [updateOverrideS.loadedVarbProp("loadDisplayName")],
-      }),
-      startAdornment: updateVarb("stringObj", {
-        updateFnName: "emptyStringObj",
-        updateOverrides: [updateOverrideS.loadedVarbProp("loadStartAdornment")],
-      }),
-      endAdornment: updateVarb("stringObj", {
-        updateFnName: "emptyStringObj",
-        updateOverrides: [updateOverrideS.loadedVarbProp("loadEndAdornment")],
-      }),
-    } as const;
   },
 };
 

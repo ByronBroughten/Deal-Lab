@@ -95,13 +95,16 @@ export function setLoanValues(
     });
   }
 
-  loan.updateValues({
-    ...(hasMortgageIns && { hasMortgageIns }),
-    interestRatePercentPeriodicSwitch: "yearly",
-    interestRatePercentPeriodicEditor: numObj(interestRateYearly),
-    loanTermSpanEditor: numObj(loanTermYears),
-    loanTermSpanSwitch: "years",
+  loan.updateValues({ ...(hasMortgageIns && { hasMortgageIns }) });
+  loan.onlyChild("interestRateEditor").updateValues({
+    valueEditor: numObj(interestRateYearly),
+    valueEditorFrequency: "yearly",
   });
+  loan.onlyChild("loanTermEditor").updateValues({
+    valueEditor: numObj(loanTermYears),
+    valueEditorUnit: "years",
+  });
+
   return loan.numValue("loanPaymentMonthly");
 }
 
@@ -264,11 +267,13 @@ export function setFirstLoanFor912p6Monthly(
   financing.updateValues({ financingMethod: "useLoan" });
 
   const loan = financing.onlyChild("loan");
-  loan.updateValues({
-    interestRatePercentPeriodicSwitch: "yearly",
-    interestRatePercentPeriodicEditor: numObj(5),
-    loanTermSpanSwitch: "years",
-    loanTermSpanEditor: numObj(30),
+  loan.onlyChild("interestRateEditor").updateValues({
+    valueEditor: numObj(5),
+    valueEditorFrequency: "yearly",
+  });
+  loan.onlyChild("loanTermEditor").updateValues({
+    valueEditor: numObj(30),
+    valueEditorUnit: "years",
   });
 
   const baseValue = loan.onlyChild("loanBaseValue");

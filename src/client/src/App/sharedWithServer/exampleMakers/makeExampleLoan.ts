@@ -1,15 +1,14 @@
-import { makeDefaultLoanPack } from "../defaultMaker/makeDefaultLoanPack";
 import { SectionValues, StateValue } from "../SectionsMeta/values/StateValue";
 import { NumObj } from "../SectionsMeta/values/StateValue/NumObj";
-import { PackBuilderSection } from "../StatePackers/PackBuilderSection";
 import { StrictPick } from "../utils/types";
+import { makeExample } from "./makeExample";
 
 type ExampleLoanProps = {
   loan: StrictPick<
     SectionValues<"loan">,
     | "displayName"
-    | "interestRatePercentPeriodicEditor"
-    | "loanTermSpanEditor"
+    | "interestRatePercentYearly"
+    | "loanTermYears"
     | "hasMortgageIns"
   >;
   purchaseLoanValue?: StrictPick<
@@ -30,36 +29,44 @@ type ExampleLoanProps = {
 };
 
 export function makeExampleLoan(props: ExampleLoanProps) {
-  const loan = PackBuilderSection.initAsOmniChild("loan");
-  loan.overwriteSelf(makeDefaultLoanPack());
-  loan.updateValues({
-    ...props.loan,
-    interestRatePercentPeriodicSwitch: "yearly",
-    loanTermSpanSwitch: "years",
-  });
-  const loanBaseValue = loan.onlyChild("loanBaseValue");
-  loanBaseValue.updateValues({
-    valueSourceName: "purchaseLoanValue",
-    ...props.baseLoan,
-  });
+  return makeExample("loan", (loan) => {
+    const { interestRatePercentYearly, loanTermYears, ...loanProps } =
+      props.loan;
+    loan.updateValues(loanProps);
 
-  const purchaseValue = loanBaseValue.onlyChild("purchaseLoanValue");
-  purchaseValue.updateValues({
-    ...props.purchaseLoanValue,
-    valueSourceName: "offPercentEditor",
-  });
-
-  const closingCostValue = loan.onlyChild("closingCostValue");
-  const { items = [], ...costProps } = props.closingCosts;
-  closingCostValue.updateValues(costProps);
-  const closingCostList = closingCostValue.onlyChild("onetimeList");
-  for (const item of items) {
-    const closingCostItem = closingCostList.addAndGetChild("onetimeItem");
-    closingCostItem.updateValues({
-      displayNameEditor: item.displayName,
-      valueDollarsEditor: item.value,
-      valueSourceName: "valueDollarsEditor",
+    loan.onlyChild("interestRateEditor").updateValues({
+      valueEditor: interestRatePercentYearly,
+      valueEditorFrequency: "yearly",
     });
-  }
-  return loan.makeSectionPack();
+
+    loan.onlyChild("loanTermEditor").updateValues({
+      valueEditor: loanTermYears,
+      valueEditorUnit: "years",
+    });
+
+    const loanBaseValue = loan.onlyChild("loanBaseValue");
+    loanBaseValue.updateValues({
+      valueSourceName: "purchaseLoanValue",
+      ...props.baseLoan,
+    });
+
+    const purchaseValue = loanBaseValue.onlyChild("purchaseLoanValue");
+    purchaseValue.updateValues({
+      ...props.purchaseLoanValue,
+      valueSourceName: "offPercentEditor",
+    });
+
+    const closingCostValue = loan.onlyChild("closingCostValue");
+    const { items = [], ...costProps } = props.closingCosts;
+    closingCostValue.updateValues(costProps);
+    const closingCostList = closingCostValue.onlyChild("onetimeList");
+    for (const item of items) {
+      const closingCostItem = closingCostList.addAndGetChild("onetimeItem");
+      closingCostItem.updateValues({
+        displayNameEditor: item.displayName,
+        valueDollarsEditor: item.value,
+        valueSourceName: "valueDollarsEditor",
+      });
+    }
+  });
 }

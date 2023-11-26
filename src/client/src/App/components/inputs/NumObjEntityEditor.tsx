@@ -5,47 +5,49 @@ import { useOnOutsideClickEffect } from "../../modules/customHooks/useOnOutsideC
 import { useToggleView } from "../../modules/customHooks/useToggleView";
 import { SetEditorState } from "../../modules/draftjs/draftUtils";
 import { insertChars } from "../../modules/draftjs/insert";
-import { VarbName } from "../../sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
 import {
   FeVarbInfo,
   FeVI,
-  SnVarbNames,
 } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { SectionName } from "../../sharedWithServer/SectionsMeta/SectionName";
+import { useGetterSections } from "../../sharedWithServer/stateClassHooks/useGetterSections";
 import { useGetterVarb } from "../../sharedWithServer/stateClassHooks/useGetterVarb";
 import { SectionInfoContextProvider } from "../../sharedWithServer/stateClassHooks/useSectionContext";
 import { ValueFixedVarbPathName } from "../../sharedWithServer/StateEntityGetters/ValueInEntityInfo";
 import { GetterVarb } from "../../sharedWithServer/StateGetters/GetterVarb";
 import { EditorTextStatus } from "../../sharedWithServer/StateGetters/GetterVarbNumObj";
+import { Obj } from "../../sharedWithServer/utils/Obj";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { arrSx } from "../../utils/mui";
 import { VarbStringLabel } from "../appWide/VarbStringLabel";
 import { useShowEqualsContext } from "../customContexts/showEquals";
 import { MaterialDraftEditor } from "./MaterialDraftEditor";
 import { NumObjVarbSelector } from "./NumObjEditor/NumObjVarbSelector";
-import {
-  Adornments,
-  getEntityEditorAdornments,
-  PropAdornments,
-} from "./NumObjEditor/useGetAdornments";
+import { getEntityEditorAdornments } from "./NumObjEditor/useGetAdornments";
 import { varSpanDecorator } from "./shared/EntitySpanWithError";
 import { useDraftInput } from "./useDraftInput";
 
 export type NumEditorType = "numeric" | "equation";
 
+type LabelProp = string | JSX.Element;
+export type LabelProps<LN extends SectionName = SectionName> = {
+  showLabel?: boolean;
+  labelInfo?: FeVI<LN>;
+  label?: LabelProp;
+  startAdornment?: LabelProp;
+  endAdornment?: LabelProp;
+};
+
 type Props<
   SN extends SectionName = SectionName,
   LN extends SectionName = SectionName
-> = PropAdornments & {
-  sx?: SxProps;
+> = {
   feVarbInfo: FeVI<SN>;
+  labelProps?: LabelProps<LN>;
   className?: string;
-  label?: any;
-  labeled?: boolean;
-  labelNames?: SnVarbNames<LN>;
-
-  bypassNumeric?: boolean;
+  sx?: SxProps;
   editorType?: NumEditorType;
+  bypassNumeric?: boolean;
   quickViewVarbNames?: ValueFixedVarbPathName[];
   inputMargins?: boolean;
   hideVarbSelector?: boolean;
@@ -57,33 +59,23 @@ export function NumObjEntityEditor<
   LN extends SectionName
 >({
   feVarbInfo,
-  labelNames,
-  label,
-  labeled = true,
-  className,
+  labelProps = {},
   editorType = "numeric",
   bypassNumeric = false,
   inputMargins = false,
   hideVarbSelector,
   quickViewVarbNames,
+  className,
   sx,
-  ...props
 }: Props<SN, LN>) {
   let { editorState, setEditorState } = useDraftInput({
     ...feVarbInfo,
     compositeDecorator: varSpanDecorator,
   });
-
   const varb = useGetterVarb(feVarbInfo);
-
   const showEqualsStatus = useShowEqualsContext();
   const doEquals = showEqualsStatus === "showAll" ? true : varb.isPureUserVarb;
-  const displayName = useDisplayName({
-    labeled,
-    label,
-    labelNames,
-    feVarbInfo,
-  });
+  const labels = useLabels(feVarbInfo, labelProps);
   return (
     <MemoNumObjEntityEditor
       {...{
@@ -98,11 +90,9 @@ export function NumObjEntityEditor<
         },
         inputMargins,
         editorType,
+        hideVarbSelector,
         displayValue: varb.displayValue,
         editorTextStatus: varb.numObj.editorTextStatus,
-        displayName,
-        startAdornment: props.startAdornment ?? varb.startAdornment,
-        endAdornment: props.endAdornment ?? varb.endAdornment,
         quickViewVarbNameString: quickViewVarbNames
           ? quickViewVarbNames.join(seperator)
           : undefined,
@@ -110,68 +100,100 @@ export function NumObjEntityEditor<
         className,
         doEquals,
         bypassNumeric,
-
         editorState,
         setEditorState,
-        ...varb.feVarbInfo,
+        ...labels,
+        ...feVarbInfo,
       }}
     />
   );
 }
 
-interface UseLabelProps {
-  labeled: boolean;
-  label?: string;
-  labelNames?: SnVarbNames;
-  feVarbInfo: FeVarbInfo;
-}
-function useDisplayName({
-  labeled,
-  label,
-  labelNames,
-  feVarbInfo,
-}: UseLabelProps): string | JSX.Element | undefined {
-  const { sectionName, varbName } = feVarbInfo;
-  const labelSn = labelNames?.sectionName;
-  const labelVn = labelNames?.varbName;
-  return React.useMemo(() => {
-    if (!labeled) {
-      return undefined;
-    } else if (label) {
-      return label;
-    } else if (labelSn && labelVn) {
-      return (
-        <VarbStringLabel
-          sx={{ marginTop: nativeTheme.s2 }}
-          names={{
-            sectionName: labelSn,
-            varbName: labelVn as VarbName<typeof labelSn>,
-          }}
-        />
-      );
-    } else {
-      return (
-        <VarbStringLabel
-          sx={{ marginTop: nativeTheme.s2 }}
-          names={{
-            sectionName,
-            varbName: varbName as VarbName<typeof sectionName>,
-          }}
-        />
-      );
-    }
-  }, [labeled, label, sectionName, varbName, labelSn, labelVn]);
+type LabelName = "startAdornment" | "endAdornment" | "inputLabel";
+type UseLabelProps = {
+  labelName: LabelName;
+  showLabel?: boolean;
+  value?: LabelProp;
+  labelInfo?: FeVarbInfo;
+  varbInfo: FeVarbInfo;
+};
+
+function getLabel(labelName: LabelName, varb: GetterVarb): LabelProp {
+  if (labelName !== "inputLabel") {
+    return varb[labelName];
+  } else {
+    return (
+      <VarbStringLabel
+        sx={{ marginTop: nativeTheme.s2 }}
+        names={varb.sectionVarbNames}
+      />
+    );
+  }
 }
 
-interface MemoProps extends Adornments, FeVarbInfo {
+function useLabel({
+  labelName,
+  showLabel = true,
+  value,
+  labelInfo,
+  varbInfo,
+}: UseLabelProps): LabelProp {
+  const getters = useGetterSections();
+  if (!showLabel) {
+    return "";
+  } else if (value) {
+    return value;
+  } else if (labelInfo) {
+    const varb = getters.varb(labelInfo);
+    return getLabel(labelName, varb);
+  } else {
+    const varb = getters.varb(varbInfo);
+    return getLabel(labelName, varb);
+  }
+}
+
+function useLabels(
+  varbInfo: FeVI,
+  lps: LabelProps
+): {
+  label: LabelProp;
+  startAdornment: LabelProp;
+  endAdornment: LabelProp;
+} {
+  const labelProps = Obj.strictPick(lps, ["showLabel", "label", "labelInfo"]);
+  const label = useLabel({
+    labelName: "inputLabel",
+    ...labelProps,
+    value: lps.label,
+    varbInfo,
+  });
+  const startAdornment = useLabel({
+    labelName: "startAdornment",
+    value: lps.startAdornment,
+    varbInfo,
+  });
+  const endAdornment = useLabel({
+    labelName: "endAdornment",
+    value: lps.endAdornment,
+    varbInfo,
+  });
+  return {
+    label,
+    startAdornment,
+    endAdornment,
+  };
+}
+
+interface MemoProps extends FeVarbInfo {
   sx?: SxProps;
   displayValue: string;
+  label: LabelProp;
+  startAdornment: LabelProp;
+  endAdornment: LabelProp;
   editorTextStatus: EditorTextStatus;
   editorType: NumEditorType;
   quickViewVarbNameString?: string;
   hideVarbSelector?: boolean;
-  displayName: string | JSX.Element | undefined;
-
   inputMargins?: boolean;
 
   className?: string;
@@ -187,7 +209,7 @@ const MemoNumObjEntityEditor = React.memo(function MemoNumObjEntityEditor({
   editorType,
   displayValue,
   className,
-  displayName,
+  label,
   setEditorState,
   editorState,
   bypassNumeric,
@@ -254,7 +276,7 @@ const MemoNumObjEntityEditor = React.memo(function MemoNumObjEntityEditor({
             className={"NumObjEditor-materialDraftEditor"}
             id={GetterVarb.feVarbInfoToVarbId(rest)}
             {...{
-              label: displayName,
+              label,
               setEditorState,
               editorState,
               startAdornment,
@@ -279,7 +301,7 @@ const MemoNumObjEntityEditor = React.memo(function MemoNumObjEntityEditor({
                       className={"NumObjEditor-materialDraftEditor"}
                       id={`${GetterVarb.feVarbInfoToVarbId(rest)}-modal`}
                       {...{
-                        label: displayName,
+                        label,
                         setEditorState: props.setEditorState,
                         editorState: props.editorState,
                         startAdornment,

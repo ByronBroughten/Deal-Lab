@@ -24,7 +24,7 @@ export function mgmtBasePayValueVarbs(): UpdateSectionVarbs<"mgmtBasePayValue"> 
         updateOverrideS.zeroIfSourceIsZero,
         updateOverride(
           [overrideSwitchS.valueSourceIs("percentOfRentEditor")],
-          updateBasicsS.loadSolvableTextByVarbInfo("valuePercentEditor")
+          updateBasicsS.loadLocal("valuePercentEditor")
         ),
         updateOverride(
           [overrideSwitchS.valueSourceIs("tenPercentRent")],

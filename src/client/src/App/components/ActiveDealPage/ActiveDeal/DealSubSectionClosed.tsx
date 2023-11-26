@@ -1,8 +1,8 @@
 import { SxProps } from "@mui/material";
+import { FeVarbInfo } from "../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { StateValue } from "../../../sharedWithServer/SectionsMeta/values/StateValue";
 import { getFinancingTitle } from "../../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
 import { GetterSection } from "../../../sharedWithServer/StateGetters/GetterSection";
-import { LabeledVarbProps } from "../../appWide/LabeledVarb";
 import { useGoToPage } from "../../customHooks/useGoToPage";
 import { DealSubSectionDetails } from "./DealSubSectionDetails";
 import { DealSubSectionTitleRow } from "./DealSubSectionTitleRow";
@@ -33,7 +33,7 @@ export function DealSubSectionClosed({ childName, ...rest }: Props) {
 type SectionProps = {
   sectionTitle: string;
   displayName: string;
-  detailVarbPropArr: LabeledVarbProps[];
+  detailVarbInfos: FeVarbInfo[];
 };
 
 const propsByDealMode = {
@@ -80,7 +80,7 @@ function getPropertyProps(property: GetterSection<"property">): SectionProps {
   return {
     sectionTitle: "Property",
     displayName: property.valueNext("displayName").mainText,
-    detailVarbPropArr: property.varbInfoArr(
+    detailVarbInfos: property.varbInfoArr(
       ...propsByDealMode.property[mode].detailVarbNames
     ),
   };
@@ -108,7 +108,7 @@ function getFinancingProps(
       financing.valueNext("financingMode")
     ),
     displayName,
-    detailVarbPropArr: financing.varbInfoArr(
+    detailVarbInfos: financing.varbInfoArr(
       "loanTotalDollars",
       "loanPaymentMonthly",
       "loanUpfrontExpenses",
@@ -121,7 +121,7 @@ function getMgmtProps(mgmt: GetterSection<"mgmt">): SectionProps {
   return {
     sectionTitle: "Management",
     displayName: mgmt.valueNext("displayName").mainText,
-    detailVarbPropArr: mgmt.varbInfoArr("expensesYearly"),
+    detailVarbInfos: mgmt.varbInfoArr("expensesYearly"),
   };
 }
 

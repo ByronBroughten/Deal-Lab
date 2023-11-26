@@ -92,7 +92,6 @@ export const allSectionChildren = checkAllSectionChildren({
     fixAndFlipOutputList: "outputList",
     brrrrOutputList: "outputList",
   }),
-  outputItem: { virtualVarb: sectionChild("virtualVarb") },
   onetimeList: { onetimeItem: sectionChild("onetimeItem") },
   periodicList: {
     periodicItem: sectionChild("periodicItem", { isListItem: true }),
@@ -117,6 +116,9 @@ export const allSectionChildren = checkAllSectionChildren({
   },
   loan: sCdn({
     loanBaseValue: "loanBaseValue",
+    interestRateEditor: "periodicEditor",
+    loanTermEditor: "timespanEditor",
+
     closingCostValue: "closingCostValue",
     customVarb: "customVarb",
     mortgageInsUpfrontValue: "mortgageInsUpfrontValue",

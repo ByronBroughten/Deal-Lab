@@ -37,7 +37,6 @@ export const sectionNames = [
   "dealCompareDealSelectMenu",
 
   "outputItem",
-  "virtualVarb",
 
   "customVarb",
   "conditionalRowList",

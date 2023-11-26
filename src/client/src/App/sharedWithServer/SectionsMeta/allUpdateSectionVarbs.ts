@@ -6,6 +6,7 @@ import { capExValueUpdateVarbs } from "./allUpdateSectionVarbs/capExValueUpdateV
 import { costOverrunUpdateVarbs } from "./allUpdateSectionVarbs/costOverrunUpdateVarbs";
 import { dealUpdateVarbs } from "./allUpdateSectionVarbs/dealUpdateVarbs";
 import { financingUpdateVarbs } from "./allUpdateSectionVarbs/financingUpdateVarbs";
+import { loanBaseExtraUpdateVarbs } from "./allUpdateSectionVarbs/loanBaseExtraUpdateVarbs";
 import { loanBaseUpdateVarbs } from "./allUpdateSectionVarbs/loanBaseUpdateVarbs";
 import { loanUpdateVarbs } from "./allUpdateSectionVarbs/loanUpdateVarbs";
 import { loanValueUpdateVarbs } from "./allUpdateSectionVarbs/loanValueUpdateVarbs";
@@ -38,14 +39,10 @@ import {
 import { updateVarb, updateVarbS, uvS } from "./updateSectionVarbs/updateVarb";
 import {
   ubS,
-  updateBasics,
   updateBasicsS,
 } from "./updateSectionVarbs/updateVarb/UpdateBasics";
 import { upS, upsS } from "./updateSectionVarbs/updateVarb/UpdateFnProps";
-import {
-  updateOverride,
-  updateOverrideS,
-} from "./updateSectionVarbs/updateVarb/UpdateOverride";
+import { updateOverride } from "./updateSectionVarbs/updateVarb/UpdateOverride";
 import { uosS } from "./updateSectionVarbs/updateVarb/UpdateOverrides";
 import { osS } from "./updateSectionVarbs/updateVarb/UpdateOverrideSwitch";
 import { updateVarbsS, uvsS } from "./updateSectionVarbs/updateVarbs";
@@ -96,32 +93,10 @@ function makeAllUpdateSections() {
     }),
     timespanEditor: timespanEditorUpdateVarbs(),
     periodicEditor: periodicEditorUpdateVarbs(),
-    ...prop("loan", loanUpdateVarbs()),
-    ...prop("loanBaseValue", loanBaseUpdateVarbs()),
-    ...prop("loanBaseExtra", {
-      hasLoanExtra: varb("boolean", { initValue: false }),
-      valueSourceName: varb("dollarsListOrZero", {
-        initValue: "valueDollarsEditor",
-      }),
-      valueDollarsEditor: varb("numObj"),
-      valueDollars: varb("numObj", {
-        updateFnName: "throwIfReached",
-        updateOverrides: [
-          updateOverride([osS.localIsFalse("hasLoanExtra")], ubS.zero),
-          ...uosS.valueSource(
-            "dollarsOrList",
-            {
-              valueDollarsEditor: ubS.loadLocal("valueDollarsEditor"),
-              listTotal: ubS.loadChild("onetimeList", "total"),
-            },
-            {
-              sharedSwitches: [osS.localIsTrue("hasLoanExtra")],
-            }
-          ),
-        ],
-      }),
-    }),
-    ...prop("customLoanBase", {
+    loan: loanUpdateVarbs(),
+    loanBaseValue: loanBaseUpdateVarbs(),
+    loanBaseExtra: loanBaseExtraUpdateVarbs(),
+    customLoanBase: usvs("customLoanBase", {
       valueSourceName: varb("dollarsOrList", {
         initValue: "valueDollarsEditor",
       }),
@@ -131,30 +106,28 @@ function makeAllUpdateSections() {
       }),
       valueDollarsEditor: uvS.input("numObj"),
     }),
-    ...prop(
+    purchaseLoanValue: usvs(
       "purchaseLoanValue",
       loanValueUpdateVarbs(mixedInfoS.varbPathName("purchasePrice"))
     ),
-    ...prop(
+    repairLoanValue: usvs(
       "repairLoanValue",
       loanValueUpdateVarbs(mixedInfoS.varbPathName("rehabCost"))
     ),
-    ...prop(
-      "arvLoanValue",
-      loanValueUpdateVarbs(mixedInfoS.varbPathName("afterRepairValue"))
+    arvLoanValue: loanValueUpdateVarbs(
+      mixedInfoS.varbPathName("afterRepairValue")
     ),
-    ...prop("sellingCostValue", sellingCostUpdateVarbs()),
-    ...prop("mgmt", mgmtRelVarbs()),
-    ...prop("vacancyLossValue", vacancyLossUpdateVarbs()),
-    ...prop("mgmtBasePayValue", mgmtBasePayValueVarbs()),
-    ...prop("deal", dealUpdateVarbs()),
-    ...prop("financing", financingUpdateVarbs()),
+    mgmt: mgmtRelVarbs(),
+    vacancyLossValue: vacancyLossUpdateVarbs(),
+    mgmtBasePayValue: mgmtBasePayValueVarbs(),
+    deal: dealUpdateVarbs(),
+    financing: financingUpdateVarbs(),
 
     property: propertyUpdateVarbs(),
     afterRepairValue: afterRepairValueUpdateVarbs(),
-
-    ...prop("costOverrunValue", costOverrunUpdateVarbs()),
-    ...prop("unit", {
+    sellingCostValue: sellingCostUpdateVarbs(),
+    costOverrunValue: costOverrunUpdateVarbs(),
+    unit: usvs("unit", {
       one: updateVarbS.one(),
       numBedrooms: updateVarb("numObj"),
       ...uvsS.childPeriodicEditor("targetRent", "targetRentEditor"),
@@ -190,50 +163,38 @@ function makeAllUpdateSections() {
     ...prop("userInfoPrivate", {
       guestSectionsAreLoaded: updateVarb("boolean", { initValue: false }),
     }),
-    ...prop("outputList", updateVarbsS.savableSection),
-    ...prop("onetimeList", {
+    outputList: usvs("outputList", updateVarbsS.savableSection),
+    onetimeList: usvs("onetimeList", {
+      ...updateVarbsS.savableSection,
       total: updateVarbS.sumNums([upS.children("onetimeItem", "valueDollars")]),
       itemValueSource: updateVarb("valueDollarsEditor"),
     }),
     prepaidPeriodic: prepaidPeriodicUpdateVarbs(),
     prepaidDaily: prepaidDailyUpdateVarbs(),
-    ...prop("closingCostValue", {
-      valueSourceName: updateVarb("closingCostValueSource", {
+    closingCostValue: usvs("closingCostValue", {
+      valueSourceName: uvS.input("closingCostValueSource", {
         initValue: "none",
       }),
-      valueDollarsEditor: updateVarb("numObj"),
-      valueDollars: updateVarb("numObj", {
-        updateFnName: "throwIfReached",
-        updateOverrides: uosS.valueSource("closingCostValueSource", {
-          none: updateBasics("emptyNumObj"),
-          fivePercentLoan: updateBasics("emptyNumObj"),
-          listTotal: updateBasicsS.loadChild("onetimeList", "total"),
-          valueDollarsEditor:
-            updateBasicsS.loadSolvableTextByVarbInfo("valueDollarsEditor"),
-        }),
+      valueDollarsEditor: uvS.input("numObj"),
+      valueDollars: uvS.vsNumObj("closingCostValueSource", {
+        none: ubS.emptyNumObj,
+        fivePercentLoan: ubS.emptyNumObj,
+        listTotal: ubS.loadChild("onetimeList", "total"),
+        valueDollarsEditor: ubS.loadLocal("valueDollarsEditor"),
       }),
     }),
-    // mortgageInsUpfrontValue: varbs({
-    //   valueSourceName: baseVarb("mortgageInsUpfrontSource"),
-    //   valueDollarsEditor: baseVarb("numObj", dollars),
-    //   valueDollars: baseVarb("numObj", dollars),
-    //   percentLoanEditor: baseVarb("numObj", dollars),
-    // }),
     // mortgageInsPeriodicValue: varbs({
     //   valueSourceName: baseVarb("mortgageInsPeriodic"),
     //   ...baseVarbsS.periodicDollarsInput("valueDollars"),
     //   ...baseVarbsS.periodicPercentInput("percentLoan"),
     // }),
-    ...prop("mortgageInsUpfrontValue", {
-      valueSourceName: updateVarb("mortgageInsUpfrontSource", {
+    mortgageInsUpfrontValue: usvs("mortgageInsUpfrontValue", {
+      valueSourceName: uvS.input("mortgageInsUpfrontSource", {
         initValue: "percentLoanEditor",
       }),
-      valueDollarsEditor: updateVarb("numObj"),
-      percentLoanEditor: updateVarb("numObj"),
-      decimalOfLoan: updateVarb(
-        "numObj",
-        ubS.equationSimple("percentToDecimal", upS.local("percentLoanEditor"))
-      ),
+      valueDollarsEditor: uvS.input("numObj"),
+      percentLoanEditor: uvS.input("numObj"),
+      decimalOfLoan: uvS.decimalToPercent("percentLoanEditor"),
     }),
     mortgageInsPeriodicValue: usvs("mortgageInsPeriodicValue", {
       valueSourceName: updateVarb("mortgageInsPeriodic", {
@@ -260,7 +221,8 @@ function makeAllUpdateSections() {
         initValue: numObj(0),
       }),
     }),
-    ...prop("calculatedVarbs", calculatedUpdateVarbs()),
+    calculatedVarbs: calculatedUpdateVarbs(),
+
     ...prop("outputSection", {
       showOutputs: updateVarb("boolean", {
         initValue: false,
@@ -286,27 +248,6 @@ function makeAllUpdateSections() {
     ...prop("outputItem", {
       valueEntityInfo: updateVarb("inEntityValue"),
     }),
-    ...prop("virtualVarb", {
-      valueEntityInfo: updateVarb("inEntityValue"),
-      value: updateVarb("numObj", {
-        updateFnName: "virtualNumObj",
-        updateFnProps: {
-          varbInfo: upS.local("valueEntityInfo"),
-        },
-      }),
-      displayName: updateVarb("stringObj", {
-        updateFnName: "emptyStringObj",
-        updateOverrides: [updateOverrideS.loadedVarbProp("loadDisplayName")],
-      }),
-      startAdornment: updateVarb("stringObj", {
-        updateFnName: "emptyStringObj",
-        updateOverrides: [updateOverrideS.loadedVarbProp("loadStartAdornment")],
-      }),
-      endAdornment: updateVarb("stringObj", {
-        updateFnName: "emptyStringObj",
-        updateOverrides: [updateOverrideS.loadedVarbProp("loadEndAdornment")],
-      }),
-    }),
     ...prop("onetimeItem", {
       ...uvsS._typeUniformity,
       ...uvsS.displayNameAndEditor,
@@ -330,7 +271,7 @@ function makeAllUpdateSections() {
         initValue: numObj(0),
         updateFnName: "userVarb",
         updateFnProps: {
-          ...upsS.localByVarbName(["valueSourceName", "valueEditor"]),
+          ...upsS.localByVarbName("valueSourceName", "valueEditor"),
           conditionalValue: upS.children("conditionalRowList", "value"),
         },
       }),

@@ -1,22 +1,26 @@
-import { groupAdornment } from "../../../varbLabelUtils";
-import { SnVarbNames } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
+import { SectionName } from "../../sharedWithServer/SectionsMeta/SectionName";
 import { useGetterSection } from "../../sharedWithServer/stateClassHooks/useGetterSection";
+import { getLabelInfo, GroupEditorProps } from "./GroupEditor/GroupEditorProps";
 import { NumObjEntityEditor } from "./NumObjEntityEditor";
 
-type Props = {
-  feId: string;
-  labelNames: SnVarbNames;
-  inputMargins?: boolean;
-};
-export function TimespanEditor({ feId, ...rest }: Props) {
+export function TimespanEditor<LN extends SectionName = SectionName>({
+  feId,
+  labelInfo,
+  labelProps,
+  ...rest
+}: GroupEditorProps<"timespan", LN>) {
   const feInfo = { sectionName: "timespanEditor", feId } as const;
   const timespanEditor = useGetterSection(feInfo);
   const valueUnit = timespanEditor.valueNext("valueEditorUnit");
+  const lInfo = getLabelInfo("timespan", valueUnit, labelInfo);
   return (
     <NumObjEntityEditor
       {...{
         feVarbInfo: timespanEditor.varbInfo2("valueEditor"),
-        endAdornment: groupAdornment("timespan", valueUnit),
+        labelProps: {
+          ...labelProps,
+          labelInfo: lInfo,
+        },
         ...rest,
       }}
     />

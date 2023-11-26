@@ -19,8 +19,8 @@ export function example20PercentDownLoan(): SectionPack<"loan"> {
   return makeExampleLoan({
     loan: {
       displayName: stringObj("Conventional 20% Down"),
-      interestRatePercentPeriodicEditor: numObj(6),
-      loanTermSpanEditor: numObj(30),
+      interestRatePercentYearly: numObj(6),
+      loanTermYears: numObj(30),
       hasMortgageIns: false,
     },
     baseLoan: {

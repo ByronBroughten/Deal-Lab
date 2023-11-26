@@ -96,8 +96,8 @@ function makeExampleStoreLoan(): SectionPack<"loan"> {
   return makeExampleLoan({
     loan: {
       displayName: stringObj("National Average 2023"),
-      interestRatePercentPeriodicEditor: numObj(7.58),
-      loanTermSpanEditor: numObj(30),
+      interestRatePercentYearly: numObj(7.58),
+      loanTermYears: numObj(30),
       hasMortgageIns: true,
     },
     baseLoan: { valueSourceName: "purchaseLoanValue" },

@@ -118,9 +118,7 @@ export function periodicInput<BN extends string>(
         updateOverrideS.activeYearlyToMonthly(baseName),
         updateOverride(
           [overrideSwitchS.monthlyIsActive(baseName)],
-          updateBasicsS.loadSolvableTextByVarbInfo(
-            validateAnyVarbName(names.editor)
-          )
+          updateBasicsS.loadLocal(validateAnyVarbName(names.editor))
         ),
       ],
       ...options.monthly,
@@ -131,9 +129,7 @@ export function periodicInput<BN extends string>(
         updateOverrideS.activeMonthlyToYearly(baseName),
         updateOverride(
           [overrideSwitchS.yearlyIsActive(baseName)],
-          updateBasicsS.loadSolvableTextByVarbInfo(
-            validateAnyVarbName(names.editor)
-          )
+          updateBasicsS.loadLocal(validateAnyVarbName(names.editor))
         ),
       ],
       ...options.yearly,
@@ -349,9 +345,7 @@ export function monthsYearsInput<BN extends string>(
               "months"
             ),
           ],
-          updateBasicsS.loadSolvableTextByVarbInfo(
-            validateAnyVarbName(varbNames.editor)
-          )
+          updateBasicsS.loadLocal(validateAnyVarbName(varbNames.editor))
         ),
       ],
       ...options?.months,
@@ -379,9 +373,7 @@ export function monthsYearsInput<BN extends string>(
               "years"
             ),
           ],
-          updateBasicsS.loadSolvableTextByVarbInfo(
-            validateAnyVarbName(varbNames.editor)
-          )
+          updateBasicsS.loadLocal(validateAnyVarbName(varbNames.editor))
         ),
       ],
       ...options?.years,

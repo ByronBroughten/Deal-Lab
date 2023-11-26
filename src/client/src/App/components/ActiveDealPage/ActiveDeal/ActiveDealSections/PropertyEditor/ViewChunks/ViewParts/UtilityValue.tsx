@@ -74,12 +74,8 @@ export function UtilityValue({ feId, propertyMode, periodicMode }: Props) {
               {...{
                 ...props,
                 feId: utilityValue.onlyChildFeId("valueDollarsEditor"),
-                labelNames: {
-                  sectionName: "utilityValue",
-                  varbBaseName: "valueDollars",
-                },
-                // I think I'll need the actual varb.
-                // And I should get the adornments at the same time as the varb
+                labelInfo: null,
+                labelProps: { showLabel: false },
               }}
             />
           ),

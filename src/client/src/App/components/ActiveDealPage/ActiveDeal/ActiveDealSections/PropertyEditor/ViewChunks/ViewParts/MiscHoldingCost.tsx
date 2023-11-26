@@ -34,10 +34,8 @@ export function MiscHoldingCost({ feId }: { feId: string }) {
                   {...{
                     ...props,
                     feId: editor.feId,
-                    labelNames: {
-                      sectionName: "miscPeriodicValue",
-                      varbBaseName: "valueDollars",
-                    },
+                    labelProps: { showLabel: false },
+                    labelInfo: null,
                   }}
                 />
               )

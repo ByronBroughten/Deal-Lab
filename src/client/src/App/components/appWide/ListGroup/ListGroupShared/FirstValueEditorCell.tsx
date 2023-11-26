@@ -18,8 +18,7 @@ export function FirstValueEditorCell({
         <NumObjEntityEditor
           editorType="equation"
           feVarbInfo={feVI}
-          labeled={false}
-          endAdornment={endAdornment}
+          labelProps={{ showLabel: false, endAdornment }}
         />
       </MuiRow>
     </FirstContentCell>

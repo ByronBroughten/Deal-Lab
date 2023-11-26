@@ -1,3 +1,4 @@
+import { GroupBaseVI } from "../../../../../../sharedWithServer/SectionsMeta/baseSectionsDerived/baseGroupNames";
 import { FeIdProp } from "../../../../../../sharedWithServer/SectionsMeta/SectionInfo/NanoIdInfo";
 import { useGetterSection } from "../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { nativeTheme } from "../../../../../../theme/nativeTheme";
@@ -6,8 +7,13 @@ import { PeriodicEditor } from "../../../../../inputs/PeriodicEditor";
 
 interface Props extends FeIdProp {
   dollarsDisplay: string;
+  editorBaseInfo: GroupBaseVI<"periodic", "loan">;
 }
-export function MortgageInsPeriodicValue({ feId, dollarsDisplay }: Props) {
+export function MortgageInsPeriodicValue({
+  feId,
+  editorBaseInfo,
+  dollarsDisplay,
+}: Props) {
   const feInfo = { sectionName: "mortgageInsPeriodicValue", feId } as const;
   const mortgageInsPeriodic = useGetterSection(feInfo);
   const sourceName = mortgageInsPeriodic.valueNext("valueSourceName");
@@ -22,7 +28,7 @@ export function MortgageInsPeriodicValue({ feId, dollarsDisplay }: Props) {
             {...{
               ...props,
               feId: mortgageInsPeriodic.onlyChildFeId(sourceName),
-              labelNames: { sectionName: "loan", varbBaseName: "mortgageIns" },
+              labelInfo: editorBaseInfo,
             }}
           />
         ),
