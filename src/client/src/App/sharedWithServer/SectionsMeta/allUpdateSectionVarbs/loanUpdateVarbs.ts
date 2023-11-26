@@ -1,7 +1,7 @@
 import { GroupKey, groupNameEnding } from "../GroupName";
 import { relVarbInfoS } from "../SectionInfo/RelVarbInfo";
 import { USVS, usvs } from "../updateSectionVarbs/updateSectionVarbs";
-import { updateVarb, uvS } from "../updateSectionVarbs/updateVarb";
+import { uvS } from "../updateSectionVarbs/updateVarb";
 import {
   OverrideBasics,
   uosb,
@@ -27,11 +27,13 @@ export function loanUpdateVarbs(): USVS<"loan"> {
     completionStatus: loanCompletionStatus(),
     financingMode: uvS.input("financingMode"),
     loanBaseDollars: uvS.loadNumObjChild("loanBaseValue", "valueDollars"),
-    ...uvsS.periodic2("interestRatePercent"),
-    ...uvsS.timespan("loanTerm"),
+    ...uvsS.childPeriodicEditor("interestRatePercent", "interestRateEditor"),
+    ...uvsS.childTimespanEditor("loanTerm", "loanTermEditor"),
     // investmentExpenses = upfrontExpenses + delayedExpenses
     // cashExpenses = upfrontExpenses + prepaidExpenses
-
+    // prepaidDaily: uvS.numObj({
+    //   updateOverrides: updateOver
+    // }),
     prepaidTaxes: loanPrepaidPeriodic("taxes"),
     prepaidHomeIns: loanPrepaidPeriodic("homeIns"),
     prepaidInterest: uvS.vsChildNumObj("prepaidInterest", "spanOrDollars", {
@@ -44,15 +46,13 @@ export function loanUpdateVarbs(): USVS<"loan"> {
         upS.children("prepaidInterest", "valueSpanEditor")
       ),
     }),
-    prepaidTotal: uvS.numObjB2(
-      ubS.sumNums("prepaidTaxes", "prepaidHomeIns", "prepaidInterest")
-    ),
-    isInterestOnly: updateVarb("boolean", {
-      initValue: false,
-    }),
-    hasMortgageIns: updateVarb("boolean", {
-      initValue: false,
-    }),
+    prepaidTotal: uvS.sumNums([
+      "prepaidTaxes",
+      "prepaidHomeIns",
+      "prepaidInterest",
+    ]),
+    isInterestOnly: uvS.input("boolean", { initValue: false }),
+    hasMortgageIns: uvS.input("boolean", { initValue: false }),
     mortgageInsUpfront: uvS.numObjO([
       updateOverride([osS.isFalse("hasMortgageIns")], ubS.zero),
       ...uosS.valueSource(
@@ -89,9 +89,6 @@ export function loanUpdateVarbs(): USVS<"loan"> {
       "firstInterestPayment",
       upS.varbPathName("thirty")
     ),
-    // prepaidDaily: uvS.numObj({
-    //   updateOverrides: updateOver
-    // }),
     loanTotalDollars: uvS.sumNums([upS.local("loanBaseDollars")]),
     ...updateVarbsS.ongoingSumNums(
       "expenses",
@@ -232,23 +229,14 @@ function mortgageInsPeriodicOverrides(
 }
 
 function loanCompletionStatus() {
-  return uvS.basic(
-    "completionStatus",
-    "completionStatus",
-    ubS.completionStatus({
-      othersValid: [upS.onlyChild("loanBaseValue", "completionStatus")],
-      nonNone: [upS.onlyChild("closingCostValue", "valueSourceName")],
-      notEmptySolvable: [
-        upS.local("interestRatePercentMonthly"),
-        upS.local("interestRatePercentYearly"),
-        upS.local("loanTermMonths"),
-        upS.local("loanTermYears"),
-      ],
-      validInputs: [
-        upS.onlyChild("closingCostValue", "valueDollarsEditor", [
-          osS.valueSourceIs("valueDollarsEditor"),
-        ]),
-      ],
-    })
-  );
+  return uvS.completionStatusB({
+    othersValid: [upS.onlyChild("loanBaseValue", "completionStatus")],
+    notEmptySolvable: [
+      upS.local("interestRatePercentMonthly"),
+      upS.local("interestRatePercentYearly"),
+      upS.local("loanTermMonths"),
+      upS.local("loanTermYears"),
+      upS.local("closingCosts"),
+    ],
+  });
 }

@@ -110,6 +110,12 @@ export const updateVarbsS = {
   ) {
     return this.loadChildPeriodic(baseName, childName, "value");
   },
+  childTimespanEditor<BN extends GroupVarbNameBase<"timespan">>(
+    baseName: BN,
+    childName: ChildName
+  ) {
+    return this.loadChildTimespan(baseName, childName, "value");
+  },
   timespan<BN extends GroupVarbNameBase<"timespan">>(
     baseName: BN,
     options?: GroupOptions<"timespan">

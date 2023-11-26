@@ -5,6 +5,7 @@ import { useGetterSection } from "../../../../../sharedWithServer/stateClassHook
 import { FormSection } from "../../../../appWide/FormSection";
 import MainSectionBody from "../../../../appWide/GeneralSection/MainSection/MainSectionBody";
 import { PageTitle } from "../../../../appWide/PageTitle";
+import { useIsDevices } from "../../../../customHooks/useMediaQueries";
 
 interface Props {
   children: React.ReactNode;
@@ -13,8 +14,13 @@ interface Props {
 }
 export function FinancingEditorBody({ children, feId, dealMode }: Props) {
   const financing = useGetterSection({ sectionName: "financing", feId });
+  const { isPhone } = useIsDevices();
   return (
-    <div>
+    <Box
+      sx={{
+        ...(!isPhone && { minWidth: 500 }),
+      }}
+    >
       <Box
         sx={{
           display: "flex",
@@ -42,6 +48,6 @@ export function FinancingEditorBody({ children, feId, dealMode }: Props) {
           </Box>
         </FormSection>
       </MainSectionBody>
-    </div>
+    </Box>
   );
 }

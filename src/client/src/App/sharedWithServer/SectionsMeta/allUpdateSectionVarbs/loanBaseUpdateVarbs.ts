@@ -116,7 +116,7 @@ export function loanBaseCompletionStatus() {
         ],
       }),
       customAmountEditor: ubS.completionStatus({
-        validInputs: [upS.onlyChild("customLoanBase", "valueDollarsEditor")],
+        notEmptySolvable: [upS.onlyChild("customLoanBase", "valueDollars")],
       }),
     })
   );
