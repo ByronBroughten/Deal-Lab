@@ -12,7 +12,7 @@ function getProps(vacancyLoss: GetterSection<"vacancyLossValue">): {
   const valueSourceName = vacancyLoss.valueNext("valueSourceName");
   const dollarsVarb = vacancyLoss.varbNext("valueDollarsMonthly");
 
-  const dollarsEditor = vacancyLoss.onlyChild("periodicEditor");
+  const dollarsEditor = vacancyLoss.onlyChild("valueDollarsEditor");
   const freq = dollarsEditor.valueNext("valueEditorFrequency");
 
   const commonQuickAccess = ["sqft", "numUnits"] as const;
@@ -48,7 +48,7 @@ function getProps(vacancyLoss: GetterSection<"vacancyLossValue">): {
           <PeriodicEditor
             {...{
               ...props,
-              feId: vacancyLoss.oneChildFeId("periodicEditor"),
+              feId: vacancyLoss.oneChildFeId("valueDollarsEditor"),
               labelInfo: vacancyLoss.periodicVBI("valueDollars"),
               labelProps: { showLabel: false },
               quickViewVarbNames: [

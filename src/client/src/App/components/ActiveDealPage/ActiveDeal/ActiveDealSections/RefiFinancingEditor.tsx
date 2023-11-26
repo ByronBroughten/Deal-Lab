@@ -1,6 +1,6 @@
 import { StateValue } from "../../../../sharedWithServer/SectionsMeta/values/StateValue";
 import { useGetterSection } from "../../../../sharedWithServer/stateClassHooks/useGetterSection";
-import { NumObjEntityEditor } from "../../../inputs/NumObjEntityEditor";
+import { TimespanEditor } from "../../../inputs/TimespanEditor";
 import { FinancingEditorBody } from "./FinancingEditor/FinancingEditorBody";
 import { FinancingLoans } from "./FinancingEditor/FinancingLoans";
 
@@ -14,13 +14,11 @@ export function RefiFinancingEditor({ feId, dealMode }: Props) {
     sectionName: "financing",
     feId,
   });
-
-  financing.varbInfo("timeTillRefinanceSpanEditor");
   return (
     <FinancingEditorBody {...{ feId, dealMode }}>
-      <NumObjEntityEditor
-        feVarbInfo={financing.varbInfo2("timeTillRefinanceSpanEditor")}
-        // labelProps={{ label: "Time till refinance" }}
+      <TimespanEditor
+        feId={financing.oneChildFeId("timeTillRefinance")}
+        labelInfo={financing.timespanVBI("timeTillRefinance")}
         sx={{
           "& .DraftEditor-root": {
             minWidth: "135px",

@@ -89,6 +89,7 @@ const valueSources = {
     "valueDollarsEditor",
     "listTotal",
   ],
+  financingMethod: ["cashOnly", "useLoan", ""],
 } as const;
 
 type ValueSources = typeof valueSources;
@@ -109,7 +110,7 @@ const unionValueArrs = {
   dealModePlusMixed: getDealModes("plusMixed"),
   dealModePlusEmpty: getDealModes("plusEmpty"),
   financingMode: financingModes,
-  financingMethod: ["cashOnly", "useLoan", ""],
+
   userDataStatus: [
     "notLoaded",
     "loading",

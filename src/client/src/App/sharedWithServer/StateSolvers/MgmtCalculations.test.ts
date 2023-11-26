@@ -42,13 +42,13 @@ describe("MgmtCalculations", () => {
     test(100);
 
     vacancyLoss.updateValues({ valueSourceName: "valueDollarsEditor" });
-    vacancyLoss.onlyChild("periodicEditor").updateValues({
+    vacancyLoss.onlyChild("valueDollarsEditor").updateValues({
       valueEditor: numObj(17),
       valueEditorFrequency: "monthly",
     });
     test(17);
 
-    vacancyLoss.onlyChild("periodicEditor").updateValues({
+    vacancyLoss.onlyChild("valueDollarsEditor").updateValues({
       valueEditorFrequency: "yearly",
       valueEditor: numObj(120),
     });
@@ -78,13 +78,13 @@ describe("MgmtCalculations", () => {
     test(300);
 
     basePay.updateValues({ valueSourceName: "valueDollarsEditor" });
-    basePay.onlyChild("periodicEditor").updateValues({
+    basePay.onlyChild("valueDollarsEditor").updateValues({
       valueEditor: numObj(10),
       valueEditorFrequency: "monthly",
     });
     test(10);
 
-    basePay.onlyChild("periodicEditor").updateValues({
+    basePay.onlyChild("valueDollarsEditor").updateValues({
       valueEditor: numObj(200),
       valueEditorFrequency: "yearly",
     });

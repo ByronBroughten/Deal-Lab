@@ -1,5 +1,5 @@
 import { UpdateSectionVarbs } from "../updateSectionVarbs/updateSectionVarbs";
-import { updateVarb, updateVarbS, uvS } from "../updateSectionVarbs/updateVarb";
+import { updateVarb, uvS } from "../updateSectionVarbs/updateVarb";
 import {
   ubS,
   updateBasics,
@@ -8,7 +8,7 @@ import { upS } from "../updateSectionVarbs/updateVarb/UpdateFnProps";
 import { updateOverride } from "../updateSectionVarbs/updateVarb/UpdateOverride";
 import { uosS } from "../updateSectionVarbs/updateVarb/UpdateOverrides";
 import { overrideSwitchS } from "../updateSectionVarbs/updateVarb/UpdateOverrideSwitch";
-import { updateVarbsS } from "../updateSectionVarbs/updateVarbs";
+import { uvsS } from "../updateSectionVarbs/updateVarbs";
 
 const notApplicable = () => updateBasics("notApplicable");
 
@@ -92,13 +92,13 @@ function dealCompletionStatus() {
 
 export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
   return {
-    ...updateVarbsS._typeUniformity,
-    ...updateVarbsS.savableSection,
-    ...updateVarbsS.displayNameAndEditor,
-    isArchived: updateVarb("boolean", { initValue: false }),
+    ...uvsS._typeUniformity,
+    ...uvsS.savableSection,
+    ...uvsS.displayNameAndEditor,
+    isArchived: uvS.input("boolean", { initValue: false }),
     completionStatus: dealCompletionStatus(),
-    dealMode: updateVarb("dealMode", { initValue: "buyAndHold" }),
-    ...updateVarbsS.group("netNonPrincipalOngoing", "periodic", "monthly", {
+    dealMode: uvS.input("dealMode", { initValue: "buyAndHold" }),
+    ...uvsS.periodic2("netNonPrincipalOngoing", {
       monthly: uvS.dealMode({
         homeBuyer: netNonPrincipal("purchaseFinancing", "Monthly"),
         buyAndHold: netNonPrincipal("purchaseFinancing", "Monthly"),
@@ -112,7 +112,7 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
         brrrr: netNonPrincipal("refiFinancing", "Yearly"),
       }),
     }),
-    ...updateVarbsS.group("averageNonPrincipalOngoing", "periodic", "monthly", {
+    ...uvsS.periodic2("averageNonPrincipalOngoing", {
       monthly: uvS.dealMode({
         homeBuyer: nonPrincipal("purchaseFinancing", "Monthly"),
         buyAndHold: nonPrincipal("purchaseFinancing", "Monthly"),
@@ -126,7 +126,7 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
         brrrr: nonPrincipal("refiFinancing", "Yearly"),
       }),
     }),
-    ...updateVarbsS.group("ongoingPiti", "periodic", "monthly", {
+    ...uvsS.periodic2("ongoingPiti", {
       monthly: uvS.dealMode({
         homeBuyer: purchasePiti("purchaseFinancing", "Monthly"),
         buyAndHold: purchasePiti("purchaseFinancing", "Monthly"),
@@ -140,7 +140,7 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
         brrrr: purchasePiti("refiFinancing", "Yearly"),
       }),
     }),
-    ...updateVarbsS.group("ongoingLoanPayment", "periodic", "monthly", {
+    ...uvsS.periodic2("ongoingLoanPayment", {
       monthly: uvS.dealMode({
         homeBuyer: ubS.loadChild("purchaseFinancing", "loanPaymentMonthly"),
         buyAndHold: ubS.loadChild("purchaseFinancing", "loanPaymentMonthly"),
@@ -154,7 +154,7 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
         brrrr: ubS.loadChild("refiFinancing", "loanPaymentYearly"),
       }),
     }),
-    ...updateVarbsS.group("timeTillValueAddProfit", "monthsYears", "months", {
+    ...uvsS.timespan("timeTillValueAddProfit", {
       months: uvS.dealMode({
         fixAndFlip: ubS.loadChild("property", "holdingPeriodMonths"),
         brrrr: ubS.equationLR(
@@ -176,7 +176,7 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
         buyAndHold: ubS.notApplicable,
       }),
     }),
-    ...updateVarbsS.group("refiLoanHolding", "monthsYears", "months", {
+    ...uvsS.timespan("refiLoanHolding", {
       months: uvS.dealMode({
         brrrr: ubS.equationLR(
           "subtractFloorZero",
@@ -198,22 +198,20 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
         buyAndHold: ubS.notApplicable,
       }),
     }),
-    ...updateVarbsS.group("purchaseLoanHolding", "monthsYears", "months", {
+    ...uvsS.group("purchaseLoanHolding", "monthsYears", "months", {
       months: uvS.dealMode({
-        brrrr: ubS.equationLR(
-          "subtract",
+        brrrr: ubS.subtract(
           upS.onlyChild("property", "holdingPeriodMonths"),
-          upS.local("refiLoanHoldingMonths")
+          "refiLoanHoldingMonths"
         ),
         fixAndFlip: ubS.loadChild("property", "holdingPeriodMonths"),
         homeBuyer: ubS.notApplicable,
         buyAndHold: ubS.notApplicable,
       }),
       years: uvS.dealMode({
-        brrrr: ubS.equationLR(
-          "subtract",
+        brrrr: ubS.subtract(
           upS.onlyChild("property", "holdingPeriodYears"),
-          upS.local("refiLoanHoldingYears")
+          "refiLoanHoldingYears"
         ),
         fixAndFlip: ubS.loadChild("property", "holdingPeriodYears"),
         homeBuyer: ubS.notApplicable,
@@ -221,24 +219,21 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
       }),
     }),
     purchaseLoanHoldingCost: uvS.dealMode({
-      brrrr: updateVarbS.equationLR(
-        "multiply",
+      brrrr: uvS.multiply(
         upS.onlyChild("purchaseFinancing", "loanPaymentMonthly"),
-        upS.local("purchaseLoanHoldingMonths")
+        "purchaseLoanHoldingMonths"
       ),
-      fixAndFlip: updateVarbS.equationLR(
-        "multiply",
+      fixAndFlip: uvS.multiply(
         upS.onlyChild("purchaseFinancing", "loanPaymentMonthly"),
-        upS.local("purchaseLoanHoldingMonths")
+        "purchaseLoanHoldingMonths"
       ),
       homeBuyer: ubS.notApplicable,
       buyAndHold: ubS.notApplicable,
     }),
     refiLoanHoldingCost: uvS.dealMode({
-      brrrr: updateVarbS.equationLR(
-        "multiply",
+      brrrr: uvS.multiply(
         upS.onlyChild("refiFinancing", "loanPaymentMonthly"),
-        upS.local("refiLoanHoldingMonths")
+        "refiLoanHoldingMonths"
       ),
       fixAndFlip: ubS.notApplicable,
       homeBuyer: ubS.notApplicable,
@@ -249,12 +244,12 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
       buyAndHold: ubS.notApplicable,
       fixAndFlip: ubS.sumNums(
         upS.onlyChild("property", "holdingCostTotal"),
-        upS.local("purchaseLoanHoldingCost")
+        "purchaseLoanHoldingCost"
       ),
       brrrr: ubS.sumNums(
         upS.onlyChild("property", "holdingCostTotal"),
-        upS.local("purchaseLoanHoldingCost"),
-        upS.local("refiLoanHoldingCost")
+        "purchaseLoanHoldingCost",
+        "refiLoanHoldingCost"
       ),
     }),
     preFinanceOneTimeExpenses: uvS.dealMode({
@@ -263,8 +258,6 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
         upS.onlyChild("property", "rehabCost"),
         upS.onlyChild("purchaseFinancing", "mortgageInsUpfront"),
         upS.onlyChild("purchaseFinancing", "closingCosts")
-        // Either keep closing costs and do mortgageIns
-        // or add a onetimeCost to financing
       ),
       buyAndHold: ubS.sumNums(
         upS.onlyChild("property", "purchasePrice"),
@@ -278,7 +271,7 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
         upS.onlyChild("property", "rehabCost"),
         upS.onlyChild("purchaseFinancing", "mortgageInsUpfront"),
         upS.onlyChild("purchaseFinancing", "closingCosts"),
-        upS.local("holdingCostTotal"),
+        "holdingCostTotal",
         upS.onlyChild("property", "sellingCosts")
       ),
       brrrr: ubS.sumNums(
@@ -287,7 +280,7 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
         upS.onlyChild("purchaseFinancing", "mortgageInsUpfront"),
         upS.onlyChild("purchaseFinancing", "closingCosts"),
         upS.onlyChild("mgmtOngoing", "miscOnetimeCosts"),
-        upS.local("holdingCostTotal"),
+        "holdingCostTotal",
         upS.onlyChild("refiFinancing", "mortgageInsUpfront"),
         upS.onlyChild("refiFinancing", "closingCosts")
       ),
@@ -332,145 +325,96 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
         upS.onlyChild("mgmtOngoing", "expensesYearly")
       ),
     }),
-    expensesOngoingPeriodicSwitch: updateVarb("periodic", {
-      initValue: "monthly",
-    }),
     netExpensesOngoingMonthly: uvS.dealMode({
-      homeBuyer: updateVarbS.equationLR(
-        "subtract",
-        upS.local("expensesOngoingMonthly"),
+      homeBuyer: uvS.subtract(
+        "expensesOngoingMonthly",
         upS.onlyChild("property", "revenueOngoingMonthly")
       ),
-      buyAndHold: updateVarbS.equationLR(
-        "subtract",
-        upS.local("expensesOngoingMonthly"),
+      buyAndHold: uvS.subtract(
+        "expensesOngoingMonthly",
         upS.onlyChild("property", "revenueOngoingMonthly")
       ),
       fixAndFlip: notApplicable(),
-      brrrr: updateVarbS.equationLR(
-        "subtract",
-        upS.local("expensesOngoingMonthly"),
+      brrrr: uvS.subtract(
+        "expensesOngoingMonthly",
         upS.onlyChild("property", "revenueOngoingMonthly")
       ),
     }),
     netExpensesOngoingYearly: uvS.dealMode({
-      homeBuyer: updateVarbS.equationLR(
-        "subtract",
-        upS.local("expensesOngoingYearly"),
+      homeBuyer: uvS.subtract(
+        "expensesOngoingYearly",
         upS.onlyChild("property", "revenueOngoingYearly")
       ),
-      buyAndHold: updateVarbS.equationLR(
-        "subtract",
-        upS.local("expensesOngoingYearly"),
+      buyAndHold: uvS.subtract(
+        "expensesOngoingYearly",
         upS.onlyChild("property", "revenueOngoingYearly")
       ),
       fixAndFlip: notApplicable(),
-      brrrr: updateVarbS.equationLR(
-        "subtract",
-        upS.local("expensesOngoingYearly"),
+      brrrr: uvS.subtract(
+        "expensesOngoingYearly",
         upS.onlyChild("property", "revenueOngoingYearly")
       ),
     }),
     cashFlowMonthly: uvS.dealMode({
       homeBuyer: notApplicable(),
-      buyAndHold: updateVarbS.equationLR(
-        "subtract",
+      buyAndHold: uvS.subtract(
         upS.onlyChild("property", "revenueOngoingMonthly"),
-        upS.local("expensesOngoingMonthly")
+        "expensesOngoingMonthly"
       ),
       fixAndFlip: notApplicable(),
-      brrrr: updateVarbS.equationLR(
-        "subtract",
+      brrrr: uvS.subtract(
         upS.onlyChild("property", "revenueOngoingMonthly"),
-        upS.local("expensesOngoingMonthly")
+        "expensesOngoingMonthly"
       ),
     }),
     cashFlowYearly: uvS.dealMode({
       homeBuyer: notApplicable(),
-      buyAndHold: updateVarbS.equationLR(
-        "subtract",
+      buyAndHold: uvS.subtract(
         upS.onlyChild("property", "revenueOngoingYearly"),
-        upS.local("expensesOngoingYearly")
+        "expensesOngoingYearly"
       ),
       fixAndFlip: ubS.notApplicable,
-      brrrr: updateVarbS.equationLR(
-        "subtract",
+      brrrr: uvS.subtract(
         upS.onlyChild("property", "revenueOngoingYearly"),
-        upS.local("expensesOngoingYearly")
+        "expensesOngoingYearly"
       ),
-    }),
-    cashFlowPeriodicSwitch: updateVarb("periodic", {
-      initValue: "yearly",
     }),
     cocRoiDecimalMonthly: uvS.dealMode({
       homeBuyer: notApplicable(),
-      buyAndHold: updateVarbS.equationLR(
-        "divide",
-        upS.local("cashFlowMonthly"),
-        upS.local("totalInvestment")
-      ),
+      buyAndHold: uvS.divide("cashFlowMonthly", "totalInvestment"),
       fixAndFlip: ubS.notApplicable,
-      brrrr: updateVarbS.equationLR(
-        "divide",
-        upS.local("cashFlowMonthly"),
-        upS.local("totalInvestment")
-      ),
+      brrrr: uvS.divide("cashFlowMonthly", "totalInvestment"),
     }),
     cocRoiDecimalYearly: uvS.dealMode({
       homeBuyer: notApplicable(),
-      buyAndHold: updateVarbS.equationLR(
-        "divide",
-        upS.local("cashFlowYearly"),
-        upS.local("totalInvestment")
-      ),
+      buyAndHold: uvS.divide("cashFlowYearly", "totalInvestment"),
       fixAndFlip: notApplicable(),
-      brrrr: updateVarbS.equationLR(
-        "divide",
-        upS.local("cashFlowYearly"),
-        upS.local("totalInvestment")
-      ),
+      brrrr: uvS.divide("cashFlowYearly", "totalInvestment"),
     }),
     cocRoiDecimalPeriodicSwitch: updateVarb("periodic", {
       initValue: "yearly",
     }),
     cocRoiMonthly: uvS.dealMode({
       homeBuyer: notApplicable(),
-      buyAndHold: updateVarbS.numEquation(
-        "decimalToPercent",
-        upS.local("cocRoiDecimalMonthly")
-      ),
+      buyAndHold: uvS.decimalToPercent("cocRoiDecimalMonthly"),
       fixAndFlip: notApplicable(),
-      brrrr: updateVarbS.numEquation(
-        "decimalToPercent",
-        upS.local("cocRoiDecimalMonthly")
-      ),
+      brrrr: uvS.decimalToPercent("cocRoiDecimalMonthly"),
     }),
     cocRoiYearly: uvS.dealMode({
       homeBuyer: notApplicable(),
-      buyAndHold: updateVarbS.numEquation(
-        "decimalToPercent",
-        upS.local("cocRoiDecimalYearly")
-      ),
+      buyAndHold: uvS.decimalToPercent("cocRoiDecimalYearly"),
       fixAndFlip: notApplicable(),
-      brrrr: updateVarbS.numEquation(
-        "decimalToPercent",
-        upS.local("cocRoiDecimalYearly")
-      ),
-    }),
-    cocRoiPeriodicSwitch: updateVarb("periodic", {
-      initValue: "yearly",
+      brrrr: uvS.decimalToPercent("cocRoiDecimalYearly"),
     }),
     cashCostsPlusPurchaseLoanRepay: uvS.dealMode({
       homeBuyer: notApplicable(),
       buyAndHold: notApplicable(),
-      fixAndFlip: updateVarbS.equationLR(
-        "add",
-        upS.local("totalInvestment"),
+      fixAndFlip: uvS.add(
+        "totalInvestment",
         upS.onlyChild("purchaseFinancing", "loanTotalDollars")
       ),
-      brrrr: updateVarbS.equationLR(
-        "add",
-        upS.local("totalInvestment"),
+      brrrr: uvS.add(
+        "totalInvestment",
         upS.onlyChild("purchaseFinancing", "loanTotalDollars")
       ),
     }),
@@ -478,71 +422,48 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
       // possibly depreciated
       homeBuyer: notApplicable(),
       buyAndHold: notApplicable(),
-      fixAndFlip: ubS.equationLR(
-        "subtract",
+      fixAndFlip: ubS.subtract(
         upS.onlyChild("property", "afterRepairValue"),
-        upS.local("preFinanceOneTimeExpenses")
+        "preFinanceOneTimeExpenses"
         // this does include selling costs
       ),
-      brrrr: ubS.equationLR(
-        "subtract",
+      brrrr: ubS.subtract(
         upS.onlyChild("property", "afterRepairValue"),
-        upS.local("preFinanceOneTimeExpenses")
+        "preFinanceOneTimeExpenses"
         // this doesn't include selling costs
       ),
     }),
     valueAddRoiPercent: uvS.dealMode({
       homeBuyer: notApplicable(),
       buyAndHold: notApplicable(),
-      fixAndFlip: ubS.equationSimple(
-        "decimalToPercent",
-        upS.local("valueAddRoiDecimal")
-      ),
-      brrrr: ubS.equationSimple(
-        "decimalToPercent",
-        upS.local("valueAddRoiDecimal")
-      ),
+      fixAndFlip: ubS.decimalToPercent("valueAddRoiDecimal"),
+      brrrr: ubS.decimalToPercent("valueAddRoiDecimal"),
     }),
     valueAddRoiDecimal: uvS.dealMode({
       homeBuyer: notApplicable(),
       buyAndHold: notApplicable(),
-      fixAndFlip: ubS.equationLR(
-        "divide",
-        upS.local("valueAddProfit"),
-        upS.local("totalInvestment")
-      ),
-      brrrr: ubS.equationLR(
-        "divide",
-        upS.local("valueAddProfit"),
-        upS.local("totalInvestment")
-      ),
+      fixAndFlip: ubS.divide("valueAddProfit", "totalInvestment"),
+      brrrr: ubS.divide("valueAddProfit", "totalInvestment"),
     }),
     valueAddRoiPercentPerMonth: uvS.dealMode({
       homeBuyer: notApplicable(),
       buyAndHold: notApplicable(),
-      fixAndFlip: ubS.equationLR(
-        "divide",
-        upS.local("valueAddRoiPercent"),
+      fixAndFlip: ubS.divide(
+        "valueAddRoiPercent",
         upS.onlyChild("property", "holdingPeriodMonths")
       ),
-      brrrr: ubS.equationLR(
-        "divide",
-        upS.local("valueAddRoiPercent"),
-        upS.local("timeTillValueAddProfitMonths")
-      ),
+      brrrr: ubS.divide("valueAddRoiPercent", "timeTillValueAddProfitMonths"),
     }),
     valueAddRoiPercentAnnualized: uvS.dealMode({
       homeBuyer: notApplicable(),
       buyAndHold: notApplicable(),
-      fixAndFlip: ubS.equationLR(
-        "multiply",
+      fixAndFlip: ubS.multiply(
         upS.varbPathName("twelve"),
-        upS.local("valueAddRoiPercentPerMonth")
+        "valueAddRoiPercentPerMonth"
       ),
-      brrrr: ubS.equationLR(
-        "multiply",
+      brrrr: ubS.multiply(
         upS.varbPathName("twelve"),
-        upS.local("valueAddRoiPercentPerMonth")
+        "valueAddRoiPercentPerMonth"
       ),
     }),
     vaProfitOnSale: uvS.dealMode({
@@ -550,9 +471,8 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
       homeBuyer: notApplicable(),
       buyAndHold: notApplicable(),
       fixAndFlip: ubS.loadLocal("valueAddProfit"),
-      brrrr: ubS.equationLR(
-        "subtract",
-        upS.local("valueAddProfit"),
+      brrrr: ubS.subtract(
+        "valueAddProfit",
         upS.onlyChild("property", "sellingCosts")
       ),
     }),
@@ -560,55 +480,39 @@ export function dealUpdateVarbs(): UpdateSectionVarbs<"deal"> {
       homeBuyer: notApplicable(),
       buyAndHold: notApplicable(),
       fixAndFlip: ubS.loadLocal("valueAddRoiDecimal"),
-      brrrr: ubS.equationLR(
-        "divide",
-        upS.local("vaProfitOnSale"),
-        upS.local("totalInvestment")
-      ),
+      brrrr: ubS.divide("vaProfitOnSale", "totalInvestment"),
     }),
     vaRoiOnSalePercent: uvS.dealMode({
       homeBuyer: notApplicable(),
       buyAndHold: notApplicable(),
       fixAndFlip: ubS.loadLocal("valueAddRoiPercent"),
-      brrrr: ubS.equationSimple(
-        "decimalToPercent",
-        upS.local("valueAddRoiOnSaleDecimal")
-      ),
+      brrrr: ubS.decimalToPercent("valueAddRoiOnSaleDecimal"),
     }),
     valueAddRoiOnSalePercentPerMonth: uvS.dealMode({
       homeBuyer: notApplicable(),
       buyAndHold: notApplicable(),
       fixAndFlip: ubS.loadLocal("valueAddRoiPercentPerMonth"),
-      brrrr: ubS.equationLR(
-        "divide",
-        upS.local("vaRoiOnSalePercent"),
-        upS.local("timeTillValueAddProfitMonths")
-      ),
+      brrrr: ubS.divide("vaRoiOnSalePercent", "timeTillValueAddProfitMonths"),
     }),
     vaRoiOnSalePercentAnnualized: uvS.dealMode({
       homeBuyer: notApplicable(),
       buyAndHold: notApplicable(),
       fixAndFlip: ubS.loadLocal("valueAddRoiPercentAnnualized"),
-      brrrr: ubS.equationLR(
-        "multiply",
+      brrrr: ubS.multiply(
         upS.varbPathName("twelve"),
-        upS.local("valueAddRoiOnSalePercentPerMonth")
+        "valueAddRoiOnSalePercentPerMonth"
       ),
     }),
-
-    displayName: updateVarb("stringObj", {
-      updateFnName: "throwIfReached",
-      updateOverrides: [
-        updateOverride(
-          [overrideSwitchS.local("displayNameSource", "displayNameEditor")],
-          ubS.localStringToStringObj("displayNameEditor")
-        ),
-        updateOverride(
-          [overrideSwitchS.local("displayNameSource", "defaultDisplayName")],
-          updateBasics("defaultDealDisplayName")
-        ),
-      ],
-    }),
+    displayName: uvS.override("stringObj", [
+      updateOverride(
+        [overrideSwitchS.local("displayNameSource", "displayNameEditor")],
+        ubS.localStringToStringObj("displayNameEditor")
+      ),
+      updateOverride(
+        [overrideSwitchS.local("displayNameSource", "defaultDisplayName")],
+        updateBasics("defaultDealDisplayName")
+      ),
+    ]),
     displayNameSource: updateVarb("dealDisplayNameSource", {
       initValue: "displayNameEditor",
     }),

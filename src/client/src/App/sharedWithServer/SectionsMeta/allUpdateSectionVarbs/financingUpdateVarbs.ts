@@ -1,12 +1,13 @@
+import { GroupVarbNameBase } from "../baseSectionsDerived/baseGroupNames";
+import { GroupKey, groupNameEnding } from "../GroupName";
 import { relVarbInfoS } from "../SectionInfo/RelVarbInfo";
 import { UpdateGroup } from "../updateSectionVarbs/switchUpdateVarbs";
-import { UpdateSectionVarbs } from "../updateSectionVarbs/updateSectionVarbs";
 import {
-  UpdateVarb,
-  updateVarb,
-  updateVarbS,
-  uvS,
-} from "../updateSectionVarbs/updateVarb";
+  UpdateSectionVarbs,
+  usvs,
+} from "../updateSectionVarbs/updateSectionVarbs";
+import { UpdateVarb, uvS } from "../updateSectionVarbs/updateVarb";
+import { uosbS } from "../updateSectionVarbs/updateVarb/OverrideBasics";
 import {
   ubS,
   UpdateBasics,
@@ -20,30 +21,23 @@ import {
   uosS,
   UpdateOverrides,
 } from "../updateSectionVarbs/updateVarb/UpdateOverrides";
-import {
-  osS,
-  overrideSwitchS,
-} from "../updateSectionVarbs/updateVarb/UpdateOverrideSwitch";
-import { updateVarbsS } from "../updateSectionVarbs/updateVarbs";
-import { numObj } from "../values/StateValue/NumObj";
+import { osS } from "../updateSectionVarbs/updateVarb/UpdateOverrideSwitch";
+import { uvsS } from "../updateSectionVarbs/updateVarbs";
 import { UnionValue } from "../values/StateValue/unionValues";
 
 export function financingUpdateVarbs(): UpdateSectionVarbs<"financing"> {
-  return {
-    ...updateVarbsS._typeUniformity,
-    one: updateVarbS.one(),
+  return usvs("financing", {
+    one: uvS.one(),
     completionStatus: financingCompletionStatus(),
-    ...sumOngoingLoanVarb("mortgageIns", "mortgageIns"),
-    ...sumOngoingLoanVarb("loanExpenses", "expenses"),
-    ...sumOngoingLoanVarb("loanPayment", "loanPayment"),
-    ...sumOngoingLoanVarb("averagePrincipal", "averagePrincipal"),
-    ...sumOngoingLoanVarb("averageInterest", "averageInterest"),
-    financingMode: updateVarb("financingMode"),
-    financingMethod: updateVarb("financingMethod", { initValue: "" }),
-    ...updateVarbsS.monthsYearsInput("timeTillRefinance", "months", {
-      months: { initValue: numObj(6) },
-    }),
-    displayName: updateVarb("stringObj", {
+    ...sumPeriodicLoanVarbs("mortgageIns", "mortgageIns"),
+    ...sumPeriodicLoanVarbs("loanExpenses", "expenses"),
+    ...sumPeriodicLoanVarbs("loanPayment", "loanPayment"),
+    ...sumPeriodicLoanVarbs("averagePrincipal", "averagePrincipal"),
+    ...sumPeriodicLoanVarbs("averageInterest", "averageInterest"),
+    financingMode: uvS.input("financingMode"),
+    financingMethod: uvS.input("financingMethod", { initValue: "" }),
+    ...uvsS.childTimespanEditor("timeTillRefinance", "timeTillRefinance"),
+    displayName: uvS.basic2("stringObj", {
       updateFnName: "financingDisplayName",
       updateFnProps: {
         loanNames: [updatePropS.children("loan", "displayName")],
@@ -61,7 +55,7 @@ export function financingUpdateVarbs(): UpdateSectionVarbs<"financing"> {
         updatePropS.local("mortgageInsUpfront")
       )
     ),
-  };
+  });
 }
 
 function financingCompletionStatus() {
@@ -99,21 +93,32 @@ function doLoanOrZero(onUseLoan: UpdateBasics): UpdateVarb<"numObj"> {
   );
 }
 
-function sumOngoingLoanVarb<BN extends string>(
+function sumPeriodicLoanVarbs<
+  BN extends GroupVarbNameBase<"periodic", "financing">
+>(
   financingBaseVarbName: BN,
-  loanBaseVarbName: string
+  loanBaseVarbName: GroupVarbNameBase<"periodic", "loan">
 ): UpdateGroup<BN, "periodic"> {
-  return updateVarbsS.ongoingSumNumsNext(financingBaseVarbName, "monthly", {
-    updateBasics: ubS.throw,
-    updateOverrides: [
-      {
-        switches: [overrideSwitchS.local("financingMethod", "useLoan")],
-        updateFnProps: [upS.children("loan", loanBaseVarbName)],
-      },
-      {
-        switches: [overrideSwitchS.local("financingMethod", "cashOnly", "")],
-        updateBasics: ubS.zero,
-      },
-    ],
+  return uvsS.periodic2(financingBaseVarbName, {
+    monthly: sumLoanVarb(loanBaseVarbName, "monthly"),
+    yearly: sumLoanVarb(loanBaseVarbName, "yearly"),
   });
+}
+
+function sumLoanVarb(
+  loanBaseVarbName: GroupVarbNameBase<"periodic", "loan">,
+  groupKey: GroupKey<"periodic">
+) {
+  const ending = groupNameEnding("periodic", groupKey);
+  return uosbS.valueSource(
+    "financingMethod",
+    {
+      cashOnly: ubS.zero,
+      "": ubS.zero,
+      useLoan: ubS.sumChildren("loan", `${loanBaseVarbName}${ending}`),
+    },
+    {
+      switchInfo: "financingMethod",
+    }
+  );
 }

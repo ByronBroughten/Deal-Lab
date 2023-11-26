@@ -22,6 +22,7 @@ export function uosb(updateOverrides: UpdateOverrides): OverrideBasics {
 }
 
 export const uosbS = {
+  dealMode() {},
   valueSource<VT extends ValueSourceType>(
     _valueSourceType: VT,
     updateBasics: Record<ValueSource<VT>, UpdateBasics>,

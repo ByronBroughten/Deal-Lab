@@ -41,6 +41,7 @@ export function makeDefaultDealPack(
   purchaseFinancing.addChild("loan", {
     sectionPack: makeDefaultLoanPack("purchase"),
   });
+  purchaseFinancing.addChild("timeTillRefinance");
 
   const refiFinancing = deal.addAndGetChild("refiFinancing", {
     sectionValues: { financingMode: "refinance", financingMethod: "useLoan" },
@@ -48,6 +49,7 @@ export function makeDefaultDealPack(
   refiFinancing.addChild("loan", {
     sectionPack: makeDefaultLoanPack("refinance"),
   });
+  refiFinancing.addChild("timeTillRefinance");
 
   deal.addChild("mgmtOngoing", {
     sectionPack: makeDefaultMgmt(),

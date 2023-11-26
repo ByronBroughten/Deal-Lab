@@ -50,6 +50,6 @@ function valueDollars(groupKey: GroupKey<"periodic">): OverrideBasics {
       "valueDecimal",
       upS.varbPathName(`targetRent${ending}`)
     ),
-    valueDollarsEditor: ubS.loadChild("periodicEditor", `value${ending}`),
+    valueDollarsEditor: ubS.loadChild("valueDollarsEditor", `value${ending}`),
   });
 }

@@ -111,8 +111,7 @@ export const allSectionChildren = checkAllSectionChildren({
   }),
   financing: {
     loan: sectionChild("loan"),
-    purchaseLoan: sectionChild("loan"),
-    refinanceLoan: sectionChild("loan"),
+    timeTillRefinance: sectionChild("timespanEditor"),
   },
   loan: sCdn({
     loanBaseValue: "loanBaseValue",
@@ -212,10 +211,10 @@ export const allSectionChildren = checkAllSectionChildren({
     customVarb: "customVarb",
   }),
   mgmtBasePayValue: sCdn({
-    periodicEditor: "periodicEditor",
+    valueDollarsEditor: "periodicEditor",
   }),
   vacancyLossValue: sCdn({
-    periodicEditor: "periodicEditor",
+    valueDollarsEditor: "periodicEditor",
   }),
 });
 

@@ -11,7 +11,7 @@ function getProps(mgmtBasePay: GetterSection<"mgmtBasePayValue">): {
   const valueSourceName = mgmtBasePay.valueNext("valueSourceName");
   const dollarsVarb = mgmtBasePay.varbNext("valueDollarsMonthly");
 
-  const dollarsEditor = mgmtBasePay.onlyChild("periodicEditor");
+  const dollarsEditor = mgmtBasePay.onlyChild("valueDollarsEditor");
   const freq = dollarsEditor.valueNext("valueEditorFrequency");
 
   const commonQuickAccess = ["sqft", "numUnits"] as const;
@@ -48,7 +48,7 @@ function getProps(mgmtBasePay: GetterSection<"mgmtBasePayValue">): {
           <PeriodicEditor
             {...{
               ...props,
-              feId: mgmtBasePay.oneChildFeId("periodicEditor"),
+              feId: mgmtBasePay.oneChildFeId("valueDollarsEditor"),
               labelInfo: mgmtBasePay.periodicVBI("valueDollars"),
               labelProps: { showLabel: false },
               quickViewVarbNames: [

@@ -1,33 +1,27 @@
-import { UpdateSectionVarbs } from "../updateSectionVarbs/updateSectionVarbs";
+import { USVS, usvs } from "../updateSectionVarbs/updateSectionVarbs";
 import { updateVarb, uvS } from "../updateSectionVarbs/updateVarb";
 import {
   ubS,
   updateBasics,
 } from "../updateSectionVarbs/updateVarb/UpdateBasics";
 import { upS } from "../updateSectionVarbs/updateVarb/UpdateFnProps";
-import { updateVarbsS } from "../updateSectionVarbs/updateVarbs";
 
-export function calculatedUpdateVarbs(): UpdateSectionVarbs<"calculatedVarbs"> {
-  return {
-    ...updateVarbsS._typeUniformity,
+export function calculatedUpdateVarbs(): USVS<"calculatedVarbs"> {
+  return usvs("calculatedVarbs", {
     currentYear: updateVarb("numObj", updateBasics("currentYear")),
-    propertyAge: uvS.equationLR(
-      "subtract",
+    propertyAge: uvS.subtract(
       upS.varbPathName("currentYear"),
       upS.varbPathName("yearBuilt")
     ),
-    pricePerUnit: uvS.equationLR(
-      "divide",
+    pricePerUnit: uvS.divide(
       upS.varbPathName("purchasePrice"),
       upS.varbPathName("numUnits")
     ),
-    pricePerSqft: uvS.equationLR(
-      "divide",
+    pricePerSqft: uvS.divide(
       upS.varbPathName("purchasePrice"),
       upS.varbPathName("sqft")
     ),
-    arvPerSqft: uvS.equationLR(
-      "divide",
+    arvPerSqft: uvS.divide(
       upS.varbPathName("afterRepairValue"),
       upS.varbPathName("sqft")
     ),
@@ -55,80 +49,36 @@ export function calculatedUpdateVarbs(): UpdateSectionVarbs<"calculatedVarbs"> {
       "twoPercent",
       upS.varbPathName("afterRepairValue")
     ),
-    fivePercentRentMonthly: updateVarb("numObj", {
-      ...ubS.equationSimple(
-        "fivePercent",
-        upS.varbPathName("targetRentMonthly")
-      ),
-    }),
-    fivePercentRentYearly: updateVarb("numObj", {
-      ...ubS.equationSimple(
-        "fivePercent",
-        upS.varbPathName("targetRentYearly")
-      ),
-    }),
-    tenPercentRentMonthly: updateVarb("numObj", {
-      ...ubS.equationSimple(
-        "tenPercent",
-        upS.varbPathName("targetRentMonthly")
-      ),
-    }),
-    tenPercentRentYearly: updateVarb("numObj", {
-      ...ubS.equationSimple("tenPercent", upS.varbPathName("targetRentYearly")),
-    }),
-    onePercentArvPlusSqft: updateVarb(
-      "numObj",
-      ubS.equationLR(
-        "add",
-        upS.local("onePercentArv"),
-        upS.varbPathName("sqft")
-      )
+    fivePercentRentMonthly: uvS.numEquation(
+      "fivePercent",
+      upS.varbPathName("targetRentMonthly")
     ),
-    onePercentPricePlusSqft: updateVarb(
-      "numObj",
+    fivePercentRentYearly: uvS.numEquation(
+      "fivePercent",
+      upS.varbPathName("targetRentYearly")
+    ),
+    tenPercentRentMonthly: uvS.numEquation(
+      "tenPercent",
+      upS.varbPathName("targetRentMonthly")
+    ),
+    tenPercentRentYearly: uvS.numEquation(
+      "tenPercent",
+      upS.varbPathName("targetRentYearly")
+    ),
+    onePercentArvPlusSqft: uvS.add("onePercentArv", upS.varbPathName("sqft")),
+    onePercentPricePlusSqft: uvS.numObjB2(
       ubS.varbPathLeftRight("add", "onePercentPrice", "sqft")
     ),
-    onePercentArvSqftAverage: updateVarb(
-      "numObj",
-      ubS.equationLR(
-        "divide",
-        upS.local("onePercentArvPlusSqft"),
-        upS.local("two")
-      )
+    onePercentArvSqftAverage: uvS.divide("onePercentArvPlusSqft", "two"),
+    onePercentPriceSqftAverage: uvS.divide("onePercentPricePlusSqft", "two"),
+    threeHundred: uvS.numObjB("solvableText300"),
+    threeHundredPerUnit: uvS.multiply(
+      "threeHundred",
+      upS.varbPathName("numUnits")
     ),
-    onePercentPriceSqftAverage: updateVarb(
-      "numObj",
-      ubS.equationLR("divide", upS.local("onePercentArv"), upS.local("two"))
+    threeHundredPerUnitTimesTwelve: uvS.multiply(
+      "threeHundredPerUnit",
+      "twelve"
     ),
-    threeHundred: updateVarb("numObj", updateBasics("solvableText300")),
-    threeHundredPerUnit: updateVarb(
-      "numObj",
-      ubS.equationLR(
-        "multiply",
-        upS.local("threeHundred"),
-        upS.varbPathName("numUnits")
-      )
-    ),
-    threeHundredPerUnitTimesTwelve: updateVarb(
-      "numObj",
-      ubS.equationLR(
-        "multiply",
-        upS.local("threeHundredPerUnit"),
-        upS.local("twelve")
-      )
-    ),
-    propertyExists: updateVarb("boolean", {
-      initValue: false,
-      updateFnName: "varbExists",
-      updateFnProps: {
-        varbInfo: upS.pathName("propertyFocal", "one"),
-      },
-    }),
-
-    mgmtExists: updateVarb("boolean", {
-      initValue: false,
-      updateFnName: "varbExists",
-      updateFnProps: { varbInfo: upS.pathName("mgmtFocal", "one") },
-    }),
-  };
+  });
 }

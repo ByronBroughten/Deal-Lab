@@ -3,11 +3,11 @@ import { makeDefaultMiscPeriodicValue } from "./makeSimpleDefaults";
 
 export const makeDefaultMgmt = makeDefaultMaker("mgmt", (mgmt) => {
   const basePay = mgmt.addAndGetChild("mgmtBasePayValue");
-  basePay.addChild("periodicEditor", {
+  basePay.addChild("valueDollarsEditor", {
     sectionValues: { valueEditorFrequency: "monthly" },
   });
   const vacancyLoss = mgmt.addAndGetChild("vacancyLossValue");
-  vacancyLoss.addChild("periodicEditor", {
+  vacancyLoss.addChild("valueDollarsEditor", {
     sectionValues: { valueEditorFrequency: "monthly" },
   });
 
