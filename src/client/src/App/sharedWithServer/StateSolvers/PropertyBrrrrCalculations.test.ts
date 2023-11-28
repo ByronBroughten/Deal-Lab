@@ -51,7 +51,7 @@ describe("PropertyBrrrrCalculations", () => {
     const miscTotal = 1200;
     const misc = property.onlyChild("miscOngoingRevenue");
     misc.updateValues({ valueSourceName: "valueDollarsEditor" });
-    const miscEditor = misc.onlyChild("periodicEditor");
+    const miscEditor = misc.onlyChild("valueDollarsEditor");
     miscEditor.updateValues({
       valueEditorFrequency: "monthly",
       valueEditor: numObj(miscTotal),

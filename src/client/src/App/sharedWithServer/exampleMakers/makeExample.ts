@@ -5,18 +5,18 @@ import { StrictExclude } from "../utils/types";
 
 type OmniChildSn = StrictExclude<SectionName, "root" | "omniParent">;
 type PropFn<SN extends OmniChildSn> = (
-  packBuilder: DefaultUpdaterSection<SN>
+  updater: DefaultUpdaterSection<SN>
 ) => void;
 
 export function makeExample<SN extends OmniChildSn>(
   sectionName: SN,
   fn: PropFn<SN>
 ): SectionPack<SN> {
-  const packBuilder = DefaultUpdaterSection.initAsOmniChild(
+  const updater = DefaultUpdaterSection.initAsOmniChild(
     sectionName
   ) as DefaultUpdaterSection<SN>;
-  fn(packBuilder);
-  return packBuilder.makeSectionPack();
+  fn(updater);
+  return updater.makeSectionPack();
 }
 
 export function makeExampleMaker<SN extends OmniChildSn>(

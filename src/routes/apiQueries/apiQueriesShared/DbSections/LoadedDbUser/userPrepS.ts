@@ -1,11 +1,15 @@
 import ThirdPartyEmailPassword from "supertokens-node/recipe/thirdpartyemailpassword";
 import {
+  DbStoreSeed,
+  initProdDbStoreArrs,
+  initTestDbStoreArrs,
+} from "../../../../../client/src/App/sharedWithServer/exampleMakers/initDbStoreArrs";
+import {
   DbStoreName,
   dbStoreNames,
 } from "../../../../../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/DbStoreName";
 import { StrictPick } from "../../../../../client/src/App/sharedWithServer/utils/types";
 import { DbUserModel } from "../../../../routesShared/DbUserModel";
-import { DbStoreSeed, initDbStoreArrs } from "./initDbStoreArrs";
 
 export function getSignUpData(
   user: ThirdPartyEmailPassword.User
@@ -18,12 +22,17 @@ export function getSignUpData(
   };
 }
 
-export async function initUserInDb(props: DbStoreSeed) {
+export async function initUserInDb(seed: DbStoreSeed) {
+  const arrs =
+    process.env.NODE_ENV === "test"
+      ? initTestDbStoreArrs(seed)
+      : initProdDbStoreArrs(seed);
+
   const dbUserModel = new DbUserModel({
-    authId: props.authId,
-    email: props.email,
+    authId: seed.authId,
+    email: seed.email,
     childDbIds: initChildDbIds(),
-    ...initDbStoreArrs(props),
+    ...arrs,
   });
   await dbUserModel.save();
 }

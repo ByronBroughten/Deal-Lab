@@ -16,6 +16,11 @@ import { dealModeLabels } from "./App/sharedWithServer/SectionsMeta/values/State
 import { StrictOmit } from "./App/sharedWithServer/utils/types";
 
 const multis = {
+  prepaids: text({
+    inputLabel: "Prepaids",
+    title: "Prepaids",
+    info: `Monthly or annual costs that you pay for upfront. The most common prepaids are property taxes, home insurance, mortgage interest, and private mortgage insurance.\n\nThese are factored into your upfront cash needed. To avoid counting them twice for calculating investment metrics, however, they are not included in your upfront investment total.`,
+  }),
   loanExtras: text({
     inputLabel: "Loan extras",
     title: "Loan extras",
@@ -84,9 +89,61 @@ function getLoanValue(loanForWhat: string) {
   };
 }
 
+function prop<SN extends SectionName>(
+  sectionName: SN,
+  partial: Partial<SectionInfoText<SN>>
+): Record<SN, SectionInfoText<SN>> {
+  return {
+    [sectionName]: {
+      ...emptySctionInfoText(sectionName),
+      ...partial,
+    },
+  } as Record<SN, SectionInfoText<SN>>;
+}
+
+function sit<SN extends SectionName>(
+  sectionName: SN,
+  partial: Partial<SectionInfoText<SN>>
+): SectionInfoText<SN> {
+  return {
+    ...emptySctionInfoText(sectionName),
+    ...partial,
+  };
+}
+
 export type AllVarbLabels = { [SN in SectionName]: SectionInfoText<SN> };
 export const varbLabels = checkAllVarbLabels({
   ...defaultSectionInfoTexts(),
+  timespanEditor: sit("timespanEditor", {
+    valueEditor: input("Timespan editor"),
+    valueMonths: input("Months"),
+    valueYears: input("Years"),
+    valueEditorUnit: input("Editor unit"),
+  }),
+  periodicEditor: sit("periodicEditor", {
+    valueEditor: input("Periodic editor"),
+    valueMonthly: input("Monthly value"),
+    valueYearly: input("Yearly value"),
+    valueEditorFrequency: input("Editor frequency"),
+  }),
+  afterRepairValue: sit("afterRepairValue", {
+    valueSourceName: text({
+      inputLabel: "After repair value",
+      title: "After Repair Value",
+      info: "The expected value of a property after all the planned repairs have been made to it. This is useful for calculating gained equity for the property owner.",
+    }),
+    valueDollarsEditor: input("After repair value"),
+    valueDollars: input("After repair value"),
+  }),
+  delayedCostValue: sit("delayedCostValue", {
+    valueSourceName: text({
+      inputLabel: "Delayed costs",
+      title: "Delayed Costs",
+      info: `Onetime expenses that you will have to pay for at some point but that you don't need to have the cash for at or around the time of purchasing a property. A good example is gutters: they're a common onetime expense that costs a lot, but you usually don't need them right away.\n\nThis is used for calculating your upfront investment total but it's left out of your upfront cash needed.`,
+    }),
+    valueDollars: input("Delayed costs"),
+    valueDollarsEditor: input("Delayed costs"),
+  }),
   ...prop("capExValue", {
     valueSourceName: text({
       inputLabel: "Capital expenses",
@@ -139,7 +196,7 @@ export const varbLabels = checkAllVarbLabels({
     }),
     valueDecimal: input("Cost overrun percent as decimal"),
   }),
-  ...prop("calculatedVarbs", {
+  calculatedVarbs: sit("calculatedVarbs", {
     currentYear: input("Current year"),
     propertyAge: input("Property age"),
     onePercentPrice: input("1% Purchase price"),
@@ -153,6 +210,7 @@ export const varbLabels = checkAllVarbLabels({
     rehabPerSqft: input("Rehab cost per sqft"),
     two: input("2"),
     twelve: input("12"),
+    thirty: input("30"),
     threeHundred: input("300"),
     threeHundredPerUnit: input("300 per unit"),
     threeHundredPerUnitTimesTwelve: input("300 per unit times twelve"),
@@ -327,9 +385,26 @@ export const varbLabels = checkAllVarbLabels({
     ...periodicInput("percentLoan", "Mortgage insurance"),
     ...simplePeriodic("decimalOfLoan", "Mortgage insurance decimal"),
   }),
-  ...prop("loan", {
+  prepaidPeriodic: sit("prepaidPeriodic", {
+    valueSourceName: multis.prepaids,
+    valueMonths: input("Prepaids"),
+    valueYears: input("Prepaids"),
+    valueDollarsEditor: input("Prepaids"),
+  }),
+  prepaidDaily: sit("prepaidDaily", {
+    valueSourceName: multis.prepaids,
+    valueDollarsEditor: input("Prepaids"),
+    valueSpanEditor: input("Prepaids"),
+  }),
+  loan: sit("loan", {
     ...simplePeriodic("loanPayment", "Loan payment"),
     ...simplePeriodic("expenses", "Total loan expenses"),
+    firstInterestPayment: input("First interest payment"),
+    firstInterestPaymentOneDay: input("First one-day interest payment"),
+    prepaidInterest: input("Prepaid interest"),
+    prepaidTaxes: input("Prepaid taxes"),
+    prepaidHomeIns: input("Prepaid home insurance"),
+    prepaidTotal: multis.prepaids,
     closingCosts: multis.closingCosts,
     hasMortgageIns: text({
       inputLabel: "Mortgage insurance",
@@ -664,17 +739,6 @@ function emptySctionInfoText<SN extends SectionName>(
     infoTexts[varbName] = null;
     return infoTexts;
   }, {} as SectionInfoText<SN>);
-}
-function prop<SN extends SectionName>(
-  sectionName: SN,
-  partial: Partial<SectionInfoText<SN>>
-): Record<SN, SectionInfoText<SN>> {
-  return {
-    [sectionName]: {
-      ...emptySctionInfoText(sectionName),
-      ...partial,
-    },
-  } as Record<SN, SectionInfoText<SN>>;
 }
 
 function defaultSectionInfoTexts(): AllVarbLabels {

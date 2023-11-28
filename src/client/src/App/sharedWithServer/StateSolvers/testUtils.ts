@@ -205,10 +205,7 @@ export function setPeriodicList<SN extends PeriodicListSn>(
   groupKey: GroupKey<"periodic">
 ) {
   const value = section as SolverSection<any> as SolverSection<PeriodicListSn>;
-  value.updateValues({
-    valueSourceName: "listTotal",
-    valueDollarsPeriodicSwitch: groupKey,
-  } as any);
+  value.updateValues({ valueSourceName: "listTotal" });
   const list = value.onlyChild("periodicList");
   list.removeChildrenAndSolve("periodicItem");
   for (const item of items) {

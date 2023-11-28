@@ -244,8 +244,8 @@ describe("Purchase financing calculations", () => {
   it("should calculate mortgage insurance", () => {
     firstLoan.updateValues({ hasMortgageIns: true });
     const monthlyValue = 30;
-
     const mortIns = firstLoan.onlyChild("mortgageInsPeriodicValue");
+    mortIns.updateValues({ valueSourceName: "valueDollarsEditor" });
     mortIns.onlyChild("valueDollarsEditor").updateValues({
       valueEditor: numObj(monthlyValue),
       valueEditorFrequency: "monthly",

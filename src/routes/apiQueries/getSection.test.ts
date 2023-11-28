@@ -16,8 +16,6 @@ import {
   validateStatus200Res,
 } from "./apiQueriesTestTools/testDbUser";
 
-jest.setTimeout(12000);
-
 type TestReqs = {
   addSection: QueryReq<"addSection">;
   getSection: QueryReq<"getSection">;

@@ -86,7 +86,7 @@ describe("MgmtCalculations", () => {
 
     basePay.onlyChild("valueDollarsEditor").updateValues({
       valueEditor: numObj(200),
-      valueEditorFrequency: "yearly",
+      valueEditorFrequency: "monthly",
     });
     test(200);
 

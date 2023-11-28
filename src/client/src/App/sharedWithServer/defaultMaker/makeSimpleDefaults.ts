@@ -18,18 +18,6 @@ export const makeDefaultMiscPeriodicValue = mdm(
   }
 );
 
-export const makeDefaultTaxesValue = mdm("taxesValue", (taxes) => {
-  taxes.updateValues({ valueSourceName: "valueDollarsEditor" });
-  taxes.addChild("valueDollarsEditor");
-});
-
-export const makeDefaultHomeInsValue = mdm("homeInsValue", (homeIns) => {
-  homeIns.updateValues({ valueSourceName: "valueDollarsEditor" });
-  homeIns.addChild("valueDollarsEditor", {
-    sectionValues: { valueEditorFrequency: "yearly" },
-  });
-});
-
 export const makeDefaultCapExItem = mdm("capExItem", (capExItem) =>
   capExItem.addChild("lifespanEditor", {
     sectionValues: { valueEditorUnit: "years" },

@@ -1,8 +1,7 @@
-import { makeDefaultMgmt } from "../defaultMaker/makeDefaultMgmt";
 import { SectionValues, StateValue } from "../SectionsMeta/values/StateValue";
 import { stringObj } from "../SectionsMeta/values/StateValue/StringObj";
-import { PackBuilderSection } from "../StatePackers/PackBuilderSection";
 import { StrictPick } from "../utils/types";
+import { makeExample } from "./makeExample";
 
 type ExampleMgmtProps = {
   mgmt: StrictPick<SectionValues<"mgmt">, "displayName">;
@@ -15,17 +14,14 @@ type ExampleMgmtProps = {
 };
 
 export function makeExampleMgmt(props: ExampleMgmtProps) {
-  const mgmt = PackBuilderSection.initAsOmniChild("mgmt");
-  mgmt.overwriteSelf(makeDefaultMgmt());
-  mgmt.updateValues(props.mgmt);
+  return makeExample("mgmt", (mgmt) => {
+    mgmt.updateValues(props.mgmt);
+    const vacancyLoss = mgmt.onlyChild("vacancyLossValue");
+    vacancyLoss.updateValues(props.vacancyLoss);
 
-  const vacancyLoss = mgmt.onlyChild("vacancyLossValue");
-  vacancyLoss.updateValues(props.vacancyLoss);
-
-  const basePay = mgmt.onlyChild("mgmtBasePayValue");
-  basePay.updateValues(props.basePay);
-
-  return mgmt.makeSectionPack();
+    const basePay = mgmt.onlyChild("mgmtBasePayValue");
+    basePay.updateValues(props.basePay);
+  });
 }
 
 export const exampleDealMgmt = makeExampleMgmt({

@@ -1,24 +1,25 @@
-import { makeDefaultDealCompareMenu } from "../../../../../client/src/App/sharedWithServer/defaultMaker/makeDefaultDealCompareMenu";
-import { makeDefaultOutputList } from "../../../../../client/src/App/sharedWithServer/defaultMaker/makeDefaultOutputList";
-import { makeDefaultOutputSection } from "../../../../../client/src/App/sharedWithServer/defaultMaker/makeDefaultOutputSection";
-import { makeHomeAdvisorNahbCapExList } from "../../../../../client/src/App/sharedWithServer/exampleMakers/makeExampleCapEx";
-import { makeExampleDeal } from "../../../../../client/src/App/sharedWithServer/exampleMakers/makeExampleDeal";
-import { makeExampleLoan } from "../../../../../client/src/App/sharedWithServer/exampleMakers/makeExampleLoan";
-import { makeExampleMgmt } from "../../../../../client/src/App/sharedWithServer/exampleMakers/makeExampleMgmt";
+import { makeDefaultDealCompareMenu } from "../defaultMaker/makeDefaultDealCompareMenu";
+import { makeDefaultOutputList } from "../defaultMaker/makeDefaultOutputList";
+import { makeDefaultOutputSection } from "../defaultMaker/makeDefaultOutputSection";
+import { dbStoreNames } from "../SectionsMeta/sectionChildrenDerived/DbStoreName";
+import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
+import { numObj } from "../SectionsMeta/values/StateValue/NumObj";
+import { stringObj } from "../SectionsMeta/values/StateValue/StringObj";
+import { PackBuilderSection } from "../StatePackers/PackBuilderSection";
+import { SectionPackArrs } from "../StatePackers/PackMakerSection";
+import { timeS } from "../utils/timeS";
+import { makeHomeAdvisorNahbCapExList } from "./makeExampleCapEx";
+import { makeExampleDeal } from "./makeExampleDeal";
+import { makeExampleLoan } from "./makeExampleLoan";
+import { makeExampleMgmt } from "./makeExampleMgmt";
 import {
   avgHomeAdvisorNahbCapExProps,
   examplePropertyRepairProps,
   examplePropertyUtilityProps,
-} from "../../../../../client/src/App/sharedWithServer/exampleMakers/makeExamplePeriodicListProps";
-import { makeNationalUtilityAverageList } from "../../../../../client/src/App/sharedWithServer/exampleMakers/makeExamplePeriodicLists";
-import { makeExampleProperty } from "../../../../../client/src/App/sharedWithServer/exampleMakers/makeExampleProperty";
-import { makeExampleUserVarbLists } from "../../../../../client/src/App/sharedWithServer/exampleMakers/makeExampleUserVarbLists";
-import { dbStoreNames } from "../../../../../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/DbStoreName";
-import { SectionPack } from "../../../../../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/SectionPack";
-import { numObj } from "../../../../../client/src/App/sharedWithServer/SectionsMeta/values/StateValue/NumObj";
-import { stringObj } from "../../../../../client/src/App/sharedWithServer/SectionsMeta/values/StateValue/StringObj";
-import { PackBuilderSection } from "../../../../../client/src/App/sharedWithServer/StatePackers/PackBuilderSection";
-import { timeS } from "../../../../../client/src/App/sharedWithServer/utils/timeS";
+} from "./makeExamplePeriodicListProps";
+import { makeNationalUtilityAverageList } from "./makeExamplePeriodicLists";
+import { makeExampleProperty } from "./makeExampleProperty";
+import { makeExampleUserVarbLists } from "./makeExampleUserVarbLists";
 
 export type DbStoreSeed = {
   authId: string;
@@ -27,12 +28,12 @@ export type DbStoreSeed = {
   timeJoined: number;
 };
 
-export function initDbStoreArrs({
+export function initDefaultDbStoreBuilder({
   authId,
   userName,
   email,
   timeJoined,
-}: DbStoreSeed) {
+}: DbStoreSeed): PackBuilderSection<"dbStore"> {
   const dbStore = PackBuilderSection.initAsOmniChild("dbStore");
   const userInfo = dbStore.addAndGetChild("userInfo");
   userInfo.updateValues({
@@ -64,6 +65,16 @@ export function initDbStoreArrs({
       makeDefaultOutputList("brrrr"),
     ],
   });
+  return dbStore;
+}
+export function initTestDbStoreArrs(seed: DbStoreSeed) {
+  return initDefaultDbStoreBuilder(seed).makeChildPackArrs(...dbStoreNames);
+}
+
+export function initProdDbStoreArrs(
+  seed: DbStoreSeed
+): SectionPackArrs<"dbStore"> {
+  const dbStore = initDefaultDbStoreBuilder(seed);
   dbStore.loadChildren({
     childName: "numVarbListMain",
     sectionPacks: makeExampleUserVarbLists(),

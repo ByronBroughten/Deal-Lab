@@ -5,9 +5,7 @@ import { getDealModes } from "../SectionsMeta/values/StateValue/dealMode";
 import { numObj } from "./../SectionsMeta/values/StateValue/NumObj";
 import { makeDefault } from "./makeDefault";
 import {
-  makeDefaultHomeInsValue,
   makeDefaultMiscPeriodicValue,
-  makeDefaultTaxesValue,
   makeDefaultUnit,
 } from "./makeSimpleDefaults";
 
@@ -20,14 +18,22 @@ export function makeDefaultProperty(
     property.addChild("unit", { sectionPack: makeDefaultUnit() });
     property.addChild("holdingPeriod");
 
-    property.addChild("taxesHolding", { sectionPack: makeDefaultTaxesValue() });
-    property.addChild("homeInsHolding", {
-      sectionPack: makeDefaultHomeInsValue(),
-    });
+    const taxAndHomeIns = [
+      "taxesHolding",
+      "taxesOngoing",
+      "homeInsHolding",
+      "homeInsOngoing",
+    ] as const;
 
-    property.addChild("taxesOngoing", { sectionPack: makeDefaultTaxesValue() });
-    property.addChild("homeInsOngoing", {
-      sectionPack: makeDefaultHomeInsValue(),
+    taxAndHomeIns.forEach((childName) => {
+      const child = property.addAndGetChild(childName, {
+        sectionValues: { valueSourceName: "valueDollarsEditor" },
+      });
+      child.addChild("valueDollarsEditor", {
+        sectionValues: {
+          valueEditorFrequency: "yearly",
+        },
+      });
     });
 
     const utilityHolding = property.addAndGetChild("utilityHolding");
@@ -56,8 +62,8 @@ export function makeDefaultProperty(
       : 10;
     const overrun = property.addAndGetChild("costOverrunValue");
     overrun.updateValues({
-      valuePercentEditor: numObj(costOverrunPercent),
       valueSourceName: "valuePercentEditor",
+      valuePercentEditor: numObj(costOverrunPercent),
     });
 
     const sellingCost = property.addAndGetChild("sellingCostValue");

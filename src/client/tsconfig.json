@@ -18,7 +18,7 @@
   },
   "include": [
     "src",
-    "../routes/apiQueries/apiQueriesShared/DbSections/LoadedDbUser/initDbStoreArrs.ts"
+    "src/App/sharedWithServer/exampleMakers/initDbStoreArrs.ts"
   ],
   "exclude": ["node_modules", ".vscode", "*.json"]
 }
