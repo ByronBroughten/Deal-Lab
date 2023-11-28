@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 import React from "react";
 import { useGetterSection } from "../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { NumObjEntityEditor } from "../../../inputs/NumObjEntityEditor";
-import { PeriodicEditor } from "../../../inputs/PeriodicEditor";
+import { TimespanEditor } from "../../../inputs/TimespanEditor";
 import { NameEditorCell } from "../../ListGroup/ListGroupShared/NameEditorCell";
 import { FirstContentCell } from "../../ListGroup/ListGroupShared/VarbListGeneric/FirstContentCellAndHeader";
 import { VarbListItemStyled } from "../../ListGroup/ListGroupShared/VarbListItemStyled";
@@ -49,9 +49,9 @@ const ListItemOngoingMemo = React.memo(function ListItemOngoingMemo({
         />
       </FirstContentCell>
       <td>
-        <PeriodicEditor
+        <TimespanEditor
           feId={capExItem.onlyChildFeId("lifespanEditor")}
-          labelInfo={null}
+          labelInfo={capExItem.timespanVBI("lifespan")}
           labelProps={{ showLabel: false }}
           editorType="equation"
           sx={{

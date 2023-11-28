@@ -5,7 +5,8 @@ import { FirstContentCell } from "./VarbListGeneric/FirstContentCellAndHeader";
 
 interface Props extends FeVI {
   className?: string;
-  endAdornment?: string;
+  endAdornment?: JSX.Element | string;
+  startAdornment?: JSX.Element | string;
 }
 export function FirstValueEditorCell({
   className,

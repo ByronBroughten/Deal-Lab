@@ -17,8 +17,10 @@ const PeriodicItemMemo = React.memo(function PeriodicItemMemo({
   return (
     <VarbListItemSimple
       {...{
+        nameEditorProps: periodicItem.feInfo,
         ...periodicEditor.varbInfo2("valueEditor"),
         valueEditorProps: {
+          startAdornment: "$",
           endAdornment: groupAdornment("periodic", frequency),
         },
         sx: {

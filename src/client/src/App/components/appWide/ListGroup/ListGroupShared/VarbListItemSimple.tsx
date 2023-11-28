@@ -1,6 +1,9 @@
 import { SxProps } from "@mui/material";
 import React from "react";
-import { FeVI } from "../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
+import {
+  FeSectionInfo,
+  FeVI,
+} from "../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { SectionName } from "../../../../sharedWithServer/SectionsMeta/SectionName";
 import { StrictExtract } from "../../../../sharedWithServer/utils/types";
 import { FirstValueEditorCell } from "./FirstValueEditorCell";
@@ -13,22 +16,28 @@ type Name = StrictExtract<
   "onetimeItem" | "periodicEditor" | "numVarbItem"
 >;
 interface Props<SN extends Name> extends FeVI<SN> {
-  valueEditorProps?: { endAdornment?: React.ReactNode };
+  nameEditorProps?: FeSectionInfo;
+  valueEditorProps?: {
+    startAdornment?: JSX.Element | string;
+    endAdornment?: JSX.Element | string;
+  };
   sx?: SxProps;
 }
 export function VarbListItemSimple<SN extends Name>({
   valueEditorProps = {},
+  nameEditorProps,
   sx,
   varbName,
   ...feInfo
 }: Props<SN>) {
+  const nameProps = nameEditorProps ?? feInfo;
   return (
     <VarbListItemStyled sx={sx}>
-      <NameEditorCell {...feInfo} />
+      <NameEditorCell {...nameProps} />
       <FirstValueEditorCell
         {...{
           className: "VarbListItemSimple-editorCell",
-          valueEditorProps,
+          ...valueEditorProps,
           ...feInfo,
           varbName,
         }}
