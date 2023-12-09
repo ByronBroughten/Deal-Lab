@@ -4,7 +4,7 @@ Deployed at [homeestimator.net](https://www.homeestimator.net/)
 
 ## Functional Description
 
-This fullstack web application is designed to produce estimates that are useful for sizing up real estate deals. The estimates it produces include the cashflow, total investment, and return on investment (ROI) of any given deal.
+This fullstack web application is designed to produce estimates that are useful for sizing up real estate deals. The estimates it produces include the cashflow, total investment, and return on investment (ROI).
 
 To that end, the user may enter information about a rental property as well as about whatever financing they'd use to purchase it and whatever costs they'd incure to manage it. As the user enters information, the input values feed into calculations that produce other derrivative variables (like monthly loan payment amounts, total monthly expenses, etc) which ultimately solve for the outputs (ROI, etc).
 
@@ -18,7 +18,7 @@ Finally, the user can login with either an email and password or with a Facebook
 
 ## Structural Description
 
-This codebase contains both the client and server sides of the app. To ease deploying both the client and server to a single machine, the client code is nested in the server code at src/client.
+This codebase contains both client and server sides. To ease deploying both the client and server to a single machine, the client code is nested in the server code at src/client.
 
 The vast majority of the codebase is written with Typescript, using React on the front-end and Node.js on the back-end.
 
