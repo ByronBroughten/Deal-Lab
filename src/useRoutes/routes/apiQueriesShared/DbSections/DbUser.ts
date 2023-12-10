@@ -32,7 +32,7 @@ import { GetterSection } from "../../../../client/src/App/sharedWithServer/State
 import { PackBuilderSection } from "../../../../client/src/App/sharedWithServer/StatePackers/PackBuilderSection";
 import { SectionPackArrs } from "../../../../client/src/App/sharedWithServer/StatePackers/PackMakerSection";
 import { Obj } from "../../../../client/src/App/sharedWithServer/utils/Obj";
-import { DbUserModel, modelPath } from "../../../../mongoose/DbUserModel";
+import { DbUserModel } from "../../../../mongoose/DbUserModel";
 import { ResStatusError } from "../../../../useErrorHandling";
 import { findUserByIdAndUpdate } from "../findAndUpdate";
 import { DbSectionsQuerierBase } from "./Bases/DbSectionsQuerierBase";
@@ -43,6 +43,7 @@ import {
   SectionPackNotFoundError,
   UserNotFoundError,
   dbUserFilters,
+  modelPath,
   queryOptions,
 } from "./DbUserTypes";
 import { LoadedDbUser } from "./LoadedDbUser";
@@ -92,7 +93,9 @@ export class DbUser extends DbSectionsQuerierBase {
     storeName,
   }: OneDbVarbInfo<CN, VN, SN>): Promise<VarbValue<SN, VN>> {
     const loaded = await this.loadedDbUser();
-    const section = loaded.get.onlyChild(storeName) as GetterSection<SN>;
+    const section = loaded.get.onlyChild(
+      storeName
+    ) as GetterSection<any> as GetterSection<SN>;
     return section.valueNext(varbName);
   }
   async getSectionPack<CN extends DbStoreName>(

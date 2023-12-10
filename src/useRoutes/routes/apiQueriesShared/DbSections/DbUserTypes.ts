@@ -1,9 +1,9 @@
 import mongoose, { Document } from "mongoose";
-import {
-  DbSectionsModelCore,
-  modelPath,
-} from "../../../../mongoose/DbUserModel";
+import { OneDbSectionVarbInfo } from "../../../../client/src/App/sharedWithServer/SectionsMeta/SectionInfo/DbStoreInfo";
+import { SectionName } from "../../../../client/src/App/sharedWithServer/SectionsMeta/SectionName";
+import { DbSectionsModelCore } from "../../../../mongoose/DbUserModel";
 import { ResStatusError } from "../../../../useErrorHandling";
+import { DbStoreName } from "./../../../../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/DbStoreName";
 
 export const queryOptions = {
   // new: true,
@@ -48,3 +48,25 @@ export const dbUserFilters = {
     return { [path]: email } as const;
   },
 } as const;
+
+export const modelPath = {
+  firstSectionPack(storeName: DbStoreName) {
+    return `${storeName}.0`;
+  },
+  firstSectionPackSection<CN extends DbStoreName>(
+    storeName: CN,
+    sectionName: SectionName
+  ) {
+    return `${this.firstSectionPack(storeName)}.rawSections.${sectionName}.0`;
+  },
+  firstSectionVarb<CN extends DbStoreName, SN extends SectionName>({
+    storeName,
+    sectionName,
+    varbName,
+  }: OneDbSectionVarbInfo<CN, SN>) {
+    return `${this.firstSectionPackSection(
+      storeName,
+      sectionName
+    )}.sectionValues.${varbName}`;
+  },
+};

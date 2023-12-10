@@ -13,4 +13,10 @@ export function useAppBasics(app: Express): void {
   }
   app.use(helmet());
   app.use(compression());
+
+  if (config.get("env") === "production") {
+    app.get("*", function (_, res) {
+      res.sendFile("index.html", { root: "src/client/build/" });
+    });
+  }
 }
