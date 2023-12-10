@@ -1,6 +1,5 @@
 {
   "name": "HomeEstimator — Test",
-  "jwtPrivateKey": "1234",
   "endpoint": "mongodb://127.0.0.1/HomeEstimator-Test",
   "port": 0
 }

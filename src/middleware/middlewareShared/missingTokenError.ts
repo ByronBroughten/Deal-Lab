@@ -1,4 +1,4 @@
-import { ResStatusError } from "../../handleErrors";
+import { ResStatusError } from "../../useErrorHandling";
 
 export function missingTokenError(whatNotPresent: string) {
   return new ResStatusError({
