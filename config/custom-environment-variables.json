@@ -1,4 +1,5 @@
 {
+  "port": "PORT",
   "endpoint": "ENDPOINT",
   "env": "NODE_ENV",
   "jwtPrivateKey": "UPA_JWT_PRIVATE_KEY",
