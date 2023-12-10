@@ -15,7 +15,7 @@ export const logger = winston.createLogger({
   ],
 });
 
-export default function setupLogger() {
+export function setupLogger() {
   const consoleTransport = new winston.transports.Console({
     level: "error",
     format: consoleFormat,

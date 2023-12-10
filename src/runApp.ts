@@ -5,11 +5,10 @@ import Debug from "debug";
 import express from "express";
 import helmet from "helmet";
 import morgan from "morgan";
-import { constants } from "./client/src/App/Constants";
 import { handleErrors } from "./handleErrors";
-import { webhookQueries } from "./routes/webhookQueries";
-import checkConfig from "./startup/config";
-import setupLogger, { logger } from "./startup/setupLogger";
+import { useStripeWebhooks } from "./routes/webhookQueries";
+import { checkConfig } from "./startup/checkConfig";
+import { logger, setupLogger } from "./startup/logger";
 import { startDb } from "./startup/startDb";
 import { useRoutes } from "./startup/useRoutes";
 import { reqSizeLimit } from "./utils/express";
@@ -20,7 +19,7 @@ export function runApp() {
   setupLogger();
 
   const app = express();
-  app.use(constants.apiPathBit, webhookQueries);
+  useStripeWebhooks(app);
   app.use(helmet());
   app.use(compression());
   app.use(express.urlencoded({ extended: true, limit: reqSizeLimit }));

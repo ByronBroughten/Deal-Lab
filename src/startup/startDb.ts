@@ -1,6 +1,6 @@
 import config from "config";
 import mongoose from "mongoose";
-import { logger } from "./setupLogger";
+import { logger } from "./logger";
 
 export async function startDb() {
   const endpoint = config.get("endpoint") as string;
