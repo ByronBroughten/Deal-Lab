@@ -16,13 +16,6 @@ export function runApp() {
   useStripeWebhooks(app);
   useCoreRoutes(app);
   useErrorHandling(app);
-
-  if (process.env.NODE_ENV === "production") {
-    app.get("*", function (_, res) {
-      res.sendFile("index.html", { root: "src/client/build/" });
-    });
-  }
-
   const port = config.get("port");
   const server = app.listen(port, () =>
     logger.info(`Listening on port ${port}...`)
