@@ -7,12 +7,6 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
-// if (process.env.NODE_ENV === "production") {
-//   app.get("*", function (_, res) {
-//     res.sendFile("index.html", { root: "src/client/build/" });
-//   });
-// }
-
 // "mongodb://localhost/HomeEstimator-Test"
 
 // Add prepaids section to loan for taxes (months), home insurance (months), and mortgage interest (days)
