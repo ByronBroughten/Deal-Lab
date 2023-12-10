@@ -1,6 +1,5 @@
 {
   "endpoint": "ENDPOINT",
-  "endpointTest": "ENDPOINT_TEST",
   "jwtPrivateKey": "UPA_JWT_PRIVATE_KEY",
   "supertokensCoreApiKey": "SUPERTOKENS_CORE_API_KEY",
   "supertokensCoreConnectionUri": "SUPERTOKENS_CORE_CONNECTION_URI",

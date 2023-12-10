@@ -1,15 +1,16 @@
 import { Server } from "http";
 import request from "supertest";
 import { constants } from "../../client/src/App/Constants";
-import { apiQueriesShared } from "../../client/src/App/sharedWithServer/apiQueriesShared";
-import { QueryReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import { Id } from "../../client/src/App/sharedWithServer/SectionsMeta/IdS";
 import { numObj } from "../../client/src/App/sharedWithServer/SectionsMeta/values/StateValue/NumObj";
 import { stringObj } from "../../client/src/App/sharedWithServer/SectionsMeta/values/StateValue/StringObj";
 import { PackBuilderSection } from "../../client/src/App/sharedWithServer/StatePackers/PackBuilderSection";
+import { apiQueriesShared } from "../../client/src/App/sharedWithServer/apiQueriesShared";
+import { QueryReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import { runApp } from "../../runApp";
 import { LoadedDbUser } from "./apiQueriesShared/DbSections/LoadedDbUser";
-import { getUserByIdNoRes } from "./apiQueriesShared/getUserDbSectionsById";
+
+import { getUserById } from "../routesShared/DbUserModel";
 import { SectionQueryTester } from "./apiQueriesTestTools/SectionQueryTester";
 import {
   createAndGetDbUser,
@@ -91,7 +92,7 @@ describe(testedRoute, () => {
   }
   it("should return 200 and update a section if happy path concurrent", async () => {
     await testStatus(200);
-    const postDoc = await getUserByIdNoRes(dbUser.userId);
+    const postDoc = await getUserById(dbUser.userId);
     const updatedDoc = postDoc.propertyMain.find(
       ({ dbId }) => dbId === reqs.updateSection.body.sectionPack.dbId
     );

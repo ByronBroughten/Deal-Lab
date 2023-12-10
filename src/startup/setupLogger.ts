@@ -1,6 +1,6 @@
+import config from "config";
 import winston from "winston";
 import "winston-mongodb";
-import { dbConfig } from "./dbConfig";
 
 const consoleFormat = winston.format.combine(
   winston.format.colorize(),
@@ -29,7 +29,7 @@ export default function setupLogger() {
   });
   const mongoTransport = new winston.transports.MongoDB({
     level: "error",
-    db: dbConfig.endpoint,
+    db: config.get("endpoint"),
     options: { useUnifiedTopology: true },
   });
 

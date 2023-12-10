@@ -1,14 +1,15 @@
 import { Server } from "http";
 import request from "supertest";
 import { constants } from "../../client/src/App/Constants";
+import { PackBuilderSection } from "../../client/src/App/sharedWithServer/StatePackers/PackBuilderSection";
 import { apiQueriesShared } from "../../client/src/App/sharedWithServer/apiQueriesShared";
 import { QueryReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
-import { PackBuilderSection } from "../../client/src/App/sharedWithServer/StatePackers/PackBuilderSection";
 import { Arr } from "../../client/src/App/sharedWithServer/utils/Arr";
 import { timeS } from "../../client/src/App/sharedWithServer/utils/timeS";
 import { runApp } from "../../runApp";
 import { LoadedDbUser } from "./apiQueriesShared/DbSections/LoadedDbUser";
-import { getUserByIdNoRes } from "./apiQueriesShared/getUserDbSectionsById";
+
+import { getUserById } from "../routesShared/DbUserModel";
 import { SectionQueryTester } from "./apiQueriesTestTools/SectionQueryTester";
 import {
   createAndGetDbUser,
@@ -60,9 +61,9 @@ describe(testedRoute, () => {
     return res;
   }
   it("should return 200 and add the section if happy path", async () => {
-    const preDoc = await getUserByIdNoRes(dbUser.userId);
+    const preDoc = await getUserById(dbUser.userId);
     await testStatus(200);
-    const postDoc = await getUserByIdNoRes(dbUser.userId);
+    const postDoc = await getUserById(dbUser.userId);
 
     expect(postDoc.propertyMain.length).toBe(preDoc.propertyMain.length + 1);
     expect(Arr.lastOrThrow(postDoc.propertyMain).dbId).toBe(

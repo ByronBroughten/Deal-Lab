@@ -6,6 +6,9 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
+
+// "mongodb://localhost/HomeEstimator-Test"
+
 // Add prepaids section to loan for taxes (months), home insurance (months), and mortgage interest (days)
 
 // Get rid of 5% baseLoan varb?

@@ -1,5 +1,5 @@
 import { FilterQuery, QueryOptions } from "mongoose";
-import { ResStatusError } from "../../../utils/resError";
+import { ResStatusError } from "../../../handleErrors";
 import {
   DbSectionsModelCore,
   DbUserModel,

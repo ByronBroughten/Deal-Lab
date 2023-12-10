@@ -6,7 +6,7 @@ import express from "express";
 import helmet from "helmet";
 import morgan from "morgan";
 import { constants } from "./client/src/App/Constants";
-import { errorBackstop } from "./middleware/errorBackstop";
+import { handleErrors } from "./handleErrors";
 import { webhookQueries } from "./routes/webhookQueries";
 import checkConfig from "./startup/config";
 import setupLogger, { logger } from "./startup/setupLogger";
@@ -39,14 +39,14 @@ export function runApp() {
   }
 
   useRoutes(app);
-  app.use(errorBackstop);
+  app.use(handleErrors);
   if (process.env.NODE_ENV === "production") {
     app.get("*", function (_, res) {
       res.sendFile("index.html", { root: "src/client/build/" });
     });
   }
 
-  const port = process.env.PORT || config.get("port");
+  const port = config.get("port");
   const server = app.listen(port, () =>
     logger.info(`Listening on port ${port}...`)
   );

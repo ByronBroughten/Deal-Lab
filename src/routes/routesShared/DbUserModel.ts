@@ -1,5 +1,10 @@
 import mongoose, { Schema } from "mongoose";
 import { sectionsMeta } from "../../client/src/App/sharedWithServer/SectionsMeta";
+import {
+  OneDbSectionValueInfo,
+  OneDbSectionVarbInfo,
+} from "../../client/src/App/sharedWithServer/SectionsMeta/SectionInfo/DbStoreInfo";
+import { SectionName } from "../../client/src/App/sharedWithServer/SectionsMeta/SectionName";
 import { VarbName } from "../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
 import {
   ChildName,
@@ -15,11 +20,7 @@ import {
 import { selfAndDescSectionNames } from "../../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/DescendantName";
 import { SectionPack } from "../../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/SectionPack";
 import { RawSection } from "../../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/SectionPack/RawSection";
-import {
-  OneDbSectionValueInfo,
-  OneDbSectionVarbInfo,
-} from "../../client/src/App/sharedWithServer/SectionsMeta/SectionInfo/DbStoreInfo";
-import { SectionName } from "../../client/src/App/sharedWithServer/SectionsMeta/SectionName";
+import { ResStatusError } from "../../handleErrors";
 import { monSchemas } from "../../utils/mongoose";
 import { mongooseValues } from "./mongooseValues";
 
@@ -161,3 +162,20 @@ export const queryParameters = {
     };
   },
 };
+
+export async function getUserById(userId: string) {
+  const user = await DbUserModel.findById(userId, undefined, {
+    new: true,
+    lean: true,
+    useFindAndModify: false,
+  });
+  if (user) {
+    return user;
+  } else {
+    throw new ResStatusError({
+      errorMessage: `User with id ${userId} not found`,
+      resMessage: "User not found",
+      status: 404,
+    });
+  }
+}
