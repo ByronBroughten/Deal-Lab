@@ -6,16 +6,16 @@ import { apiQueriesShared } from "../../client/src/App/sharedWithServer/apiQueri
 import { QueryReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import { Arr } from "../../client/src/App/sharedWithServer/utils/Arr";
 import { timeS } from "../../client/src/App/sharedWithServer/utils/timeS";
+import { LoadedDbUser } from "../../database/LoadedDbUser";
 import { runApp } from "../../runApp";
-import { LoadedDbUser } from "./apiQueriesShared/DbSections/LoadedDbUser";
 
-import { getUserById } from "../../mongoose/DbUserModel";
+import { getUserById } from "../../database/DbUserModel";
 import { SectionQueryTester } from "./apiQueriesTestTools/SectionQueryTester";
 import {
   createAndGetDbUser,
   deleteUserTotally,
   makeSessionGetCookies,
-} from "./apiQueriesTestTools/testDbUser";
+} from "./apiQueriesTestTools/testUser";
 
 jest.setTimeout(12000);
 
@@ -37,7 +37,7 @@ describe(testedRoute, () => {
     server = runApp();
     req = makeAddSectionReq();
     dbUser = await createAndGetDbUser(testedRoute);
-    token = dbUser.createUserInfoToken();
+    token = dbUser.createUserJwt();
     cookies = await makeSessionGetCookies({ server, authId: dbUser.authId });
   });
 
@@ -114,7 +114,7 @@ describe(testedRoute, () => {
     req = makeAddSectionReq();
     await exec();
     req = makeAddSectionReq();
-    token = dbUser.createUserInfoToken({
+    token = dbUser.createUserJwt({
       labSubscription: "fullPlan",
       labSubscriptionExp: timeS.now() + timeS.thirtyDays,
     });

@@ -1,16 +1,12 @@
 import { Request, Response } from "express";
 import { UserInfoTokenProp } from "../../client/src/App/modules/services/userTokenS";
+import { DbUser } from "../../database/DbUser";
 import { getAuthWare } from "../../middleware/authWare";
-import { checkUserInfoWare } from "../../middleware/checkUserInfoWare";
-import { DbUser } from "./apiQueriesShared/DbSections/DbUser";
-import { sendSuccess } from "./apiQueriesShared/sendSuccess";
-import { validateSectionPackReq } from "./apiQueriesShared/validateSectionPackReq";
+import { userJwtWare } from "../../middleware/jwtWare";
+import { sendSuccess } from "./routesShared/sendSuccess";
+import { validateSectionPackReq } from "./routesShared/validateCommonReqs";
 
-export const addSectionWare = [
-  getAuthWare(),
-  checkUserInfoWare,
-  addSection,
-] as const;
+export const addSectionWare = [getAuthWare(), userJwtWare, addSection] as const;
 async function addSection(req: Request, res: Response) {
   const {
     dbStoreName,

@@ -1,23 +1,17 @@
-import { Request, Response } from "express";
+import { Response } from "express";
 import { SessionRequest } from "supertokens-node/framework/express";
 import ThirdPartyEmailPassword from "supertokens-node/recipe/thirdpartyemailpassword";
-import { QueryReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
-import { makeReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/makeReqAndRes";
 import { Str } from "../../client/src/App/sharedWithServer/utils/Str";
-import { getAuthWare } from "../../middleware/authWare";
-import { DbUser } from "./apiQueriesShared/DbSections/DbUser";
-import {
-  getSignUpData,
-  initUserInDb,
-} from "./apiQueriesShared/DbSections/LoadedDbUser/userPrepS";
-import { Authed, validateAuthObj } from "./apiQueriesShared/ReqAugmenters";
+import { DbUser } from "../../database/DbUser";
+import { getSignUpData, initUserInDb } from "../../database/userPrepS";
+import { getAuthWare, validateEmptyAuthReq } from "../../middleware/authWare";
 
 const { getUserById } = ThirdPartyEmailPassword;
 
 export const getUserDataWare = [getAuthWare(), getUserData] as const;
 
 async function getUserData(req: SessionRequest, res: Response) {
-  const { auth } = validateGetUserDataReq(req).body;
+  const { auth } = validateEmptyAuthReq(req).body;
   if (!(await DbUser.existsBy("authId", auth.id))) {
     const authUser = await getUserById(auth.id);
     if (authUser) {
@@ -29,12 +23,6 @@ async function getUserData(req: SessionRequest, res: Response) {
   const dbUser = await DbUser.initBy("authId", auth.id);
   const loaded = await dbUser.loadedDbUser();
   loaded.sendUserData(res);
-}
-
-type Req = Authed<QueryReq<"getUserData">>;
-function validateGetUserDataReq(req: Request): Req {
-  const { auth } = (req as Req).body;
-  return makeReq({ auth: validateAuthObj(auth) });
 }
 
 type FormFields = {

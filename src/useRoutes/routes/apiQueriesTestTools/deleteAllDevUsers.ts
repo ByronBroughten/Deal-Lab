@@ -1,6 +1,6 @@
 import { deleteUser, getUsersNewestFirst } from "supertokens-node";
 import { revokeAllSessionsForUser } from "supertokens-node/recipe/session";
-import { DbUserModel } from "../../../mongoose/DbUserModel";
+import { DbUserModel } from "../../../database/DbUserModel";
 
 export const deleteAllDevUsersWare = [deleteAllDevUsers];
 async function deleteAllDevUsers() {

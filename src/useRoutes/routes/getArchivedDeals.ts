@@ -1,10 +1,9 @@
 import { Request, Response } from "express";
 import { SectionPack } from "../../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/SectionPack";
 import { PackBuilderSection } from "../../client/src/App/sharedWithServer/StatePackers/PackBuilderSection";
-import { getAuthWare } from "../../middleware/authWare";
-import { DbUser } from "./apiQueriesShared/DbSections/DbUser";
-import { sendSuccess } from "./apiQueriesShared/sendSuccess";
-import { validateEmptyAuthReq } from "./apiQueriesShared/validateEmptyAuthReq";
+import { DbUser } from "../../database/DbUser";
+import { getAuthWare, validateEmptyAuthReq } from "../../middleware/authWare";
+import { sendSuccess } from "./routesShared/sendSuccess";
 
 export const getArchivedDealsWare = [getAuthWare(), getArchivedDeals] as const;
 

@@ -3,8 +3,8 @@ import Stripe from "stripe";
 import { SectionValues } from "../../client/src/App/sharedWithServer/SectionsMeta/values/StateValue";
 import { PackBuilderSection } from "../../client/src/App/sharedWithServer/StatePackers/PackBuilderSection";
 import { timeS } from "../../client/src/App/sharedWithServer/utils/timeS";
-import { DbUser } from "./apiQueriesShared/DbSections/DbUser";
-import { getStripeEvent } from "./apiQueriesShared/stripe";
+import { DbUser } from "../../database/DbUser";
+import { getStripeEvent } from "./routesShared/stripe";
 
 export const stripeWebhookWare = [express.raw({ type: "*/*" }), stripeWebhook];
 export const stripeWebhookTestWare = [

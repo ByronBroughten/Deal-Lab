@@ -1,9 +1,9 @@
-import { DbSectionPack } from "../../../../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/DbSectionPack";
+import { DbSectionPack } from "../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/DbSectionPack";
 import {
   DbStoreInfo,
   DbStoreName,
-} from "../../../../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/DbStoreName";
-import { DbSectionsBase } from "./Bases/DbSectionsBase";
+} from "../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/DbStoreName";
+import { DbSectionsBase } from "./BaseClasses/DbSectionsBase";
 import { DbUser } from "./DbUser";
 import { SectionPackNotFoundError } from "./DbUserTypes";
 

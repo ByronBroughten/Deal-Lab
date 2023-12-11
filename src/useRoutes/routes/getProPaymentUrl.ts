@@ -2,12 +2,15 @@ import { Request, Response } from "express";
 import { constants } from "../../client/src/App/Constants";
 import { QueryReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import { makeRes } from "../../client/src/App/sharedWithServer/apiQueriesShared/makeReqAndRes";
-import { getAuthWare } from "../../middleware/authWare";
+import { LoadedDbUser } from "../../database/LoadedDbUser";
+import {
+  Authed,
+  getAuthWare,
+  validateAuthData,
+} from "../../middleware/authWare";
 import { ResStatusError } from "../../useErrorHandling";
-import { LoadedDbUser } from "./apiQueriesShared/DbSections/LoadedDbUser";
-import { Authed, validateAuthObj } from "./apiQueriesShared/ReqAugmenters";
-import { sendSuccess } from "./apiQueriesShared/sendSuccess";
-import { getStripe } from "./apiQueriesShared/stripe";
+import { sendSuccess } from "./routesShared/sendSuccess";
+import { getStripe } from "./routesShared/stripe";
 
 export async function getCustomerPortalUrl(req: Request, res: Response) {
   const { auth } = validateUpgradeUserToProReq(req).body;
@@ -73,10 +76,16 @@ function validateUpgradeUserToProReq(req: Authed<any>): Req {
     return {
       body: {
         priceId,
-        auth: validateAuthObj(auth),
+        auth: validateAuthData(auth),
       },
     };
-  } else throw new Error("Failed getProPaymentUrl validation.");
+  } else {
+    throw new ResStatusError({
+      status: 400,
+      errorMessage: "Failed getProPaymentUrl validation.",
+      resMessage: "Server payload validation failed.",
+    });
+  }
 }
 
 function validateSessionUrl(url: any): string {

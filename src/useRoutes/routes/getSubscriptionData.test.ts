@@ -3,14 +3,14 @@ import request from "supertest";
 import { userTokenS } from "../../client/src/App/modules/services/userTokenS";
 import { apiQueriesShared } from "../../client/src/App/sharedWithServer/apiQueriesShared";
 import { validateSubscriptionValues } from "../../client/src/App/sharedWithServer/apiQueriesShared/AnalyzerPlanValues";
+import { LoadedDbUser } from "../../database/LoadedDbUser";
 import { runApp } from "../../runApp";
-import { LoadedDbUser } from "./apiQueriesShared/DbSections/LoadedDbUser";
 import {
   createAndGetDbUser,
   deleteUserTotally,
   getStandardRes,
   makeSessionGetCookies,
-} from "./apiQueriesTestTools/testDbUser";
+} from "./apiQueriesTestTools/testUser";
 
 const testedRoute = apiQueriesShared.getSubscriptionData.pathRoute;
 describe(testedRoute, () => {

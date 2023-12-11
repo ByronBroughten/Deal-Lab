@@ -6,14 +6,14 @@ import {
   QueryReq,
   QueryRes,
 } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
+import { LoadedDbUser } from "../../database/LoadedDbUser";
 import { runApp } from "../../runApp";
-import { LoadedDbUser } from "./apiQueriesShared/DbSections/LoadedDbUser";
 import {
   createAndGetDbUser,
   deleteUserTotally,
   getStandardRes,
   makeSessionGetCookies,
-} from "./apiQueriesTestTools/testDbUser";
+} from "./apiQueriesTestTools/testUser";
 
 const testedRoute = apiQueriesShared.getProPaymentUrl.pathRoute;
 describe(testedRoute, () => {
@@ -37,7 +37,7 @@ describe(testedRoute, () => {
   async function exec() {
     const res = await request(server)
       .post(testedRoute)
-      .set(constants.tokenKey.userAuthData, dbUser.createUserInfoToken())
+      .set(constants.tokenKey.userAuthData, dbUser.createUserJwt())
       .set("Cookie", cookies)
       .send(req.body);
     return getStandardRes(res);

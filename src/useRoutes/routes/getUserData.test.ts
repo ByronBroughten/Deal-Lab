@@ -4,14 +4,14 @@ import { apiQueriesShared } from "../../client/src/App/sharedWithServer/apiQueri
 import { QueryReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import { makeReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/makeReqAndRes";
 import { validateUserData } from "../../client/src/App/sharedWithServer/apiQueriesShared/validateUserData";
+import { LoadedDbUser } from "../../database/LoadedDbUser";
 import { runApp } from "../../runApp";
-import { LoadedDbUser } from "./apiQueriesShared/DbSections/LoadedDbUser";
 import {
   createAndGetDbUser,
   deleteUserTotally,
   getStandardRes,
   makeSessionGetCookies,
-} from "./apiQueriesTestTools/testDbUser";
+} from "./apiQueriesTestTools/testUser";
 
 const testedRoute = apiQueriesShared.getUserData.pathRoute;
 describe(testedRoute, () => {

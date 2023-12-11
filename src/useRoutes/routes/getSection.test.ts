@@ -1,12 +1,12 @@
 import { Server } from "http";
 import request from "supertest";
 import { constants } from "../../client/src/App/Constants";
-import { apiQueriesShared } from "../../client/src/App/sharedWithServer/apiQueriesShared";
-import { QueryReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import { Id } from "../../client/src/App/sharedWithServer/SectionsMeta/IdS";
 import { PackBuilderSection } from "../../client/src/App/sharedWithServer/StatePackers/PackBuilderSection";
+import { apiQueriesShared } from "../../client/src/App/sharedWithServer/apiQueriesShared";
+import { QueryReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
+import { LoadedDbUser } from "../../database/LoadedDbUser";
 import { runApp } from "../../runApp";
-import { LoadedDbUser } from "./apiQueriesShared/DbSections/LoadedDbUser";
 import { SectionQueryTester } from "./apiQueriesTestTools/SectionQueryTester";
 import {
   createAndGetDbUser,
@@ -14,7 +14,7 @@ import {
   getStandardRes,
   makeSessionGetCookies,
   validateStatus200Res,
-} from "./apiQueriesTestTools/testDbUser";
+} from "./apiQueriesTestTools/testUser";
 
 type TestReqs = {
   addSection: QueryReq<"addSection">;
@@ -52,7 +52,7 @@ describe(testedRoute, () => {
   const addSection = async () => {
     const res = await request(server)
       .post(apiQueriesShared.addSection.pathRoute)
-      .set(constants.tokenKey.userAuthData, dbUser.createUserInfoToken())
+      .set(constants.tokenKey.userAuthData, dbUser.createUserJwt())
       .set("Cookie", cookies)
       .send(reqs.addSection.body);
     validateStatus200Res(res);

@@ -8,12 +8,9 @@ import {
 } from "supertokens-node/recipe/thirdpartyemailpassword";
 import { apiQueriesShared } from "../../../client/src/App/sharedWithServer/apiQueriesShared";
 import { Str } from "../../../client/src/App/sharedWithServer/utils/Str";
-import { DbUserModel } from "../../../mongoose/DbUserModel";
-import { LoadedDbUser } from "../apiQueriesShared/DbSections/LoadedDbUser";
-import {
-  getSignUpData,
-  initUserInDb,
-} from "../apiQueriesShared/DbSections/LoadedDbUser/userPrepS";
+import { DbUserModel } from "../../../database/DbUserModel";
+import { LoadedDbUser } from "../../../database/LoadedDbUser";
+import { getSignUpData, initUserInDb } from "../../../database/userPrepS";
 
 export async function createAndGetDbUser(
   testSuiteName: string

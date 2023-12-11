@@ -1,9 +1,9 @@
 import mongoose, { Document } from "mongoose";
-import { OneDbSectionVarbInfo } from "../../../../client/src/App/sharedWithServer/SectionsMeta/SectionInfo/DbStoreInfo";
-import { SectionName } from "../../../../client/src/App/sharedWithServer/SectionsMeta/SectionName";
-import { DbSectionsModelCore } from "../../../../mongoose/DbUserModel";
-import { ResStatusError } from "../../../../useErrorHandling";
-import { DbStoreName } from "./../../../../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/DbStoreName";
+import { OneDbSectionVarbInfo } from "../client/src/App/sharedWithServer/SectionsMeta/SectionInfo/DbStoreInfo";
+import { SectionName } from "../client/src/App/sharedWithServer/SectionsMeta/SectionName";
+import { DbStoreName } from "../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/DbStoreName";
+import { ResStatusError } from "../useErrorHandling";
+import { DbSectionsModelCore } from "./DbUserModel";
 
 export const queryOptions = {
   // new: true,

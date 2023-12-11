@@ -1,31 +1,28 @@
 import { Response } from "express";
 import { pick } from "lodash";
 import mongoose from "mongoose";
-import { constants } from "../../../../client/src/App/Constants";
-import { SectionPack } from "../../../../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/SectionPack";
-import { storeNames } from "../../../../client/src/App/sharedWithServer/SectionsMeta/sectionStores";
+import { constants } from "../client/src/App/Constants";
+import { SectionPack } from "../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/SectionPack";
+import { storeNames } from "../client/src/App/sharedWithServer/SectionsMeta/sectionStores";
 import {
   GetterSectionBase,
   GetterSectionProps,
-} from "../../../../client/src/App/sharedWithServer/StateGetters/Bases/GetterSectionBase";
-import { GetterSection } from "../../../../client/src/App/sharedWithServer/StateGetters/GetterSection";
-import { PackBuilderSection } from "../../../../client/src/App/sharedWithServer/StatePackers/PackBuilderSection";
-import { PackBuilderSections } from "../../../../client/src/App/sharedWithServer/StatePackers/PackBuilderSections";
-import { AnalyzerPlanValues } from "../../../../client/src/App/sharedWithServer/apiQueriesShared/AnalyzerPlanValues";
-import { UserData } from "../../../../client/src/App/sharedWithServer/apiQueriesShared/validateUserData";
-import { makeDefaultSessionDeal } from "../../../../client/src/App/sharedWithServer/defaultMaker/defaultSessionDeal";
-import { Arr } from "../../../../client/src/App/sharedWithServer/utils/Arr";
-import { stripeS } from "../../../../client/src/App/sharedWithServer/utils/stripe";
-import { timeS } from "../../../../client/src/App/sharedWithServer/utils/timeS";
+} from "../client/src/App/sharedWithServer/StateGetters/Bases/GetterSectionBase";
+import { GetterSection } from "../client/src/App/sharedWithServer/StateGetters/GetterSection";
+import { PackBuilderSection } from "../client/src/App/sharedWithServer/StatePackers/PackBuilderSection";
+import { PackBuilderSections } from "../client/src/App/sharedWithServer/StatePackers/PackBuilderSections";
+import { AnalyzerPlanValues } from "../client/src/App/sharedWithServer/apiQueriesShared/AnalyzerPlanValues";
+import { UserData } from "../client/src/App/sharedWithServer/apiQueriesShared/validateUserData";
+import { makeDefaultSessionDeal } from "../client/src/App/sharedWithServer/defaultMaker/defaultSessionDeal";
+import { Arr } from "../client/src/App/sharedWithServer/utils/Arr";
+import { stripeS } from "../client/src/App/sharedWithServer/utils/stripe";
+import { timeS } from "../client/src/App/sharedWithServer/utils/timeS";
 
-import { isProEmail } from "../proList";
+import { createUserJwt } from "../middleware/jwtWare";
 import { DbSections } from "./DbSections";
 import { DbUser } from "./DbUser";
 import { DbSectionsRaw, DbUserSpecifierType } from "./DbUserTypes";
-import {
-  checkUserAuthToken,
-  createUserInfoToken,
-} from "./LoadedDbUser/userAuthToken";
+import { isProEmail } from "./isProEmail";
 
 interface DbUserProps extends GetterSectionProps<"dbStore"> {
   dbSections: DbSections;
@@ -182,15 +179,15 @@ export class LoadedDbUser extends GetterSectionBase<"dbStore"> {
       sessionStore: sessionStore.makeSectionPack(),
     };
   }
-  createUserInfoToken(subscriptionValues?: AnalyzerPlanValues): string {
-    return createUserInfoToken({
+  createUserJwt(subscriptionValues?: AnalyzerPlanValues): string {
+    return createUserJwt({
       userId: this.userId,
       ...this.subscriptionValues,
       ...subscriptionValues,
     });
   }
   setResTokenHeader(res: Response): void {
-    const token = this.createUserInfoToken();
+    const token = this.createUserJwt();
     LoadedDbUser.setResTokenHeader(res, token);
   }
   static setResTokenHeader(res: Response, token: string): void {
@@ -202,5 +199,4 @@ export class LoadedDbUser extends GetterSectionBase<"dbStore"> {
     this.setResTokenHeader(res);
     res.status(200).send(userData);
   }
-  static checkUserAuthToken = checkUserAuthToken;
 }

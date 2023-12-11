@@ -1,9 +1,8 @@
 import { Request, Response } from "express";
 import { constants } from "../../client/src/App/Constants";
-import { getAuthWare } from "../../middleware/authWare";
-import { LoadedDbUser } from "./apiQueriesShared/DbSections/LoadedDbUser";
-import { sendSuccess } from "./apiQueriesShared/sendSuccess";
-import { validateEmptyAuthReq } from "./apiQueriesShared/validateEmptyAuthReq";
+import { LoadedDbUser } from "../../database/LoadedDbUser";
+import { getAuthWare, validateEmptyAuthReq } from "../../middleware/authWare";
+import { sendSuccess } from "./routesShared/sendSuccess";
 
 export const subscriptionDataWare = [getAuthWare(), getSubscriptionData];
 async function getSubscriptionData(req: Request, res: Response) {
@@ -13,8 +12,7 @@ async function getSubscriptionData(req: Request, res: Response) {
   sendSuccess(res, "getSubscriptionData", {
     data: subscriptionValues,
     headers: {
-      [constants.tokenKey.userAuthData]:
-        user.createUserInfoToken(subscriptionValues),
+      [constants.tokenKey.userAuthData]: user.createUserJwt(subscriptionValues),
     },
   });
 }

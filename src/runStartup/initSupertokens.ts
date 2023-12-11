@@ -4,11 +4,8 @@ import Session from "supertokens-node/recipe/session";
 import ThirdPartyEmailPassword from "supertokens-node/recipe/thirdpartyemailpassword";
 import { constants } from "../client/src/App/Constants";
 import { Str } from "../client/src/App/sharedWithServer/utils/Str";
-import { DbUser } from "../useRoutes/routes/apiQueriesShared/DbSections/DbUser";
-import {
-  getSignUpData,
-  initUserInDb,
-} from "../useRoutes/routes/apiQueriesShared/DbSections/LoadedDbUser/userPrepS";
+import { DbUser } from "../database/DbUser";
+import { getSignUpData, initUserInDb } from "../database/userPrepS";
 const { Google, Facebook, Apple } = ThirdPartyEmailPassword;
 
 export function initSupertokens() {

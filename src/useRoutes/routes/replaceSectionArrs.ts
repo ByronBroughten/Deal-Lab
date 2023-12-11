@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
+import { DbUser } from "../../database/DbUser";
 import { getAuthWare } from "../../middleware/authWare";
-import { DbUser } from "./apiQueriesShared/DbSections/DbUser";
-import { sendSuccess } from "./apiQueriesShared/sendSuccess";
-import { validateSectionQueryArrReq } from "./apiQueriesShared/validateSectionPackReq";
+import { sendSuccess } from "./routesShared/sendSuccess";
+import { validateSectionQueryArrReq } from "./routesShared/validateCommonReqs";
 
 export const replaceSectionArrWare = [getAuthWare(), replaceSectionArrs];
 

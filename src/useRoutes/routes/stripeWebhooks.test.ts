@@ -3,14 +3,14 @@ import Stripe from "stripe";
 import request from "supertest";
 import { constants } from "../../client/src/App/Constants";
 import { timeS } from "../../client/src/App/sharedWithServer/utils/timeS";
+import { DbUser } from "../../database/DbUser";
+import { LoadedDbUser } from "../../database/LoadedDbUser";
 import { runApp } from "../../runApp";
-import { DbUser } from "./apiQueriesShared/DbSections/DbUser";
-import { LoadedDbUser } from "./apiQueriesShared/DbSections/LoadedDbUser";
-import { getStripe } from "./apiQueriesShared/stripe";
 import {
   createAndGetDbUser,
   deleteUserTotally,
-} from "./apiQueriesTestTools/testDbUser";
+} from "./apiQueriesTestTools/testUser";
+import { getStripe } from "./routesShared/stripe";
 import { stripeSubToValues } from "./stripeWebhooks";
 const productionRoute = "/api/webhook/stripe";
 describe(productionRoute, () => {

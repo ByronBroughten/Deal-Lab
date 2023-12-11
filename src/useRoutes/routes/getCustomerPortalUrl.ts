@@ -1,18 +1,18 @@
 import { Request, Response } from "express";
 import { constants } from "../../client/src/App/Constants";
 import { makeRes } from "../../client/src/App/sharedWithServer/apiQueriesShared/makeReqAndRes";
-import { getAuthWare } from "../../middleware/authWare";
-import { LoadedDbUser } from "./apiQueriesShared/DbSections/LoadedDbUser";
-import { Authed, validateAuthObj } from "./apiQueriesShared/ReqAugmenters";
-import { sendSuccess } from "./apiQueriesShared/sendSuccess";
-import { getStripe } from "./apiQueriesShared/stripe";
+import { LoadedDbUser } from "../../database/LoadedDbUser";
+import { getAuthWare, validateEmptyAuthReq } from "../../middleware/authWare";
+
+import { sendSuccess } from "./routesShared/sendSuccess";
+import { getStripe } from "./routesShared/stripe";
 
 export const getCustomerPortalUrlWare = [
   getAuthWare(),
   getCustomerPortalUrl,
 ] as const;
 async function getCustomerPortalUrl(req: Request, res: Response) {
-  const { auth } = validateAuthReq(req).body;
+  const { auth } = validateEmptyAuthReq(req).body;
   const dbUser = await LoadedDbUser.getBy("authId", auth.id);
   const { customerId } = dbUser;
   if (!customerId) {
@@ -28,13 +28,4 @@ async function getCustomerPortalUrl(req: Request, res: Response) {
     "getCustomerPortalUrl",
     makeRes({ sessionUrl: session.url })
   );
-}
-
-function validateAuthReq(req: Authed<any>): Authed<any> {
-  const { auth } = req.body;
-  return {
-    body: {
-      auth: validateAuthObj(auth),
-    },
-  };
 }

@@ -5,19 +5,18 @@ import {
 } from "../../client/src/App/sharedWithServer/apiQueriesShared/DbAction";
 import { SyncChangesReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/makeReqAndRes";
 import { Arr } from "../../client/src/App/sharedWithServer/utils/Arr";
-import { getAuthWare } from "../../middleware/authWare";
-import { checkUserInfoWare } from "../../middleware/checkUserInfoWare";
-import { DbUser } from "./apiQueriesShared/DbSections/DbUser";
+import { DbUser } from "../../database/DbUser";
 import {
   Authed,
-  LoggedIn,
-  validateAuthObj,
-} from "./apiQueriesShared/ReqAugmenters";
-import { sendSuccess } from "./apiQueriesShared/sendSuccess";
+  getAuthWare,
+  validateAuthData,
+} from "../../middleware/authWare";
+import { WithJWT, userJwtWare } from "../../middleware/jwtWare";
+import { sendSuccess } from "./routesShared/sendSuccess";
 
 export const updateSectionsWare = [
   getAuthWare(),
-  checkUserInfoWare,
+  userJwtWare,
   updateSections,
 ] as const;
 
@@ -53,12 +52,12 @@ export async function updateSections(req: Request, res: Response) {
   sendSuccess(res, "updateSections", { data: { success: true } });
 }
 
-type Req = Authed<LoggedIn<SyncChangesReq>>;
+type Req = Authed<WithJWT<SyncChangesReq>>;
 export function validateSyncChangesReq(req: Authed<any>): Req {
   const { changes, auth, userJwt } = (req as Req).body;
   return {
     body: {
-      auth: validateAuthObj(auth),
+      auth: validateAuthData(auth),
       changes: validateActions(changes),
       userJwt, // this should already be validated by userJwtWare
     },

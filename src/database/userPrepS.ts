@@ -2,14 +2,14 @@ import ThirdPartyEmailPassword from "supertokens-node/recipe/thirdpartyemailpass
 import {
   DbStoreName,
   dbStoreNames,
-} from "../../../../../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/DbStoreName";
+} from "../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/DbStoreName";
 import {
   DbStoreSeed,
   initProdDbStoreArrs,
   initTestDbStoreArrs,
-} from "../../../../../client/src/App/sharedWithServer/exampleMakers/initDbStoreArrs";
-import { StrictPick } from "../../../../../client/src/App/sharedWithServer/utils/types";
-import { DbUserModel } from "../../../../../mongoose/DbUserModel";
+} from "../client/src/App/sharedWithServer/exampleMakers/initDbStoreArrs";
+import { StrictPick } from "../client/src/App/sharedWithServer/utils/types";
+import { DbUserModel } from "./DbUserModel";
 
 export function getSignUpData(
   user: ThirdPartyEmailPassword.User
