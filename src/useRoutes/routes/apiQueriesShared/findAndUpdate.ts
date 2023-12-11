@@ -39,18 +39,3 @@ export async function findOneAndUpdate({
     });
   }
 }
-
-export async function updateOneUser({
-  filter,
-  queryParameters: { operation, options },
-  doWhat = "query the database",
-}: FindOneAndUpdateProps) {
-  const result = await DbUserModel.findOneAndUpdate(filter, operation, options);
-  if (!result) {
-    throw new ResStatusError({
-      resMessage: `Failed to ${doWhat}.`,
-      errorMessage: `Failed to ${doWhat}.`,
-      status: 404,
-    });
-  }
-}
