@@ -1,41 +1,7 @@
 import mongoose, { QueryOptions } from "mongoose";
-import { constants } from "../client/src/App/Constants";
-import {
-  OneDbSectionValueInfo,
-  OneDbVarbInfo,
-} from "../client/src/App/sharedWithServer/SectionsMeta/SectionInfo/DbStoreInfo";
-import { FeSectionInfo } from "../client/src/App/sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
-import { SectionName } from "../client/src/App/sharedWithServer/SectionsMeta/SectionName";
-import { VarbName } from "../client/src/App/sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
-import { ChildSectionName } from "../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/ChildSectionName";
-import {
-  DbPack,
-  DbSectionPack,
-} from "../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/DbSectionPack";
-import {
-  DbSectionName,
-  DbStoreInfo,
-  DbStoreName,
-  dbStoreNames,
-  getSectionDbStoreNames,
-} from "../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/DbStoreName";
-import { SectionPack } from "../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/SectionPack";
-import {
-  StoreName,
-  StoreSectionName,
-} from "../client/src/App/sharedWithServer/SectionsMeta/sectionStores";
-import {
-  StateValue,
-  VarbValue,
-} from "../client/src/App/sharedWithServer/SectionsMeta/values/StateValue";
-import { GetterSection } from "../client/src/App/sharedWithServer/StateGetters/GetterSection";
-import { PackBuilderSection } from "../client/src/App/sharedWithServer/StatePackers/PackBuilderSection";
-import { SectionPackArrs } from "../client/src/App/sharedWithServer/StatePackers/PackMakerSection";
-import { Obj } from "../client/src/App/sharedWithServer/utils/Obj";
-import { ResStatusError } from "../useErrorHandling";
-import { DbSectionsQuerierBase } from "./BaseClasses/DbSectionsQuerierBase";
-import { DbSections } from "./DbSections";
-import { DbUserModel } from "./DbUserModel";
+import { DbSections } from "./DbUserService/DbSections";
+import { DbUserGetter } from "./DbUserService/DbUserGetter";
+import { DbUserModel } from "./DbUserService/DbUserModel";
 import {
   DbSectionsRaw,
   DbUserSpecifierType,
@@ -44,11 +10,54 @@ import {
   dbUserFilters,
   modelPath,
   queryOptions,
-} from "./DbUserTypes";
-import { LoadedDbUser } from "./LoadedDbUser";
-import { findUserByIdAndUpdate } from "./findAndUpdate";
+} from "./DbUserService/DbUserTypes";
+import { findUserByIdAndUpdate } from "./DbUserService/findAndUpdate";
+import { constants } from "./client/src/App/Constants";
+import {
+  OneDbSectionValueInfo,
+  OneDbVarbInfo,
+} from "./client/src/App/sharedWithServer/SectionsMeta/SectionInfo/DbStoreInfo";
+import { FeSectionInfo } from "./client/src/App/sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
+import { SectionName } from "./client/src/App/sharedWithServer/SectionsMeta/SectionName";
+import { VarbName } from "./client/src/App/sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
+import { ChildSectionName } from "./client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/ChildSectionName";
+import {
+  DbPack,
+  DbSectionPack,
+} from "./client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/DbSectionPack";
+import {
+  DbSectionName,
+  DbStoreInfo,
+  DbStoreName,
+  dbStoreNames,
+  getSectionDbStoreNames,
+} from "./client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/DbStoreName";
+import { SectionPack } from "./client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/SectionPack";
+import {
+  StoreName,
+  StoreSectionName,
+} from "./client/src/App/sharedWithServer/SectionsMeta/sectionStores";
+import {
+  StateValue,
+  VarbValue,
+} from "./client/src/App/sharedWithServer/SectionsMeta/values/StateValue";
+import { GetterSection } from "./client/src/App/sharedWithServer/StateGetters/GetterSection";
+import { PackBuilderSection } from "./client/src/App/sharedWithServer/StatePackers/PackBuilderSection";
+import { SectionPackArrs } from "./client/src/App/sharedWithServer/StatePackers/PackMakerSection";
+import { EstimatorPlanValues } from "./client/src/App/sharedWithServer/apiQueriesShared/EstimatorPlanValues";
+import { UserData } from "./client/src/App/sharedWithServer/apiQueriesShared/validateUserData";
+import { Obj } from "./client/src/App/sharedWithServer/utils/Obj";
+import { ResStatusError } from "./useErrorHandling";
 
-export class DbUser extends DbSectionsQuerierBase {
+interface Props {
+  userFilter: { [key: string]: string };
+}
+
+export class DbUserService {
+  readonly userFilter: { [key: string]: string };
+  constructor({ userFilter }: Props) {
+    this.userFilter = userFilter;
+  }
   async exists(): Promise<boolean> {
     return await DbUserModel.exists(this.userFilter);
   }
@@ -92,11 +101,28 @@ export class DbUser extends DbSectionsQuerierBase {
     varbName,
     storeName,
   }: OneDbVarbInfo<CN, VN, SN>): Promise<VarbValue<SN, VN>> {
-    const loaded = await this.loadedDbUser();
-    const section = loaded.get.onlyChild(
+    const getter = await this.dbUserGetter();
+    const section = getter.get.onlyChild(
       storeName
     ) as GetterSection<any> as GetterSection<SN>;
     return section.valueNext(varbName);
+  }
+  async userInfo(): Promise<{ email: string; customerId: string }> {
+    const { email, customerId } = await this.dbUserGetter();
+    return {
+      email,
+      customerId,
+    };
+  }
+  async subscriptionValues(): Promise<EstimatorPlanValues> {
+    const getter = await this.dbUserGetter();
+    return getter.subscriptionValues;
+  }
+  customerId(): Promise<string> {
+    return this.getOnlySectionValue({
+      storeName: "stripeInfoPrivate",
+      varbName: "customerId",
+    });
   }
   async getSectionPack<CN extends DbStoreName>(
     dbInfo: DbStoreInfo<CN>
@@ -222,13 +248,23 @@ export class DbUser extends DbSectionsQuerierBase {
       undefined,
       queryOptions
     );
-    if (dbSectionsRaw) return dbSectionsRaw as DbSectionsRaw;
-    else throw this.userNotFoundError();
+    if (dbSectionsRaw) {
+      return dbSectionsRaw as DbSectionsRaw;
+    } else {
+      throw this.userNotFoundError();
+    }
   }
   private userNotFoundError(): UserNotFoundError {
-    return DbUser.userNotFoundError();
+    return DbUserService.userNotFoundError();
   }
-  async loadedDbUser(): Promise<LoadedDbUser> {
+  async getUserTokenAndData(): Promise<{ token: string; data: UserData }> {
+    const getterUser = await this.dbUserGetter();
+    return {
+      data: getterUser.collectUserData(),
+      token: getterUser.createUserJwt(),
+    };
+  }
+  async dbUserGetter(): Promise<DbUserGetter> {
     const dbSections = await this.dbSections();
     const dbStore = PackBuilderSection.initAsOmniChild("dbStore");
     for (const childName of dbStoreNames) {
@@ -238,7 +274,7 @@ export class DbUser extends DbSectionsQuerierBase {
         sectionPacks,
       });
     }
-    return new LoadedDbUser({
+    return new DbUserGetter({
       ...dbStore.getterSectionProps,
       dbSections,
     });
@@ -363,13 +399,13 @@ export class DbUser extends DbSectionsQuerierBase {
   }
 
   static async initBy(specifierType: DbUserSpecifierType, specifier: string) {
-    const dbUser = new DbUser({
+    const dbUser = new DbUserService({
       userFilter: dbUserFilters[specifierType](specifier),
     });
     if (await dbUser.exists()) return dbUser;
     else throw this.userNotFoundError();
   }
-  static async initByEmail(email: string): Promise<DbUser> {
+  static async initByEmail(email: string): Promise<DbUserService> {
     try {
       return this.initBy("email", email);
     } catch (ex) {

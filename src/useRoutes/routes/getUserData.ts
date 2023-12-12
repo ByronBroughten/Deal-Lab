@@ -1,10 +1,11 @@
 import { Response } from "express";
 import { SessionRequest } from "supertokens-node/framework/express";
 import ThirdPartyEmailPassword from "supertokens-node/recipe/thirdpartyemailpassword";
+import { DbUserService } from "../../DbUserService";
+import { getSignUpData, initUserInDb } from "../../DbUserService/userPrepS";
 import { Str } from "../../client/src/App/sharedWithServer/utils/Str";
-import { DbUser } from "../../database/DbUser";
-import { getSignUpData, initUserInDb } from "../../database/userPrepS";
 import { getAuthWare, validateEmptyAuthReq } from "../../middleware/authWare";
+import { sendSuccess } from "./routesShared/sendSuccess";
 
 const { getUserById } = ThirdPartyEmailPassword;
 
@@ -12,7 +13,7 @@ export const getUserDataWare = [getAuthWare(), getUserData] as const;
 
 async function getUserData(req: SessionRequest, res: Response) {
   const { auth } = validateEmptyAuthReq(req).body;
-  if (!(await DbUser.existsBy("authId", auth.id))) {
+  if (!(await DbUserService.existsBy("authId", auth.id))) {
     const authUser = await getUserById(auth.id);
     if (authUser) {
       await addUserToDb(authUser);
@@ -20,9 +21,12 @@ async function getUserData(req: SessionRequest, res: Response) {
       throw new Error("There is a session but no authUser");
     }
   }
-  const dbUser = await DbUser.initBy("authId", auth.id);
-  const loaded = await dbUser.loadedDbUser();
-  loaded.sendUserData(res);
+  const dbUser = await DbUserService.initBy("authId", auth.id);
+  const { token, data } = await dbUser.getUserTokenAndData();
+  sendSuccess(res, "getUserData", {
+    data,
+    headers: { "user-auth-data-token": token },
+  });
 }
 
 type FormFields = {

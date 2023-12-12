@@ -1,10 +1,10 @@
 import { Server } from "http";
 import Stripe from "stripe";
 import request from "supertest";
+import { DbUserService } from "../../DbUserService";
+import { DbUserGetter } from "../../DbUserService/DbUserGetter";
 import { constants } from "../../client/src/App/Constants";
 import { timeS } from "../../client/src/App/sharedWithServer/utils/timeS";
-import { DbUser } from "../../database/DbUser";
-import { LoadedDbUser } from "../../database/LoadedDbUser";
 import { runApp } from "../../runApp";
 import {
   createAndGetDbUser,
@@ -18,7 +18,7 @@ describe(productionRoute, () => {
   let server: Server;
   let route: string;
   let secret: string;
-  let loadedDbUser: LoadedDbUser;
+  let dbUserGetter: DbUserGetter;
   let payload: { id: string; type: string; data: any };
   let customerId: string;
 
@@ -28,7 +28,7 @@ describe(productionRoute, () => {
     secret = process.env.STRIPE_WEBHOOK_SECRET as string;
     stripe = getStripe();
     server = runApp();
-    loadedDbUser = await createAndGetDbUser(productionRoute);
+    dbUserGetter = await createAndGetDbUser(productionRoute);
     payload = {
       id: "evt_test_webhook",
       type: "event_type",
@@ -37,7 +37,7 @@ describe(productionRoute, () => {
   });
 
   afterEach(async () => {
-    await deleteUserTotally(loadedDbUser);
+    await deleteUserTotally(dbUserGetter);
     server.close();
   });
 
@@ -48,7 +48,7 @@ describe(productionRoute, () => {
       data: {
         object: {
           id: customerId,
-          email: loadedDbUser.email,
+          email: dbUserGetter.email,
         },
       },
     };
@@ -73,7 +73,7 @@ describe(productionRoute, () => {
     it("should return 200 and add the customer id to the user in the db", async () => {
       const res = await exec();
       expect(res.status).toBe(200);
-      const dbUser = await DbUser.initBy("userId", loadedDbUser.userId);
+      const dbUser = await DbUserService.initBy("userId", dbUserGetter.userId);
       const customerId = await dbUser.getOnlySectionValue({
         storeName: "stripeInfoPrivate",
         varbName: "customerId",
@@ -115,7 +115,7 @@ describe(productionRoute, () => {
     it("should return status 200 and create a subscription concurrent", async () => {
       const res = await exec();
       expect(res.status).toBe(200);
-      const dbUser = await LoadedDbUser.getBy("userId", loadedDbUser.userId);
+      const dbUser = await DbUserGetter.getBy("userId", dbUserGetter.userId);
       const subList = dbUser.get.childList("stripeSubscription");
       const sub = subList.getByValue("subId", subId);
 
@@ -127,7 +127,7 @@ describe(productionRoute, () => {
       subscription.status = "canceled";
       await exec();
 
-      const dbUser = await LoadedDbUser.getBy("userId", loadedDbUser.userId);
+      const dbUser = await DbUserGetter.getBy("userId", dbUserGetter.userId);
       const subList = dbUser.get.childList("stripeSubscription");
       const sub = subList.getByValue("subId", subId);
 

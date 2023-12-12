@@ -1,7 +1,9 @@
 import urljoin from "url-join";
 import { config } from "../Constants";
 import { UserInfoTokenProp } from "../modules/services/userTokenS";
-import { AnalyzerPlanValues } from "./apiQueriesShared/AnalyzerPlanValues";
+import { SectionQueryName } from "./SectionsMeta/sectionChildrenDerived/DbStoreName";
+import { SectionPack } from "./SectionsMeta/sectionChildrenDerived/SectionPack";
+import { EstimatorPlanValues } from "./apiQueriesShared/EstimatorPlanValues";
 import { ApiQueryName } from "./apiQueriesShared/apiQueriesSharedTypes";
 import {
   DbIdRes,
@@ -17,8 +19,6 @@ import {
   UrlRes,
 } from "./apiQueriesShared/makeReqAndRes";
 import { UserData } from "./apiQueriesShared/validateUserData";
-import { SectionQueryName } from "./SectionsMeta/sectionChildrenDerived/DbStoreName";
-import { SectionPack } from "./SectionsMeta/sectionChildrenDerived/SectionPack";
 
 export type ApiQueries = {
   addSection: QueryAddSection;
@@ -36,7 +36,7 @@ export type ApiQueries = {
   }>;
   getSubscriptionData: (
     req: MakeReq<{}>
-  ) => Promise<{ data: AnalyzerPlanValues; headers: UserInfoTokenProp }>;
+  ) => Promise<{ data: EstimatorPlanValues; headers: UserInfoTokenProp }>;
   makeSession: (req: MakeReq<{ authId: string }>) => Promise<{ data: {} }>;
   getArchivedDeals: (
     req: MakeReq<{}>

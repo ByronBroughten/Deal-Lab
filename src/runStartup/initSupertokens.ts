@@ -2,10 +2,10 @@ import config from "config";
 import supertokens from "supertokens-node";
 import Session from "supertokens-node/recipe/session";
 import ThirdPartyEmailPassword from "supertokens-node/recipe/thirdpartyemailpassword";
+import { DbUserService } from "../DbUserService";
+import { getSignUpData, initUserInDb } from "../DbUserService/userPrepS";
 import { constants } from "../client/src/App/Constants";
 import { Str } from "../client/src/App/sharedWithServer/utils/Str";
-import { DbUser } from "../database/DbUser";
-import { getSignUpData, initUserInDb } from "../database/userPrepS";
 const { Google, Facebook, Apple } = ThirdPartyEmailPassword;
 
 export function initSupertokens() {
@@ -93,7 +93,7 @@ async function finishSignIn(
   formFields?: FormFields
 ) {
   const signUpData = getSignUpData(stUser);
-  const userExists = await DbUser.existsBy("authId", signUpData.authId);
+  const userExists = await DbUserService.existsBy("authId", signUpData.authId);
   if (!userExists) {
     const userName = getUserName(stUser.email, formFields);
     await initUserInDb({

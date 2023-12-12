@@ -3,7 +3,7 @@ import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import { constants } from "../client/src/App/Constants";
 import { validateLabSubscription } from "../client/src/App/sharedWithServer/SectionsMeta/values/StateValue/unionValues";
-import { AnalyzerPlanValues } from "../client/src/App/sharedWithServer/apiQueriesShared/AnalyzerPlanValues";
+import { EstimatorPlanValues } from "../client/src/App/sharedWithServer/apiQueriesShared/EstimatorPlanValues";
 import {
   ApiQueryName,
   QueryReq,
@@ -15,7 +15,7 @@ import { mathS } from "../client/src/App/sharedWithServer/utils/math";
 import { StrictOmit } from "../client/src/App/sharedWithServer/utils/types";
 import { ResStatusError } from "../useErrorHandling";
 
-export interface UserJwt extends AnalyzerPlanValues {
+export interface UserJwt extends EstimatorPlanValues {
   userId: string;
   iat: number;
 }

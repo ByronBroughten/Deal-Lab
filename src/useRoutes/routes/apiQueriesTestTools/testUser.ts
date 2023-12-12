@@ -6,15 +6,15 @@ import {
   emailPasswordSignUp,
   getUsersByEmail,
 } from "supertokens-node/recipe/thirdpartyemailpassword";
+import { DbUserGetter } from "../../../DbUserService/DbUserGetter";
+import { DbUserModel } from "../../../DbUserService/DbUserModel";
+import { getSignUpData, initUserInDb } from "../../../DbUserService/userPrepS";
 import { apiQueriesShared } from "../../../client/src/App/sharedWithServer/apiQueriesShared";
 import { Str } from "../../../client/src/App/sharedWithServer/utils/Str";
-import { DbUserModel } from "../../../database/DbUserModel";
-import { LoadedDbUser } from "../../../database/LoadedDbUser";
-import { getSignUpData, initUserInDb } from "../../../database/userPrepS";
 
 export async function createAndGetDbUser(
   testSuiteName: string
-): Promise<LoadedDbUser> {
+): Promise<DbUserGetter> {
   const email = `${testSuiteName}/test@gmail.com`;
   await ensureFreshUserStart(email);
 
@@ -25,7 +25,7 @@ export async function createAndGetDbUser(
       ...signUpData,
       userName: "Testosis",
     });
-    return await LoadedDbUser.getBy("authId", signUpData.authId);
+    return await DbUserGetter.getBy("authId", signUpData.authId);
   } else {
     throw new Error("A user with that email already exists");
   }
@@ -49,7 +49,7 @@ async function ensureFreshUserStart(email: string): Promise<void> {
   }
 }
 
-export async function deleteUserTotally(dbUser: LoadedDbUser): Promise<void> {
+export async function deleteUserTotally(dbUser: DbUserGetter): Promise<void> {
   await deleteAuthUser(dbUser.authId);
   await DbUserModel.deleteOne({ _id: dbUser.userId });
 }

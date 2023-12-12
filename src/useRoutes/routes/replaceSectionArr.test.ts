@@ -1,10 +1,10 @@
 import request from "supertest";
+import { DbUserGetter } from "../../DbUserService/DbUserGetter";
 import { SectionArrReqMaker } from "../../client/src/App/sharedWithServer/ReqMakers/SectionArrReqMaker";
 import { childToSectionName } from "../../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/ChildSectionName";
 import { PackBuilderSection } from "../../client/src/App/sharedWithServer/StatePackers/PackBuilderSection";
 import { apiQueriesShared } from "../../client/src/App/sharedWithServer/apiQueriesShared";
 import { SectionPackArrsReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/makeReqAndRes";
-import { LoadedDbUser } from "../../database/LoadedDbUser";
 import { runApp } from "../../runApp";
 import {
   createAndGetDbUser,
@@ -23,7 +23,7 @@ const testedRoute = apiQueriesShared.replaceSectionArrs.pathRoute;
 describe(testedRoute, () => {
   let req: SectionPackArrsReq;
   let server: any;
-  let dbUser: LoadedDbUser;
+  let dbUser: DbUserGetter;
   let cookies: string[];
 
   beforeEach(async () => {

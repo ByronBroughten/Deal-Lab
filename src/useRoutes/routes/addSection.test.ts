@@ -1,15 +1,15 @@
 import { Server } from "http";
 import request from "supertest";
+import { DbUserGetter } from "../../DbUserService/DbUserGetter";
 import { constants } from "../../client/src/App/Constants";
 import { PackBuilderSection } from "../../client/src/App/sharedWithServer/StatePackers/PackBuilderSection";
 import { apiQueriesShared } from "../../client/src/App/sharedWithServer/apiQueriesShared";
 import { QueryReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import { Arr } from "../../client/src/App/sharedWithServer/utils/Arr";
 import { timeS } from "../../client/src/App/sharedWithServer/utils/timeS";
-import { LoadedDbUser } from "../../database/LoadedDbUser";
 import { runApp } from "../../runApp";
 
-import { getUserById } from "../../database/DbUserModel";
+import { getUserById } from "../../DbUserService/DbUserModel";
 import { SectionQueryTester } from "./apiQueriesTestTools/SectionQueryTester";
 import {
   createAndGetDbUser,
@@ -29,7 +29,7 @@ const testedRoute = apiQueriesShared.addSection.pathRoute;
 describe(testedRoute, () => {
   let req: QueryReq<"addSection">;
   let server: Server;
-  let dbUser: LoadedDbUser;
+  let dbUser: DbUserGetter;
   let cookies: string[];
   let token: string;
 

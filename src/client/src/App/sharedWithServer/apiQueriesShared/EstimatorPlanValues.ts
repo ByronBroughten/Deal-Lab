@@ -2,12 +2,12 @@ import { StateValue } from "../SectionsMeta/values/StateValue";
 import { isLabSubscription } from "../SectionsMeta/values/StateValue/unionValues";
 import { Obj } from "../utils/Obj";
 
-export interface AnalyzerPlanValues {
+export interface EstimatorPlanValues {
   labSubscription: StateValue<"labSubscription">;
   labSubscriptionExp: number;
 }
 
-export function validateSubscriptionValues(props: any): AnalyzerPlanValues {
+export function validateSubscriptionValues(props: any): EstimatorPlanValues {
   if (!Obj.isObjToAny(props))
     throw new Error(`Expected subscriptionProps, received ${props}`);
   const { labSubscription, labSubscriptionExp } = props;

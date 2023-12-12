@@ -5,11 +5,11 @@ import {
   apiQueriesShared,
   ApiQuery,
 } from "../sharedWithServer/apiQueriesShared";
-import { validateSubscriptionValues } from "../sharedWithServer/apiQueriesShared/AnalyzerPlanValues";
 import {
   ApiQueryName,
   QueryRes,
 } from "../sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
+import { validateSubscriptionValues } from "../sharedWithServer/apiQueriesShared/EstimatorPlanValues";
 import { validateUserData } from "../sharedWithServer/apiQueriesShared/validateUserData";
 import { validateSectionPackArrByType } from "../sharedWithServer/SectionsMeta/SectionNameByType";
 import { Obj } from "../sharedWithServer/utils/Obj";

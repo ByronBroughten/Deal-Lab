@@ -1,11 +1,11 @@
 import { Server } from "http";
 import request from "supertest";
+import { DbUserGetter } from "../../DbUserService/DbUserGetter";
 import { constants } from "../../client/src/App/Constants";
 import { Id } from "../../client/src/App/sharedWithServer/SectionsMeta/IdS";
 import { PackBuilderSection } from "../../client/src/App/sharedWithServer/StatePackers/PackBuilderSection";
 import { apiQueriesShared } from "../../client/src/App/sharedWithServer/apiQueriesShared";
 import { QueryReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
-import { LoadedDbUser } from "../../database/LoadedDbUser";
 import { runApp } from "../../runApp";
 import { SectionQueryTester } from "./apiQueriesTestTools/SectionQueryTester";
 import {
@@ -34,7 +34,7 @@ const testedRoute = apiQueriesShared.getSection.pathRoute;
 describe(testedRoute, () => {
   let reqs: TestReqs;
   let server: Server;
-  let dbUser: LoadedDbUser;
+  let dbUser: DbUserGetter;
   let cookies: string[];
 
   beforeEach(async () => {

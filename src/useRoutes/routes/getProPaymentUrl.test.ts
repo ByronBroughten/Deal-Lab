@@ -1,12 +1,12 @@
 import { Server } from "http";
 import request from "supertest";
+import { DbUserGetter } from "../../DbUserService/DbUserGetter";
 import { constants } from "../../client/src/App/Constants";
 import { apiQueriesShared } from "../../client/src/App/sharedWithServer/apiQueriesShared";
 import {
   QueryReq,
   QueryRes,
 } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
-import { LoadedDbUser } from "../../database/LoadedDbUser";
 import { runApp } from "../../runApp";
 import {
   createAndGetDbUser,
@@ -18,7 +18,7 @@ import {
 const testedRoute = apiQueriesShared.getProPaymentUrl.pathRoute;
 describe(testedRoute, () => {
   let server: Server;
-  let dbUser: LoadedDbUser;
+  let dbUser: DbUserGetter;
   let cookies: string[];
   let req: QueryReq<"getProPaymentUrl">;
 

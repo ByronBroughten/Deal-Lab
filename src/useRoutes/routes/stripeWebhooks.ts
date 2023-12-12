@@ -1,9 +1,9 @@
 import express, { Request, Response } from "express";
 import Stripe from "stripe";
+import { DbUserService } from "../../DbUserService";
 import { SectionValues } from "../../client/src/App/sharedWithServer/SectionsMeta/values/StateValue";
 import { PackBuilderSection } from "../../client/src/App/sharedWithServer/StatePackers/PackBuilderSection";
 import { timeS } from "../../client/src/App/sharedWithServer/utils/timeS";
-import { DbUser } from "../../database/DbUser";
 import { getStripeEvent } from "./routesShared/stripe";
 
 export const stripeWebhookWare = [express.raw({ type: "*/*" }), stripeWebhook];
@@ -43,8 +43,10 @@ async function handleStripeEvent(event: Stripe.Event, res: Response) {
   switch (event.type) {
     case "customer.created": {
       const customer = event.data.object as Stripe.Customer;
-      // const dbUser = await LoadedDbUser.queryByEmail(customer.email as string);
-      const dbUser = await DbUser.initBy("email", customer.email as string);
+      const dbUser = await DbUserService.initBy(
+        "email",
+        customer.email as string
+      );
       await dbUser.setOnlyValue({
         storeName: "stripeInfoPrivate",
         sectionName: "stripeInfoPrivate",
@@ -67,7 +69,7 @@ async function handleStripeEvent(event: Stripe.Event, res: Response) {
       if (!(typeof customerId === "string")) {
         throw new Error(`customerId "${customerId}" needs to be a string.`);
       }
-      const querier = await DbUser.initBy("customerId", customerId);
+      const querier = await DbUserService.initBy("customerId", customerId);
       const subPacks = await querier.getSectionPackArr("stripeSubscription");
       const currentIdx = subPacks.findIndex(
         (sub) =>

@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
+import { DbUserService } from "../../DbUserService";
 import { UserInfoTokenProp } from "../../client/src/App/modules/services/userTokenS";
-import { DbUser } from "../../database/DbUser";
 import { getAuthWare } from "../../middleware/authWare";
 import { userJwtWare } from "../../middleware/jwtWare";
 import { sendSuccess } from "./routesShared/sendSuccess";
@@ -14,7 +14,7 @@ async function addSection(req: Request, res: Response) {
     userJwt: { userId, labSubscription },
   } = validateSectionPackReq(req).body;
 
-  const dbUser = await DbUser.initBy("userId", userId);
+  const dbUser = await DbUserService.initBy("userId", userId);
   await dbUser.addSection({
     storeName: dbStoreName,
     labSubscription,

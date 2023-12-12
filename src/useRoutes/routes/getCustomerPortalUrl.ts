@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
 import { constants } from "../../client/src/App/Constants";
 import { makeRes } from "../../client/src/App/sharedWithServer/apiQueriesShared/makeReqAndRes";
-import { LoadedDbUser } from "../../database/LoadedDbUser";
 import { getAuthWare, validateEmptyAuthReq } from "../../middleware/authWare";
 
+import { DbUserService } from "../../DbUserService";
 import { sendSuccess } from "./routesShared/sendSuccess";
 import { getStripe } from "./routesShared/stripe";
 
@@ -13,8 +13,8 @@ export const getCustomerPortalUrlWare = [
 ] as const;
 async function getCustomerPortalUrl(req: Request, res: Response) {
   const { auth } = validateEmptyAuthReq(req).body;
-  const dbUser = await LoadedDbUser.getBy("authId", auth.id);
-  const { customerId } = dbUser;
+  const dbUser = await DbUserService.initBy("authId", auth.id);
+  const customerId = await dbUser.customerId();
   if (!customerId) {
     throw new Error(`"customerId" hasn't been set yet for this user`);
   }

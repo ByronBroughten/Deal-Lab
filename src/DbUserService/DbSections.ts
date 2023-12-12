@@ -3,17 +3,20 @@ import {
   DbStoreInfo,
   DbStoreName,
 } from "../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/DbStoreName";
-import { DbSectionsBase } from "./BaseClasses/DbSectionsBase";
-import { DbUser } from "./DbUser";
-import { SectionPackNotFoundError } from "./DbUserTypes";
+import { DbSectionsRaw, SectionPackNotFoundError } from "./DbUserTypes";
 
 export interface DbSectionsInitByIdProps {
   userId: string;
 }
-export interface DbSectionsInitByEmailProps {
-  email: string;
-}
-export class DbSections extends DbSectionsBase {
+
+export type Props = {
+  dbSectionsRaw: DbSectionsRaw;
+};
+export class DbSections {
+  readonly dbSectionsRaw: DbSectionsRaw;
+  constructor({ dbSectionsRaw }: Props) {
+    this.dbSectionsRaw = dbSectionsRaw;
+  }
   onlySectionPack<CN extends DbStoreName>(dbStoreName: CN): DbSectionPack<CN> {
     const sectionPacks = this.dbSectionsRaw[dbStoreName];
     if (sectionPacks.length !== 1) {
@@ -54,21 +57,5 @@ export class DbSections extends DbSectionsBase {
     );
     if (sectionPack) return true;
     else return false;
-  }
-  static async initByEmail({
-    email,
-  }: DbSectionsInitByEmailProps): Promise<DbSections> {
-    const querier = await DbUser.initByEmail(email);
-    return new DbSections({
-      dbSectionsRaw: await querier.getDbSectionsRaw(),
-    });
-  }
-  static async initById({
-    userId,
-  }: DbSectionsInitByIdProps): Promise<DbSections> {
-    const querier = await DbUser.initBy("userId", userId);
-    return new DbSections({
-      dbSectionsRaw: await querier.getDbSectionsRaw(),
-    });
   }
 }

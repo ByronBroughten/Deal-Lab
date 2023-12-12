@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
+import { DbUserService } from "../../DbUserService";
 import { CreateDealReq } from "../../client/src/App/sharedWithServer/apiQueriesShared";
 import { Obj } from "../../client/src/App/sharedWithServer/utils/Obj";
-import { DbUser } from "../../database/DbUser";
 import {
   Authed,
   getAuthWare,
@@ -14,7 +14,7 @@ export const getNewDealWare = [getAuthWare(), getNewDeal] as const;
 
 async function getNewDeal(req: Request, res: Response) {
   const { auth, ...rest } = validateCreateDealReq(req).body;
-  const dbUser = await DbUser.initBy("authId", auth.id);
+  const dbUser = await DbUserService.initBy("authId", auth.id);
 
   if (rest.loadFrom === "dataBase") {
     let sectionPack = await dbUser.getSectionPack({

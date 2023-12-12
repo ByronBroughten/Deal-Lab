@@ -1,9 +1,9 @@
 import { Server } from "http";
 import request from "supertest";
+import { DbUserGetter } from "../../DbUserService/DbUserGetter";
 import { userTokenS } from "../../client/src/App/modules/services/userTokenS";
 import { apiQueriesShared } from "../../client/src/App/sharedWithServer/apiQueriesShared";
-import { validateSubscriptionValues } from "../../client/src/App/sharedWithServer/apiQueriesShared/AnalyzerPlanValues";
-import { LoadedDbUser } from "../../database/LoadedDbUser";
+import { validateSubscriptionValues } from "../../client/src/App/sharedWithServer/apiQueriesShared/EstimatorPlanValues";
 import { runApp } from "../../runApp";
 import {
   createAndGetDbUser,
@@ -15,7 +15,7 @@ import {
 const testedRoute = apiQueriesShared.getSubscriptionData.pathRoute;
 describe(testedRoute, () => {
   let server: Server;
-  let dbUser: LoadedDbUser;
+  let dbUser: DbUserGetter;
   let cookies: string[];
 
   beforeEach(async () => {

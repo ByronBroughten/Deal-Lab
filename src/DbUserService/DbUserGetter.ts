@@ -1,4 +1,3 @@
-import { Response } from "express";
 import { pick } from "lodash";
 import mongoose from "mongoose";
 import { constants } from "../client/src/App/Constants";
@@ -11,24 +10,23 @@ import {
 import { GetterSection } from "../client/src/App/sharedWithServer/StateGetters/GetterSection";
 import { PackBuilderSection } from "../client/src/App/sharedWithServer/StatePackers/PackBuilderSection";
 import { PackBuilderSections } from "../client/src/App/sharedWithServer/StatePackers/PackBuilderSections";
-import { AnalyzerPlanValues } from "../client/src/App/sharedWithServer/apiQueriesShared/AnalyzerPlanValues";
+import { EstimatorPlanValues } from "../client/src/App/sharedWithServer/apiQueriesShared/EstimatorPlanValues";
 import { UserData } from "../client/src/App/sharedWithServer/apiQueriesShared/validateUserData";
 import { makeDefaultSessionDeal } from "../client/src/App/sharedWithServer/defaultMaker/defaultSessionDeal";
 import { Arr } from "../client/src/App/sharedWithServer/utils/Arr";
 import { stripeS } from "../client/src/App/sharedWithServer/utils/stripe";
 import { timeS } from "../client/src/App/sharedWithServer/utils/timeS";
 
+import { DbUserService } from "../DbUserService";
 import { createUserJwt } from "../middleware/jwtWare";
 import { DbSections } from "./DbSections";
-import { DbUser } from "./DbUser";
 import { DbSectionsRaw, DbUserSpecifierType } from "./DbUserTypes";
 import { isProEmail } from "./isProEmail";
 
 interface DbUserProps extends GetterSectionProps<"dbStore"> {
   dbSections: DbSections;
 }
-
-export class LoadedDbUser extends GetterSectionBase<"dbStore"> {
+export class DbUserGetter extends GetterSectionBase<"dbStore"> {
   readonly dbSections: DbSections;
   constructor({ dbSections, ...rest }: DbUserProps) {
     super(rest);
@@ -57,24 +55,21 @@ export class LoadedDbUser extends GetterSectionBase<"dbStore"> {
   static async getBy(
     specifierType: DbUserSpecifierType,
     specifier: string
-  ): Promise<LoadedDbUser> {
-    const dbUser = await DbUser.initBy(specifierType, specifier);
-    return dbUser.loadedDbUser();
+  ): Promise<DbUserGetter> {
+    const dbUser = await DbUserService.initBy(specifierType, specifier);
+    return dbUser.dbUserGetter();
   }
-  static async queryByEmail(email: string): Promise<LoadedDbUser> {
-    const dbUser = await DbUser.initByEmail(email);
-    return dbUser.loadedDbUser();
+  static async queryByEmail(email: string): Promise<DbUserGetter> {
+    const dbUser = await DbUserService.initByEmail(email);
+    return dbUser.dbUserGetter();
   }
   get get(): GetterSection<"dbStore"> {
     return new GetterSection(this.getterSectionProps);
   }
-  get builder(): PackBuilderSection<"dbStore"> {
-    return new PackBuilderSection(this.getterSectionProps);
-  }
   get userInfo(): GetterSection<"userInfo"> {
     return this.get.onlyChild("userInfo");
   }
-  get subscriptionValues(): AnalyzerPlanValues {
+  get subscriptionValues(): EstimatorPlanValues {
     if (isProEmail(this.email)) {
       return {
         labSubscription: "fullPlan",
@@ -83,7 +78,7 @@ export class LoadedDbUser extends GetterSectionBase<"dbStore"> {
     }
 
     const subscriptions = this.get.children("stripeSubscription");
-    let subscriptionValues: AnalyzerPlanValues = {
+    let subscriptionValues: EstimatorPlanValues = {
       labSubscription: "basicPlan",
       labSubscriptionExp: timeS.hundredsOfYearsFromNow,
     };
@@ -179,24 +174,11 @@ export class LoadedDbUser extends GetterSectionBase<"dbStore"> {
       sessionStore: sessionStore.makeSectionPack(),
     };
   }
-  createUserJwt(subscriptionValues?: AnalyzerPlanValues): string {
+  createUserJwt(subscriptionValues?: EstimatorPlanValues): string {
     return createUserJwt({
       userId: this.userId,
       ...this.subscriptionValues,
       ...subscriptionValues,
     });
-  }
-  setResTokenHeader(res: Response): void {
-    const token = this.createUserJwt();
-    LoadedDbUser.setResTokenHeader(res, token);
-  }
-  static setResTokenHeader(res: Response, token: string): void {
-    res.header(constants.tokenKey.userAuthData, token);
-  }
-
-  sendUserData(res: Response): void {
-    const userData = this.collectUserData();
-    this.setResTokenHeader(res);
-    res.status(200).send(userData);
   }
 }

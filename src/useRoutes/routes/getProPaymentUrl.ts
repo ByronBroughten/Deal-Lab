@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
+import { DbUserService } from "../../DbUserService";
 import { constants } from "../../client/src/App/Constants";
 import { QueryReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import { makeRes } from "../../client/src/App/sharedWithServer/apiQueriesShared/makeReqAndRes";
-import { LoadedDbUser } from "../../database/LoadedDbUser";
 import {
   Authed,
   getAuthWare,
@@ -14,8 +14,8 @@ import { getStripe } from "./routesShared/stripe";
 
 export async function getCustomerPortalUrl(req: Request, res: Response) {
   const { auth } = validateUpgradeUserToProReq(req).body;
-  const dbUser = await LoadedDbUser.getBy("authId", auth.id);
-  const { customerId } = dbUser;
+  const dbUser = await DbUserService.initBy("authId", auth.id);
+  const customerId = await dbUser.customerId();
 
   const stripe = getStripe();
   const session = await stripe.billingPortal.sessions.create({
@@ -42,8 +42,8 @@ async function getProPaymentUrl(req: Request, res: Response) {
 
   const { auth, priceId } = validateUpgradeUserToProReq(req).body;
 
-  const dbUser = await LoadedDbUser.getBy("authId", auth.id);
-  const { customerId, email } = dbUser;
+  const dbUser = await DbUserService.initBy("authId", auth.id);
+  const { customerId, email } = await dbUser.userInfo();
 
   // should this be implemented?: checkIfAlreadySubscribed(userId);
 
