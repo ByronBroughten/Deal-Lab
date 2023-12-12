@@ -4,7 +4,7 @@ import config from "config";
 import express from "express";
 import { runStartup } from "./runStartup";
 import { logger } from "./runStartup/logger";
-import { useAppBasics } from "./useAppBasics";
+import { useBasics } from "./useBasics";
 import { useErrorHandling } from "./useErrorHandling";
 import { useCoreRoutes } from "./useRoutes/useCoreRoutes";
 import { useStripeWebhooks } from "./useRoutes/useStripeWebhooks";
@@ -12,12 +12,12 @@ import { useStripeWebhooks } from "./useRoutes/useStripeWebhooks";
 export function runApp() {
   runStartup();
   const app = express();
-  useAppBasics(app);
+  useBasics(app);
   useStripeWebhooks(app);
   useCoreRoutes(app);
   useErrorHandling(app);
 
-  if (process.env.NODE_ENV === "production") {
+  if (config.get("env") === "production") {
     app.get("*", function (_, res) {
       res.sendFile("index.html", { root: "src/client/build/" });
     });
