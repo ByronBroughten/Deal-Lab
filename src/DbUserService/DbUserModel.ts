@@ -17,8 +17,7 @@ import { selfAndDescSectionNames } from "../client/src/App/sharedWithServer/Sect
 import { SectionPack } from "../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/SectionPack";
 import { RawSection } from "../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/SectionPack/RawSection";
 import { ResStatusError } from "../useErrorHandling";
-import { monSchemas } from "./mongooseUtils";
-import { mongooseValues } from "./mongooseValues";
+import { mongooseId, mongooseValues } from "./mongooseValues";
 
 export type DbSectionsModelCore = RawDbUser & { _id: mongoose.Types.ObjectId };
 
@@ -46,8 +45,8 @@ function makeMongooseUserSchema(): Schema<Record<SchemaKeys, any>> {
       return frame;
     },
     {
-      authId: monSchemas.reqString,
-      email: monSchemas.reqString,
+      authId: mongooseValues.string,
+      email: mongooseValues.string,
       childDbIds: makeMongooseChildDbIds(),
     } as Record<SchemaKeys, any>
   );
@@ -56,7 +55,7 @@ function makeMongooseUserSchema(): Schema<Record<SchemaKeys, any>> {
 
 function makeMongooseChildDbIds(): Schema<Record<DbStoreName, any>> {
   const schemaFrame = dbStoreNames.reduce((frame, storeName) => {
-    frame[storeName] = monSchemas.reqStringArr;
+    frame[storeName] = mongooseValues.stringArray;
     return frame;
   }, {} as Record<DbStoreName, any>);
   return new Schema(schemaFrame);
@@ -64,9 +63,9 @@ function makeMongooseChildDbIds(): Schema<Record<DbStoreName, any>> {
 
 function makeMongooseSectionPack<SN extends DbSectionName>(sectionName: SN) {
   const schemaFrame: Record<keyof SectionPack, any> = {
-    dbId: monSchemas.reqId,
+    dbId: mongooseId,
     sectionName: {
-      ...monSchemas.reqString,
+      ...mongooseValues.string,
       // validate: (v: any) => v === sectionName,
     },
     rawSections: makeMongooseRawSections(sectionName),
@@ -88,8 +87,8 @@ function makeMongooseRawSection<SN extends SectionName>(
   sectionName: SN
 ): Schema<any> {
   const schemaFrame: Record<keyof RawSection, any> = {
-    spNum: monSchemas.reqNumber,
-    dbId: monSchemas.reqId,
+    spNum: mongooseValues.number,
+    dbId: mongooseId,
     childSpNums: makeMongooseChildSpNums(sectionName),
     sectionValues: makeMongooseVarbs(sectionName),
   };
@@ -112,7 +111,7 @@ function makeMongooseChildSpNums<SN extends SectionName>(
 ): Schema<any> {
   const childNames = getChildNames(sectionName);
   const frame = childNames.reduce((childIds, childName) => {
-    childIds[childName] = [monSchemas.reqNumber];
+    childIds[childName] = [mongooseValues.number];
     return childIds;
   }, {} as Record<ChildName<SN>, any>);
   return new Schema(frame);
