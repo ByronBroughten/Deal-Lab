@@ -19,21 +19,21 @@ import { timeS } from "../client/src/App/sharedWithServer/utils/timeS";
 
 import { DbUserService } from "../DbUserService";
 import { createUserJwt } from "../middleware/jwtWare";
-import { DbSections } from "./DbSections";
-import { DbSectionsRaw, DbUserSpecifierType } from "./DbUserTypes";
+import { DbSectionsRaw, DbUserSpecifierType } from "./DbUserFiltersAndPaths";
+import { DbUserQuickGetter } from "./DbUserQuickGetter";
 import { isProEmail } from "./isProEmail";
 
 interface DbUserProps extends GetterSectionProps<"dbStore"> {
-  dbSections: DbSections;
+  quickGetter: DbUserQuickGetter;
 }
 export class DbUserGetter extends GetterSectionBase<"dbStore"> {
-  readonly dbSections: DbSections;
-  constructor({ dbSections, ...rest }: DbUserProps) {
+  readonly quickGetter: DbUserQuickGetter;
+  constructor({ quickGetter, ...rest }: DbUserProps) {
     super(rest);
-    this.dbSections = dbSections;
+    this.quickGetter = quickGetter;
   }
   get dbSectionsRaw(): DbSectionsRaw {
-    return this.dbSections.dbSectionsRaw;
+    return this.quickGetter.dbSectionsRaw;
   }
   get userId(): string {
     const userId = this.dbSectionsRaw._id as mongoose.Types.ObjectId;
@@ -131,7 +131,7 @@ export class DbUserGetter extends GetterSectionBase<"dbStore"> {
       userDataStatus: "loaded",
     });
 
-    const dealPacks = this.dbSections.sectionPackArr("dealMain");
+    const dealPacks = this.quickGetter.sectionPackArr("dealMain");
     const feDealPacks = dealPacks.reduce((storePacks, pack) => {
       const deal = PackBuilderSection.hydratePackAsOmniChild(pack).get;
       sessionStore.addChild("dealMain", {
@@ -154,7 +154,7 @@ export class DbUserGetter extends GetterSectionBase<"dbStore"> {
       } else if (storeName === "dealCompareMenu") {
         feStore.replaceChildren({
           childName: storeName,
-          sectionPacks: this.dbSections.sectionPackArr(storeName),
+          sectionPacks: this.quickGetter.sectionPackArr(storeName),
         });
         const compareMenu = feStore.onlyChild("dealCompareMenu");
         compareMenu.children("comparedDeal").forEach((compared) => {
@@ -165,7 +165,7 @@ export class DbUserGetter extends GetterSectionBase<"dbStore"> {
       } else {
         feStore.replaceChildren({
           childName: storeName,
-          sectionPacks: this.dbSections.sectionPackArr(storeName),
+          sectionPacks: this.quickGetter.sectionPackArr(storeName),
         });
       }
     }

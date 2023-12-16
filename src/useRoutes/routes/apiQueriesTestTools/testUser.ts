@@ -6,9 +6,9 @@ import {
   emailPasswordSignUp,
   getUsersByEmail,
 } from "supertokens-node/recipe/thirdpartyemailpassword";
+import { DbUserService } from "../../../DbUserService";
 import { DbUserGetter } from "../../../DbUserService/DbUserGetter";
 import { DbUserModel } from "../../../DbUserService/DbUserModel";
-import { getSignUpData, initUserInDb } from "../../../DbUserService/userPrepS";
 import { apiQueriesShared } from "../../../client/src/App/sharedWithServer/apiQueriesShared";
 import { Str } from "../../../client/src/App/sharedWithServer/utils/Str";
 
@@ -20,12 +20,11 @@ export async function createAndGetDbUser(
 
   const res = await emailPasswordSignUp(email, "TestP@ssword1");
   if (res.status === "OK") {
-    const signUpData = getSignUpData(res.user);
-    await initUserInDb({
-      ...signUpData,
+    await DbUserService.initInDb({
+      ...res.user,
       userName: "Testosis",
     });
-    return await DbUserGetter.getBy("authId", signUpData.authId);
+    return await DbUserGetter.getBy("authId", res.user.id);
   } else {
     throw new Error("A user with that email already exists");
   }

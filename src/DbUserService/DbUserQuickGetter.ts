@@ -3,7 +3,10 @@ import {
   DbStoreInfo,
   DbStoreName,
 } from "../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/DbStoreName";
-import { DbSectionsRaw, SectionPackNotFoundError } from "./DbUserTypes";
+import {
+  DbSectionsRaw,
+  SectionPackNotFoundError,
+} from "./DbUserFiltersAndPaths";
 
 export interface DbSectionsInitByIdProps {
   userId: string;
@@ -12,7 +15,7 @@ export interface DbSectionsInitByIdProps {
 export type Props = {
   dbSectionsRaw: DbSectionsRaw;
 };
-export class DbSections {
+export class DbUserQuickGetter {
   readonly dbSectionsRaw: DbSectionsRaw;
   constructor({ dbSectionsRaw }: Props) {
     this.dbSectionsRaw = dbSectionsRaw;

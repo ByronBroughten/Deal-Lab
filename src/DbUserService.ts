@@ -1,7 +1,5 @@
-import mongoose, { QueryOptions } from "mongoose";
-import { DbSections } from "./DbUserService/DbSections";
-import { DbUserGetter } from "./DbUserService/DbUserGetter";
-import { DbUserModel } from "./DbUserService/DbUserModel";
+import mongoose, { FilterQuery, QueryOptions } from "mongoose";
+import ThirdPartyEmailPassword from "supertokens-node/recipe/thirdpartyemailpassword";
 import {
   DbSectionsRaw,
   DbUserSpecifierType,
@@ -10,8 +8,10 @@ import {
   dbUserFilters,
   modelPath,
   queryOptions,
-} from "./DbUserService/DbUserTypes";
-import { findUserByIdAndUpdate } from "./DbUserService/findAndUpdate";
+} from "./DbUserService/DbUserFiltersAndPaths";
+import { DbUserGetter } from "./DbUserService/DbUserGetter";
+import { DbSectionsModelCore, DbUserModel } from "./DbUserService/DbUserModel";
+import { DbUserQuickGetter } from "./DbUserService/DbUserQuickGetter";
 import { constants } from "./client/src/App/Constants";
 import {
   OneDbSectionValueInfo,
@@ -46,11 +46,19 @@ import { PackBuilderSection } from "./client/src/App/sharedWithServer/StatePacke
 import { SectionPackArrs } from "./client/src/App/sharedWithServer/StatePackers/PackMakerSection";
 import { EstimatorPlanValues } from "./client/src/App/sharedWithServer/apiQueriesShared/EstimatorPlanValues";
 import { UserData } from "./client/src/App/sharedWithServer/apiQueriesShared/validateUserData";
+import {
+  initProdDbStoreArrs,
+  initTestDbStoreArrs,
+} from "./client/src/App/sharedWithServer/exampleMakers/initDbStoreArrs";
 import { Obj } from "./client/src/App/sharedWithServer/utils/Obj";
 import { ResStatusError } from "./useErrorHandling";
 
 interface Props {
   userFilter: { [key: string]: string };
+}
+
+interface InitUserInDbProps extends ThirdPartyEmailPassword.User {
+  userName: string;
 }
 
 export class DbUserService {
@@ -71,8 +79,8 @@ export class DbUserService {
     }
   }
   async getUserId(): Promise<string> {
-    const dbSections = await this.getDbSectionsRaw();
-    const userId = dbSections._id;
+    const quickGetter = await this.getDbSectionsRaw();
+    const userId = quickGetter._id;
     if (!(userId instanceof mongoose.Types.ObjectId))
       throw new Error(`userId "${userId}" is not valid.`);
     return userId.toHexString();
@@ -90,8 +98,8 @@ export class DbUserService {
   async hasSectionPack<CN extends DbStoreName>(
     dbInfo: DbStoreInfo<CN>
   ): Promise<boolean> {
-    const dbSections = await this.dbSections();
-    return dbSections.hasSection(dbInfo);
+    const quickGetter = await this.quickGetter();
+    return quickGetter.hasSection(dbInfo);
   }
   async getOnlySectionValue<
     CN extends DbStoreName,
@@ -127,8 +135,8 @@ export class DbUserService {
   async getSectionPack<CN extends DbStoreName>(
     dbInfo: DbStoreInfo<CN>
   ): Promise<DbSectionPack<CN>> {
-    const dbSections = await this.dbSections();
-    return dbSections.sectionPack(dbInfo);
+    const quickGetter = await this.quickGetter();
+    return quickGetter.sectionPack(dbInfo);
     // It would be cool to query one pack directly, but it didn't work:
     // const users = await DbUserModel.aggregate([{ $match: this.userFilter }]);
     // const userDocs = await DbUserModel.aggregate([
@@ -207,19 +215,31 @@ export class DbUserService {
       },
     });
   }
-  async update({
-    filter = this.userFilter,
-    operation,
-    options,
+  async update({ filter = this.userFilter, operation, options }: UpdateProps) {
+    return await DbUserService.findOneAndUpdate({
+      filter,
+      queryParameters: { operation, options },
+    });
+  }
+  static async findUserByIdAndUpdate({
+    userId,
+    ...rest
+  }: FindUserByIdAndUpdateProps) {
+    return await this.findOneAndUpdate({ filter: { _id: userId }, ...rest });
+  }
+  static async findOneAndUpdate({
+    filter,
+    queryParameters: { operation, options },
     doWhat = "query the database",
-  }: UpdateProps) {
+  }: FindOneAndUpdateProps) {
     const result = await DbUserModel.findOneAndUpdate(
       filter,
       operation,
       options
     );
-    if (result) return result;
-    else {
+    if (result) {
+      return result;
+    } else {
       throw new ResStatusError({
         resMessage: `Failed to ${doWhat}.`,
         errorMessage: `Failed to ${doWhat}.`,
@@ -227,19 +247,20 @@ export class DbUserService {
       });
     }
   }
+
   async getSectionPackArr<DSN extends DbStoreName>(
     dbStoreName: DSN
   ): Promise<DbSectionPack<DSN>[]> {
-    const dbSections = await this.dbSections();
-    return dbSections.sectionPackArr(dbStoreName);
+    const quickGetter = await this.quickGetter();
+    return quickGetter.sectionPackArr(dbStoreName);
   }
   async storeSectionCount(dbStoreName: DbStoreName): Promise<number> {
     const arr = await this.getSectionPackArr(dbStoreName);
     return arr.length;
   }
-  private async dbSections(): Promise<DbSections> {
+  private async quickGetter(): Promise<DbUserQuickGetter> {
     const dbSectionsRaw = await this.getDbSectionsRaw();
-    return new DbSections({ dbSectionsRaw });
+    return new DbUserQuickGetter({ dbSectionsRaw });
   }
 
   async getDbSectionsRaw(): Promise<DbSectionsRaw> {
@@ -265,10 +286,10 @@ export class DbUserService {
     };
   }
   async dbUserGetter(): Promise<DbUserGetter> {
-    const dbSections = await this.dbSections();
+    const quickGetter = await this.quickGetter();
     const dbStore = PackBuilderSection.initAsOmniChild("dbStore");
     for (const childName of dbStoreNames) {
-      let sectionPacks = dbSections.sectionPackArr(childName);
+      let sectionPacks = quickGetter.sectionPackArr(childName);
       dbStore.replaceChildren({
         childName,
         sectionPacks,
@@ -276,7 +297,7 @@ export class DbUserService {
     }
     return new DbUserGetter({
       ...dbStore.getterSectionProps,
-      dbSections,
+      quickGetter,
     });
   }
   async addSection<CN extends StoreName>(props: {
@@ -291,7 +312,7 @@ export class DbUserService {
       storeName,
       dbId: sectionPack.dbId,
     });
-    return findUserByIdAndUpdate({
+    return DbUserService.findUserByIdAndUpdate({
       userId: await this.getUserId(),
       queryParameters: {
         operation: { $push: { [storeName]: sectionPack } },
@@ -442,6 +463,30 @@ export class DbUserService {
       status: 400,
     });
   }
+  static async initInDb(initData: InitUserInDbProps) {
+    const seed = {
+      authId: initData.id,
+      ...Obj.strictPick(initData, ["email", "timeJoined", "userName"]),
+    };
+    const arrs =
+      process.env.NODE_ENV === "test"
+        ? initTestDbStoreArrs(seed)
+        : initProdDbStoreArrs(seed);
+
+    const dbUserModel = new DbUserModel({
+      authId: seed.authId,
+      email: seed.email,
+      childDbIds: this.initChildDbIds(),
+      ...arrs,
+    });
+    await dbUserModel.save();
+  }
+  private static initChildDbIds(): Record<DbStoreName, string[]> {
+    return dbStoreNames.reduce((ids, storeName) => {
+      ids[storeName] = [];
+      return ids;
+    }, {} as Record<DbStoreName, string[]>);
+  }
 }
 type UserNotFoundOptions = {
   idType: string;
@@ -464,3 +509,15 @@ interface QueryParameters {
   operation: any;
   options: QueryOptions;
 }
+
+type FindOneAndUpdateProps = {
+  filter: FilterQuery<DbSectionsModelCore>;
+  queryParameters: QueryParameters;
+  doWhat?: string;
+};
+
+type FindUserByIdAndUpdateProps = {
+  userId: string;
+  queryParameters: QueryParameters;
+  doWhat?: string;
+};
