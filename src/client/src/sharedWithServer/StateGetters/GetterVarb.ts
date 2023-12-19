@@ -1,21 +1,20 @@
 import { clone } from "lodash";
-
 import {
+  getVarbLabels,
   LabelOverrideSwitches,
   VarbInfoTextProps,
   VarbLabel,
-  getVarbLabels,
 } from "../../varbLabels/varbLabels";
 import {
-  FeVI,
   FeVarbInfo,
+  FeVI,
   SectionVarbNames,
   varbIdToInfo,
   varbInfoToId,
 } from "../SectionInfos/FeInfo";
 import {
-  VarbInfoMixedFocal,
   mixedInfoS,
+  VarbInfoMixedFocal,
 } from "../SectionInfos/MixedSectionInfo";
 import { relVarbInfoS } from "../SectionInfos/RelVarbInfo";
 import {
@@ -24,8 +23,7 @@ import {
   VarbNames,
 } from "../SectionInfos/VarbInfoBase";
 import { SectionNameByType } from "../SectionNameByType";
-import { VarbMeta } from "../SectionsMeta/VarbMeta";
-import { StateVarb } from "../State/StateSectionsTypes";
+import { DisplayOverrideSwitches } from "../sectionVarbsConfig/allDisplaySectionVarbs/displayVarb";
 import {
   StateValue,
   StateValueOrAny,
@@ -33,15 +31,16 @@ import {
 } from "../sectionVarbsConfig/StateValue";
 import { StrAdornments } from "../sectionVarbsConfig/StateValue/EditorValue";
 import {
-  NumObjOutput,
-  NumberOrQ,
   notApplicableString,
+  NumberOrQ,
+  NumObjOutput,
 } from "../sectionVarbsConfig/StateValue/NumObj";
 import { switchValueNames } from "../sectionVarbsConfig/StateValue/unionValues";
-import { ValueName } from "../sectionVarbsConfig/ValueName";
-import { DisplayOverrideSwitches } from "../sectionVarbsConfig/allDisplaySectionVarbs/displayVarb";
 import { isObjValue } from "../sectionVarbsConfig/valueMetas";
-import { NotANumberError, mathS } from "../utils/math";
+import { ValueName } from "../sectionVarbsConfig/ValueName";
+import { StateVarb } from "../State/StateSectionsTypes";
+import { VarbMeta } from "../StateMeta/VarbMeta";
+import { mathS, NotANumberError } from "../utils/math";
 import { GetterVarbBase, NotAVarbNameError } from "./Bases/GetterVarbBase";
 import { GetterSection } from "./GetterSection";
 import { GetterSections } from "./GetterSections";

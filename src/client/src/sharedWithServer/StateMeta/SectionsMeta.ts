@@ -1,11 +1,11 @@
-import { VarbNames } from "./SectionInfos/VarbInfoBase";
-import { SectionMeta, VarbMetas } from "./SectionsMeta/SectionMeta";
-import { VarbMeta } from "./SectionsMeta/VarbMeta";
-import { SectionName, sectionNames } from "./sectionVarbsConfig/SectionName";
-import { ValueName } from "./sectionVarbsConfig/ValueName";
-import { valueMetas } from "./sectionVarbsConfig/valueMetas";
-import { ValueMeta } from "./sectionVarbsConfig/valueMetas/valueMetaGeneric";
-import { Obj } from "./utils/Obj";
+import { VarbNames } from "../SectionInfos/VarbInfoBase";
+import { SectionName, sectionNames } from "../sectionVarbsConfig/SectionName";
+import { valueMetas } from "../sectionVarbsConfig/valueMetas";
+import { ValueMeta } from "../sectionVarbsConfig/valueMetas/valueMetaGeneric";
+import { ValueName } from "../sectionVarbsConfig/ValueName";
+import { Obj } from "../utils/Obj";
+import { SectionMeta, VarbMetas } from "./SectionMeta";
+import { VarbMeta } from "./VarbMeta";
 
 type SectionMetasCore = {
   [SN in SectionName]: SectionMeta<SN>;

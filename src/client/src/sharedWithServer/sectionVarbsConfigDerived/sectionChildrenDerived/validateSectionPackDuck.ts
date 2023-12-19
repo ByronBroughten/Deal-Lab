@@ -1,22 +1,22 @@
 import { Id } from "../../Ids/IdS";
 import { SectionPack } from "../../SectionPacks/SectionPack";
-import { sectionsMeta } from "../../SectionsMeta";
+import {
+  SectionName,
+  validateSectionName,
+} from "../../sectionVarbsConfig/SectionName";
 import {
   ChildSpNums,
   OneRawSection,
   RawSections,
   SectionValuesGeneric,
 } from "../../State/RawSection";
-import {
-  SectionName,
-  validateSectionName,
-} from "../../sectionVarbsConfig/SectionName";
+import { sectionsMeta } from "../../StateMeta/SectionsMeta";
 import { Arr } from "../../utils/Arr";
 import { ValidationError } from "../../utils/Error";
 import { Obj } from "../../utils/Obj";
 import { validateS } from "../../validateS";
-import { validateSectionVarbValue } from "../baseSectionsDerived/baseSectionValues";
 import { sectionVarbNames } from "../baseSectionsDerived/baseSectionsVarbsTypes";
+import { validateSectionVarbValue } from "../baseSectionsDerived/baseSectionValues";
 import { getChildNames } from "./ChildName";
 import { selfAndDescSectionNames } from "./DescendantName";
 

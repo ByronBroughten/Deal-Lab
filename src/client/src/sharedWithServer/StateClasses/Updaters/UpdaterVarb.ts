@@ -1,9 +1,9 @@
 import { SectionNameByType } from "../../SectionNameByType";
-import { VarbMeta } from "../../SectionsMeta/VarbMeta";
+import { StateValue } from "../../sectionVarbsConfig/StateValue";
 import { StateVarb } from "../../State/StateSectionsTypes";
 import { GetterVarbBase } from "../../StateGetters/Bases/GetterVarbBase";
 import { GetterVarb } from "../../StateGetters/GetterVarb";
-import { StateValue } from "../../sectionVarbsConfig/StateValue";
+import { VarbMeta } from "../../StateMeta/VarbMeta";
 
 export class UpdaterVarb<
   SN extends SectionNameByType<"hasVarb">
