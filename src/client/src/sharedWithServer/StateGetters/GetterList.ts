@@ -1,4 +1,4 @@
-import { IdInfoMixedMulti } from "../SectionInfo/MixedSectionInfo";
+import { IdInfoMixedMulti } from "../SectionInfos/MixedSectionInfo";
 import { SectionNameByType } from "../SectionNameByType";
 import {
   RawFeSection,

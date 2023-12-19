@@ -1,4 +1,4 @@
-import { SectionPack } from "../SectionPack/SectionPack";
+import { SectionPack } from "../SectionPacks/SectionPack";
 import { PackBuilderSection } from "../StateClasses/Packers/PackBuilderSection";
 import { SectionName } from "../sectionVarbsConfig/SectionName";
 import { StrictExclude } from "../utils/types";

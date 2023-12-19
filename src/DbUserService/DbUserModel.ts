@@ -1,7 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 import { sectionsMeta } from "../client/src/sharedWithServer/SectionsMeta";
 
-import { SectionPack } from "../client/src/sharedWithServer/SectionPack/SectionPack";
+import { SectionPack } from "../client/src/sharedWithServer/SectionPacks/SectionPack";
 import {
   DbSectionName,
   DbStoreName,

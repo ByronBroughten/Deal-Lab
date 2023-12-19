@@ -1,4 +1,4 @@
-import { FeIdProp } from "../../../../../../../sharedWithServer/SectionInfo/NanoIdInfo";
+import { FeIdProp } from "../../../../../../../sharedWithServer/SectionInfos/NanoIdInfo";
 import { useGetterSection } from "../../../../../../stateClassHooks/useGetterSection";
 import { nativeTheme } from "../../../../../../theme/nativeTheme";
 import { SelectEditor } from "../../../../../appWide/SelectEditor";

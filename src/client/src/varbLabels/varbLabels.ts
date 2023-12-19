@@ -1,19 +1,19 @@
-import { externalLink } from "./sharedWithServer/Constants/externalLinks";
+import { externalLink } from "../sharedWithServer/Constants/externalLinks";
 import {
   RelLocalVarbInfo,
   relVarbInfoS,
-} from "./sharedWithServer/SectionInfo/RelVarbInfo";
+} from "../sharedWithServer/SectionInfos/RelVarbInfo";
 import {
   SectionName,
   sectionNames,
-} from "./sharedWithServer/sectionVarbsConfig/SectionName";
-import { dealModeLabels } from "./sharedWithServer/sectionVarbsConfig/StateValue/unionValues";
-import { SwitchTargetKey } from "./sharedWithServer/sectionVarbsConfig/allBaseSectionVarbs/baseSwitchNames";
+} from "../sharedWithServer/sectionVarbsConfig/SectionName";
+import { dealModeLabels } from "../sharedWithServer/sectionVarbsConfig/StateValue/unionValues";
+import { SwitchTargetKey } from "../sharedWithServer/sectionVarbsConfig/allBaseSectionVarbs/baseSwitchNames";
 import {
   VarbName,
   sectionVarbNames,
-} from "./sharedWithServer/sectionVarbsConfigDerived/baseSectionsDerived/baseSectionsVarbsTypes";
-import { StrictOmit } from "./sharedWithServer/utils/types";
+} from "../sharedWithServer/sectionVarbsConfigDerived/baseSectionsDerived/baseSectionsVarbsTypes";
+import { StrictOmit } from "../sharedWithServer/utils/types";
 
 const multis = {
   prepaids: text({
@@ -151,7 +151,7 @@ export const varbLabels = checkAllVarbLabels({
       moreInfoLink: externalLink("capEx"),
       info: `Capital expenses, or CapEx, are the big expensive things that every property has that will eventually need to be replaced—the roof, furnace, water heater, etc. No long-term analysis of a property is complete without accounting for these.\n\nTo do so, simply go through each major capital expense and estimate how much it would cost to replace it and how many years a replacement would last. From there, the app will calculate how much you should budget per month for all of them together.\n\nWe included a handy template of national averages. Feel free to use that as a rough estimate or tailor it to suite your needs`,
     }),
-    ...periodicInput("valueDollars", "Capital Expenses"),
+    ...simplePeriodic("valueDollars", "Capital Expenses"),
   }),
   ...prop("purchaseLoanValue", getLoanValue("Purchase")),
   ...prop("repairLoanValue", getLoanValue("Repair")),
@@ -170,7 +170,7 @@ export const varbLabels = checkAllVarbLabels({
       title: "Maintenance",
       info: `Every property needs minor repairs from time to time. Doorknobs break. Oven igniters die. Pipes burst. To account for these and other miscellaneous things, there are a few common methods.\n\nOne is to assume you will spend $1 per property square foot per year. The idea is that the more square feet there are, the more opportunity for things to go wrong.\n\nAnother common method is to assume that miscellanious repairs will cost 1% of the property's dollar value per year. The reasoning is that more expensive properties may generally have more expensive components that require more expensive repairs.\n\nA third method is to use the average between the first two methods.\n\nThere are probably other, more creative methods out there. By selecting "custom amount", you are free to enter any equation that suits you.`,
     }),
-    ...periodicInput("valueDollars", "Maintenance"),
+    ...simplePeriodic("valueDollars", "Maintenance"),
   }),
   ...prop("costOverrunValue", {
     valueSourceName: text({
@@ -278,7 +278,7 @@ export const varbLabels = checkAllVarbLabels({
     rehabCostBase: input("Rehab cost base"),
     afterRepairValue: multis.afterRepairValue,
     afterRepairValueEditor: multis.afterRepairValue,
-    ...spanInput("holdingPeriod", "Holding period", {
+    ...simpleSpan("holdingPeriod", "Holding period", {
       title: "Holding Period",
       info: `This is the amount of time that a property is owned before its rehab is complete and it is either sold (in the case of fix and flip) or refinanced and rented out (in the case of brrrr).\n\nTypically, the longer the holding period, the more that costs will accumulate.`,
     }),
@@ -307,12 +307,12 @@ export const varbLabels = checkAllVarbLabels({
   }),
   ...prop("unit", {
     numBedrooms: input("BR count"),
-    ...periodicInput("targetRent", "Rent"),
+    ...simplePeriodic("targetRent", "Rent"),
   }),
   ...prop("capExList", simplePeriodic("total", "Total")),
   ...prop("capExItem", {
     ...simplePeriodic("valueDollars", "Item cost"),
-    ...spanInput("lifespan", "Item lifespan"),
+    ...simpleSpan("lifespan", "Item lifespan"),
     costToReplace: input("Item cost to replace"),
   }),
   ...prop("repairValue", {
@@ -336,14 +336,11 @@ export const varbLabels = checkAllVarbLabels({
   }),
   ...prop("utilityValue", {
     valueSourceName: input("Utilities"),
-    ...periodicInput("valueDollars", "Utility costs"),
+    ...simplePeriodic("valueDollars", "Utility costs"),
   }),
 
-  ...prop("taxesValue", periodicInputAndSource("valueDollars", "Taxes")),
-  ...prop(
-    "homeInsValue",
-    periodicInputAndSource("valueDollars", "Home insurance")
-  ),
+  ...prop("taxesValue", periodicAndSource("valueDollars", "Taxes")),
+  ...prop("homeInsValue", periodicAndSource("valueDollars", "Home insurance")),
   ...prop("financing", {
     ...simplePeriodic("averagePrincipal", "Average principal payment"),
     ...simplePeriodic("averageInterest", "Average interest payment"),
@@ -369,7 +366,7 @@ export const varbLabels = checkAllVarbLabels({
     }),
     ...simplePeriodic("mortgageIns", "Total mortgage insurance"),
     mortgageInsUpfront: input("Total upfront mortgage insurance"),
-    ...spanInput("timeTillRefinance", "Time till refinance"),
+    ...simpleSpan("timeTillRefinance", "Time till refinance"),
     loanBaseDollars: input("Total loan base"),
     closingCosts: input("Total closing costs"),
   }),
@@ -381,8 +378,8 @@ export const varbLabels = checkAllVarbLabels({
   }),
   ...prop("mortgageInsPeriodicValue", {
     valueSourceName: input("Periodic mortgage insurance"),
-    ...periodicInput("valueDollars", "Mortgage insurance"),
-    ...periodicInput("percentLoan", "Mortgage insurance"),
+    ...simplePeriodic("valueDollars", "Mortgage insurance"),
+    ...simplePeriodic("percentLoan", "Mortgage insurance"),
     ...simplePeriodic("decimalOfLoan", "Mortgage insurance decimal"),
   }),
   prepaidPeriodic: sit("prepaidPeriodic", {
@@ -412,9 +409,9 @@ export const varbLabels = checkAllVarbLabels({
       info: `Sometimes in order to get a loan you are required to pay for mortgage insurance. This tends to happen with loans where the borrower pays a low down payment—lower than 20%.\n\nMortgage insurance basically assures the bank that it will be able to recover its assets in the event that the borrower does not repay them, which makes it less risky for them to work with smaller down payments.\n\nYou may be required to pay the mortgage insurance in a lump sum at the time of closing, or as a recurring monthly payment, or both. To determine whether you'll need mortgage insurance and, if so, in what form and at what cost, either research the type of loan you're entering or ask your lender.`,
     }),
     loanBaseDollars: input("Base loan amount"),
-    ...periodicInput("interestRatePercent", "Interest rate"),
+    ...simplePeriodic("interestRatePercent", "Interest rate"),
     ...simplePeriodic("interestRateDecimal", "Interest rate as decimal"),
-    ...spanInput("loanTerm", "Loan term"),
+    ...simpleSpan("loanTerm", "Loan term"),
     ...simplePeriodic("piFixedStandard", "Principal and interest"),
     ...simplePeriodic("interestOnlySimple", "Interest only payment"),
     ...simplePeriodic("averagePrincipal", "Average principal payment"),
@@ -437,14 +434,14 @@ export const varbLabels = checkAllVarbLabels({
     ...simplePeriodic("miscCosts", "Misc costs"),
     miscOnetimeCosts: input("Misc onetime costs"),
   }),
-  ...prop("miscPeriodicValue", periodicInputAndSource("valueDollars", "Misc")),
+  ...prop("miscPeriodicValue", periodicAndSource("valueDollars", "Misc")),
   ...prop("miscOnetimeValue", {
     valueSourceName: input("Misc upfront costs"),
     valueDollars: input("Misc upfront costs"),
     valueDollarsEditor: input("Misc upfront costs"),
   }),
   ...prop("mgmtBasePayValue", {
-    ...periodicInputAndSource("valueDollars", "Base pay", {
+    ...periodicAndSource("valueDollars", "Base pay", {
       variableLabel: "Mgmt base pay",
     }),
     valuePercentEditor: input("Base pay", {
@@ -457,7 +454,7 @@ export const varbLabels = checkAllVarbLabels({
   }),
   ...prop("vacancyLossValue", {
     valueSourceName: multis.vacancyLoss,
-    ...periodicInput("valueDollars", "Vacancy loss"),
+    ...simplePeriodic("valueDollars", "Vacancy loss"),
     valuePercentEditor: input("Vacancy loss"),
     valuePercent: input("Vacancy loss"),
     valueDecimal: input("Vacancy loss percent as decimal"),
@@ -551,7 +548,7 @@ export const varbLabels = checkAllVarbLabels({
   ...prop("periodicList", simplePeriodic("total", "List total")),
   ...prop("periodicItem", {
     valueSourceName: input(relVarbInfoS.local("displayName")),
-    ...periodicInput("valueDollars", relVarbInfoS.local("displayName")),
+    ...simplePeriodic("valueDollars", relVarbInfoS.local("displayName")),
   }),
   ...prop("numVarbItem", {
     valueSourceName: input(relVarbInfoS.local("displayName")),
@@ -570,50 +567,16 @@ export const varbLabels = checkAllVarbLabels({
   }),
 });
 
-function periodicInputAndSource<BN extends string>(
+function periodicAndSource<BN extends string>(
   baseName: BN,
   inputLabel: VarbLabel,
   options: OptionsNext = {}
 ): {
-  [T in
-    | "Monthly"
-    | "Yearly"
-    | "PeriodicEditor" as `${BN}${T}`]: VarbInfoTextProps;
+  [T in "Monthly" | "Yearly" as `${BN}${T}`]: VarbInfoTextProps;
 } & { valueSourceName: VarbInfoTextProps } {
   return {
-    ...periodicInput(baseName, inputLabel, options),
-    valueSourceName: input(inputLabel, options),
-  };
-}
-
-function periodicInput<BN extends string>(
-  baseName: BN,
-  inputLabel: VarbLabel,
-  options: OptionsNext = {}
-): {
-  [T in
-    | "Monthly"
-    | "Yearly"
-    | "PeriodicEditor" as `${BN}${T}`]: VarbInfoTextProps;
-} {
-  return {
     ...simplePeriodic(baseName, inputLabel, options),
-    [`${baseName}PeriodicEditor`]: text({
-      inputLabel,
-      ...options,
-      sourceFinder: [
-        {
-          switchInfo: relVarbInfoS.localBase(`${baseName}PeriodicSwitch`),
-          switchValue: "monthly",
-          sourceInfo: relVarbInfoS.localBase(`${baseName}Monthly`),
-        },
-        {
-          switchInfo: relVarbInfoS.localBase(`${baseName}PeriodicSwitch`),
-          switchValue: "yearly",
-          sourceInfo: relVarbInfoS.localBase(`${baseName}Yearly`),
-        },
-      ],
-    }),
+    valueSourceName: input(inputLabel, options),
   };
 }
 
@@ -637,35 +600,6 @@ function simplePeriodic<BN extends string>(
       variableLabel:
         typeof labelBase === "string" ? labelBase + " yearly" : labelBase,
       ...rest,
-    }),
-  };
-}
-
-function spanInput<BN extends string>(
-  baseName: BN,
-  inputLabel: string,
-  options: OptionsNext = {}
-): {
-  [T in "Months" | "Years" | "SpanEditor" as `${BN}${T}`]: VarbInfoTextProps;
-} {
-  return {
-    ...simpleSpan(baseName, inputLabel, options),
-    [`${baseName}SpanEditor`]: text({
-      inputLabel,
-      ...options,
-      variableLabel: options.variableLabel ?? inputLabel,
-      sourceFinder: [
-        {
-          switchInfo: relVarbInfoS.localBase(`${baseName}SpanSwitch`),
-          switchValue: "months",
-          sourceInfo: relVarbInfoS.localBase(`${baseName}Months`),
-        },
-        {
-          switchInfo: relVarbInfoS.localBase(`${baseName}SpanSwitch`),
-          switchValue: "years",
-          sourceInfo: relVarbInfoS.localBase(`${baseName}Years`),
-        },
-      ],
     }),
   };
 }

@@ -1,8 +1,8 @@
 import { makeDefaultSessionDeal } from "../../../sharedWithServer/defaultMaker/defaultSessionDeal";
 import { Id } from "../../../sharedWithServer/Ids/IdS";
 import { StoreId } from "../../../sharedWithServer/Ids/StoreId";
-import { DbIdProp } from "../../../sharedWithServer/SectionInfo/NanoIdInfo";
-import { SectionPack } from "../../../sharedWithServer/SectionPack/SectionPack";
+import { DbIdProp } from "../../../sharedWithServer/SectionInfos/NanoIdInfo";
+import { SectionPack } from "../../../sharedWithServer/SectionPacks/SectionPack";
 import {
   FeStoreInfo,
   isStoreNameByType,

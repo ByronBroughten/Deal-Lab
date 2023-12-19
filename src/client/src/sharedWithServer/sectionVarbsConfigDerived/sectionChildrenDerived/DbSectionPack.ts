@@ -1,9 +1,9 @@
-import { ChildPackArrs } from "../../SectionPack/ChildSectionPack";
+import { ChildPackArrs } from "../../SectionPacks/ChildSectionPack";
 import {
   isSectionPack,
   SectionPack,
   validateSectionPack,
-} from "../../SectionPack/SectionPack";
+} from "../../SectionPacks/SectionPack";
 
 import { Arr } from "../../utils/Arr";
 import { Obj } from "../../utils/Obj";

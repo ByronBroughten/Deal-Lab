@@ -2,7 +2,7 @@ import {
   GroupKey,
   GroupName,
   GroupRecord,
-} from "./sharedWithServer/sectionVarbsConfig/GroupName";
+} from "../sharedWithServer/sectionVarbsConfig/GroupName";
 
 export const periodicEndAdornments: GroupRecord<"periodic", string> = {
   monthly: "/month",

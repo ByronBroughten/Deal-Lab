@@ -1,5 +1,5 @@
 import { SxProps } from "@mui/material";
-import { FeIdProp } from "../../../../../../../../sharedWithServer/SectionInfo/NanoIdInfo";
+import { FeIdProp } from "../../../../../../../../sharedWithServer/SectionInfos/NanoIdInfo";
 import { GetterSection } from "../../../../../../../../sharedWithServer/StateGetters/GetterSection";
 import { VarbName } from "../../../../../../../../sharedWithServer/sectionVarbsConfigDerived/baseSectionsDerived/baseSectionsVarbsTypes";
 import { useGetterSection } from "../../../../../../../stateClassHooks/useGetterSection";

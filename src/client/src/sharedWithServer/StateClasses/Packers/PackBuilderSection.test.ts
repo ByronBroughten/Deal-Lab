@@ -1,5 +1,5 @@
 import { pick } from "lodash";
-import { isSectionPack } from "../../SectionPack/SectionPack";
+import { isSectionPack } from "../../SectionPacks/SectionPack";
 import { SectionValues } from "../../sectionVarbsConfig/StateValue";
 import { numObj } from "../../sectionVarbsConfig/StateValue/NumObj";
 import { stringObj } from "../../sectionVarbsConfig/StateValue/StringObj";

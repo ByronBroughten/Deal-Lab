@@ -1,5 +1,5 @@
 import React from "react";
-import { groupAdornment } from "../../../../../varbLabelUtils";
+import { groupAdornment } from "../../../../../varbLabels/varbLabelUtils";
 import { useGetterSection } from "../../../../stateClassHooks/useGetterSection";
 import { VarbListItemSimple } from "../../ListGroup/ListGroupShared/VarbListItemSimple";
 

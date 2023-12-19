@@ -1,8 +1,11 @@
 import { SxProps } from "@mui/material";
 import React from "react";
-import { SectionVarbNames } from "../../../sharedWithServer/SectionInfo/FeInfo";
+import { SectionVarbNames } from "../../../sharedWithServer/SectionInfos/FeInfo";
 import { SectionName } from "../../../sharedWithServer/sectionVarbsConfig/SectionName";
-import { getVarbLabels, VarbInfoTextProps } from "../../../varbLabels";
+import {
+  getVarbLabels,
+  VarbInfoTextProps,
+} from "../../../varbLabels/varbLabels";
 import { IconProps } from "../Icons";
 import { LabelWithInfo } from "./LabelWithInfo";
 

@@ -3,7 +3,7 @@ import { StoreId } from "../../Ids/StoreId";
 import {
   SectionPack,
   validateSectionPack,
-} from "../../SectionPack/SectionPack";
+} from "../../SectionPacks/SectionPack";
 import { ValidationError } from "../../utils/Error";
 import { Obj } from "../../utils/Obj";
 

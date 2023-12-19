@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import styled from "styled-components";
-import { FeSectionInfo } from "../../../../../../../sharedWithServer/SectionInfo/FeInfo";
+import { FeSectionInfo } from "../../../../../../../sharedWithServer/SectionInfos/FeInfo";
 import { SectionNameByType } from "../../../../../../../sharedWithServer/SectionNameByType";
 import { nativeTheme } from "../../../../../../theme/nativeTheme";
 import { ListRouteName } from "../../../../../UserListEditorPage/UserComponentClosed";

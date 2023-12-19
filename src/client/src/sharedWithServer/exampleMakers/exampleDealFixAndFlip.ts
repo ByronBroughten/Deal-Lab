@@ -1,4 +1,4 @@
-import { SectionPack } from "../SectionPack/SectionPack";
+import { SectionPack } from "../SectionPacks/SectionPack";
 import { numObj } from "../sectionVarbsConfig/StateValue/NumObj";
 import { numObjNext } from "../sectionVarbsConfig/StateValue/numObjNext";
 import { makeExampleProperty } from "./makeExampleProperty";

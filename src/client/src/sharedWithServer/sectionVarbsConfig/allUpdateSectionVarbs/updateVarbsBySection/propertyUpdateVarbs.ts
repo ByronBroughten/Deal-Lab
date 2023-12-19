@@ -1,4 +1,4 @@
-import { relVarbInfoS } from "../../../SectionInfo/RelVarbInfo";
+import { relVarbInfoS } from "../../../SectionInfos/RelVarbInfo";
 import { GroupKey, periodicEnding } from "../../GroupName";
 import { NumObj, numObj } from "../../StateValue/NumObj";
 

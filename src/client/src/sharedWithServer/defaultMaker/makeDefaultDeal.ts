@@ -1,4 +1,4 @@
-import { SectionPack } from "../SectionPack/SectionPack";
+import { SectionPack } from "../SectionPacks/SectionPack";
 import { PackBuilderSection } from "../StateClasses/Packers/PackBuilderSection";
 import { GetterSection } from "../StateGetters/GetterSection";
 import { StateValue } from "../sectionVarbsConfig/StateValue";

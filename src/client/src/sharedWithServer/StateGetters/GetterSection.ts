@@ -3,32 +3,32 @@ import { StoreId } from "../Ids/StoreId";
 import {
   AbsolutePathNodeDbIdInfo,
   AbsolutePathNodeInfoMixed,
-} from "../SectionInfo/AbsolutePathInfo";
-import { ChildValueInfo } from "../SectionInfo/ChildInfo";
+} from "../SectionInfos/AbsolutePathInfo";
+import { ChildValueInfo } from "../SectionInfos/ChildInfo";
 import {
   FeParentInfo,
   FeParentInfoSafe,
   FeSectionInfo,
   FeVarbInfo,
   FeVarbInfoNext,
-} from "../SectionInfo/FeInfo";
+} from "../SectionInfos/FeInfo";
 import {
   SectionInfoMixedFocal,
   VarbInfoMixedFocal,
   mixedInfoS,
-} from "../SectionInfo/MixedSectionInfo";
-import { RelSectionInfo } from "../SectionInfo/RelInfo";
+} from "../SectionInfos/MixedSectionInfo";
+import { RelSectionInfo } from "../SectionInfos/RelInfo";
 import {
   DbSectionInfoMixed,
   FeSectionInfoMixed,
-} from "../SectionInfo/VarbInfoBase";
-import { getVarbPathParams } from "../SectionInfo/VarbPathNameInfo";
+} from "../SectionInfos/VarbInfoBase";
+import { getVarbPathParams } from "../SectionInfos/VarbPathNameInfo";
 import {
   SectionNameByType,
   SectionNameType,
   sectionNameS,
 } from "../SectionNameByType";
-import { SectionPack } from "../SectionPack/SectionPack";
+import { SectionPack } from "../SectionPacks/SectionPack";
 import { SectionMeta } from "../SectionsMeta/SectionMeta";
 import { SectionValuesGeneric } from "../State/RawSection";
 import {

@@ -3,7 +3,7 @@ import React from "react";
 import { unstable_batchedUpdates } from "react-dom";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import styled from "styled-components";
-import { FeSectionInfo } from "../../../sharedWithServer/SectionInfo/FeInfo";
+import { FeSectionInfo } from "../../../sharedWithServer/SectionInfos/FeInfo";
 import { SectionNameByType } from "../../../sharedWithServer/SectionNameByType";
 import { useAction } from "../../stateClassHooks/useAction";
 import { useGetterFeStore } from "../../stateClassHooks/useFeStore";

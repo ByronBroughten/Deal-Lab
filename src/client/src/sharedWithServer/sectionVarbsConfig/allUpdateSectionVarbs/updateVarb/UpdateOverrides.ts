@@ -1,5 +1,5 @@
 import { isString } from "lodash";
-import { relVarbInfoS, rviS } from "../../../SectionInfo/RelVarbInfo";
+import { relVarbInfoS, rviS } from "../../../SectionInfos/RelVarbInfo";
 import { VarbNameWide } from "../../../sectionVarbsConfigDerived/baseSectionsDerived/baseSectionsVarbsTypes";
 import { Obj } from "../../../utils/Obj";
 import {

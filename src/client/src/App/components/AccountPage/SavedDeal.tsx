@@ -6,7 +6,7 @@ import { constants } from "../../../sharedWithServer/Constants";
 import {
   DbIdProp,
   FeIdProp,
-} from "../../../sharedWithServer/SectionInfo/NanoIdInfo";
+} from "../../../sharedWithServer/SectionInfos/NanoIdInfo";
 import { dealModeLabels } from "../../../sharedWithServer/sectionVarbsConfig/StateValue/unionValues";
 import { timeS } from "../../../sharedWithServer/utils/timeS";
 import {

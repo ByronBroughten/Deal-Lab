@@ -1,4 +1,4 @@
-import { fixedVariableLabel } from "../../varbLabels";
+import { fixedVariableLabel } from "../../varbLabels/varbLabels";
 import { constants } from "../Constants";
 import {
   pathSectionName,

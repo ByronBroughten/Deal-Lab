@@ -1,5 +1,5 @@
 import { SxProps } from "@mui/material";
-import { FeVarbInfo } from "../../../../sharedWithServer/SectionInfo/FeInfo";
+import { FeVarbInfo } from "../../../../sharedWithServer/SectionInfos/FeInfo";
 import { GetterSection } from "../../../../sharedWithServer/StateGetters/GetterSection";
 import { StateValue } from "../../../../sharedWithServer/sectionVarbsConfig/StateValue";
 import { getFinancingTitle } from "../../../../sharedWithServer/sectionVarbsConfig/StateValue/unionValues";

@@ -1,5 +1,5 @@
 import { Box, SxProps } from "@mui/material";
-import { FeVarbInfoNext } from "../../../sharedWithServer/SectionInfo/FeInfo";
+import { FeVarbInfoNext } from "../../../sharedWithServer/SectionInfos/FeInfo";
 import { SectionName } from "../../../sharedWithServer/sectionVarbsConfig/SectionName";
 import { VarbName } from "../../../sharedWithServer/sectionVarbsConfigDerived/baseSectionsDerived/baseSectionsVarbsTypes";
 import { useGetterVarbNext } from "../../stateClassHooks/useGetterVarb";

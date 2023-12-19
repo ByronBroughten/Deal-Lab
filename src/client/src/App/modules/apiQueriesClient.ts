@@ -4,7 +4,7 @@ import { validateSectionPackArrByType } from "../../sharedWithServer/SectionName
 import {
   SectionPack,
   validateSectionPack,
-} from "../../sharedWithServer/SectionPack/SectionPack";
+} from "../../sharedWithServer/SectionPacks/SectionPack";
 import {
   ApiQueries,
   ApiQuery,

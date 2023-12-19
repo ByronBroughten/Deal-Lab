@@ -1,6 +1,6 @@
 import { isEqual } from "lodash";
 import styled from "styled-components";
-import { FeVarbInfo } from "../../../../../../../sharedWithServer/SectionInfo/FeInfo";
+import { FeVarbInfo } from "../../../../../../../sharedWithServer/SectionInfos/FeInfo";
 import { GetterVarb } from "../../../../../../../sharedWithServer/StateGetters/GetterVarb";
 import { useGetterVarb } from "../../../../../../stateClassHooks/useGetterVarb";
 import {

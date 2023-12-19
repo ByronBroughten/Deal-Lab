@@ -1,6 +1,6 @@
 import { Box, SxProps } from "@mui/material";
 import styled from "styled-components";
-import { ValueInEntityInfo } from "../../../../sharedWithServer/SectionInfo/ValueInEntityInfo";
+import { ValueInEntityInfo } from "../../../../sharedWithServer/SectionInfos/ValueInEntityInfo";
 import { useGetterMainOnlyChild } from "../../../stateClassHooks/useMain";
 import ccs from "../../../theme/cssChunks";
 import { nativeTheme } from "../../../theme/nativeTheme";

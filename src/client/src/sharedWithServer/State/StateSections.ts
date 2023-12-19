@@ -1,6 +1,6 @@
 import { pick } from "lodash";
 import { Id } from "../Ids/IdS";
-import { FeSectionInfo, FeVarbInfo } from "../SectionInfo/FeInfo";
+import { FeSectionInfo, FeVarbInfo } from "../SectionInfos/FeInfo";
 import { SectionNameByType, sectionNameS } from "../SectionNameByType";
 import { Arr, ValueNotFoundError } from "../utils/Arr";
 import { Obj } from "../utils/Obj";

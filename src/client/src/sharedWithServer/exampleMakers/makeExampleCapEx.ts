@@ -1,4 +1,4 @@
-import { SectionPack } from "../SectionPack/SectionPack";
+import { SectionPack } from "../SectionPacks/SectionPack";
 import { numToObj } from "../sectionVarbsConfig/StateValue/NumObj";
 import { stringObj } from "../sectionVarbsConfig/StateValue/StringObj";
 import { timeS } from "../utils/timeS";

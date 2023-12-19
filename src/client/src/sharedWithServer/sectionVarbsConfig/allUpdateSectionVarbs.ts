@@ -1,4 +1,4 @@
-import { mixedInfoS } from "../SectionInfo/MixedSectionInfo";
+import { mixedInfoS } from "../SectionInfos/MixedSectionInfo";
 import { VarbName } from "../sectionVarbsConfigDerived/baseSectionsDerived/baseSectionsVarbsTypes";
 import { timeS } from "../utils/timeS";
 import { SectionName, sectionNames } from "./SectionName";

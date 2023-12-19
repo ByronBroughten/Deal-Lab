@@ -1,10 +1,10 @@
-import { sectionNames } from "./sharedWithServer/sectionVarbsConfig/SectionName";
-import { ValueName } from "./sharedWithServer/sectionVarbsConfig/ValueName";
+import { sectionNames } from "../sharedWithServer/sectionVarbsConfig/SectionName";
+import { ValueName } from "../sharedWithServer/sectionVarbsConfig/ValueName";
 import {
   sectionVarbNames,
   VarbNameWide,
-} from "./sharedWithServer/sectionVarbsConfigDerived/baseSectionsDerived/baseSectionsVarbsTypes";
-import { sectionVarbValueName } from "./sharedWithServer/sectionVarbsConfigDerived/baseSectionsDerived/baseSectionValues";
+} from "../sharedWithServer/sectionVarbsConfigDerived/baseSectionsDerived/baseSectionsVarbsTypes";
+import { sectionVarbValueName } from "../sharedWithServer/sectionVarbsConfigDerived/baseSectionsDerived/baseSectionValues";
 import { varbLabels } from "./varbLabels";
 
 function checkAllVarbLabels() {

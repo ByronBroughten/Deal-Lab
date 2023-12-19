@@ -1,8 +1,8 @@
 import { Box, SxProps } from "@mui/material";
 import React from "react";
-import { FeVarbInfo } from "../../../sharedWithServer/SectionInfo/FeInfo";
-import { VarbNames } from "../../../sharedWithServer/SectionInfo/VarbInfoBase";
-import { getVarbLabels } from "../../../varbLabels";
+import { FeVarbInfo } from "../../../sharedWithServer/SectionInfos/FeInfo";
+import { VarbNames } from "../../../sharedWithServer/SectionInfos/VarbInfoBase";
+import { getVarbLabels } from "../../../varbLabels/varbLabels";
 import { useGetterSections } from "../../stateClassHooks/useGetterSections";
 import { useGetterVarb } from "../../stateClassHooks/useGetterVarb";
 import { nativeTheme } from "../../theme/nativeTheme";

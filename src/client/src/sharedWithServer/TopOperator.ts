@@ -4,9 +4,9 @@ import {
   PrepperFeStore,
 } from "../App/modules/FeStore/PrepperFeStore";
 import { StoreId } from "./Ids/StoreId";
-import { FeSectionInfo } from "./SectionInfo/FeInfo";
-import { DbIdProp } from "./SectionInfo/NanoIdInfo";
-import { SectionPack } from "./SectionPack/SectionPack";
+import { FeSectionInfo } from "./SectionInfos/FeInfo";
+import { DbIdProp } from "./SectionInfos/NanoIdInfo";
+import { SectionPack } from "./SectionPacks/SectionPack";
 import { MainState, MainStateProps } from "./State/MainState";
 import { SolvePrepper } from "./StateClasses/SolvePreppers/SolvePrepper";
 import { SolvePrepperSection } from "./StateClasses/SolvePreppers/SolvePrepperSection";

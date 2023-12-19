@@ -2,7 +2,7 @@ import { SxProps } from "@mui/material";
 import {
   FeSectionInfo,
   FeVI,
-} from "../../../../../sharedWithServer/SectionInfo/FeInfo";
+} from "../../../../../sharedWithServer/SectionInfos/FeInfo";
 import { SectionName } from "../../../../../sharedWithServer/sectionVarbsConfig/SectionName";
 import { StrictExtract } from "../../../../../sharedWithServer/utils/types";
 import { FirstValueEditorCell } from "./FirstValueEditorCell";

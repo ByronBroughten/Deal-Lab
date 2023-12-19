@@ -1,6 +1,6 @@
 import { SxProps } from "@mui/material";
 import React from "react";
-import { FeSectionInfo } from "../../../../../../../sharedWithServer/SectionInfo/FeInfo";
+import { FeSectionInfo } from "../../../../../../../sharedWithServer/SectionInfos/FeInfo";
 import { SectionNameByType } from "../../../../../../../sharedWithServer/SectionNameByType";
 import { useGetterSection } from "../../../../../../stateClassHooks/useGetterSection";
 import { SelectEditor } from "../../../../../appWide/SelectEditor";

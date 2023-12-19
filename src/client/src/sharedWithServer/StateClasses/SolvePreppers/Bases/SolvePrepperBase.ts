@@ -1,4 +1,4 @@
-import { FeVarbInfo } from "../../../SectionInfo/FeInfo";
+import { FeVarbInfo } from "../../../SectionInfos/FeInfo";
 import { GetterVarb } from "../../../StateGetters/GetterVarb";
 import { SolverBase } from "../../SolverBases/SolverBase";
 

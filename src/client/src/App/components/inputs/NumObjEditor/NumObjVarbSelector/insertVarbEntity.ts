@@ -1,5 +1,5 @@
 import { Id } from "../../../../../sharedWithServer/Ids/IdS";
-import { ValueInEntityInfo } from "../../../../../sharedWithServer/SectionInfo/ValueInEntityInfo";
+import { ValueInEntityInfo } from "../../../../../sharedWithServer/SectionInfos/ValueInEntityInfo";
 import { EntityMapData } from "../../../../../sharedWithServer/sectionVarbsConfig/StateValue/stateValuesShared/entities";
 import { SetEditorState } from "../../../../modules/draftjs/draftUtils";
 import { insertEntity } from "../../../../modules/draftjs/insert";

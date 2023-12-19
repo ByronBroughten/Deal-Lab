@@ -2,7 +2,7 @@ import { SxProps } from "@mui/material";
 import { unstable_batchedUpdates } from "react-dom";
 import { AiOutlineSave } from "react-icons/ai";
 import { View } from "react-native";
-import { FeInfoByType } from "../../../../../../sharedWithServer/SectionInfo/FeInfo";
+import { FeInfoByType } from "../../../../../../sharedWithServer/SectionInfos/FeInfo";
 import { useToggleView } from "../../../../../modules/customHooks/useToggleView";
 import { useAction } from "../../../../../stateClassHooks/useAction";
 import { useGetterFeStore } from "../../../../../stateClassHooks/useFeStore";

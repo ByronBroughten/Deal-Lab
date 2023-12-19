@@ -3,7 +3,7 @@ import {
   SectionPack,
   isSectionPack,
   validateSectionPack,
-} from "./SectionPack/SectionPack";
+} from "./SectionPacks/SectionPack";
 import { SectionName } from "./sectionVarbsConfig/SectionName";
 import { SectionValues } from "./sectionVarbsConfig/StateValue";
 import {

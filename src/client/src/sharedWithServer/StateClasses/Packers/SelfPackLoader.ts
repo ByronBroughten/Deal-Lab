@@ -1,5 +1,5 @@
 import { SectionNameByType } from "../../SectionNameByType";
-import { SectionPack } from "../../SectionPack/SectionPack";
+import { SectionPack } from "../../SectionPacks/SectionPack";
 import { OneRawSection } from "../../State/RawSection";
 import {
   GetterSectionBase,
@@ -8,7 +8,7 @@ import {
 import { GetterSection } from "../../StateGetters/GetterSection";
 import { SectionName } from "../../sectionVarbsConfig/SectionName";
 
-import { FeSectionInfo } from "../../SectionInfo/FeInfo";
+import { FeSectionInfo } from "../../SectionInfos/FeInfo";
 import { UpdaterSection } from "../Updaters/UpdaterSection";
 
 interface SelfPackLoaderSectionProps<SN extends SectionNameByType>

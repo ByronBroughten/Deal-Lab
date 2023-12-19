@@ -1,4 +1,4 @@
-import { SectionPack } from "../SectionPack/SectionPack";
+import { SectionPack } from "../SectionPacks/SectionPack";
 import { PackBuilderSection } from "../StateClasses/Packers/PackBuilderSection";
 import { numObj } from "../sectionVarbsConfig/StateValue/NumObj";
 import { FinancingMode } from "../sectionVarbsConfig/StateValue/financingMode";

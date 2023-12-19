@@ -1,7 +1,7 @@
 import { pick } from "lodash";
 import { Id } from "../Ids/IdS";
-import { FeSectionInfo, FeVarbInfo } from "../SectionInfo/FeInfo";
-import { VarbNames } from "../SectionInfo/VarbInfoBase";
+import { FeSectionInfo, FeVarbInfo } from "../SectionInfos/FeInfo";
+import { VarbNames } from "../SectionInfos/VarbInfoBase";
 import { sectionsMeta } from "../SectionsMeta";
 import { SectionName } from "../sectionVarbsConfig/SectionName";
 import { SectionValues, StateValue } from "../sectionVarbsConfig/StateValue";

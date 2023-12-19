@@ -1,4 +1,4 @@
-import { FeVarbInfo } from "../../../../../../../sharedWithServer/SectionInfo/FeInfo";
+import { FeVarbInfo } from "../../../../../../../sharedWithServer/SectionInfos/FeInfo";
 import { GetterVarb } from "../../../../../../../sharedWithServer/StateGetters/GetterVarb";
 import { InEntityGetterVarb } from "../../../../../../../sharedWithServer/StateGetters/InEntityGetterVarb";
 import { useGetterSectionsProps } from "../../../../../../stateClassHooks/useGetterSectionsProps";

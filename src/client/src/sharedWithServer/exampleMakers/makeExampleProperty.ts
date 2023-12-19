@@ -1,4 +1,4 @@
-import { SectionPack } from "../SectionPack/SectionPack";
+import { SectionPack } from "../SectionPacks/SectionPack";
 import { sectionNames } from "../sectionVarbsConfig/SectionName";
 import { StateValue } from "../sectionVarbsConfig/StateValue";
 import {

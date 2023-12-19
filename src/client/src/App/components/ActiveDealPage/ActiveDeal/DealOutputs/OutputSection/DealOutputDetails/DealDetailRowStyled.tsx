@@ -1,7 +1,7 @@
 import { BiCaretDown, BiCaretRight } from "react-icons/bi";
 import { BsDot } from "react-icons/bs";
 import styled from "styled-components";
-import { FeVarbInfo } from "../../../../../../../sharedWithServer/SectionInfo/FeInfo";
+import { FeVarbInfo } from "../../../../../../../sharedWithServer/SectionInfos/FeInfo";
 import { StrictOmit } from "../../../../../../../sharedWithServer/utils/types";
 import useToggle from "../../../../../../modules/customHooks/useToggle";
 import theme from "../../../../../../theme/Theme";

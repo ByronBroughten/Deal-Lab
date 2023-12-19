@@ -1,4 +1,4 @@
-import { SectionPack } from "../SectionPack/SectionPack";
+import { SectionPack } from "../SectionPacks/SectionPack";
 import { SolvePrepperSection } from "../StateClasses/SolvePreppers/SolvePrepperSection";
 import { numObj } from "../sectionVarbsConfig/StateValue/NumObj";
 import { stringObj } from "../sectionVarbsConfig/StateValue/StringObj";

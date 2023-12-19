@@ -3,8 +3,8 @@ import { Id } from "../../Ids/IdS";
 import {
   ValueInEntityInfo,
   validateInEntityInfo,
-} from "../../SectionInfo/ValueInEntityInfo";
-import { isVarbPathName } from "../../SectionInfo/VarbPathNameInfo";
+} from "../../SectionInfos/ValueInEntityInfo";
+import { isVarbPathName } from "../../SectionInfos/VarbPathNameInfo";
 import { Obj } from "../../utils/Obj";
 import { zS } from "../../utils/zod";
 import {

@@ -1,10 +1,10 @@
-import { FeSectionInfo } from "../../SectionInfo/FeInfo";
+import { FeSectionInfo } from "../../SectionInfos/FeInfo";
 import { SectionNameByType, SectionNameType } from "../../SectionNameByType";
 import {
   ChildArrPack,
   ChildSectionPack,
-} from "../../SectionPack/ChildSectionPack";
-import { SectionPack } from "../../SectionPack/SectionPack";
+} from "../../SectionPacks/ChildSectionPack";
+import { SectionPack } from "../../SectionPacks/SectionPack";
 import { GetterSectionBase } from "../../StateGetters/Bases/GetterSectionBase";
 import {
   GetterSection,
@@ -19,7 +19,7 @@ import {
 } from "../../sectionVarbsConfigDerived/sectionChildrenDerived/ChildName";
 import { ChildSectionName } from "../../sectionVarbsConfigDerived/sectionChildrenDerived/ChildSectionName";
 
-import { ChildPackArrs } from "../../SectionPack/ChildSectionPack";
+import { ChildPackArrs } from "../../SectionPacks/ChildSectionPack";
 import { Obj } from "../../utils/Obj";
 import { AddChildOptions, UpdaterSection } from "../Updaters/UpdaterSection";
 import { PackBuilderSections } from "./PackBuilderSections";

@@ -1,7 +1,7 @@
-import { FeSectionInfo } from "../../SectionInfo/FeInfo";
-import { VarbInfoMixedFocal } from "../../SectionInfo/MixedSectionInfo";
+import { FeSectionInfo } from "../../SectionInfos/FeInfo";
+import { VarbInfoMixedFocal } from "../../SectionInfos/MixedSectionInfo";
 import { SectionNameByType } from "../../SectionNameByType";
-import { SectionPack } from "../../SectionPack/SectionPack";
+import { SectionPack } from "../../SectionPacks/SectionPack";
 import { StateSections } from "../../State/StateSections";
 import { GetterSectionProps } from "../../StateGetters/Bases/GetterSectionBase";
 import { GetterSection } from "../../StateGetters/GetterSection";
@@ -19,7 +19,7 @@ import { ChildSectionName } from "../../sectionVarbsConfigDerived/sectionChildre
 import {
   ChildPackArrs,
   ChildPackInfo,
-} from "../../SectionPack/ChildSectionPack";
+} from "../../SectionPacks/ChildSectionPack";
 import { DefaultUpdaterSection } from "../DefaultUpdaters/DefaultUpdaterSection";
 import {
   AddChildWithPackOptions,

@@ -1,4 +1,4 @@
-import { FeSectionInfo } from "../../sharedWithServer/SectionInfo/FeInfo";
+import { FeSectionInfo } from "../../sharedWithServer/SectionInfos/FeInfo";
 import { SectionNameByType } from "../../sharedWithServer/SectionNameByType";
 import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection";
 import { GetterSections } from "../../sharedWithServer/StateGetters/GetterSections";

@@ -1,5 +1,5 @@
 import { Id } from "../Ids/IdS";
-import { SectionPack } from "../SectionPack/SectionPack";
+import { SectionPack } from "../SectionPacks/SectionPack";
 import {
   StoreName,
   StoreSectionName,

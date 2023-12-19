@@ -2,7 +2,7 @@ import { pick } from "lodash";
 import mongoose from "mongoose";
 import { DbUserService } from "../DbUserService";
 import { constants } from "../client/src/sharedWithServer/Constants";
-import { SectionPack } from "../client/src/sharedWithServer/SectionPack/SectionPack";
+import { SectionPack } from "../client/src/sharedWithServer/SectionPacks/SectionPack";
 import { PackBuilderSection } from "../client/src/sharedWithServer/StateClasses/Packers/PackBuilderSection";
 import { PackBuilderSections } from "../client/src/sharedWithServer/StateClasses/Packers/PackBuilderSections";
 import {

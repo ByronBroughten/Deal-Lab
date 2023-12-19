@@ -1,5 +1,5 @@
-import { ChildPackArrs } from "../SectionPack/ChildSectionPack";
-import { SectionPack } from "../SectionPack/SectionPack";
+import { ChildPackArrs } from "../SectionPacks/ChildSectionPack";
+import { SectionPack } from "../SectionPacks/SectionPack";
 import { DbPack } from "../sectionVarbsConfigDerived/sectionChildrenDerived/DbSectionPack";
 import {
   DbSectionName,

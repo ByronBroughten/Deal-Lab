@@ -1,8 +1,8 @@
 import { pick } from "lodash";
 import { SolverFeStore } from "../../../App/modules/FeStore/SolverFeStore";
 import { StoreId } from "../../Ids/StoreId";
-import { FeSectionInfo, FeVarbInfo } from "../../SectionInfo/FeInfo";
-import { SectionPack } from "../../SectionPack/SectionPack";
+import { FeSectionInfo, FeVarbInfo } from "../../SectionInfos/FeInfo";
+import { SectionPack } from "../../SectionPacks/SectionPack";
 import { SolveState } from "../../State/SolveState";
 import { StateSections } from "../../State/StateSections";
 import { GetterSections } from "../../StateGetters/GetterSections";

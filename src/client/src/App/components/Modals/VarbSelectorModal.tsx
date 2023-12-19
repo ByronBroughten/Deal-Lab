@@ -1,7 +1,7 @@
 import { SxProps } from "@mui/material";
 import { EditorState } from "draft-js";
 import React from "react";
-import { FeVarbInfo } from "../../../sharedWithServer/SectionInfo/FeInfo";
+import { FeVarbInfo } from "../../../sharedWithServer/SectionInfos/FeInfo";
 import { DealMode } from "../../../sharedWithServer/sectionVarbsConfig/StateValue/dealMode";
 import { timeS } from "../../../sharedWithServer/utils/timeS";
 import { useGetterSectionOnlyOne } from "../../stateClassHooks/useGetterSection";

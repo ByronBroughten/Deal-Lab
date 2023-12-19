@@ -4,7 +4,7 @@ import styled from "styled-components";
 import {
   FeVarbInfo,
   FeVarbInfoNext,
-} from "../../../sharedWithServer/SectionInfo/FeInfo";
+} from "../../../sharedWithServer/SectionInfos/FeInfo";
 import { numObj } from "../../../sharedWithServer/sectionVarbsConfig/StateValue/NumObj";
 import { useAction } from "../../stateClassHooks/useAction";
 import { useGetterVarb } from "../../stateClassHooks/useGetterVarb";

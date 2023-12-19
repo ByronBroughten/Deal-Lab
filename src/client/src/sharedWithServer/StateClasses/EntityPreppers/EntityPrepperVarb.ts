@@ -1,4 +1,4 @@
-import { VarbInfoMixedFocal } from "../../SectionInfo/MixedSectionInfo";
+import { VarbInfoMixedFocal } from "../../SectionInfos/MixedSectionInfo";
 import { SectionName } from "../../sectionVarbsConfig/SectionName";
 import {
   entityS,

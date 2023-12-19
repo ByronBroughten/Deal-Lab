@@ -1,9 +1,9 @@
-import { FeSectionInfo } from "../../SectionInfo/FeInfo";
+import { FeSectionInfo } from "../../SectionInfos/FeInfo";
 import {
   ChildArrPack,
   ChildPackArrs,
-} from "../../SectionPack/ChildSectionPack";
-import { SectionPack } from "../../SectionPack/SectionPack";
+} from "../../SectionPacks/ChildSectionPack";
+import { SectionPack } from "../../SectionPacks/SectionPack";
 import { SolveState } from "../../State/SolveState";
 import { StateSections } from "../../State/StateSections";
 import { GetterSectionProps } from "../../StateGetters/Bases/GetterSectionBase";

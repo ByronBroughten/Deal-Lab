@@ -1,5 +1,5 @@
 import { SxProps } from "@mui/material";
-import { FeVarbInfo } from "../../../sharedWithServer/SectionInfo/FeInfo";
+import { FeVarbInfo } from "../../../sharedWithServer/SectionInfos/FeInfo";
 import { GetterVarb } from "../../../sharedWithServer/StateGetters/GetterVarb";
 import { HandleReturn, MaterialDraftEditor } from "./MaterialDraftEditor";
 import { useDraftInput } from "./useDraftInput";

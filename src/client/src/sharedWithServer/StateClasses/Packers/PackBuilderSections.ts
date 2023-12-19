@@ -1,6 +1,6 @@
 import { pick } from "lodash";
-import { FeSectionInfo } from "../../SectionInfo/FeInfo";
-import { SectionPack } from "../../SectionPack/SectionPack";
+import { FeSectionInfo } from "../../SectionInfos/FeInfo";
+import { SectionPack } from "../../SectionPacks/SectionPack";
 import { StateSections } from "../../State/StateSections";
 import { GetterSections } from "../../StateGetters/GetterSections";
 import { defaultMaker } from "../../defaultMaker/defaultMaker";

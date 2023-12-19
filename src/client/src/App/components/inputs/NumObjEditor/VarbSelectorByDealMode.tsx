@@ -1,7 +1,7 @@
 import { SxProps } from "@mui/material";
-import { mixedInfoS } from "../../../../sharedWithServer/SectionInfo/MixedSectionInfo";
-import { ValueCustomVarbPathInfo } from "../../../../sharedWithServer/SectionInfo/ValueInEntityInfo";
-import { collectionNamesFixed } from "../../../../sharedWithServer/SectionInfo/VarbPathNameInfo";
+import { mixedInfoS } from "../../../../sharedWithServer/SectionInfos/MixedSectionInfo";
+import { ValueCustomVarbPathInfo } from "../../../../sharedWithServer/SectionInfos/ValueInEntityInfo";
+import { collectionNamesFixed } from "../../../../sharedWithServer/SectionInfos/VarbPathNameInfo";
 import { GetterSection } from "../../../../sharedWithServer/StateGetters/GetterSection";
 import { fixedVarbOptionArrs } from "../../../../sharedWithServer/sectionPaths/varbPathOptions";
 import { DealMode } from "../../../../sharedWithServer/sectionVarbsConfig/StateValue/dealMode";

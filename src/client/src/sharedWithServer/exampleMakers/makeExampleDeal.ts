@@ -1,4 +1,4 @@
-import { SectionPack } from "../SectionPack/SectionPack";
+import { SectionPack } from "../SectionPacks/SectionPack";
 import { DealMode } from "../sectionVarbsConfig/StateValue/dealMode";
 import { StrictExclude } from "../utils/types";
 import { exampleDealBuyAndHold } from "./exampleDealBuyAndHold";

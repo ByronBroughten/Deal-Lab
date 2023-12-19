@@ -1,4 +1,4 @@
-import { SectionPack } from "../SectionPack/SectionPack";
+import { SectionPack } from "../SectionPacks/SectionPack";
 import { DefaultUpdaterSection } from "../StateClasses/DefaultUpdaters/DefaultUpdaterSection";
 import { SectionName } from "../sectionVarbsConfig/SectionName";
 import { StrictExclude } from "../utils/types";

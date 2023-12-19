@@ -1,6 +1,6 @@
 import { isString } from "lodash";
-import { isVarbName } from "../../../SectionInfo/VarbInfoBase";
-import { VarbPathName } from "../../../SectionInfo/VarbPathNameInfo";
+import { isVarbName } from "../../../SectionInfos/VarbInfoBase";
+import { VarbPathName } from "../../../SectionInfos/VarbPathNameInfo";
 import { GroupVarbNameBase } from "../../../sectionVarbsConfigDerived/baseSectionsDerived/baseGroupNames";
 import {
   VarbNameWide,

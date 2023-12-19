@@ -1,4 +1,4 @@
-import { PathNameVarbInfoMixed } from "../../SectionInfo/PathNameInfo";
+import { PathNameVarbInfoMixed } from "../../SectionInfos/PathNameInfo";
 import {
   RelChildrenVarbInfo,
   RelFirstChildVarbInfo,
@@ -8,8 +8,8 @@ import {
   RelPiblingVarbInfo,
   RelStepSiblingOfChildVarbInfo,
   RelStepSiblingVarbInfo,
-} from "../../SectionInfo/RelVarbInfo";
-import { VarbPathNameInfoMixed } from "../../SectionInfo/VarbPathNameInfo";
+} from "../../SectionInfos/RelVarbInfo";
+import { VarbPathNameInfoMixed } from "../../SectionInfos/VarbPathNameInfo";
 
 export type PathInVarbInfo =
   | RelInVarbInfo

@@ -1,7 +1,7 @@
 import {
   AbsolutePathInfo,
   absolutePathInfo,
-} from "../SectionInfo/AbsolutePathInfo";
+} from "../SectionInfos/AbsolutePathInfo";
 import { SectionName } from "../sectionVarbsConfig/SectionName";
 import {
   ChildName,

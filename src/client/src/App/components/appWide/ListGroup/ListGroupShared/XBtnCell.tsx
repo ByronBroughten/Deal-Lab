@@ -1,4 +1,4 @@
-import { FeSectionInfo } from "../../../../../sharedWithServer/SectionInfo/FeInfo";
+import { FeSectionInfo } from "../../../../../sharedWithServer/SectionInfos/FeInfo";
 import { MuiRow } from "../../../general/MuiRow";
 import { RemoveSectionXBtn } from "../../RemoveSectionXBtn";
 

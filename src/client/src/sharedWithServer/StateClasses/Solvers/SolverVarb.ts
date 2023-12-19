@@ -1,7 +1,7 @@
 import { Id } from "../../Ids/IdS";
-import { VarbInfoMixedFocal } from "../../SectionInfo/MixedSectionInfo";
-import { ValueInEntityInfo } from "../../SectionInfo/ValueInEntityInfo";
-import { FeVarbInfoMixed } from "../../SectionInfo/VarbInfoBase";
+import { VarbInfoMixedFocal } from "../../SectionInfos/MixedSectionInfo";
+import { ValueInEntityInfo } from "../../SectionInfos/ValueInEntityInfo";
+import { FeVarbInfoMixed } from "../../SectionInfos/VarbInfoBase";
 import { SectionNameByType } from "../../SectionNameByType";
 import { StateSections } from "../../State/StateSections";
 import { GetterSections } from "../../StateGetters/GetterSections";

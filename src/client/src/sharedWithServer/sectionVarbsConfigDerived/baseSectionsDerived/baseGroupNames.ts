@@ -1,4 +1,4 @@
-import { SnProp } from "../../SectionInfo/SectionNameProp";
+import { SnProp } from "../../SectionInfos/SectionNameProp";
 import {
   GroupKey,
   GroupName,

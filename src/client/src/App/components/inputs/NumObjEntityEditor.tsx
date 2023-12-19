@@ -1,8 +1,11 @@
 import { Box, SxProps } from "@mui/material";
 import { EditorState } from "draft-js";
 import React from "react";
-import { FeVI, FeVarbInfo } from "../../../sharedWithServer/SectionInfo/FeInfo";
-import { ValueFixedVarbPathName } from "../../../sharedWithServer/SectionInfo/ValueInEntityInfo";
+import {
+  FeVI,
+  FeVarbInfo,
+} from "../../../sharedWithServer/SectionInfos/FeInfo";
+import { ValueFixedVarbPathName } from "../../../sharedWithServer/SectionInfos/ValueInEntityInfo";
 import { GetterVarb } from "../../../sharedWithServer/StateGetters/GetterVarb";
 import { EditorTextStatus } from "../../../sharedWithServer/StateGetters/GetterVarbNumObj";
 import { SectionName } from "../../../sharedWithServer/sectionVarbsConfig/SectionName";

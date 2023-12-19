@@ -1,4 +1,4 @@
-import { FeVarbInfo } from "../../SectionInfo/FeInfo";
+import { FeVarbInfo } from "../../SectionInfos/FeInfo";
 import { MainStateProps } from "../../State/MainState";
 import { SolveState } from "../../State/SolveState";
 import { StateSections } from "../../State/StateSections";

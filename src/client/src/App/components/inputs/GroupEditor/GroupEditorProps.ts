@@ -1,6 +1,6 @@
 import { SxProps } from "@mui/material";
-import { FeVI } from "../../../../sharedWithServer/SectionInfo/FeInfo";
-import { ValueFixedVarbPathName } from "../../../../sharedWithServer/SectionInfo/ValueInEntityInfo";
+import { FeVI } from "../../../../sharedWithServer/SectionInfos/FeInfo";
+import { ValueFixedVarbPathName } from "../../../../sharedWithServer/SectionInfos/ValueInEntityInfo";
 import {
   GroupKey,
   GroupName,

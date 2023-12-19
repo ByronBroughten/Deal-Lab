@@ -1,5 +1,5 @@
 import { Box, SxProps } from "@mui/material";
-import { FeSectionInfo } from "../../../../../../../sharedWithServer/SectionInfo/FeInfo";
+import { FeSectionInfo } from "../../../../../../../sharedWithServer/SectionInfos/FeInfo";
 import {
   SectionNameByType,
   sectionNameS,

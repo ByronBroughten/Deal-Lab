@@ -1,4 +1,4 @@
-import { SectionPack } from "../SectionPack/SectionPack";
+import { SectionPack } from "../SectionPacks/SectionPack";
 import { validateSectionPackDuck } from "../sectionVarbsConfigDerived/sectionChildrenDerived/validateSectionPackDuck";
 import { Obj } from "../utils/Obj";
 

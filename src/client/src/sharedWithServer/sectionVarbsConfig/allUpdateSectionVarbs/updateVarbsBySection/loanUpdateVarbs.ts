@@ -1,4 +1,4 @@
-import { relVarbInfoS } from "../../../SectionInfo/RelVarbInfo";
+import { relVarbInfoS } from "../../../SectionInfos/RelVarbInfo";
 import { GroupKey, groupNameEnding } from "../../GroupName";
 import { USVS, usvs } from "../updateSectionVarbs";
 import { uvS } from "../updateVarb";

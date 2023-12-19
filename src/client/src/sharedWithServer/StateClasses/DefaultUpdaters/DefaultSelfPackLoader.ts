@@ -1,6 +1,6 @@
-import { FeSectionInfo } from "../../SectionInfo/FeInfo";
+import { FeSectionInfo } from "../../SectionInfos/FeInfo";
 import { SectionNameByType } from "../../SectionNameByType";
-import { SectionPack } from "../../SectionPack/SectionPack";
+import { SectionPack } from "../../SectionPacks/SectionPack";
 import { OneRawSection } from "../../State/RawSection";
 import { GetterSectionProps } from "../../StateGetters/Bases/GetterSectionBase";
 import { GetterSection } from "../../StateGetters/GetterSection";

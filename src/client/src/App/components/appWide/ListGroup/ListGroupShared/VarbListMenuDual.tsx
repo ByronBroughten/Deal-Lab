@@ -1,4 +1,4 @@
-import { FeSectionInfo } from "../../../../../sharedWithServer/SectionInfo/FeInfo";
+import { FeSectionInfo } from "../../../../../sharedWithServer/SectionInfos/FeInfo";
 import { SectionNameByType } from "../../../../../sharedWithServer/SectionNameByType";
 import { ListRouteName } from "../../../UserListEditorPage/UserComponentClosed";
 import { StoreSectionActions } from "../../GeneralSection/MainSection/StoreSectionActions";

@@ -1,5 +1,5 @@
 import { cloneDeep } from "lodash";
-import { FeVarbInfo } from "../SectionInfo/FeInfo";
+import { FeVarbInfo } from "../SectionInfos/FeInfo";
 import { InUpdatePack } from "../SectionsMeta/VarbMeta";
 import { InVarbInfo } from "../StateClasses/Solvers/SolverVarb";
 import { SectionName } from "../sectionVarbsConfig/SectionName";

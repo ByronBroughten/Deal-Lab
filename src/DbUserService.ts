@@ -16,16 +16,16 @@ import { constants } from "./client/src/sharedWithServer/Constants";
 import {
   OneDbSectionValueInfo,
   OneDbVarbInfo,
-} from "./client/src/sharedWithServer/SectionInfo/DbStoreInfo";
-import { FeSectionInfo } from "./client/src/sharedWithServer/SectionInfo/FeInfo";
+} from "./client/src/sharedWithServer/SectionInfos/DbStoreInfo";
+import { FeSectionInfo } from "./client/src/sharedWithServer/SectionInfos/FeInfo";
 import { PackBuilderSection } from "./client/src/sharedWithServer/StateClasses/Packers/PackBuilderSection";
 import {
   StoreName,
   StoreSectionName,
 } from "./client/src/sharedWithServer/sectionStores";
 
-import { ChildPackArrs } from "./client/src/sharedWithServer/SectionPack/ChildSectionPack";
-import { SectionPack } from "./client/src/sharedWithServer/SectionPack/SectionPack";
+import { ChildPackArrs } from "./client/src/sharedWithServer/SectionPacks/ChildSectionPack";
+import { SectionPack } from "./client/src/sharedWithServer/SectionPacks/SectionPack";
 import { GetterSection } from "./client/src/sharedWithServer/StateGetters/GetterSection";
 import { EstimatorPlanValues } from "./client/src/sharedWithServer/apiQueriesShared/EstimatorPlanValues";
 import { UserData } from "./client/src/sharedWithServer/apiQueriesShared/validateUserData";

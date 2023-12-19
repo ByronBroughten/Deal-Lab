@@ -1,4 +1,4 @@
-import { SectionPack } from "../SectionPack/SectionPack";
+import { SectionPack } from "../SectionPacks/SectionPack";
 import { UpdaterSection } from "../StateClasses/Updaters/UpdaterSection";
 import { SectionName } from "../sectionVarbsConfig/SectionName";
 import { ChildName } from "../sectionVarbsConfigDerived/sectionChildrenDerived/ChildName";

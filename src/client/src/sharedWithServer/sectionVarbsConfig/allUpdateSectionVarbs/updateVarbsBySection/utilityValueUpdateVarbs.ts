@@ -1,4 +1,4 @@
-import { VarbPathName } from "../../../SectionInfo/VarbPathNameInfo";
+import { VarbPathName } from "../../../SectionInfos/VarbPathNameInfo";
 import { GroupKey, groupNameEnding, GroupRecord } from "../../GroupName";
 
 import { usvs, USVS } from "../updateSectionVarbs";

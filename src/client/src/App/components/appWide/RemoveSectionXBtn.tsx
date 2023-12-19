@@ -1,4 +1,4 @@
-import { FeSectionInfo } from "../../../sharedWithServer/SectionInfo/FeInfo";
+import { FeSectionInfo } from "../../../sharedWithServer/SectionInfos/FeInfo";
 import { FeStoreInfo } from "../../../sharedWithServer/sectionStores";
 import { useAction, useActionWithProps } from "../../stateClassHooks/useAction";
 import { MuiStandardPropsNext } from "../general/StandardProps";

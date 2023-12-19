@@ -1,10 +1,10 @@
-import { FeSectionInfo } from "../../SectionInfo/FeInfo";
+import { FeSectionInfo } from "../../SectionInfos/FeInfo";
 import { SectionNameByType } from "../../SectionNameByType";
 import {
   ChildPackArrs,
   ChildSectionPack,
-} from "../../SectionPack/ChildSectionPack";
-import { SectionPack } from "../../SectionPack/SectionPack";
+} from "../../SectionPacks/ChildSectionPack";
+import { SectionPack } from "../../SectionPacks/SectionPack";
 import {
   ChildSpNums,
   OneRawSection,

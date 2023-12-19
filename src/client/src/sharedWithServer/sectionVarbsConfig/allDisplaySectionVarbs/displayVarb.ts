@@ -1,4 +1,4 @@
-import { RelLocalVarbInfo } from "../../SectionInfo/RelVarbInfo";
+import { RelLocalVarbInfo } from "../../SectionInfos/RelVarbInfo";
 
 export type DisplayName = string | RelLocalVarbInfo;
 export type DisplayOverrideSwitches = readonly DisplayOverrideSwitch[];

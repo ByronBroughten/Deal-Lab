@@ -1,10 +1,14 @@
 import { SectionId } from "../Ids/SectionId";
-import { FeSectionInfo, FeVarbInfo, varbIdToInfo } from "../SectionInfo/FeInfo";
+import {
+  FeSectionInfo,
+  FeVarbInfo,
+  varbIdToInfo,
+} from "../SectionInfos/FeInfo";
 import {
   IdInfoMixedMulti,
   SectionInfoMixed,
   VarbInfoMixed,
-} from "../SectionInfo/MixedSectionInfo";
+} from "../SectionInfos/MixedSectionInfo";
 import { SectionNameByType } from "../SectionNameByType";
 import { SectionsMeta, sectionsMeta } from "../SectionsMeta";
 import { SectionName } from "../sectionVarbsConfig/SectionName";

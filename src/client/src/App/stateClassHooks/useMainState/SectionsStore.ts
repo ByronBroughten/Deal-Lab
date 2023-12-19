@@ -5,7 +5,7 @@ import { config } from "../../../sharedWithServer/Constants";
 import {
   ChildSectionPack,
   validateSectionPackArrs,
-} from "../../../sharedWithServer/SectionPack/ChildSectionPack";
+} from "../../../sharedWithServer/SectionPacks/ChildSectionPack";
 import { StateSections } from "../../../sharedWithServer/State/StateSections";
 import { PackBuilderSection } from "../../../sharedWithServer/StateClasses/Packers/PackBuilderSection";
 import { SolverSection } from "../../../sharedWithServer/StateClasses/Solvers/SolverSection";

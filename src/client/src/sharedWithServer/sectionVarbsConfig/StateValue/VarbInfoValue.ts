@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { VarbInfoMixedFocal } from "../../SectionInfo/MixedSectionInfo";
+import { VarbInfoMixedFocal } from "../../SectionInfos/MixedSectionInfo";
 
 export type VarbInfoValue = (VarbInfoMixedFocal & { entityId: string }) | null;
 function isVarbInfoValue(value: any): value is VarbInfoValue {

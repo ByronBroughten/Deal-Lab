@@ -3,12 +3,12 @@ import {
   FeSectionInfo,
   FeVarbInfo,
   FeVarbValueInfo,
-} from "../../../sharedWithServer/SectionInfo/FeInfo";
+} from "../../../sharedWithServer/SectionInfos/FeInfo";
 import {
   DbIdProp,
   FeIdProp,
-} from "../../../sharedWithServer/SectionInfo/NanoIdInfo";
-import { SectionPack } from "../../../sharedWithServer/SectionPack/SectionPack";
+} from "../../../sharedWithServer/SectionInfos/NanoIdInfo";
+import { SectionPack } from "../../../sharedWithServer/SectionPacks/SectionPack";
 import { MainState } from "../../../sharedWithServer/State/MainState";
 import { SolvePrepperSection } from "../../../sharedWithServer/StateClasses/SolvePreppers/SolvePrepperSection";
 import { SolvePrepperVarb } from "../../../sharedWithServer/StateClasses/SolvePreppers/SolvePrepperVarb";

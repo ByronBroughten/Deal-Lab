@@ -1,16 +1,16 @@
-import { mixedInfoS } from "../../../SectionInfo/MixedSectionInfo";
-import { PathNameVarbInfoMixed } from "../../../SectionInfo/PathNameInfo";
+import { mixedInfoS } from "../../../SectionInfos/MixedSectionInfo";
+import { PathNameVarbInfoMixed } from "../../../SectionInfos/PathNameInfo";
 import {
   RelChildrenVarbInfo,
   RelLocalVarbInfo,
   relVarbInfoS,
-} from "../../../SectionInfo/RelVarbInfo";
-import { isVarbName } from "../../../SectionInfo/VarbInfoBase";
+} from "../../../SectionInfos/RelVarbInfo";
+import { isVarbName } from "../../../SectionInfos/VarbInfoBase";
 import {
   VarbPathName,
   VarbPathNameInfoMixed,
   VarbPathValue,
-} from "../../../SectionInfo/VarbPathNameInfo";
+} from "../../../SectionInfos/VarbPathNameInfo";
 import {
   SectionPathName,
   SectionPathVarbName,

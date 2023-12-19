@@ -1,7 +1,7 @@
 import { Id } from "../../../Ids/IdS";
-import { mixedInfoS } from "../../../SectionInfo/MixedSectionInfo";
-import { relVarbInfoS } from "../../../SectionInfo/RelVarbInfo";
-import { VarbPathName } from "../../../SectionInfo/VarbPathNameInfo";
+import { mixedInfoS } from "../../../SectionInfos/MixedSectionInfo";
+import { relVarbInfoS } from "../../../SectionInfos/RelVarbInfo";
+import { VarbPathName } from "../../../SectionInfos/VarbPathNameInfo";
 import {
   SectionPathName,
   SectionPathVarbName,

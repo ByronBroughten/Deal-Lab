@@ -1,12 +1,12 @@
 import { EditorState } from "draft-js";
 import React from "react";
 import styled from "styled-components";
-import { FeVarbInfo } from "../../../../sharedWithServer/SectionInfo/FeInfo";
-import { mixedInfoS } from "../../../../sharedWithServer/SectionInfo/MixedSectionInfo";
+import { FeVarbInfo } from "../../../../sharedWithServer/SectionInfos/FeInfo";
+import { mixedInfoS } from "../../../../sharedWithServer/SectionInfos/MixedSectionInfo";
 import {
   ValueFixedVarbPathName,
   ValueInEntityInfo,
-} from "../../../../sharedWithServer/SectionInfo/ValueInEntityInfo";
+} from "../../../../sharedWithServer/SectionInfos/ValueInEntityInfo";
 import { useToggleView } from "../../../modules/customHooks/useToggleView";
 import { useGetterSection } from "../../../stateClassHooks/useGetterSection";
 import theme from "../../../theme/Theme";

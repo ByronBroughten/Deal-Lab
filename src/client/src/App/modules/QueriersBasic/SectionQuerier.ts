@@ -3,7 +3,7 @@ import {
   makeReq,
   SectionPackReq,
 } from "../../../sharedWithServer/apiQueriesShared/makeReqAndRes";
-import { SectionPack } from "../../../sharedWithServer/SectionPack/SectionPack";
+import { SectionPack } from "../../../sharedWithServer/SectionPacks/SectionPack";
 import { StoreName } from "../../../sharedWithServer/sectionStores";
 import { ChildName } from "../../../sharedWithServer/sectionVarbsConfigDerived/sectionChildrenDerived/ChildName";
 import { DbSectionName } from "../../../sharedWithServer/sectionVarbsConfigDerived/sectionChildrenDerived/DbStoreName";

@@ -1,9 +1,9 @@
 import { AddChildWithPackOptions } from "../Packers/PackBuilderSection";
 import { UpdaterSection } from "../Updaters/UpdaterSection";
 
-import { FeSectionInfo } from "../../SectionInfo/FeInfo";
+import { FeSectionInfo } from "../../SectionInfos/FeInfo";
 import { SectionNameByType } from "../../SectionNameByType";
-import { SectionPack } from "../../SectionPack/SectionPack";
+import { SectionPack } from "../../SectionPacks/SectionPack";
 import { SectionName } from "../../sectionVarbsConfig/SectionName";
 import { SectionValues } from "../../sectionVarbsConfig/StateValue";
 import {

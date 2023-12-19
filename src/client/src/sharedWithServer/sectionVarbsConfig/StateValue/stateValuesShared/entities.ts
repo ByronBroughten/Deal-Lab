@@ -1,16 +1,16 @@
 import { pick } from "lodash";
 import { z } from "zod";
 import { Id } from "../../../Ids/IdS";
-import { FeVarbInfo } from "../../../SectionInfo/FeInfo";
-import { PathDbVarbInfoMixed } from "../../../SectionInfo/PathNameInfo";
+import { FeVarbInfo } from "../../../SectionInfos/FeInfo";
+import { PathDbVarbInfoMixed } from "../../../SectionInfos/PathNameInfo";
 import {
   validateInEntityInfoCustom,
   validateInEntityInfoFixed,
   ValueCustomVarbPathInfo,
   ValueFixedVarbPathInfo,
   ValueInEntityInfo,
-} from "../../../SectionInfo/ValueInEntityInfo";
-import { VarbPathNameInfoMixed } from "../../../SectionInfo/VarbPathNameInfo";
+} from "../../../SectionInfos/ValueInEntityInfo";
+import { VarbPathNameInfoMixed } from "../../../SectionInfos/VarbPathNameInfo";
 import { PathInVarbInfo } from "../../../sectionVarbsConfigDerived/sectionChildrenDerived/RelInOutVarbInfo";
 import { Arr } from "../../../utils/Arr";
 import { Obj } from "../../../utils/Obj";

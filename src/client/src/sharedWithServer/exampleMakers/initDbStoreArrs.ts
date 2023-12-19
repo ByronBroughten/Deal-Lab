@@ -1,5 +1,5 @@
-import { ChildPackArrs } from "../SectionPack/ChildSectionPack";
-import { SectionPack } from "../SectionPack/SectionPack";
+import { ChildPackArrs } from "../SectionPacks/ChildSectionPack";
+import { SectionPack } from "../SectionPacks/SectionPack";
 import { PackBuilderSection } from "../StateClasses/Packers/PackBuilderSection";
 
 import { makeDefaultDealCompareMenu } from "../defaultMaker/makeDefaultDealCompareMenu";

@@ -1,5 +1,5 @@
 import { Id } from "../Ids/IdS";
-import { SectionPack } from "../SectionPack/SectionPack";
+import { SectionPack } from "../SectionPacks/SectionPack";
 import { PackBuilderSection } from "../StateClasses/Packers/PackBuilderSection";
 import { numObj } from "../sectionVarbsConfig/StateValue/NumObj";
 import { stringObj } from "../sectionVarbsConfig/StateValue/StringObj";

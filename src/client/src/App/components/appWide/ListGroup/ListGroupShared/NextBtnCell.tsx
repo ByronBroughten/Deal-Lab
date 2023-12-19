@@ -1,4 +1,4 @@
-import { FeVarbInfo } from "../../../../../sharedWithServer/SectionInfo/FeInfo";
+import { FeVarbInfo } from "../../../../../sharedWithServer/SectionInfos/FeInfo";
 import { UpdateValueNextBtn } from "../../UpdateValueNextBtn";
 
 interface Props extends FeVarbInfo {

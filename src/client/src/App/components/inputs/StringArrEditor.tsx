@@ -3,7 +3,7 @@ import { darken, lighten } from "polished";
 import React from "react";
 import { css } from "styled-components";
 import styled from "styled-components/macro";
-import { FeVarbInfo } from "../../../sharedWithServer/SectionInfo/FeInfo";
+import { FeVarbInfo } from "../../../sharedWithServer/SectionInfos/FeInfo";
 import useOnOutsideClickRef from "../../modules/customHooks/useOnOutsideClickRef";
 import { getEntityStrategy } from "../../modules/draftjs/getEntityStrategies";
 import { insertEntity } from "../../modules/draftjs/insert";

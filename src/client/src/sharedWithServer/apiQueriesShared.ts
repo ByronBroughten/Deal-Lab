@@ -1,7 +1,7 @@
 import urljoin from "url-join";
 import { UserInfoTokenProp } from "../App/modules/services/userTokenS";
 import { config } from "./Constants";
-import { SectionPack } from "./SectionPack/SectionPack";
+import { SectionPack } from "./SectionPacks/SectionPack";
 import { EstimatorPlanValues } from "./apiQueriesShared/EstimatorPlanValues";
 import { ApiQueryName } from "./apiQueriesShared/apiQueriesSharedTypes";
 import {

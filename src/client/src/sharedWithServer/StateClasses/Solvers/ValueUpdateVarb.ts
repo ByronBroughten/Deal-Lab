@@ -1,5 +1,5 @@
-import { RelVarbInfo } from "../../SectionInfo/RelVarbInfo";
-import { DbVarbInfoMixed } from "../../SectionInfo/VarbInfoBase";
+import { RelVarbInfo } from "../../SectionInfos/RelVarbInfo";
+import { DbVarbInfoMixed } from "../../SectionInfos/VarbInfoBase";
 import { SectionNameByType } from "../../SectionNameByType";
 import { GetterSectionProps } from "../../StateGetters/Bases/GetterSectionBase";
 import { GetterVarbBase } from "../../StateGetters/Bases/GetterVarbBase";

@@ -1,14 +1,14 @@
-import { fixedVariableLabel } from "../../../varbLabels";
+import { fixedVariableLabel } from "../../../varbLabels/varbLabels";
 import { Id } from "../../Ids/IdS";
 import {
   ValueFixedVarbPathName,
   ValueInEntityInfo,
-} from "../../SectionInfo/ValueInEntityInfo";
+} from "../../SectionInfos/ValueInEntityInfo";
 import {
   getVarbPathParams,
   varbPathDbIdInfo,
   varbPathInfo,
-} from "../../SectionInfo/VarbPathNameInfo";
+} from "../../SectionInfos/VarbPathNameInfo";
 import { pathSectionName } from "../../sectionPaths/sectionPathNames";
 import { NumObj } from "./NumObj";
 import { ValueInEntity } from "./stateValuesShared/entities";

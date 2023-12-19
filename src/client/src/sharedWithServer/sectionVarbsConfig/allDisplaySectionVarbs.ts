@@ -1,4 +1,4 @@
-import { relVarbInfoS } from "../SectionInfo/RelVarbInfo";
+import { relVarbInfoS } from "../SectionInfos/RelVarbInfo";
 import { VarbName } from "../sectionVarbsConfigDerived/baseSectionsDerived/baseSectionsVarbsTypes";
 import { SectionName, sectionNames } from "./SectionName";
 import {

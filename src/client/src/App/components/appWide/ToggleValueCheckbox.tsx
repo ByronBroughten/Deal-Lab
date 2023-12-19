@@ -1,5 +1,5 @@
 import React from "react";
-import { FeVarbInfo } from "../../../sharedWithServer/SectionInfo/FeInfo";
+import { FeVarbInfo } from "../../../sharedWithServer/SectionInfos/FeInfo";
 import { useAction } from "../../stateClassHooks/useAction";
 import { useGetterVarb } from "../../stateClassHooks/useGetterVarb";
 import { CheckboxStyled } from "../general/CheckboxStyled";

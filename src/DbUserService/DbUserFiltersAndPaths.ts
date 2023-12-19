@@ -1,5 +1,5 @@
 import mongoose, { Document } from "mongoose";
-import { OneDbSectionVarbInfo } from "../client/src/sharedWithServer/SectionInfo/DbStoreInfo";
+import { OneDbSectionVarbInfo } from "../client/src/sharedWithServer/SectionInfos/DbStoreInfo";
 import { SectionName } from "../client/src/sharedWithServer/sectionVarbsConfig/SectionName";
 import { DbStoreName } from "../client/src/sharedWithServer/sectionVarbsConfigDerived/sectionChildrenDerived/DbStoreName";
 import { ResStatusError } from "../useErrorHandling";

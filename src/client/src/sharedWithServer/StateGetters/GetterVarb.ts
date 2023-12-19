@@ -5,24 +5,24 @@ import {
   VarbInfoTextProps,
   VarbLabel,
   getVarbLabels,
-} from "../../varbLabels";
+} from "../../varbLabels/varbLabels";
 import {
   FeVI,
   FeVarbInfo,
   SectionVarbNames,
   varbIdToInfo,
   varbInfoToId,
-} from "../SectionInfo/FeInfo";
+} from "../SectionInfos/FeInfo";
 import {
   VarbInfoMixedFocal,
   mixedInfoS,
-} from "../SectionInfo/MixedSectionInfo";
-import { relVarbInfoS } from "../SectionInfo/RelVarbInfo";
+} from "../SectionInfos/MixedSectionInfo";
+import { relVarbInfoS } from "../SectionInfos/RelVarbInfo";
 import {
   DbVarbInfoMixed,
   FeVarbInfoMixed,
   VarbNames,
-} from "../SectionInfo/VarbInfoBase";
+} from "../SectionInfos/VarbInfoBase";
 import { SectionNameByType } from "../SectionNameByType";
 import { VarbMeta } from "../SectionsMeta/VarbMeta";
 import { StateVarb } from "../State/StateSectionsTypes";

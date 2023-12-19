@@ -1,6 +1,6 @@
-import { mixedInfoS } from "../SectionInfo/MixedSectionInfo";
-import { ValueFixedVarbPathName } from "../SectionInfo/ValueInEntityInfo";
-import { SectionPack } from "../SectionPack/SectionPack";
+import { mixedInfoS } from "../SectionInfos/MixedSectionInfo";
+import { ValueFixedVarbPathName } from "../SectionInfos/ValueInEntityInfo";
+import { SectionPack } from "../SectionPacks/SectionPack";
 import { PackBuilderSection } from "../StateClasses/Packers/PackBuilderSection";
 import { inEntityValueInfo } from "../sectionVarbsConfig/StateValue/InEntityValue";
 import { stringObj } from "../sectionVarbsConfig/StateValue/StringObj";

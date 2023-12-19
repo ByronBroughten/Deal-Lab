@@ -1,4 +1,4 @@
-import { FeIdProp } from "./SectionInfo/NanoIdInfo";
+import { FeIdProp } from "./SectionInfos/NanoIdInfo";
 import { Arr } from "./utils/Arr";
 import { Obj } from "./utils/Obj";
 

@@ -1,7 +1,7 @@
 import { SxProps } from "@mui/material";
 import React from "react";
 import { unstable_batchedUpdates } from "react-dom";
-import { FeVarbInfo } from "../../../sharedWithServer/SectionInfo/FeInfo";
+import { FeVarbInfo } from "../../../sharedWithServer/SectionInfos/FeInfo";
 import { useAction } from "../../stateClassHooks/useAction";
 import { useGetterVarb } from "../../stateClassHooks/useGetterVarb";
 import { Toggler } from "../general/Toggler";

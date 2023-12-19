@@ -1,4 +1,4 @@
-import { SectionPack } from "../SectionPack/SectionPack";
+import { SectionPack } from "../SectionPacks/SectionPack";
 import { SectionName } from "../sectionVarbsConfig/SectionName";
 import { makeDefaultDealPack } from "./makeDefaultDeal";
 import { makeDefaultDealCompareMenu } from "./makeDefaultDealCompareMenu";

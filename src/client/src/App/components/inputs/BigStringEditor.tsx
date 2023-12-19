@@ -1,5 +1,5 @@
 import { SxProps } from "@mui/material";
-import { FeVarbInfo } from "../../../sharedWithServer/SectionInfo/FeInfo";
+import { FeVarbInfo } from "../../../sharedWithServer/SectionInfos/FeInfo";
 import { GetterVarb } from "../../../sharedWithServer/StateGetters/GetterVarb";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { arrSx } from "../../utils/mui";

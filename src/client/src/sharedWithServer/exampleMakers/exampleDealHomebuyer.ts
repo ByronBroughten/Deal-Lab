@@ -1,4 +1,4 @@
-import { SectionPack } from "../SectionPack/SectionPack";
+import { SectionPack } from "../SectionPacks/SectionPack";
 import { TopOperator } from "../TopOperator";
 import { makeDefaultDealPack } from "../defaultMaker/makeDefaultDeal";
 import { numObj } from "../sectionVarbsConfig/StateValue/NumObj";

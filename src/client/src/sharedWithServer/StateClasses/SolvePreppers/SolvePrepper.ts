@@ -1,5 +1,5 @@
-import { FeSectionInfo, FeVarbInfo } from "../../SectionInfo/FeInfo";
-import { SectionPack } from "../../SectionPack/SectionPack";
+import { FeSectionInfo, FeVarbInfo } from "../../SectionInfos/FeInfo";
+import { SectionPack } from "../../SectionPacks/SectionPack";
 import { GetterList } from "../../StateGetters/GetterList";
 import { GetterSections } from "../../StateGetters/GetterSections";
 import { defaultMaker } from "../../defaultMaker/defaultMaker";

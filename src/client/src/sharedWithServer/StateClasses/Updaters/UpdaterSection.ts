@@ -1,5 +1,5 @@
 import { Id } from "../../Ids/IdS";
-import { FeSectionInfo } from "../../SectionInfo/FeInfo";
+import { FeSectionInfo } from "../../SectionInfos/FeInfo";
 import { SectionNameByType } from "../../SectionNameByType";
 import { StateSections } from "../../State/StateSections";
 import {

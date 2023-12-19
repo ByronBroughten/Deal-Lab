@@ -15,7 +15,7 @@ import {
   getBaseVarb,
 } from "../sectionVarbsConfigDerived/baseSectionsDerived/baseSectionsVarbsTypes";
 
-import { VarbNames } from "../SectionInfo/VarbInfoBase";
+import { VarbNames } from "../SectionInfos/VarbInfoBase";
 import { sectionsMeta } from "../SectionsMeta";
 import { SectionMeta } from "./SectionMeta";
 

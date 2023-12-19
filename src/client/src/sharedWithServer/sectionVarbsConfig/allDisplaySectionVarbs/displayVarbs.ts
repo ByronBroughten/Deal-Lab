@@ -1,4 +1,4 @@
-import { relVarbInfoS } from "../../SectionInfo/RelVarbInfo";
+import { relVarbInfoS } from "../../SectionInfos/RelVarbInfo";
 import { Arr } from "../../utils/Arr";
 import {
   EditorSwitchName,
