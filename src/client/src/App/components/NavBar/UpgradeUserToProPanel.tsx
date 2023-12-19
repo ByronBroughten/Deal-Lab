@@ -1,7 +1,7 @@
 import { Button } from "@mui/material";
 import { StyleSheet, Text, View } from "react-native";
 import styled from "styled-components";
-import { constants } from "../../Constants";
+import { constants } from "../../../sharedWithServer/Constants";
 import { goToPaymentPage } from "../../modules/services/stripeService";
 import theme from "../../theme/Theme";
 import { NavBarPanel } from "./NavBarPanel";

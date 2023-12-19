@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useGetterSection } from "../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
+import { useGetterSection } from "../../../../../../stateClassHooks/useGetterSection";
 import theme from "../../../../../../theme/Theme";
 import { FormSectionNext } from "../../../../../appWide/FormSectionNext";
 import { MuiRow } from "../../../../../general/MuiRow";

@@ -1,7 +1,7 @@
 import React from "react";
-import { FeIdProp } from "../../../../sharedWithServer/SectionsMeta/SectionInfo/NanoIdInfo";
-import { StateValue } from "../../../../sharedWithServer/SectionsMeta/values/StateValue";
-import { useGetterSection } from "../../../../sharedWithServer/stateClassHooks/useGetterSection";
+import { FeIdProp } from "../../../../../sharedWithServer/SectionInfo/NanoIdInfo";
+import { StateValue } from "../../../../../sharedWithServer/sectionVarbsConfig/StateValue";
+import { useGetterSection } from "../../../../stateClassHooks/useGetterSection";
 import { PropertyBrrrrView } from "./PropertyEditor/PropertyBrrrrView";
 import { PropertyBuyAndHoldView } from "./PropertyEditor/PropertyBuyAndHoldView";
 import { PropertyFixAndFlipView } from "./PropertyEditor/PropertyFixAndFlipView";

@@ -1,6 +1,6 @@
 import { FiMaximize2, FiMinimize2 } from "react-icons/fi";
 import styled from "styled-components";
-import { FeSectionInfo } from "../../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
+import { FeSectionInfo } from "../../../../../../sharedWithServer/SectionInfo/FeInfo";
 import theme from "../../../../../theme/Theme";
 import { RemoveSectionXBtn } from "../../../RemoveSectionXBtn";
 import { ListMenuBtn } from "./ListMenuBtn";

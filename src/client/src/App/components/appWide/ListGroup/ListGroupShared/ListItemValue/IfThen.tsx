@@ -1,5 +1,5 @@
 import { useToggleView } from "../../../../../modules/customHooks/useToggleView";
-import { useGetterSection } from "../../../../../sharedWithServer/stateClassHooks/useGetterSection";
+import { useGetterSection } from "../../../../../stateClassHooks/useGetterSection";
 import { MuiRow } from "../../../../general/MuiRow";
 import { MaterialStringEditor } from "../../../../inputs/MaterialStringEditor";
 import { FirstContentCell } from "../VarbListGeneric/FirstContentCellAndHeader";

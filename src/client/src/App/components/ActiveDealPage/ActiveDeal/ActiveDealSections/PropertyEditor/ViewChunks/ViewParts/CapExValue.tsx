@@ -1,6 +1,6 @@
+import { StateValue } from "../../../../../../../../sharedWithServer/sectionVarbsConfig/StateValue";
 import { capExItemizeDescription } from "../../../../../../../../varbLabels";
-import { StateValue } from "../../../../../../../sharedWithServer/SectionsMeta/values/StateValue";
-import { useGetterSection } from "../../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
+import { useGetterSection } from "../../../../../../../stateClassHooks/useGetterSection";
 import { LabelWithInfo } from "../../../../../../appWide/LabelWithInfo";
 import { SelectAndItemizeEditor } from "../../../../../../appWide/SelectAndItemizeEditor";
 import { VarbStringLabel } from "../../../../../../appWide/VarbStringLabel";

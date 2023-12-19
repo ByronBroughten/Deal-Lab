@@ -1,13 +1,13 @@
 import { Box, SxProps } from "@mui/material";
-import { VarbName } from "../../../../../../sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
-import { FeSectionInfo } from "../../../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
+import { FeSectionInfo } from "../../../../../../../sharedWithServer/SectionInfo/FeInfo";
 import {
   SectionNameByType,
   sectionNameS,
-} from "../../../../../../sharedWithServer/SectionsMeta/SectionNameByType";
-import { StateValue } from "../../../../../../sharedWithServer/SectionsMeta/values/StateValue";
-import { useGetterSection } from "../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
-import { Arr } from "../../../../../../sharedWithServer/utils/Arr";
+} from "../../../../../../../sharedWithServer/SectionNameByType";
+import { StateValue } from "../../../../../../../sharedWithServer/sectionVarbsConfig/StateValue";
+import { VarbName } from "../../../../../../../sharedWithServer/sectionVarbsConfigDerived/baseSectionsDerived/baseSectionsVarbsTypes";
+import { Arr } from "../../../../../../../sharedWithServer/utils/Arr";
+import { useGetterSection } from "../../../../../../stateClassHooks/useGetterSection";
 import { nativeTheme } from "../../../../../../theme/nativeTheme";
 import { FormSectionLabeled } from "../../../../../appWide/FormSectionLabeled";
 import { LabeledVarbRow } from "../../../../../appWide/LabeledVarbRow";

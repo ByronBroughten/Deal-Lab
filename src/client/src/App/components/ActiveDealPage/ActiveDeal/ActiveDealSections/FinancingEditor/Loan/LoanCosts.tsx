@@ -1,4 +1,4 @@
-import { useGetterSection } from "../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
+import { useGetterSection } from "../../../../../../stateClassHooks/useGetterSection";
 import { FormSectionNext } from "../../../../../appWide/FormSectionNext";
 import { ClosingCostValue } from "./ClosingCostValue";
 

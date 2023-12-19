@@ -1,8 +1,8 @@
 import { SxProps } from "@mui/material";
-import { FeVarbInfo } from "../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
-import { StateValue } from "../../../sharedWithServer/SectionsMeta/values/StateValue";
-import { getFinancingTitle } from "../../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
-import { GetterSection } from "../../../sharedWithServer/StateGetters/GetterSection";
+import { FeVarbInfo } from "../../../../sharedWithServer/SectionInfo/FeInfo";
+import { GetterSection } from "../../../../sharedWithServer/StateGetters/GetterSection";
+import { StateValue } from "../../../../sharedWithServer/sectionVarbsConfig/StateValue";
+import { getFinancingTitle } from "../../../../sharedWithServer/sectionVarbsConfig/StateValue/unionValues";
 import { useGoToPage } from "../../customHooks/useGoToPage";
 import { DealSubSectionDetails } from "./DealSubSectionDetails";
 import { DealSubSectionTitleRow } from "./DealSubSectionTitleRow";

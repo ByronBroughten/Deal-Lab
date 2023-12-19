@@ -1,7 +1,8 @@
-import { GetterSectionsProps } from "../../sharedWithServer/StateGetters/Bases/GetterSectionsBase";
-import { StateSections } from "../../sharedWithServer/StateSections/StateSections";
-import { apiQueries } from "../apiQueriesClient";
+import { StateSections } from "../../../sharedWithServer/State/StateSections";
+import { GetterSectionsProps } from "../../../sharedWithServer/StateGetters/Bases/GetterSectionsBase";
+
 import { QuerierFeStore } from "../FeStore/QuerierFeStore";
+import { apiQueries } from "../apiQueriesClient";
 import { QuerierSectionsBase } from "./QuerierSectionsBase";
 
 export class QuerierSections extends QuerierSectionsBase {

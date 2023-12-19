@@ -1,8 +1,8 @@
 import { Box } from "@mui/material";
 import React from "react";
 import { MoonLoader } from "react-spinners";
-import { constants } from "../../Constants";
-import { useGetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useGetterSection";
+import { constants } from "../../../sharedWithServer/Constants";
+import { useGetterSectionOnlyOne } from "../../stateClassHooks/useGetterSection";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { NewDealSelector } from "../AccountPage/NewDealSelector";
 import { BackBtnWrapper } from "../appWide/BackBtnWrapper";

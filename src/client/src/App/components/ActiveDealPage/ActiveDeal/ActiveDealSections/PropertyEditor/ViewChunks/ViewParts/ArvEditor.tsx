@@ -1,4 +1,4 @@
-import { useGetterSection } from "../../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
+import { useGetterSection } from "../../../../../../../stateClassHooks/useGetterSection";
 import { NumObjEntityEditor } from "../../../../../../inputs/NumObjEntityEditor";
 
 type Props = { feId: string };

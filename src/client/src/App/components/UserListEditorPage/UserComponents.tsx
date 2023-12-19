@@ -1,5 +1,5 @@
-import { constants } from "../../Constants";
-import { Arr } from "../../sharedWithServer/utils/Arr";
+import { constants } from "../../../sharedWithServer/Constants";
+import { Arr } from "../../../sharedWithServer/utils/Arr";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { BackBtnWrapper } from "../appWide/BackBtnWrapper";
 import { BackgroundContainer } from "../appWide/BackgroundContainter";

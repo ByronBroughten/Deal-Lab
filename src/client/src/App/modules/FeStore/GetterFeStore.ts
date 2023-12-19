@@ -1,17 +1,18 @@
-import { constants } from "../../Constants";
+import { constants } from "../../../sharedWithServer/Constants";
+import { StoreId } from "../../../sharedWithServer/Ids/StoreId";
+import { GetterSectionBase } from "../../../sharedWithServer/StateGetters/Bases/GetterSectionBase";
+import { GetterSectionsProps } from "../../../sharedWithServer/StateGetters/Bases/GetterSectionsBase";
+import { GetterSection } from "../../../sharedWithServer/StateGetters/GetterSection";
+import { GetterSections } from "../../../sharedWithServer/StateGetters/GetterSections";
 import {
   FeStoreInfo,
   StoreName,
   StoreSectionName,
-} from "../../sharedWithServer/SectionsMeta/sectionStores";
-import { StateValue } from "../../sharedWithServer/SectionsMeta/values/StateValue";
-import { GetterSectionBase } from "../../sharedWithServer/StateGetters/Bases/GetterSectionBase";
-import { GetterSectionsProps } from "../../sharedWithServer/StateGetters/Bases/GetterSectionsBase";
-import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection";
-import { GetterSections } from "../../sharedWithServer/StateGetters/GetterSections";
-import { StoreId } from "../../sharedWithServer/StateGetters/StoreId";
-import { Obj } from "../../sharedWithServer/utils/Obj";
-import { Str } from "../../sharedWithServer/utils/Str";
+} from "../../../sharedWithServer/sectionStores";
+import { StateValue } from "../../../sharedWithServer/sectionVarbsConfig/StateValue";
+
+import { Obj } from "../../../sharedWithServer/utils/Obj";
+import { Str } from "../../../sharedWithServer/utils/Str";
 
 export class GetterFeStore extends GetterSectionBase<"feStore"> {
   constructor(props: GetterSectionsProps) {

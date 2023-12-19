@@ -1,7 +1,7 @@
 import { SxProps } from "@mui/material";
-import { StateValue } from "../../../../../../../sharedWithServer/SectionsMeta/values/StateValue";
-import { dealModes } from "../../../../../../../sharedWithServer/SectionsMeta/values/StateValue/dealMode";
-import { useGetterSection } from "../../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
+import { StateValue } from "../../../../../../../../sharedWithServer/sectionVarbsConfig/StateValue";
+import { dealModes } from "../../../../../../../../sharedWithServer/sectionVarbsConfig/StateValue/dealMode";
+import { useGetterSection } from "../../../../../../../stateClassHooks/useGetterSection";
 import { SelectAndItemizeEditor } from "../../../../../../appWide/SelectAndItemizeEditor";
 import { NumObjEntityEditor } from "../../../../../../inputs/NumObjEntityEditor";
 import { ListEditorOneTime } from "../../ValueShared/ListEditorOneTime";

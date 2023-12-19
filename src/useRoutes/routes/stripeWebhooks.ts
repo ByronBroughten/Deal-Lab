@@ -1,9 +1,10 @@
 import express, { Request, Response } from "express";
 import Stripe from "stripe";
 import { DbUserService } from "../../DbUserService";
-import { SectionValues } from "../../client/src/App/sharedWithServer/SectionsMeta/values/StateValue";
-import { PackBuilderSection } from "../../client/src/App/sharedWithServer/StatePackers/PackBuilderSection";
-import { timeS } from "../../client/src/App/sharedWithServer/utils/timeS";
+
+import { PackBuilderSection } from "../../client/src/sharedWithServer/StateClasses/Packers/PackBuilderSection";
+import { SectionValues } from "../../client/src/sharedWithServer/sectionVarbsConfig/StateValue";
+import { timeS } from "../../client/src/sharedWithServer/utils/timeS";
 import { getStripeEvent } from "./routesShared/stripe";
 
 export const stripeWebhookWare = [express.raw({ type: "*/*" }), stripeWebhook];

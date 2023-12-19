@@ -4,10 +4,10 @@ import styled from "styled-components";
 import {
   FeVarbInfo,
   FeVarbInfoNext,
-} from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
-import { numObj } from "../../sharedWithServer/SectionsMeta/values/StateValue/NumObj";
-import { useAction } from "../../sharedWithServer/stateClassHooks/useAction";
-import { useGetterVarb } from "../../sharedWithServer/stateClassHooks/useGetterVarb";
+} from "../../../sharedWithServer/SectionInfo/FeInfo";
+import { numObj } from "../../../sharedWithServer/sectionVarbsConfig/StateValue/NumObj";
+import { useAction } from "../../stateClassHooks/useAction";
+import { useGetterVarb } from "../../stateClassHooks/useGetterVarb";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { VarbStringLabel } from "../appWide/VarbStringLabel";
 

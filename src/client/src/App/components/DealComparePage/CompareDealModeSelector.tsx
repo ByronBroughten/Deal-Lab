@@ -1,5 +1,5 @@
-import { dealModeLabels } from "../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
-import { useGetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useGetterSection";
+import { dealModeLabels } from "../../../sharedWithServer/sectionVarbsConfig/StateValue/unionValues";
+import { useGetterSectionOnlyOne } from "../../stateClassHooks/useGetterSection";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { MuiSelect } from "../appWide/MuiSelect";
 

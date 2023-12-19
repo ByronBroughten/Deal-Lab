@@ -1,7 +1,7 @@
-import { useActionWithProps } from "../../sharedWithServer/stateClassHooks/useAction";
-import { useGetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useGetterSection";
-import { IdOfSectionToSaveProvider } from "../../sharedWithServer/stateClassHooks/useIdOfSectionToSave";
-import { StoreId } from "../../sharedWithServer/StateGetters/StoreId";
+import { StoreId } from "../../../sharedWithServer/Ids/StoreId";
+import { useActionWithProps } from "../../stateClassHooks/useAction";
+import { useGetterSectionOnlyOne } from "../../stateClassHooks/useGetterSection";
+import { IdOfSectionToSaveProvider } from "../../stateClassHooks/useIdOfSectionToSave";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { SubSectionOpen } from "../ActiveDealPage/ActiveDeal/SubSectionOpen";
 import { FormSection } from "../appWide/FormSection";

@@ -2,7 +2,7 @@ import config from "config";
 import supertokens from "supertokens-node";
 import Session from "supertokens-node/recipe/session";
 import ThirdPartyEmailPassword from "supertokens-node/recipe/thirdpartyemailpassword";
-import { constants } from "../client/src/App/Constants";
+import { constants } from "../client/src/sharedWithServer/Constants";
 const { Google, Facebook, Apple } = ThirdPartyEmailPassword;
 
 export function initSupertokens() {

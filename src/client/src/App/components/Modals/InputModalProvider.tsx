@@ -1,8 +1,8 @@
 import React from "react";
-import { DealMode } from "../../sharedWithServer/SectionsMeta/values/StateValue/dealMode";
-import { useIdOfSectionToSave } from "../../sharedWithServer/stateClassHooks/useIdOfSectionToSave";
-import { timeS } from "../../sharedWithServer/utils/timeS";
-import { StrictOmit } from "../../sharedWithServer/utils/types";
+import { DealMode } from "../../../sharedWithServer/sectionVarbsConfig/StateValue/dealMode";
+import { timeS } from "../../../sharedWithServer/utils/timeS";
+import { StrictOmit } from "../../../sharedWithServer/utils/types";
+import { useIdOfSectionToSave } from "../../stateClassHooks/useIdOfSectionToSave";
 import { useDealModeContext } from "../customContexts/dealModeContext";
 
 export interface InputModalOptions {

@@ -1,7 +1,7 @@
 import { Grid, Link } from "@mui/material";
 import React from "react";
-import { constants } from "../Constants";
-import { timeS } from "../sharedWithServer/utils/timeS";
+import { constants } from "../../sharedWithServer/Constants";
+import { timeS } from "../../sharedWithServer/utils/timeS";
 import { nativeTheme } from "../theme/nativeTheme";
 import { DealLabIconBtn } from "./DealLabIcon";
 import { MuiRow } from "./general/MuiRow";

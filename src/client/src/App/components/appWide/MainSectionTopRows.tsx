@@ -1,9 +1,9 @@
 import { Box } from "@mui/material";
 import React from "react";
 import styled from "styled-components";
-import { SectionNameByType } from "../../sharedWithServer/SectionsMeta/SectionNameByType";
-import { nativeTheme } from "../../theme/nativeTheme";
+import { SectionNameByType } from "../../../sharedWithServer/SectionNameByType";
 import theme from "../../theme/Theme";
+import { nativeTheme } from "../../theme/nativeTheme";
 import { useIsDevices } from "../customHooks/useMediaQueries";
 import { MuiRow } from "../general/MuiRow";
 import { StoreSectionActions } from "./GeneralSection/MainSection/StoreSectionActions";

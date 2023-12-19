@@ -4,7 +4,7 @@ import { HiOutlineVariable } from "react-icons/hi";
 import { IoIosGitCompare } from "react-icons/io";
 import { SiWebcomponentsdotorg } from "react-icons/si";
 import styled from "styled-components";
-import { constants } from "../../Constants";
+import { constants } from "../../../sharedWithServer/Constants";
 import theme from "../../theme/Theme";
 import { useMakeGoToPage } from "../customHooks/useGoToPage";
 import { StandardBtnProps } from "../general/StandardProps";

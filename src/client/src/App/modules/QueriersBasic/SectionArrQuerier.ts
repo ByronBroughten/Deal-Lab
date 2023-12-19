@@ -1,7 +1,7 @@
 import {
   DbPackArrQueryArrs,
   makeReq,
-} from "../../sharedWithServer/apiQueriesShared/makeReqAndRes";
+} from "../../../sharedWithServer/apiQueriesShared/makeReqAndRes";
 import { ApiQuerierBase } from "./Bases/ApiQuerierBase";
 
 export class SectionArrQuerier extends ApiQuerierBase {

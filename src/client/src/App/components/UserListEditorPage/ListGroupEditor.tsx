@@ -1,8 +1,8 @@
-import { ListChildName } from "../../sharedWithServer/SectionsMeta/sectionStores";
-import { useAction } from "../../sharedWithServer/stateClassHooks/useAction";
-import { useGetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useGetterSection";
-import { IdOfSectionToSaveProvider } from "../../sharedWithServer/stateClassHooks/useIdOfSectionToSave";
-import { StoreId } from "../../sharedWithServer/StateGetters/StoreId";
+import { StoreId } from "../../../sharedWithServer/Ids/StoreId";
+import { ListChildName } from "../../../sharedWithServer/sectionStores";
+import { useAction } from "../../stateClassHooks/useAction";
+import { useGetterSectionOnlyOne } from "../../stateClassHooks/useGetterSection";
+import { IdOfSectionToSaveProvider } from "../../stateClassHooks/useIdOfSectionToSave";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { SubSectionOpen } from "../ActiveDealPage/ActiveDeal/SubSectionOpen";
 import { BackBtnWrapper } from "../appWide/BackBtnWrapper";

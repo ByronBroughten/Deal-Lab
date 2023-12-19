@@ -1,13 +1,13 @@
 import { Box } from "@mui/material";
 import { unstable_batchedUpdates } from "react-dom";
 import { View } from "react-native";
-import { useAction } from "../../sharedWithServer/stateClassHooks/useAction";
-import { useGetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useGetterSection";
-import { useGetterMain } from "../../sharedWithServer/stateClassHooks/useMain";
-import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection";
+import { GetterSection } from "../../../sharedWithServer/StateGetters/GetterSection";
+import { useAction } from "../../stateClassHooks/useAction";
+import { useGetterSectionOnlyOne } from "../../stateClassHooks/useGetterSection";
+import { useGetterMain } from "../../stateClassHooks/useMain";
 import { nativeTheme } from "../../theme/nativeTheme";
-import { PlainIconBtn } from "../general/PlainIconBtn";
 import { icons } from "../Icons";
+import { PlainIconBtn } from "../general/PlainIconBtn";
 import { MaterialStringEditor } from "../inputs/MaterialStringEditor";
 
 function useFilteredDealsToCompare(): GetterSection<"deal">[] {

@@ -1,8 +1,8 @@
-import { DbSectionPack } from "../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/DbSectionPack";
+import { DbSectionPack } from "../client/src/sharedWithServer/sectionVarbsConfigDerived/sectionChildrenDerived/DbSectionPack";
 import {
   DbStoreInfo,
   DbStoreName,
-} from "../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/DbStoreName";
+} from "../client/src/sharedWithServer/sectionVarbsConfigDerived/sectionChildrenDerived/DbStoreName";
 import {
   DbSectionsRaw,
   SectionPackNotFoundError,

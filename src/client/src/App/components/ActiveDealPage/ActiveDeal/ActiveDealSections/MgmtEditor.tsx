@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { StateValue } from "../../../../sharedWithServer/SectionsMeta/values/StateValue";
+import { StateValue } from "../../../../../sharedWithServer/sectionVarbsConfig/StateValue";
 import theme from "../../../../theme/Theme";
 import MainSectionBody from "../../../appWide/GeneralSection/MainSection/MainSectionBody";
 import { MainSectionTopRows } from "../../../appWide/MainSectionTopRows";

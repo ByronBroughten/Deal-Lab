@@ -1,21 +1,21 @@
 import { IndexSectionQuerierBase } from "../../../client/src/App/modules/QueriersBasic/Bases/IndexSectionQuerierBase";
-import { ApiQueries } from "../../../client/src/App/sharedWithServer/apiQueriesShared";
+import { ApiQueries } from "../../../client/src/sharedWithServer/apiQueriesShared";
 import {
   DbPackInfoSectionReq,
   makeReq,
   SectionPackReq,
-} from "../../../client/src/App/sharedWithServer/apiQueriesShared/makeReqAndRes";
-import { SectionNameByType } from "../../../client/src/App/sharedWithServer/SectionsMeta/SectionNameByType";
-import { StoreName } from "../../../client/src/App/sharedWithServer/SectionsMeta/sectionStores";
-import { GetterListProps } from "../../../client/src/App/sharedWithServer/StateGetters/Bases/GetterListBase";
-import { GetterSectionProps } from "../../../client/src/App/sharedWithServer/StateGetters/Bases/GetterSectionBase";
-import { GetterSectionsBase } from "../../../client/src/App/sharedWithServer/StateGetters/Bases/GetterSectionsBase";
-import { GetterList } from "../../../client/src/App/sharedWithServer/StateGetters/GetterList";
-import { GetterSection } from "../../../client/src/App/sharedWithServer/StateGetters/GetterSection";
-import { PackMakerSection } from "../../../client/src/App/sharedWithServer/StatePackers/PackMakerSection";
-import { SolverSection } from "../../../client/src/App/sharedWithServer/StateSolvers/SolverSection";
-import { SolverSections } from "../../../client/src/App/sharedWithServer/StateSolvers/SolverSections";
-import { UpdaterSection } from "../../../client/src/App/sharedWithServer/StateUpdaters/UpdaterSection";
+} from "../../../client/src/sharedWithServer/apiQueriesShared/makeReqAndRes";
+import { SectionNameByType } from "../../../client/src/sharedWithServer/SectionNameByType";
+import { StoreName } from "../../../client/src/sharedWithServer/sectionStores";
+import { PackMakerSection } from "../../../client/src/sharedWithServer/StateClasses/Packers/PackMakerSection";
+import { SolverSection } from "../../../client/src/sharedWithServer/StateClasses/Solvers/SolverSection";
+import { SolverSections } from "../../../client/src/sharedWithServer/StateClasses/Solvers/SolverSections";
+import { UpdaterSection } from "../../../client/src/sharedWithServer/StateClasses/Updaters/UpdaterSection";
+import { GetterListProps } from "../../../client/src/sharedWithServer/StateGetters/Bases/GetterListBase";
+import { GetterSectionProps } from "../../../client/src/sharedWithServer/StateGetters/Bases/GetterSectionBase";
+import { GetterList } from "../../../client/src/sharedWithServer/StateGetters/GetterList";
+import { GetterSection } from "../../../client/src/sharedWithServer/StateGetters/GetterSection";
+import { GetterSectionsBase } from "./../../../client/src/sharedWithServer/StateGetters/Bases/GetterSectionsBase";
 
 export function makeLastSectionProps<SN extends SectionNameByType>(
   props: GetterListProps<SN>

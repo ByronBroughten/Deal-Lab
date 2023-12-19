@@ -1,4 +1,4 @@
-import { DealMode } from "../../sharedWithServer/SectionsMeta/values/StateValue/dealMode";
+import { DealMode } from "../../../sharedWithServer/sectionVarbsConfig/StateValue/dealMode";
 import { makeContextUseContext } from "../../utils/react";
 
 const [DealModeContext, use] = makeContextUseContext(

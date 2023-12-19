@@ -1,10 +1,11 @@
-import { SectionName } from "../../sharedWithServer/SectionsMeta/SectionName";
-import { SectionNameByType } from "../../sharedWithServer/SectionsMeta/SectionNameByType";
+import { SectionNameByType } from "../../../sharedWithServer/SectionNameByType";
 import {
   GetterSectionBase,
   GetterSectionProps,
-} from "../../sharedWithServer/StateGetters/Bases/GetterSectionBase";
-import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection";
+} from "../../../sharedWithServer/StateGetters/Bases/GetterSectionBase";
+import { GetterSection } from "../../../sharedWithServer/StateGetters/GetterSection";
+import { SectionName } from "../../../sharedWithServer/sectionVarbsConfig/SectionName";
+
 import {
   ApiQuerierBase,
   ApiQuerierBaseProps,

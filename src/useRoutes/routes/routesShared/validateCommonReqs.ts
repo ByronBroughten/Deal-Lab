@@ -1,18 +1,18 @@
+import { Id } from "../../../client/src/sharedWithServer/Ids/IdS";
 import {
   DbPackInfoSectionReq,
   SectionPackArrsReq,
   SectionPackReq,
-} from "../../../client/src/App/sharedWithServer/apiQueriesShared/makeReqAndRes";
-import { Id } from "../../../client/src/App/sharedWithServer/SectionsMeta/IdS";
+} from "../../../client/src/sharedWithServer/apiQueriesShared/makeReqAndRes";
 import {
   validateDbSectionPack,
   validateDbSectionPackArrs,
-} from "../../../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/DbSectionPack";
+} from "../../../client/src/sharedWithServer/sectionVarbsConfigDerived/sectionChildrenDerived/DbSectionPack";
 import {
   DbStoreNameByType,
-  dbStoreNameS,
   DbStoreType,
-} from "../../../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/DbStoreName";
+  dbStoreNameS,
+} from "../../../client/src/sharedWithServer/sectionVarbsConfigDerived/sectionChildrenDerived/DbStoreName";
 import { Authed, validateAuthData } from "../../../middleware/authWare";
 import { JwtReq, WithJWT } from "../../../middleware/jwtWare";
 

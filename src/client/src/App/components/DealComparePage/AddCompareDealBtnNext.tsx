@@ -1,9 +1,9 @@
 import { SxProps } from "@mui/material";
-import { constants } from "../../Constants";
+import { constants } from "../../../sharedWithServer/Constants";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { arrSx } from "../../utils/mui";
-import { HollowBtn } from "../appWide/HollowBtn";
 import { useInputModalWithContext } from "../Modals/InputModalProvider";
+import { HollowBtn } from "../appWide/HollowBtn";
 import { DealCompareDealSelectMenu } from "./DealCompareDealSelectMenu";
 
 interface Props {

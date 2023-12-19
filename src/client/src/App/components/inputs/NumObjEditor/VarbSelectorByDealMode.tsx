@@ -1,11 +1,11 @@
 import { SxProps } from "@mui/material";
-import { mixedInfoS } from "../../../sharedWithServer/SectionsMeta/SectionInfo/MixedSectionInfo";
-import { collectionNamesFixed } from "../../../sharedWithServer/SectionsMeta/SectionInfo/VarbPathNameInfo";
-import { DealMode } from "../../../sharedWithServer/SectionsMeta/values/StateValue/dealMode";
-import { useGetterMainOnlyChild } from "../../../sharedWithServer/stateClassHooks/useMain";
-import { ValueCustomVarbPathInfo } from "../../../sharedWithServer/StateEntityGetters/ValueInEntityInfo";
-import { fixedVarbOptionArrs } from "../../../sharedWithServer/StateEntityGetters/varbPathOptions";
-import { GetterSection } from "../../../sharedWithServer/StateGetters/GetterSection";
+import { mixedInfoS } from "../../../../sharedWithServer/SectionInfo/MixedSectionInfo";
+import { ValueCustomVarbPathInfo } from "../../../../sharedWithServer/SectionInfo/ValueInEntityInfo";
+import { collectionNamesFixed } from "../../../../sharedWithServer/SectionInfo/VarbPathNameInfo";
+import { GetterSection } from "../../../../sharedWithServer/StateGetters/GetterSection";
+import { fixedVarbOptionArrs } from "../../../../sharedWithServer/sectionPaths/varbPathOptions";
+import { DealMode } from "../../../../sharedWithServer/sectionVarbsConfig/StateValue/dealMode";
+import { useGetterMainOnlyChild } from "../../../stateClassHooks/useMain";
 import { OnVarbSelect } from "./NumObjVarbSelector/VarbSelectorCollection";
 import { CollectionProps, VarbSelector } from "./VarbSelector";
 

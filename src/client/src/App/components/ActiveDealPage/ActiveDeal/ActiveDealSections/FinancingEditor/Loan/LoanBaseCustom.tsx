@@ -1,5 +1,5 @@
 import { SxProps } from "@mui/material";
-import { useGetterSection } from "../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
+import { useGetterSection } from "../../../../../../stateClassHooks/useGetterSection";
 import { arrSx } from "../../../../../../utils/mui";
 import { SelectAndItemizeEditor } from "../../../../../appWide/SelectAndItemizeEditor";
 import { NumObjEntityEditor } from "../../../../../inputs/NumObjEntityEditor";

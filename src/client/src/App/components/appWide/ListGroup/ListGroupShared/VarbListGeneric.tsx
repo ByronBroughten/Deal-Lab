@@ -1,10 +1,10 @@
 import { SxProps } from "@mui/material";
 import React, { ReactNode } from "react";
-import { ChildName } from "../../../../sharedWithServer/SectionsMeta/sectionChildrenDerived/ChildName";
-import { FeSectionInfo } from "../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
-import { SectionNameByType } from "../../../../sharedWithServer/SectionsMeta/SectionNameByType";
-import { useAction } from "../../../../sharedWithServer/stateClassHooks/useAction";
-import { useGetterSection } from "../../../../sharedWithServer/stateClassHooks/useGetterSection";
+import { FeSectionInfo } from "../../../../../sharedWithServer/SectionInfo/FeInfo";
+import { SectionNameByType } from "../../../../../sharedWithServer/SectionNameByType";
+import { ChildName } from "../../../../../sharedWithServer/sectionVarbsConfigDerived/sectionChildrenDerived/ChildName";
+import { useAction } from "../../../../stateClassHooks/useAction";
+import { useGetterSection } from "../../../../stateClassHooks/useGetterSection";
 import { VarbListTableSectionGeneric } from "./VarbListGeneric/VarbListTableSectionGeneric";
 import { VarbListMenuDual } from "./VarbListMenuDual";
 import { VarbListStyled } from "./VarbListStyled";

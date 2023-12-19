@@ -1,8 +1,8 @@
 import React, { useRef } from "react";
 import { MoonLoader } from "react-spinners";
-import { useAction } from "../../sharedWithServer/stateClassHooks/useAction";
-import { useGetterMain } from "../../sharedWithServer/stateClassHooks/useMain";
-import { timeS } from "../../sharedWithServer/utils/timeS";
+import { timeS } from "../../../sharedWithServer/utils/timeS";
+import { useAction } from "../../stateClassHooks/useAction";
+import { useGetterMain } from "../../stateClassHooks/useMain";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { MuiRow } from "../general/MuiRow";
 import { ComparedDealDisplay } from "./ComparedDealDisplay";

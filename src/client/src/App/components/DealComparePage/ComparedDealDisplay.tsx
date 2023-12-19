@@ -1,10 +1,10 @@
 import { Box, SxProps } from "@mui/material";
 import { Text, View } from "react-native";
-import { useGetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useGetterSection";
+import { useGetterSectionOnlyOne } from "../../stateClassHooks/useGetterSection";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { arrSx } from "../../utils/mui";
-import { MuiRow } from "../general/MuiRow";
 import { icons } from "../Icons";
+import { MuiRow } from "../general/MuiRow";
 
 type Props = {
   feId: string;

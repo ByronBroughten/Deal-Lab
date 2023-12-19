@@ -1,6 +1,6 @@
 import React from "react";
-import { useGetterFeStore } from "../../sharedWithServer/stateClassHooks/useFeStore";
-import { useQueryAction } from "../../sharedWithServer/stateClassHooks/useQueryAction";
+import { useGetterFeStore } from "../../stateClassHooks/useFeStore";
+import { useQueryAction } from "../../stateClassHooks/useQueryAction";
 import { authS } from "./authS";
 
 export function useControlUserData() {

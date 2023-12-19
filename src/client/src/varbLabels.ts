@@ -1,19 +1,19 @@
-import { externalLink } from "./App/Constants/externalLinks";
-import { SwitchTargetKey } from "./App/sharedWithServer/SectionsMeta/allBaseSectionVarbs/baseSwitchNames";
-import {
-  sectionVarbNames,
-  VarbName,
-} from "./App/sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
+import { externalLink } from "./sharedWithServer/Constants/externalLinks";
 import {
   RelLocalVarbInfo,
   relVarbInfoS,
-} from "./App/sharedWithServer/SectionsMeta/SectionInfo/RelVarbInfo";
+} from "./sharedWithServer/SectionInfo/RelVarbInfo";
 import {
   SectionName,
   sectionNames,
-} from "./App/sharedWithServer/SectionsMeta/SectionName";
-import { dealModeLabels } from "./App/sharedWithServer/SectionsMeta/values/StateValue/unionValues";
-import { StrictOmit } from "./App/sharedWithServer/utils/types";
+} from "./sharedWithServer/sectionVarbsConfig/SectionName";
+import { dealModeLabels } from "./sharedWithServer/sectionVarbsConfig/StateValue/unionValues";
+import { SwitchTargetKey } from "./sharedWithServer/sectionVarbsConfig/allBaseSectionVarbs/baseSwitchNames";
+import {
+  VarbName,
+  sectionVarbNames,
+} from "./sharedWithServer/sectionVarbsConfigDerived/baseSectionsDerived/baseSectionsVarbsTypes";
+import { StrictOmit } from "./sharedWithServer/utils/types";
 
 const multis = {
   prepaids: text({

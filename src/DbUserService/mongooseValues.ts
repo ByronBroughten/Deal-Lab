@@ -1,20 +1,20 @@
 import { Schema } from "mongoose";
-import { validateInEntityValue } from "../client/src/App/sharedWithServer/SectionsMeta/values/StateValue/InEntityValue";
-import { NumObj } from "../client/src/App/sharedWithServer/SectionsMeta/values/StateValue/NumObj";
-import { StringObj } from "../client/src/App/sharedWithServer/SectionsMeta/values/StateValue/StringObj";
+import { validateInEntityValue } from "../client/src/sharedWithServer/sectionVarbsConfig/StateValue/InEntityValue";
+import { NumObj } from "../client/src/sharedWithServer/sectionVarbsConfig/StateValue/NumObj";
+import { StringObj } from "../client/src/sharedWithServer/sectionVarbsConfig/StateValue/StringObj";
 import {
   validateChangeSaving,
   validateChangesToSave,
-} from "../client/src/App/sharedWithServer/SectionsMeta/values/StateValue/sectionChanges";
+} from "../client/src/sharedWithServer/sectionVarbsConfig/StateValue/sectionChanges";
+import { validateValueInEntities } from "../client/src/sharedWithServer/sectionVarbsConfig/StateValue/stateValuesShared/entities";
 import {
   UnionValueName,
   unionValueNames,
-} from "../client/src/App/sharedWithServer/SectionsMeta/values/StateValue/unionValues";
-import { validateValueInEntities } from "../client/src/App/sharedWithServer/SectionsMeta/values/StateValue/valuesShared/entities";
-import { ValueName } from "../client/src/App/sharedWithServer/SectionsMeta/values/ValueName";
-import { valueMetas } from "../client/src/App/sharedWithServer/SectionsMeta/values/valueMetas";
-import { dbLimits } from "../client/src/App/sharedWithServer/utils/dbLimits";
-import { validateS } from "../client/src/App/sharedWithServer/validateS";
+} from "../client/src/sharedWithServer/sectionVarbsConfig/StateValue/unionValues";
+import { ValueName } from "../client/src/sharedWithServer/sectionVarbsConfig/ValueName";
+import { valueMetas } from "../client/src/sharedWithServer/sectionVarbsConfig/valueMetas";
+import { dbLimits } from "../client/src/sharedWithServer/utils/dbLimits";
+import { validateS } from "../client/src/sharedWithServer/validateS";
 
 const mInEntities = mFromValidator(validateValueInEntities);
 

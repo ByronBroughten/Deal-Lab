@@ -1,12 +1,11 @@
 import { SxProps } from "@mui/material";
-import React from "react";
 import { StyleSheet, Text } from "react-native";
-import { timeS } from "../../sharedWithServer/utils/timeS";
-import { nativeTheme } from "../../theme/nativeTheme";
+import { timeS } from "../../../sharedWithServer/utils/timeS";
 import theme from "../../theme/Theme";
+import { nativeTheme } from "../../theme/nativeTheme";
+import { icons } from "../Icons";
 import { HollowBtn } from "../appWide/HollowBtn";
 import { MuiRow } from "../general/MuiRow";
-import { icons } from "../Icons";
 import {
   InfoModalOptions,
   InfoModalState,

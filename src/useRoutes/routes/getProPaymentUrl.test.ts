@@ -1,12 +1,13 @@
 import { Server } from "http";
 import request from "supertest";
 import { DbUserGetter } from "../../DbUserService/DbUserGetter";
-import { constants } from "../../client/src/App/Constants";
-import { apiQueriesShared } from "../../client/src/App/sharedWithServer/apiQueriesShared";
+import { constants } from "../../client/src/sharedWithServer/Constants";
+
+import { apiQueriesShared } from "../../client/src/sharedWithServer/apiQueriesShared";
 import {
   QueryReq,
   QueryRes,
-} from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
+} from "../../client/src/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import { runApp } from "../../runApp";
 import {
   createAndGetDbUser,

@@ -1,10 +1,10 @@
 import { Box } from "@mui/material";
 import { View } from "react-native";
 import { MoonLoader } from "react-spinners";
-import { constants } from "../../Constants";
-import { isDealMode } from "../../sharedWithServer/SectionsMeta/values/StateValue/dealMode";
-import { dealModeLabels } from "../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
-import { useGetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useGetterSection";
+import { constants } from "../../../sharedWithServer/Constants";
+import { isDealMode } from "../../../sharedWithServer/sectionVarbsConfig/StateValue/dealMode";
+import { dealModeLabels } from "../../../sharedWithServer/sectionVarbsConfig/StateValue/unionValues";
+import { useGetterSectionOnlyOne } from "../../stateClassHooks/useGetterSection";
 import { BackBtnWrapper } from "../appWide/BackBtnWrapper";
 import { BackgroundContainer } from "../appWide/BackgroundContainter";
 import { PageTitle } from "../appWide/PageTitle";

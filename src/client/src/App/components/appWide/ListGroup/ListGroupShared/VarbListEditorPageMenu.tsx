@@ -1,6 +1,6 @@
-import { FeSectionInfo } from "../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
-import { SectionNameByType } from "../../../../sharedWithServer/SectionsMeta/SectionNameByType";
-import { useGetterSection } from "../../../../sharedWithServer/stateClassHooks/useGetterSection";
+import { FeSectionInfo } from "../../../../../sharedWithServer/SectionInfo/FeInfo";
+import { SectionNameByType } from "../../../../../sharedWithServer/SectionNameByType";
+import { useGetterSection } from "../../../../stateClassHooks/useGetterSection";
 import { BigStringEditor } from "../../../inputs/BigStringEditor";
 import { RemoveFromStoreXBtn } from "../../RemoveSectionXBtn";
 import { VarbListTotal } from "./VarbListGeneric/VarbListTotal";

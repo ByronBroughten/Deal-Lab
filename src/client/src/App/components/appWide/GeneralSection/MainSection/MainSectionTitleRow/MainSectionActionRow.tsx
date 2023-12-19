@@ -1,4 +1,4 @@
-import { SectionNameByType } from "../../../../../sharedWithServer/SectionsMeta/SectionNameByType";
+import { SectionNameByType } from "../../../../../../sharedWithServer/SectionNameByType";
 import { ActionMenuProps } from "../ActionBtns/ActionMenuTypes";
 import { StoreSectionActions } from "../StoreSectionActions";
 

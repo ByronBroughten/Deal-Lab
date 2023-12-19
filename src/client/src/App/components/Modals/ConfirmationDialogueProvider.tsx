@@ -1,5 +1,5 @@
 import * as React from "react";
-import { StrictOmit } from "../../sharedWithServer/utils/types";
+import { StrictOmit } from "../../../sharedWithServer/utils/types";
 import { ConfirmationOptions } from "./ConfirmationDialogue";
 
 export interface ConfirmationModalOptions extends ConfirmationOptions {

@@ -1,6 +1,5 @@
-import React from "react";
 import styled from "styled-components";
-import { useGetterSection } from "../../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
+import { useGetterSection } from "../../../../../../../stateClassHooks/useGetterSection";
 import theme from "../../../../../../../theme/Theme";
 import { NumObjEntityEditor } from "../../../../../../inputs/NumObjEntityEditor";
 import SolidBtn from "../../../../../SolidBtn";

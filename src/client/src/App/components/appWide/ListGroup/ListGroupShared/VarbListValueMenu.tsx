@@ -1,8 +1,8 @@
 import { AiOutlineArrowRight } from "react-icons/ai";
-import { FeSectionInfo } from "../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
-import { SectionNameByType } from "../../../../sharedWithServer/SectionsMeta/SectionNameByType";
-import { useMakeGoToPage } from "../../../customHooks/useGoToPage";
+import { FeSectionInfo } from "../../../../../sharedWithServer/SectionInfo/FeInfo";
+import { SectionNameByType } from "../../../../../sharedWithServer/SectionNameByType";
 import { ListRouteName } from "../../../UserListEditorPage/UserComponentClosed";
+import { useMakeGoToPage } from "../../../customHooks/useGoToPage";
 import { ActionLoadBtn } from "../../GeneralSection/MainSection/ActionBtns/ActionLoadBtn";
 import { ActionSaveAsNewBtn } from "../../GeneralSection/MainSection/ActionBtns/SaveAsNewBtn";
 import { StyledActionBtn } from "../../GeneralSection/MainSection/StyledActionBtn";

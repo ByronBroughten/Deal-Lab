@@ -1,15 +1,15 @@
-import { constants } from "../../Constants";
-import { useAction } from "../../sharedWithServer/stateClassHooks/useAction";
-import { useGetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useGetterSection";
-import { IdOfSectionToSaveProvider } from "../../sharedWithServer/stateClassHooks/useIdOfSectionToSave";
+import { constants } from "../../../sharedWithServer/Constants";
+import { useAction } from "../../stateClassHooks/useAction";
+import { useGetterSectionOnlyOne } from "../../stateClassHooks/useGetterSection";
+import { IdOfSectionToSaveProvider } from "../../stateClassHooks/useIdOfSectionToSave";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { SubSectionOpen } from "../ActiveDealPage/ActiveDeal/SubSectionOpen";
+import { icons } from "../Icons";
 import { BackBtnWrapper } from "../appWide/BackBtnWrapper";
 import { StyledActionBtn } from "../appWide/GeneralSection/MainSection/StyledActionBtn";
 import { PageTitle } from "../appWide/PageTitle";
 import { DealModeProvider } from "../customContexts/dealModeContext";
 import { MuiRow } from "../general/MuiRow";
-import { icons } from "../Icons";
 import { CompareDealsDisplayBody } from "./CompareDealsDisplayBody";
 import { CompareDealsEditBody } from "./CompareDealsEditBody";
 

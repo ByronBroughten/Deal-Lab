@@ -1,5 +1,5 @@
 import React from "react";
-import { useGetterSection } from "../../../../../sharedWithServer/stateClassHooks/useGetterSection";
+import { useGetterSection } from "../../../../../stateClassHooks/useGetterSection";
 import { VarbListItemSimple } from "../../ListGroupShared/VarbListItemSimple";
 
 type MemoProps = { feId: string; valueSourceName: string };

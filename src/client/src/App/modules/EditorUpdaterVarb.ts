@@ -5,21 +5,22 @@ import Draft, {
   RawDraftContentState,
 } from "draft-js";
 import { pick } from "lodash";
-import { SectionName } from "../sharedWithServer/SectionsMeta/SectionName";
-import { isEditorUpdateFnName } from "../sharedWithServer/SectionsMeta/updateSectionVarbs/updateVarb/UpdateFnName";
-import { EditorValueName } from "../sharedWithServer/SectionsMeta/values/EditorValue";
+import { GetterVarb } from "../../sharedWithServer/StateGetters/GetterVarb";
+import { GetterVarbNumObj } from "../../sharedWithServer/StateGetters/GetterVarbNumObj";
+import { InEntityGetterVarb } from "../../sharedWithServer/StateGetters/InEntityGetterVarb";
+import { SectionName } from "../../sharedWithServer/sectionVarbsConfig/SectionName";
+import { EditorValueName } from "../../sharedWithServer/sectionVarbsConfig/StateValue/EditorValue";
 import {
   EntitiesAndEditorText,
   NumObj,
-} from "../sharedWithServer/SectionsMeta/values/StateValue/NumObj";
-import { StringObj } from "../sharedWithServer/SectionsMeta/values/StateValue/StringObj";
-import { ValueInEntity } from "../sharedWithServer/SectionsMeta/values/StateValue/valuesShared/entities";
-import { GetterVarbBase } from "../sharedWithServer/StateGetters/Bases/GetterVarbBase";
-import { GetterVarb } from "../sharedWithServer/StateGetters/GetterVarb";
-import { GetterVarbNumObj } from "../sharedWithServer/StateGetters/GetterVarbNumObj";
-import { InEntityGetterVarb } from "../sharedWithServer/StateGetters/InEntityGetterVarb";
-import { UpdaterVarb } from "../sharedWithServer/StateUpdaters/UpdaterVarb";
-import { Arr } from "../sharedWithServer/utils/Arr";
+} from "../../sharedWithServer/sectionVarbsConfig/StateValue/NumObj";
+import { StringObj } from "../../sharedWithServer/sectionVarbsConfig/StateValue/StringObj";
+import { ValueInEntity } from "../../sharedWithServer/sectionVarbsConfig/StateValue/stateValuesShared/entities";
+import { isEditorUpdateFnName } from "../../sharedWithServer/sectionVarbsConfig/allUpdateSectionVarbs/updateVarb/UpdateFnName";
+
+import { UpdaterVarb } from "../../sharedWithServer/StateClasses/Updaters/UpdaterVarb";
+import { GetterVarbBase } from "../../sharedWithServer/StateGetters/Bases/GetterVarbBase";
+import { Arr } from "../../sharedWithServer/utils/Arr";
 import { EntityMap, EntityRanges, RawEditorState } from "../utils/DraftS";
 import { draftUtils, numObjToRawContent } from "./draftjs/draftUtils";
 

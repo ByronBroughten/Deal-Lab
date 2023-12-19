@@ -1,5 +1,5 @@
-import { constants } from "../../Constants";
-import { makeReq } from "../../sharedWithServer/apiQueriesShared/makeReqAndRes";
+import { makeReq } from "../../../sharedWithServer/apiQueriesShared/makeReqAndRes";
+import { constants } from "../../../sharedWithServer/Constants";
 import { apiQueries } from "../apiQueriesClient";
 
 export async function goToPaymentPage(): Promise<void> {

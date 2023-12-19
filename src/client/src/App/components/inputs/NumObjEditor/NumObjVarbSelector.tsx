@@ -1,19 +1,17 @@
 import { EditorState } from "draft-js";
 import React from "react";
 import styled from "styled-components";
-import { useToggleView } from "../../../modules/customHooks/useToggleView";
-import { FeVarbInfo } from "../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
-import { mixedInfoS } from "../../../sharedWithServer/SectionsMeta/SectionInfo/MixedSectionInfo";
-import { useGetterSection } from "../../../sharedWithServer/stateClassHooks/useGetterSection";
+import { FeVarbInfo } from "../../../../sharedWithServer/SectionInfo/FeInfo";
+import { mixedInfoS } from "../../../../sharedWithServer/SectionInfo/MixedSectionInfo";
 import {
   ValueFixedVarbPathName,
   ValueInEntityInfo,
-} from "../../../sharedWithServer/StateEntityGetters/ValueInEntityInfo";
-import { nativeTheme } from "../../../theme/nativeTheme";
+} from "../../../../sharedWithServer/SectionInfo/ValueInEntityInfo";
+import { useToggleView } from "../../../modules/customHooks/useToggleView";
+import { useGetterSection } from "../../../stateClassHooks/useGetterSection";
 import theme from "../../../theme/Theme";
+import { nativeTheme } from "../../../theme/nativeTheme";
 import { SetEditorState } from "../../../utils/DraftS";
-import { HollowBtn } from "../../appWide/HollowBtn";
-import { DropdownContainer } from "../../general/DropdownContainer";
 import { icons } from "../../Icons";
 import { useInfoModal } from "../../Modals/InfoModalProvider";
 import {
@@ -21,13 +19,15 @@ import {
   ModalViewWindow,
   useDealModeContextVarbSelectModal,
 } from "../../Modals/VarbSelectModalProvider";
-import { insertVarbEntity } from "./NumObjVarbSelector/insertVarbEntity";
+import { HollowBtn } from "../../appWide/HollowBtn";
+import { DropdownContainer } from "../../general/DropdownContainer";
 import {
   OnVarbSelect,
   VarbSelectorCollection,
 } from "./NumObjVarbSelector/VarbSelectorCollection";
 import { VarbSelectorRow } from "./NumObjVarbSelector/VarbSelectorRow";
 import { VarbSelectorShell } from "./NumObjVarbSelector/VarbSelectorShell";
+import { insertVarbEntity } from "./NumObjVarbSelector/insertVarbEntity";
 
 export type PopperRef = React.Ref<HTMLDivElement>;
 

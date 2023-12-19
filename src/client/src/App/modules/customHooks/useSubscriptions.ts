@@ -1,11 +1,11 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
+import { constants } from "../../../sharedWithServer/Constants";
+import { StateValue } from "../../../sharedWithServer/sectionVarbsConfig/StateValue";
+import { timeS } from "../../../sharedWithServer/utils/timeS";
 import { useGoToPage } from "../../components/customHooks/useGoToPage";
-import { constants } from "../../Constants";
-import { StateValue } from "../../sharedWithServer/SectionsMeta/values/StateValue";
-import { useGetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useGetterSection";
-import { useQueryAction } from "../../sharedWithServer/stateClassHooks/useQueryAction";
-import { timeS } from "../../sharedWithServer/utils/timeS";
+import { useGetterSectionOnlyOne } from "../../stateClassHooks/useGetterSection";
+import { useQueryAction } from "../../stateClassHooks/useQueryAction";
 import { getErrorMessage } from "../../utils/error";
 
 export function useSubscriptions() {

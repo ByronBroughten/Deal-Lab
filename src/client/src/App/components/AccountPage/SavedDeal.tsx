@@ -2,33 +2,33 @@ import { SxProps } from "@mui/material";
 import { Box } from "@mui/system";
 import { Text } from "react-native";
 import { PulseLoader } from "react-spinners";
-import { constants } from "../../Constants";
+import { constants } from "../../../sharedWithServer/Constants";
 import {
   DbIdProp,
   FeIdProp,
-} from "../../sharedWithServer/SectionsMeta/SectionInfo/NanoIdInfo";
-import { dealModeLabels } from "../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
+} from "../../../sharedWithServer/SectionInfo/NanoIdInfo";
+import { dealModeLabels } from "../../../sharedWithServer/sectionVarbsConfig/StateValue/unionValues";
+import { timeS } from "../../../sharedWithServer/utils/timeS";
 import {
   useAction,
   useActionNoSave,
   useActionWithProps,
-} from "../../sharedWithServer/stateClassHooks/useAction";
+} from "../../stateClassHooks/useAction";
 import {
   useGetterSection,
   useGetterSectionOnlyOne,
-} from "../../sharedWithServer/stateClassHooks/useGetterSection";
-import { timeS } from "../../sharedWithServer/utils/timeS";
+} from "../../stateClassHooks/useGetterSection";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { arrSx } from "../../utils/mui";
 import { reactNativeS } from "../../utils/reactNative";
+import { icons } from "../Icons";
+import { useConfirmationModal } from "../Modals/ConfirmationModalProvider";
 import { StyledActionBtn } from "../appWide/GeneralSection/MainSection/StyledActionBtn";
 import { LabelText, StyledLabeledVarb } from "../appWide/LabeledVarbNext";
 import { showToastInfo } from "../appWide/toast";
 import { MuiRow } from "../general/MuiRow";
 import { Row } from "../general/Row";
-import { icons } from "../Icons";
 import { BareStringEditor } from "../inputs/BareStringEditor";
-import { useConfirmationModal } from "../Modals/ConfirmationModalProvider";
 import { useIsDevices } from "./../customHooks/useMediaQueries";
 
 const titleSx = (displayName: string, minWidth: number | string) => ({

@@ -1,22 +1,19 @@
 import { Box, SxProps } from "@mui/material";
 import { EditorState } from "draft-js";
 import React from "react";
+import { FeVI, FeVarbInfo } from "../../../sharedWithServer/SectionInfo/FeInfo";
+import { ValueFixedVarbPathName } from "../../../sharedWithServer/SectionInfo/ValueInEntityInfo";
+import { GetterVarb } from "../../../sharedWithServer/StateGetters/GetterVarb";
+import { EditorTextStatus } from "../../../sharedWithServer/StateGetters/GetterVarbNumObj";
+import { SectionName } from "../../../sharedWithServer/sectionVarbsConfig/SectionName";
+import { Obj } from "../../../sharedWithServer/utils/Obj";
 import { useOnOutsideClickEffect } from "../../modules/customHooks/useOnOutsideClickRef";
 import { useToggleView } from "../../modules/customHooks/useToggleView";
 import { SetEditorState } from "../../modules/draftjs/draftUtils";
 import { insertChars } from "../../modules/draftjs/insert";
-import {
-  FeVarbInfo,
-  FeVI,
-} from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
-import { SectionName } from "../../sharedWithServer/SectionsMeta/SectionName";
-import { useGetterSections } from "../../sharedWithServer/stateClassHooks/useGetterSections";
-import { useGetterVarb } from "../../sharedWithServer/stateClassHooks/useGetterVarb";
-import { SectionInfoContextProvider } from "../../sharedWithServer/stateClassHooks/useSectionContext";
-import { ValueFixedVarbPathName } from "../../sharedWithServer/StateEntityGetters/ValueInEntityInfo";
-import { GetterVarb } from "../../sharedWithServer/StateGetters/GetterVarb";
-import { EditorTextStatus } from "../../sharedWithServer/StateGetters/GetterVarbNumObj";
-import { Obj } from "../../sharedWithServer/utils/Obj";
+import { useGetterSections } from "../../stateClassHooks/useGetterSections";
+import { useGetterVarb } from "../../stateClassHooks/useGetterVarb";
+import { SectionInfoContextProvider } from "../../stateClassHooks/useSectionContext";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { arrSx } from "../../utils/mui";
 import { VarbStringLabel } from "../appWide/VarbStringLabel";

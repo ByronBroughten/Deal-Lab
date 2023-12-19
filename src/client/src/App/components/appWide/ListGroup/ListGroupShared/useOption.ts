@@ -1,5 +1,5 @@
-import { Arr } from "../../../../sharedWithServer/utils/Arr";
-import { Obj } from "../../../../sharedWithServer/utils/Obj";
+import { Arr } from "../../../../../sharedWithServer/utils/Arr";
+import { Obj } from "../../../../../sharedWithServer/utils/Obj";
 
 function checkOption<O extends string>(valueSwitch: any, options: O[]): O {
   if (options.includes(valueSwitch)) {

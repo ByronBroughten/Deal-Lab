@@ -1,13 +1,13 @@
 import { Box } from "@mui/material";
 import styled from "styled-components";
-import { FeSectionInfo } from "../../../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
-import { SectionNameByType } from "../../../../../../sharedWithServer/SectionsMeta/SectionNameByType";
+import { FeSectionInfo } from "../../../../../../../sharedWithServer/SectionInfo/FeInfo";
+import { SectionNameByType } from "../../../../../../../sharedWithServer/SectionNameByType";
 import { nativeTheme } from "../../../../../../theme/nativeTheme";
+import { ListRouteName } from "../../../../../UserListEditorPage/UserComponentClosed";
 import { FormSection } from "../../../../../appWide/FormSection";
 import { VarbListGenericMenuType } from "../../../../../appWide/ListGroup/ListGroupShared/VarbListGeneric";
 import { VarbListMenuDual } from "../../../../../appWide/ListGroup/ListGroupShared/VarbListMenuDual";
 import { MuiRow } from "../../../../../general/MuiRow";
-import { ListRouteName } from "../../../../../UserListEditorPage/UserComponentClosed";
 import { AddWithDisplayName, CommonItemsList } from "./CommonItemsList";
 
 interface Props<SN extends SectionNameByType<"varbListAllowed">>

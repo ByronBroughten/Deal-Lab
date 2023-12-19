@@ -5,11 +5,11 @@ import {
   makeRes,
   SectionPackRes,
   UrlRes,
-} from "../../sharedWithServer/apiQueriesShared/makeReqAndRes";
-import { Id } from "../../sharedWithServer/SectionsMeta/IdS";
-import { validateSectionPackDuck } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/validateSectionPackDuck";
-import { Obj } from "../../sharedWithServer/utils/Obj";
-import { Str } from "../../sharedWithServer/utils/Str";
+} from "../../../sharedWithServer/apiQueriesShared/makeReqAndRes";
+import { Id } from "../../../sharedWithServer/Ids/IdS";
+import { validateSectionPackDuck } from "../../../sharedWithServer/sectionVarbsConfigDerived/sectionChildrenDerived/validateSectionPackDuck";
+import { Obj } from "../../../sharedWithServer/utils/Obj";
+import { Str } from "../../../sharedWithServer/utils/Str";
 
 export function validateDbIdRes(res: AxiosResponse<unknown>): DbIdRes {
   const axiosRes = validateAxiosRes(res);

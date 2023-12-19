@@ -1,7 +1,7 @@
 import {
   SimpleSectionVarbName,
   simpleSectionVarbNames,
-} from "../../../../../../sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
+} from "../../../../../../../sharedWithServer/sectionVarbsConfigDerived/baseSectionsDerived/baseSectionsVarbsTypes";
 
 type DetailsConfig = {
   [SV in SimpleSectionVarbName]: DetailConfig;

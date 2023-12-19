@@ -1,12 +1,12 @@
-import { StateValue } from "../../../../../../../sharedWithServer/SectionsMeta/values/StateValue";
-import { useGetterSection } from "../../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
-import { SelectEditor } from "../../../../../../appWide/SelectEditor";
-import { VarbStringLabel } from "../../../../../../appWide/VarbStringLabel";
-import { PeriodicEditor } from "../../../../../../inputs/PeriodicEditor";
+import { StateValue } from "../../../../../../../../sharedWithServer/sectionVarbsConfig/StateValue";
 import {
   DealMode,
   isDealMode,
-} from "./../../../../../../../sharedWithServer/SectionsMeta/values/StateValue/dealMode";
+} from "../../../../../../../../sharedWithServer/sectionVarbsConfig/StateValue/dealMode";
+import { useGetterSection } from "../../../../../../../stateClassHooks/useGetterSection";
+import { SelectEditor } from "../../../../../../appWide/SelectEditor";
+import { VarbStringLabel } from "../../../../../../appWide/VarbStringLabel";
+import { PeriodicEditor } from "../../../../../../inputs/PeriodicEditor";
 
 export function MaintenanceValue({
   feId,

@@ -1,7 +1,6 @@
 import { SxProps } from "@mui/material";
-import React from "react";
-import { StateValue } from "../../../../../sharedWithServer/SectionsMeta/values/StateValue";
-import { useGetterSection } from "../../../../../sharedWithServer/stateClassHooks/useGetterSection";
+import { StateValue } from "../../../../../../sharedWithServer/sectionVarbsConfig/StateValue";
+import { useGetterSection } from "../../../../../stateClassHooks/useGetterSection";
 import { nativeTheme } from "../../../../../theme/nativeTheme";
 import { arrSx } from "../../../../../utils/mui";
 import MainSectionBody from "../../../../appWide/GeneralSection/MainSection/MainSectionBody";

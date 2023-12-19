@@ -1,4 +1,4 @@
-import { FeSectionInfo } from "../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
+import { FeSectionInfo } from "../../../../../sharedWithServer/SectionInfo/FeInfo";
 import { CheckboxCell } from "./CheckboxCell";
 import { XBtnCell } from "./XBtnCell";
 

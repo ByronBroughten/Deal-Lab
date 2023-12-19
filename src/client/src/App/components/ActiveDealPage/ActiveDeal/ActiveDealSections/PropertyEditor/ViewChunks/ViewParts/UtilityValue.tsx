@@ -1,8 +1,8 @@
-import { periodicName } from "../../../../../../../sharedWithServer/SectionsMeta/GroupName";
-import { StateValue } from "../../../../../../../sharedWithServer/SectionsMeta/values/StateValue";
-import { DealMode } from "../../../../../../../sharedWithServer/SectionsMeta/values/StateValue/dealMode";
-import { PeriodicMode } from "../../../../../../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
-import { useGetterSection } from "../../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
+import { periodicName } from "../../../../../../../../sharedWithServer/sectionVarbsConfig/GroupName";
+import { StateValue } from "../../../../../../../../sharedWithServer/sectionVarbsConfig/StateValue";
+import { DealMode } from "../../../../../../../../sharedWithServer/sectionVarbsConfig/StateValue/dealMode";
+import { PeriodicMode } from "../../../../../../../../sharedWithServer/sectionVarbsConfig/StateValue/unionValues";
+import { useGetterSection } from "../../../../../../../stateClassHooks/useGetterSection";
 import { SelectAndItemizeEditor } from "../../../../../../appWide/SelectAndItemizeEditor";
 import { PeriodicEditor } from "../../../../../../inputs/PeriodicEditor";
 import { PeriodicList } from "../../ValueShared/PeriodicList";

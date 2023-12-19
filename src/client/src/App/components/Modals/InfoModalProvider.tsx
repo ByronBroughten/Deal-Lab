@@ -1,6 +1,6 @@
 import React from "react";
-import { timeS } from "../../sharedWithServer/utils/timeS";
-import { StrictOmit } from "../../sharedWithServer/utils/types";
+import { timeS } from "../../../sharedWithServer/utils/timeS";
+import { StrictOmit } from "../../../sharedWithServer/utils/types";
 
 export interface InfoModalOptions {
   title: React.ReactNode;

@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
-import { FeIdProp } from "../../../../../../sharedWithServer/SectionsMeta/SectionInfo/NanoIdInfo";
-import { useGetterSection } from "../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
+import { FeIdProp } from "../../../../../../../sharedWithServer/SectionInfo/NanoIdInfo";
+import { useGetterSection } from "../../../../../../stateClassHooks/useGetterSection";
 import { nativeTheme } from "../../../../../../theme/nativeTheme";
 import { FormSectionNext } from "../../../../../appWide/FormSectionNext";
 import { LabeledVarbRow } from "../../../../../appWide/LabeledVarbRow";

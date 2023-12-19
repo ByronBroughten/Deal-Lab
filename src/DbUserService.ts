@@ -12,45 +12,46 @@ import {
 import { DbUserGetter } from "./DbUserService/DbUserGetter";
 import { DbSectionsModelCore, DbUserModel } from "./DbUserService/DbUserModel";
 import { DbUserQuickGetter } from "./DbUserService/DbUserQuickGetter";
-import { constants } from "./client/src/App/Constants";
+import { constants } from "./client/src/sharedWithServer/Constants";
 import {
   OneDbSectionValueInfo,
   OneDbVarbInfo,
-} from "./client/src/App/sharedWithServer/SectionsMeta/SectionInfo/DbStoreInfo";
-import { FeSectionInfo } from "./client/src/App/sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
-import { SectionName } from "./client/src/App/sharedWithServer/SectionsMeta/SectionName";
-import { VarbName } from "./client/src/App/sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
-import { ChildSectionName } from "./client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/ChildSectionName";
+} from "./client/src/sharedWithServer/SectionInfo/DbStoreInfo";
+import { FeSectionInfo } from "./client/src/sharedWithServer/SectionInfo/FeInfo";
+import { PackBuilderSection } from "./client/src/sharedWithServer/StateClasses/Packers/PackBuilderSection";
+import {
+  StoreName,
+  StoreSectionName,
+} from "./client/src/sharedWithServer/sectionStores";
+
+import { ChildPackArrs } from "./client/src/sharedWithServer/SectionPack/ChildSectionPack";
+import { SectionPack } from "./client/src/sharedWithServer/SectionPack/SectionPack";
+import { GetterSection } from "./client/src/sharedWithServer/StateGetters/GetterSection";
+import { EstimatorPlanValues } from "./client/src/sharedWithServer/apiQueriesShared/EstimatorPlanValues";
+import { UserData } from "./client/src/sharedWithServer/apiQueriesShared/validateUserData";
+import {
+  initProdDbStoreArrs,
+  initTestDbStoreArrs,
+} from "./client/src/sharedWithServer/exampleMakers/initDbStoreArrs";
+import { SectionName } from "./client/src/sharedWithServer/sectionVarbsConfig/SectionName";
+import {
+  StateValue,
+  VarbValue,
+} from "./client/src/sharedWithServer/sectionVarbsConfig/StateValue";
+import { VarbName } from "./client/src/sharedWithServer/sectionVarbsConfigDerived/baseSectionsDerived/baseSectionsVarbsTypes";
+import { ChildSectionName } from "./client/src/sharedWithServer/sectionVarbsConfigDerived/sectionChildrenDerived/ChildSectionName";
 import {
   DbPack,
   DbSectionPack,
-} from "./client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/DbSectionPack";
+} from "./client/src/sharedWithServer/sectionVarbsConfigDerived/sectionChildrenDerived/DbSectionPack";
 import {
   DbSectionName,
   DbStoreInfo,
   DbStoreName,
   dbStoreNames,
   getSectionDbStoreNames,
-} from "./client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/DbStoreName";
-import { SectionPack } from "./client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/SectionPack";
-import {
-  StoreName,
-  StoreSectionName,
-} from "./client/src/App/sharedWithServer/SectionsMeta/sectionStores";
-import {
-  StateValue,
-  VarbValue,
-} from "./client/src/App/sharedWithServer/SectionsMeta/values/StateValue";
-import { GetterSection } from "./client/src/App/sharedWithServer/StateGetters/GetterSection";
-import { PackBuilderSection } from "./client/src/App/sharedWithServer/StatePackers/PackBuilderSection";
-import { SectionPackArrs } from "./client/src/App/sharedWithServer/StatePackers/PackMakerSection";
-import { EstimatorPlanValues } from "./client/src/App/sharedWithServer/apiQueriesShared/EstimatorPlanValues";
-import { UserData } from "./client/src/App/sharedWithServer/apiQueriesShared/validateUserData";
-import {
-  initProdDbStoreArrs,
-  initTestDbStoreArrs,
-} from "./client/src/App/sharedWithServer/exampleMakers/initDbStoreArrs";
-import { Obj } from "./client/src/App/sharedWithServer/utils/Obj";
+} from "./client/src/sharedWithServer/sectionVarbsConfigDerived/sectionChildrenDerived/DbStoreName";
+import { Obj } from "./client/src/sharedWithServer/utils/Obj";
 import { ResStatusError } from "./useErrorHandling";
 
 interface Props {
@@ -498,7 +499,7 @@ type SetSectionPackArrProps<CN extends DbStoreName> = {
   sectionPackArr: DbSectionPack<CN>[];
 };
 
-type DbSectionPackArrs = SectionPackArrs<"dbStore">;
+type DbSectionPackArrs = ChildPackArrs<"dbStore">;
 
 interface UpdateProps extends QueryParameters {
   filter?: Record<string, string>;

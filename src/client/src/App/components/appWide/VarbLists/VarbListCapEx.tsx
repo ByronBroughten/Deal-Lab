@@ -1,5 +1,5 @@
-import { useAction } from "../../../sharedWithServer/stateClassHooks/useAction";
-import { useGetterSection } from "../../../sharedWithServer/stateClassHooks/useGetterSection";
+import { useAction } from "../../../stateClassHooks/useAction";
+import { useGetterSection } from "../../../stateClassHooks/useGetterSection";
 import {
   VarbListGeneric,
   VarbListGenericMenuType,

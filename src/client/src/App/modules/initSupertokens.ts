@@ -4,7 +4,7 @@ import ThirdPartyEmailPassword, {
   Facebook,
   Google,
 } from "supertokens-auth-react/recipe/thirdpartyemailpassword";
-import { constants } from "../Constants";
+import { constants } from "../../sharedWithServer/Constants";
 
 export function initSupertokens(): void {
   SuperTokens.init({

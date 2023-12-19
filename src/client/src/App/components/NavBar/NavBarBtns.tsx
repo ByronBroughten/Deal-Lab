@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 import { BsArrowUpCircle } from "react-icons/bs";
 import { View } from "react-native";
 import { useUserSubscription } from "../../modules/customHooks/useSubscriptions";
-import { useUserDataStatus } from "../../sharedWithServer/stateClassHooks/useFeStore";
+import { useUserDataStatus } from "../../stateClassHooks/useFeStore";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { MuiRow } from "../general/MuiRow";
 import { NavBtn } from "./NavBtn";

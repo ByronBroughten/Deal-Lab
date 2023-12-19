@@ -1,11 +1,10 @@
 import { SxProps } from "@mui/material";
-import React from "react";
 import {
   FeSectionInfo,
   FeVI,
-} from "../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
-import { SectionName } from "../../../../sharedWithServer/SectionsMeta/SectionName";
-import { StrictExtract } from "../../../../sharedWithServer/utils/types";
+} from "../../../../../sharedWithServer/SectionInfo/FeInfo";
+import { SectionName } from "../../../../../sharedWithServer/sectionVarbsConfig/SectionName";
+import { StrictExtract } from "../../../../../sharedWithServer/utils/types";
 import { FirstValueEditorCell } from "./FirstValueEditorCell";
 import { NameEditorCell } from "./NameEditorCell";
 import { VarbListItemStyled } from "./VarbListItemStyled";

@@ -3,9 +3,9 @@ import { DbUserService } from "../../DbUserService";
 import {
   DbAction,
   validateDbAction,
-} from "../../client/src/App/sharedWithServer/apiQueriesShared/DbAction";
-import { SyncChangesReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/makeReqAndRes";
-import { Arr } from "../../client/src/App/sharedWithServer/utils/Arr";
+} from "../../client/src/sharedWithServer/apiQueriesShared/DbAction";
+import { SyncChangesReq } from "../../client/src/sharedWithServer/apiQueriesShared/makeReqAndRes";
+import { Arr } from "../../client/src/sharedWithServer/utils/Arr";
 import {
   Authed,
   getAuthWare,

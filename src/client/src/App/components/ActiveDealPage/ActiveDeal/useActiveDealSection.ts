@@ -1,9 +1,9 @@
-import { constants } from "../../../Constants";
-import { FeRouteName } from "../../../Constants/feRoutes";
-import { ChildName } from "../../../sharedWithServer/SectionsMeta/sectionChildrenDerived/ChildName";
-import { StateValue } from "../../../sharedWithServer/SectionsMeta/values/StateValue";
-import { useGetterSectionOnlyOne } from "../../../sharedWithServer/stateClassHooks/useGetterSection";
-import { StrictExtract } from "../../../sharedWithServer/utils/types";
+import { constants } from "../../../../sharedWithServer/Constants";
+import { FeRouteName } from "../../../../sharedWithServer/Constants/feRoutes";
+import { StateValue } from "../../../../sharedWithServer/sectionVarbsConfig/StateValue";
+import { ChildName } from "../../../../sharedWithServer/sectionVarbsConfigDerived/sectionChildrenDerived/ChildName";
+import { StrictExtract } from "../../../../sharedWithServer/utils/types";
+import { useGetterSectionOnlyOne } from "../../../stateClassHooks/useGetterSection";
 import { useGoToPage } from "../../customHooks/useGoToPage";
 
 export type ActiveDealChildName = StrictExtract<

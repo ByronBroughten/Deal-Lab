@@ -1,9 +1,9 @@
 import React from "react";
 import { Navigate, Outlet, useNavigate } from "react-router-dom";
 import { SessionAuth } from "supertokens-auth-react/recipe/session";
-import { feRoutes } from "../Constants/feRoutes";
-import { useUserDataStatus } from "../sharedWithServer/stateClassHooks/useFeStore";
-import { useGetterSectionOnlyOne } from "../sharedWithServer/stateClassHooks/useGetterSection";
+import { feRoutes } from "../../sharedWithServer/Constants/feRoutes";
+import { useUserDataStatus } from "../stateClassHooks/useFeStore";
+import { useGetterSectionOnlyOne } from "../stateClassHooks/useGetterSection";
 import { DealModeProvider } from "./customContexts/dealModeContext";
 
 export function AuthProtectedPage() {

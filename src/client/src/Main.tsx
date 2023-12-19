@@ -5,27 +5,27 @@ import { getSuperTokensRoutesForReactRouterDom } from "supertokens-auth-react";
 import { ActiveDealRoutes } from "./ActiveDealRoutes";
 import { AccountPage } from "./App/components/AccountPage";
 import { CreateDeal } from "./App/components/ActiveDealPage/CreateDeal";
-import { PageContent } from "./App/components/appWide/GeneralSection/PageContent";
 import { AuthProtectedPage } from "./App/components/AuthProtectedPage";
 import { CompareDealsPage } from "./App/components/DealComparePage/CompareDealsPage";
 import { FooterNext } from "./App/components/Footer";
-import NotFound from "./App/components/general/NotFound";
 import { NavBar } from "./App/components/NavBar";
 import { UserVarbEditorPage } from "./App/components/UserVarbEditorPage";
-import { feRoutes } from "./App/Constants/feRoutes";
+import { PageContent } from "./App/components/appWide/GeneralSection/PageContent";
+import NotFound from "./App/components/general/NotFound";
 import { useControlUserData } from "./App/modules/customHooks/useControlUserData";
 import { useSubscriptions } from "./App/modules/customHooks/useSubscriptions";
-import { useAutoSave } from "./App/sharedWithServer/stateClassHooks/useAutoSave";
+import { useAutoSave } from "./App/stateClassHooks/useAutoSave";
 import {
   useAddDeal,
   useEditDeal,
   useSolve,
-} from "./App/sharedWithServer/stateClassHooks/useLoading";
+} from "./App/stateClassHooks/useLoading";
 import { nativeTheme } from "./App/theme/nativeTheme";
 import { HandleAuth } from "./HandleAuth";
 import { PrivacyPolicyPage } from "./PrivacyPolicyPage";
 import { TermsOfServicePage } from "./TermsOfServicePage";
 import { UserComponentRoutes } from "./UserComponentRoutes";
+import { feRoutes } from "./sharedWithServer/Constants/feRoutes";
 
 export function Main() {
   useControlUserData();

@@ -3,9 +3,9 @@ import { AiOutlineFieldTime } from "react-icons/ai";
 import { FaFaucet, FaHandHoldingUsd, FaMoneyCheckAlt } from "react-icons/fa";
 import { MdAttachMoney, MdOutlineRoofing, MdSell } from "react-icons/md";
 import { VscOutput } from "react-icons/vsc";
-import { constants } from "../../Constants";
+import { constants } from "../../../sharedWithServer/Constants";
+import { StoreName } from "../../../sharedWithServer/sectionStores";
 import { icons } from "../Icons";
-import { StoreName } from "./../../sharedWithServer/SectionsMeta/sectionStores";
 
 type Props = {
   title: string;

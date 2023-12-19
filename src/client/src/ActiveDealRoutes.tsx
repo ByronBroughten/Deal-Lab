@@ -9,9 +9,9 @@ import {
 import { ActiveDealMain } from "./App/components/ActiveDealPage/ActiveDealMain";
 import { UserDataNeededPage } from "./App/components/AuthProtectedPage";
 import { DealModeProvider } from "./App/components/customContexts/dealModeContext";
-import { feRoutes } from "./App/Constants/feRoutes";
-import { useGetterSections } from "./App/sharedWithServer/stateClassHooks/useGetterSections";
-import { IdOfSectionToSaveProvider } from "./App/sharedWithServer/stateClassHooks/useIdOfSectionToSave";
+import { useGetterSections } from "./App/stateClassHooks/useGetterSections";
+import { IdOfSectionToSaveProvider } from "./App/stateClassHooks/useIdOfSectionToSave";
+import { feRoutes } from "./sharedWithServer/Constants/feRoutes";
 
 export const ActiveDealRoutes = (
   <Route path={feRoutes.activeDeal} element={<ActiveDealMainController />}>

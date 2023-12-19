@@ -1,8 +1,9 @@
 import {
   GetterSectionsBase,
   GetterSectionsProps,
-} from "../../sharedWithServer/StateGetters/Bases/GetterSectionsBase";
-import { GetterSections } from "../../sharedWithServer/StateGetters/GetterSections";
+} from "../../../sharedWithServer/StateGetters/Bases/GetterSectionsBase";
+import { GetterSections } from "../../../sharedWithServer/StateGetters/GetterSections";
+
 import {
   ApiQuerierBase,
   ApiQuerierBaseProps,

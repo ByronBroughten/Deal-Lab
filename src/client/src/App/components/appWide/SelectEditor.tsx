@@ -1,7 +1,7 @@
 import { Box, SxProps } from "@mui/material";
 import React from "react";
-import { SectionName } from "../../sharedWithServer/SectionsMeta/SectionName";
-import { UnionValueName } from "../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
+import { SectionName } from "../../../sharedWithServer/sectionVarbsConfig/SectionName";
+import { UnionValueName } from "../../../sharedWithServer/sectionVarbsConfig/StateValue/unionValues";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { arrSx } from "../../utils/mui";
 import { NumEditorType } from "../inputs/NumObjEntityEditor";

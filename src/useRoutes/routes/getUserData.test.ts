@@ -1,10 +1,10 @@
 import request from "supertest";
 import { DbUserGetter } from "../../DbUserService/DbUserGetter";
-import { constants } from "../../client/src/App/Constants";
-import { apiQueriesShared } from "../../client/src/App/sharedWithServer/apiQueriesShared";
-import { QueryReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
-import { makeReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/makeReqAndRes";
-import { validateUserData } from "../../client/src/App/sharedWithServer/apiQueriesShared/validateUserData";
+import { constants } from "../../client/src/sharedWithServer/Constants";
+import { apiQueriesShared } from "../../client/src/sharedWithServer/apiQueriesShared";
+import { QueryReq } from "../../client/src/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
+import { makeReq } from "../../client/src/sharedWithServer/apiQueriesShared/makeReqAndRes";
+import { validateUserData } from "../../client/src/sharedWithServer/apiQueriesShared/validateUserData";
 import { runApp } from "../../runApp";
 import {
   createAndGetDbUser,

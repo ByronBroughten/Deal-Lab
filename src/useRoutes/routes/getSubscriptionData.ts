@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { DbUserService } from "../../DbUserService";
-import { constants } from "../../client/src/App/Constants";
+import { constants } from "../../client/src/sharedWithServer/Constants";
 import { getAuthWare, validateEmptyAuthReq } from "../../middleware/authWare";
 import { sendSuccess } from "./routesShared/sendSuccess";
 

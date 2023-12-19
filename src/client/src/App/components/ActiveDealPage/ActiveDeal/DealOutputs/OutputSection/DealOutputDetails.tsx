@@ -1,5 +1,5 @@
 import { Box, SxProps } from "@mui/material";
-import { useGetterSection } from "../../../../../sharedWithServer/stateClassHooks/useGetterSection";
+import { useGetterSection } from "../../../../../stateClassHooks/useGetterSection";
 import { nativeTheme } from "../../../../../theme/nativeTheme";
 import { arrSx } from "../../../../../utils/mui";
 import {

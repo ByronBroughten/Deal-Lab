@@ -1,10 +1,12 @@
 import request from "supertest";
 import { DbUserGetter } from "../../DbUserService/DbUserGetter";
-import { SectionArrReqMaker } from "../../client/src/App/sharedWithServer/ReqMakers/SectionArrReqMaker";
-import { childToSectionName } from "../../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/ChildSectionName";
-import { PackBuilderSection } from "../../client/src/App/sharedWithServer/StatePackers/PackBuilderSection";
-import { apiQueriesShared } from "../../client/src/App/sharedWithServer/apiQueriesShared";
-import { SectionPackArrsReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/makeReqAndRes";
+
+import { SectionPackArrsReq } from "../../client/src/sharedWithServer/apiQueriesShared/makeReqAndRes";
+import { SectionArrReqMaker } from "./apiQueriesTestTools/SectionArrReqMaker";
+
+import { PackBuilderSection } from "../../client/src/sharedWithServer/StateClasses/Packers/PackBuilderSection";
+import { apiQueriesShared } from "../../client/src/sharedWithServer/apiQueriesShared";
+import { childToSectionName } from "../../client/src/sharedWithServer/sectionVarbsConfigDerived/sectionChildrenDerived/ChildSectionName";
 import { runApp } from "../../runApp";
 import {
   createAndGetDbUser,

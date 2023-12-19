@@ -3,10 +3,10 @@ import { darken, lighten } from "polished";
 import React from "react";
 import { css } from "styled-components";
 import styled from "styled-components/macro";
+import { FeVarbInfo } from "../../../sharedWithServer/SectionInfo/FeInfo";
 import useOnOutsideClickRef from "../../modules/customHooks/useOnOutsideClickRef";
 import { getEntityStrategy } from "../../modules/draftjs/getEntityStrategies";
 import { insertEntity } from "../../modules/draftjs/insert";
-import { FeVarbInfo } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import ErrorMessage from "../appWide/ErrorMessage";
 import ItemOrCommaSpan, {
   CommaSpan,

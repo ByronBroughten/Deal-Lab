@@ -1,6 +1,6 @@
 import React from "react";
-import { FeVarbValueInfo } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
-import { useAction } from "../../sharedWithServer/stateClassHooks/useAction";
+import { FeVarbValueInfo } from "../../../sharedWithServer/SectionInfo/FeInfo";
+import { useAction } from "../../stateClassHooks/useAction";
 import { StandardProps } from "../general/StandardProps";
 import { NextBtn } from "./NextBtn";
 

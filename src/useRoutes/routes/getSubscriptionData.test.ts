@@ -2,8 +2,8 @@ import { Server } from "http";
 import request from "supertest";
 import { DbUserGetter } from "../../DbUserService/DbUserGetter";
 import { userTokenS } from "../../client/src/App/modules/services/userTokenS";
-import { apiQueriesShared } from "../../client/src/App/sharedWithServer/apiQueriesShared";
-import { validateSubscriptionValues } from "../../client/src/App/sharedWithServer/apiQueriesShared/EstimatorPlanValues";
+import { apiQueriesShared } from "../../client/src/sharedWithServer/apiQueriesShared";
+import { validateSubscriptionValues } from "../../client/src/sharedWithServer/apiQueriesShared/EstimatorPlanValues";
 import { runApp } from "../../runApp";
 import {
   createAndGetDbUser,

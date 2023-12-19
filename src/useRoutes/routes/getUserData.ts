@@ -2,7 +2,7 @@ import { Response } from "express";
 import { SessionRequest } from "supertokens-node/framework/express";
 import ThirdPartyEmailPassword from "supertokens-node/recipe/thirdpartyemailpassword";
 import { DbUserService } from "../../DbUserService";
-import { Str } from "../../client/src/App/sharedWithServer/utils/Str";
+import { Str } from "../../client/src/sharedWithServer/utils/Str";
 import { getAuthWare, validateEmptyAuthReq } from "../../middleware/authWare";
 import { sendSuccess } from "./routesShared/sendSuccess";
 

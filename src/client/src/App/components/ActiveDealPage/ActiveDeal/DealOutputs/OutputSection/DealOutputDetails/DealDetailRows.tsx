@@ -1,8 +1,8 @@
 import { isEqual } from "lodash";
 import styled from "styled-components";
-import { FeVarbInfo } from "../../../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
-import { useGetterVarb } from "../../../../../../sharedWithServer/stateClassHooks/useGetterVarb";
-import { GetterVarb } from "../../../../../../sharedWithServer/StateGetters/GetterVarb";
+import { FeVarbInfo } from "../../../../../../../sharedWithServer/SectionInfo/FeInfo";
+import { GetterVarb } from "../../../../../../../sharedWithServer/StateGetters/GetterVarb";
+import { useGetterVarb } from "../../../../../../stateClassHooks/useGetterVarb";
 import {
   DealDetailRowVarbFound,
   DealDetailRowVarbNotFound,

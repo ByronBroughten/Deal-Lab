@@ -1,9 +1,9 @@
 import { SxProps } from "@mui/material";
 import React from "react";
 import { unstable_batchedUpdates } from "react-dom";
-import { FeVarbInfo } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
-import { useAction } from "../../sharedWithServer/stateClassHooks/useAction";
-import { useGetterVarb } from "../../sharedWithServer/stateClassHooks/useGetterVarb";
+import { FeVarbInfo } from "../../../sharedWithServer/SectionInfo/FeInfo";
+import { useAction } from "../../stateClassHooks/useAction";
+import { useGetterVarb } from "../../stateClassHooks/useGetterVarb";
 import { Toggler } from "../general/Toggler";
 
 export interface TogglerBooleanVarbProps {

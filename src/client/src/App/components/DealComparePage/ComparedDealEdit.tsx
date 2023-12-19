@@ -1,10 +1,10 @@
 import { Box, SxProps } from "@mui/material";
-import { useGetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useGetterSection";
+import { useGetterSectionOnlyOne } from "../../stateClassHooks/useGetterSection";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { arrSx } from "../../utils/mui";
+import { icons } from "../Icons";
 import { RemoveSectionXBtn } from "../appWide/RemoveSectionXBtn";
 import { MuiRow } from "../general/MuiRow";
-import { icons } from "../Icons";
 
 type Props = {
   feId: string;

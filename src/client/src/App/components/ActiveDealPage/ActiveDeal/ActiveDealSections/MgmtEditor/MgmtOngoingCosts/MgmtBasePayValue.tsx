@@ -1,5 +1,5 @@
-import { useGetterSection } from "../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
-import { GetterSection } from "../../../../../../sharedWithServer/StateGetters/GetterSection";
+import { GetterSection } from "../../../../../../../sharedWithServer/StateGetters/GetterSection";
+import { useGetterSection } from "../../../../../../stateClassHooks/useGetterSection";
 import { MakeEditor, SelectEditor } from "../../../../../appWide/SelectEditor";
 import { NumObjEntityEditor } from "../../../../../inputs/NumObjEntityEditor";
 import { PeriodicEditor } from "../../../../../inputs/PeriodicEditor";

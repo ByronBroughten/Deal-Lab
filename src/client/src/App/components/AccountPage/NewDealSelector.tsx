@@ -1,9 +1,9 @@
 import { Box, SxProps } from "@mui/material";
 import { unstable_batchedUpdates } from "react-dom";
-import { constants } from "../../Constants";
-import { dealModeLabels } from "../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
-import { useActionNoSave } from "../../sharedWithServer/stateClassHooks/useAction";
-import { useGetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useGetterSection";
+import { constants } from "../../../sharedWithServer/Constants";
+import { dealModeLabels } from "../../../sharedWithServer/sectionVarbsConfig/StateValue/unionValues";
+import { useActionNoSave } from "../../stateClassHooks/useAction";
+import { useGetterSectionOnlyOne } from "../../stateClassHooks/useGetterSection";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { HollowBtn } from "../appWide/HollowBtn";
 import { MuiSelect } from "../appWide/MuiSelect";

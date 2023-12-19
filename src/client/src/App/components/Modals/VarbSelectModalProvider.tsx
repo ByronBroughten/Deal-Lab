@@ -1,10 +1,10 @@
 import { EditorState } from "draft-js";
 import React from "react";
-import { FeVarbInfo } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
-import { DealMode } from "../../sharedWithServer/SectionsMeta/values/StateValue/dealMode";
-import { ValueInEntityInfo } from "../../sharedWithServer/StateEntityGetters/ValueInEntityInfo";
-import { timeS } from "../../sharedWithServer/utils/timeS";
-import { StrictOmit } from "../../sharedWithServer/utils/types";
+import { FeVarbInfo } from "../../../sharedWithServer/SectionInfo/FeInfo";
+import { ValueInEntityInfo } from "../../../sharedWithServer/SectionInfo/ValueInEntityInfo";
+import { DealMode } from "../../../sharedWithServer/sectionVarbsConfig/StateValue/dealMode";
+import { timeS } from "../../../sharedWithServer/utils/timeS";
+import { StrictOmit } from "../../../sharedWithServer/utils/types";
 import { SetEditorState } from "../../utils/DraftS";
 import { useDealModeContext } from "../customContexts/dealModeContext";
 

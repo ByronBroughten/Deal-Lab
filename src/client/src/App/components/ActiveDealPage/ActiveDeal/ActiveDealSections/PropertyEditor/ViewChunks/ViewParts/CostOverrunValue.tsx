@@ -1,5 +1,5 @@
 import { SxProps } from "@mui/material";
-import { useGetterSection } from "../../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
+import { useGetterSection } from "../../../../../../../stateClassHooks/useGetterSection";
 import { SelectEditor } from "../../../../../../appWide/SelectEditor";
 import { VarbStringLabel } from "../../../../../../appWide/VarbStringLabel";
 import { NumObjEntityEditor } from "../../../../../../inputs/NumObjEntityEditor";

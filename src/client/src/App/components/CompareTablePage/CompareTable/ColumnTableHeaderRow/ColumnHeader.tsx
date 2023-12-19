@@ -1,6 +1,6 @@
+import { Obj } from "../../../../../sharedWithServer/utils/Obj";
 import useOnOutsideClickRef from "../../../../modules/customHooks/useOnOutsideClickRef";
 import { useToggleView } from "../../../../modules/customHooks/useToggleView";
-import { Obj } from "../../../../sharedWithServer/utils/Obj";
 import SimpleMuiMenu, {
   SimpleMuiMenuItem,
 } from "../../../appWide/SimpleMuiMenu";
@@ -42,7 +42,7 @@ const menuOptionDisplayValues = {
   removeColumn: "Remove column",
 } as const;
 const menuItemNames = Obj.keys(menuOptionDisplayValues);
-type MenuItemName = typeof menuItemNames[number];
+type MenuItemName = (typeof menuItemNames)[number];
 type MenuOptionProps = {
   [K in MenuItemName]?: () => void;
 };

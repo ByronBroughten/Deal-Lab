@@ -1,10 +1,7 @@
-import { FeSectionInfo } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
-import { FeStoreInfo } from "../../sharedWithServer/SectionsMeta/sectionStores";
+import { FeSectionInfo } from "../../../sharedWithServer/SectionInfo/FeInfo";
+import { FeStoreInfo } from "../../../sharedWithServer/sectionStores";
+import { useAction, useActionWithProps } from "../../stateClassHooks/useAction";
 import { MuiStandardPropsNext } from "../general/StandardProps";
-import {
-  useAction,
-  useActionWithProps,
-} from "./../../sharedWithServer/stateClassHooks/useAction";
 import { XBtn } from "./Xbtn";
 
 interface Props extends MuiStandardPropsNext, FeSectionInfo {}

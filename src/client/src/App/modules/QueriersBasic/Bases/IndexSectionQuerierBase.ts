@@ -1,8 +1,9 @@
-import { SectionNameByType } from "../../../sharedWithServer/SectionsMeta/SectionNameByType";
+import { SectionNameByType } from "../../../../sharedWithServer/SectionNameByType";
 import {
   GetterSectionBase,
   GetterSectionProps,
-} from "../../../sharedWithServer/StateGetters/Bases/GetterSectionBase";
+} from "../../../../sharedWithServer/StateGetters/Bases/GetterSectionBase";
+
 import { ApiQuerierBase, ApiQuerierBaseProps } from "./ApiQuerierBase";
 
 interface IndexSectionQuerierProps<

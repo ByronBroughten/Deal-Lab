@@ -1,9 +1,9 @@
 import { Box } from "@mui/material";
 import { rem } from "polished";
 import styled from "styled-components";
-import { useGetterSection } from "../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
-import { nativeTheme } from "../../../../../../theme/nativeTheme";
+import { useGetterSection } from "../../../../../../stateClassHooks/useGetterSection";
 import theme from "../../../../../../theme/Theme";
+import { nativeTheme } from "../../../../../../theme/nativeTheme";
 import ConditionalRows from "./ConditionalRowList/ConditionalRows";
 import LogicRow from "./ConditionalRowList/LogicRow";
 

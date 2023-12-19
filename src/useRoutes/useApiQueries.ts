@@ -1,7 +1,8 @@
 import { Express } from "express";
-import { apiQueriesShared } from "../client/src/App/sharedWithServer/apiQueriesShared";
-import { ApiQueryName } from "../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
-import { Obj } from "../client/src/App/sharedWithServer/utils/Obj";
+
+import { apiQueriesShared } from "../client/src/sharedWithServer/apiQueriesShared";
+import { ApiQueryName } from "../client/src/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
+import { Obj } from "../client/src/sharedWithServer/utils/Obj";
 import { addSectionWare } from "./routes/addSection";
 import { makeSessionWare } from "./routes/apiQueriesTestTools/makeSession";
 import { deleteSectionWare } from "./routes/deleteSection";

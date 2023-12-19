@@ -1,9 +1,9 @@
 import { Route } from "react-router-dom";
 import { UserDataNeededPage } from "./App/components/AuthProtectedPage";
-import { ShowEqualsProvider } from "./App/components/customContexts/showEquals";
 import { ListGroupEditor } from "./App/components/UserListEditorPage/ListGroupEditor";
 import { UserComponents } from "./App/components/UserListEditorPage/UserComponents";
-import { feRoutes } from "./App/Constants/feRoutes";
+import { ShowEqualsProvider } from "./App/components/customContexts/showEquals";
+import { feRoutes } from "./sharedWithServer/Constants/feRoutes";
 
 const listRoutes = [
   "repairsListMain",

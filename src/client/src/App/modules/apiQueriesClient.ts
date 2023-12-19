@@ -1,23 +1,23 @@
 import { AxiosResponse } from "axios";
-import { constants } from "../Constants";
-import {
-  ApiQueries,
-  apiQueriesShared,
-  ApiQuery,
-} from "../sharedWithServer/apiQueriesShared";
-import {
-  ApiQueryName,
-  QueryRes,
-} from "../sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
-import { validateSubscriptionValues } from "../sharedWithServer/apiQueriesShared/EstimatorPlanValues";
-import { validateUserData } from "../sharedWithServer/apiQueriesShared/validateUserData";
-import { validateSectionPackArrByType } from "../sharedWithServer/SectionsMeta/SectionNameByType";
-import { Obj } from "../sharedWithServer/utils/Obj";
-import { StrictOmit } from "../sharedWithServer/utils/types";
+import { constants } from "../../sharedWithServer/Constants";
+import { validateSectionPackArrByType } from "../../sharedWithServer/SectionNameByType";
 import {
   SectionPack,
   validateSectionPack,
-} from "./../sharedWithServer/SectionsMeta/sectionChildrenDerived/SectionPack";
+} from "../../sharedWithServer/SectionPack/SectionPack";
+import {
+  ApiQueries,
+  ApiQuery,
+  apiQueriesShared,
+} from "../../sharedWithServer/apiQueriesShared";
+import { validateSubscriptionValues } from "../../sharedWithServer/apiQueriesShared/EstimatorPlanValues";
+import {
+  ApiQueryName,
+  QueryRes,
+} from "../../sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
+import { validateUserData } from "../../sharedWithServer/apiQueriesShared/validateUserData";
+import { Obj } from "../../sharedWithServer/utils/Obj";
+import { StrictOmit } from "../../sharedWithServer/utils/types";
 import {
   validateAxiosRes,
   validateDbIdData,

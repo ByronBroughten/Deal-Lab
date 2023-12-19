@@ -1,5 +1,5 @@
-import { constants } from "../../Constants";
-import { Obj } from "../../sharedWithServer/utils/Obj";
+import { constants } from "../../../sharedWithServer/Constants";
+import { Obj } from "../../../sharedWithServer/utils/Obj";
 
 const userDataKey = constants.tokenKey.userAuthData;
 export type UserInfoTokenProp = { [userDataKey]: string };

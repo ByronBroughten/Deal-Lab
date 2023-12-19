@@ -1,4 +1,4 @@
-import { ApiQueries } from "../../../sharedWithServer/apiQueriesShared";
+import { ApiQueries } from "../../../../sharedWithServer/apiQueriesShared";
 
 export type ApiQuerierBaseProps = {
   readonly apiQueries: ApiQueries;

@@ -1,7 +1,7 @@
 import { SxProps } from "@mui/material";
-import { StateValue } from "../../../../../../../sharedWithServer/SectionsMeta/values/StateValue";
-import { useGetterSection } from "../../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
-import { StrictExtract } from "../../../../../../../sharedWithServer/utils/types";
+import { StateValue } from "../../../../../../../../sharedWithServer/sectionVarbsConfig/StateValue";
+import { StrictExtract } from "../../../../../../../../sharedWithServer/utils/types";
+import { useGetterSection } from "../../../../../../../stateClassHooks/useGetterSection";
 import { SelectAndItemizeEditor } from "../../../../../../appWide/SelectAndItemizeEditor";
 import { VarbStringLabel } from "../../../../../../appWide/VarbStringLabel";
 import { NumObjEntityEditor } from "../../../../../../inputs/NumObjEntityEditor";

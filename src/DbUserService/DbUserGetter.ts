@@ -1,23 +1,22 @@
 import { pick } from "lodash";
 import mongoose from "mongoose";
-import { constants } from "../client/src/App/Constants";
-import { SectionPack } from "../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/SectionPack";
-import { storeNames } from "../client/src/App/sharedWithServer/SectionsMeta/sectionStores";
+import { DbUserService } from "../DbUserService";
+import { constants } from "../client/src/sharedWithServer/Constants";
+import { SectionPack } from "../client/src/sharedWithServer/SectionPack/SectionPack";
+import { PackBuilderSection } from "../client/src/sharedWithServer/StateClasses/Packers/PackBuilderSection";
+import { PackBuilderSections } from "../client/src/sharedWithServer/StateClasses/Packers/PackBuilderSections";
 import {
   GetterSectionBase,
   GetterSectionProps,
-} from "../client/src/App/sharedWithServer/StateGetters/Bases/GetterSectionBase";
-import { GetterSection } from "../client/src/App/sharedWithServer/StateGetters/GetterSection";
-import { PackBuilderSection } from "../client/src/App/sharedWithServer/StatePackers/PackBuilderSection";
-import { PackBuilderSections } from "../client/src/App/sharedWithServer/StatePackers/PackBuilderSections";
-import { EstimatorPlanValues } from "../client/src/App/sharedWithServer/apiQueriesShared/EstimatorPlanValues";
-import { UserData } from "../client/src/App/sharedWithServer/apiQueriesShared/validateUserData";
-import { makeDefaultSessionDeal } from "../client/src/App/sharedWithServer/defaultMaker/defaultSessionDeal";
-import { Arr } from "../client/src/App/sharedWithServer/utils/Arr";
-import { stripeS } from "../client/src/App/sharedWithServer/utils/stripe";
-import { timeS } from "../client/src/App/sharedWithServer/utils/timeS";
-
-import { DbUserService } from "../DbUserService";
+} from "../client/src/sharedWithServer/StateGetters/Bases/GetterSectionBase";
+import { GetterSection } from "../client/src/sharedWithServer/StateGetters/GetterSection";
+import { EstimatorPlanValues } from "../client/src/sharedWithServer/apiQueriesShared/EstimatorPlanValues";
+import { UserData } from "../client/src/sharedWithServer/apiQueriesShared/validateUserData";
+import { makeDefaultSessionDeal } from "../client/src/sharedWithServer/defaultMaker/defaultSessionDeal";
+import { storeNames } from "../client/src/sharedWithServer/sectionStores";
+import { Arr } from "../client/src/sharedWithServer/utils/Arr";
+import { stripeS } from "../client/src/sharedWithServer/utils/stripe";
+import { timeS } from "../client/src/sharedWithServer/utils/timeS";
 import { createUserJwt } from "../middleware/jwtWare";
 import { DbSectionsRaw, DbUserSpecifierType } from "./DbUserFiltersAndPaths";
 import { DbUserQuickGetter } from "./DbUserQuickGetter";

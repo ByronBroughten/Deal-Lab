@@ -18,7 +18,8 @@
   },
   "include": [
     "src",
-    "src/App/sharedWithServer/exampleMakers/initDbStoreArrs.ts"
+    "src/sharedWithServer/exampleMakers/initDbStoreArrs.ts",
+    "../useRoutes/routes/apiQueriesTestTools/SectionArrReqMaker.ts"
   ],
   "exclude": ["node_modules", ".vscode", "*.json"]
 }

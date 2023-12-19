@@ -1,7 +1,7 @@
 import { darken, lighten, rem, transparentize } from "polished";
 import React from "react";
-import { css, ThemeProvider } from "styled-components";
-import { Obj } from "../sharedWithServer/utils/Obj";
+import { ThemeProvider, css } from "styled-components";
+import { Obj } from "../../sharedWithServer/utils/Obj";
 
 const color = {
   // blue: "#0d6efd",

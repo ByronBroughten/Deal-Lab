@@ -1,7 +1,7 @@
 import { BsCloudArrowDown } from "react-icons/bs";
-import { FeSectionInfo } from "../../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
-import { SectionNameByType } from "../../../../../sharedWithServer/SectionsMeta/SectionNameByType";
-import { useGetterSection } from "../../../../../sharedWithServer/stateClassHooks/useGetterSection";
+import { FeSectionInfo } from "../../../../../../sharedWithServer/SectionInfo/FeInfo";
+import { SectionNameByType } from "../../../../../../sharedWithServer/SectionNameByType";
+import { useGetterSection } from "../../../../../stateClassHooks/useGetterSection";
 import { DropdownBtnWrapper } from "../../../../general/DropdownBtnWrapper";
 import { componentProps } from "../../../../props/userComponentPropGroups";
 import { SectionIndexRows } from "../../../SectionIndexRows";

@@ -1,4 +1,4 @@
-import { useGetterSection } from "../../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
+import { useGetterSection } from "../../../../../../../stateClassHooks/useGetterSection";
 import { nativeTheme } from "../../../../../../../theme/nativeTheme";
 import { SelectAndItemizeEditor } from "../../../../../../appWide/SelectAndItemizeEditor";
 import { PeriodicEditor } from "../../../../../../inputs/PeriodicEditor";

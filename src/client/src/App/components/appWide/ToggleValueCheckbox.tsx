@@ -1,7 +1,7 @@
 import React from "react";
-import { FeVarbInfo } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
-import { useAction } from "../../sharedWithServer/stateClassHooks/useAction";
-import { useGetterVarb } from "../../sharedWithServer/stateClassHooks/useGetterVarb";
+import { FeVarbInfo } from "../../../sharedWithServer/SectionInfo/FeInfo";
+import { useAction } from "../../stateClassHooks/useAction";
+import { useGetterVarb } from "../../stateClassHooks/useGetterVarb";
 import { CheckboxStyled } from "../general/CheckboxStyled";
 
 interface Props extends FeVarbInfo {

@@ -1,6 +1,9 @@
 import { unstable_batchedUpdates } from "react-dom";
 import { NavigateFunction, useNavigate } from "react-router-dom";
-import { FeRouteName, feRoutes } from "../../Constants/feRoutes";
+import {
+  FeRouteName,
+  feRoutes,
+} from "../../../sharedWithServer/Constants/feRoutes";
 import { useCloseAllModals } from "../Modals";
 
 export type GoToPageValue = FeRouteName | number;

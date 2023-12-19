@@ -1,16 +1,16 @@
 import { ContentState, EditorState } from "draft-js";
 import { isEqual } from "lodash";
 import React, { useEffect, useState } from "react";
-import { constants } from "../../Constants";
+import { constants } from "../../../sharedWithServer/Constants";
+import { FeVarbInfo } from "../../../sharedWithServer/SectionInfo/FeInfo";
+import { isEditorValueName } from "../../../sharedWithServer/sectionVarbsConfig/StateValue/EditorValue";
+import { StrictOmit } from "../../../sharedWithServer/utils/types";
 import {
   CreateEditorProps,
   EditorUpdaterVarb,
 } from "../../modules/EditorUpdaterVarb";
-import { FeVarbInfo } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
-import { isEditorValueName } from "../../sharedWithServer/SectionsMeta/values/EditorValue";
-import { useAction } from "../../sharedWithServer/stateClassHooks/useAction";
-import { useGetterVarb } from "../../sharedWithServer/stateClassHooks/useGetterVarb";
-import { StrictOmit } from "../../sharedWithServer/utils/types";
+import { useAction } from "../../stateClassHooks/useAction";
+import { useGetterVarb } from "../../stateClassHooks/useGetterVarb";
 import { SetEditorState } from "../../utils/DraftS";
 
 interface UseDraftInputProps

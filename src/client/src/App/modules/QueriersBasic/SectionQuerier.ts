@@ -1,12 +1,12 @@
-import { AddSectionRes } from "../../sharedWithServer/apiQueriesShared";
+import { AddSectionRes } from "../../../sharedWithServer/apiQueriesShared";
 import {
   makeReq,
   SectionPackReq,
-} from "../../sharedWithServer/apiQueriesShared/makeReqAndRes";
-import { ChildName } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/ChildName";
-import { DbSectionName } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/DbStoreName";
-import { SectionPack } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/SectionPack";
-import { StoreName } from "../../sharedWithServer/SectionsMeta/sectionStores";
+} from "../../../sharedWithServer/apiQueriesShared/makeReqAndRes";
+import { SectionPack } from "../../../sharedWithServer/SectionPack/SectionPack";
+import { StoreName } from "../../../sharedWithServer/sectionStores";
+import { ChildName } from "../../../sharedWithServer/sectionVarbsConfigDerived/sectionChildrenDerived/ChildName";
+import { DbSectionName } from "../../../sharedWithServer/sectionVarbsConfigDerived/sectionChildrenDerived/DbStoreName";
 import { ApiQuerierBase, ApiQuerierBaseProps } from "./Bases/ApiQuerierBase";
 
 export interface SectionQuerierProps<CN extends ChildName<"dbStore">>

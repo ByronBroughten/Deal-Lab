@@ -1,20 +1,20 @@
 import { Box, SxProps } from "@mui/material";
 import { CgDetailsLess, CgDetailsMore } from "react-icons/cg";
+import { outputListName } from "../../../../../sharedWithServer/defaultMaker/makeDefaultOutputSection";
+import { StateValue } from "../../../../../sharedWithServer/sectionVarbsConfig/StateValue";
+import { dealModeLabels } from "../../../../../sharedWithServer/sectionVarbsConfig/StateValue/unionValues";
 import { useToggleView } from "../../../../modules/customHooks/useToggleView";
-import { outputListName } from "../../../../sharedWithServer/defaultMaker/makeDefaultOutputSection";
-import { StateValue } from "../../../../sharedWithServer/SectionsMeta/values/StateValue";
-import { dealModeLabels } from "../../../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
-import { useGetterSection } from "../../../../sharedWithServer/stateClassHooks/useGetterSection";
-import { IdOfSectionToSaveProvider } from "../../../../sharedWithServer/stateClassHooks/useIdOfSectionToSave";
+import { useGetterSection } from "../../../../stateClassHooks/useGetterSection";
+import { IdOfSectionToSaveProvider } from "../../../../stateClassHooks/useIdOfSectionToSave";
 import { nativeTheme } from "../../../../theme/nativeTheme";
-import { CheckMarkCircle } from "../../../appWide/checkMarkCircle";
+import { useInputModalWithContext } from "../../../Modals/InputModalProvider";
 import { EditSectionBtn } from "../../../appWide/EditSectionBtn";
 import { MainSection } from "../../../appWide/GeneralSection/MainSection";
 import { StyledActionBtn } from "../../../appWide/GeneralSection/MainSection/StyledActionBtn";
-import { TitleAppend } from "../../../appWide/titleAppend";
 import { LoadedVarbListNext } from "../../../appWide/VarbLists/LoadedVarbListNext";
+import { CheckMarkCircle } from "../../../appWide/checkMarkCircle";
+import { TitleAppend } from "../../../appWide/titleAppend";
 import { MuiRow } from "../../../general/MuiRow";
-import { useInputModalWithContext } from "../../../Modals/InputModalProvider";
 import { DealSubSectionTitle } from "../DealSubSectionTitle";
 import { DealOutputListOrDetails } from "./OutputSection/DealOutputListOrDetails";
 

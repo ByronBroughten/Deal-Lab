@@ -9,8 +9,8 @@ import {
 import { DbUserService } from "../../../DbUserService";
 import { DbUserGetter } from "../../../DbUserService/DbUserGetter";
 import { DbUserModel } from "../../../DbUserService/DbUserModel";
-import { apiQueriesShared } from "../../../client/src/App/sharedWithServer/apiQueriesShared";
-import { Str } from "../../../client/src/App/sharedWithServer/utils/Str";
+import { apiQueriesShared } from "../../../client/src/sharedWithServer/apiQueriesShared";
+import { Str } from "../../../client/src/sharedWithServer/utils/Str";
 
 export async function createAndGetDbUser(
   testSuiteName: string

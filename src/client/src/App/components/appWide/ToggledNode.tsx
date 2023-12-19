@@ -1,9 +1,11 @@
 import { Box } from "@mui/material";
 import React from "react";
-import { FeVarbInfo } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
-import { useGetterVarb } from "../../sharedWithServer/stateClassHooks/useGetterVarb";
+import {
+  FeVarbInfo,
+  FeVarbInfoNext,
+} from "../../../sharedWithServer/SectionInfo/FeInfo";
+import { useGetterVarb } from "../../stateClassHooks/useGetterVarb";
 import { nativeTheme } from "../../theme/nativeTheme";
-import { FeVarbInfoNext } from "./../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { TogglerBooleanVarb } from "./TogglerBooleanVarb";
 import { VarbStringLabel } from "./VarbStringLabel";
 

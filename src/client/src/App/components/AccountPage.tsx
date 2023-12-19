@@ -2,21 +2,21 @@ import { Box } from "@mui/material";
 import React from "react";
 import { unstable_batchedUpdates } from "react-dom";
 import { View } from "react-native";
-import { constants } from "../Constants";
-import { FeRouteName } from "../Constants/feRoutes";
+import { constants } from "../../sharedWithServer/Constants";
+import { FeRouteName } from "../../sharedWithServer/Constants/feRoutes";
 import {
   showDealLimitReachedMessage,
   useIsAtDealLimit,
-} from "../sharedWithServer/stateClassHooks/useStorageLimitReached";
+} from "../stateClassHooks/useStorageLimitReached";
 import { nativeTheme } from "../theme/nativeTheme";
 import { arrSx } from "../utils/mui";
 import { SavedDeals } from "./AccountPage/SavedDeals";
+import { icons } from "./Icons";
 import { HollowBtn } from "./appWide/HollowBtn";
 import { useGoToPage, useMakeGoToPage } from "./customHooks/useGoToPage";
 import { MuiRow } from "./general/MuiRow";
 import { Row } from "./general/Row";
 import { MuiBtnPropsNext } from "./general/StandardProps";
-import { icons } from "./Icons";
 
 const iconSize = 40;
 export function AccountPage() {

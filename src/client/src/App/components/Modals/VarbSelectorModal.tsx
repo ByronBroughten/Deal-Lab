@@ -1,9 +1,10 @@
 import { SxProps } from "@mui/material";
 import { EditorState } from "draft-js";
 import React from "react";
-import { DealMode } from "../../sharedWithServer/SectionsMeta/values/StateValue/dealMode";
-import { useGetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useGetterSection";
-import { timeS } from "../../sharedWithServer/utils/timeS";
+import { FeVarbInfo } from "../../../sharedWithServer/SectionInfo/FeInfo";
+import { DealMode } from "../../../sharedWithServer/sectionVarbsConfig/StateValue/dealMode";
+import { timeS } from "../../../sharedWithServer/utils/timeS";
+import { useGetterSectionOnlyOne } from "../../stateClassHooks/useGetterSection";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { StyledActionBtn } from "../appWide/GeneralSection/MainSection/StyledActionBtn";
 import { useGoToPage } from "../customHooks/useGoToPage";
@@ -13,7 +14,6 @@ import { MaterialStringEditor } from "../inputs/MaterialStringEditor";
 import { OnVarbSelect } from "../inputs/NumObjEditor/NumObjVarbSelector/VarbSelectorCollection";
 import { VarbSelectorByDealMode } from "../inputs/NumObjEditor/VarbSelectorByDealMode";
 import { useDraftInput } from "../inputs/useDraftInput";
-import { FeVarbInfo } from "./../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { varSpanDecorator } from "./../inputs/shared/EntitySpanWithError";
 import { ModalSection } from "./ModalSection";
 import {

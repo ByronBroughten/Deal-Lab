@@ -1,9 +1,9 @@
-import { DbAction } from "../../sharedWithServer/apiQueriesShared/DbAction";
-import { makeReq } from "../../sharedWithServer/apiQueriesShared/makeReqAndRes";
-import { GetterSections } from "../../sharedWithServer/StateGetters/GetterSections";
-import { StoreId } from "../../sharedWithServer/StateGetters/StoreId";
-import { Obj } from "../../sharedWithServer/utils/Obj";
-import { StrictOmit } from "../../sharedWithServer/utils/types";
+import { StoreId } from "../../../sharedWithServer/Ids/StoreId";
+import { GetterSections } from "../../../sharedWithServer/StateGetters/GetterSections";
+import { DbAction } from "../../../sharedWithServer/apiQueriesShared/DbAction";
+import { makeReq } from "../../../sharedWithServer/apiQueriesShared/makeReqAndRes";
+import { Obj } from "../../../sharedWithServer/utils/Obj";
+import { StrictOmit } from "../../../sharedWithServer/utils/types";
 import {
   QuerierSectionBase,
   QuerierSectionBaseProps,

@@ -1,5 +1,5 @@
 import { MainSection } from "./App/components/appWide/GeneralSection/MainSection";
-import { constants } from "./App/Constants";
+import { constants } from "./sharedWithServer/Constants";
 
 export function PrivacyPolicyPage() {
   return (

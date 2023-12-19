@@ -1,8 +1,9 @@
 import { NextFunction, Response } from "express";
 import { SessionRequest } from "supertokens-node/framework/express";
 import { verifySession } from "supertokens-node/recipe/session/framework/express";
-import { Obj } from "../client/src/App/sharedWithServer/utils/Obj";
-import { Str } from "../client/src/App/sharedWithServer/utils/Str";
+
+import { Obj } from "../client/src/sharedWithServer/utils/Obj";
+import { Str } from "../client/src/sharedWithServer/utils/Str";
 import { ResStatusError } from "../useErrorHandling";
 
 export function getAuthWare() {

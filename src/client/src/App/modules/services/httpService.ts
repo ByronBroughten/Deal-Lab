@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from "axios"; // npm i axios
 import { toast } from "react-toastify";
 import Session from "supertokens-auth-react/recipe/session";
-import { constants } from "../../Constants";
+import { constants } from "../../../sharedWithServer/Constants";
 import logger from "./logService";
 import { userTokenS } from "./userTokenS";
 

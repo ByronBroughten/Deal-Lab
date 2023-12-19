@@ -1,4 +1,4 @@
-import { capitalizeFirstLetter } from "../../sharedWithServer/utils/Str";
+import { capitalizeFirstLetter } from "../../../sharedWithServer/utils/Str";
 import useToggle from "./useToggle";
 
 type TFirst = {

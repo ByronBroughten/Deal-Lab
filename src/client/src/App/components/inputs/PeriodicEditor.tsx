@@ -1,5 +1,5 @@
-import { SectionName } from "../../sharedWithServer/SectionsMeta/SectionName";
-import { useGetterSection } from "../../sharedWithServer/stateClassHooks/useGetterSection";
+import { SectionName } from "../../../sharedWithServer/sectionVarbsConfig/SectionName";
+import { useGetterSection } from "../../stateClassHooks/useGetterSection";
 import { getLabelInfo, GroupEditorProps } from "./GroupEditor/GroupEditorProps";
 import { NumObjEntityEditor } from "./NumObjEntityEditor";
 

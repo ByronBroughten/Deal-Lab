@@ -1,4 +1,4 @@
-import { dealModeLabels } from "../../../../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
+import { dealModeLabels } from "../../../../../../sharedWithServer/sectionVarbsConfig/StateValue/unionValues";
 import { BasicHomebuyerInfo } from "./ViewChunks/BasicHomebuyerInfo";
 import { PropertyEditorBody } from "./ViewChunks/PropertyEditorBody";
 import { PropertyOngoingCosts } from "./ViewChunks/PropertyOngoingCosts";

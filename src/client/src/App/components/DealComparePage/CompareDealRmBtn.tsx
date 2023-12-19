@@ -1,6 +1,6 @@
 import { SxProps } from "@mui/material";
-import { FeIdProp } from "../../sharedWithServer/SectionsMeta/SectionInfo/NanoIdInfo";
-import { useAction } from "../../sharedWithServer/stateClassHooks/useAction";
+import { FeIdProp } from "../../../sharedWithServer/SectionInfo/NanoIdInfo";
+import { useAction } from "../../stateClassHooks/useAction";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { arrSx } from "../../utils/mui";
 import { XBtn } from "../appWide/Xbtn";

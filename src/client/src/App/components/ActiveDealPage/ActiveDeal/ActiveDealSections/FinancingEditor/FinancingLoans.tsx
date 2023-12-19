@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
-import { FeIdProp } from "../../../../../sharedWithServer/SectionsMeta/SectionInfo/NanoIdInfo";
-import { useAction } from "../../../../../sharedWithServer/stateClassHooks/useAction";
-import { useGetterSection } from "../../../../../sharedWithServer/stateClassHooks/useGetterSection";
+import { FeIdProp } from "../../../../../../sharedWithServer/SectionInfo/NanoIdInfo";
+import { useAction } from "../../../../../stateClassHooks/useAction";
+import { useGetterSection } from "../../../../../stateClassHooks/useGetterSection";
 import { nativeTheme } from "../../../../../theme/nativeTheme";
 import { SubSectionBtn } from "../../../../appWide/GeneralSection/GeneralSectionTitle/SubSectionBtn";
 import { Loan } from "./Loan";

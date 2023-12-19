@@ -1,5 +1,5 @@
-import { FeIdProp } from "../../../../../../../sharedWithServer/SectionsMeta/SectionInfo/NanoIdInfo";
-import { useGetterSection } from "../../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
+import { FeIdProp } from "../../../../../../../../sharedWithServer/SectionInfo/NanoIdInfo";
+import { useGetterSection } from "../../../../../../../stateClassHooks/useGetterSection";
 import { nativeTheme } from "../../../../../../../theme/nativeTheme";
 import { SelectAndItemizeEditor } from "../../../../../../appWide/SelectAndItemizeEditor";
 import { NumObjEntityEditor } from "../../../../../../inputs/NumObjEntityEditor";

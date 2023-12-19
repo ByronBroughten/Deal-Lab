@@ -3,8 +3,8 @@ import Stripe from "stripe";
 import request from "supertest";
 import { DbUserService } from "../../DbUserService";
 import { DbUserGetter } from "../../DbUserService/DbUserGetter";
-import { constants } from "../../client/src/App/Constants";
-import { timeS } from "../../client/src/App/sharedWithServer/utils/timeS";
+import { constants } from "../../client/src/sharedWithServer/Constants";
+import { timeS } from "../../client/src/sharedWithServer/utils/timeS";
 import { runApp } from "../../runApp";
 import {
   createAndGetDbUser,

@@ -1,6 +1,7 @@
 import { Express } from "express";
-import { constants } from "../client/src/App/Constants";
-import { Obj } from "../client/src/App/sharedWithServer/utils/Obj";
+import { constants } from "../client/src/sharedWithServer/Constants";
+
+import { Obj } from "../client/src/sharedWithServer/utils/Obj";
 import {
   stripeWebhookTestWare,
   stripeWebhookWare,

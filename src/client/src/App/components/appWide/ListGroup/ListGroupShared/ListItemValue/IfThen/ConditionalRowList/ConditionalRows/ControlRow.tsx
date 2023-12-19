@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { useAction } from "../../../../../../../../sharedWithServer/stateClassHooks/useAction";
-import { useGetterVarbNext } from "../../../../../../../../sharedWithServer/stateClassHooks/useGetterVarb";
+import { useAction } from "../../../../../../../../stateClassHooks/useAction";
+import { useGetterVarbNext } from "../../../../../../../../stateClassHooks/useGetterVarb";
 import theme from "../../../../../../../../theme/Theme";
 import TicBtn from "./ControlRow/TicBtn";
 

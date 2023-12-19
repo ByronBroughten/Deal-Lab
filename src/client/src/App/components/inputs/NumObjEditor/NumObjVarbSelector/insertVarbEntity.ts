@@ -1,8 +1,8 @@
+import { Id } from "../../../../../sharedWithServer/Ids/IdS";
+import { ValueInEntityInfo } from "../../../../../sharedWithServer/SectionInfo/ValueInEntityInfo";
+import { EntityMapData } from "../../../../../sharedWithServer/sectionVarbsConfig/StateValue/stateValuesShared/entities";
 import { SetEditorState } from "../../../../modules/draftjs/draftUtils";
 import { insertEntity } from "../../../../modules/draftjs/insert";
-import { Id } from "../../../../sharedWithServer/SectionsMeta/IdS";
-import { EntityMapData } from "../../../../sharedWithServer/SectionsMeta/values/StateValue/valuesShared/entities";
-import { ValueInEntityInfo } from "../../../../sharedWithServer/StateEntityGetters/ValueInEntityInfo";
 
 type Props = {
   setEditorState: SetEditorState;

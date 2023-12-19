@@ -1,7 +1,7 @@
 import { Box, SxProps } from "@mui/material";
 import styled from "styled-components";
-import { useGetterMainOnlyChild } from "../../../sharedWithServer/stateClassHooks/useMain";
-import { ValueInEntityInfo } from "../../../sharedWithServer/StateEntityGetters/ValueInEntityInfo";
+import { ValueInEntityInfo } from "../../../../sharedWithServer/SectionInfo/ValueInEntityInfo";
+import { useGetterMainOnlyChild } from "../../../stateClassHooks/useMain";
 import ccs from "../../../theme/cssChunks";
 import { nativeTheme } from "../../../theme/nativeTheme";
 import { arrSx } from "../../../utils/mui";

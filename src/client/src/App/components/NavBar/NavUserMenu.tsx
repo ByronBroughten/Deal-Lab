@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { useUserSubscription } from "../../modules/customHooks/useSubscriptions";
 import useToggle from "../../modules/customHooks/useToggle";
 import { goToCustomerPortalPage } from "../../modules/services/stripeService";
-import { useQueryAction } from "../../sharedWithServer/stateClassHooks/useQueryAction";
+import { useQueryAction } from "../../stateClassHooks/useQueryAction";
 import theme from "../../theme/Theme";
 import { NavDropdownMenuBtn } from "../appWide/ListGroup/ListGroupShared/ListMenuSimple/NavDropdownMenuBtn";
 import { StandardProps } from "../general/StandardProps";

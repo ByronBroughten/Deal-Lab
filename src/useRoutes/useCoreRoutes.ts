@@ -3,7 +3,7 @@ import cors from "cors";
 import express from "express";
 import supertokens from "supertokens-node";
 import { errorHandler, middleware } from "supertokens-node/framework/express";
-import { constants } from "../client/src/App/Constants";
+import { constants } from "../client/src/sharedWithServer/Constants";
 import { useApiQueries } from "./useApiQueries";
 
 const superTokensExpress = {

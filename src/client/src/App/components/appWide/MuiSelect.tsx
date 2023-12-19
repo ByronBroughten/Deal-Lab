@@ -1,13 +1,13 @@
 import { SxProps } from "@mui/material";
 import React from "react";
 import { unstable_batchedUpdates } from "react-dom";
-import { FeVarbInfoNext } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
-import { SectionName } from "../../sharedWithServer/SectionsMeta/SectionName";
-import { StateValue } from "../../sharedWithServer/SectionsMeta/values/StateValue";
-import { UnionValueName } from "../../sharedWithServer/SectionsMeta/values/StateValue/unionValues";
-import { validateStateValue } from "../../sharedWithServer/SectionsMeta/values/valueMetas";
-import { useAction } from "../../sharedWithServer/stateClassHooks/useAction";
-import { useGetterVarbNext } from "../../sharedWithServer/stateClassHooks/useGetterVarb";
+import { FeVarbInfoNext } from "../../../sharedWithServer/SectionInfo/FeInfo";
+import { SectionName } from "../../../sharedWithServer/sectionVarbsConfig/SectionName";
+import { StateValue } from "../../../sharedWithServer/sectionVarbsConfig/StateValue";
+import { UnionValueName } from "../../../sharedWithServer/sectionVarbsConfig/StateValue/unionValues";
+import { validateStateValue } from "../../../sharedWithServer/sectionVarbsConfig/valueMetas";
+import { useAction } from "../../stateClassHooks/useAction";
+import { useGetterVarbNext } from "../../stateClassHooks/useGetterVarb";
 import { MuiSelectOnChange } from "../../utils/mui";
 import { MuiSelectStyled } from "./MuiSelectStyled";
 

@@ -1,11 +1,11 @@
 import { Box } from "@mui/material";
-import { useAction } from "../../sharedWithServer/stateClassHooks/useAction";
-import { useGetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useGetterSection";
+import { useAction } from "../../stateClassHooks/useAction";
+import { useGetterSectionOnlyOne } from "../../stateClassHooks/useGetterSection";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { FinishBtn } from "../ActiveDealPage/ActiveDeal/FinishBtn";
+import { icons } from "../Icons";
 import { LoadedVarbListNext } from "../appWide/VarbLists/LoadedVarbListNext";
 import { MuiRow } from "../general/MuiRow";
-import { icons } from "../Icons";
 import { CompareDealsEdit } from "./CompareDealsEdit";
 
 export function CompareDealsEditBody() {

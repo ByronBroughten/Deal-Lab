@@ -1,22 +1,22 @@
 import { Box } from "@mui/material";
 import { View } from "react-native";
 import { MoonLoader } from "react-spinners";
-import { constants } from "../../Constants";
-import { useActionWithProps } from "../../sharedWithServer/stateClassHooks/useAction";
+import { constants } from "../../../sharedWithServer/Constants";
+import { StoreId } from "../../../sharedWithServer/Ids/StoreId";
+import { useActionWithProps } from "../../stateClassHooks/useAction";
 import {
   useGetterFeStore,
   useUserDataStatus,
-} from "../../sharedWithServer/stateClassHooks/useFeStore";
-import { useGetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useGetterSection";
-import { IdOfSectionToSaveProvider } from "../../sharedWithServer/stateClassHooks/useIdOfSectionToSave";
-import { useQueryAction } from "../../sharedWithServer/stateClassHooks/useQueryAction";
-import { StoreId } from "../../sharedWithServer/StateGetters/StoreId";
+} from "../../stateClassHooks/useFeStore";
+import { useGetterSectionOnlyOne } from "../../stateClassHooks/useGetterSection";
+import { IdOfSectionToSaveProvider } from "../../stateClassHooks/useIdOfSectionToSave";
+import { useQueryAction } from "../../stateClassHooks/useQueryAction";
 import { nativeTheme } from "../../theme/nativeTheme";
+import { icons } from "../Icons";
 import { StyledActionBtn } from "../appWide/GeneralSection/MainSection/StyledActionBtn";
 import { useIsDevices } from "../customHooks/useMediaQueries";
 import ChunkTitle from "../general/ChunkTitle";
 import { MuiRow } from "../general/MuiRow";
-import { icons } from "../Icons";
 import { BigStringEditor } from "../inputs/BigStringEditor";
 import { SavedDeal } from "./SavedDeal";
 

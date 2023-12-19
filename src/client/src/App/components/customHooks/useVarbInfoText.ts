@@ -1,7 +1,7 @@
+import { FeVarbInfo } from "../../../sharedWithServer/SectionInfo/FeInfo";
+import { SectionName } from "../../../sharedWithServer/sectionVarbsConfig/SectionName";
 import { VarbInfoTextProps } from "../../../varbLabels";
-import { FeVarbInfo } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
-import { SectionName } from "../../sharedWithServer/SectionsMeta/SectionName";
-import { useGetterVarb } from "../../sharedWithServer/stateClassHooks/useGetterVarb";
+import { useGetterVarb } from "../../stateClassHooks/useGetterVarb";
 
 export function useVarbInfoText<SN extends SectionName>(
   varbInfo: FeVarbInfo<SN>
