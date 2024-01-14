@@ -7,3 +7,4 @@ logfile.log
 /.gitignore/
 src/client/build
 src/DbUserService.test.ts
+src/client/
