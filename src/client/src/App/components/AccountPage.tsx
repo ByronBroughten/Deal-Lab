@@ -11,12 +11,12 @@ import {
 import { nativeTheme } from "../theme/nativeTheme";
 import { arrSx } from "../utils/mui";
 import { SavedDeals } from "./AccountPage/SavedDeals";
-import { icons } from "./Icons";
 import { HollowBtn } from "./appWide/HollowBtn";
 import { useGoToPage, useMakeGoToPage } from "./customHooks/useGoToPage";
 import { MuiRow } from "./general/MuiRow";
 import { Row } from "./general/Row";
 import { MuiBtnPropsNext } from "./general/StandardProps";
+import { icons } from "./Icons";
 
 const iconSize = 40;
 export function AccountPage() {
@@ -56,14 +56,14 @@ export function AccountPage() {
             feRouteName="components"
             text={
               <div style={{ whiteSpace: "pre-line", lineHeight: "26px" }}>
-                {"Your\nComponents"}
+                {"Home\nComponents"}
               </div>
             }
             icon={icons.dealComponents({ size: iconSize })}
           />
           <AccountBtn
             feRouteName="userVariables"
-            text={<div>Your Variables</div>}
+            text={<div>Home Variables</div>}
             icon={icons.variable({ size: iconSize })}
           />
         </Row>

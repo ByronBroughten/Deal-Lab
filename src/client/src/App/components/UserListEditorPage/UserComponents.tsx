@@ -27,10 +27,10 @@ export function UserComponents() {
               <LabelWithInfo
                 {...{
                   iconProps: { size: nativeTheme.pageInfoDotSize },
-                  label: "Your Components",
+                  label: "Home Components",
                   infoProps: {
-                    title: "Your Components",
-                    info: `Here you can create and edit templates for different types of deal components that you can then plug in throughout the app. This way you don't have to repetetively input all the costs for things like utilities, Capital Expenses, and the like.`,
+                    title: "Home Components",
+                    info: `Here you can create and edit templates for different types of components that you can then plug in throughout the app. This way you don't have to repetetively input all the costs for things like utilities, Capital Expenses, and the like.`,
                   },
                 }}
               />
