@@ -1,10 +1,10 @@
-import { getAppNameStuff } from "./Constants/appName";
+import { getAppModeStuff } from "./Constants/appMode";
 import { envName } from "./Constants/envName";
 import { feRoutes } from "./Constants/feRoutes";
 import { stripePrices } from "./Constants/stripePrices";
 
 const clientDevUrl = "http://localhost:3000";
-const { devAppDisplayName, clientProdUrl, ...appNameStuff } = getAppNameStuff();
+const { devAppDisplayName, clientProdUrl, ...appNameStuff } = getAppModeStuff();
 
 const envConstants = {
   development: {
@@ -113,4 +113,11 @@ export const config = {
   },
 } as const;
 
+type Config = typeof config;
+type ConfigKey = keyof Config;
+
 export const constants = config;
+
+export function constant<K extends ConfigKey>(key: K): Config[K] {
+  return config[key];
+}

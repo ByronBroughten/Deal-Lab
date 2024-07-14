@@ -1,4 +1,4 @@
 {
-  "name": "HomeEstimator — Development",
+  "mode": "Development",
   "endpoint": "mongodb://127.0.0.1/HomeEstimator-Dev"
 }

@@ -1,5 +1,5 @@
 {
-  "name": "HomeEstimator — Test",
+  "mode": "Test",
   "endpoint": "mongodb://127.0.0.1/HomeEstimator-Test",
   "port": 0
 }

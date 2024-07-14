@@ -1,5 +1,5 @@
 {
-  "name": "HomeEstimator — Default",
+  "mode": "Default",
   "port": 5000,
   "reqSizeLimit": "5mb"
 }
