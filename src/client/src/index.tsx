@@ -7,6 +7,19 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
+// MLS-ilizer: select an area and analyze all the properties
+// in that area simultaneously according to your formulas
+
+// Utility checkboxes update slowly after being clicked
+// Xing out a utility line item causes crash
+// Add switch for Misc Income
+// Add switch for Misc Upfront Costs in Management(?)
+// Add switch for Misc Ongoing Costs in Management(?)
+// Or a switch for owner managed and external managed or something?
+
+// Add switch? and (i) for misc ongoing costs
+// Instead of Enter Amount, put "Lump Sum"
+
 // "mongodb://localhost/HomeEstimator-Test"
 
 // Add prepaids section to loan for taxes (months), home insurance (months), and mortgage interest (days)

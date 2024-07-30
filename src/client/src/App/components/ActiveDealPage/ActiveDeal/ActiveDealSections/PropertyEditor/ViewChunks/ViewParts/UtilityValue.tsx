@@ -19,23 +19,23 @@ function getItems(
   if (dealMode === "homeBuyer") {
     return [
       ["zero", "Choose method"],
+      ["listTotal", itemizeLabel],
       ["threeHundredPerUnit", "$300 per month"],
       ["valueDollarsEditor", "Custom amount"],
-      ["listTotal", itemizeLabel],
     ];
   } else if (periodicMode === "holding") {
     return [
       ["zero", "None"],
+      ["listTotal", itemizeLabel],
       ["threeHundredPerUnit", "$300 per unit per month"],
       ["valueDollarsEditor", "Custom amount"],
-      ["listTotal", itemizeLabel],
     ];
   } else {
     return [
       ["zero", "Tenant pays all utilities"],
+      ["listTotal", itemizeLabel],
       ["threeHundredPerUnit", "Three hundred per unit"],
       ["valueDollarsEditor", "Custom amount"],
-      ["listTotal", itemizeLabel],
     ];
   }
 }

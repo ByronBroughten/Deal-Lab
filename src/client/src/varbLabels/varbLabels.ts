@@ -3,15 +3,15 @@ import {
   RelLocalVarbInfo,
   relVarbInfoS,
 } from "../sharedWithServer/SectionInfos/RelVarbInfo";
+import { SwitchTargetKey } from "../sharedWithServer/sectionVarbsConfig/allBaseSectionVarbs/baseSwitchNames";
 import {
   SectionName,
   sectionNames,
 } from "../sharedWithServer/sectionVarbsConfig/SectionName";
 import { dealModeLabels } from "../sharedWithServer/sectionVarbsConfig/StateValue/unionValues";
-import { SwitchTargetKey } from "../sharedWithServer/sectionVarbsConfig/allBaseSectionVarbs/baseSwitchNames";
 import {
-  VarbName,
   sectionVarbNames,
+  VarbName,
 } from "../sharedWithServer/sectionVarbsConfigDerived/baseSectionsDerived/baseSectionsVarbsTypes";
 import { StrictOmit } from "../sharedWithServer/utils/types";
 
@@ -24,7 +24,7 @@ const multis = {
   loanExtras: text({
     inputLabel: "Loan extras",
     title: "Loan extras",
-    info: "This is for any additional upfront costs you intend to wrap into the loan. For example, You might wrap in closing costs.",
+    info: "This is for any additional upfront costs you intend to wrap into the loan. For example, you might wrap in closing costs.",
   }),
   dealMode: text({
     inputLabel: "Select type",

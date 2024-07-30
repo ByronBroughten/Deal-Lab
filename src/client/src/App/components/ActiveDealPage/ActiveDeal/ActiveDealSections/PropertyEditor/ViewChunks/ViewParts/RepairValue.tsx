@@ -42,6 +42,7 @@ export function RepairValue({ feId, dealMode, sx }: Props) {
                 <NumObjEntityEditor
                   {...{
                     ...props,
+                    labelProps: { showLabel: false },
                     feVarbInfo: repairValue.varbInfo2("valueDollarsEditor"),
                   }}
                 />

@@ -1,7 +1,6 @@
 import { Button } from "@mui/material";
 import { StyleSheet, Text, View } from "react-native";
 import styled from "styled-components";
-import { constants } from "../../../sharedWithServer/Constants";
 import { goToPaymentPage } from "../../modules/services/stripeService";
 import theme from "../../theme/Theme";
 import { NavBarPanel } from "./NavBarPanel";
@@ -40,7 +39,7 @@ export function UpgradeUserToProPanel() {
             <View style={styles.subSectionSpace}>
               <Text
                 style={styles.normalText}
-              >{`With ${constants.appName} Pro, save and load hundreds of deals, deal components, and variables. Try it out with a 7 day free trial, why don't'chya?`}</Text>
+              >{`Save and load hundreds of deals, components, and variables. Try it out with a 7 day free trial`}</Text>
             </View>
           </View>
         </View>
