@@ -17,7 +17,7 @@ export function getAppModeStuff() {
     investor: {
       appMode: "investor",
       appName: "DealLab",
-      clientProdUrl: "https://the.deallab.app",
+      clientProdUrl: "https://app.homeestimator.net", // "https://the.deallab.app",
       devAppDisplayName: "DealLab — Development",
       appUnit: "Deal",
       appUnitPlural: "Deals",
