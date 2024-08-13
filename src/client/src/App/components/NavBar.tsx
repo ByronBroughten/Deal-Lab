@@ -1,8 +1,9 @@
 import { AppBar, Box, Toolbar } from "@mui/material";
 import { rem } from "polished";
 import styled from "styled-components";
-import logo from "../../icons/logo500.png";
-import logoAndName from "../../icons/logoAndName.png";
+import logo from "../../icons/logo500DealLab.png";
+import logoAndName from "../../icons/logoAndNameDealLab.png";
+import { constant } from "../../sharedWithServer/Constants";
 import { nativeTheme } from "../theme/nativeTheme";
 import theme from "../theme/Theme";
 import { SaveStatusIndicator } from "./appWide/SaveStatusIndicator";
@@ -19,6 +20,7 @@ interface Props extends AppMenuProps {
 export function NavBar({ showMenu = true, ...props }: Props) {
   const goToMain = useGoToPage("mainPage");
   const { isPhone } = useIsDevices();
+  const logoHeight = getLogoHeight(isPhone);
   return (
     <Styled
       sx={{
@@ -40,7 +42,7 @@ export function NavBar({ showMenu = true, ...props }: Props) {
             }}
             middle={
               <Box
-                sx={{ height: isPhone ? 23 : 30 }} // this is needed for the logo to not be huge
+                sx={{ height: logoHeight }} // this is needed for the logo to not be huge
                 component="img"
                 src={isPhone ? logo : logoAndName}
               />
@@ -53,6 +55,16 @@ export function NavBar({ showMenu = true, ...props }: Props) {
       </Toolbar>
     </Styled>
   );
+}
+
+function getLogoHeight(isPhone: boolean): number {
+  const appMode = constant("appMode");
+  const logoHeights = {
+    homeBuyer: { phone: 23, notPhone: 30 },
+    investor: { phone: 30, notPhone: 40 },
+  } as const;
+  const heights = logoHeights[appMode];
+  return isPhone ? heights.phone : heights.notPhone;
 }
 
 const Styled = styled(AppBar)`

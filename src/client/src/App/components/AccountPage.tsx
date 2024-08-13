@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 import React from "react";
 import { unstable_batchedUpdates } from "react-dom";
 import { View } from "react-native";
-import { constants } from "../../sharedWithServer/Constants";
+import { constant } from "../../sharedWithServer/Constants";
 import { FeRouteName } from "../../sharedWithServer/Constants/feRoutes";
 import {
   showDealLimitReachedMessage,
@@ -37,12 +37,12 @@ export function AccountPage() {
         <Row style={{ flexWrap: "wrap" }}>
           <AccountBtn
             onClick={openAddDeal}
-            text={<Box>{`New ${constants.appUnit}`}</Box>}
+            text={<Box>{`New ${constant("appUnit")}`}</Box>}
             icon={icons.addDeal({ size: iconSize })}
           />
           <AccountBtn
             feRouteName="compare"
-            text={<Box>{`Compare ${constants.appUnitPlural}`}</Box>}
+            text={<Box>{`Compare ${constant("appUnitPlural")}`}</Box>}
             icon={icons.compareDeals({ size: iconSize })}
           />
         </Row>
@@ -56,14 +56,14 @@ export function AccountPage() {
             feRouteName="components"
             text={
               <div style={{ whiteSpace: "pre-line", lineHeight: "26px" }}>
-                {"Home\nComponents"}
+                {`${constant("appUnit")}\nComponents`}
               </div>
             }
             icon={icons.dealComponents({ size: iconSize })}
           />
           <AccountBtn
             feRouteName="userVariables"
-            text={<div>Home Variables</div>}
+            text={<div>{`${constant("appUnit")} Variables`}</div>}
             icon={icons.variable({ size: iconSize })}
           />
         </Row>

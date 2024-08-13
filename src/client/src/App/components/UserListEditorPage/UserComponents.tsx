@@ -1,4 +1,4 @@
-import { constants } from "../../../sharedWithServer/Constants";
+import { constant, constants } from "../../../sharedWithServer/Constants";
 import { Arr } from "../../../sharedWithServer/utils/Arr";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { BackBtnWrapper } from "../appWide/BackBtnWrapper";
@@ -27,9 +27,9 @@ export function UserComponents() {
               <LabelWithInfo
                 {...{
                   iconProps: { size: nativeTheme.pageInfoDotSize },
-                  label: "Home Components",
+                  label: `${constant("appUnit")} Components`,
                   infoProps: {
-                    title: "Home Components",
+                    title: `${constant("appUnit")} Components`,
                     info: `Here you can create and edit templates for different types of components that you can then plug in throughout the app. This way you don't have to repetetively input all the costs for things like utilities, Capital Expenses, and the like.`,
                   },
                 }}
