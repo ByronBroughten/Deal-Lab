@@ -7,6 +7,7 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
+// Trigger rebuild
 // MLS-ilizer: select an area and analyze all the properties
 // in that area simultaneously according to your formulas
 
