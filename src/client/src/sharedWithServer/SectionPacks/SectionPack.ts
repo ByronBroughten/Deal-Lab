@@ -1,9 +1,6 @@
 import { Id } from "../Ids/IdS";
 import { RawSections, validateRawSections } from "../State/RawSection";
-import {
-  SectionName,
-  validateSectionName,
-} from "../sectionVarbsConfig/SectionName";
+import { SectionName, validateSectionName } from "../stateSchemas/SectionName";
 import { ValidationError } from "../utils/Error";
 import { Obj } from "../utils/Obj";
 

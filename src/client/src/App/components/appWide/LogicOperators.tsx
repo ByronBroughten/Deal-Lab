@@ -1,5 +1,5 @@
 import { MenuItem } from "@mui/material";
-import { LogicOperator } from "../../../sharedWithServer/StateClasses/Solvers/ValueUpdateVarb/ConditionalValueSolver";
+import { LogicOperator } from "../../../sharedWithServer/StateOperators/Solvers/ValueUpdateVarb/ConditionalValueSolver";
 
 const valueChildObj: Record<LogicOperator, string> = {
   "===": "=",

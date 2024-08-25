@@ -1,7 +1,7 @@
 import { constants } from "../../../../sharedWithServer/Constants";
 import { FeRouteName } from "../../../../sharedWithServer/Constants/feRoutes";
-import { StateValue } from "../../../../sharedWithServer/sectionVarbsConfig/StateValue";
 import { ChildName } from "../../../../sharedWithServer/sectionVarbsConfigDerived/sectionChildrenDerived/ChildName";
+import { StateValue } from "../../../../sharedWithServer/stateSchemas/StateValue";
 import { StrictExtract } from "../../../../sharedWithServer/utils/types";
 import { useGetterSectionOnlyOne } from "../../../stateClassHooks/useGetterSection";
 import { useGoToPage } from "../../customHooks/useGoToPage";

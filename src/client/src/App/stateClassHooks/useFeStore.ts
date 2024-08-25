@@ -1,4 +1,4 @@
-import { StateValue } from "../../sharedWithServer/sectionVarbsConfig/StateValue";
+import { StateValue } from "../../sharedWithServer/stateSchemas/StateValue";
 import { GetterFeStore } from "../modules/FeStore/GetterFeStore";
 import { useSectionsContext } from "./useMainState";
 

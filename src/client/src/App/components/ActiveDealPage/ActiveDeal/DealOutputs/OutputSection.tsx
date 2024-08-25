@@ -1,20 +1,20 @@
 import { Box, SxProps } from "@mui/material";
 import { CgDetailsLess, CgDetailsMore } from "react-icons/cg";
-import { outputListName } from "../../../../../sharedWithServer/defaultMaker/makeDefaultOutputSection";
-import { StateValue } from "../../../../../sharedWithServer/sectionVarbsConfig/StateValue";
-import { dealModeLabels } from "../../../../../sharedWithServer/sectionVarbsConfig/StateValue/unionValues";
+import { outputListName } from "../../../../../sharedWithServer/StateOperators/defaultMaker/makeDefaultOutputSection";
+import { StateValue } from "../../../../../sharedWithServer/stateSchemas/StateValue";
+import { dealModeLabels } from "../../../../../sharedWithServer/stateSchemas/StateValue/unionValues";
 import { useToggleView } from "../../../../modules/customHooks/useToggleView";
 import { useGetterSection } from "../../../../stateClassHooks/useGetterSection";
 import { IdOfSectionToSaveProvider } from "../../../../stateClassHooks/useIdOfSectionToSave";
 import { nativeTheme } from "../../../../theme/nativeTheme";
-import { useInputModalWithContext } from "../../../Modals/InputModalProvider";
+import { CheckMarkCircle } from "../../../appWide/checkMarkCircle";
 import { EditSectionBtn } from "../../../appWide/EditSectionBtn";
 import { MainSection } from "../../../appWide/GeneralSection/MainSection";
 import { StyledActionBtn } from "../../../appWide/GeneralSection/MainSection/StyledActionBtn";
-import { LoadedVarbListNext } from "../../../appWide/VarbLists/LoadedVarbListNext";
-import { CheckMarkCircle } from "../../../appWide/checkMarkCircle";
 import { TitleAppend } from "../../../appWide/titleAppend";
+import { LoadedVarbListNext } from "../../../appWide/VarbLists/LoadedVarbListNext";
 import { MuiRow } from "../../../general/MuiRow";
+import { useInputModalWithContext } from "../../../Modals/InputModalProvider";
 import { DealSubSectionTitle } from "../DealSubSectionTitle";
 import { DealOutputListOrDetails } from "./OutputSection/DealOutputListOrDetails";
 

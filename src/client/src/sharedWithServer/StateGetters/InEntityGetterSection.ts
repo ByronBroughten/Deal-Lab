@@ -1,5 +1,5 @@
 import { FeSectionInfo, FeVarbInfo } from "../SectionInfos/FeInfo";
-import { SectionName } from "../sectionVarbsConfig/SectionName";
+import { SectionName } from "../stateSchemas/SectionName";
 import { GetterSectionBase } from "./Bases/GetterSectionBase";
 import { GetterSection } from "./GetterSection";
 import { GetterSections } from "./GetterSections";

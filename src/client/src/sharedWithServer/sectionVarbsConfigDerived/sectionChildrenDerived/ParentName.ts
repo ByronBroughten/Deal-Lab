@@ -1,12 +1,9 @@
-import {
-  SectionName,
-  sectionNames,
-} from "../../sectionVarbsConfig/SectionName";
+import { SectionName, sectionNames } from "../../stateSchemas/SectionName";
 import { NeversToSomething, SubType } from "../../utils/types";
 import { ChildName } from "./ChildName";
 import {
-  ChildSectionNameOrNull,
   childrenSectionNames,
+  ChildSectionNameOrNull,
 } from "./ChildSectionName";
 
 export const noParentWarning = "no parent";

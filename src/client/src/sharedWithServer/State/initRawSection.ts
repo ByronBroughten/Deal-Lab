@@ -2,10 +2,10 @@ import { pick } from "lodash";
 import { Id } from "../Ids/IdS";
 import { FeSectionInfo, FeVarbInfo } from "../SectionInfos/FeInfo";
 import { VarbNames } from "../SectionInfos/VarbInfoBase";
-import { SectionName } from "../sectionVarbsConfig/SectionName";
-import { SectionValues, StateValue } from "../sectionVarbsConfig/StateValue";
 import { ChildIdArrsNarrow } from "../sectionVarbsConfigDerived/sectionChildrenDerived/ChildName";
 import { sectionsMeta } from "../StateMeta/SectionsMeta";
+import { SectionName } from "../stateSchemas/SectionName";
+import { SectionValues, StateValue } from "../stateSchemas/StateValue";
 import { StrictPick, StrictPickPartial } from "../utils/types";
 import { RawFeSection, StateVarb, StateVarbs } from "./StateSectionsTypes";
 

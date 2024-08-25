@@ -1,6 +1,6 @@
-import { SectionName } from "../sectionVarbsConfig/SectionName";
 import { VarbName } from "../sectionVarbsConfigDerived/baseSectionsDerived/baseSectionsVarbsTypes";
 import { ChildName } from "../sectionVarbsConfigDerived/sectionChildrenDerived/ChildName";
+import { SectionName } from "../stateSchemas/SectionName";
 import { Obj } from "../utils/Obj";
 import { SubType } from "../utils/types";
 

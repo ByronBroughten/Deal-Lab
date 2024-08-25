@@ -1,16 +1,13 @@
 import {
+  AllBaseSectionVarbs,
+  allBaseSectionVarbs,
+} from "../../stateSchemas/allBaseSectionVarbs";
+import {
   GroupKey,
   GroupName,
   groupVarbName,
-} from "../../sectionVarbsConfig/GroupName";
-import {
-  SectionName,
-  sectionNames,
-} from "../../sectionVarbsConfig/SectionName";
-import {
-  AllBaseSectionVarbs,
-  allBaseSectionVarbs,
-} from "../../sectionVarbsConfig/allBaseSectionVarbs";
+} from "../../stateSchemas/GroupName";
+import { SectionName, sectionNames } from "../../stateSchemas/SectionName";
 import { ValidationError } from "../../utils/Error";
 import { Obj } from "../../utils/Obj";
 

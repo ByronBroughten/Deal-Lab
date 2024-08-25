@@ -1,7 +1,7 @@
 import { Box, SxProps } from "@mui/material";
 import { unstable_batchedUpdates } from "react-dom";
 import { constants } from "../../../sharedWithServer/Constants";
-import { dealModeLabels } from "../../../sharedWithServer/sectionVarbsConfig/StateValue/unionValues";
+import { dealModeLabels } from "../../../sharedWithServer/stateSchemas/StateValue/unionValues";
 import { useActionNoSave } from "../../stateClassHooks/useAction";
 import { useGetterSectionOnlyOne } from "../../stateClassHooks/useGetterSection";
 import { nativeTheme } from "../../theme/nativeTheme";

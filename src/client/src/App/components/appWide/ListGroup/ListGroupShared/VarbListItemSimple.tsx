@@ -3,7 +3,7 @@ import {
   FeSectionInfo,
   FeVI,
 } from "../../../../../sharedWithServer/SectionInfos/FeInfo";
-import { SectionName } from "../../../../../sharedWithServer/sectionVarbsConfig/SectionName";
+import { SectionName } from "../../../../../sharedWithServer/stateSchemas/SectionName";
 import { StrictExtract } from "../../../../../sharedWithServer/utils/types";
 import { FirstValueEditorCell } from "./FirstValueEditorCell";
 import { NameEditorCell } from "./NameEditorCell";

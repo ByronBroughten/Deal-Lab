@@ -1,11 +1,9 @@
 import { Id } from "../Ids/IdS";
 import {
   SectionNameByType,
-  SectionNameType,
   sectionNameS,
+  SectionNameType,
 } from "../SectionNameByType";
-import { SectionName } from "../sectionVarbsConfig/SectionName";
-import { StateValue } from "../sectionVarbsConfig/StateValue";
 import {
   VarbName,
   VarbNameWide,
@@ -14,6 +12,8 @@ import {
   ParentName,
   ParentNameSafe,
 } from "../sectionVarbsConfigDerived/sectionChildrenDerived/ParentName";
+import { SectionName } from "../stateSchemas/SectionName";
+import { StateValue } from "../stateSchemas/StateValue";
 import { SectionNameProp } from "./SectionNameProp";
 import { VarbProp, VarbPropNext } from "./VarbInfoBase";
 

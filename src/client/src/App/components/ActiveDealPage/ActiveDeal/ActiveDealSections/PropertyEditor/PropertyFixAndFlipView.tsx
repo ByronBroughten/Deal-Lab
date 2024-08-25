@@ -1,4 +1,4 @@
-import { dealModeLabels } from "../../../../../../sharedWithServer/sectionVarbsConfig/StateValue/unionValues";
+import { dealModeLabels } from "../../../../../../sharedWithServer/stateSchemas/StateValue/unionValues";
 import { BasicFixAndFlipInfo } from "./ViewChunks/BasicFixAndFlipInfo";
 import { PropertyEditorBody } from "./ViewChunks/PropertyEditorBody";
 import { PropertyHoldingCosts } from "./ViewChunks/PropertyHoldingCosts";

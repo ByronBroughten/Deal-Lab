@@ -1,4 +1,4 @@
-import { periodicName } from "../../../../../../../sharedWithServer/sectionVarbsConfig/GroupName";
+import { periodicName } from "../../../../../../../sharedWithServer/stateSchemas/GroupName";
 import { useGetterSection } from "../../../../../../stateClassHooks/useGetterSection";
 import { nativeTheme } from "../../../../../../theme/nativeTheme";
 import { ToggledNode } from "../../../../../appWide/ToggledNode";

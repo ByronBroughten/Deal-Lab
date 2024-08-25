@@ -1,4 +1,4 @@
-import { SectionValues } from "../../../../sharedWithServer/sectionVarbsConfig/StateValue";
+import { SectionValues } from "../../../../sharedWithServer/stateSchemas/StateValue";
 import { useAction } from "../../../stateClassHooks/useAction";
 import { useGetterSection } from "../../../stateClassHooks/useGetterSection";
 import {

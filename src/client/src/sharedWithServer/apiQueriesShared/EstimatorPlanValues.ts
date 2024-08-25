@@ -1,5 +1,5 @@
-import { StateValue } from "../sectionVarbsConfig/StateValue";
-import { isLabSubscription } from "../sectionVarbsConfig/StateValue/unionValues";
+import { StateValue } from "../stateSchemas/StateValue";
+import { isLabSubscription } from "../stateSchemas/StateValue/unionValues";
 import { Obj } from "../utils/Obj";
 
 export interface EstimatorPlanValues {

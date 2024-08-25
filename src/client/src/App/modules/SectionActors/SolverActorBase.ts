@@ -1,9 +1,9 @@
+import { GetterSection } from "../../../sharedWithServer/StateGetters/GetterSection";
 import {
   SolverSectionBase,
   SolverSectionProps,
-} from "../../../sharedWithServer/StateClasses/SolverBases/SolverSectionBase";
-import { GetterSection } from "../../../sharedWithServer/StateGetters/GetterSection";
-import { SectionName } from "../../../sharedWithServer/sectionVarbsConfig/SectionName";
+} from "../../../sharedWithServer/StateOperators/SolverBases/SolverSectionBase";
+import { SectionName } from "../../../sharedWithServer/stateSchemas/SectionName";
 import {
   ApiQuerierBase,
   ApiQuerierBaseProps,

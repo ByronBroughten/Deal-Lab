@@ -1,4 +1,3 @@
-import { SectionName } from "../sectionVarbsConfig/SectionName";
 import { VarbNameWide } from "../sectionVarbsConfigDerived/baseSectionsDerived/baseSectionsVarbsTypes";
 import { ChildName } from "../sectionVarbsConfigDerived/sectionChildrenDerived/ChildName";
 import {
@@ -6,6 +5,7 @@ import {
   PiblingName,
   StepSiblingName,
 } from "../sectionVarbsConfigDerived/sectionChildrenDerived/ParentName";
+import { SectionName } from "../stateSchemas/SectionName";
 import { Obj } from "../utils/Obj";
 import {
   RelChildrenInfo,

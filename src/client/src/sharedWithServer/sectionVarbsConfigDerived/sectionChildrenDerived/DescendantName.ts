@@ -1,5 +1,5 @@
 import { AbsolutePathNode } from "../../sectionPaths/sectionPathNames";
-import { SectionName } from "../../sectionVarbsConfig/SectionName";
+import { SectionName } from "../../stateSchemas/SectionName";
 import { ChildName, getChildNames } from "./ChildName";
 import { childToSectionName } from "./ChildSectionName";
 

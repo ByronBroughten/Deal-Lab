@@ -4,8 +4,8 @@ import {
   GroupName,
   GroupNameEnding,
   GroupVNGeneral,
-} from "../../sectionVarbsConfig/GroupName";
-import { SectionName } from "../../sectionVarbsConfig/SectionName";
+} from "../../stateSchemas/GroupName";
+import { SectionName } from "../../stateSchemas/SectionName";
 import { Replace } from "../../utils/types";
 import { VarbNameWide } from "./baseSectionsVarbsTypes";
 

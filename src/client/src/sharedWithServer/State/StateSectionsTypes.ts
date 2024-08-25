@@ -1,11 +1,11 @@
 import { SectionPathContextName } from "../sectionPaths/sectionPathContexts";
-import { SectionName } from "../sectionVarbsConfig/SectionName";
-import { StateValue } from "../sectionVarbsConfig/StateValue";
-import { OutEntity } from "../sectionVarbsConfig/StateValue/stateValuesShared/entities";
 import {
   ChildIdArrsNarrow,
   ChildName,
 } from "../sectionVarbsConfigDerived/sectionChildrenDerived/ChildName";
+import { SectionName } from "../stateSchemas/SectionName";
+import { StateValue } from "../stateSchemas/StateValue";
+import { OutEntity } from "../stateSchemas/StateValue/stateValuesShared/entities";
 
 export class SectionNotFoundError extends Error {}
 export class TooManySectionsFoundError extends Error {}

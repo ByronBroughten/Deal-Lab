@@ -1,5 +1,5 @@
 import { Id } from "../Ids/IdS";
-import { DealMode } from "../sectionVarbsConfig/StateValue/dealMode";
+import { DealMode } from "../stateSchemas/StateValue/dealMode";
 import { Arr } from "../utils/Arr";
 import { ValidationError } from "../utils/Error";
 import { Obj } from "../utils/Obj";

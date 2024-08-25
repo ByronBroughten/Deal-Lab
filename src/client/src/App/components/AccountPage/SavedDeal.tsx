@@ -7,7 +7,7 @@ import {
   DbIdProp,
   FeIdProp,
 } from "../../../sharedWithServer/SectionInfos/NanoIdInfo";
-import { dealModeLabels } from "../../../sharedWithServer/sectionVarbsConfig/StateValue/unionValues";
+import { dealModeLabels } from "../../../sharedWithServer/stateSchemas/StateValue/unionValues";
 import { timeS } from "../../../sharedWithServer/utils/timeS";
 import {
   useAction,
@@ -21,14 +21,14 @@ import {
 import { nativeTheme } from "../../theme/nativeTheme";
 import { arrSx } from "../../utils/mui";
 import { reactNativeS } from "../../utils/reactNative";
-import { icons } from "../Icons";
-import { useConfirmationModal } from "../Modals/ConfirmationModalProvider";
 import { StyledActionBtn } from "../appWide/GeneralSection/MainSection/StyledActionBtn";
 import { LabelText, StyledLabeledVarb } from "../appWide/LabeledVarbNext";
 import { showToastInfo } from "../appWide/toast";
 import { MuiRow } from "../general/MuiRow";
 import { Row } from "../general/Row";
+import { icons } from "../Icons";
 import { BareStringEditor } from "../inputs/BareStringEditor";
+import { useConfirmationModal } from "../Modals/ConfirmationModalProvider";
 import { useIsDevices } from "./../customHooks/useMediaQueries";
 
 const titleSx = (displayName: string, minWidth: number | string) => ({

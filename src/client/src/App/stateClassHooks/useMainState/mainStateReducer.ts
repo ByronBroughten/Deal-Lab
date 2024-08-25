@@ -15,14 +15,14 @@ import {
   StoreNameProp,
   StoreSectionName,
 } from "../../../sharedWithServer/sectionStores";
-import { SectionName } from "../../../sharedWithServer/sectionVarbsConfig/SectionName";
-import { SectionValues } from "../../../sharedWithServer/sectionVarbsConfig/StateValue";
-import { DealMode } from "../../../sharedWithServer/sectionVarbsConfig/StateValue/dealMode";
 import { ChildName } from "../../../sharedWithServer/sectionVarbsConfigDerived/sectionChildrenDerived/ChildName";
 import { MainState } from "../../../sharedWithServer/State/MainState";
-import { SolvePrepperSection } from "../../../sharedWithServer/StateClasses/SolvePreppers/SolvePrepperSection";
-import { SolvePrepperVarb } from "../../../sharedWithServer/StateClasses/SolvePreppers/SolvePrepperVarb";
-import { AddChildOptions } from "../../../sharedWithServer/StateClasses/Updaters/UpdaterSection";
+import { SolvePrepperSection } from "../../../sharedWithServer/StateOperators/SolvePreppers/SolvePrepperSection";
+import { SolvePrepperVarb } from "../../../sharedWithServer/StateOperators/SolvePreppers/SolvePrepperVarb";
+import { AddChildOptions } from "../../../sharedWithServer/StateOperators/Updaters/UpdaterSection";
+import { SectionName } from "../../../sharedWithServer/stateSchemas/SectionName";
+import { SectionValues } from "../../../sharedWithServer/stateSchemas/StateValue";
+import { DealMode } from "../../../sharedWithServer/stateSchemas/StateValue/dealMode";
 import { TopOperator } from "../../../sharedWithServer/TopOperator";
 import { Arr } from "../../../sharedWithServer/utils/Arr";
 import { Merge } from "../../../sharedWithServer/utils/Obj/merge";

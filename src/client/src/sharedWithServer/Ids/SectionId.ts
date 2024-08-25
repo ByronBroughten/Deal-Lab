@@ -1,8 +1,5 @@
 import { constants } from "../Constants";
-import {
-  SectionName,
-  validateSectionName,
-} from "../sectionVarbsConfig/SectionName";
+import { SectionName, validateSectionName } from "../stateSchemas/SectionName";
 import { Str } from "../utils/Str";
 import { Id } from "./IdS";
 

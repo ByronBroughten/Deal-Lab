@@ -1,11 +1,9 @@
 import { StringTypeChecker } from "../App/utils/StringTypeChecker";
 import {
-  SectionPack,
   isSectionPack,
+  SectionPack,
   validateSectionPack,
 } from "./SectionPacks/SectionPack";
-import { SectionName } from "./sectionVarbsConfig/SectionName";
-import { SectionValues } from "./sectionVarbsConfig/StateValue";
 import {
   BaseNameArrs,
   baseNameArrs,
@@ -23,6 +21,8 @@ import {
   childToSectionName,
 } from "./sectionVarbsConfigDerived/sectionChildrenDerived/ChildSectionName";
 import { ParentName } from "./sectionVarbsConfigDerived/sectionChildrenDerived/ParentName";
+import { SectionName } from "./stateSchemas/SectionName";
+import { SectionValues } from "./stateSchemas/StateValue";
 import { Arr } from "./utils/Arr";
 import { PropKeyOfValue } from "./utils/Obj/SubType";
 

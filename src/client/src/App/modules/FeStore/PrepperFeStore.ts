@@ -1,4 +1,3 @@
-import { makeDefaultSessionDeal } from "../../../sharedWithServer/defaultMaker/defaultSessionDeal";
 import { Id } from "../../../sharedWithServer/Ids/IdS";
 import { StoreId } from "../../../sharedWithServer/Ids/StoreId";
 import { DbIdProp } from "../../../sharedWithServer/SectionInfos/NanoIdInfo";
@@ -10,19 +9,20 @@ import {
   StoreNameProp,
   StoreSectionName,
 } from "../../../sharedWithServer/sectionStores";
-import { SectionValues } from "../../../sharedWithServer/sectionVarbsConfig/StateValue";
+import { ChildSectionName } from "../../../sharedWithServer/sectionVarbsConfigDerived/sectionChildrenDerived/ChildSectionName";
+import { GetterSection } from "../../../sharedWithServer/StateGetters/GetterSection";
+import { GetterSections } from "../../../sharedWithServer/StateGetters/GetterSections";
+import { makeDefaultSessionDeal } from "../../../sharedWithServer/StateOperators/defaultMaker/defaultSessionDeal";
+import { AddChildWithPackOptions } from "../../../sharedWithServer/StateOperators/Packers/PackBuilderSection";
+import { SolvePrepperSectionBase } from "../../../sharedWithServer/StateOperators/SolvePreppers/Bases/SolvePrepperSectionBase";
+import { SolvePrepper } from "../../../sharedWithServer/StateOperators/SolvePreppers/SolvePrepper";
+import { SolvePrepperSection } from "../../../sharedWithServer/StateOperators/SolvePreppers/SolvePrepperSection";
+import { SolverSectionsProps } from "../../../sharedWithServer/StateOperators/SolverBases/SolverSectionsBase";
+import { SectionValues } from "../../../sharedWithServer/stateSchemas/StateValue";
 import {
   changeSavingToToSave,
   ChangeToSave,
-} from "../../../sharedWithServer/sectionVarbsConfig/StateValue/sectionChanges";
-import { ChildSectionName } from "../../../sharedWithServer/sectionVarbsConfigDerived/sectionChildrenDerived/ChildSectionName";
-import { AddChildWithPackOptions } from "../../../sharedWithServer/StateClasses/Packers/PackBuilderSection";
-import { SolvePrepperSectionBase } from "../../../sharedWithServer/StateClasses/SolvePreppers/Bases/SolvePrepperSectionBase";
-import { SolvePrepper } from "../../../sharedWithServer/StateClasses/SolvePreppers/SolvePrepper";
-import { SolvePrepperSection } from "../../../sharedWithServer/StateClasses/SolvePreppers/SolvePrepperSection";
-import { SolverSectionsProps } from "../../../sharedWithServer/StateClasses/SolverBases/SolverSectionsBase";
-import { GetterSection } from "../../../sharedWithServer/StateGetters/GetterSection";
-import { GetterSections } from "../../../sharedWithServer/StateGetters/GetterSections";
+} from "../../../sharedWithServer/stateSchemas/StateValue/sectionChanges";
 import { Obj } from "../../../sharedWithServer/utils/Obj";
 import { timeS } from "../../../sharedWithServer/utils/timeS";
 import { showDealLimitReachedMessage } from "../../stateClassHooks/useStorageLimitReached";

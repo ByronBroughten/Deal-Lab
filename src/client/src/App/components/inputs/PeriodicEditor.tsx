@@ -1,4 +1,4 @@
-import { SectionName } from "../../../sharedWithServer/sectionVarbsConfig/SectionName";
+import { SectionName } from "../../../sharedWithServer/stateSchemas/SectionName";
 import { useGetterSection } from "../../stateClassHooks/useGetterSection";
 import { getLabelInfo, GroupEditorProps } from "./GroupEditor/GroupEditorProps";
 import { NumObjEntityEditor } from "./NumObjEntityEditor";

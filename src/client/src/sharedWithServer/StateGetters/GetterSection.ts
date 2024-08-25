@@ -35,23 +35,6 @@ import {
   pathSectionName,
   SectionPathName,
 } from "../sectionPaths/sectionPathNames";
-import { DbSectionInfo } from "../sectionVarbsConfig/allBaseSectionVarbs/DbSectionInfo";
-import { GenericChildTraits } from "../sectionVarbsConfig/allChildrenTraits";
-import {
-  GroupKey,
-  periodicName,
-  timespanName,
-} from "../sectionVarbsConfig/GroupName";
-import { SectionName } from "../sectionVarbsConfig/SectionName";
-import {
-  SectionValues,
-  StateValue,
-  StateValueOrAny,
-  ValueNameOrAny,
-  VarbValue,
-} from "../sectionVarbsConfig/StateValue";
-import { InEntityValue } from "../sectionVarbsConfig/StateValue/InEntityValue";
-import { ValueName } from "../sectionVarbsConfig/ValueName";
 import {
   GroupBaseVI,
   GroupVarbNameBase,
@@ -86,8 +69,25 @@ import {
   SectionNotFoundError,
   TooManySectionsFoundError,
 } from "../State/StateSectionsTypes";
-import { PackMakerSection } from "../StateClasses/Packers/PackMakerSection";
 import { SectionMeta } from "../StateMeta/SectionMeta";
+import { PackMakerSection } from "../StateOperators/Packers/PackMakerSection";
+import { DbSectionInfo } from "../stateSchemas/allBaseSectionVarbs/DbSectionInfo";
+import { GenericChildTraits } from "../stateSchemas/allChildrenTraits";
+import {
+  GroupKey,
+  periodicName,
+  timespanName,
+} from "../stateSchemas/GroupName";
+import { SectionName } from "../stateSchemas/SectionName";
+import {
+  SectionValues,
+  StateValue,
+  StateValueOrAny,
+  ValueNameOrAny,
+  VarbValue,
+} from "../stateSchemas/StateValue";
+import { InEntityValue } from "../stateSchemas/StateValue/InEntityValue";
+import { ValueName } from "../stateSchemas/ValueName";
 import { Arr } from "../utils/Arr";
 import { Obj } from "../utils/Obj";
 import {

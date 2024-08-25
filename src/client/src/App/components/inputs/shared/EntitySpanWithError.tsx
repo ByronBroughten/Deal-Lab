@@ -1,7 +1,7 @@
 import { CompositeDecorator } from "draft-js";
 import { lighten } from "polished";
 import styled, { css } from "styled-components";
-import { EntityMapData } from "../../../../sharedWithServer/sectionVarbsConfig/StateValue/stateValuesShared/entities";
+import { EntityMapData } from "../../../../sharedWithServer/stateSchemas/StateValue/stateValuesShared/entities";
 import { getEntityStrategy } from "../../../modules/draftjs/getEntityStrategies";
 import { useGetterSectionContext } from "../../../stateClassHooks/useGetterSection";
 import theme from "../../../theme/Theme";

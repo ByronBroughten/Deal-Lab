@@ -1,25 +1,25 @@
 import { cloneDeep, round } from "lodash";
 import { VarbNames } from "../SectionInfos/VarbInfoBase";
-import { GeneralBaseVarb } from "../sectionVarbsConfig/allBaseSectionVarbs/baseVarbs";
-import { getDisplayVarb } from "../sectionVarbsConfig/allDisplaySectionVarbs";
-import {
-  DisplayName,
-  DisplaySourceFinder,
-} from "../sectionVarbsConfig/allDisplaySectionVarbs/displayVarb";
-import { getUpdateVarb } from "../sectionVarbsConfig/allUpdateSectionVarbs";
-import { GeneralUpdateVarb } from "../sectionVarbsConfig/allUpdateSectionVarbs/updateVarb";
-import { UpdateBasics } from "../sectionVarbsConfig/allUpdateSectionVarbs/updateVarb/UpdateBasics";
-import { UpdateFnProps } from "../sectionVarbsConfig/allUpdateSectionVarbs/updateVarb/UpdateFnProps";
-import { UpdateOverrides } from "../sectionVarbsConfig/allUpdateSectionVarbs/updateVarb/UpdateOverrides";
-import { UpdateOverrideSwitches } from "../sectionVarbsConfig/allUpdateSectionVarbs/updateVarb/UpdateOverrideSwitch";
-import { SectionName } from "../sectionVarbsConfig/SectionName";
-import { FixedInEntity } from "../sectionVarbsConfig/StateValue/stateValuesShared/entities";
-import { valueMetas } from "../sectionVarbsConfig/valueMetas";
-import { ValueName } from "../sectionVarbsConfig/ValueName";
 import {
   getBaseVarb,
   VarbName,
 } from "../sectionVarbsConfigDerived/baseSectionsDerived/baseSectionsVarbsTypes";
+import { GeneralBaseVarb } from "../stateSchemas/allBaseSectionVarbs/baseVarbs";
+import { getDisplayVarb } from "../stateSchemas/allDisplaySectionVarbs";
+import {
+  DisplayName,
+  DisplaySourceFinder,
+} from "../stateSchemas/allDisplaySectionVarbs/displayVarb";
+import { getUpdateVarb } from "../stateSchemas/allUpdateSectionVarbs";
+import { GeneralUpdateVarb } from "../stateSchemas/allUpdateSectionVarbs/updateVarb";
+import { UpdateBasics } from "../stateSchemas/allUpdateSectionVarbs/updateVarb/UpdateBasics";
+import { UpdateFnProps } from "../stateSchemas/allUpdateSectionVarbs/updateVarb/UpdateFnProps";
+import { UpdateOverrides } from "../stateSchemas/allUpdateSectionVarbs/updateVarb/UpdateOverrides";
+import { UpdateOverrideSwitches } from "../stateSchemas/allUpdateSectionVarbs/updateVarb/UpdateOverrideSwitch";
+import { SectionName } from "../stateSchemas/SectionName";
+import { FixedInEntity } from "../stateSchemas/StateValue/stateValuesShared/entities";
+import { valueMetas } from "../stateSchemas/valueMetas";
+import { ValueName } from "../stateSchemas/ValueName";
 import { SectionMeta } from "./SectionMeta";
 import { sectionsMeta } from "./SectionsMeta";
 

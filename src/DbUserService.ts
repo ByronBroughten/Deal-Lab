@@ -4,10 +4,6 @@ import { EstimatorPlanValues } from "./client/src/sharedWithServer/apiQueriesSha
 import { UserData } from "./client/src/sharedWithServer/apiQueriesShared/UserData";
 import { constants } from "./client/src/sharedWithServer/Constants";
 import {
-  initProdDbStoreArrs,
-  initTestDbStoreArrs,
-} from "./client/src/sharedWithServer/exampleMakers/initDbStoreArrs";
-import {
   OneDbSectionValueInfo,
   OneDbVarbInfo,
 } from "./client/src/sharedWithServer/SectionInfos/DbStoreInfo";
@@ -18,11 +14,6 @@ import {
   StoreName,
   StoreSectionName,
 } from "./client/src/sharedWithServer/sectionStores";
-import { SectionName } from "./client/src/sharedWithServer/sectionVarbsConfig/SectionName";
-import {
-  StateValue,
-  VarbValue,
-} from "./client/src/sharedWithServer/sectionVarbsConfig/StateValue";
 import { VarbName } from "./client/src/sharedWithServer/sectionVarbsConfigDerived/baseSectionsDerived/baseSectionsVarbsTypes";
 import { ChildSectionName } from "./client/src/sharedWithServer/sectionVarbsConfigDerived/sectionChildrenDerived/ChildSectionName";
 import {
@@ -36,8 +27,17 @@ import {
   dbStoreNames,
   getSectionDbStoreNames,
 } from "./client/src/sharedWithServer/sectionVarbsConfigDerived/sectionChildrenDerived/DbStoreName";
-import { PackBuilderSection } from "./client/src/sharedWithServer/StateClasses/Packers/PackBuilderSection";
 import { GetterSection } from "./client/src/sharedWithServer/StateGetters/GetterSection";
+import {
+  initProdDbStoreArrs,
+  initTestDbStoreArrs,
+} from "./client/src/sharedWithServer/StateOperators/exampleMakers/initDbStoreArrs";
+import { PackBuilderSection } from "./client/src/sharedWithServer/StateOperators/Packers/PackBuilderSection";
+import { SectionName } from "./client/src/sharedWithServer/stateSchemas/SectionName";
+import {
+  StateValue,
+  VarbValue,
+} from "./client/src/sharedWithServer/stateSchemas/StateValue";
 import { Obj } from "./client/src/sharedWithServer/utils/Obj";
 import {
   DbSectionsRaw,

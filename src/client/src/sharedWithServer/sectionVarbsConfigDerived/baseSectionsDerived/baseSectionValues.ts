@@ -1,8 +1,8 @@
-import { SectionName } from "../../sectionVarbsConfig/SectionName";
-import { VarbValue } from "../../sectionVarbsConfig/StateValue";
-import { ValueName } from "../../sectionVarbsConfig/ValueName";
-import { allBaseSectionVarbs } from "../../sectionVarbsConfig/allBaseSectionVarbs";
-import { valueMetas } from "../../sectionVarbsConfig/valueMetas";
+import { allBaseSectionVarbs } from "../../stateSchemas/allBaseSectionVarbs";
+import { SectionName } from "../../stateSchemas/SectionName";
+import { VarbValue } from "../../stateSchemas/StateValue";
+import { valueMetas } from "../../stateSchemas/valueMetas";
+import { ValueName } from "../../stateSchemas/ValueName";
 import { SubType } from "../../utils/types";
 import { BaseSectionVarbs, VarbName } from "./baseSectionsVarbsTypes";
 

@@ -3,10 +3,10 @@ import {
   SectionPackArrsReq,
 } from "../../../client/src/sharedWithServer/apiQueriesShared/makeReqAndRes";
 import { DbSectionNameByType } from "../../../client/src/sharedWithServer/sectionVarbsConfigDerived/sectionChildrenDerived/DbStoreName";
-import { PackMakerSection } from "../../../client/src/sharedWithServer/StateClasses/Packers/PackMakerSection";
 import { GetterSectionBase } from "../../../client/src/sharedWithServer/StateGetters/Bases/GetterSectionBase";
 import { GetterSectionsBase } from "../../../client/src/sharedWithServer/StateGetters/Bases/GetterSectionsBase";
 import { GetterSection } from "../../../client/src/sharedWithServer/StateGetters/GetterSection";
+import { PackMakerSection } from "../../../client/src/sharedWithServer/StateOperators/Packers/PackMakerSection";
 import { TopOperator } from "../../../client/src/sharedWithServer/TopOperator";
 
 export class SectionArrReqMaker<

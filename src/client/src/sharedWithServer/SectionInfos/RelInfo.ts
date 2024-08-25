@@ -1,10 +1,10 @@
-import { SectionName } from "../sectionVarbsConfig/SectionName";
 import { ChildName } from "../sectionVarbsConfigDerived/sectionChildrenDerived/ChildName";
 import {
   ParentName,
   PiblingName,
   StepSiblingName,
 } from "../sectionVarbsConfigDerived/sectionChildrenDerived/ParentName";
+import { SectionName } from "../stateSchemas/SectionName";
 import { MixedInfoProps } from "./VarbInfoBase";
 
 export type RelInfoType =

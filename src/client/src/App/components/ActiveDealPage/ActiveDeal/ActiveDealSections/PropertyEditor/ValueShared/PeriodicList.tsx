@@ -1,11 +1,11 @@
-import { SectionValues } from "../../../../../../../sharedWithServer/sectionVarbsConfig/StateValue";
+import { SectionValues } from "../../../../../../../sharedWithServer/stateSchemas/StateValue";
 import { useAction } from "../../../../../../stateClassHooks/useAction";
 import { useGetterSection } from "../../../../../../stateClassHooks/useGetterSection";
-import { ListRouteName } from "../../../../../UserListEditorPage/UserComponentClosed";
 import { VarbListGenericMenuType } from "../../../../../appWide/ListGroup/ListGroupShared/VarbListGeneric";
 import { VarbListStandardHeaders } from "../../../../../appWide/ListGroup/ListGroupShared/VarbListGeneric/VarbListStandardHeaders";
 import { VarbListTableSectionGeneric } from "../../../../../appWide/ListGroup/ListGroupShared/VarbListGeneric/VarbListTableSectionGeneric";
 import { PeriodicItem } from "../../../../../appWide/VarbLists/ListGroupPeriodicList/PeriodicItem";
+import { ListRouteName } from "../../../../../UserListEditorPage/UserComponentClosed";
 import { ValueListGeneral } from "./ValueListGeneral";
 
 type Props = {

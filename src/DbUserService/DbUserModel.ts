@@ -1,6 +1,5 @@
 import mongoose, { Schema } from "mongoose";
 import { SectionPack } from "../client/src/sharedWithServer/SectionPacks/SectionPack";
-import { SectionName } from "../client/src/sharedWithServer/sectionVarbsConfig/SectionName";
 import { VarbName } from "../client/src/sharedWithServer/sectionVarbsConfigDerived/baseSectionsDerived/baseSectionsVarbsTypes";
 import {
   ChildName,
@@ -16,6 +15,7 @@ import {
 import { selfAndDescSectionNames } from "../client/src/sharedWithServer/sectionVarbsConfigDerived/sectionChildrenDerived/DescendantName";
 import { RawSection } from "../client/src/sharedWithServer/State/RawSection";
 import { sectionsMeta } from "../client/src/sharedWithServer/StateMeta/SectionsMeta";
+import { SectionName } from "../client/src/sharedWithServer/stateSchemas/SectionName";
 import { ResStatusError } from "../useErrorHandling";
 import { mongooseId, mongooseValues } from "./mongooseValues";
 

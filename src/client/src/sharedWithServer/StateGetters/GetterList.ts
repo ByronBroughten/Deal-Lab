@@ -1,12 +1,12 @@
 import { IdInfoMixedMulti } from "../SectionInfos/MixedSectionInfo";
 import { SectionNameByType } from "../SectionNameByType";
+import { VarbName } from "../sectionVarbsConfigDerived/baseSectionsDerived/baseSectionsVarbsTypes";
 import {
   RawFeSection,
   SectionNotFoundError,
   TooManySectionsFoundError,
 } from "../State/StateSectionsTypes";
-import { VarbValue } from "../sectionVarbsConfig/StateValue";
-import { VarbName } from "../sectionVarbsConfigDerived/baseSectionsDerived/baseSectionsVarbsTypes";
+import { VarbValue } from "../stateSchemas/StateValue";
 import { Arr } from "../utils/Arr";
 import { GetterListBase } from "./Bases/GetterListBase";
 import { GetterSection } from "./GetterSection";

@@ -1,20 +1,7 @@
 import { SectionNameByType } from "../SectionNameByType";
-import { SectionValuesGeneric } from "../State/RawSection";
-import { SectionName } from "../sectionVarbsConfig/SectionName";
 import {
-  ChildrenTraits,
-  GenericChildTraits,
-  allChildrenTraits,
-} from "../sectionVarbsConfig/allChildrenTraits";
-import {
-  GetSectionTraits,
-  SectionTrait,
-  getSectionTraits,
-  sectionTrait,
-} from "../sectionVarbsConfig/allSectionTraits";
-import {
-  VarbName,
   sectionVarbNames,
+  VarbName,
 } from "../sectionVarbsConfigDerived/baseSectionsDerived/baseSectionsVarbsTypes";
 import {
   ChildIdArrsNarrow,
@@ -24,19 +11,32 @@ import {
   isChildName,
 } from "../sectionVarbsConfigDerived/sectionChildrenDerived/ChildName";
 import {
+  childrenSectionNames,
   ChildSectionName,
   ChildSectionNameName,
   childToSectionName,
-  childrenSectionNames,
   sectionChildNameNames,
 } from "../sectionVarbsConfigDerived/sectionChildrenDerived/ChildSectionName";
+import { SectionValuesGeneric } from "../State/RawSection";
+import {
+  allChildrenTraits,
+  ChildrenTraits,
+  GenericChildTraits,
+} from "../stateSchemas/allChildrenTraits";
+import {
+  GetSectionTraits,
+  getSectionTraits,
+  SectionTrait,
+  sectionTrait,
+} from "../stateSchemas/allSectionTraits";
+import { SectionName } from "../stateSchemas/SectionName";
 import { Obj } from "../utils/Obj";
-import { VarbMeta } from "./VarbMeta";
 import {
   CorePropName,
-  SectionsMetaCore,
   sectionMetasCore,
+  SectionsMetaCore,
 } from "./sectionMetasCore";
+import { VarbMeta } from "./VarbMeta";
 
 export type VarbMetas<SN extends SectionName> = {
   [varbName: string]: VarbMeta<SN>;

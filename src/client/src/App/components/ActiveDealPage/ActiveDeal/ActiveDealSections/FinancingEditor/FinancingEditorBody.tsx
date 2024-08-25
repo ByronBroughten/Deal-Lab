@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
-import { DealMode } from "../../../../../../sharedWithServer/sectionVarbsConfig/StateValue/dealMode";
-import { getFinancingTitle } from "../../../../../../sharedWithServer/sectionVarbsConfig/StateValue/unionValues";
+import { DealMode } from "../../../../../../sharedWithServer/stateSchemas/StateValue/dealMode";
+import { getFinancingTitle } from "../../../../../../sharedWithServer/stateSchemas/StateValue/unionValues";
 import { useGetterSection } from "../../../../../stateClassHooks/useGetterSection";
 import { FormSection } from "../../../../appWide/FormSection";
 import MainSectionBody from "../../../../appWide/GeneralSection/MainSection/MainSectionBody";

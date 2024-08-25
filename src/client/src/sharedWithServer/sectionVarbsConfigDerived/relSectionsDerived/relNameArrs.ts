@@ -1,5 +1,5 @@
 import { indexStoreSectionNames, storeSectionNames } from "../../sectionStores";
-import { SectionName } from "../../sectionVarbsConfig/SectionName";
+import { SectionName } from "../../stateSchemas/SectionName";
 import { hasChildSectionNames } from "../sectionChildrenDerived/ChildName";
 
 export const relNameArrs = {

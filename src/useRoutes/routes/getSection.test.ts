@@ -6,7 +6,7 @@ import {
   constants,
 } from "../../client/src/sharedWithServer/Constants";
 import { Id } from "../../client/src/sharedWithServer/Ids/IdS";
-import { PackBuilderSection } from "../../client/src/sharedWithServer/StateClasses/Packers/PackBuilderSection";
+import { PackBuilderSection } from "../../client/src/sharedWithServer/StateOperators/Packers/PackBuilderSection";
 import { DbUserGetter } from "../../DbUserService/DbUserGetter";
 import { runApp } from "../../runApp";
 import { SectionQueryTester } from "./apiQueriesTestTools/SectionQueryTester";

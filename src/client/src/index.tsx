@@ -10,9 +10,10 @@ AppRegistry.runApplication("App", {
 
 // *Constants
 // Schemas (includes sectionStores)
+
 // State
 // StateGetters (includes StateMeta)
-// StateOperators
+// *StateOperators
 // *ApiQueries (includes query types)
 
 // Transports (SectionPacks)

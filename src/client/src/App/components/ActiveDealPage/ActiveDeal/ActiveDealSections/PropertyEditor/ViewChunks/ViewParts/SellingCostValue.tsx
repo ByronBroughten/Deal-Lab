@@ -1,5 +1,5 @@
 import { SxProps } from "@mui/material";
-import { StateValue } from "../../../../../../../../sharedWithServer/sectionVarbsConfig/StateValue";
+import { StateValue } from "../../../../../../../../sharedWithServer/stateSchemas/StateValue";
 import { StrictExtract } from "../../../../../../../../sharedWithServer/utils/types";
 import { useGetterSection } from "../../../../../../../stateClassHooks/useGetterSection";
 import { SelectAndItemizeEditor } from "../../../../../../appWide/SelectAndItemizeEditor";

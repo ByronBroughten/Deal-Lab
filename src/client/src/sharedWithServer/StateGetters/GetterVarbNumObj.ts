@@ -2,14 +2,14 @@ import { round } from "lodash";
 import { SectionNameByType } from "../SectionNameByType";
 import {
   EntitiesAndEditorText,
+  NumberOrQ,
   NumObj,
   NumObjOutput,
-  NumberOrQ,
-} from "../sectionVarbsConfig/StateValue/NumObj";
-import { ValueInEntity } from "../sectionVarbsConfig/StateValue/stateValuesShared/entities";
+} from "../stateSchemas/StateValue/NumObj";
+import { ValueInEntity } from "../stateSchemas/StateValue/stateValuesShared/entities";
 import { Arr } from "../utils/Arr";
-import { Str } from "../utils/Str";
 import { arithmeticOperatorsArr, evaluate, mathS } from "../utils/math";
+import { Str } from "../utils/Str";
 import { GetterVarbBase } from "./Bases/GetterVarbBase";
 import { GetterVarb } from "./GetterVarb";
 import { InEntityGetterVarb } from "./InEntityGetterVarb";

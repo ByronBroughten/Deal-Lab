@@ -1,16 +1,16 @@
 import { Id } from "../../Ids/IdS";
 import { SectionPack } from "../../SectionPacks/SectionPack";
 import {
-  SectionName,
-  validateSectionName,
-} from "../../sectionVarbsConfig/SectionName";
-import {
   ChildSpNums,
   OneRawSection,
   RawSections,
   SectionValuesGeneric,
 } from "../../State/RawSection";
 import { sectionsMeta } from "../../StateMeta/SectionsMeta";
+import {
+  SectionName,
+  validateSectionName,
+} from "../../stateSchemas/SectionName";
 import { Arr } from "../../utils/Arr";
 import { ValidationError } from "../../utils/Error";
 import { Obj } from "../../utils/Obj";

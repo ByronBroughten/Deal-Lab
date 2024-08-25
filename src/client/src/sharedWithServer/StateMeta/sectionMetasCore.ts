@@ -1,26 +1,26 @@
-import { SectionName, sectionNames } from "../sectionVarbsConfig/SectionName";
+import {
+  sectionParentNames,
+  SectionToParentNameArrs,
+} from "../sectionVarbsConfigDerived/sectionChildrenDerived/ParentName";
 import {
   AllBaseSectionVarbs,
   allBaseSectionVarbs,
-} from "../sectionVarbsConfig/allBaseSectionVarbs";
-import { GeneralBaseSectionVarbs } from "../sectionVarbsConfig/allBaseSectionVarbs/baseSectionVarbs";
+} from "../stateSchemas/allBaseSectionVarbs";
+import { GeneralBaseSectionVarbs } from "../stateSchemas/allBaseSectionVarbs/baseSectionVarbs";
 import {
   AllSectionTraits,
   allSectionTraits,
-} from "../sectionVarbsConfig/allSectionTraits";
+} from "../stateSchemas/allSectionTraits";
 import {
   GeneralSectionTraits,
   SectionTraitName,
-} from "../sectionVarbsConfig/allSectionTraits/sectionTraits";
+} from "../stateSchemas/allSectionTraits/sectionTraits";
 import {
   AllUpdateSections,
   allUpdateSections,
-} from "../sectionVarbsConfig/allUpdateSectionVarbs";
-import { GeneralUpdateSectionVarbs } from "../sectionVarbsConfig/allUpdateSectionVarbs/updateSectionVarbs";
-import {
-  SectionToParentNameArrs,
-  sectionParentNames,
-} from "../sectionVarbsConfigDerived/sectionChildrenDerived/ParentName";
+} from "../stateSchemas/allUpdateSectionVarbs";
+import { GeneralUpdateSectionVarbs } from "../stateSchemas/allUpdateSectionVarbs/updateSectionVarbs";
+import { SectionName, sectionNames } from "../stateSchemas/SectionName";
 
 type SectionMetaCoreGeneral = {
   baseVarbs: GeneralBaseSectionVarbs;

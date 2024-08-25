@@ -1,4 +1,4 @@
-import { SectionName } from "../sectionVarbsConfig/SectionName";
+import { SectionName } from "../stateSchemas/SectionName";
 
 export interface SectionNameProp<SN extends SectionName> {
   sectionName: SN;

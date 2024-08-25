@@ -4,8 +4,7 @@ import {
   GetterSectionProps,
 } from "../../../sharedWithServer/StateGetters/Bases/GetterSectionBase";
 import { GetterSection } from "../../../sharedWithServer/StateGetters/GetterSection";
-import { SectionName } from "../../../sharedWithServer/sectionVarbsConfig/SectionName";
-
+import { SectionName } from "../../../sharedWithServer/stateSchemas/SectionName";
 import {
   ApiQuerierBase,
   ApiQuerierBaseProps,

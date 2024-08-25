@@ -1,5 +1,5 @@
 import { FormControl, FormControlLabel, RadioGroup } from "@mui/material";
-import { StateValue } from "../../../../../../sharedWithServer/sectionVarbsConfig/StateValue";
+import { StateValue } from "../../../../../../sharedWithServer/stateSchemas/StateValue";
 import { useAction } from "../../../../../stateClassHooks/useAction";
 import { useGetterSection } from "../../../../../stateClassHooks/useGetterSection";
 import { nativeTheme } from "../../../../../theme/nativeTheme";

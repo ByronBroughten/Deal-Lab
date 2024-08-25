@@ -1,5 +1,5 @@
-import { capExDisplayNames } from "../../../../../../../sharedWithServer/exampleMakers/makeExamplePeriodicListProps";
-import { SectionValues } from "../../../../../../../sharedWithServer/sectionVarbsConfig/StateValue";
+import { capExDisplayNames } from "../../../../../../../sharedWithServer/StateOperators/exampleMakers/makeExamplePeriodicListProps";
+import { SectionValues } from "../../../../../../../sharedWithServer/stateSchemas/StateValue";
 import { useAction } from "../../../../../../stateClassHooks/useAction";
 import { useGetterSection } from "../../../../../../stateClassHooks/useGetterSection";
 import { VarbListGenericMenuType } from "../../../../../appWide/ListGroup/ListGroupShared/VarbListGeneric";

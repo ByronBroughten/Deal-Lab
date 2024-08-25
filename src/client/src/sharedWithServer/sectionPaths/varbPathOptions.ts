@@ -7,10 +7,7 @@ import {
   VarbPathNameProp,
   VarbPathParams,
 } from "../SectionInfos/VarbPathNameInfo";
-import {
-  DealMode,
-  getDealModes,
-} from "../sectionVarbsConfig/StateValue/dealMode";
+import { DealMode, getDealModes } from "../stateSchemas/StateValue/dealMode";
 
 export type VarbPathArrParam<
   VPN extends ValueFixedVarbPathName = ValueFixedVarbPathName

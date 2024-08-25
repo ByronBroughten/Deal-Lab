@@ -7,14 +7,14 @@ import {
 } from "../../../client/src/sharedWithServer/apiQueriesShared/makeReqAndRes";
 import { SectionNameByType } from "../../../client/src/sharedWithServer/SectionNameByType";
 import { StoreName } from "../../../client/src/sharedWithServer/sectionStores";
-import { PackMakerSection } from "../../../client/src/sharedWithServer/StateClasses/Packers/PackMakerSection";
-import { SolverSection } from "../../../client/src/sharedWithServer/StateClasses/Solvers/SolverSection";
-import { SolverSections } from "../../../client/src/sharedWithServer/StateClasses/Solvers/SolverSections";
-import { UpdaterSection } from "../../../client/src/sharedWithServer/StateClasses/Updaters/UpdaterSection";
 import { GetterListProps } from "../../../client/src/sharedWithServer/StateGetters/Bases/GetterListBase";
 import { GetterSectionProps } from "../../../client/src/sharedWithServer/StateGetters/Bases/GetterSectionBase";
 import { GetterList } from "../../../client/src/sharedWithServer/StateGetters/GetterList";
 import { GetterSection } from "../../../client/src/sharedWithServer/StateGetters/GetterSection";
+import { PackMakerSection } from "../../../client/src/sharedWithServer/StateOperators/Packers/PackMakerSection";
+import { SolverSection } from "../../../client/src/sharedWithServer/StateOperators/Solvers/SolverSection";
+import { SolverSections } from "../../../client/src/sharedWithServer/StateOperators/Solvers/SolverSections";
+import { UpdaterSection } from "../../../client/src/sharedWithServer/StateOperators/Updaters/UpdaterSection";
 import { GetterSectionsBase } from "./../../../client/src/sharedWithServer/StateGetters/Bases/GetterSectionsBase";
 
 export function makeLastSectionProps<SN extends SectionNameByType>(

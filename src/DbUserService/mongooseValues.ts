@@ -1,18 +1,18 @@
 import { Schema } from "mongoose";
-import { validateInEntityValue } from "../client/src/sharedWithServer/sectionVarbsConfig/StateValue/InEntityValue";
-import { NumObj } from "../client/src/sharedWithServer/sectionVarbsConfig/StateValue/NumObj";
-import { StringObj } from "../client/src/sharedWithServer/sectionVarbsConfig/StateValue/StringObj";
+import { validateInEntityValue } from "../client/src/sharedWithServer/stateSchemas/StateValue/InEntityValue";
+import { NumObj } from "../client/src/sharedWithServer/stateSchemas/StateValue/NumObj";
 import {
   validateChangeSaving,
   validateChangesToSave,
-} from "../client/src/sharedWithServer/sectionVarbsConfig/StateValue/sectionChanges";
-import { validateValueInEntities } from "../client/src/sharedWithServer/sectionVarbsConfig/StateValue/stateValuesShared/entities";
+} from "../client/src/sharedWithServer/stateSchemas/StateValue/sectionChanges";
+import { validateValueInEntities } from "../client/src/sharedWithServer/stateSchemas/StateValue/stateValuesShared/entities";
+import { StringObj } from "../client/src/sharedWithServer/stateSchemas/StateValue/StringObj";
 import {
   UnionValueName,
   unionValueNames,
-} from "../client/src/sharedWithServer/sectionVarbsConfig/StateValue/unionValues";
-import { ValueName } from "../client/src/sharedWithServer/sectionVarbsConfig/ValueName";
-import { valueMetas } from "../client/src/sharedWithServer/sectionVarbsConfig/valueMetas";
+} from "../client/src/sharedWithServer/stateSchemas/StateValue/unionValues";
+import { valueMetas } from "../client/src/sharedWithServer/stateSchemas/valueMetas";
+import { ValueName } from "../client/src/sharedWithServer/stateSchemas/ValueName";
 import { dbLimits } from "../client/src/sharedWithServer/utils/dbLimits";
 import { validateS } from "../client/src/sharedWithServer/validateS";
 

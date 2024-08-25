@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { listOperators } from "../../../../../../../../../sharedWithServer/StateClasses/Solvers/ValueUpdateVarb/ConditionalValueSolver";
+import { listOperators } from "../../../../../../../../../sharedWithServer/StateOperators/Solvers/ValueUpdateVarb/ConditionalValueSolver";
 import { useGetterSection } from "../../../../../../../../stateClassHooks/useGetterSection";
 import { NumObjEntityEditor } from "../../../../../../../inputs/NumObjEntityEditor";
 import { StringArrEditor } from "../../../../../../../inputs/StringArrEditor";

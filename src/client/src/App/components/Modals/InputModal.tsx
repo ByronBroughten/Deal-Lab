@@ -1,5 +1,5 @@
 import React from "react";
-import { DealMode } from "../../../sharedWithServer/sectionVarbsConfig/StateValue/dealMode";
+import { DealMode } from "../../../sharedWithServer/stateSchemas/StateValue/dealMode";
 import { timeS } from "../../../sharedWithServer/utils/timeS";
 import { IdOfSectionToSaveProvider } from "../../stateClassHooks/useIdOfSectionToSave";
 import { nativeTheme } from "../../theme/nativeTheme";

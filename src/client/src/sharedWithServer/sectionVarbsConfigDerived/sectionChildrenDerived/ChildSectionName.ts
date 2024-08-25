@@ -1,16 +1,12 @@
+import {
+  allSectionChildren,
+  SectionChildProps,
+} from "../../stateSchemas/allSectionChildren";
+import { GeneralChildrenSections } from "../../stateSchemas/allSectionChildren/sectionChildren";
+import { SectionName, sectionNames } from "../../stateSchemas/SectionName";
 import { Obj } from "../../utils/Obj";
 import { PropKeyOfValue } from "../../utils/Obj/SubType";
 import { MergeUnionObjFull } from "../../utils/types/mergeUnionObj";
-
-import {
-  SectionName,
-  sectionNames,
-} from "../../sectionVarbsConfig/SectionName";
-import {
-  SectionChildProps,
-  allSectionChildren,
-} from "../../sectionVarbsConfig/allSectionChildren";
-import { GeneralChildrenSections } from "../../sectionVarbsConfig/allSectionChildren/sectionChildren";
 import { ChildName, sectionToChildNames } from "./ChildName";
 
 export type ChildToSectionName = SectionChildProps<"sectionName">;

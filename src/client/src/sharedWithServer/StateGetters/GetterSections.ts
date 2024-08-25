@@ -10,9 +10,9 @@ import {
   VarbInfoMixed,
 } from "../SectionInfos/MixedSectionInfo";
 import { SectionNameByType } from "../SectionNameByType";
-import { DbSectionInfo } from "../sectionVarbsConfig/allBaseSectionVarbs/DbSectionInfo";
-import { SectionName } from "../sectionVarbsConfig/SectionName";
 import { SectionsMeta, sectionsMeta } from "../StateMeta/SectionsMeta";
+import { DbSectionInfo } from "../stateSchemas/allBaseSectionVarbs/DbSectionInfo";
+import { SectionName } from "../stateSchemas/SectionName";
 import { Arr } from "../utils/Arr";
 import {
   GetterSectionsBase,

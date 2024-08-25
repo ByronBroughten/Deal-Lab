@@ -5,7 +5,7 @@ import {
   constant,
   constants,
 } from "../../client/src/sharedWithServer/Constants";
-import { PackBuilderSection } from "../../client/src/sharedWithServer/StateClasses/Packers/PackBuilderSection";
+import { PackBuilderSection } from "../../client/src/sharedWithServer/StateOperators/Packers/PackBuilderSection";
 import { Arr } from "../../client/src/sharedWithServer/utils/Arr";
 import { timeS } from "../../client/src/sharedWithServer/utils/timeS";
 import { DbUserGetter } from "../../DbUserService/DbUserGetter";

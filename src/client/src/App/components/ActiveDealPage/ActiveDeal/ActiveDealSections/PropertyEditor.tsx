@@ -1,6 +1,6 @@
 import React from "react";
 import { FeIdProp } from "../../../../../sharedWithServer/SectionInfos/NanoIdInfo";
-import { StateValue } from "../../../../../sharedWithServer/sectionVarbsConfig/StateValue";
+import { StateValue } from "../../../../../sharedWithServer/stateSchemas/StateValue";
 import { useGetterSection } from "../../../../stateClassHooks/useGetterSection";
 import { PropertyBrrrrView } from "./PropertyEditor/PropertyBrrrrView";
 import { PropertyBuyAndHoldView } from "./PropertyEditor/PropertyBuyAndHoldView";

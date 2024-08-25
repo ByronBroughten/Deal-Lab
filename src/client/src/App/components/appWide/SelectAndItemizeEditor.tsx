@@ -1,14 +1,14 @@
 import { Box } from "@mui/material";
 import React from "react";
-import { SectionName } from "../../../sharedWithServer/sectionVarbsConfig/SectionName";
-import { StateValue } from "../../../sharedWithServer/sectionVarbsConfig/StateValue";
-import { UnionValueName } from "../../../sharedWithServer/sectionVarbsConfig/StateValue/unionValues";
+import { SectionName } from "../../../sharedWithServer/stateSchemas/SectionName";
+import { StateValue } from "../../../sharedWithServer/stateSchemas/StateValue";
+import { UnionValueName } from "../../../sharedWithServer/stateSchemas/StateValue/unionValues";
 import { useGetterVarbNext } from "../../stateClassHooks/useGetterVarb";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { arrSx } from "../../utils/mui";
-import { useInputModalWithContext } from "../Modals/InputModalProvider";
 import { useIsDevices } from "../customHooks/useMediaQueries";
 import { MuiRow } from "../general/MuiRow";
+import { useInputModalWithContext } from "../Modals/InputModalProvider";
 import { EditSectionBtn } from "./EditSectionBtn";
 import { SelectEditor, SelectEditorPropsNext } from "./SelectEditor";
 

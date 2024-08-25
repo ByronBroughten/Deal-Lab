@@ -1,15 +1,15 @@
 import { Box, SxProps } from "@mui/material";
 import { FeIdProp } from "../../../../sharedWithServer/SectionInfos/NanoIdInfo";
-import { AddChildOptions } from "../../../../sharedWithServer/StateClasses/Updaters/UpdaterSection";
-import { inEntityValueInfo } from "../../../../sharedWithServer/sectionVarbsConfig/StateValue/InEntityValue";
+import { AddChildOptions } from "../../../../sharedWithServer/StateOperators/Updaters/UpdaterSection";
+import { inEntityValueInfo } from "../../../../sharedWithServer/stateSchemas/StateValue/InEntityValue";
 import { useAction } from "../../../stateClassHooks/useAction";
 import { useGetterSection } from "../../../stateClassHooks/useGetterSection";
 import { useVariableLabels } from "../../../stateClassHooks/useVariableLabels";
 import { nativeTheme } from "../../../theme/nativeTheme";
 import { arrSx } from "../../../utils/mui";
-import { useDealModeContextVarbSelectModal } from "../../Modals/VarbSelectModalProvider";
 import { MuiRow } from "../../general/MuiRow";
 import { OnVarbSelect } from "../../inputs/NumObjEditor/NumObjVarbSelector/VarbSelectorCollection";
+import { useDealModeContextVarbSelectModal } from "../../Modals/VarbSelectModalProvider";
 import { HollowBtn } from "../HollowBtn";
 import { VarbListMenuDual } from "../ListGroup/ListGroupShared/VarbListMenuDual";
 import { RemoveSectionXBtn } from "../RemoveSectionXBtn";

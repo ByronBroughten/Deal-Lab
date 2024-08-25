@@ -1,8 +1,8 @@
-import { StateValue } from "../../../../../../../../sharedWithServer/sectionVarbsConfig/StateValue";
+import { StateValue } from "../../../../../../../../sharedWithServer/stateSchemas/StateValue";
 import {
   DealMode,
   isDealMode,
-} from "../../../../../../../../sharedWithServer/sectionVarbsConfig/StateValue/dealMode";
+} from "../../../../../../../../sharedWithServer/stateSchemas/StateValue/dealMode";
 import { useGetterSection } from "../../../../../../../stateClassHooks/useGetterSection";
 import { SelectEditor } from "../../../../../../appWide/SelectEditor";
 import { VarbStringLabel } from "../../../../../../appWide/VarbStringLabel";

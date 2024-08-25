@@ -1,12 +1,12 @@
 import { Id } from "../Ids/IdS";
-import { SectionName } from "../sectionVarbsConfig/SectionName";
-import { StateValue } from "../sectionVarbsConfig/StateValue";
-import { validateStateValue } from "../sectionVarbsConfig/valueMetas";
 import { validateAnyVarbName } from "../sectionVarbsConfigDerived/baseSectionsDerived/baseSectionsVarbsTypes";
 import {
   ChildName,
   validateAnyChildName,
 } from "../sectionVarbsConfigDerived/sectionChildrenDerived/ChildName";
+import { SectionName } from "../stateSchemas/SectionName";
+import { StateValue } from "../stateSchemas/StateValue";
+import { validateStateValue } from "../stateSchemas/valueMetas";
 import { Arr } from "../utils/Arr";
 import { Obj } from "../utils/Obj";
 import { validateS } from "../validateS";

@@ -1,12 +1,9 @@
 import { StoreName } from "../../sectionStores";
 import {
-  SectionName,
-  sectionNames,
-} from "../../sectionVarbsConfig/SectionName";
-import {
   AllSectionChildren,
   allSectionChildren,
-} from "../../sectionVarbsConfig/allSectionChildren";
+} from "../../stateSchemas/allSectionChildren";
+import { SectionName, sectionNames } from "../../stateSchemas/SectionName";
 import { ValidationError } from "../../utils/Error";
 import { Obj } from "../../utils/Obj";
 import { RemoveNotStrings, StrictOmit } from "../../utils/types";

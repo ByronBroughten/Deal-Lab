@@ -1,5 +1,5 @@
-import { SectionName } from "../sectionVarbsConfig/SectionName";
 import { ChildName } from "../sectionVarbsConfigDerived/sectionChildrenDerived/ChildName";
+import { SectionName } from "../stateSchemas/SectionName";
 import { Obj } from "../utils/Obj";
 import {
   RelChildrenVarbInfo,

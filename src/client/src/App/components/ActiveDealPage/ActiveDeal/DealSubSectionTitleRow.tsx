@@ -1,10 +1,10 @@
 import React from "react";
 import { FaPlay } from "react-icons/fa";
 import styled from "styled-components";
-import { StateValue } from "../../../../sharedWithServer/sectionVarbsConfig/StateValue";
+import { StateValue } from "../../../../sharedWithServer/stateSchemas/StateValue";
 import { nativeTheme } from "../../../theme/nativeTheme";
-import { EditSectionBtn } from "../../appWide/EditSectionBtn";
 import { CheckMarkCircle } from "../../appWide/checkMarkCircle";
+import { EditSectionBtn } from "../../appWide/EditSectionBtn";
 import { DealSubSectionTitle } from "./DealSubSectionTitle";
 import { MainSectionLargeEditBtn } from "./MainSectionLargeEditBtn";
 

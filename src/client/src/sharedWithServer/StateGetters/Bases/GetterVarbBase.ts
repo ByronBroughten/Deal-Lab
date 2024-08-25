@@ -1,6 +1,6 @@
 import { isValidVarbNames } from "../../SectionInfos/VarbInfoBase";
-import { SectionName } from "../../sectionVarbsConfig/SectionName";
 import { VarbMeta } from "../../StateMeta/VarbMeta";
+import { SectionName } from "../../stateSchemas/SectionName";
 import { GetterSectionBase, GetterSectionProps } from "./GetterSectionBase";
 
 export class NotAVarbNameError extends Error {}

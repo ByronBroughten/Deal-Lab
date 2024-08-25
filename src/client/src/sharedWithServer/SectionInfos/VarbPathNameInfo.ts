@@ -6,9 +6,9 @@ import {
   SectionPathName,
   SectionPathVarbName,
 } from "../sectionPaths/sectionPathNames";
-import { targetNames } from "../sectionVarbsConfig/allBaseSectionVarbs/baseSwitchNames";
-import { VarbValue } from "../sectionVarbsConfig/StateValue";
 import { VarbName } from "../sectionVarbsConfigDerived/baseSectionsDerived/baseSectionsVarbsTypes";
+import { targetNames } from "../stateSchemas/allBaseSectionVarbs/baseSwitchNames";
+import { VarbValue } from "../stateSchemas/StateValue";
 import { ValidationError } from "../utils/Error";
 import { Obj } from "../utils/Obj";
 import { DbIdProp } from "./NanoIdInfo";

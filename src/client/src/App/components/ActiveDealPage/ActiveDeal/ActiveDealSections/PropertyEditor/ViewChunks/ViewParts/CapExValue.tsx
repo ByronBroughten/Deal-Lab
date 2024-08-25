@@ -1,4 +1,4 @@
-import { StateValue } from "../../../../../../../../sharedWithServer/sectionVarbsConfig/StateValue";
+import { StateValue } from "../../../../../../../../sharedWithServer/stateSchemas/StateValue";
 import { capExItemizeDescription } from "../../../../../../../../varbLabels/varbLabels";
 import { useGetterSection } from "../../../../../../../stateClassHooks/useGetterSection";
 import { LabelWithInfo } from "../../../../../../appWide/LabelWithInfo";

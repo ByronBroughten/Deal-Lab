@@ -1,7 +1,4 @@
-import {
-  SectionName,
-  sectionNames,
-} from "../../sectionVarbsConfig/SectionName";
+import { SectionName, sectionNames } from "../../stateSchemas/SectionName";
 import { Arr } from "../../utils/Arr";
 type SnArrs = {
   [SN in SectionName]: SN[];

@@ -1,5 +1,5 @@
 import { SxProps } from "@mui/material";
-import { StateValue } from "../../../../../../sharedWithServer/sectionVarbsConfig/StateValue";
+import { StateValue } from "../../../../../../sharedWithServer/stateSchemas/StateValue";
 import { useGetterSection } from "../../../../../stateClassHooks/useGetterSection";
 import { nativeTheme } from "../../../../../theme/nativeTheme";
 import { arrSx } from "../../../../../utils/mui";

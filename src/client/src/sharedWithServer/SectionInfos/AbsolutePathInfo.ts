@@ -1,6 +1,6 @@
 import { AbsolutePathNode } from "../sectionPaths/sectionPathNames";
-import { SectionName } from "../sectionVarbsConfig/SectionName";
 import { ChildName } from "../sectionVarbsConfigDerived/sectionChildrenDerived/ChildName";
+import { SectionName } from "../stateSchemas/SectionName";
 import { DbIdProp, NanoIdProp } from "./NanoIdInfo";
 import { SectionNameProp } from "./SectionNameProp";
 import { MixedInfoProps, VarbProp } from "./VarbInfoBase";

@@ -5,7 +5,7 @@ import {
   FeVarbInfo,
   FeVarbInfoNext,
 } from "../../../sharedWithServer/SectionInfos/FeInfo";
-import { numObj } from "../../../sharedWithServer/sectionVarbsConfig/StateValue/NumObj";
+import { numObj } from "../../../sharedWithServer/stateSchemas/StateValue/NumObj";
 import { useAction } from "../../stateClassHooks/useAction";
 import { useGetterVarb } from "../../stateClassHooks/useGetterVarb";
 import { nativeTheme } from "../../theme/nativeTheme";

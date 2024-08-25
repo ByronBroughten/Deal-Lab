@@ -2,12 +2,12 @@ import {
   AbsolutePathInfo,
   absolutePathInfo,
 } from "../SectionInfos/AbsolutePathInfo";
-import { SectionName } from "../sectionVarbsConfig/SectionName";
 import {
   ChildName,
   isChildName,
 } from "../sectionVarbsConfigDerived/sectionChildrenDerived/ChildName";
 import { childToSectionName } from "../sectionVarbsConfigDerived/sectionChildrenDerived/ChildSectionName";
+import { SectionName } from "../stateSchemas/SectionName";
 import { Obj } from "../utils/Obj";
 import {
   SectionNameOfPath,

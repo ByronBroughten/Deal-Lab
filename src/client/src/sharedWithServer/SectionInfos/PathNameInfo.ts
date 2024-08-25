@@ -4,7 +4,7 @@ import {
   SectionPathName,
   SectionPathVarbName,
 } from "../sectionPaths/sectionPathNames";
-import { SectionName } from "../sectionVarbsConfig/SectionName";
+import { SectionName } from "../stateSchemas/SectionName";
 import { zS } from "../utils/zod";
 import { NanoIdProp } from "./NanoIdInfo";
 import { MakeVarbProp, MixedInfoProps } from "./VarbInfoBase";

@@ -1,17 +1,17 @@
 import hash from "object-hash";
 import React from "react";
 import { constant } from "../../../sharedWithServer/Constants";
-import { makeDefaultMain } from "../../../sharedWithServer/defaultMaker/makeDefaultMain";
 import {
   ChildSectionPack,
   validateSectionPackArrs,
 } from "../../../sharedWithServer/SectionPacks/ChildSectionPack";
-import { allBaseSectionVarbs } from "../../../sharedWithServer/sectionVarbsConfig/allBaseSectionVarbs";
 import { StateSections } from "../../../sharedWithServer/State/StateSections";
-import { PackBuilderSection } from "../../../sharedWithServer/StateClasses/Packers/PackBuilderSection";
-import { SolverSection } from "../../../sharedWithServer/StateClasses/Solvers/SolverSection";
-import { SolverSections } from "../../../sharedWithServer/StateClasses/Solvers/SolverSections";
 import { GetterSections } from "../../../sharedWithServer/StateGetters/GetterSections";
+import { makeDefaultMain } from "../../../sharedWithServer/StateOperators/defaultMaker/makeDefaultMain";
+import { PackBuilderSection } from "../../../sharedWithServer/StateOperators/Packers/PackBuilderSection";
+import { SolverSection } from "../../../sharedWithServer/StateOperators/Solvers/SolverSection";
+import { SolverSections } from "../../../sharedWithServer/StateOperators/Solvers/SolverSections";
+import { allBaseSectionVarbs } from "../../../sharedWithServer/stateSchemas/allBaseSectionVarbs";
 import { getStoredObj } from "../../utils/localStorage";
 
 const storeChildNames = [

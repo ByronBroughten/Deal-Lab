@@ -1,7 +1,7 @@
 import { AiOutlineSync } from "react-icons/ai";
 import { BsCloudCheck, BsCloudSlash } from "react-icons/bs";
 import styled, { css } from "styled-components";
-import { StateValue } from "../../../sharedWithServer/sectionVarbsConfig/StateValue";
+import { StateValue } from "../../../sharedWithServer/stateSchemas/StateValue";
 import { useGetterFeStore } from "../../stateClassHooks/useFeStore";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { ListMenuBtn } from "./ListGroup/ListGroupShared/ListMenuSimple/ListMenuBtn";

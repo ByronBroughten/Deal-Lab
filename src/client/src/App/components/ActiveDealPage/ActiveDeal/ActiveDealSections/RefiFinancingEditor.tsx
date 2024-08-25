@@ -1,4 +1,4 @@
-import { StateValue } from "../../../../../sharedWithServer/sectionVarbsConfig/StateValue";
+import { StateValue } from "../../../../../sharedWithServer/stateSchemas/StateValue";
 import { useGetterSection } from "../../../../stateClassHooks/useGetterSection";
 import { TimespanEditor } from "../../../inputs/TimespanEditor";
 import { FinancingEditorBody } from "./FinancingEditor/FinancingEditorBody";
