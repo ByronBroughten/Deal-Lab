@@ -1,4 +1,4 @@
-import { VarbNames } from "../SectionInfos/VarbInfoBase";
+import { VarbNames } from "../StateGetters/Identifiers/VarbInfoBase";
 import { SectionName, sectionNames } from "../stateSchemas/SectionName";
 import { valueMetas } from "../stateSchemas/valueMetas";
 import { ValueMeta } from "../stateSchemas/valueMetas/valueMetaGeneric";

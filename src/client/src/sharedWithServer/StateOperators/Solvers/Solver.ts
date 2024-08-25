@@ -1,7 +1,7 @@
-import { FeVarbInfo } from "../../SectionInfos/FeInfo";
 import { SolveState } from "../../State/SolveState";
 import { GetterSectionsProps } from "../../StateGetters/Bases/GetterSectionsBase";
 import { GetterVarb } from "../../StateGetters/GetterVarb";
+import { FeVarbInfo } from "../../StateGetters/Identifiers/FeInfo";
 import { SectionName } from "../../stateSchemas/SectionName";
 import { Arr } from "../../utils/Arr";
 import { EntityPrepperSections } from "../EntityPreppers/EntityPrepperSections";

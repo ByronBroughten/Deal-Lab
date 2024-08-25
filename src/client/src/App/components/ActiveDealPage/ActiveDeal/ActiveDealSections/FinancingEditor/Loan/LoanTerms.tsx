@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { FeIdProp } from "../../../../../../../sharedWithServer/SectionInfos/NanoIdInfo";
+import { FeIdProp } from "../../../../../../../sharedWithServer/StateGetters/Identifiers/NanoIdInfo";
 import { useGetterSection } from "../../../../../../stateClassHooks/useGetterSection";
 import { nativeTheme } from "../../../../../../theme/nativeTheme";
 import { FormSectionNext } from "../../../../../appWide/FormSectionNext";

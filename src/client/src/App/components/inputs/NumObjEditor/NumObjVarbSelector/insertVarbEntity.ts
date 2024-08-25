@@ -1,6 +1,6 @@
-import { Id } from "../../../../../sharedWithServer/Ids/IdS";
-import { ValueInEntityInfo } from "../../../../../sharedWithServer/SectionInfos/ValueInEntityInfo";
+import { ValueInEntityInfo } from "../../../../../sharedWithServer/StateGetters/Identifiers/ValueInEntityInfo";
 import { EntityMapData } from "../../../../../sharedWithServer/stateSchemas/StateValue/stateValuesShared/entities";
+import { IdS } from "../../../../../sharedWithServer/utils/IdS";
 import { SetEditorState } from "../../../../modules/draftjs/draftUtils";
 import { insertEntity } from "../../../../modules/draftjs/insert";
 
@@ -17,7 +17,7 @@ export function insertVarbEntity({
 }: Props) {
   const entityData: EntityMapData = {
     ...varbInfo,
-    entityId: Id.make(),
+    entityId: IdS.make(),
   };
   setEditorState((editorState) =>
     insertEntity(editorState, displayName, entityData)

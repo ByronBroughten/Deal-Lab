@@ -5,14 +5,14 @@ import {
   QueryRes,
 } from "../../sharedWithServer/ApiQueries";
 import { validateSubscriptionValues } from "../../sharedWithServer/apiQueriesShared/EstimatorPlanValues";
-import { validateUserData } from "../../sharedWithServer/apiQueriesShared/UserData";
 import { constant, constants } from "../../sharedWithServer/Constants";
 import { ApiQueryName } from "../../sharedWithServer/Constants/queryPaths";
 import { validateSectionPackArrByType } from "../../sharedWithServer/SectionNameByType";
 import {
   SectionPack,
   validateSectionPack,
-} from "../../sharedWithServer/SectionPacks/SectionPack";
+} from "../../sharedWithServer/StateTransports/SectionPack";
+import { validateUserData } from "../../sharedWithServer/StateTransports/UserData";
 import { Obj } from "../../sharedWithServer/utils/Obj";
 import { StrictOmit } from "../../sharedWithServer/utils/types";
 import {

@@ -1,8 +1,8 @@
-import { Id } from "../../Ids/IdS";
-import { SectionPack } from "../../SectionPacks/SectionPack";
 import { numObj } from "../../stateSchemas/StateValue/NumObj";
 import { numObjNext } from "../../stateSchemas/StateValue/numObjNext";
 import { stringObj } from "../../stateSchemas/StateValue/StringObj";
+import { SectionPack } from "../../StateTransports/SectionPack";
+import { IdS } from "../../utils/IdS";
 import { PackBuilderSection } from "../Packers/PackBuilderSection";
 
 const userVarbNames = [
@@ -16,7 +16,7 @@ const userVarbNames = [
 type UserVarbName = (typeof userVarbNames)[number];
 
 const dbIds = userVarbNames.reduce((userVarbDbIds, name) => {
-  userVarbDbIds[name] = Id.make();
+  userVarbDbIds[name] = IdS.make();
   return userVarbDbIds;
 }, {} as Record<UserVarbName, string>);
 

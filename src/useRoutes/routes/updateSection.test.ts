@@ -2,10 +2,10 @@ import { Server } from "http";
 import request from "supertest";
 import { QueryReq } from "../../client/src/sharedWithServer/ApiQueries";
 import { constant } from "../../client/src/sharedWithServer/Constants";
-import { Id } from "../../client/src/sharedWithServer/Ids/IdS";
 import { PackBuilderSection } from "../../client/src/sharedWithServer/StateOperators/Packers/PackBuilderSection";
 import { numObj } from "../../client/src/sharedWithServer/stateSchemas/StateValue/NumObj";
 import { stringObj } from "../../client/src/sharedWithServer/stateSchemas/StateValue/StringObj";
+import { IdS } from "../../client/src/sharedWithServer/utils/IdS";
 import { DbUserGetter } from "../../DbUserService/DbUserGetter";
 import { getUserById } from "../../DbUserService/DbUserModel";
 import { runApp } from "../../runApp";
@@ -106,7 +106,7 @@ describe(testedRoute, () => {
     );
   });
   it("should return 404 if there is not an entry in the db with the sectionPack's dbId concurrent", async () => {
-    reqs.updateSection.body.sectionPack.dbId = Id.make();
+    reqs.updateSection.body.sectionPack.dbId = IdS.make();
     await testStatus(404);
   });
   it("should return 401 if client is not logged in", async () => {

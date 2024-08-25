@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { SectionPack } from "../../client/src/sharedWithServer/SectionPacks/SectionPack";
 import { PackBuilderSection } from "../../client/src/sharedWithServer/StateOperators/Packers/PackBuilderSection";
+import { SectionPack } from "../../client/src/sharedWithServer/StateTransports/SectionPack";
 import { DbUserService } from "../../DbUserService";
 import { getAuthWare, validateEmptyAuthReq } from "../../middleware/authWare";
 import { sendSuccess } from "./routesShared/sendSuccess";

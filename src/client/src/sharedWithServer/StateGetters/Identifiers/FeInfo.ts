@@ -1,19 +1,19 @@
-import { Id } from "../Ids/IdS";
 import {
   SectionNameByType,
   sectionNameS,
   SectionNameType,
-} from "../SectionNameByType";
+} from "../../SectionNameByType";
 import {
   VarbName,
   VarbNameWide,
-} from "../stateSchemas/derivedFromBaseSchemas/baseSectionsVarbsTypes";
+} from "../../stateSchemas/derivedFromBaseSchemas/baseSectionsVarbsTypes";
 import {
   ParentName,
   ParentNameSafe,
-} from "../stateSchemas/derivedFromChildrenSchemas/ParentName";
-import { SectionName } from "../stateSchemas/SectionName";
-import { StateValue } from "../stateSchemas/StateValue";
+} from "../../stateSchemas/derivedFromChildrenSchemas/ParentName";
+import { SectionName } from "../../stateSchemas/SectionName";
+import { StateValue } from "../../stateSchemas/StateValue";
+import { IdS } from "../../utils/IdS";
 import { SectionNameProp } from "./SectionNameProp";
 import { VarbProp, VarbPropNext } from "./VarbInfoBase";
 
@@ -66,7 +66,7 @@ export interface FeVI<
 export const feInfoS = {
   isVarbInfo(value: any): value is FeVarbInfo {
     return (
-      Id.is(value.feId) &&
+      IdS.is(value.feId) &&
       sectionNameS.is(value.sectionName) &&
       typeof value.varbName === "string"
     );

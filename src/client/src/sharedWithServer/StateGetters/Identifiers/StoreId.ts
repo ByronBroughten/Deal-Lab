@@ -1,7 +1,7 @@
-import { constants } from "../Constants";
-import { StoreName, validateStoreName } from "../sectionStores";
-import { Str } from "../utils/Str";
-import { Id } from "./IdS";
+import { constants } from "../../Constants";
+import { StoreName, validateStoreName } from "../../sectionStores";
+import { IdS } from "../../utils/IdS";
+import { Str } from "../../utils/Str";
 
 export const StoreId = {
   get storeIdSplitter() {
@@ -21,7 +21,7 @@ export const StoreId = {
     const str = Str.validate(value);
     const { storeName, feId } = this.split(str);
     validateStoreName(storeName);
-    Id.validate(feId);
+    IdS.validate(feId);
     return str;
   },
 };

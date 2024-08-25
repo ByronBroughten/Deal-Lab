@@ -1,19 +1,14 @@
-import { ChildPackArrs } from "../../SectionPacks/ChildSectionPack";
-import {
-  isSectionPack,
-  SectionPack,
-  validateSectionPack,
-} from "../../SectionPacks/SectionPack";
-
-import { Arr } from "../../utils/Arr";
-import { Obj } from "../../utils/Obj";
-import { childToSectionName } from "./ChildSectionName";
+import { childToSectionName } from "../stateSchemas/derivedFromChildrenSchemas/ChildSectionName";
 import {
   DbSectionName,
   DbStoreName,
   dbStoreNameS,
   DbStoreType,
-} from "./DbStoreName";
+} from "../stateSchemas/derivedFromChildrenSchemas/DbStoreName";
+import { Arr } from "../utils/Arr";
+import { Obj } from "../utils/Obj";
+import { ChildPackArrs } from "./ChildSectionPack";
+import { isSectionPack, SectionPack, validateSectionPack } from "./SectionPack";
 
 export type DbSectionPack<CN extends DbStoreName = DbStoreName> = SectionPack<
   DbSectionName<CN>

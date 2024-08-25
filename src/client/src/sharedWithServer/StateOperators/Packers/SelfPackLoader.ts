@@ -1,13 +1,13 @@
-import { FeSectionInfo } from "../../SectionInfos/FeInfo";
 import { SectionNameByType } from "../../SectionNameByType";
-import { SectionPack } from "../../SectionPacks/SectionPack";
 import { OneRawSection } from "../../State/RawSection";
 import {
   GetterSectionBase,
   GetterSectionProps,
 } from "../../StateGetters/Bases/GetterSectionBase";
 import { GetterSection } from "../../StateGetters/GetterSection";
+import { FeSectionInfo } from "../../StateGetters/Identifiers/FeInfo";
 import { SectionName } from "../../stateSchemas/SectionName";
+import { SectionPack } from "../../StateTransports/SectionPack";
 import { UpdaterSection } from "../Updaters/UpdaterSection";
 
 interface SelfPackLoaderSectionProps<SN extends SectionNameByType>

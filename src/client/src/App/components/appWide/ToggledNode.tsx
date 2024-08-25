@@ -3,7 +3,7 @@ import React from "react";
 import {
   FeVarbInfo,
   FeVarbInfoNext,
-} from "../../../sharedWithServer/SectionInfos/FeInfo";
+} from "../../../sharedWithServer/StateGetters/Identifiers/FeInfo";
 import { useGetterVarb } from "../../stateClassHooks/useGetterVarb";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { TogglerBooleanVarb } from "./TogglerBooleanVarb";

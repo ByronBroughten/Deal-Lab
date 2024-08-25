@@ -3,14 +3,12 @@ import {
   AddToStoreOptions,
   PrepperFeStore,
 } from "../App/modules/FeStore/PrepperFeStore";
-import { UserData } from "./apiQueriesShared/UserData";
-import { StoreId } from "./Ids/StoreId";
-import { FeSectionInfo } from "./SectionInfos/FeInfo";
-import { DbIdProp } from "./SectionInfos/NanoIdInfo";
-import { SectionPack } from "./SectionPacks/SectionPack";
 import { isStoreNameByType, StoreSectionName } from "./sectionStores";
 import { MainState, MainStateProps } from "./State/MainState";
 import { GetterSections } from "./StateGetters/GetterSections";
+import { FeSectionInfo } from "./StateGetters/Identifiers/FeInfo";
+import { DbIdProp } from "./StateGetters/Identifiers/NanoIdInfo";
+import { StoreId } from "./StateGetters/Identifiers/StoreId";
 import { defaultMaker } from "./StateOperators/defaultMaker/defaultMaker";
 import { makeDefaultSessionDeal } from "./StateOperators/defaultMaker/defaultSessionDeal";
 import { makeEmptyMain } from "./StateOperators/defaultMaker/makeEmptyMain";
@@ -19,6 +17,8 @@ import { SolvePrepperSection } from "./StateOperators/SolvePreppers/SolvePrepper
 import { SolverBase } from "./StateOperators/SolverBases/SolverBase";
 import { Solver } from "./StateOperators/Solvers/Solver";
 import { DealMode } from "./stateSchemas/StateValue/dealMode";
+import { SectionPack } from "./StateTransports/SectionPack";
+import { UserData } from "./StateTransports/UserData";
 import { Obj } from "./utils/Obj";
 import { timeS } from "./utils/timeS";
 

@@ -1,10 +1,10 @@
-import { Id } from "../../Ids/IdS";
-import { StoreId } from "../../Ids/StoreId";
+import { StoreId } from "../../StateGetters/Identifiers/StoreId";
 import {
   SectionPack,
   validateSectionPack,
-} from "../../SectionPacks/SectionPack";
+} from "../../StateTransports/SectionPack";
 import { ValidationError } from "../../utils/Error";
+import { IdS } from "../../utils/IdS";
 import { Obj } from "../../utils/Obj";
 
 function validateChangeToSave(value: any): ChangeToSave {
@@ -13,7 +13,7 @@ function validateChangeToSave(value: any): ChangeToSave {
   if (obj.changeName === "remove") {
     return {
       changeName: obj.changeName,
-      dbId: Id.validate(obj.dbId),
+      dbId: IdS.validate(obj.dbId),
     };
   } else {
     return { changeName: obj.changeName };
@@ -48,7 +48,7 @@ export function validateChangeSaving(value: any): ChangeSaving {
   if (obj.changeName === "remove") {
     return {
       changeName: obj.changeName,
-      dbId: Id.validate(obj.dbId),
+      dbId: IdS.validate(obj.dbId),
     };
   } else {
     return {

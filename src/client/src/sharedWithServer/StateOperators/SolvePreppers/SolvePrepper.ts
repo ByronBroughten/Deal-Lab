@@ -1,5 +1,3 @@
-import { FeSectionInfo, FeVarbInfo } from "../../SectionInfos/FeInfo";
-import { SectionPack } from "../../SectionPacks/SectionPack";
 import {
   activeDealPathIdx,
   SectionPathContextName,
@@ -7,9 +5,14 @@ import {
 import { StoreName } from "../../sectionStores";
 import { GetterList } from "../../StateGetters/GetterList";
 import { GetterSections } from "../../StateGetters/GetterSections";
+import {
+  FeSectionInfo,
+  FeVarbInfo,
+} from "../../StateGetters/Identifiers/FeInfo";
 import { FeChildInfo } from "../../stateSchemas/derivedFromChildrenSchemas/ChildName";
 import { ChildSectionName } from "../../stateSchemas/derivedFromChildrenSchemas/ChildSectionName";
 import { SectionName } from "../../stateSchemas/SectionName";
+import { SectionPack } from "../../StateTransports/SectionPack";
 import { defaultMaker } from "../defaultMaker/defaultMaker";
 import { AddChildOptions } from "../Updaters/UpdaterSection";
 import { SolvePrepperBase } from "./Bases/SolvePrepperBase";

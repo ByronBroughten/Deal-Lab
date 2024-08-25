@@ -1,6 +1,5 @@
-import { FeSectionInfo } from "../../SectionInfos/FeInfo";
 import { SectionNameByType } from "../../SectionNameByType";
-import { SectionPack } from "../../SectionPacks/SectionPack";
+import { FeSectionInfo } from "../../StateGetters/Identifiers/FeInfo";
 import {
   ChildName,
   FeChildInfo,
@@ -8,6 +7,7 @@ import {
 import { ChildSectionName } from "../../stateSchemas/derivedFromChildrenSchemas/ChildSectionName";
 import { SectionName } from "../../stateSchemas/SectionName";
 import { SectionValues } from "../../stateSchemas/StateValue";
+import { SectionPack } from "../../StateTransports/SectionPack";
 import { AddChildWithPackOptions } from "../Packers/PackBuilderSection";
 import { UpdaterSection } from "../Updaters/UpdaterSection";
 import { UpdaterSectionBase } from "../Updaters/UpdaterSectionBase";

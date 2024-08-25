@@ -1,5 +1,5 @@
-import { FeSectionInfo } from "../../../../../sharedWithServer/SectionInfos/FeInfo";
 import { SectionNameByType } from "../../../../../sharedWithServer/SectionNameByType";
+import { FeSectionInfo } from "../../../../../sharedWithServer/StateGetters/Identifiers/FeInfo";
 import { useGetterSection } from "../../../../stateClassHooks/useGetterSection";
 import { BigStringEditor } from "../../../inputs/BigStringEditor";
 import { RemoveFromStoreXBtn } from "../../RemoveSectionXBtn";

@@ -1,6 +1,6 @@
 import { isString } from "lodash";
-import { isVarbName } from "../../../SectionInfos/VarbInfoBase";
-import { VarbPathName } from "../../../SectionInfos/VarbPathNameInfo";
+import { isVarbName } from "../../../StateGetters/Identifiers/VarbInfoBase";
+import { VarbPathName } from "../../../StateGetters/Identifiers/VarbPathNameInfo";
 import { switchKeyToVarbNames } from "../../allBaseSectionVarbs/baseSwitchNames";
 import { GroupVarbNameBase } from "../../derivedFromBaseSchemas/baseGroupNames";
 import {

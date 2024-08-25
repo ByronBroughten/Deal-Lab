@@ -1,4 +1,4 @@
-import { Id } from "../Ids/IdS";
+import { IdS } from "./IdS";
 
 export const dbLimits = {
   number: {
@@ -20,6 +20,6 @@ export const dbLimits = {
     },
   },
   dbId: {
-    length: Id.length,
+    length: IdS.length,
   },
 } as const;

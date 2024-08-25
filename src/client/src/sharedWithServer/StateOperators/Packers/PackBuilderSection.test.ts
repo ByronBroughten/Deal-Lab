@@ -1,8 +1,8 @@
 import { pick } from "lodash";
-import { isSectionPack } from "../../SectionPacks/SectionPack";
 import { SectionValues } from "../../stateSchemas/StateValue";
 import { numObj } from "../../stateSchemas/StateValue/NumObj";
 import { stringObj } from "../../stateSchemas/StateValue/StringObj";
+import { isSectionPack } from "../../StateTransports/SectionPack";
 import { Obj } from "../../utils/Obj";
 import { PackBuilderSection } from "./PackBuilderSection";
 

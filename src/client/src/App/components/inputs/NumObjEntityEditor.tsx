@@ -1,13 +1,13 @@
 import { Box, SxProps } from "@mui/material";
 import { EditorState } from "draft-js";
 import React from "react";
+import { GetterVarb } from "../../../sharedWithServer/StateGetters/GetterVarb";
+import { EditorTextStatus } from "../../../sharedWithServer/StateGetters/GetterVarbNumObj";
 import {
   FeVarbInfo,
   FeVI,
-} from "../../../sharedWithServer/SectionInfos/FeInfo";
-import { ValueFixedVarbPathName } from "../../../sharedWithServer/SectionInfos/ValueInEntityInfo";
-import { GetterVarb } from "../../../sharedWithServer/StateGetters/GetterVarb";
-import { EditorTextStatus } from "../../../sharedWithServer/StateGetters/GetterVarbNumObj";
+} from "../../../sharedWithServer/StateGetters/Identifiers/FeInfo";
+import { ValueFixedVarbPathName } from "../../../sharedWithServer/StateGetters/Identifiers/ValueInEntityInfo";
 import { SectionName } from "../../../sharedWithServer/stateSchemas/SectionName";
 import { Obj } from "../../../sharedWithServer/utils/Obj";
 import { useOnOutsideClickEffect } from "../../modules/customHooks/useOnOutsideClickRef";

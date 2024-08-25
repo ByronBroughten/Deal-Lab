@@ -1,6 +1,6 @@
-import { SectionPack } from "../../SectionPacks/SectionPack";
 import { numObj, NumObj } from "../../stateSchemas/StateValue/NumObj";
 import { stringObj } from "../../stateSchemas/StateValue/StringObj";
+import { SectionPack } from "../../StateTransports/SectionPack";
 import { makeExample } from "./makeExample";
 
 type OneTimeItemProp = readonly [string, number | NumObj];

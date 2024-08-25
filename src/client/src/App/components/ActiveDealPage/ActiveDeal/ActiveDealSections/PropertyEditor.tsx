@@ -1,5 +1,5 @@
 import React from "react";
-import { FeIdProp } from "../../../../../sharedWithServer/SectionInfos/NanoIdInfo";
+import { FeIdProp } from "../../../../../sharedWithServer/StateGetters/Identifiers/NanoIdInfo";
 import { StateValue } from "../../../../../sharedWithServer/stateSchemas/StateValue";
 import { useGetterSection } from "../../../../stateClassHooks/useGetterSection";
 import { PropertyBrrrrView } from "./PropertyEditor/PropertyBrrrrView";

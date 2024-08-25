@@ -1,11 +1,11 @@
 import request from "supertest";
 import { QueryReq } from "../../client/src/sharedWithServer/ApiQueries";
 import { makeReq } from "../../client/src/sharedWithServer/apiQueriesShared/makeReqAndRes";
-import { validateUserData } from "../../client/src/sharedWithServer/apiQueriesShared/UserData";
 import {
   constant,
   constants,
 } from "../../client/src/sharedWithServer/Constants";
+import { validateUserData } from "../../client/src/sharedWithServer/StateTransports/UserData";
 import { DbUserGetter } from "../../DbUserService/DbUserGetter";
 import { runApp } from "../../runApp";
 import {

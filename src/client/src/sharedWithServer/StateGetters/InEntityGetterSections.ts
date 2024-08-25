@@ -1,7 +1,7 @@
-import { FeSectionInfo } from "../SectionInfos/FeInfo";
 import { SectionName } from "../stateSchemas/SectionName";
 import { GetterSectionsBase } from "./Bases/GetterSectionsBase";
 import { GetterSections } from "./GetterSections";
+import { FeSectionInfo } from "./Identifiers/FeInfo";
 import { InEntityGetterSection } from "./InEntityGetterSection";
 
 export class InEntityGetterSections extends GetterSectionsBase {

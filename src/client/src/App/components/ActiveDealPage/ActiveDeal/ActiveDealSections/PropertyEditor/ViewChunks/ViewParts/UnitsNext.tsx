@@ -1,6 +1,6 @@
 import { SxProps } from "@mui/material";
-import { FeIdProp } from "../../../../../../../../sharedWithServer/SectionInfos/NanoIdInfo";
 import { GetterSection } from "../../../../../../../../sharedWithServer/StateGetters/GetterSection";
+import { FeIdProp } from "../../../../../../../../sharedWithServer/StateGetters/Identifiers/NanoIdInfo";
 import { VarbName } from "../../../../../../../../sharedWithServer/stateSchemas/derivedFromBaseSchemas/baseSectionsVarbsTypes";
 import { useGetterSection } from "../../../../../../../stateClassHooks/useGetterSection";
 import { nativeTheme } from "../../../../../../../theme/nativeTheme";

@@ -1,8 +1,8 @@
-import { SectionPack } from "../../SectionPacks/SectionPack";
 import { sectionNames } from "../../stateSchemas/SectionName";
 import { StateValue } from "../../stateSchemas/StateValue";
 import { numObj, NumObj, numToObj } from "../../stateSchemas/StateValue/NumObj";
 import { stringObj } from "../../stateSchemas/StateValue/StringObj";
+import { SectionPack } from "../../StateTransports/SectionPack";
 import { Arr } from "../../utils/Arr";
 import { DefaultUpdaterSection } from "../DefaultUpdaters/DefaultUpdaterSection";
 import { makeExample } from "./makeExample";

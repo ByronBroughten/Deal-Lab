@@ -1,7 +1,7 @@
 import { SxProps } from "@mui/material";
 import React from "react";
 import { unstable_batchedUpdates } from "react-dom";
-import { FeVarbInfoNext } from "../../../sharedWithServer/SectionInfos/FeInfo";
+import { FeVarbInfoNext } from "../../../sharedWithServer/StateGetters/Identifiers/FeInfo";
 import { SectionName } from "../../../sharedWithServer/stateSchemas/SectionName";
 import { StateValue } from "../../../sharedWithServer/stateSchemas/StateValue";
 import { UnionValueName } from "../../../sharedWithServer/stateSchemas/StateValue/unionValues";

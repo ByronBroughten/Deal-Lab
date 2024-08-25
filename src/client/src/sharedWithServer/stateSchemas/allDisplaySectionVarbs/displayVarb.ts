@@ -1,4 +1,4 @@
-import { RelLocalVarbInfo } from "../../SectionInfos/RelVarbInfo";
+import { RelLocalVarbInfo } from "../../StateGetters/Identifiers/RelVarbInfo";
 
 export type DisplayName = string | RelLocalVarbInfo;
 export type DisplayOverrideSwitches = readonly DisplayOverrideSwitch[];

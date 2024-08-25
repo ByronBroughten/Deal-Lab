@@ -1,10 +1,10 @@
-import { ChildName } from "../stateSchemas/derivedFromChildrenSchemas/ChildName";
+import { ChildName } from "../../stateSchemas/derivedFromChildrenSchemas/ChildName";
 import {
   ParentName,
   PiblingName,
   StepSiblingName,
-} from "../stateSchemas/derivedFromChildrenSchemas/ParentName";
-import { SectionName } from "../stateSchemas/SectionName";
+} from "../../stateSchemas/derivedFromChildrenSchemas/ParentName";
+import { SectionName } from "../../stateSchemas/SectionName";
 import { MixedInfoProps } from "./VarbInfoBase";
 
 export type RelInfoType =

@@ -1,14 +1,13 @@
-import { relVarbInfoS } from "../../../SectionInfos/RelVarbInfo";
+import { relVarbInfoS } from "../../../StateGetters/Identifiers/RelVarbInfo";
 import { GroupKey, periodicEnding } from "../../GroupName";
 import { NumObj, numObj } from "../../StateValue/NumObj";
-
 import { USVS, usvs } from "../updateSectionVarbs";
 import { updateVarb, uvS } from "../updateVarb";
 import { OverrideBasics, uosb, uosbS } from "../updateVarb/OverrideBasics";
 import { ubS } from "../updateVarb/UpdateBasics";
 import { UpdateFnProp, upS } from "../updateVarb/UpdateFnProps";
-import { osS } from "../updateVarb/UpdateOverrideSwitch";
 import { DealModeBasics, uosS } from "../updateVarb/UpdateOverrides";
+import { osS } from "../updateVarb/UpdateOverrideSwitch";
 import { GroupUpdateVarbs, uvsS } from "../updateVarbs";
 
 export function propertyUpdateVarbs(): USVS<"property"> {

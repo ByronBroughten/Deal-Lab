@@ -1,10 +1,10 @@
 import { pick } from "lodash";
-import { FeSectionInfo } from "../../SectionInfos/FeInfo";
-import { SectionPack } from "../../SectionPacks/SectionPack";
 import { StateSections } from "../../State/StateSections";
 import { GetterSectionsBase } from "../../StateGetters/Bases/GetterSectionsBase";
 import { GetterSections } from "../../StateGetters/GetterSections";
+import { FeSectionInfo } from "../../StateGetters/Identifiers/FeInfo";
 import { SectionName } from "../../stateSchemas/SectionName";
+import { SectionPack } from "../../StateTransports/SectionPack";
 import { defaultMaker } from "../defaultMaker/defaultMaker";
 import { PackBuilderSection } from "./PackBuilderSection";
 

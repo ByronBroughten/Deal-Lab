@@ -1,7 +1,7 @@
 import { EditorState } from "draft-js";
 import React from "react";
-import { FeVarbInfo } from "../../../sharedWithServer/SectionInfos/FeInfo";
-import { ValueInEntityInfo } from "../../../sharedWithServer/SectionInfos/ValueInEntityInfo";
+import { FeVarbInfo } from "../../../sharedWithServer/StateGetters/Identifiers/FeInfo";
+import { ValueInEntityInfo } from "../../../sharedWithServer/StateGetters/Identifiers/ValueInEntityInfo";
 import { DealMode } from "../../../sharedWithServer/stateSchemas/StateValue/dealMode";
 import { timeS } from "../../../sharedWithServer/utils/timeS";
 import { StrictOmit } from "../../../sharedWithServer/utils/types";

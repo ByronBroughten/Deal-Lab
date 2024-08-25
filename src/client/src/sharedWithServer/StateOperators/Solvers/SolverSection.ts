@@ -1,14 +1,9 @@
-import { FeSectionInfo } from "../../SectionInfos/FeInfo";
-import { VarbInfoMixedFocal } from "../../SectionInfos/MixedSectionInfo";
 import { SectionNameByType } from "../../SectionNameByType";
-import {
-  ChildPackArrs,
-  ChildPackInfo,
-} from "../../SectionPacks/ChildSectionPack";
-import { SectionPack } from "../../SectionPacks/SectionPack";
 import { StateSections } from "../../State/StateSections";
 import { GetterSectionProps } from "../../StateGetters/Bases/GetterSectionBase";
 import { GetterSection } from "../../StateGetters/GetterSection";
+import { FeSectionInfo } from "../../StateGetters/Identifiers/FeInfo";
+import { VarbInfoMixedFocal } from "../../StateGetters/Identifiers/MixedSectionInfo";
 import { VarbName } from "../../stateSchemas/derivedFromBaseSchemas/baseSectionsVarbsTypes";
 import {
   ChildName,
@@ -19,6 +14,11 @@ import { ChildSectionName } from "../../stateSchemas/derivedFromChildrenSchemas/
 import { SectionName } from "../../stateSchemas/SectionName";
 import { SectionValues, VarbValue } from "../../stateSchemas/StateValue";
 import { NumObjOutput } from "../../stateSchemas/StateValue/NumObj";
+import {
+  ChildPackArrs,
+  ChildPackInfo,
+} from "../../StateTransports/ChildSectionPack";
+import { SectionPack } from "../../StateTransports/SectionPack";
 import { DefaultUpdaterSection } from "../DefaultUpdaters/DefaultUpdaterSection";
 import {
   AddChildWithPackOptions,

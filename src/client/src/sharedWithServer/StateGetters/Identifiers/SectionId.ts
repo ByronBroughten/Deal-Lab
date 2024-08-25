@@ -1,7 +1,10 @@
-import { constants } from "../Constants";
-import { SectionName, validateSectionName } from "../stateSchemas/SectionName";
-import { Str } from "../utils/Str";
-import { Id } from "./IdS";
+import { constants } from "../../Constants";
+import {
+  SectionName,
+  validateSectionName,
+} from "../../stateSchemas/SectionName";
+import { IdS } from "../../utils/IdS";
+import { Str } from "../../utils/Str";
 
 export const SectionId = {
   get sectionIdSplitter() {
@@ -21,7 +24,7 @@ export const SectionId = {
     const str = Str.validate(value);
     const { sectionName, feId } = this.split(str);
     validateSectionName(sectionName);
-    Id.validate(feId);
+    IdS.validate(feId);
     return str;
   },
 };

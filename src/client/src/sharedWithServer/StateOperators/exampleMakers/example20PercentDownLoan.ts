@@ -1,6 +1,6 @@
-import { SectionPack } from "../../SectionPacks/SectionPack";
 import { numObj } from "../../stateSchemas/StateValue/NumObj";
 import { stringObj } from "../../stateSchemas/StateValue/StringObj";
+import { SectionPack } from "../../StateTransports/SectionPack";
 import { SolvePrepperSection } from "../SolvePreppers/SolvePrepperSection";
 import { makeExampleLoan } from "./makeExampleLoan";
 

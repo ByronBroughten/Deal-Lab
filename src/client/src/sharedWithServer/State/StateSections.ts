@@ -1,9 +1,10 @@
 import { pick } from "lodash";
-import { Id } from "../Ids/IdS";
-import { FeSectionInfo, FeVarbInfo } from "../SectionInfos/FeInfo";
 import { SectionNameByType, sectionNameS } from "../SectionNameByType";
+import { FeSectionInfo, FeVarbInfo } from "../StateGetters/Identifiers/FeInfo";
 import { Arr, ValueNotFoundError } from "../utils/Arr";
+import { IdS } from "../utils/IdS";
 import { Obj } from "../utils/Obj";
+import { initRawSection, initRawVarbs } from "./initRawSection";
 import {
   RawFeSection,
   RawFeSections,
@@ -11,7 +12,6 @@ import {
   SectionNotFoundError,
   StateVarb,
 } from "./StateSectionsTypes";
-import { initRawSection, initRawVarbs } from "./initRawSection";
 
 type UpdateVarbProps<SN extends SectionNameByType> = {
   feVarbInfo: FeVarbInfo<SN>;
@@ -141,7 +141,7 @@ export class StateSections {
   static initWithRoot(): StateSections {
     const rootSection = StateSections.initRawSection({
       sectionName: "root",
-      feId: Id.make(),
+      feId: IdS.make(),
     });
     const sections = this.initEmpty();
     return sections.updateSectionList({

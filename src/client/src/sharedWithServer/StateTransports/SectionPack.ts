@@ -1,7 +1,7 @@
-import { Id } from "../Ids/IdS";
 import { RawSections, validateRawSections } from "../State/RawSection";
 import { SectionName, validateSectionName } from "../stateSchemas/SectionName";
 import { ValidationError } from "../utils/Error";
+import { IdS } from "../utils/IdS";
 import { Obj } from "../utils/Obj";
 
 export type SectionPack<SN extends SectionName = SectionName> = {
@@ -31,7 +31,7 @@ export function validateSectionPack<SN extends SectionName = any>(
 
   return {
     sectionName: validateSectionName(obj.sectionName) as SN,
-    dbId: Id.validate(obj.dbId),
+    dbId: IdS.validate(obj.dbId),
     rawSections: validateRawSections(obj.rawSections),
   };
 }

@@ -1,9 +1,9 @@
 import {
   SectionPathName,
   SectionPathVarbName,
-} from "../sectionPaths/sectionPathNames";
-import { SectionName } from "../stateSchemas/SectionName";
-import { DistributiveOmit } from "../utils/types";
+} from "../../sectionPaths/sectionPathNames";
+import { SectionName } from "../../stateSchemas/SectionName";
+import { DistributiveOmit } from "../../utils/types";
 import {
   AbsolutePathDbInfoMixed,
   AbsolutePathInfoMixed,

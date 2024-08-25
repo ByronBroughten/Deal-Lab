@@ -1,4 +1,4 @@
-import { FeVarbInfo } from "../../../../sharedWithServer/SectionInfos/FeInfo";
+import { FeVarbInfo } from "../../../../sharedWithServer/StateGetters/Identifiers/FeInfo";
 import { LabeledVarbRow } from "../../appWide/LabeledVarbRow";
 
 type Props = {

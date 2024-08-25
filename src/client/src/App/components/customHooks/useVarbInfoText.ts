@@ -1,4 +1,4 @@
-import { FeVarbInfo } from "../../../sharedWithServer/SectionInfos/FeInfo";
+import { FeVarbInfo } from "../../../sharedWithServer/StateGetters/Identifiers/FeInfo";
 import { SectionName } from "../../../sharedWithServer/stateSchemas/SectionName";
 import { VarbInfoTextProps } from "../../../varbLabels/varbLabels";
 import { useGetterVarb } from "../../stateClassHooks/useGetterVarb";

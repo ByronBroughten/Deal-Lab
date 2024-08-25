@@ -1,11 +1,11 @@
-import { RelVarbInfo } from "../../SectionInfos/RelVarbInfo";
-import { DbVarbInfoMixed } from "../../SectionInfos/VarbInfoBase";
 import { SectionNameByType } from "../../SectionNameByType";
 import { GetterSectionProps } from "../../StateGetters/Bases/GetterSectionBase";
 import { GetterVarbBase } from "../../StateGetters/Bases/GetterVarbBase";
 import { GetterSection } from "../../StateGetters/GetterSection";
 import { GetterVarb } from "../../StateGetters/GetterVarb";
 import { GetterVarbNumObj } from "../../StateGetters/GetterVarbNumObj";
+import { RelVarbInfo } from "../../StateGetters/Identifiers/RelVarbInfo";
+import { DbVarbInfoMixed } from "../../StateGetters/Identifiers/VarbInfoBase";
 import { InEntityGetterVarb } from "../../StateGetters/InEntityGetterVarb";
 import {
   CompletionStatusProps,

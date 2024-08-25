@@ -1,5 +1,5 @@
-import { SectionPack } from "../../SectionPacks/SectionPack";
 import { DealMode } from "../../stateSchemas/StateValue/dealMode";
+import { SectionPack } from "../../StateTransports/SectionPack";
 import { StrictExclude } from "../../utils/types";
 import { exampleDealBuyAndHold } from "./exampleDealBuyAndHold";
 import { exampleDealHomebuyer } from "./exampleDealHomebuyer";

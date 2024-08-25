@@ -1,4 +1,4 @@
-import { relVarbInfoS } from "../../../SectionInfos/RelVarbInfo";
+import { relVarbInfoS } from "../../../StateGetters/Identifiers/RelVarbInfo";
 import { GroupVarbNameBase } from "../../derivedFromBaseSchemas/baseGroupNames";
 import { GroupKey, groupNameEnding } from "../../GroupName";
 import { UnionValue } from "../../StateValue/unionValues";

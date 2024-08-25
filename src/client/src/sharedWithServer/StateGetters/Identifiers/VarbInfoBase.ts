@@ -1,7 +1,7 @@
-import { allBaseSectionVarbs } from "../stateSchemas/allBaseSectionVarbs";
-import { VarbName } from "../stateSchemas/derivedFromBaseSchemas/baseSectionsVarbsTypes";
-import { SectionName } from "../stateSchemas/SectionName";
-import { Obj } from "../utils/Obj";
+import { allBaseSectionVarbs } from "../../stateSchemas/allBaseSectionVarbs";
+import { VarbName } from "../../stateSchemas/derivedFromBaseSchemas/baseSectionsVarbsTypes";
+import { SectionName } from "../../stateSchemas/SectionName";
+import { Obj } from "../../utils/Obj";
 import { NanoIdProp } from "./NanoIdInfo";
 import { SectionNameProp } from "./SectionNameProp";
 

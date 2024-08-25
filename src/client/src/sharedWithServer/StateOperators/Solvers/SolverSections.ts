@@ -1,14 +1,17 @@
 import { pick } from "lodash";
 import { SolverFeStore } from "../../../App/modules/FeStore/SolverFeStore";
-import { StoreId } from "../../Ids/StoreId";
-import { FeSectionInfo, FeVarbInfo } from "../../SectionInfos/FeInfo";
-import { SectionPack } from "../../SectionPacks/SectionPack";
 import { StoreSectionName } from "../../sectionStores";
 import { SolveState } from "../../State/SolveState";
 import { StateSections } from "../../State/StateSections";
 import { GetterSectionsProps } from "../../StateGetters/Bases/GetterSectionsBase";
 import { GetterSections } from "../../StateGetters/GetterSections";
+import {
+  FeSectionInfo,
+  FeVarbInfo,
+} from "../../StateGetters/Identifiers/FeInfo";
+import { StoreId } from "../../StateGetters/Identifiers/StoreId";
 import { SectionName } from "../../stateSchemas/SectionName";
+import { SectionPack } from "../../StateTransports/SectionPack";
 import { defaultMaker } from "../defaultMaker/defaultMaker";
 import { PackBuilderSections } from "../Packers/PackBuilderSections";
 import { SolvePrepper } from "../SolvePreppers/SolvePrepper";

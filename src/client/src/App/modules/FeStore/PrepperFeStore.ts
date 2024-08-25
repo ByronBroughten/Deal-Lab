@@ -1,7 +1,3 @@
-import { Id } from "../../../sharedWithServer/Ids/IdS";
-import { StoreId } from "../../../sharedWithServer/Ids/StoreId";
-import { DbIdProp } from "../../../sharedWithServer/SectionInfos/NanoIdInfo";
-import { SectionPack } from "../../../sharedWithServer/SectionPacks/SectionPack";
 import {
   FeStoreInfo,
   isStoreNameByType,
@@ -11,6 +7,8 @@ import {
 } from "../../../sharedWithServer/sectionStores";
 import { GetterSection } from "../../../sharedWithServer/StateGetters/GetterSection";
 import { GetterSections } from "../../../sharedWithServer/StateGetters/GetterSections";
+import { DbIdProp } from "../../../sharedWithServer/StateGetters/Identifiers/NanoIdInfo";
+import { StoreId } from "../../../sharedWithServer/StateGetters/Identifiers/StoreId";
 import { makeDefaultSessionDeal } from "../../../sharedWithServer/StateOperators/defaultMaker/defaultSessionDeal";
 import { AddChildWithPackOptions } from "../../../sharedWithServer/StateOperators/Packers/PackBuilderSection";
 import { SolvePrepperSectionBase } from "../../../sharedWithServer/StateOperators/SolvePreppers/Bases/SolvePrepperSectionBase";
@@ -23,6 +21,8 @@ import {
   changeSavingToToSave,
   ChangeToSave,
 } from "../../../sharedWithServer/stateSchemas/StateValue/sectionChanges";
+import { SectionPack } from "../../../sharedWithServer/StateTransports/SectionPack";
+import { IdS } from "../../../sharedWithServer/utils/IdS";
 import { Obj } from "../../../sharedWithServer/utils/Obj";
 import { timeS } from "../../../sharedWithServer/utils/timeS";
 import { showDealLimitReachedMessage } from "../../stateClassHooks/useStorageLimitReached";
@@ -157,7 +157,7 @@ export class PrepperFeStore extends SolvePrepperSectionBase<"feStore"> {
   }
 
   saveAndOverwriteToStore({ storeName, sectionPack }: SaveAsToStoreProps) {
-    this.addToStore({ storeName, options: { dbId: Id.make(), sectionPack } });
+    this.addToStore({ storeName, options: { dbId: IdS.make(), sectionPack } });
     const added = this.prepper.youngestChild(storeName);
     const addedName = added.get.valueNext("displayName").mainText;
     for (const child of this.get.children(storeName)) {

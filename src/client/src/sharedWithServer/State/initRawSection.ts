@@ -1,11 +1,11 @@
 import { pick } from "lodash";
-import { Id } from "../Ids/IdS";
-import { FeSectionInfo, FeVarbInfo } from "../SectionInfos/FeInfo";
-import { VarbNames } from "../SectionInfos/VarbInfoBase";
+import { FeSectionInfo, FeVarbInfo } from "../StateGetters/Identifiers/FeInfo";
+import { VarbNames } from "../StateGetters/Identifiers/VarbInfoBase";
 import { sectionsMeta } from "../StateMeta/SectionsMeta";
 import { ChildIdArrsNarrow } from "../stateSchemas/derivedFromChildrenSchemas/ChildName";
 import { SectionName } from "../stateSchemas/SectionName";
 import { SectionValues, StateValue } from "../stateSchemas/StateValue";
+import { IdS } from "../utils/IdS";
 import { StrictPick, StrictPickPartial } from "../utils/types";
 import { RawFeSection, StateVarb, StateVarbs } from "./StateSectionsTypes";
 
@@ -26,8 +26,8 @@ export function initRawSection<SN extends SectionName>({
   sectionName,
   sectionContextName = "default",
   contextPathIdxSpecifier = {},
-  feId = Id.make(),
-  dbId = Id.make(),
+  feId = IdS.make(),
+  dbId = IdS.make(),
   childFeIds = {},
   sectionValues = {},
 }: InitRawFeSectionProps<SN>): RawFeSection<SN> {

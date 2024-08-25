@@ -1,7 +1,7 @@
-import { Id } from "../../Ids/IdS";
-import { FeSectionInfo } from "../../SectionInfos/FeInfo";
 import { SectionNameByType, sectionNameS } from "../../SectionNameByType";
 import { StateSections } from "../../State/StateSections";
+import { IdS } from "../../utils/IdS";
+import { FeSectionInfo } from "../Identifiers/FeInfo";
 import { GetterListBase, GetterListProps } from "./GetterListBase";
 
 export interface GetterSectionProps<SN extends SectionNameByType>
@@ -42,7 +42,7 @@ export class GetterSectionBase<
   ): value is GetterSectionProps<SectionNameByType> {
     return (
       typeof value === "object" &&
-      Id.is(value.feId) &&
+      IdS.is(value.feId) &&
       sectionNameS.is(value.sectionName) &&
       (value as GetterSectionProps<SectionNameByType>).sectionsShare
         .sections instanceof StateSections

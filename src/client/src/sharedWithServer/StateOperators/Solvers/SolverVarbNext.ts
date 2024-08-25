@@ -1,4 +1,3 @@
-import { VarbInfoMixedFocal } from "../../SectionInfos/MixedSectionInfo";
 import {
   GetterVarbBase,
   GetterVarbProps,
@@ -6,6 +5,7 @@ import {
 import { GetterSection } from "../../StateGetters/GetterSection";
 import { GetterSections } from "../../StateGetters/GetterSections";
 import { GetterVarb } from "../../StateGetters/GetterVarb";
+import { VarbInfoMixedFocal } from "../../StateGetters/Identifiers/MixedSectionInfo";
 import { InEntityGetterVarb } from "../../StateGetters/InEntityGetterVarb";
 import { SectionName } from "../../stateSchemas/SectionName";
 import { StateValue } from "../../stateSchemas/StateValue";

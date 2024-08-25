@@ -1,4 +1,4 @@
-import { relVarbInfoS } from "../SectionInfos/RelVarbInfo";
+import { relVarbInfoS } from "../StateGetters/Identifiers/RelVarbInfo";
 import {
   DisplaySectionVarbs,
   displaySectionVarbs,

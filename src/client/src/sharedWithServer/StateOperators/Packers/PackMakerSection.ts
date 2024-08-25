@@ -1,10 +1,4 @@
-import { FeSectionInfo } from "../../SectionInfos/FeInfo";
 import { SectionNameByType } from "../../SectionNameByType";
-import {
-  ChildPackArrs,
-  ChildSectionPack,
-} from "../../SectionPacks/ChildSectionPack";
-import { SectionPack } from "../../SectionPacks/SectionPack";
 import {
   ChildSpNums,
   OneRawSection,
@@ -19,6 +13,7 @@ import {
   GetterSection,
   GetterSectionRequiredProps,
 } from "../../StateGetters/GetterSection";
+import { FeSectionInfo } from "../../StateGetters/Identifiers/FeInfo";
 import {
   ChildIdArrsWide,
   ChildName,
@@ -27,6 +22,11 @@ import {
 } from "../../stateSchemas/derivedFromChildrenSchemas/ChildName";
 import { ChildSectionName } from "../../stateSchemas/derivedFromChildrenSchemas/ChildSectionName";
 import { SectionName } from "../../stateSchemas/SectionName";
+import {
+  ChildPackArrs,
+  ChildSectionPack,
+} from "../../StateTransports/ChildSectionPack";
+import { SectionPack } from "../../StateTransports/SectionPack";
 import { Obj } from "../../utils/Obj";
 
 export function initSectionPackArrs<

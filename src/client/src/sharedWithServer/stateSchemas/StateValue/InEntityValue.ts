@@ -1,10 +1,10 @@
 import { z } from "zod";
-import { Id } from "../../Ids/IdS";
 import {
-  ValueInEntityInfo,
   validateInEntityInfo,
-} from "../../SectionInfos/ValueInEntityInfo";
-import { isVarbPathName } from "../../SectionInfos/VarbPathNameInfo";
+  ValueInEntityInfo,
+} from "../../StateGetters/Identifiers/ValueInEntityInfo";
+import { isVarbPathName } from "../../StateGetters/Identifiers/VarbPathNameInfo";
+import { IdS } from "../../utils/IdS";
 import { Obj } from "../../utils/Obj";
 import { zS } from "../../utils/zod";
 import {
@@ -21,7 +21,7 @@ export function inEntityValueInfo(
 ): InEntityValueInfo {
   return {
     ...varbInfo,
-    entityId: Id.make(),
+    entityId: IdS.make(),
   };
 }
 
@@ -38,7 +38,7 @@ function isInEntityValue(value: any): value is InEntityValue {
 }
 function generalCheck(value: any): boolean {
   const info: ValueInEntityInfo = value;
-  return Obj.isObjToAny(info) && Id.is(value.entityId);
+  return Obj.isObjToAny(info) && IdS.is(value.entityId);
 }
 function infoTypeCheck(value: any): boolean {
   const info: ValueInEntityInfo = value;
@@ -47,7 +47,7 @@ function infoTypeCheck(value: any): boolean {
       return isVarbPathName(info.varbPathName);
     }
     case "varbPathDbId": {
-      return isVarbPathName(info.varbPathName) && Id.is(info.dbId);
+      return isVarbPathName(info.varbPathName) && IdS.is(info.dbId);
     }
     default: {
       throw new Error(

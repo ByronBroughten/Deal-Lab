@@ -6,8 +6,8 @@ import {
   SectionPackRes,
   UrlRes,
 } from "../../../sharedWithServer/apiQueriesShared/makeReqAndRes";
-import { Id } from "../../../sharedWithServer/Ids/IdS";
-import { validateSectionPackDuck } from "../../../sharedWithServer/stateSchemas/derivedFromChildrenSchemas/validateSectionPackDuck";
+import { validateSectionPackDuck } from "../../../sharedWithServer/StateTransports/validateSectionPackDuck";
+import { IdS } from "../../../sharedWithServer/utils/IdS";
 import { Obj } from "../../../sharedWithServer/utils/Obj";
 import { Str } from "../../../sharedWithServer/utils/Str";
 
@@ -21,7 +21,7 @@ type DbIdData = { dbId: string };
 export function validateDbIdData(value: any): DbIdData {
   value = Obj.validateObjToAny(value) as DbIdData;
   return {
-    dbId: Id.validate(value.dbId),
+    dbId: IdS.validate(value.dbId),
   };
 }
 

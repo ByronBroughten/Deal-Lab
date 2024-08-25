@@ -1,16 +1,10 @@
-import { FeSectionInfo } from "../../SectionInfos/FeInfo";
 import { SectionNameByType, SectionNameType } from "../../SectionNameByType";
-import {
-  ChildArrPack,
-  ChildPackArrs,
-  ChildSectionPack,
-} from "../../SectionPacks/ChildSectionPack";
-import { SectionPack } from "../../SectionPacks/SectionPack";
 import { GetterSectionBase } from "../../StateGetters/Bases/GetterSectionBase";
 import {
   GetterSection,
   GetterSectionRequiredProps,
 } from "../../StateGetters/GetterSection";
+import { FeSectionInfo } from "../../StateGetters/Identifiers/FeInfo";
 import {
   ChildName,
   DbChildInfo,
@@ -19,6 +13,12 @@ import {
 import { ChildSectionName } from "../../stateSchemas/derivedFromChildrenSchemas/ChildSectionName";
 import { SectionName } from "../../stateSchemas/SectionName";
 import { SectionValues } from "../../stateSchemas/StateValue";
+import {
+  ChildArrPack,
+  ChildPackArrs,
+  ChildSectionPack,
+} from "../../StateTransports/ChildSectionPack";
+import { SectionPack } from "../../StateTransports/SectionPack";
 import { Obj } from "../../utils/Obj";
 import { AddChildOptions, UpdaterSection } from "../Updaters/UpdaterSection";
 import { PackBuilderSections } from "./PackBuilderSections";

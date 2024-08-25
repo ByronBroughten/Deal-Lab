@@ -1,16 +1,16 @@
-import { fixedVariableLabel } from "../../varbLabels/varbLabels";
-import { constants } from "../Constants";
+import { fixedVariableLabel } from "../../../varbLabels/varbLabels";
+import { constants } from "../../Constants";
 import {
   pathSectionName,
   PathSectionName,
   SectionPathName,
   SectionPathVarbName,
-} from "../sectionPaths/sectionPathNames";
-import { targetNames } from "../stateSchemas/allBaseSectionVarbs/baseSwitchNames";
-import { VarbName } from "../stateSchemas/derivedFromBaseSchemas/baseSectionsVarbsTypes";
-import { VarbValue } from "../stateSchemas/StateValue";
-import { ValidationError } from "../utils/Error";
-import { Obj } from "../utils/Obj";
+} from "../../sectionPaths/sectionPathNames";
+import { targetNames } from "../../stateSchemas/allBaseSectionVarbs/baseSwitchNames";
+import { VarbName } from "../../stateSchemas/derivedFromBaseSchemas/baseSectionsVarbsTypes";
+import { VarbValue } from "../../stateSchemas/StateValue";
+import { ValidationError } from "../../utils/Error";
+import { Obj } from "../../utils/Obj";
 import { DbIdProp } from "./NanoIdInfo";
 import { MixedInfoProps } from "./VarbInfoBase";
 

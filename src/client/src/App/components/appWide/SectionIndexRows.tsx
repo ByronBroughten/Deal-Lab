@@ -3,13 +3,13 @@ import React from "react";
 import { unstable_batchedUpdates } from "react-dom";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import styled from "styled-components";
-import { FeSectionInfo } from "../../../sharedWithServer/SectionInfos/FeInfo";
 import { SectionNameByType } from "../../../sharedWithServer/SectionNameByType";
+import { FeSectionInfo } from "../../../sharedWithServer/StateGetters/Identifiers/FeInfo";
 import { useAction } from "../../stateClassHooks/useAction";
 import { useGetterFeStore } from "../../stateClassHooks/useFeStore";
 import { useGetterSection } from "../../stateClassHooks/useGetterSection";
-import theme, { ThemeName, themeSectionNameOrDefault } from "../../theme/Theme";
 import ccs from "../../theme/cssChunks";
+import theme, { ThemeName, themeSectionNameOrDefault } from "../../theme/Theme";
 import useHowMany from "../customHooks/useHowMany";
 import { RowIndexListRow, StyledRowIndexRow } from "./RowIndexListRow";
 

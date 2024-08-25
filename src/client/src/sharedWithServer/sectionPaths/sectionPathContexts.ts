@@ -1,7 +1,7 @@
 import {
   AbsolutePathInfo,
   absolutePathInfo,
-} from "../SectionInfos/AbsolutePathInfo";
+} from "../StateGetters/Identifiers/AbsolutePathInfo";
 import {
   ChildName,
   isChildName,

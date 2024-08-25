@@ -1,13 +1,8 @@
-import { FeSectionInfo } from "../../SectionInfos/FeInfo";
-import {
-  ChildArrPack,
-  ChildPackArrs,
-} from "../../SectionPacks/ChildSectionPack";
-import { SectionPack } from "../../SectionPacks/SectionPack";
 import { SolveState } from "../../State/SolveState";
 import { StateSections } from "../../State/StateSections";
 import { GetterSectionProps } from "../../StateGetters/Bases/GetterSectionBase";
 import { GetterSection } from "../../StateGetters/GetterSection";
+import { FeSectionInfo } from "../../StateGetters/Identifiers/FeInfo";
 import { VarbName } from "../../stateSchemas/derivedFromBaseSchemas/baseSectionsVarbsTypes";
 import {
   ChildName,
@@ -18,6 +13,11 @@ import { ChildSectionName } from "../../stateSchemas/derivedFromChildrenSchemas/
 import { ParentNameSafe } from "../../stateSchemas/derivedFromChildrenSchemas/ParentName";
 import { SectionName } from "../../stateSchemas/SectionName";
 import { SectionValues } from "../../stateSchemas/StateValue";
+import {
+  ChildArrPack,
+  ChildPackArrs,
+} from "../../StateTransports/ChildSectionPack";
+import { SectionPack } from "../../StateTransports/SectionPack";
 import { Obj } from "../../utils/Obj";
 import { makeEmptyMain } from "../defaultMaker/makeEmptyMain";
 import { DefaultUpdaterSection } from "../DefaultUpdaters/DefaultUpdaterSection";

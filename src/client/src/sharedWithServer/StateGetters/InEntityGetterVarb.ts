@@ -1,5 +1,4 @@
 import { cloneDeep } from "lodash";
-import { FeVarbInfo } from "../SectionInfos/FeInfo";
 import { InUpdatePack } from "../StateMeta/VarbMeta";
 import { InVarbInfo } from "../StateOperators/Solvers/SolverVarb";
 import { UpdateOverrideSwitch } from "../stateSchemas/allUpdateSectionVarbs/updateVarb/UpdateOverrideSwitch";
@@ -12,6 +11,7 @@ import {
 import { isObjValue } from "../stateSchemas/valueMetas";
 import { GetterVarbBase } from "./Bases/GetterVarbBase";
 import { GetterVarb } from "./GetterVarb";
+import { FeVarbInfo } from "./Identifiers/FeInfo";
 
 export class InEntityGetterVarb<
   SN extends SectionName = SectionName

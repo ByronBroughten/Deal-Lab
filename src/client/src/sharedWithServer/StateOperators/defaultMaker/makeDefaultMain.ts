@@ -1,4 +1,4 @@
-import { SectionPack } from "../../SectionPacks/SectionPack";
+import { SectionPack } from "../../StateTransports/SectionPack";
 import { PackBuilderSection } from "../Packers/PackBuilderSection";
 import { makeDefaultDealPack } from "./makeDefaultDeal";
 import { makeDefaultFeUserPack } from "./makeDefaultFeStore";

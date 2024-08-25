@@ -1,4 +1,3 @@
-import { Id } from "../Ids/IdS";
 import { validateAnyVarbName } from "../stateSchemas/derivedFromBaseSchemas/baseSectionsVarbsTypes";
 import {
   ChildName,
@@ -8,6 +7,7 @@ import { SectionName } from "../stateSchemas/SectionName";
 import { StateValue } from "../stateSchemas/StateValue";
 import { validateStateValue } from "../stateSchemas/valueMetas";
 import { Arr } from "../utils/Arr";
+import { IdS } from "../utils/IdS";
 import { Obj } from "../utils/Obj";
 import { validateS } from "../validateS";
 
@@ -69,7 +69,7 @@ function validateRawSection(value: any): OneRawSection<any> {
 
   return {
     spNum: validateS.number(obj.spNum),
-    dbId: Id.validate(obj.dbId),
+    dbId: IdS.validate(obj.dbId),
     sectionValues: validateSectionValues(obj.sectionValues),
     childSpNums: validateChildSpNums(obj.childSpNums),
   };

@@ -1,15 +1,15 @@
 import { fixedVariableLabel } from "../../../varbLabels/varbLabels";
-import { Id } from "../../Ids/IdS";
+import { pathSectionName } from "../../sectionPaths/sectionPathNames";
 import {
   ValueFixedVarbPathName,
   ValueInEntityInfo,
-} from "../../SectionInfos/ValueInEntityInfo";
+} from "../../StateGetters/Identifiers/ValueInEntityInfo";
 import {
   getVarbPathParams,
   varbPathDbIdInfo,
   varbPathInfo,
-} from "../../SectionInfos/VarbPathNameInfo";
-import { pathSectionName } from "../../sectionPaths/sectionPathNames";
+} from "../../StateGetters/Identifiers/VarbPathNameInfo";
+import { IdS } from "../../utils/IdS";
 import { NumObj } from "./NumObj";
 import { ValueInEntity } from "./stateValuesShared/entities";
 
@@ -30,7 +30,7 @@ export function numObjNext(...propArr: EntityNumObjPropArr): NumObj {
   ) => {
     entities.push({
       ...entityInfo,
-      entityId: Id.make(),
+      entityId: IdS.make(),
       length: varbLabel.length,
       offset: mainText.length,
       entitySource: "editor",

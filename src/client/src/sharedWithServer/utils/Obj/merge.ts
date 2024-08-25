@@ -6,9 +6,9 @@ type SpreadProperties<L, R, K extends keyof L & keyof R> = {
   [P in K]: L[P] | Exclude<R[P], undefined>;
 };
 
-type Id<T> = T extends infer U ? { [K in keyof U]: U[K] } : never;
+type IdS<T> = T extends infer U ? { [K in keyof U]: U[K] } : never;
 
-export type Merge<L, R> = Id<
+export type Merge<L, R> = IdS<
   Pick<L, Exclude<keyof L, keyof R>> &
     Pick<R, Exclude<keyof R, OptionalPropertyNames<R>>> &
     Pick<R, Exclude<OptionalPropertyNames<R>, keyof L>> &

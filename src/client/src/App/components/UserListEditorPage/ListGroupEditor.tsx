@@ -1,5 +1,5 @@
-import { StoreId } from "../../../sharedWithServer/Ids/StoreId";
 import { ListChildName } from "../../../sharedWithServer/sectionStores";
+import { StoreId } from "../../../sharedWithServer/StateGetters/Identifiers/StoreId";
 import { useAction } from "../../stateClassHooks/useAction";
 import { useGetterSectionOnlyOne } from "../../stateClassHooks/useGetterSection";
 import { IdOfSectionToSaveProvider } from "../../stateClassHooks/useIdOfSectionToSave";

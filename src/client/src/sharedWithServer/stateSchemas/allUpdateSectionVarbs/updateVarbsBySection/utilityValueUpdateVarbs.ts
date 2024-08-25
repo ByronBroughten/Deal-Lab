@@ -1,6 +1,5 @@
-import { VarbPathName } from "../../../SectionInfos/VarbPathNameInfo";
+import { VarbPathName } from "../../../StateGetters/Identifiers/VarbPathNameInfo";
 import { GroupKey, groupNameEnding, GroupRecord } from "../../GroupName";
-
 import { usvs, USVS } from "../updateSectionVarbs";
 import { uvS } from "../updateVarb";
 import { uosbS } from "../updateVarb/OverrideBasics";

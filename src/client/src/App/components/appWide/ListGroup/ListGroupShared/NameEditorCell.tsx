@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { FeSectionInfo } from "../../../../../sharedWithServer/SectionInfos/FeInfo";
+import { FeSectionInfo } from "../../../../../sharedWithServer/StateGetters/Identifiers/FeInfo";
 import { MaterialStringEditor } from "../../../inputs/MaterialStringEditor";
 
 export function NameEditorCell(feInfo: FeSectionInfo) {

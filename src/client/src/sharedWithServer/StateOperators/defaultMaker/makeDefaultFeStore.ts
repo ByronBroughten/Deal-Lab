@@ -1,4 +1,4 @@
-import { SectionPack } from "../../SectionPacks/SectionPack";
+import { SectionPack } from "../../StateTransports/SectionPack";
 import { timeS } from "../../utils/timeS";
 import { PackBuilderSection } from "../Packers/PackBuilderSection";
 import { makeDefaultDealPack } from "./makeDefaultDeal";

@@ -1,9 +1,9 @@
 import { SxProps } from "@mui/material";
-import { mixedInfoS } from "../../../../sharedWithServer/SectionInfos/MixedSectionInfo";
-import { ValueCustomVarbPathInfo } from "../../../../sharedWithServer/SectionInfos/ValueInEntityInfo";
-import { collectionNamesFixed } from "../../../../sharedWithServer/SectionInfos/VarbPathNameInfo";
 import { fixedVarbOptionArrs } from "../../../../sharedWithServer/sectionPaths/varbPathOptions";
 import { GetterSection } from "../../../../sharedWithServer/StateGetters/GetterSection";
+import { mixedInfoS } from "../../../../sharedWithServer/StateGetters/Identifiers/MixedSectionInfo";
+import { ValueCustomVarbPathInfo } from "../../../../sharedWithServer/StateGetters/Identifiers/ValueInEntityInfo";
+import { collectionNamesFixed } from "../../../../sharedWithServer/StateGetters/Identifiers/VarbPathNameInfo";
 import { DealMode } from "../../../../sharedWithServer/stateSchemas/StateValue/dealMode";
 import { useGetterMainOnlyChild } from "../../../stateClassHooks/useMain";
 import { OnVarbSelect } from "./NumObjVarbSelector/VarbSelectorCollection";

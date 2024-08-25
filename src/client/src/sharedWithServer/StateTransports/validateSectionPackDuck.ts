@@ -1,21 +1,21 @@
-import { Id } from "../../Ids/IdS";
-import { SectionPack } from "../../SectionPacks/SectionPack";
 import {
   ChildSpNums,
   OneRawSection,
   RawSections,
   SectionValuesGeneric,
-} from "../../State/RawSection";
-import { sectionsMeta } from "../../StateMeta/SectionsMeta";
-import { Arr } from "../../utils/Arr";
-import { ValidationError } from "../../utils/Error";
-import { Obj } from "../../utils/Obj";
-import { validateS } from "../../validateS";
-import { sectionVarbNames } from "../derivedFromBaseSchemas/baseSectionsVarbsTypes";
-import { validateSectionVarbValue } from "../derivedFromBaseSchemas/baseSectionValues";
-import { SectionName, validateSectionName } from "../SectionName";
-import { getChildNames } from "./ChildName";
-import { selfAndDescSectionNames } from "./DescendantName";
+} from "../State/RawSection";
+import { sectionsMeta } from "../StateMeta/SectionsMeta";
+import { sectionVarbNames } from "../stateSchemas/derivedFromBaseSchemas/baseSectionsVarbsTypes";
+import { validateSectionVarbValue } from "../stateSchemas/derivedFromBaseSchemas/baseSectionValues";
+import { getChildNames } from "../stateSchemas/derivedFromChildrenSchemas/ChildName";
+import { selfAndDescSectionNames } from "../stateSchemas/derivedFromChildrenSchemas/DescendantName";
+import { SectionName, validateSectionName } from "../stateSchemas/SectionName";
+import { Arr } from "../utils/Arr";
+import { ValidationError } from "../utils/Error";
+import { IdS } from "../utils/IdS";
+import { Obj } from "../utils/Obj";
+import { validateS } from "../validateS";
+import { SectionPack } from "./SectionPack";
 
 export function validateSectionPackDuck<SN extends SectionName = any>(
   value: any,
@@ -33,7 +33,7 @@ export function validateSectionPackDuck<SN extends SectionName = any>(
   const validatedName = validateSectionName(obj.sectionName) as SN;
   return {
     sectionName: validatedName,
-    dbId: Id.validate(obj.dbId),
+    dbId: IdS.validate(obj.dbId),
     rawSections: validateRawSectionsDuck(obj.rawSections, validatedName),
   };
 }
@@ -61,7 +61,7 @@ function validateRawSectionDuck(
   const obj = Obj.validateObjToAny(value) as OneRawSection<any>;
   return {
     spNum: validateS.number(obj.spNum),
-    dbId: Id.validate(obj.dbId),
+    dbId: IdS.validate(obj.dbId),
     sectionValues: validateSectionValuesDuck(obj.sectionValues, sectionName),
     childSpNums: validateChildSpNumsDuck(obj.childSpNums, sectionName),
   };

@@ -1,5 +1,5 @@
 import React from "react";
-import { FeSectionInfo } from "../../sharedWithServer/SectionInfos/FeInfo";
+import { FeSectionInfo } from "../../sharedWithServer/StateGetters/Identifiers/FeInfo";
 import { react } from "../utils/react";
 
 export const [SectionInfoContext, useSectionInfoContext] =

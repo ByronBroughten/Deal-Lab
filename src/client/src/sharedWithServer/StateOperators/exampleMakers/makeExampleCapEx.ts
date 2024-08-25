@@ -1,6 +1,6 @@
-import { SectionPack } from "../../SectionPacks/SectionPack";
 import { numToObj } from "../../stateSchemas/StateValue/NumObj";
 import { stringObj } from "../../stateSchemas/StateValue/StringObj";
+import { SectionPack } from "../../StateTransports/SectionPack";
 import { timeS } from "../../utils/timeS";
 import { makeExample } from "./makeExample";
 import {

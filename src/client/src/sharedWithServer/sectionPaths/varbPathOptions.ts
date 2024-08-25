@@ -1,12 +1,12 @@
 import {
   fixedVarbPathNames,
   ValueFixedVarbPathName,
-} from "../SectionInfos/ValueInEntityInfo";
+} from "../StateGetters/Identifiers/ValueInEntityInfo";
 import {
   getVarbPathParams,
   VarbPathNameProp,
   VarbPathParams,
-} from "../SectionInfos/VarbPathNameInfo";
+} from "../StateGetters/Identifiers/VarbPathNameInfo";
 import { DealMode, getDealModes } from "../stateSchemas/StateValue/dealMode";
 
 export type VarbPathArrParam<

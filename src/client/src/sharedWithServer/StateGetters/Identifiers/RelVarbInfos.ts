@@ -1,6 +1,6 @@
-import { ChildName } from "../stateSchemas/derivedFromChildrenSchemas/ChildName";
-import { SectionName } from "../stateSchemas/SectionName";
-import { Obj } from "../utils/Obj";
+import { ChildName } from "../../stateSchemas/derivedFromChildrenSchemas/ChildName";
+import { SectionName } from "../../stateSchemas/SectionName";
+import { Obj } from "../../utils/Obj";
 import {
   RelChildrenVarbInfo,
   RelLocalVarbInfo,

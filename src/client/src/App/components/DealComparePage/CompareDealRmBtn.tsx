@@ -1,5 +1,5 @@
 import { SxProps } from "@mui/material";
-import { FeIdProp } from "../../../sharedWithServer/SectionInfos/NanoIdInfo";
+import { FeIdProp } from "../../../sharedWithServer/StateGetters/Identifiers/NanoIdInfo";
 import { useAction } from "../../stateClassHooks/useAction";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { arrSx } from "../../utils/mui";

@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { Id } from "../Ids/IdS";
 import { dbLimits } from "./dbLimits";
+import { IdS } from "./IdS";
 
 export const validationMessage = {
   min: (num: number) => {
@@ -12,7 +12,7 @@ export const validationMessage = {
   email: "Valid email required",
 };
 
-export const zNanoId = Id.zodSchema;
+export const zNanoId = IdS.zodSchema;
 export const zString = z.string().max(dbLimits.string.maxLength);
 export const zNumber = z
   .number()

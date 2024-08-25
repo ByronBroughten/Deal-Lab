@@ -5,8 +5,8 @@ import {
   constant,
   constants,
 } from "../../client/src/sharedWithServer/Constants";
-import { Id } from "../../client/src/sharedWithServer/Ids/IdS";
 import { PackBuilderSection } from "../../client/src/sharedWithServer/StateOperators/Packers/PackBuilderSection";
+import { IdS } from "../../client/src/sharedWithServer/utils/IdS";
 import { DbUserGetter } from "../../DbUserService/DbUserGetter";
 import { runApp } from "../../runApp";
 import { SectionQueryTester } from "./apiQueriesTestTools/SectionQueryTester";
@@ -75,11 +75,11 @@ describe(testedRoute, () => {
     await testStatus(200);
   });
   it("should return 500 if the dbId isn't a dbId", async () => {
-    reqs.deleteSection.body.dbId = Id.make().substring(1);
+    reqs.deleteSection.body.dbId = IdS.make().substring(1);
     await testStatus(500);
   });
   // it("should return 404 if no section in the queried sectionArr has the dbId", async () => {
-  //   reqs.deleteSection.body.dbId = Id.makeId();
+  //   reqs.deleteSection.body.dbId = IdS.makeId();
   //   await testStatus(404);
   // });
   it("should return 500 if the payload isn't for a sectionQuery dbStoreName", async () => {

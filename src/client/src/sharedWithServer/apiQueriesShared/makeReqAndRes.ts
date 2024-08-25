@@ -1,6 +1,3 @@
-import { ChildPackArrs } from "../SectionPacks/ChildSectionPack";
-import { SectionPack } from "../SectionPacks/SectionPack";
-import { DbPack } from "../stateSchemas/derivedFromChildrenSchemas/DbSectionPack";
 import {
   DbSectionName,
   DbStoreInfo,
@@ -8,6 +5,9 @@ import {
   DbStoreNameProp,
   SectionQueryName,
 } from "../stateSchemas/derivedFromChildrenSchemas/DbStoreName";
+import { ChildPackArrs } from "../StateTransports/ChildSectionPack";
+import { DbPack } from "../StateTransports/DbSectionPack";
+import { SectionPack } from "../StateTransports/SectionPack";
 import { DbAction } from "./DbAction";
 
 export const makeReq = <B extends QueryObj = {}>(body?: B): MakeReq<B> => ({

@@ -1,5 +1,5 @@
 import { Box, SxProps } from "@mui/material";
-import { FeIdProp } from "../../../../sharedWithServer/SectionInfos/NanoIdInfo";
+import { FeIdProp } from "../../../../sharedWithServer/StateGetters/Identifiers/NanoIdInfo";
 import { AddChildOptions } from "../../../../sharedWithServer/StateOperators/Updaters/UpdaterSection";
 import { inEntityValueInfo } from "../../../../sharedWithServer/stateSchemas/StateValue/InEntityValue";
 import { useAction } from "../../../stateClassHooks/useAction";

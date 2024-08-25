@@ -1,4 +1,4 @@
-import { mixedInfoS } from "../SectionInfos/MixedSectionInfo";
+import { mixedInfoS } from "../StateGetters/Identifiers/MixedSectionInfo";
 import { timeS } from "../utils/timeS";
 import {
   defaultSectionUpdateVarbs,

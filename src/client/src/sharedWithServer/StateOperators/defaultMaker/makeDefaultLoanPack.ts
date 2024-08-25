@@ -1,6 +1,6 @@
-import { SectionPack } from "../../SectionPacks/SectionPack";
 import { FinancingMode } from "../../stateSchemas/StateValue/financingMode";
 import { numObj } from "../../stateSchemas/StateValue/NumObj";
+import { SectionPack } from "../../StateTransports/SectionPack";
 import { PackBuilderSection } from "../Packers/PackBuilderSection";
 
 export function makeDefaultLoanPack(

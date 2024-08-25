@@ -2,7 +2,7 @@ import { externalLink } from "../sharedWithServer/Constants/externalLinks";
 import {
   RelLocalVarbInfo,
   relVarbInfoS,
-} from "../sharedWithServer/SectionInfos/RelVarbInfo";
+} from "../sharedWithServer/StateGetters/Identifiers/RelVarbInfo";
 import { SwitchTargetKey } from "../sharedWithServer/stateSchemas/allBaseSectionVarbs/baseSwitchNames";
 import {
   sectionVarbNames,

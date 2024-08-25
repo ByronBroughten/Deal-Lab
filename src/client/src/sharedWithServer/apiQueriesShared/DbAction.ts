@@ -1,11 +1,11 @@
-import { Id } from "../Ids/IdS";
-import { SectionPack } from "../SectionPacks/SectionPack";
 import {
   StoreName,
   StoreSectionName,
   validateStoreName,
 } from "../sectionStores";
-import { validateDbSectionPack } from "../stateSchemas/derivedFromChildrenSchemas/DbSectionPack";
+import { validateDbSectionPack } from "../StateTransports/DbSectionPack";
+import { SectionPack } from "../StateTransports/SectionPack";
+import { IdS } from "../utils/IdS";
 import { Obj } from "../utils/Obj";
 
 const dbActionNames = ["add", "update", "remove"] as const;
@@ -60,7 +60,7 @@ function validateStoreNameAndDbId(value: any): StoreNameAndDbId {
   const obj = Obj.validateObjToAny(value) as StoreNameAndDbId;
   return {
     storeName: validateStoreName(obj.storeName),
-    dbId: Id.validate(obj.dbId),
+    dbId: IdS.validate(obj.dbId),
   };
 }
 

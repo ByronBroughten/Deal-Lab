@@ -1,10 +1,5 @@
 import { StringTypeChecker } from "../App/utils/StringTypeChecker";
 import {
-  isSectionPack,
-  SectionPack,
-  validateSectionPack,
-} from "./SectionPacks/SectionPack";
-import {
   BaseNameArrs,
   baseNameArrs,
 } from "./stateSchemas/derivedFromBaseSchemas/baseNameArrs";
@@ -23,6 +18,11 @@ import {
 } from "./stateSchemas/derivedFromRelSchemas/relNameArrs";
 import { SectionName } from "./stateSchemas/SectionName";
 import { SectionValues } from "./stateSchemas/StateValue";
+import {
+  isSectionPack,
+  SectionPack,
+  validateSectionPack,
+} from "./StateTransports/SectionPack";
 import { Arr } from "./utils/Arr";
 import { PropKeyOfValue } from "./utils/Obj/SubType";
 

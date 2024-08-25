@@ -1,9 +1,9 @@
 import { Box, SxProps } from "@mui/material";
-import { FeSectionInfo } from "../../../../../../../sharedWithServer/SectionInfos/FeInfo";
 import {
   SectionNameByType,
   sectionNameS,
 } from "../../../../../../../sharedWithServer/SectionNameByType";
+import { FeSectionInfo } from "../../../../../../../sharedWithServer/StateGetters/Identifiers/FeInfo";
 import { VarbName } from "../../../../../../../sharedWithServer/stateSchemas/derivedFromBaseSchemas/baseSectionsVarbsTypes";
 import { StateValue } from "../../../../../../../sharedWithServer/stateSchemas/StateValue";
 import { Arr } from "../../../../../../../sharedWithServer/utils/Arr";

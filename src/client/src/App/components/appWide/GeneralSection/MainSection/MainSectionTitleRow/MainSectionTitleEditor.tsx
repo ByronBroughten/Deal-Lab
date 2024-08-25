@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { FeInfoByType } from "../../../../../../sharedWithServer/SectionInfos/FeInfo";
+import { FeInfoByType } from "../../../../../../sharedWithServer/StateGetters/Identifiers/FeInfo";
 import theme from "../../../../../theme/Theme";
 import { BigStringEditor } from "../../../../inputs/BigStringEditor";
 

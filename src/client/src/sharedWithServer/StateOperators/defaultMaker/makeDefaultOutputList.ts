@@ -1,9 +1,9 @@
-import { mixedInfoS } from "../../SectionInfos/MixedSectionInfo";
-import { ValueFixedVarbPathName } from "../../SectionInfos/ValueInEntityInfo";
-import { SectionPack } from "../../SectionPacks/SectionPack";
+import { mixedInfoS } from "../../StateGetters/Identifiers/MixedSectionInfo";
+import { ValueFixedVarbPathName } from "../../StateGetters/Identifiers/ValueInEntityInfo";
 import { DealMode } from "../../stateSchemas/StateValue/dealMode";
 import { inEntityValueInfo } from "../../stateSchemas/StateValue/InEntityValue";
 import { stringObj } from "../../stateSchemas/StateValue/StringObj";
+import { SectionPack } from "../../StateTransports/SectionPack";
 import { PackBuilderSection } from "../Packers/PackBuilderSection";
 
 type OutputVarbPathNames = Record<

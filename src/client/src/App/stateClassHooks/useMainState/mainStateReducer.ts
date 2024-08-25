@@ -1,21 +1,19 @@
 import { ContentState } from "draft-js";
-import { UserData } from "../../../sharedWithServer/apiQueriesShared/UserData";
-import {
-  FeSectionInfo,
-  FeVarbInfo,
-  FeVarbValueInfo,
-} from "../../../sharedWithServer/SectionInfos/FeInfo";
-import {
-  DbIdProp,
-  FeIdProp,
-} from "../../../sharedWithServer/SectionInfos/NanoIdInfo";
-import { SectionPack } from "../../../sharedWithServer/SectionPacks/SectionPack";
 import {
   FeStoreInfo,
   StoreNameProp,
   StoreSectionName,
 } from "../../../sharedWithServer/sectionStores";
 import { MainState } from "../../../sharedWithServer/State/MainState";
+import {
+  FeSectionInfo,
+  FeVarbInfo,
+  FeVarbValueInfo,
+} from "../../../sharedWithServer/StateGetters/Identifiers/FeInfo";
+import {
+  DbIdProp,
+  FeIdProp,
+} from "../../../sharedWithServer/StateGetters/Identifiers/NanoIdInfo";
 import { SolvePrepperSection } from "../../../sharedWithServer/StateOperators/SolvePreppers/SolvePrepperSection";
 import { SolvePrepperVarb } from "../../../sharedWithServer/StateOperators/SolvePreppers/SolvePrepperVarb";
 import { AddChildOptions } from "../../../sharedWithServer/StateOperators/Updaters/UpdaterSection";
@@ -23,6 +21,8 @@ import { ChildName } from "../../../sharedWithServer/stateSchemas/derivedFromChi
 import { SectionName } from "../../../sharedWithServer/stateSchemas/SectionName";
 import { SectionValues } from "../../../sharedWithServer/stateSchemas/StateValue";
 import { DealMode } from "../../../sharedWithServer/stateSchemas/StateValue/dealMode";
+import { SectionPack } from "../../../sharedWithServer/StateTransports/SectionPack";
+import { UserData } from "../../../sharedWithServer/StateTransports/UserData";
 import { TopOperator } from "../../../sharedWithServer/TopOperator";
 import { Arr } from "../../../sharedWithServer/utils/Arr";
 import { Merge } from "../../../sharedWithServer/utils/Obj/merge";

@@ -1,4 +1,4 @@
-import { relVarbInfoS } from "../../SectionInfos/RelVarbInfo";
+import { relVarbInfoS } from "../../StateGetters/Identifiers/RelVarbInfo";
 import { Obj } from "../../utils/Obj";
 import { StrictOmit } from "../../utils/types";
 import { VarbNameWide } from "../derivedFromBaseSchemas/baseSectionsVarbsTypes";

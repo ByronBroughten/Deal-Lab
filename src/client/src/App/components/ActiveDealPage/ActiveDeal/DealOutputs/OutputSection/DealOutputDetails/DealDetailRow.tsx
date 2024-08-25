@@ -1,5 +1,5 @@
-import { FeVarbInfo } from "../../../../../../../sharedWithServer/SectionInfos/FeInfo";
 import { GetterVarb } from "../../../../../../../sharedWithServer/StateGetters/GetterVarb";
+import { FeVarbInfo } from "../../../../../../../sharedWithServer/StateGetters/Identifiers/FeInfo";
 import { InEntityGetterVarb } from "../../../../../../../sharedWithServer/StateGetters/InEntityGetterVarb";
 import { useGetterSectionsProps } from "../../../../../../stateClassHooks/useGetterSectionsProps";
 import { useGetterVarb } from "../../../../../../stateClassHooks/useGetterVarb";

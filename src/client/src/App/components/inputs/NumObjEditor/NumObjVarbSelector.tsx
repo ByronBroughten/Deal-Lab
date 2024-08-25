@@ -1,17 +1,19 @@
 import { EditorState } from "draft-js";
 import React from "react";
 import styled from "styled-components";
-import { FeVarbInfo } from "../../../../sharedWithServer/SectionInfos/FeInfo";
-import { mixedInfoS } from "../../../../sharedWithServer/SectionInfos/MixedSectionInfo";
+import { FeVarbInfo } from "../../../../sharedWithServer/StateGetters/Identifiers/FeInfo";
+import { mixedInfoS } from "../../../../sharedWithServer/StateGetters/Identifiers/MixedSectionInfo";
 import {
   ValueFixedVarbPathName,
   ValueInEntityInfo,
-} from "../../../../sharedWithServer/SectionInfos/ValueInEntityInfo";
+} from "../../../../sharedWithServer/StateGetters/Identifiers/ValueInEntityInfo";
 import { useToggleView } from "../../../modules/customHooks/useToggleView";
 import { useGetterSection } from "../../../stateClassHooks/useGetterSection";
-import theme from "../../../theme/Theme";
 import { nativeTheme } from "../../../theme/nativeTheme";
+import theme from "../../../theme/Theme";
 import { SetEditorState } from "../../../utils/DraftS";
+import { HollowBtn } from "../../appWide/HollowBtn";
+import { DropdownContainer } from "../../general/DropdownContainer";
 import { icons } from "../../Icons";
 import { useInfoModal } from "../../Modals/InfoModalProvider";
 import {
@@ -19,15 +21,13 @@ import {
   ModalViewWindow,
   useDealModeContextVarbSelectModal,
 } from "../../Modals/VarbSelectModalProvider";
-import { HollowBtn } from "../../appWide/HollowBtn";
-import { DropdownContainer } from "../../general/DropdownContainer";
+import { insertVarbEntity } from "./NumObjVarbSelector/insertVarbEntity";
 import {
   OnVarbSelect,
   VarbSelectorCollection,
 } from "./NumObjVarbSelector/VarbSelectorCollection";
 import { VarbSelectorRow } from "./NumObjVarbSelector/VarbSelectorRow";
 import { VarbSelectorShell } from "./NumObjVarbSelector/VarbSelectorShell";
-import { insertVarbEntity } from "./NumObjVarbSelector/insertVarbEntity";
 
 export type PopperRef = React.Ref<HTMLDivElement>;
 

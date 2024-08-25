@@ -1,20 +1,17 @@
 import mongoose, { FilterQuery, QueryOptions } from "mongoose";
 import ThirdPartyEmailPassword from "supertokens-node/recipe/thirdpartyemailpassword";
 import { EstimatorPlanValues } from "./client/src/sharedWithServer/apiQueriesShared/EstimatorPlanValues";
-import { UserData } from "./client/src/sharedWithServer/apiQueriesShared/UserData";
 import { constants } from "./client/src/sharedWithServer/Constants";
-import {
-  OneDbSectionValueInfo,
-  OneDbVarbInfo,
-} from "./client/src/sharedWithServer/SectionInfos/DbStoreInfo";
-import { FeSectionInfo } from "./client/src/sharedWithServer/SectionInfos/FeInfo";
-import { ChildPackArrs } from "./client/src/sharedWithServer/SectionPacks/ChildSectionPack";
-import { SectionPack } from "./client/src/sharedWithServer/SectionPacks/SectionPack";
 import {
   StoreName,
   StoreSectionName,
 } from "./client/src/sharedWithServer/sectionStores";
 import { GetterSection } from "./client/src/sharedWithServer/StateGetters/GetterSection";
+import {
+  OneDbSectionValueInfo,
+  OneDbVarbInfo,
+} from "./client/src/sharedWithServer/StateGetters/Identifiers/DbStoreInfo";
+import { FeSectionInfo } from "./client/src/sharedWithServer/StateGetters/Identifiers/FeInfo";
 import {
   initProdDbStoreArrs,
   initTestDbStoreArrs,
@@ -22,10 +19,6 @@ import {
 import { PackBuilderSection } from "./client/src/sharedWithServer/StateOperators/Packers/PackBuilderSection";
 import { VarbName } from "./client/src/sharedWithServer/stateSchemas/derivedFromBaseSchemas/baseSectionsVarbsTypes";
 import { ChildSectionName } from "./client/src/sharedWithServer/stateSchemas/derivedFromChildrenSchemas/ChildSectionName";
-import {
-  DbPack,
-  DbSectionPack,
-} from "./client/src/sharedWithServer/stateSchemas/derivedFromChildrenSchemas/DbSectionPack";
 import {
   DbSectionName,
   DbStoreInfo,
@@ -35,9 +28,16 @@ import {
 } from "./client/src/sharedWithServer/stateSchemas/derivedFromChildrenSchemas/DbStoreName";
 import { SectionName } from "./client/src/sharedWithServer/stateSchemas/SectionName";
 import {
+  DbPack,
+  DbSectionPack,
+} from "./client/src/sharedWithServer/stateSchemas/StateTransports/DbSectionPack";
+import {
   StateValue,
   VarbValue,
 } from "./client/src/sharedWithServer/stateSchemas/StateValue";
+import { ChildPackArrs } from "./client/src/sharedWithServer/StateTransports/ChildSectionPack";
+import { SectionPack } from "./client/src/sharedWithServer/StateTransports/SectionPack";
+import { UserData } from "./client/src/sharedWithServer/StateTransports/UserData";
 import { Obj } from "./client/src/sharedWithServer/utils/Obj";
 import {
   DbSectionsRaw,

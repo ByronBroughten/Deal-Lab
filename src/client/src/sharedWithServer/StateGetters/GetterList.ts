@@ -1,4 +1,3 @@
-import { IdInfoMixedMulti } from "../SectionInfos/MixedSectionInfo";
 import { SectionNameByType } from "../SectionNameByType";
 import {
   RawFeSection,
@@ -11,6 +10,7 @@ import { Arr } from "../utils/Arr";
 import { GetterListBase } from "./Bases/GetterListBase";
 import { GetterSection } from "./GetterSection";
 import { GetterSections } from "./GetterSections";
+import { IdInfoMixedMulti } from "./Identifiers/MixedSectionInfo";
 
 export class GetterList<
   SN extends SectionNameByType

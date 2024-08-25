@@ -1,5 +1,5 @@
-import { SectionPack } from "../../SectionPacks/SectionPack";
 import { SectionName } from "../../stateSchemas/SectionName";
+import { SectionPack } from "../../StateTransports/SectionPack";
 import { makeDefaultDealPack } from "./makeDefaultDeal";
 import { makeDefaultDealCompareMenu } from "./makeDefaultDealCompareMenu";
 import { makeDefaultDealSystem } from "./makeDefaultDealSystem";

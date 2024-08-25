@@ -1,4 +1,3 @@
-import { FeVarbInfo } from "../../SectionInfos/FeInfo";
 import { MainStateProps } from "../../State/MainState";
 import { SolveState } from "../../State/SolveState";
 import { StateSections } from "../../State/StateSections";
@@ -8,6 +7,7 @@ import {
   GetterSectionsRequiredProps,
 } from "../../StateGetters/Bases/GetterSectionsBase";
 import { GetterVarb } from "../../StateGetters/GetterVarb";
+import { FeVarbInfo } from "../../StateGetters/Identifiers/FeInfo";
 
 type SolveShare = { solveState: SolveState };
 export type HasSolveShare = {

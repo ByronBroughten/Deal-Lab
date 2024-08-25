@@ -1,5 +1,5 @@
-import { FeSectionInfo } from "../../SectionInfos/FeInfo";
 import { GetterSection } from "../../StateGetters/GetterSection";
+import { FeSectionInfo } from "../../StateGetters/Identifiers/FeInfo";
 import { SectionName } from "../../stateSchemas/SectionName";
 import { DealMode } from "../../stateSchemas/StateValue/dealMode";
 import { TopOperator } from "../../TopOperator";

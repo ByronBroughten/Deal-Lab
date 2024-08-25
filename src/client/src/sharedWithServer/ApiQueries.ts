@@ -13,10 +13,10 @@ import {
   UpgradeUserToProReq,
   UrlRes,
 } from "./apiQueriesShared/makeReqAndRes";
-import { UserData } from "./apiQueriesShared/UserData";
 import { ApiQueryName } from "./Constants/queryPaths";
-import { SectionPack } from "./SectionPacks/SectionPack";
 import { SectionQueryName } from "./stateSchemas/derivedFromChildrenSchemas/DbStoreName";
+import { SectionPack } from "./StateTransports/SectionPack";
+import { UserData } from "./StateTransports/UserData";
 
 export type QueryRes<AN extends ApiQueryName> = Awaited<
   ReturnType<ApiQuery<AN>>

@@ -1,15 +1,15 @@
-import { relVarbInfoS } from "../../SectionInfos/RelVarbInfo";
+import { relVarbInfoS } from "../../StateGetters/Identifiers/RelVarbInfo";
 import { Arr } from "../../utils/Arr";
 import {
   EditorSwitchName,
+  getSwitchVarbName,
+  switchKeys,
+  switchKeyToVarbNames,
   SwitchName,
   SwitchOptionName,
-  SwitchVarbName,
-  getSwitchVarbName,
-  switchKeyToVarbNames,
-  switchKeys,
   switchOptionNames,
   switchTargetKeys,
+  SwitchVarbName,
 } from "../allBaseSectionVarbs/baseSwitchNames";
 import {
   DisplayName,

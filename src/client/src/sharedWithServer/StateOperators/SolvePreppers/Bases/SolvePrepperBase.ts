@@ -1,5 +1,5 @@
-import { FeVarbInfo } from "../../../SectionInfos/FeInfo";
 import { GetterVarb } from "../../../StateGetters/GetterVarb";
+import { FeVarbInfo } from "../../../StateGetters/Identifiers/FeInfo";
 import { SolverBase } from "../../SolverBases/SolverBase";
 
 export class SolvePrepperBase extends SolverBase {

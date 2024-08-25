@@ -1,4 +1,4 @@
-import { FeIdProp } from "../../../../../../../sharedWithServer/SectionInfos/NanoIdInfo";
+import { FeIdProp } from "../../../../../../../sharedWithServer/StateGetters/Identifiers/NanoIdInfo";
 import { useGetterSection } from "../../../../../../stateClassHooks/useGetterSection";
 import { FormSectionLabeled } from "../../../../../appWide/FormSectionLabeled";
 import { MuiRow } from "../../../../../general/MuiRow";

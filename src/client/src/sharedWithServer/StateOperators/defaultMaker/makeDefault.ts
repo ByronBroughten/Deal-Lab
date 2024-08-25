@@ -1,5 +1,5 @@
-import { SectionPack } from "../../SectionPacks/SectionPack";
 import { SectionName } from "../../stateSchemas/SectionName";
+import { SectionPack } from "../../StateTransports/SectionPack";
 import { StrictExclude } from "../../utils/types";
 import { PackBuilderSection } from "../Packers/PackBuilderSection";
 

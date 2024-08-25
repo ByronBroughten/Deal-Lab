@@ -1,5 +1,5 @@
 import { constant } from "../../../sharedWithServer/Constants";
-import { StoreId } from "../../../sharedWithServer/Ids/StoreId";
+import { StoreId } from "../../../sharedWithServer/StateGetters/Identifiers/StoreId";
 import { useActionWithProps } from "../../stateClassHooks/useAction";
 import { useGetterSectionOnlyOne } from "../../stateClassHooks/useGetterSection";
 import { IdOfSectionToSaveProvider } from "../../stateClassHooks/useIdOfSectionToSave";

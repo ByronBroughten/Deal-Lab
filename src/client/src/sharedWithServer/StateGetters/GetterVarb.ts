@@ -5,23 +5,6 @@ import {
   VarbInfoTextProps,
   VarbLabel,
 } from "../../varbLabels/varbLabels";
-import {
-  FeVarbInfo,
-  FeVI,
-  SectionVarbNames,
-  varbIdToInfo,
-  varbInfoToId,
-} from "../SectionInfos/FeInfo";
-import {
-  mixedInfoS,
-  VarbInfoMixedFocal,
-} from "../SectionInfos/MixedSectionInfo";
-import { relVarbInfoS } from "../SectionInfos/RelVarbInfo";
-import {
-  DbVarbInfoMixed,
-  FeVarbInfoMixed,
-  VarbNames,
-} from "../SectionInfos/VarbInfoBase";
 import { SectionNameByType } from "../SectionNameByType";
 import { StateVarb } from "../State/StateSectionsTypes";
 import { VarbMeta } from "../StateMeta/VarbMeta";
@@ -45,6 +28,20 @@ import { GetterVarbBase, NotAVarbNameError } from "./Bases/GetterVarbBase";
 import { GetterSection } from "./GetterSection";
 import { GetterSections } from "./GetterSections";
 import { GetterVarbNumObj } from "./GetterVarbNumObj";
+import {
+  FeVarbInfo,
+  FeVI,
+  SectionVarbNames,
+  varbIdToInfo,
+  varbInfoToId,
+} from "./Identifiers/FeInfo";
+import { mixedInfoS, VarbInfoMixedFocal } from "./Identifiers/MixedSectionInfo";
+import { relVarbInfoS } from "./Identifiers/RelVarbInfo";
+import {
+  DbVarbInfoMixed,
+  FeVarbInfoMixed,
+  VarbNames,
+} from "./Identifiers/VarbInfoBase";
 import { InEntityGetterVarb } from "./InEntityGetterVarb";
 
 class ValueTypeError extends Error {}

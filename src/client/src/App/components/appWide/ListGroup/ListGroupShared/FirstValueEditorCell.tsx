@@ -1,4 +1,4 @@
-import { FeVI } from "../../../../../sharedWithServer/SectionInfos/FeInfo";
+import { FeVI } from "../../../../../sharedWithServer/StateGetters/Identifiers/FeInfo";
 import { MuiRow } from "../../../general/MuiRow";
 import { NumObjEntityEditor } from "../../../inputs/NumObjEntityEditor";
 import { FirstContentCell } from "./VarbListGeneric/FirstContentCellAndHeader";

@@ -1,5 +1,5 @@
-import { FeSectionInfo } from "../../sharedWithServer/SectionInfos/FeInfo";
-import { ValueInEntityInfo } from "../../sharedWithServer/SectionInfos/ValueInEntityInfo";
+import { FeSectionInfo } from "../../sharedWithServer/StateGetters/Identifiers/FeInfo";
+import { ValueInEntityInfo } from "../../sharedWithServer/StateGetters/Identifiers/ValueInEntityInfo";
 import { useGetterSection } from "./useGetterSection";
 
 export interface VarbFinderProps {

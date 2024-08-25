@@ -1,24 +1,24 @@
 import { pick } from "lodash";
 import { z } from "zod";
-import { Id } from "../../../Ids/IdS";
-import { FeVarbInfo } from "../../../SectionInfos/FeInfo";
-import { PathDbVarbInfoMixed } from "../../../SectionInfos/PathNameInfo";
+import { FeVarbInfo } from "../../../StateGetters/Identifiers/FeInfo";
+import { PathDbVarbInfoMixed } from "../../../StateGetters/Identifiers/PathNameInfo";
 import {
   validateInEntityInfoCustom,
   validateInEntityInfoFixed,
   ValueCustomVarbPathInfo,
   ValueFixedVarbPathInfo,
   ValueInEntityInfo,
-} from "../../../SectionInfos/ValueInEntityInfo";
-import { VarbPathNameInfoMixed } from "../../../SectionInfos/VarbPathNameInfo";
+} from "../../../StateGetters/Identifiers/ValueInEntityInfo";
+import { VarbPathNameInfoMixed } from "../../../StateGetters/Identifiers/VarbPathNameInfo";
 import { Arr } from "../../../utils/Arr";
+import { IdS } from "../../../utils/IdS";
 import { Obj } from "../../../utils/Obj";
 import { zS } from "../../../utils/zod";
 import { validateS } from "../../../validateS";
 import { PathInVarbInfo } from "../../derivedFromChildrenSchemas/RelInOutVarbInfo";
 
 export function validateEntityId(value: any): string {
-  return Id.validate(value);
+  return IdS.validate(value);
 }
 export type EntityIdProp = { entityId: string };
 export type OutEntity = FeVarbInfo & EntityIdProp;
@@ -45,7 +45,7 @@ interface InEntityBase {
 function validateInEntityBase(value: any): InEntityBase {
   const obj = Obj.validateObjToAny(value) as InEntityBase;
   return {
-    entityId: Id.validate(obj.entityId),
+    entityId: IdS.validate(obj.entityId),
     entitySource: validateValueInEntitySource(obj.entitySource),
     length: validateS.number(obj.length),
     offset: validateS.number(obj.offset),
@@ -111,7 +111,7 @@ export const entityS = {
     }
   ): InEntity {
     return {
-      entityId: Id.make(),
+      entityId: IdS.make(),
       ...varbInfo,
       ...entityInfo,
     };

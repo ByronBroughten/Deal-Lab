@@ -1,9 +1,9 @@
-import { Id } from "../Ids/IdS";
-import { DealMode } from "../stateSchemas/StateValue/dealMode";
-import { Arr } from "../utils/Arr";
-import { ValidationError } from "../utils/Error";
-import { Obj } from "../utils/Obj";
-import { validateS } from "../validateS";
+import { DealMode } from "../../stateSchemas/StateValue/dealMode";
+import { Arr } from "../../utils/Arr";
+import { ValidationError } from "../../utils/Error";
+import { IdS } from "../../utils/IdS";
+import { Obj } from "../../utils/Obj";
+import { validateS } from "../../validateS";
 import {
   VarbPathName,
   VarbPathNameDbInfoMixed,
@@ -213,7 +213,7 @@ export function validateInEntityInfoCustom(
   const obj = Obj.validateObjToAny(value) as ValueCustomVarbPathInfo;
   return {
     infoType: validateS.literal(obj.infoType, "varbPathDbId"),
-    dbId: Id.validate(obj.dbId),
+    dbId: IdS.validate(obj.dbId),
     varbPathName: validateS.unionLiteral(
       obj.varbPathName,
       customVarbOptionNames

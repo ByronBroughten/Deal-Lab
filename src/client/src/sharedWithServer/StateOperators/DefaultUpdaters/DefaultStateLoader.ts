@@ -1,7 +1,7 @@
-import { SectionPack } from "../../SectionPacks/SectionPack";
 import { GetterSectionBase } from "../../StateGetters/Bases/GetterSectionBase";
 import { GetterSection } from "../../StateGetters/GetterSection";
 import { SectionName } from "../../stateSchemas/SectionName";
+import { SectionPack } from "../../StateTransports/SectionPack";
 import {
   hasDefaultChild,
   makeDefaultChildPack,

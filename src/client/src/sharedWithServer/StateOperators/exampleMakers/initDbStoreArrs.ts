@@ -1,8 +1,8 @@
-import { ChildPackArrs } from "../../SectionPacks/ChildSectionPack";
-import { SectionPack } from "../../SectionPacks/SectionPack";
 import { dbStoreNames } from "../../stateSchemas/derivedFromChildrenSchemas/DbStoreName";
 import { numObj } from "../../stateSchemas/StateValue/NumObj";
 import { stringObj } from "../../stateSchemas/StateValue/StringObj";
+import { ChildPackArrs } from "../../StateTransports/ChildSectionPack";
+import { SectionPack } from "../../StateTransports/SectionPack";
 import { timeS } from "../../utils/timeS";
 import { makeDefaultDealCompareMenu } from "../defaultMaker/makeDefaultDealCompareMenu";
 import { makeDefaultOutputList } from "../defaultMaker/makeDefaultOutputList";

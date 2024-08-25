@@ -1,5 +1,5 @@
 import { cloneDeep, round } from "lodash";
-import { VarbNames } from "../SectionInfos/VarbInfoBase";
+import { VarbNames } from "../StateGetters/Identifiers/VarbInfoBase";
 import { GeneralBaseVarb } from "../stateSchemas/allBaseSectionVarbs/baseVarbs";
 import { getDisplayVarb } from "../stateSchemas/allDisplaySectionVarbs";
 import {

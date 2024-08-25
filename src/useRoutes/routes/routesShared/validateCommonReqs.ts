@@ -3,16 +3,16 @@ import {
   SectionPackArrsReq,
   SectionPackReq,
 } from "../../../client/src/sharedWithServer/apiQueriesShared/makeReqAndRes";
-import { Id } from "../../../client/src/sharedWithServer/Ids/IdS";
-import {
-  validateDbSectionPack,
-  validateDbSectionPackArrs,
-} from "../../../client/src/sharedWithServer/stateSchemas/derivedFromChildrenSchemas/DbSectionPack";
 import {
   DbStoreNameByType,
   dbStoreNameS,
   DbStoreType,
 } from "../../../client/src/sharedWithServer/stateSchemas/derivedFromChildrenSchemas/DbStoreName";
+import {
+  validateDbSectionPack,
+  validateDbSectionPackArrs,
+} from "../../../client/src/sharedWithServer/stateSchemas/StateTransports/DbSectionPack";
+import { IdS } from "../../../client/src/sharedWithServer/utils/IdS";
 import { Authed, validateAuthData } from "../../../middleware/authWare";
 import { JwtReq, WithJWT } from "../../../middleware/jwtWare";
 
@@ -39,7 +39,7 @@ export function validateDbStoreName<DT extends DbStoreType = "all">(
 }
 
 export function validateDbId(value: any): string {
-  if (Id.is(value)) return value;
+  if (IdS.is(value)) return value;
   else {
     throw new Error("The received dbId is not valid.");
   }

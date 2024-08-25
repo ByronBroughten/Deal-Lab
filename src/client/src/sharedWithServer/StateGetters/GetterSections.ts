@@ -1,14 +1,3 @@
-import { SectionId } from "../Ids/SectionId";
-import {
-  FeSectionInfo,
-  FeVarbInfo,
-  varbIdToInfo,
-} from "../SectionInfos/FeInfo";
-import {
-  IdInfoMixedMulti,
-  SectionInfoMixed,
-  VarbInfoMixed,
-} from "../SectionInfos/MixedSectionInfo";
 import { SectionNameByType } from "../SectionNameByType";
 import { SectionsMeta, sectionsMeta } from "../StateMeta/SectionsMeta";
 import { DbSectionInfo } from "../stateSchemas/allBaseSectionVarbs/DbSectionInfo";
@@ -21,6 +10,13 @@ import {
 import { GetterList } from "./GetterList";
 import { GetterSection } from "./GetterSection";
 import { GetterVarb } from "./GetterVarb";
+import { FeSectionInfo, FeVarbInfo, varbIdToInfo } from "./Identifiers/FeInfo";
+import {
+  IdInfoMixedMulti,
+  SectionInfoMixed,
+  VarbInfoMixed,
+} from "./Identifiers/MixedSectionInfo";
+import { SectionId } from "./Identifiers/SectionId";
 
 export class GetterSections extends GetterSectionsBase {
   static init(requiredProps: GetterSectionsRequiredProps) {

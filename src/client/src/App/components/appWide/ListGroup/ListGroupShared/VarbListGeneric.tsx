@@ -1,7 +1,7 @@
 import { SxProps } from "@mui/material";
 import React, { ReactNode } from "react";
-import { FeSectionInfo } from "../../../../../sharedWithServer/SectionInfos/FeInfo";
 import { SectionNameByType } from "../../../../../sharedWithServer/SectionNameByType";
+import { FeSectionInfo } from "../../../../../sharedWithServer/StateGetters/Identifiers/FeInfo";
 import { ChildName } from "../../../../../sharedWithServer/stateSchemas/derivedFromChildrenSchemas/ChildName";
 import { useAction } from "../../../../stateClassHooks/useAction";
 import { useGetterSection } from "../../../../stateClassHooks/useGetterSection";

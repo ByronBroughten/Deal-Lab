@@ -1,7 +1,7 @@
-import { FeSectionInfo } from "../../sharedWithServer/SectionInfos/FeInfo";
 import { SectionNameByType } from "../../sharedWithServer/SectionNameByType";
 import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection";
 import { GetterSections } from "../../sharedWithServer/StateGetters/GetterSections";
+import { FeSectionInfo } from "../../sharedWithServer/StateGetters/Identifiers/FeInfo";
 import { SectionName } from "../../sharedWithServer/stateSchemas/SectionName";
 import { useSectionsContext } from "./useMainState";
 import { useSectionInfoContext } from "./useSectionContext";

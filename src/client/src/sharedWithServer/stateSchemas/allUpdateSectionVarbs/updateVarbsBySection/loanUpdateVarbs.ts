@@ -1,13 +1,13 @@
-import { relVarbInfoS } from "../../../SectionInfos/RelVarbInfo";
+import { relVarbInfoS } from "../../../StateGetters/Identifiers/RelVarbInfo";
 import { GroupKey, groupNameEnding } from "../../GroupName";
 import { USVS, usvs } from "../updateSectionVarbs";
 import { uvS } from "../updateVarb";
 import { OverrideBasics, uosb, uosbS } from "../updateVarb/OverrideBasics";
 import { ubS } from "../updateVarb/UpdateBasics";
-import { upS, updateFnPropsS, upsS } from "../updateVarb/UpdateFnProps";
+import { updateFnPropsS, upS, upsS } from "../updateVarb/UpdateFnProps";
 import { uO, updateOverride } from "../updateVarb/UpdateOverride";
-import { osS } from "../updateVarb/UpdateOverrideSwitch";
 import { uosS } from "../updateVarb/UpdateOverrides";
+import { osS } from "../updateVarb/UpdateOverrideSwitch";
 import { uvsS } from "../updateVarbs";
 
 export function loanUpdateVarbs(): USVS<"loan"> {

@@ -1,6 +1,6 @@
-import { SectionPack } from "../SectionPacks/SectionPack";
-import { validateSectionPackDuck } from "../stateSchemas/derivedFromChildrenSchemas/validateSectionPackDuck";
 import { Obj } from "../utils/Obj";
+import { SectionPack } from "./SectionPack";
+import { validateSectionPackDuck } from "./validateSectionPackDuck";
 
 export type UserData = {
   feStore: SectionPack<"feStore">;

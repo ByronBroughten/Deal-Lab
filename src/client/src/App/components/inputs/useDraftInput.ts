@@ -2,7 +2,7 @@ import { ContentState, EditorState } from "draft-js";
 import { isEqual } from "lodash";
 import React, { useEffect, useState } from "react";
 import { constants } from "../../../sharedWithServer/Constants";
-import { FeVarbInfo } from "../../../sharedWithServer/SectionInfos/FeInfo";
+import { FeVarbInfo } from "../../../sharedWithServer/StateGetters/Identifiers/FeInfo";
 import { isEditorValueName } from "../../../sharedWithServer/stateSchemas/StateValue/EditorValue";
 import { StrictOmit } from "../../../sharedWithServer/utils/types";
 import {

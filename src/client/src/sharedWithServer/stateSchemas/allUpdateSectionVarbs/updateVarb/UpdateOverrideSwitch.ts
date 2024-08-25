@@ -1,20 +1,20 @@
-import { mixedInfoS } from "../../../SectionInfos/MixedSectionInfo";
-import { PathNameVarbInfoMixed } from "../../../SectionInfos/PathNameInfo";
-import {
-  RelChildrenVarbInfo,
-  RelLocalVarbInfo,
-  relVarbInfoS,
-} from "../../../SectionInfos/RelVarbInfo";
-import { isVarbName } from "../../../SectionInfos/VarbInfoBase";
-import {
-  VarbPathName,
-  VarbPathNameInfoMixed,
-  VarbPathValue,
-} from "../../../SectionInfos/VarbPathNameInfo";
 import {
   SectionPathName,
   SectionPathVarbName,
 } from "../../../sectionPaths/sectionPathNames";
+import { mixedInfoS } from "../../../StateGetters/Identifiers/MixedSectionInfo";
+import { PathNameVarbInfoMixed } from "../../../StateGetters/Identifiers/PathNameInfo";
+import {
+  RelChildrenVarbInfo,
+  RelLocalVarbInfo,
+  relVarbInfoS,
+} from "../../../StateGetters/Identifiers/RelVarbInfo";
+import { isVarbName } from "../../../StateGetters/Identifiers/VarbInfoBase";
+import {
+  VarbPathName,
+  VarbPathNameInfoMixed,
+  VarbPathValue,
+} from "../../../StateGetters/Identifiers/VarbPathNameInfo";
 import { VarbNameWide } from "../../derivedFromBaseSchemas/baseSectionsVarbsTypes";
 import { ChildName } from "../../derivedFromChildrenSchemas/ChildName";
 import { ValueSource } from "../../StateValue/unionValues";

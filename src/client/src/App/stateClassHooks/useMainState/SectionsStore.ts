@@ -1,10 +1,6 @@
 import hash from "object-hash";
 import React from "react";
 import { constant } from "../../../sharedWithServer/Constants";
-import {
-  ChildSectionPack,
-  validateSectionPackArrs,
-} from "../../../sharedWithServer/SectionPacks/ChildSectionPack";
 import { StateSections } from "../../../sharedWithServer/State/StateSections";
 import { GetterSections } from "../../../sharedWithServer/StateGetters/GetterSections";
 import { makeDefaultMain } from "../../../sharedWithServer/StateOperators/defaultMaker/makeDefaultMain";
@@ -12,6 +8,10 @@ import { PackBuilderSection } from "../../../sharedWithServer/StateOperators/Pac
 import { SolverSection } from "../../../sharedWithServer/StateOperators/Solvers/SolverSection";
 import { SolverSections } from "../../../sharedWithServer/StateOperators/Solvers/SolverSections";
 import { allBaseSectionVarbs } from "../../../sharedWithServer/stateSchemas/allBaseSectionVarbs";
+import {
+  ChildSectionPack,
+  validateSectionPackArrs,
+} from "../../../sharedWithServer/StateTransports/ChildSectionPack";
 import { getStoredObj } from "../../utils/localStorage";
 
 const storeChildNames = [

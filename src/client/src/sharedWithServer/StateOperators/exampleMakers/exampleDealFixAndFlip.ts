@@ -1,6 +1,6 @@
-import { SectionPack } from "../../SectionPacks/SectionPack";
 import { numObj } from "../../stateSchemas/StateValue/NumObj";
 import { numObjNext } from "../../stateSchemas/StateValue/numObjNext";
+import { SectionPack } from "../../StateTransports/SectionPack";
 import { makeExampleProperty } from "./makeExampleProperty";
 
 export function exampleDealFixAndFlipProperty(): SectionPack<"property"> {

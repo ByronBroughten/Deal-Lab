@@ -1,11 +1,10 @@
-import { Id } from "../../Ids/IdS";
-import { VarbInfoMixedFocal } from "../../SectionInfos/MixedSectionInfo";
-import { ValueInEntityInfo } from "../../SectionInfos/ValueInEntityInfo";
-import { FeVarbInfoMixed } from "../../SectionInfos/VarbInfoBase";
 import { SectionNameByType } from "../../SectionNameByType";
 import { StateSections } from "../../State/StateSections";
 import { GetterSections } from "../../StateGetters/GetterSections";
 import { GetterVarb } from "../../StateGetters/GetterVarb";
+import { VarbInfoMixedFocal } from "../../StateGetters/Identifiers/MixedSectionInfo";
+import { ValueInEntityInfo } from "../../StateGetters/Identifiers/ValueInEntityInfo";
+import { FeVarbInfoMixed } from "../../StateGetters/Identifiers/VarbInfoBase";
 import { InEntityGetterVarb } from "../../StateGetters/InEntityGetterVarb";
 import { StateValue } from "../../stateSchemas/StateValue";
 import {
@@ -15,6 +14,7 @@ import {
   OutEntityInfo,
   ValueInEntity,
 } from "../../stateSchemas/StateValue/stateValuesShared/entities";
+import { IdS } from "../../utils/IdS";
 import { StrictOmit } from "../../utils/types";
 import { EntityPrepperVarb } from "../EntityPreppers/EntityPrepperVarb";
 import { OutEntityGetterVarb } from "../OutEntityGetters/OutEntityGetterVarb";
@@ -100,7 +100,7 @@ export class SolverVarb<
     this.updateConnectedEntities();
   }
   loadValueFromVarb(varbInfo: ValueInEntityInfo): void {
-    const entityInfo = { ...varbInfo, entityId: Id.make() };
+    const entityInfo = { ...varbInfo, entityId: IdS.make() };
     const infoVarb = this.localSolverVarb("valueEntityInfo");
     infoVarb.updaterVarb.updateValue(entityInfo);
 

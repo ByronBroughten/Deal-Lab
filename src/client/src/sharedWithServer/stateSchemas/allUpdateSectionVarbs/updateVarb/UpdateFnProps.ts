@@ -1,11 +1,11 @@
-import { Id } from "../../../Ids/IdS";
-import { mixedInfoS } from "../../../SectionInfos/MixedSectionInfo";
-import { relVarbInfoS } from "../../../SectionInfos/RelVarbInfo";
-import { VarbPathName } from "../../../SectionInfos/VarbPathNameInfo";
 import {
   SectionPathName,
   SectionPathVarbName,
 } from "../../../sectionPaths/sectionPathNames";
+import { mixedInfoS } from "../../../StateGetters/Identifiers/MixedSectionInfo";
+import { relVarbInfoS } from "../../../StateGetters/Identifiers/RelVarbInfo";
+import { VarbPathName } from "../../../StateGetters/Identifiers/VarbPathNameInfo";
+import { IdS } from "../../../utils/IdS";
 import { Obj } from "../../../utils/Obj";
 import { VarbNameWide } from "../../derivedFromBaseSchemas/baseSectionsVarbsTypes";
 import { ChildName } from "../../derivedFromChildrenSchemas/ChildName";
@@ -107,7 +107,7 @@ export function updateFnProp(
   return {
     ...varbInfo,
     andSwitches,
-    entityId: Id.make(),
+    entityId: IdS.make(),
   };
 }
 

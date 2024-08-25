@@ -1,5 +1,3 @@
-import { Id } from "../../Ids/IdS";
-import { FeSectionInfo } from "../../SectionInfos/FeInfo";
 import { SectionNameByType } from "../../SectionNameByType";
 import { SectionPathContextName } from "../../sectionPaths/sectionPathContexts";
 import { InitRawFeSectionProps } from "../../State/initRawSection";
@@ -11,6 +9,7 @@ import {
 import { GetterSectionProps } from "../../StateGetters/Bases/GetterSectionBase";
 import { NotAVarbNameError } from "../../StateGetters/Bases/GetterVarbBase";
 import { GetterSections } from "../../StateGetters/GetterSections";
+import { FeSectionInfo } from "../../StateGetters/Identifiers/FeInfo";
 import { VarbName } from "../../stateSchemas/derivedFromBaseSchemas/baseSectionsVarbsTypes";
 import {
   ChildArrInfo,
@@ -25,6 +24,7 @@ import { SectionName } from "../../stateSchemas/SectionName";
 import { SectionValues, StateValue } from "../../stateSchemas/StateValue";
 import { Arr } from "../../utils/Arr";
 import { ValidationError } from "../../utils/Error";
+import { IdS } from "../../utils/IdS";
 import { Obj } from "../../utils/Obj";
 import { StrictOmit } from "../../utils/types";
 import { UpdaterList } from "./UpdaterList";
@@ -178,7 +178,7 @@ export class UpdaterSection<
     childName,
     sectionContextName = this.pickSectionContextName(childName),
     contextPathIdxSpecifier = {},
-    feId = Id.make(),
+    feId = IdS.make(),
   }: {
     childName: CN;
     feId?: string;
@@ -294,7 +294,7 @@ export class UpdaterSection<
     this.updateChildFeIds({ childName, feIds: nextIds });
   }
   newDbId(): void {
-    this.updateDbId(Id.make());
+    this.updateDbId(IdS.make());
   }
   updateDbId(dbId: string): void {
     this.updateProps({ dbId });
