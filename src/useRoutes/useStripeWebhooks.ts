@@ -1,6 +1,5 @@
 import { Express } from "express";
-import { constants } from "../client/src/sharedWithServer/Constants";
-
+import { constant } from "../client/src/sharedWithServer/Constants";
 import { Obj } from "../client/src/sharedWithServer/utils/Obj";
 import {
   stripeWebhookTestWare,
@@ -13,6 +12,6 @@ export function useStripeWebhooks(app: Express) {
     stripeTest: stripeWebhookTestWare,
   } as const;
   Obj.entries(webhookWare).forEach(([webhookName, ware]) => {
-    app.post(`${constants.apiPathBit}/webhook/${webhookName}`, ...ware);
+    app.post(`${constant("apiPathBit")}/webhook/${webhookName}`, ...ware);
   });
 }

@@ -6,6 +6,17 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
+// sharedWithServer
+
+// *Constants
+// Schemas (includes sectionStores)
+// State
+// StateGetters (includes StateMeta)
+// StateOperators
+// *ApiQueries (includes query types)
+
+// Transports (SectionPacks)
+// utils
 
 // Trigger rebuild
 // MLS-ilizer: select an area and analyze all the properties

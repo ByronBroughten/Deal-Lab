@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { createNewSession } from "supertokens-node/recipe/session";
-import { QueryReq } from "../../../client/src/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
+import { QueryReq } from "../../../client/src/sharedWithServer/ApiQueries";
 import { sendSuccess } from "../routesShared/sendSuccess";
 
 export const makeSessionWare = [makeSession];

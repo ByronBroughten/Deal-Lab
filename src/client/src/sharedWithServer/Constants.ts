@@ -1,33 +1,16 @@
 import { getAppModeStuff } from "./Constants/appMode";
-import { envName } from "./Constants/envName";
+import { envConstants } from "./Constants/envConstants";
 import { feRoutes } from "./Constants/feRoutes";
+import {
+  apiPathBit,
+  apiPathFull,
+  apiQueryNames,
+  makeQueryPaths,
+} from "./Constants/queryPaths";
 import { stripePrices } from "./Constants/stripePrices";
 
 const clientDevUrl = "http://localhost:3000";
 const { devAppDisplayName, clientProdUrl, ...appNameStuff } = getAppModeStuff();
-
-const envConstants = {
-  development: {
-    environment: "development",
-    appDisplayName: devAppDisplayName,
-    apiUrlBase: "http://localhost:5000",
-    clientUrlBase: clientDevUrl,
-    paymentManagementLink:
-      "https://billing.stripe.com/p/login/test_5kA16HgOu6k00nubII",
-  },
-  production: {
-    environment: "production",
-    appDisplayName: appNameStuff.appName,
-    apiUrlBase: clientProdUrl,
-    clientUrlBase: clientProdUrl,
-    paymentManagementLink:
-      "https://billing.stripe.com/p/login/cN24j771Yd5qc3C9AA",
-  },
-} as const;
-
-const env = envConstants[envName];
-const apiPathBit = "/api";
-const apiPathFull = `${env.apiUrlBase}${apiPathBit}`;
 
 const isBeta = false;
 const maxSectionSaveLimit = 10000;
@@ -36,9 +19,11 @@ const saveDelayInMs = 4000;
 const solveDelayInMs = 500;
 const editorValueUpdateDelayMs = 300;
 
-export const config = {
-  ...env,
+export const constants = {
+  ...envConstants,
   ...appNameStuff,
+  ...makeQueryPaths(),
+  apiQueryNames,
   compoundIdSpliter: ".",
   maxSectionSaveLimit,
   stripePrices,
@@ -51,8 +36,6 @@ export const config = {
   clientProdUrl,
   clientDevUrl,
   isBeta,
-  apiPathBit,
-  apiPathFull,
   basicStorageLimit: basicSectionSaveLimit,
   plans: {
     basicPlan: {
@@ -67,9 +50,9 @@ export const config = {
   superTokens: {
     appInfo: {
       // learn more about this on https://supertokens.com/docs/emailpassword/appinfo
-      appName: env.appDisplayName,
+      appName: envConstants.appDisplayName,
       apiDomain: apiPathFull,
-      websiteDomain: env.clientUrlBase,
+      websiteDomain: envConstants.clientUrlBase,
 
       websiteBasePath: feRoutes.auth,
       apiBasePath: feRoutes.auth,
@@ -78,24 +61,11 @@ export const config = {
   feRoutes,
   auth: {
     get successUrl() {
-      return `${env.clientUrlBase}${config.feRoutes.handleAuth}`;
+      return `${envConstants.clientUrlBase}${constants.feRoutes.handleAuth}`;
     },
   },
-  apiQueryNames: [
-    "getArchivedDeals",
-    "addSection",
-    "updateSection",
-    "updateSections",
-    "getSection",
-    "deleteSection",
-    "replaceSectionArrs",
-    "getProPaymentUrl",
-    "getCustomerPortalUrl",
-    "getUserData",
-    "getSubscriptionData",
-    "makeSession",
-    "getNewDeal",
-  ],
+  apiPathFull,
+  apiPathBit,
   get superTokensAppInfo() {
     return {
       // learn more about this on https://supertokens.com/docs/emailpassword/appinfo
@@ -113,11 +83,10 @@ export const config = {
   },
 } as const;
 
-type Config = typeof config;
-type ConfigKey = keyof Config;
+type Constants = typeof constants;
+type ConstantsKey = keyof Constants;
+export type Constant<K extends ConstantsKey> = Constants[K];
 
-export const constants = config;
-
-export function constant<K extends ConfigKey>(key: K): Config[K] {
-  return config[key];
+export function constant<K extends ConstantsKey>(key: K): Constants[K] {
+  return constants[key];
 }

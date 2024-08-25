@@ -1,4 +1,4 @@
-import { envName } from "./envName";
+import { envConstant } from "./envConstants";
 
 type StripePrice = {
   priceId: string;
@@ -7,14 +7,9 @@ type StripePrice = {
   product: "proPlan" | "trial";
 };
 
-const stripeProPlanPriceIds = {
-  development: "price_1M8A2OBcSOBChcCBAqDD2TQn",
-  production: "price_1M8A4TBcSOBChcCBfz5K4buL",
-};
-
 export const stripePrices: StripePrice[] = [
   {
-    priceId: stripeProPlanPriceIds[envName],
+    priceId: envConstant("stripeProPriceId"),
     costInCents: 800,
     billed: "monthly",
     product: "proPlan",

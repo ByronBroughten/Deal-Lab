@@ -1,13 +1,11 @@
 import { Server } from "http";
 import request from "supertest";
-import { DbUserGetter } from "../../DbUserService/DbUserGetter";
-import { constants } from "../../client/src/sharedWithServer/Constants";
-
-import { apiQueriesShared } from "../../client/src/sharedWithServer/apiQueriesShared";
 import {
   QueryReq,
   QueryRes,
-} from "../../client/src/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
+} from "../../client/src/sharedWithServer/ApiQueries";
+import { constant } from "../../client/src/sharedWithServer/Constants";
+import { DbUserGetter } from "../../DbUserService/DbUserGetter";
 import { runApp } from "../../runApp";
 import {
   createAndGetDbUser,
@@ -16,7 +14,7 @@ import {
   makeSessionGetCookies,
 } from "./apiQueriesTestTools/testUser";
 
-const testedRoute = apiQueriesShared.getProPaymentUrl.pathRoute;
+const testedRoute = constant("pathRoutes").getProPaymentUrl;
 describe(testedRoute, () => {
   let server: Server;
   let dbUser: DbUserGetter;
@@ -38,14 +36,14 @@ describe(testedRoute, () => {
   async function exec() {
     const res = await request(server)
       .post(testedRoute)
-      .set(constants.tokenKey.userAuthData, dbUser.createUserJwt())
+      .set(constant("tokenKey").userAuthData, dbUser.createUserJwt())
       .set("Cookie", cookies)
       .send(req.body);
     return getStandardRes(res);
   }
   it("should return status 200 and a url", async () => {
     const res = await exec();
-    if (constants.isBeta) {
+    if (constant("isBeta")) {
       expect(res.status).toBe(400);
     } else {
       expect(res.status).toBe(200);
@@ -61,7 +59,7 @@ describe(testedRoute, () => {
 });
 
 function makeReq(): QueryReq<"getProPaymentUrl"> {
-  const priceId = constants.stripePrices[0].priceId;
+  const priceId = constant("stripePrices")[0].priceId;
   return {
     body: { priceId },
   };

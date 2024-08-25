@@ -1,8 +1,6 @@
 import { Response } from "express";
-import {
-  ApiQueryName,
-  QueryRes,
-} from "../../../client/src/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
+import { QueryRes } from "../../../client/src/sharedWithServer/ApiQueries";
+import { ApiQueryName } from "../../../client/src/sharedWithServer/Constants/queryPaths";
 
 export function sendSuccess<QN extends ApiQueryName>(
   res: Response,

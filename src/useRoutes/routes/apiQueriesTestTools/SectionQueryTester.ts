@@ -1,5 +1,5 @@
 import { IndexSectionQuerierBase } from "../../../client/src/App/modules/QueriersBasic/Bases/IndexSectionQuerierBase";
-import { ApiQueries } from "../../../client/src/sharedWithServer/apiQueriesShared";
+import { ApiQueries } from "../../../client/src/sharedWithServer/ApiQueries";
 import {
   DbPackInfoSectionReq,
   makeReq,

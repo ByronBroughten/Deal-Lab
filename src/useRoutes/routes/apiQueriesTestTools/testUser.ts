@@ -6,11 +6,11 @@ import {
   emailPasswordSignUp,
   getUsersByEmail,
 } from "supertokens-node/recipe/thirdpartyemailpassword";
+import { constant } from "../../../client/src/sharedWithServer/Constants";
+import { Str } from "../../../client/src/sharedWithServer/utils/Str";
 import { DbUserService } from "../../../DbUserService";
 import { DbUserGetter } from "../../../DbUserService/DbUserGetter";
 import { DbUserModel } from "../../../DbUserService/DbUserModel";
-import { apiQueriesShared } from "../../../client/src/sharedWithServer/apiQueriesShared";
-import { Str } from "../../../client/src/sharedWithServer/utils/Str";
 
 export async function createAndGetDbUser(
   testSuiteName: string
@@ -36,7 +36,7 @@ export async function makeSessionGetCookies({
   authId,
 }: CreateTestSessionProps): Promise<string[]> {
   const cookieRes = await request(server)
-    .post(apiQueriesShared.makeSession.pathRoute)
+    .post(constant("pathRoutes").makeSession)
     .send({ authId });
   return cookieRes.get("Set-Cookie");
 }

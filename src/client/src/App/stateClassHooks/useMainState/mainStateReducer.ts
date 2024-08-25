@@ -1,4 +1,5 @@
 import { ContentState } from "draft-js";
+import { UserData } from "../../../sharedWithServer/apiQueriesShared/UserData";
 import {
   FeSectionInfo,
   FeVarbInfo,
@@ -9,12 +10,6 @@ import {
   FeIdProp,
 } from "../../../sharedWithServer/SectionInfos/NanoIdInfo";
 import { SectionPack } from "../../../sharedWithServer/SectionPacks/SectionPack";
-import { MainState } from "../../../sharedWithServer/State/MainState";
-import { SolvePrepperSection } from "../../../sharedWithServer/StateClasses/SolvePreppers/SolvePrepperSection";
-import { SolvePrepperVarb } from "../../../sharedWithServer/StateClasses/SolvePreppers/SolvePrepperVarb";
-import { AddChildOptions } from "../../../sharedWithServer/StateClasses/Updaters/UpdaterSection";
-import { TopOperator } from "../../../sharedWithServer/TopOperator";
-import { UserData } from "../../../sharedWithServer/apiQueriesShared/validateUserData";
 import {
   FeStoreInfo,
   StoreNameProp,
@@ -24,6 +19,11 @@ import { SectionName } from "../../../sharedWithServer/sectionVarbsConfig/Sectio
 import { SectionValues } from "../../../sharedWithServer/sectionVarbsConfig/StateValue";
 import { DealMode } from "../../../sharedWithServer/sectionVarbsConfig/StateValue/dealMode";
 import { ChildName } from "../../../sharedWithServer/sectionVarbsConfigDerived/sectionChildrenDerived/ChildName";
+import { MainState } from "../../../sharedWithServer/State/MainState";
+import { SolvePrepperSection } from "../../../sharedWithServer/StateClasses/SolvePreppers/SolvePrepperSection";
+import { SolvePrepperVarb } from "../../../sharedWithServer/StateClasses/SolvePreppers/SolvePrepperVarb";
+import { AddChildOptions } from "../../../sharedWithServer/StateClasses/Updaters/UpdaterSection";
+import { TopOperator } from "../../../sharedWithServer/TopOperator";
 import { Arr } from "../../../sharedWithServer/utils/Arr";
 import { Merge } from "../../../sharedWithServer/utils/Obj/merge";
 import { EditorUpdaterVarb } from "../../modules/EditorUpdaterVarb";

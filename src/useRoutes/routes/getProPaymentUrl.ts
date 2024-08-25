@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import { DbUserService } from "../../DbUserService";
-import { constants } from "../../client/src/sharedWithServer/Constants";
-import { QueryReq } from "../../client/src/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
+import { QueryReq } from "../../client/src/sharedWithServer/ApiQueries";
 import { makeRes } from "../../client/src/sharedWithServer/apiQueriesShared/makeReqAndRes";
+import { constants } from "../../client/src/sharedWithServer/Constants";
+import { DbUserService } from "../../DbUserService";
 import {
   Authed,
   getAuthWare,

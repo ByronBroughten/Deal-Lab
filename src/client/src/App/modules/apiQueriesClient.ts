@@ -1,21 +1,18 @@
 import { AxiosResponse } from "axios";
-import { constants } from "../../sharedWithServer/Constants";
+import {
+  ApiQueries,
+  ApiQuery,
+  QueryRes,
+} from "../../sharedWithServer/ApiQueries";
+import { validateSubscriptionValues } from "../../sharedWithServer/apiQueriesShared/EstimatorPlanValues";
+import { validateUserData } from "../../sharedWithServer/apiQueriesShared/UserData";
+import { constant, constants } from "../../sharedWithServer/Constants";
+import { ApiQueryName } from "../../sharedWithServer/Constants/queryPaths";
 import { validateSectionPackArrByType } from "../../sharedWithServer/SectionNameByType";
 import {
   SectionPack,
   validateSectionPack,
 } from "../../sharedWithServer/SectionPacks/SectionPack";
-import {
-  ApiQueries,
-  ApiQuery,
-  apiQueriesShared,
-} from "../../sharedWithServer/apiQueriesShared";
-import { validateSubscriptionValues } from "../../sharedWithServer/apiQueriesShared/EstimatorPlanValues";
-import {
-  ApiQueryName,
-  QueryRes,
-} from "../../sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
-import { validateUserData } from "../../sharedWithServer/apiQueriesShared/validateUserData";
 import { Obj } from "../../sharedWithServer/utils/Obj";
 import { StrictOmit } from "../../sharedWithServer/utils/types";
 import {
@@ -141,6 +138,7 @@ interface MakeApiQueryProps<QN extends ApiQueryName> {
   doingWhat: string;
   validateRes: (res: AxiosResponse<unknown>) => QueryRes<QN>;
 }
+
 function makeApiQuery<QN extends ApiQueryName>({
   queryName,
   doingWhat,
@@ -149,7 +147,7 @@ function makeApiQuery<QN extends ApiQueryName>({
   return async function apiQuery(req: any) {
     const res = await https.post(
       doingWhat,
-      apiQueriesShared[queryName].pathFull,
+      constant("pathFull")[queryName],
       req.body
     );
 

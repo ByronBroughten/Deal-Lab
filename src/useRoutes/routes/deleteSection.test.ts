@@ -1,12 +1,13 @@
 import { Server } from "http";
 import request from "supertest";
-import { DbUserGetter } from "../../DbUserService/DbUserGetter";
-import { constants } from "../../client/src/sharedWithServer/Constants";
-
+import { QueryReq } from "../../client/src/sharedWithServer/ApiQueries";
+import {
+  constant,
+  constants,
+} from "../../client/src/sharedWithServer/Constants";
 import { Id } from "../../client/src/sharedWithServer/Ids/IdS";
 import { PackBuilderSection } from "../../client/src/sharedWithServer/StateClasses/Packers/PackBuilderSection";
-import { apiQueriesShared } from "../../client/src/sharedWithServer/apiQueriesShared";
-import { QueryReq } from "../../client/src/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
+import { DbUserGetter } from "../../DbUserService/DbUserGetter";
 import { runApp } from "../../runApp";
 import { SectionQueryTester } from "./apiQueriesTestTools/SectionQueryTester";
 import {
@@ -30,7 +31,7 @@ function makeReqs(): TestReqs {
   };
 }
 
-const testedRoute = apiQueriesShared.deleteSection.pathRoute;
+const testedRoute = constant("pathRoutes").deleteSection;
 describe(testedRoute, () => {
   let server: Server;
   let dbUser: DbUserGetter;
@@ -51,7 +52,7 @@ describe(testedRoute, () => {
 
   const exec = async () => {
     const res = await request(server)
-      .post(apiQueriesShared.addSection.pathRoute)
+      .post(constant("pathRoutes").addSection)
       .set(constants.tokenKey.userAuthData, dbUser.createUserJwt())
       .set("Cookie", cookies)
       .send(reqs.addSection.body);

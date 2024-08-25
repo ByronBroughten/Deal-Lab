@@ -1,9 +1,8 @@
 import { Request, Response } from "express";
-import { constants } from "../../client/src/sharedWithServer/Constants";
 import { makeRes } from "../../client/src/sharedWithServer/apiQueriesShared/makeReqAndRes";
-import { getAuthWare, validateEmptyAuthReq } from "../../middleware/authWare";
-
+import { constants } from "../../client/src/sharedWithServer/Constants";
 import { DbUserService } from "../../DbUserService";
+import { getAuthWare, validateEmptyAuthReq } from "../../middleware/authWare";
 import { sendSuccess } from "./routesShared/sendSuccess";
 import { getStripe } from "./routesShared/stripe";
 

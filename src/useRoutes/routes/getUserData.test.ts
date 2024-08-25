@@ -1,10 +1,12 @@
 import request from "supertest";
-import { DbUserGetter } from "../../DbUserService/DbUserGetter";
-import { constants } from "../../client/src/sharedWithServer/Constants";
-import { apiQueriesShared } from "../../client/src/sharedWithServer/apiQueriesShared";
-import { QueryReq } from "../../client/src/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
+import { QueryReq } from "../../client/src/sharedWithServer/ApiQueries";
 import { makeReq } from "../../client/src/sharedWithServer/apiQueriesShared/makeReqAndRes";
-import { validateUserData } from "../../client/src/sharedWithServer/apiQueriesShared/validateUserData";
+import { validateUserData } from "../../client/src/sharedWithServer/apiQueriesShared/UserData";
+import {
+  constant,
+  constants,
+} from "../../client/src/sharedWithServer/Constants";
+import { DbUserGetter } from "../../DbUserService/DbUserGetter";
 import { runApp } from "../../runApp";
 import {
   createAndGetDbUser,
@@ -13,7 +15,7 @@ import {
   makeSessionGetCookies,
 } from "./apiQueriesTestTools/testUser";
 
-const testedRoute = apiQueriesShared.getUserData.pathRoute;
+const testedRoute = constant("pathRoutes").getUserData;
 describe(testedRoute, () => {
   let server: ReturnType<typeof runApp>;
   let dbUser: DbUserGetter;

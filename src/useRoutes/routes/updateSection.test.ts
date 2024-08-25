@@ -1,15 +1,13 @@
 import { Server } from "http";
 import request from "supertest";
-import { DbUserGetter } from "../../DbUserService/DbUserGetter";
-import { constants } from "../../client/src/sharedWithServer/Constants";
-
-import { getUserById } from "../../DbUserService/DbUserModel";
+import { QueryReq } from "../../client/src/sharedWithServer/ApiQueries";
+import { constant } from "../../client/src/sharedWithServer/Constants";
 import { Id } from "../../client/src/sharedWithServer/Ids/IdS";
-import { PackBuilderSection } from "../../client/src/sharedWithServer/StateClasses/Packers/PackBuilderSection";
-import { apiQueriesShared } from "../../client/src/sharedWithServer/apiQueriesShared";
-import { QueryReq } from "../../client/src/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import { numObj } from "../../client/src/sharedWithServer/sectionVarbsConfig/StateValue/NumObj";
 import { stringObj } from "../../client/src/sharedWithServer/sectionVarbsConfig/StateValue/StringObj";
+import { PackBuilderSection } from "../../client/src/sharedWithServer/StateClasses/Packers/PackBuilderSection";
+import { DbUserGetter } from "../../DbUserService/DbUserGetter";
+import { getUserById } from "../../DbUserService/DbUserModel";
 import { runApp } from "../../runApp";
 import { SectionQueryTester } from "./apiQueriesTestTools/SectionQueryTester";
 import {
@@ -48,7 +46,7 @@ function makeReqs(): TestReqs {
   } as TestReqs;
 }
 
-const testedRoute = apiQueriesShared.updateSection.pathRoute;
+const testedRoute = constant("pathRoutes").updateSection;
 describe(testedRoute, () => {
   let server: Server;
   let dbUser: DbUserGetter;
@@ -73,8 +71,8 @@ describe(testedRoute, () => {
 
   const exec = async () => {
     const res = await request(server)
-      .post(apiQueriesShared.addSection.pathRoute)
-      .set(constants.tokenKey.userAuthData, dbUser.createUserJwt())
+      .post(constant("pathRoutes").addSection)
+      .set(constant("tokenKey").userAuthData, dbUser.createUserJwt())
       .set("Cookie", addSectionCookies)
       .send(reqs.addSection.body);
 

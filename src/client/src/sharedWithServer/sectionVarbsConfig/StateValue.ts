@@ -1,10 +1,10 @@
-import { VarbValueName } from "../sectionVarbsConfigDerived/baseSectionsDerived/baseSectionValues";
 import { VarbName } from "../sectionVarbsConfigDerived/baseSectionsDerived/baseSectionsVarbsTypes";
+import { VarbValueName } from "../sectionVarbsConfigDerived/baseSectionsDerived/baseSectionValues";
 import { SectionName } from "./SectionName";
 import { InEntityValue } from "./StateValue/InEntityValue";
 import { NumObj } from "./StateValue/NumObj";
-import { StringObj } from "./StateValue/StringObj";
 import { ChangesSaving, ChangesToSave } from "./StateValue/sectionChanges";
+import { StringObj } from "./StateValue/StringObj";
 import { UnionValueNamesToTypes } from "./StateValue/unionValues";
 import { ValueName } from "./ValueName";
 

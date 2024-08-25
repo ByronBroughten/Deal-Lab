@@ -1,9 +1,9 @@
 import { Server } from "http";
 import request from "supertest";
-import { DbUserGetter } from "../../DbUserService/DbUserGetter";
 import { userTokenS } from "../../client/src/App/modules/services/userTokenS";
-import { apiQueriesShared } from "../../client/src/sharedWithServer/apiQueriesShared";
 import { validateSubscriptionValues } from "../../client/src/sharedWithServer/apiQueriesShared/EstimatorPlanValues";
+import { constant } from "../../client/src/sharedWithServer/Constants";
+import { DbUserGetter } from "../../DbUserService/DbUserGetter";
 import { runApp } from "../../runApp";
 import {
   createAndGetDbUser,
@@ -12,7 +12,7 @@ import {
   makeSessionGetCookies,
 } from "./apiQueriesTestTools/testUser";
 
-const testedRoute = apiQueriesShared.getSubscriptionData.pathRoute;
+const testedRoute = constant("pathRoutes").getSubscriptionData;
 describe(testedRoute, () => {
   let server: Server;
   let dbUser: DbUserGetter;

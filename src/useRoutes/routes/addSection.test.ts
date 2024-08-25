@@ -1,16 +1,16 @@
 import { Server } from "http";
 import request from "supertest";
-import { DbUserGetter } from "../../DbUserService/DbUserGetter";
-import { constants } from "../../client/src/sharedWithServer/Constants";
-
-import { QueryReq } from "../../client/src/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
-import { runApp } from "../../runApp";
-
-import { getUserById } from "../../DbUserService/DbUserModel";
+import { QueryReq } from "../../client/src/sharedWithServer/ApiQueries";
+import {
+  constant,
+  constants,
+} from "../../client/src/sharedWithServer/Constants";
 import { PackBuilderSection } from "../../client/src/sharedWithServer/StateClasses/Packers/PackBuilderSection";
-import { apiQueriesShared } from "../../client/src/sharedWithServer/apiQueriesShared";
 import { Arr } from "../../client/src/sharedWithServer/utils/Arr";
 import { timeS } from "../../client/src/sharedWithServer/utils/timeS";
+import { DbUserGetter } from "../../DbUserService/DbUserGetter";
+import { getUserById } from "../../DbUserService/DbUserModel";
+import { runApp } from "../../runApp";
 import { SectionQueryTester } from "./apiQueriesTestTools/SectionQueryTester";
 import {
   createAndGetDbUser,
@@ -26,7 +26,7 @@ function makeAddSectionReq(): QueryReq<"addSection"> {
   return tester.makeSectionPackReq() as QueryReq<"addSection">;
 }
 
-const testedRoute = apiQueriesShared.addSection.pathRoute;
+const testedRoute = constant("pathRoutes").addSection;
 describe(testedRoute, () => {
   let req: QueryReq<"addSection">;
   let server: Server;

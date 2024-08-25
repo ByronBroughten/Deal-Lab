@@ -1,18 +1,17 @@
 import hash from "object-hash";
 import React from "react";
-
-import { config } from "../../../sharedWithServer/Constants";
+import { constant } from "../../../sharedWithServer/Constants";
+import { makeDefaultMain } from "../../../sharedWithServer/defaultMaker/makeDefaultMain";
 import {
   ChildSectionPack,
   validateSectionPackArrs,
 } from "../../../sharedWithServer/SectionPacks/ChildSectionPack";
+import { allBaseSectionVarbs } from "../../../sharedWithServer/sectionVarbsConfig/allBaseSectionVarbs";
 import { StateSections } from "../../../sharedWithServer/State/StateSections";
 import { PackBuilderSection } from "../../../sharedWithServer/StateClasses/Packers/PackBuilderSection";
 import { SolverSection } from "../../../sharedWithServer/StateClasses/Solvers/SolverSection";
 import { SolverSections } from "../../../sharedWithServer/StateClasses/Solvers/SolverSections";
 import { GetterSections } from "../../../sharedWithServer/StateGetters/GetterSections";
-import { makeDefaultMain } from "../../../sharedWithServer/defaultMaker/makeDefaultMain";
-import { allBaseSectionVarbs } from "../../../sharedWithServer/sectionVarbsConfig/allBaseSectionVarbs";
 import { getStoredObj } from "../../utils/localStorage";
 
 const storeChildNames = [
@@ -50,7 +49,7 @@ export function useLocalSectionsStore({
   }, [storeSectionsLocally, sections]);
 }
 
-const { tokenKey } = config;
+const tokenKey = constant("tokenKey");
 export class SectionsStore {
   static storeSections(sections: StateSections): void {
     const getterSections = GetterSections.init({ sections });

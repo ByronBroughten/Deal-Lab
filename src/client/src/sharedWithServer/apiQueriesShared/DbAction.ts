@@ -9,16 +9,13 @@ import { validateDbSectionPack } from "../sectionVarbsConfigDerived/sectionChild
 import { Obj } from "../utils/Obj";
 
 const dbActionNames = ["add", "update", "remove"] as const;
-function validateDbActionName(value: any): DbActionName {
+export type DbActionName = (typeof dbActionNames)[number];
+export function validateDbActionName(value: any): DbActionName {
   if (dbActionNames.includes(value)) return value;
   else throw new Error(`value "${value}" is not a DbActionName.`);
 }
-type DbActionName = (typeof dbActionNames)[number];
+
 export type DbAction = DbAdd | DbUpdate | DbRemove;
-
-type CheckDbAction<T extends { changeName: DbActionName }> = T;
-type _Test = CheckDbAction<DbAction>;
-
 export function validateDbAction(value: any): DbAction {
   const obj = Obj.validateObjToAny(value) as DbAction;
   const changeName = validateDbActionName(obj.changeName);
@@ -43,28 +40,8 @@ export function validateDbAction(value: any): DbAction {
   }
 }
 
-type StoreNameAndDbId = { storeName: StoreName; dbId: string };
-function validateStoreNameAndDbId(value: any): StoreNameAndDbId {
-  const obj = Obj.validateObjToAny(value) as StoreNameAndDbId;
-  return {
-    storeName: validateStoreName(obj.storeName),
-    dbId: Id.validate(obj.dbId),
-  };
-}
-
-function validateStoreNameAndSectionPack(value: any): StoreNameAndSectionPack {
-  const obj = Obj.validateObjToAny(value) as StoreNameAndSectionPack;
-  const storeName = validateStoreName(obj.storeName);
-  return {
-    storeName,
-    sectionPack: validateDbSectionPack(obj.sectionPack, storeName),
-  };
-}
-
-type StoreNameAndSectionPack<CN extends StoreName = StoreName> = {
-  storeName: CN;
-  sectionPack: SectionPack<StoreSectionName<CN>>;
-};
+type CheckDbAction<T extends { changeName: DbActionName }> = T;
+type _Test = CheckDbAction<DbAction>;
 
 export interface DbAdd<CN extends StoreName = StoreName>
   extends StoreNameAndSectionPack<CN> {
@@ -76,4 +53,26 @@ export interface DbUpdate<CN extends StoreName = StoreName>
 }
 export interface DbRemove extends StoreNameAndDbId {
   changeName: "remove";
+}
+
+type StoreNameAndDbId = { storeName: StoreName; dbId: string };
+function validateStoreNameAndDbId(value: any): StoreNameAndDbId {
+  const obj = Obj.validateObjToAny(value) as StoreNameAndDbId;
+  return {
+    storeName: validateStoreName(obj.storeName),
+    dbId: Id.validate(obj.dbId),
+  };
+}
+
+type StoreNameAndSectionPack<CN extends StoreName = StoreName> = {
+  storeName: CN;
+  sectionPack: SectionPack<StoreSectionName<CN>>;
+};
+function validateStoreNameAndSectionPack(value: any): StoreNameAndSectionPack {
+  const obj = Obj.validateObjToAny(value) as StoreNameAndSectionPack;
+  const storeName = validateStoreName(obj.storeName);
+  return {
+    storeName,
+    sectionPack: validateDbSectionPack(obj.sectionPack, storeName),
+  };
 }

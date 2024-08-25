@@ -1,8 +1,7 @@
 import { Request, Response } from "express";
-import { DbUserService } from "../../DbUserService";
-
-import { CreateDealReq } from "../../client/src/sharedWithServer/apiQueriesShared";
+import { CreateDealReq } from "../../client/src/sharedWithServer/ApiQueries";
 import { Obj } from "../../client/src/sharedWithServer/utils/Obj";
+import { DbUserService } from "../../DbUserService";
 import {
   Authed,
   getAuthWare,

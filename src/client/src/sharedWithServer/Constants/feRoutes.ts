@@ -1,24 +1,12 @@
 import { Obj } from "../utils/Obj";
-import { envName } from "./envName";
+import { envConstant } from "./envConstants";
 
-const envs = {
-  development: {
-    paymentManagementLink:
-      "https://billing.stripe.com/p/login/test_5kA16HgOu6k00nubII",
-  },
-  production: {
-    paymentManagementLink:
-      "https://billing.stripe.com/p/login/cN24j771Yd5qc3C9AA",
-  },
-};
-
-const env = envs[envName];
 const componentsRoute = "/components";
 const activeDealRoute = "/active-deal";
 const accountPageRoute = "/home";
 export const feRoutes = {
   auth: "/login",
-  paymentManagement: env.paymentManagementLink,
+  paymentManagement: envConstant("paymentManagementLink"),
   privacyPolicy: "/privacy-policy",
   termsOfService: "/terms-of-service",
   compare: "/compare",

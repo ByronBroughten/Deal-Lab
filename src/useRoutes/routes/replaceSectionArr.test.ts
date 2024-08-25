@@ -1,13 +1,11 @@
 import request from "supertest";
-import { DbUserGetter } from "../../DbUserService/DbUserGetter";
-
 import { SectionPackArrsReq } from "../../client/src/sharedWithServer/apiQueriesShared/makeReqAndRes";
-import { SectionArrReqMaker } from "./apiQueriesTestTools/SectionArrReqMaker";
-
-import { PackBuilderSection } from "../../client/src/sharedWithServer/StateClasses/Packers/PackBuilderSection";
-import { apiQueriesShared } from "../../client/src/sharedWithServer/apiQueriesShared";
+import { constant } from "../../client/src/sharedWithServer/Constants";
 import { childToSectionName } from "../../client/src/sharedWithServer/sectionVarbsConfigDerived/sectionChildrenDerived/ChildSectionName";
+import { PackBuilderSection } from "../../client/src/sharedWithServer/StateClasses/Packers/PackBuilderSection";
+import { DbUserGetter } from "../../DbUserService/DbUserGetter";
 import { runApp } from "../../runApp";
+import { SectionArrReqMaker } from "./apiQueriesTestTools/SectionArrReqMaker";
 import {
   createAndGetDbUser,
   deleteUserTotally,
@@ -21,7 +19,7 @@ function makeReq(): SectionPackArrsReq {
   return reqMaker.makeReq();
 }
 
-const testedRoute = apiQueriesShared.replaceSectionArrs.pathRoute;
+const testedRoute = constant("pathRoutes").replaceSectionArrs;
 describe(testedRoute, () => {
   let req: SectionPackArrsReq;
   let server: any;

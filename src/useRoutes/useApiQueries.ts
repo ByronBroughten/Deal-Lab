@@ -1,7 +1,6 @@
 import { Express } from "express";
-
-import { apiQueriesShared } from "../client/src/sharedWithServer/apiQueriesShared";
-import { ApiQueryName } from "../client/src/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
+import { constant } from "../client/src/sharedWithServer/Constants";
+import { ApiQueryName } from "../client/src/sharedWithServer/Constants/queryPaths";
 import { Obj } from "../client/src/sharedWithServer/utils/Obj";
 import { addSectionWare } from "./routes/addSection";
 import { makeSessionWare } from "./routes/apiQueriesTestTools/makeSession";
@@ -35,6 +34,6 @@ export function useApiQueries(app: Express): void {
   } as const;
 
   for (const [queryName, ware] of Obj.entries(endpointWare)) {
-    app.post(`${apiQueriesShared[queryName].pathRoute}`, ...ware);
+    app.post(`${constant("pathRoutes")[queryName]}`, ...ware);
   }
 }
