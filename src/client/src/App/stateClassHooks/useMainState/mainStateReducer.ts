@@ -15,11 +15,11 @@ import {
   StoreNameProp,
   StoreSectionName,
 } from "../../../sharedWithServer/sectionStores";
-import { ChildName } from "../../../sharedWithServer/sectionVarbsConfigDerived/sectionChildrenDerived/ChildName";
 import { MainState } from "../../../sharedWithServer/State/MainState";
 import { SolvePrepperSection } from "../../../sharedWithServer/StateOperators/SolvePreppers/SolvePrepperSection";
 import { SolvePrepperVarb } from "../../../sharedWithServer/StateOperators/SolvePreppers/SolvePrepperVarb";
 import { AddChildOptions } from "../../../sharedWithServer/StateOperators/Updaters/UpdaterSection";
+import { ChildName } from "../../../sharedWithServer/stateSchemas/derivedFromChildrenSchemas/ChildName";
 import { SectionName } from "../../../sharedWithServer/stateSchemas/SectionName";
 import { SectionValues } from "../../../sharedWithServer/stateSchemas/StateValue";
 import { DealMode } from "../../../sharedWithServer/stateSchemas/StateValue/dealMode";

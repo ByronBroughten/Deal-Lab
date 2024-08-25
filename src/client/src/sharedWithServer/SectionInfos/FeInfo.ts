@@ -7,11 +7,11 @@ import {
 import {
   VarbName,
   VarbNameWide,
-} from "../sectionVarbsConfigDerived/baseSectionsDerived/baseSectionsVarbsTypes";
+} from "../stateSchemas/derivedFromBaseSchemas/baseSectionsVarbsTypes";
 import {
   ParentName,
   ParentNameSafe,
-} from "../sectionVarbsConfigDerived/sectionChildrenDerived/ParentName";
+} from "../stateSchemas/derivedFromChildrenSchemas/ParentName";
 import { SectionName } from "../stateSchemas/SectionName";
 import { StateValue } from "../stateSchemas/StateValue";
 import { SectionNameProp } from "./SectionNameProp";

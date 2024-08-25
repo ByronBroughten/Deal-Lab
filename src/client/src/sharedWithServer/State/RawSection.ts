@@ -1,9 +1,9 @@
 import { Id } from "../Ids/IdS";
-import { validateAnyVarbName } from "../sectionVarbsConfigDerived/baseSectionsDerived/baseSectionsVarbsTypes";
+import { validateAnyVarbName } from "../stateSchemas/derivedFromBaseSchemas/baseSectionsVarbsTypes";
 import {
   ChildName,
   validateAnyChildName,
-} from "../sectionVarbsConfigDerived/sectionChildrenDerived/ChildName";
+} from "../stateSchemas/derivedFromChildrenSchemas/ChildName";
 import { SectionName } from "../stateSchemas/SectionName";
 import { StateValue } from "../stateSchemas/StateValue";
 import { validateStateValue } from "../stateSchemas/valueMetas";

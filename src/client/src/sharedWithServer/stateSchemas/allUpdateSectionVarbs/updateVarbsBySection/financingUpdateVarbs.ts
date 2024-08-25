@@ -1,16 +1,15 @@
 import { relVarbInfoS } from "../../../SectionInfos/RelVarbInfo";
-import { GroupVarbNameBase } from "../../../sectionVarbsConfigDerived/baseSectionsDerived/baseGroupNames";
+import { GroupVarbNameBase } from "../../derivedFromBaseSchemas/baseGroupNames";
 import { GroupKey, groupNameEnding } from "../../GroupName";
 import { UnionValue } from "../../StateValue/unionValues";
-
 import { UpdateSectionVarbs, usvs } from "../updateSectionVarbs";
 import { UpdateVarb, uvS } from "../updateVarb";
 import { uosbS } from "../updateVarb/OverrideBasics";
-import { UpdateBasics, ubS } from "../updateVarb/UpdateBasics";
-import { upS, updatePropS } from "../updateVarb/UpdateFnProps";
+import { ubS, UpdateBasics } from "../updateVarb/UpdateBasics";
+import { updatePropS, upS } from "../updateVarb/UpdateFnProps";
 import { updateOverride } from "../updateVarb/UpdateOverride";
+import { uosS, UpdateOverrides } from "../updateVarb/UpdateOverrides";
 import { osS } from "../updateVarb/UpdateOverrideSwitch";
-import { UpdateOverrides, uosS } from "../updateVarb/UpdateOverrides";
 import { GroupUpdateVarbs, uvsS } from "../updateVarbs";
 
 export function financingUpdateVarbs(): UpdateSectionVarbs<"financing"> {

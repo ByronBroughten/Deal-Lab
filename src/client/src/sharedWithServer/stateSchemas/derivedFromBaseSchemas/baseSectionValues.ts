@@ -1,9 +1,9 @@
-import { allBaseSectionVarbs } from "../../stateSchemas/allBaseSectionVarbs";
-import { SectionName } from "../../stateSchemas/SectionName";
-import { VarbValue } from "../../stateSchemas/StateValue";
-import { valueMetas } from "../../stateSchemas/valueMetas";
-import { ValueName } from "../../stateSchemas/ValueName";
 import { SubType } from "../../utils/types";
+import { allBaseSectionVarbs } from "../allBaseSectionVarbs";
+import { SectionName } from "../SectionName";
+import { VarbValue } from "../StateValue";
+import { valueMetas } from "../valueMetas";
+import { ValueName } from "../ValueName";
 import { BaseSectionVarbs, VarbName } from "./baseSectionsVarbsTypes";
 
 export function validateSectionVarbValue<

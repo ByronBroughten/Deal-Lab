@@ -1,9 +1,8 @@
 import { SectionNameByType } from "../../sharedWithServer/SectionNameByType";
-import { GetterVarb } from "../../sharedWithServer/StateGetters/GetterVarb";
-import { VarbName } from "../../sharedWithServer/sectionVarbsConfigDerived/baseSectionsDerived/baseSectionsVarbsTypes";
-
 import { GetterSectionsBase } from "../../sharedWithServer/StateGetters/Bases/GetterSectionsBase";
 import { GetterVarbProps } from "../../sharedWithServer/StateGetters/Bases/GetterVarbBase";
+import { GetterVarb } from "../../sharedWithServer/StateGetters/GetterVarb";
+import { VarbName } from "../../sharedWithServer/stateSchemas/derivedFromBaseSchemas/baseSectionsVarbsTypes";
 import { StrictOmit } from "../../sharedWithServer/utils/types";
 import { useSectionsContext } from "./useMainState";
 

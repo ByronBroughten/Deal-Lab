@@ -1,6 +1,6 @@
 import { StoreName, StoreSectionName } from "../../sectionStores";
-import { ChildName } from "../../sectionVarbsConfigDerived/sectionChildrenDerived/ChildName";
 import { Merge } from "../../utils/Obj/merge";
+import { ChildName } from "../derivedFromChildrenSchemas/ChildName";
 import { SectionName } from "../SectionName";
 
 export type SectionTraits<

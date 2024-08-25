@@ -5,8 +5,8 @@ import {
 import {
   ChildName,
   isChildName,
-} from "../sectionVarbsConfigDerived/sectionChildrenDerived/ChildName";
-import { childToSectionName } from "../sectionVarbsConfigDerived/sectionChildrenDerived/ChildSectionName";
+} from "../stateSchemas/derivedFromChildrenSchemas/ChildName";
+import { childToSectionName } from "../stateSchemas/derivedFromChildrenSchemas/ChildSectionName";
 import { SectionName } from "../stateSchemas/SectionName";
 import { Obj } from "../utils/Obj";
 import {

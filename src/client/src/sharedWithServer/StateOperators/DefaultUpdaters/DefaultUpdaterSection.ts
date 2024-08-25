@@ -4,8 +4,8 @@ import { SectionPack } from "../../SectionPacks/SectionPack";
 import {
   ChildName,
   FeChildInfo,
-} from "../../sectionVarbsConfigDerived/sectionChildrenDerived/ChildName";
-import { ChildSectionName } from "../../sectionVarbsConfigDerived/sectionChildrenDerived/ChildSectionName";
+} from "../../stateSchemas/derivedFromChildrenSchemas/ChildName";
+import { ChildSectionName } from "../../stateSchemas/derivedFromChildrenSchemas/ChildSectionName";
 import { SectionName } from "../../stateSchemas/SectionName";
 import { SectionValues } from "../../stateSchemas/StateValue";
 import { AddChildWithPackOptions } from "../Packers/PackBuilderSection";

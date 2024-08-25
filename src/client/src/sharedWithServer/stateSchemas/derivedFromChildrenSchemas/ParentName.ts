@@ -1,5 +1,5 @@
-import { SectionName, sectionNames } from "../../stateSchemas/SectionName";
 import { NeversToSomething, SubType } from "../../utils/types";
+import { SectionName, sectionNames } from "../SectionName";
 import { ChildName } from "./ChildName";
 import {
   childrenSectionNames,

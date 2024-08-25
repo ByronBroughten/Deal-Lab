@@ -11,11 +11,11 @@ import {
   ValueInEntityInfo,
 } from "../../../SectionInfos/ValueInEntityInfo";
 import { VarbPathNameInfoMixed } from "../../../SectionInfos/VarbPathNameInfo";
-import { PathInVarbInfo } from "../../../sectionVarbsConfigDerived/sectionChildrenDerived/RelInOutVarbInfo";
 import { Arr } from "../../../utils/Arr";
 import { Obj } from "../../../utils/Obj";
 import { zS } from "../../../utils/zod";
 import { validateS } from "../../../validateS";
+import { PathInVarbInfo } from "../../derivedFromChildrenSchemas/RelInOutVarbInfo";
 
 export function validateEntityId(value: any): string {
   return Id.validate(value);

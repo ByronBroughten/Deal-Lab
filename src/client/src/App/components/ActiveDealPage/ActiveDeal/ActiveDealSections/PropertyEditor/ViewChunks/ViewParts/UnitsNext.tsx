@@ -1,15 +1,15 @@
 import { SxProps } from "@mui/material";
 import { FeIdProp } from "../../../../../../../../sharedWithServer/SectionInfos/NanoIdInfo";
 import { GetterSection } from "../../../../../../../../sharedWithServer/StateGetters/GetterSection";
-import { VarbName } from "../../../../../../../../sharedWithServer/sectionVarbsConfigDerived/baseSectionsDerived/baseSectionsVarbsTypes";
+import { VarbName } from "../../../../../../../../sharedWithServer/stateSchemas/derivedFromBaseSchemas/baseSectionsVarbsTypes";
 import { useGetterSection } from "../../../../../../../stateClassHooks/useGetterSection";
 import { nativeTheme } from "../../../../../../../theme/nativeTheme";
-import { icons } from "../../../../../../Icons";
-import { useInputModalWithContext } from "../../../../../../Modals/InputModalProvider";
 import { SubSectionBtn } from "../../../../../../appWide/GeneralSection/GeneralSectionTitle/SubSectionBtn";
 import { StyledActionBtn } from "../../../../../../appWide/GeneralSection/MainSection/StyledActionBtn";
 import { LabeledVarbRow } from "../../../../../../appWide/LabeledVarbRow";
 import { MuiRow } from "../../../../../../general/MuiRow";
+import { icons } from "../../../../../../Icons";
+import { useInputModalWithContext } from "../../../../../../Modals/InputModalProvider";
 import { UnitList } from "../Units/UnitList";
 import { arrSx } from "./../../../../../../../utils/mui";
 

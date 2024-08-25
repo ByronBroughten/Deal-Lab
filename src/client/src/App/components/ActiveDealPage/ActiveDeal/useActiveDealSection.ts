@@ -1,6 +1,6 @@
 import { constants } from "../../../../sharedWithServer/Constants";
 import { FeRouteName } from "../../../../sharedWithServer/Constants/feRoutes";
-import { ChildName } from "../../../../sharedWithServer/sectionVarbsConfigDerived/sectionChildrenDerived/ChildName";
+import { ChildName } from "../../../../sharedWithServer/stateSchemas/derivedFromChildrenSchemas/ChildName";
 import { StateValue } from "../../../../sharedWithServer/stateSchemas/StateValue";
 import { StrictExtract } from "../../../../sharedWithServer/utils/types";
 import { useGetterSectionOnlyOne } from "../../../stateClassHooks/useGetterSection";

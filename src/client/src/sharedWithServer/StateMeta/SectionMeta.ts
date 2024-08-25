@@ -1,22 +1,4 @@
 import { SectionNameByType } from "../SectionNameByType";
-import {
-  sectionVarbNames,
-  VarbName,
-} from "../sectionVarbsConfigDerived/baseSectionsDerived/baseSectionsVarbsTypes";
-import {
-  ChildIdArrsNarrow,
-  ChildIdArrsWide,
-  ChildName,
-  getChildNames,
-  isChildName,
-} from "../sectionVarbsConfigDerived/sectionChildrenDerived/ChildName";
-import {
-  childrenSectionNames,
-  ChildSectionName,
-  ChildSectionNameName,
-  childToSectionName,
-  sectionChildNameNames,
-} from "../sectionVarbsConfigDerived/sectionChildrenDerived/ChildSectionName";
 import { SectionValuesGeneric } from "../State/RawSection";
 import {
   allChildrenTraits,
@@ -29,6 +11,24 @@ import {
   SectionTrait,
   sectionTrait,
 } from "../stateSchemas/allSectionTraits";
+import {
+  sectionVarbNames,
+  VarbName,
+} from "../stateSchemas/derivedFromBaseSchemas/baseSectionsVarbsTypes";
+import {
+  ChildIdArrsNarrow,
+  ChildIdArrsWide,
+  ChildName,
+  getChildNames,
+  isChildName,
+} from "../stateSchemas/derivedFromChildrenSchemas/ChildName";
+import {
+  childrenSectionNames,
+  ChildSectionName,
+  ChildSectionNameName,
+  childToSectionName,
+  sectionChildNameNames,
+} from "../stateSchemas/derivedFromChildrenSchemas/ChildSectionName";
 import { SectionName } from "../stateSchemas/SectionName";
 import { Obj } from "../utils/Obj";
 import {

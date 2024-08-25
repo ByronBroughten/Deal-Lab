@@ -1,12 +1,12 @@
 import { SnProp } from "../../SectionInfos/SectionNameProp";
+import { Replace } from "../../utils/types";
 import {
   GroupKey,
   GroupName,
   GroupNameEnding,
   GroupVNGeneral,
-} from "../../stateSchemas/GroupName";
-import { SectionName } from "../../stateSchemas/SectionName";
-import { Replace } from "../../utils/types";
+} from "../GroupName";
+import { SectionName } from "../SectionName";
 import { VarbNameWide } from "./baseSectionsVarbsTypes";
 
 export type SectionGroupVarbName<

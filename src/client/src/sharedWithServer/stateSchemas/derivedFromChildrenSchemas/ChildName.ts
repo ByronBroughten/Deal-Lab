@@ -1,13 +1,10 @@
 import { StoreName } from "../../sectionStores";
-import {
-  AllSectionChildren,
-  allSectionChildren,
-} from "../../stateSchemas/allSectionChildren";
-import { SectionName, sectionNames } from "../../stateSchemas/SectionName";
 import { ValidationError } from "../../utils/Error";
 import { Obj } from "../../utils/Obj";
 import { RemoveNotStrings, StrictOmit } from "../../utils/types";
 import { MergeUnionObj } from "../../utils/types/mergeUnionObj";
+import { AllSectionChildren, allSectionChildren } from "../allSectionChildren";
+import { SectionName, sectionNames } from "../SectionName";
 import { ChildSectionName } from "./ChildSectionName";
 
 type SectionToCN = {

@@ -15,8 +15,8 @@ import {
   SectionPathName,
   SectionPathVarbName,
 } from "../../../sectionPaths/sectionPathNames";
-import { VarbNameWide } from "../../../sectionVarbsConfigDerived/baseSectionsDerived/baseSectionsVarbsTypes";
-import { ChildName } from "../../../sectionVarbsConfigDerived/sectionChildrenDerived/ChildName";
+import { VarbNameWide } from "../../derivedFromBaseSchemas/baseSectionsVarbsTypes";
+import { ChildName } from "../../derivedFromChildrenSchemas/ChildName";
 import { ValueSource } from "../../StateValue/unionValues";
 
 export type UpdateOverrideSwitches = readonly UpdateOverrideSwitch[];

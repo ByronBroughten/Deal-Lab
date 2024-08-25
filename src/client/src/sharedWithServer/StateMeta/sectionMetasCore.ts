@@ -1,8 +1,4 @@
 import {
-  sectionParentNames,
-  SectionToParentNameArrs,
-} from "../sectionVarbsConfigDerived/sectionChildrenDerived/ParentName";
-import {
   AllBaseSectionVarbs,
   allBaseSectionVarbs,
 } from "../stateSchemas/allBaseSectionVarbs";
@@ -20,6 +16,10 @@ import {
   allUpdateSections,
 } from "../stateSchemas/allUpdateSectionVarbs";
 import { GeneralUpdateSectionVarbs } from "../stateSchemas/allUpdateSectionVarbs/updateSectionVarbs";
+import {
+  sectionParentNames,
+  SectionToParentNameArrs,
+} from "../stateSchemas/derivedFromChildrenSchemas/ParentName";
 import { SectionName, sectionNames } from "../stateSchemas/SectionName";
 
 type SectionMetaCoreGeneral = {

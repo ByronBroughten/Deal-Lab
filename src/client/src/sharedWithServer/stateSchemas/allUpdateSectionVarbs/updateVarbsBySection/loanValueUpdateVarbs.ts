@@ -1,12 +1,12 @@
-import { PathInVarbInfo } from "../../../sectionVarbsConfigDerived/sectionChildrenDerived/RelInOutVarbInfo";
+import { PathInVarbInfo } from "../../derivedFromChildrenSchemas/RelInOutVarbInfo";
 import { unionValueArr } from "../../StateValue/unionValues";
 import { UpdateSectionVarbs } from "../updateSectionVarbs";
 import { UpdateVarb, updateVarb, uvS } from "../updateVarb";
 import { ubS } from "../updateVarb/UpdateBasics";
-import { upS, updateFnProp } from "../updateVarb/UpdateFnProps";
+import { updateFnProp, upS } from "../updateVarb/UpdateFnProps";
 import { updateOverride } from "../updateVarb/UpdateOverride";
-import { osS } from "../updateVarb/UpdateOverrideSwitch";
 import { UpdateOverrides } from "../updateVarb/UpdateOverrides";
+import { osS } from "../updateVarb/UpdateOverrideSwitch";
 import { updateVarbsS } from "../updateVarbs";
 
 export function loanValueUpdateVarbs(

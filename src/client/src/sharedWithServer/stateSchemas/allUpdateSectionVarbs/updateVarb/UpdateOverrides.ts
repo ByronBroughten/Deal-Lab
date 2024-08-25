@@ -1,7 +1,7 @@
 import { isString } from "lodash";
 import { relVarbInfoS, rviS } from "../../../SectionInfos/RelVarbInfo";
-import { VarbNameWide } from "../../../sectionVarbsConfigDerived/baseSectionsDerived/baseSectionsVarbsTypes";
 import { Obj } from "../../../utils/Obj";
+import { VarbNameWide } from "../../derivedFromBaseSchemas/baseSectionsVarbsTypes";
 import {
   UnionValue,
   UnionValueName,
@@ -11,16 +11,16 @@ import {
 import { ValueName } from "../../ValueName";
 import { UpdateBasics } from "./UpdateBasics";
 import {
-  UpdateFnProp,
   collectUpdateFnSwitchProps,
+  UpdateFnProp,
   updateFnProp,
 } from "./UpdateFnProps";
 import { UpdateOverride, updateOverride } from "./UpdateOverride";
 import {
-  StandardSP,
-  UpdateOverrideSwitchInfo,
-  UpdateOverrideSwitches,
   osS,
+  StandardSP,
+  UpdateOverrideSwitches,
+  UpdateOverrideSwitchInfo,
 } from "./UpdateOverrideSwitch";
 
 export type UpdateOverrides<VN extends ValueName = ValueName> =

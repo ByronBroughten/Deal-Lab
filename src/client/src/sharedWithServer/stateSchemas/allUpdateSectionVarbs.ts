@@ -1,13 +1,9 @@
 import { mixedInfoS } from "../SectionInfos/MixedSectionInfo";
-import { VarbName } from "../sectionVarbsConfigDerived/baseSectionsDerived/baseSectionsVarbsTypes";
 import { timeS } from "../utils/timeS";
-import { SectionName, sectionNames } from "./SectionName";
-import { numObj } from "./StateValue/NumObj";
-import { defaultCreateDealModeOf } from "./StateValue/unionValues";
 import {
-  UpdateSectionVarbs,
   defaultSectionUpdateVarbs,
   updateSectionProp,
+  UpdateSectionVarbs,
   usvs,
 } from "./allUpdateSectionVarbs/updateSectionVarbs";
 import {
@@ -21,8 +17,8 @@ import {
 } from "./allUpdateSectionVarbs/updateVarb/UpdateBasics";
 import { upS, upsS } from "./allUpdateSectionVarbs/updateVarb/UpdateFnProps";
 import { updateOverride } from "./allUpdateSectionVarbs/updateVarb/UpdateOverride";
-import { osS } from "./allUpdateSectionVarbs/updateVarb/UpdateOverrideSwitch";
 import { uosS } from "./allUpdateSectionVarbs/updateVarb/UpdateOverrides";
+import { osS } from "./allUpdateSectionVarbs/updateVarb/UpdateOverrideSwitch";
 import { updateVarbsS, uvsS } from "./allUpdateSectionVarbs/updateVarbs";
 import { afterRepairValueUpdateVarbs } from "./allUpdateSectionVarbs/updateVarbsBySection/afterRepairValueUpdateVarbs";
 import { calculatedUpdateVarbs } from "./allUpdateSectionVarbs/updateVarbsBySection/calculatedUpdateVarbs";
@@ -52,6 +48,10 @@ import { sellingCostUpdateVarbs } from "./allUpdateSectionVarbs/updateVarbsBySec
 import { timespanEditorUpdateVarbs } from "./allUpdateSectionVarbs/updateVarbsBySection/timespanEditorUpdateVarbs";
 import { utilityValueUpdateVarbs } from "./allUpdateSectionVarbs/updateVarbsBySection/utilityValueUpdateVarbs";
 import { vacancyLossUpdateVarbs } from "./allUpdateSectionVarbs/updateVarbsBySection/vacancyLossUpdateVarbs";
+import { VarbName } from "./derivedFromBaseSchemas/baseSectionsVarbsTypes";
+import { SectionName, sectionNames } from "./SectionName";
+import { numObj } from "./StateValue/NumObj";
+import { defaultCreateDealModeOf } from "./StateValue/unionValues";
 
 const varb = updateVarb;
 

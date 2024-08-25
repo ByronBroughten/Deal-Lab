@@ -1,6 +1,6 @@
-import { VarbName } from "../sectionVarbsConfigDerived/baseSectionsDerived/baseSectionsVarbsTypes";
-import { ChildName } from "../sectionVarbsConfigDerived/sectionChildrenDerived/ChildName";
-import { ChildSectionName } from "../sectionVarbsConfigDerived/sectionChildrenDerived/ChildSectionName";
+import { VarbName } from "../stateSchemas/derivedFromBaseSchemas/baseSectionsVarbsTypes";
+import { ChildName } from "../stateSchemas/derivedFromChildrenSchemas/ChildName";
+import { ChildSectionName } from "../stateSchemas/derivedFromChildrenSchemas/ChildSectionName";
 import { SectionName } from "../stateSchemas/SectionName";
 import { VarbValue } from "../stateSchemas/StateValue";
 

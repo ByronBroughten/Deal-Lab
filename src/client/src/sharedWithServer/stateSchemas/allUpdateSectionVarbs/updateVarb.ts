@@ -1,8 +1,8 @@
 import { relVarbInfoS } from "../../SectionInfos/RelVarbInfo";
-import { VarbNameWide } from "../../sectionVarbsConfigDerived/baseSectionsDerived/baseSectionsVarbsTypes";
-import { ChildName } from "../../sectionVarbsConfigDerived/sectionChildrenDerived/ChildName";
 import { Obj } from "../../utils/Obj";
 import { StrictOmit } from "../../utils/types";
+import { VarbNameWide } from "../derivedFromBaseSchemas/baseSectionsVarbsTypes";
+import { ChildName } from "../derivedFromChildrenSchemas/ChildName";
 import { SectionName } from "../SectionName";
 import { StateValue } from "../StateValue";
 import { NumObj } from "../StateValue/NumObj";
@@ -11,26 +11,26 @@ import {
   NumPropCalcName,
 } from "../StateValue/stateValuesShared/calculations";
 import { ValueSource, ValueSourceType } from "../StateValue/unionValues";
-import { ValueName } from "../ValueName";
 import { valueMetas } from "../valueMetas";
+import { ValueName } from "../ValueName";
 import { uosb } from "./updateVarb/OverrideBasics";
-import { StandardUP, UpdateBasics, ubS } from "./updateVarb/UpdateBasics";
-import { UpdateFnName, getUpdateFnNames } from "./updateVarb/UpdateFnName";
+import { StandardUP, ubS, UpdateBasics } from "./updateVarb/UpdateBasics";
+import { getUpdateFnNames, UpdateFnName } from "./updateVarb/UpdateFnName";
 import {
+  collectUpdateFnSwitchProps,
   CompletionStatusProps,
   UpdateFnProp,
-  collectUpdateFnSwitchProps,
-  upS,
   updatePropS,
+  upS,
 } from "./updateVarb/UpdateFnProps";
-import { UpdateOverrideSwitchInfo } from "./updateVarb/UpdateOverrideSwitch";
 import {
+  collectOverrideSwitchProps,
   DealModeBasics,
+  uosS,
   UpdateOverrides,
   ValueSourceOptions,
-  collectOverrideSwitchProps,
-  uosS,
 } from "./updateVarb/UpdateOverrides";
+import { UpdateOverrideSwitchInfo } from "./updateVarb/UpdateOverrideSwitch";
 import { UpdateProps } from "./updateVarb/UpdateProps";
 
 export interface GeneralUpdateVarb extends UpdateProps {

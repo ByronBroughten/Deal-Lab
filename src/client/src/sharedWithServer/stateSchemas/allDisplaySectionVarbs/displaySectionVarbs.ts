@@ -1,20 +1,20 @@
 import {
-  VarbName,
+  GeneralBaseVarb,
+  ValueFrequency,
+  ValueUnit,
+} from "../allBaseSectionVarbs/baseVarbs";
+import {
   getBaseVarb,
   sectionVarbNames,
-} from "../../sectionVarbsConfigDerived/baseSectionsDerived/baseSectionsVarbsTypes";
+  VarbName,
+} from "../derivedFromBaseSchemas/baseSectionsVarbsTypes";
 import { SectionName } from "../SectionName";
 import {
   decimalRounding,
   maxRounding,
   percentRounding,
 } from "../StateValue/stateValuesShared/calculations/numUnitParams";
-import {
-  GeneralBaseVarb,
-  ValueFrequency,
-  ValueUnit,
-} from "../allBaseSectionVarbs/baseVarbs";
-import { DisplayVarb, DisplayVarbOptions, displayVarb } from "./displayVarb";
+import { DisplayVarb, displayVarb, DisplayVarbOptions } from "./displayVarb";
 
 type DisplaySectionVarbsProp<SN extends SectionName> = {
   [S in SN]: DisplaySectionVarbs<SN>;

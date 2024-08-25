@@ -6,13 +6,6 @@ import {
 } from "../../SectionPacks/ChildSectionPack";
 import { SectionPack } from "../../SectionPacks/SectionPack";
 import {
-  ChildIdArrsWide,
-  ChildName,
-  FeChildInfo,
-  getChildNames,
-} from "../../sectionVarbsConfigDerived/sectionChildrenDerived/ChildName";
-import { ChildSectionName } from "../../sectionVarbsConfigDerived/sectionChildrenDerived/ChildSectionName";
-import {
   ChildSpNums,
   OneRawSection,
   RawSections,
@@ -26,6 +19,13 @@ import {
   GetterSection,
   GetterSectionRequiredProps,
 } from "../../StateGetters/GetterSection";
+import {
+  ChildIdArrsWide,
+  ChildName,
+  FeChildInfo,
+  getChildNames,
+} from "../../stateSchemas/derivedFromChildrenSchemas/ChildName";
+import { ChildSectionName } from "../../stateSchemas/derivedFromChildrenSchemas/ChildSectionName";
 import { SectionName } from "../../stateSchemas/SectionName";
 import { Obj } from "../../utils/Obj";
 

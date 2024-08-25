@@ -7,7 +7,7 @@ import {
   UrlRes,
 } from "../../../sharedWithServer/apiQueriesShared/makeReqAndRes";
 import { Id } from "../../../sharedWithServer/Ids/IdS";
-import { validateSectionPackDuck } from "../../../sharedWithServer/sectionVarbsConfigDerived/sectionChildrenDerived/validateSectionPackDuck";
+import { validateSectionPackDuck } from "../../../sharedWithServer/stateSchemas/derivedFromChildrenSchemas/validateSectionPackDuck";
 import { Obj } from "../../../sharedWithServer/utils/Obj";
 import { Str } from "../../../sharedWithServer/utils/Str";
 

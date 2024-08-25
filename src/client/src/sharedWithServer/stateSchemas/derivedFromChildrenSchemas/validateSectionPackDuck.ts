@@ -7,16 +7,13 @@ import {
   SectionValuesGeneric,
 } from "../../State/RawSection";
 import { sectionsMeta } from "../../StateMeta/SectionsMeta";
-import {
-  SectionName,
-  validateSectionName,
-} from "../../stateSchemas/SectionName";
 import { Arr } from "../../utils/Arr";
 import { ValidationError } from "../../utils/Error";
 import { Obj } from "../../utils/Obj";
 import { validateS } from "../../validateS";
-import { sectionVarbNames } from "../baseSectionsDerived/baseSectionsVarbsTypes";
-import { validateSectionVarbValue } from "../baseSectionsDerived/baseSectionValues";
+import { sectionVarbNames } from "../derivedFromBaseSchemas/baseSectionsVarbsTypes";
+import { validateSectionVarbValue } from "../derivedFromBaseSchemas/baseSectionValues";
+import { SectionName, validateSectionName } from "../SectionName";
 import { getChildNames } from "./ChildName";
 import { selfAndDescSectionNames } from "./DescendantName";
 

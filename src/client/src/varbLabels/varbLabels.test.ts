@@ -1,8 +1,8 @@
 import {
   sectionVarbNames,
   VarbNameWide,
-} from "../sharedWithServer/sectionVarbsConfigDerived/baseSectionsDerived/baseSectionsVarbsTypes";
-import { sectionVarbValueName } from "../sharedWithServer/sectionVarbsConfigDerived/baseSectionsDerived/baseSectionValues";
+} from "../sharedWithServer/stateSchemas/derivedFromBaseSchemas/baseSectionsVarbsTypes";
+import { sectionVarbValueName } from "../sharedWithServer/stateSchemas/derivedFromBaseSchemas/baseSectionValues";
 import { sectionNames } from "../sharedWithServer/stateSchemas/SectionName";
 import { ValueName } from "../sharedWithServer/stateSchemas/ValueName";
 import { varbLabels } from "./varbLabels";

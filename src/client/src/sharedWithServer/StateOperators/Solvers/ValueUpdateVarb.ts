@@ -1,7 +1,6 @@
 import { RelVarbInfo } from "../../SectionInfos/RelVarbInfo";
 import { DbVarbInfoMixed } from "../../SectionInfos/VarbInfoBase";
 import { SectionNameByType } from "../../SectionNameByType";
-import { PathInVarbInfo } from "../../sectionVarbsConfigDerived/sectionChildrenDerived/RelInOutVarbInfo";
 import { GetterSectionProps } from "../../StateGetters/Bases/GetterSectionBase";
 import { GetterVarbBase } from "../../StateGetters/Bases/GetterVarbBase";
 import { GetterSection } from "../../StateGetters/GetterSection";
@@ -13,6 +12,7 @@ import {
   UpdateFnProp,
   UpdateFnProps,
 } from "../../stateSchemas/allUpdateSectionVarbs/updateVarb/UpdateFnProps";
+import { PathInVarbInfo } from "../../stateSchemas/derivedFromChildrenSchemas/RelInOutVarbInfo";
 import { StateValue } from "../../stateSchemas/StateValue";
 import { InEntityValueInfo } from "../../stateSchemas/StateValue/InEntityValue";
 import {

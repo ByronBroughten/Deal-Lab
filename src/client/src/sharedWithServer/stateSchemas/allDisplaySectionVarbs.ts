@@ -1,6 +1,4 @@
 import { relVarbInfoS } from "../SectionInfos/RelVarbInfo";
-import { VarbName } from "../sectionVarbsConfigDerived/baseSectionsDerived/baseSectionsVarbsTypes";
-import { SectionName, sectionNames } from "./SectionName";
 import {
   DisplaySectionVarbs,
   displaySectionVarbs,
@@ -16,6 +14,8 @@ import {
   displayVarbsS,
   editorDisplayGroup,
 } from "./allDisplaySectionVarbs/displayVarbs";
+import { VarbName } from "./derivedFromBaseSchemas/baseSectionsVarbsTypes";
+import { SectionName, sectionNames } from "./SectionName";
 
 type AllDisplaySectionVarbsGeneric = {
   [SN in SectionName]: DisplaySectionVarbs<SN>;

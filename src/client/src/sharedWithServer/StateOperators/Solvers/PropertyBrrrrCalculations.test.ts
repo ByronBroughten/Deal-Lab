@@ -1,5 +1,5 @@
-import { VarbName } from "../../sectionVarbsConfigDerived/baseSectionsDerived/baseSectionsVarbsTypes";
 import { switchKeyToVarbNames } from "../../stateSchemas/allBaseSectionVarbs/baseSwitchNames";
+import { VarbName } from "../../stateSchemas/derivedFromBaseSchemas/baseSectionsVarbsTypes";
 import { numObj } from "../../stateSchemas/StateValue/NumObj";
 import { SolverSection } from "./SolverSection";
 import {

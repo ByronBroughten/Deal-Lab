@@ -1,5 +1,5 @@
 import { SectionPack } from "../SectionPacks/SectionPack";
-import { validateSectionPackDuck } from "../sectionVarbsConfigDerived/sectionChildrenDerived/validateSectionPackDuck";
+import { validateSectionPackDuck } from "../stateSchemas/derivedFromChildrenSchemas/validateSectionPackDuck";
 import { Obj } from "../utils/Obj";
 
 export type UserData = {

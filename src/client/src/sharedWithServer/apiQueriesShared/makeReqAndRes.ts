@@ -1,13 +1,13 @@
 import { ChildPackArrs } from "../SectionPacks/ChildSectionPack";
 import { SectionPack } from "../SectionPacks/SectionPack";
-import { DbPack } from "../sectionVarbsConfigDerived/sectionChildrenDerived/DbSectionPack";
+import { DbPack } from "../stateSchemas/derivedFromChildrenSchemas/DbSectionPack";
 import {
   DbSectionName,
   DbStoreInfo,
   DbStoreNameByType,
   DbStoreNameProp,
   SectionQueryName,
-} from "../sectionVarbsConfigDerived/sectionChildrenDerived/DbStoreName";
+} from "../stateSchemas/derivedFromChildrenSchemas/DbStoreName";
 import { DbAction } from "./DbAction";
 
 export const makeReq = <B extends QueryObj = {}>(body?: B): MakeReq<B> => ({

@@ -1,16 +1,16 @@
-import { GroupVarbNameBase } from "../../sectionVarbsConfigDerived/baseSectionsDerived/baseGroupNames";
-import { safeGroupVarbName } from "../../sectionVarbsConfigDerived/baseSectionsDerived/baseSectionsVarbsTypes";
-import { ChildName } from "../../sectionVarbsConfigDerived/sectionChildrenDerived/ChildName";
+import { GroupVarbNameBase } from "../derivedFromBaseSchemas/baseGroupNames";
+import { safeGroupVarbName } from "../derivedFromBaseSchemas/baseSectionsVarbsTypes";
+import { ChildName } from "../derivedFromChildrenSchemas/ChildName";
 import {
   GroupBaseVarbName,
+  groupKeys,
   GroupName,
   GroupRecordAndAll,
-  groupKeys,
   groupVarbName,
 } from "../GroupName";
 import { SafeUpdateOptions, UpdateVarb, updateVarb, uvS } from "./updateVarb";
 import { ubS } from "./updateVarb/UpdateBasics";
-import { upS, updatePropS } from "./updateVarb/UpdateFnProps";
+import { updatePropS, upS } from "./updateVarb/UpdateFnProps";
 
 type GroupOptions<GN extends GroupName> = Partial<
   GroupRecordAndAll<GN, SafeUpdateOptions<"numObj">>

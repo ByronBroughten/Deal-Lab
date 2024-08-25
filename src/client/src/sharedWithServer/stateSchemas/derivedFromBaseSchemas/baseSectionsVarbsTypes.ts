@@ -1,15 +1,11 @@
+import { ValidationError } from "../../utils/Error";
+import { Obj } from "../../utils/Obj";
 import {
   AllBaseSectionVarbs,
   allBaseSectionVarbs,
-} from "../../stateSchemas/allBaseSectionVarbs";
-import {
-  GroupKey,
-  GroupName,
-  groupVarbName,
-} from "../../stateSchemas/GroupName";
-import { SectionName, sectionNames } from "../../stateSchemas/SectionName";
-import { ValidationError } from "../../utils/Error";
-import { Obj } from "../../utils/Obj";
+} from "../allBaseSectionVarbs";
+import { GroupKey, GroupName, groupVarbName } from "../GroupName";
+import { SectionName, sectionNames } from "../SectionName";
 
 export type BaseSectionVarbs<SN extends SectionName> = AllBaseSectionVarbs[SN];
 export type VarbName<SN extends SectionName = SectionName> = string &

@@ -16,7 +16,7 @@ import {
 import { UserData } from "./apiQueriesShared/UserData";
 import { ApiQueryName } from "./Constants/queryPaths";
 import { SectionPack } from "./SectionPacks/SectionPack";
-import { SectionQueryName } from "./sectionVarbsConfigDerived/sectionChildrenDerived/DbStoreName";
+import { SectionQueryName } from "./stateSchemas/derivedFromChildrenSchemas/DbStoreName";
 
 export type QueryRes<AN extends ApiQueryName> = Awaited<
   ReturnType<ApiQuery<AN>>

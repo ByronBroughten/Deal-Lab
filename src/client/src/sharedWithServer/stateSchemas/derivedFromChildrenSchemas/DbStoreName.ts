@@ -4,8 +4,8 @@ import {
   storeNames,
   StoreSectionName,
 } from "../../sectionStores";
-import { allSectionChildren } from "../../stateSchemas/allSectionChildren";
 import { Obj } from "../../utils/Obj";
+import { allSectionChildren } from "../allSectionChildren";
 import { ChildName } from "./ChildName";
 import {
   ChildSectionName,

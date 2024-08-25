@@ -1,6 +1,6 @@
-import { VarbName } from "../../sectionVarbsConfigDerived/baseSectionsDerived/baseSectionsVarbsTypes";
-import { ChildName } from "../../sectionVarbsConfigDerived/sectionChildrenDerived/ChildName";
 import { switchKeyToVarbNames } from "../../stateSchemas/allBaseSectionVarbs/baseSwitchNames";
+import { VarbName } from "../../stateSchemas/derivedFromBaseSchemas/baseSectionsVarbsTypes";
+import { ChildName } from "../../stateSchemas/derivedFromChildrenSchemas/ChildName";
 import {
   DealMode,
   dealModes,

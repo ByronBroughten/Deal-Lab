@@ -5,10 +5,10 @@ import {
   SectionPathContextName,
 } from "../../sectionPaths/sectionPathContexts";
 import { StoreName } from "../../sectionStores";
-import { FeChildInfo } from "../../sectionVarbsConfigDerived/sectionChildrenDerived/ChildName";
-import { ChildSectionName } from "../../sectionVarbsConfigDerived/sectionChildrenDerived/ChildSectionName";
 import { GetterList } from "../../StateGetters/GetterList";
 import { GetterSections } from "../../StateGetters/GetterSections";
+import { FeChildInfo } from "../../stateSchemas/derivedFromChildrenSchemas/ChildName";
+import { ChildSectionName } from "../../stateSchemas/derivedFromChildrenSchemas/ChildSectionName";
 import { SectionName } from "../../stateSchemas/SectionName";
 import { defaultMaker } from "../defaultMaker/defaultMaker";
 import { AddChildOptions } from "../Updaters/UpdaterSection";

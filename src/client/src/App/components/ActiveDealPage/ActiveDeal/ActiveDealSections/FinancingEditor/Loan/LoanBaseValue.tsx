@@ -4,7 +4,7 @@ import {
   SectionNameByType,
   sectionNameS,
 } from "../../../../../../../sharedWithServer/SectionNameByType";
-import { VarbName } from "../../../../../../../sharedWithServer/sectionVarbsConfigDerived/baseSectionsDerived/baseSectionsVarbsTypes";
+import { VarbName } from "../../../../../../../sharedWithServer/stateSchemas/derivedFromBaseSchemas/baseSectionsVarbsTypes";
 import { StateValue } from "../../../../../../../sharedWithServer/stateSchemas/StateValue";
 import { Arr } from "../../../../../../../sharedWithServer/utils/Arr";
 import { useGetterSection } from "../../../../../../stateClassHooks/useGetterSection";

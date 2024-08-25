@@ -6,8 +6,8 @@ import {
   SectionPathName,
   SectionPathVarbName,
 } from "../sectionPaths/sectionPathNames";
-import { VarbName } from "../sectionVarbsConfigDerived/baseSectionsDerived/baseSectionsVarbsTypes";
 import { targetNames } from "../stateSchemas/allBaseSectionVarbs/baseSwitchNames";
+import { VarbName } from "../stateSchemas/derivedFromBaseSchemas/baseSectionsVarbsTypes";
 import { VarbValue } from "../stateSchemas/StateValue";
 import { ValidationError } from "../utils/Error";
 import { Obj } from "../utils/Obj";

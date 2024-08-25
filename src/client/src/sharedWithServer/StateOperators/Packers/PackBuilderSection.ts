@@ -6,17 +6,17 @@ import {
   ChildSectionPack,
 } from "../../SectionPacks/ChildSectionPack";
 import { SectionPack } from "../../SectionPacks/SectionPack";
-import {
-  ChildName,
-  DbChildInfo,
-  FeChildInfo,
-} from "../../sectionVarbsConfigDerived/sectionChildrenDerived/ChildName";
-import { ChildSectionName } from "../../sectionVarbsConfigDerived/sectionChildrenDerived/ChildSectionName";
 import { GetterSectionBase } from "../../StateGetters/Bases/GetterSectionBase";
 import {
   GetterSection,
   GetterSectionRequiredProps,
 } from "../../StateGetters/GetterSection";
+import {
+  ChildName,
+  DbChildInfo,
+  FeChildInfo,
+} from "../../stateSchemas/derivedFromChildrenSchemas/ChildName";
+import { ChildSectionName } from "../../stateSchemas/derivedFromChildrenSchemas/ChildSectionName";
 import { SectionName } from "../../stateSchemas/SectionName";
 import { SectionValues } from "../../stateSchemas/StateValue";
 import { Obj } from "../../utils/Obj";

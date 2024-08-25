@@ -1,6 +1,6 @@
 import { ChildPackArrs } from "../../SectionPacks/ChildSectionPack";
 import { SectionPack } from "../../SectionPacks/SectionPack";
-import { dbStoreNames } from "../../sectionVarbsConfigDerived/sectionChildrenDerived/DbStoreName";
+import { dbStoreNames } from "../../stateSchemas/derivedFromChildrenSchemas/DbStoreName";
 import { numObj } from "../../stateSchemas/StateValue/NumObj";
 import { stringObj } from "../../stateSchemas/StateValue/StringObj";
 import { timeS } from "../../utils/timeS";

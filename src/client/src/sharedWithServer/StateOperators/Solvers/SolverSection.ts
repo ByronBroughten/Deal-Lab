@@ -6,16 +6,16 @@ import {
   ChildPackInfo,
 } from "../../SectionPacks/ChildSectionPack";
 import { SectionPack } from "../../SectionPacks/SectionPack";
-import { VarbName } from "../../sectionVarbsConfigDerived/baseSectionsDerived/baseSectionsVarbsTypes";
+import { StateSections } from "../../State/StateSections";
+import { GetterSectionProps } from "../../StateGetters/Bases/GetterSectionBase";
+import { GetterSection } from "../../StateGetters/GetterSection";
+import { VarbName } from "../../stateSchemas/derivedFromBaseSchemas/baseSectionsVarbsTypes";
 import {
   ChildName,
   DbChildInfo,
   FeChildInfo,
-} from "../../sectionVarbsConfigDerived/sectionChildrenDerived/ChildName";
-import { ChildSectionName } from "../../sectionVarbsConfigDerived/sectionChildrenDerived/ChildSectionName";
-import { StateSections } from "../../State/StateSections";
-import { GetterSectionProps } from "../../StateGetters/Bases/GetterSectionBase";
-import { GetterSection } from "../../StateGetters/GetterSection";
+} from "../../stateSchemas/derivedFromChildrenSchemas/ChildName";
+import { ChildSectionName } from "../../stateSchemas/derivedFromChildrenSchemas/ChildSectionName";
 import { SectionName } from "../../stateSchemas/SectionName";
 import { SectionValues, VarbValue } from "../../stateSchemas/StateValue";
 import { NumObjOutput } from "../../stateSchemas/StateValue/NumObj";

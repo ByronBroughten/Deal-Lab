@@ -2,7 +2,7 @@ import { SectionPathContextName } from "../sectionPaths/sectionPathContexts";
 import {
   ChildIdArrsNarrow,
   ChildName,
-} from "../sectionVarbsConfigDerived/sectionChildrenDerived/ChildName";
+} from "../stateSchemas/derivedFromChildrenSchemas/ChildName";
 import { SectionName } from "../stateSchemas/SectionName";
 import { StateValue } from "../stateSchemas/StateValue";
 import { OutEntity } from "../stateSchemas/StateValue/stateValuesShared/entities";

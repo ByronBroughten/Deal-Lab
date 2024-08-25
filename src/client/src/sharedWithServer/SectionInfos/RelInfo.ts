@@ -1,9 +1,9 @@
-import { ChildName } from "../sectionVarbsConfigDerived/sectionChildrenDerived/ChildName";
+import { ChildName } from "../stateSchemas/derivedFromChildrenSchemas/ChildName";
 import {
   ParentName,
   PiblingName,
   StepSiblingName,
-} from "../sectionVarbsConfigDerived/sectionChildrenDerived/ParentName";
+} from "../stateSchemas/derivedFromChildrenSchemas/ParentName";
 import { SectionName } from "../stateSchemas/SectionName";
 import { MixedInfoProps } from "./VarbInfoBase";
 

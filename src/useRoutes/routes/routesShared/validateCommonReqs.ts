@@ -7,12 +7,12 @@ import { Id } from "../../../client/src/sharedWithServer/Ids/IdS";
 import {
   validateDbSectionPack,
   validateDbSectionPackArrs,
-} from "../../../client/src/sharedWithServer/sectionVarbsConfigDerived/sectionChildrenDerived/DbSectionPack";
+} from "../../../client/src/sharedWithServer/stateSchemas/derivedFromChildrenSchemas/DbSectionPack";
 import {
   DbStoreNameByType,
   dbStoreNameS,
   DbStoreType,
-} from "../../../client/src/sharedWithServer/sectionVarbsConfigDerived/sectionChildrenDerived/DbStoreName";
+} from "../../../client/src/sharedWithServer/stateSchemas/derivedFromChildrenSchemas/DbStoreName";
 import { Authed, validateAuthData } from "../../../middleware/authWare";
 import { JwtReq, WithJWT } from "../../../middleware/jwtWare";
 

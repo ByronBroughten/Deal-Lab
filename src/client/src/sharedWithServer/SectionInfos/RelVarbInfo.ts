@@ -1,10 +1,10 @@
-import { VarbNameWide } from "../sectionVarbsConfigDerived/baseSectionsDerived/baseSectionsVarbsTypes";
-import { ChildName } from "../sectionVarbsConfigDerived/sectionChildrenDerived/ChildName";
+import { VarbNameWide } from "../stateSchemas/derivedFromBaseSchemas/baseSectionsVarbsTypes";
+import { ChildName } from "../stateSchemas/derivedFromChildrenSchemas/ChildName";
 import {
   ParentName,
   PiblingName,
   StepSiblingName,
-} from "../sectionVarbsConfigDerived/sectionChildrenDerived/ParentName";
+} from "../stateSchemas/derivedFromChildrenSchemas/ParentName";
 import { SectionName } from "../stateSchemas/SectionName";
 import { Obj } from "../utils/Obj";
 import {

@@ -5,7 +5,7 @@ import {
   StoreSectionName,
   validateStoreName,
 } from "../sectionStores";
-import { validateDbSectionPack } from "../sectionVarbsConfigDerived/sectionChildrenDerived/DbSectionPack";
+import { validateDbSectionPack } from "../stateSchemas/derivedFromChildrenSchemas/DbSectionPack";
 import { Obj } from "../utils/Obj";
 
 const dbActionNames = ["add", "update", "remove"] as const;

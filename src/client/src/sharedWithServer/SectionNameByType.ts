@@ -7,20 +7,20 @@ import {
 import {
   BaseNameArrs,
   baseNameArrs,
-} from "./sectionVarbsConfigDerived/baseSectionsDerived/baseNameArrs";
-import {
-  RelNameArrs,
-  relNameArrs,
-} from "./sectionVarbsConfigDerived/relSectionsDerived/relNameArrs";
+} from "./stateSchemas/derivedFromBaseSchemas/baseNameArrs";
 import {
   ChildName,
   getChildNames,
-} from "./sectionVarbsConfigDerived/sectionChildrenDerived/ChildName";
+} from "./stateSchemas/derivedFromChildrenSchemas/ChildName";
 import {
   ChildToSectionName,
   childToSectionName,
-} from "./sectionVarbsConfigDerived/sectionChildrenDerived/ChildSectionName";
-import { ParentName } from "./sectionVarbsConfigDerived/sectionChildrenDerived/ParentName";
+} from "./stateSchemas/derivedFromChildrenSchemas/ChildSectionName";
+import { ParentName } from "./stateSchemas/derivedFromChildrenSchemas/ParentName";
+import {
+  RelNameArrs,
+  relNameArrs,
+} from "./stateSchemas/derivedFromRelSchemas/relNameArrs";
 import { SectionName } from "./stateSchemas/SectionName";
 import { SectionValues } from "./stateSchemas/StateValue";
 import { Arr } from "./utils/Arr";

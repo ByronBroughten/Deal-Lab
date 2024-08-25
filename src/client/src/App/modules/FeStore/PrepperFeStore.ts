@@ -9,7 +9,6 @@ import {
   StoreNameProp,
   StoreSectionName,
 } from "../../../sharedWithServer/sectionStores";
-import { ChildSectionName } from "../../../sharedWithServer/sectionVarbsConfigDerived/sectionChildrenDerived/ChildSectionName";
 import { GetterSection } from "../../../sharedWithServer/StateGetters/GetterSection";
 import { GetterSections } from "../../../sharedWithServer/StateGetters/GetterSections";
 import { makeDefaultSessionDeal } from "../../../sharedWithServer/StateOperators/defaultMaker/defaultSessionDeal";
@@ -18,6 +17,7 @@ import { SolvePrepperSectionBase } from "../../../sharedWithServer/StateOperator
 import { SolvePrepper } from "../../../sharedWithServer/StateOperators/SolvePreppers/SolvePrepper";
 import { SolvePrepperSection } from "../../../sharedWithServer/StateOperators/SolvePreppers/SolvePrepperSection";
 import { SolverSectionsProps } from "../../../sharedWithServer/StateOperators/SolverBases/SolverSectionsBase";
+import { ChildSectionName } from "../../../sharedWithServer/stateSchemas/derivedFromChildrenSchemas/ChildSectionName";
 import { SectionValues } from "../../../sharedWithServer/stateSchemas/StateValue";
 import {
   changeSavingToToSave,

@@ -2,11 +2,11 @@ import { validateSectionPackArrByType } from "../SectionNameByType";
 import {
   ChildName,
   validateChildName,
-} from "../sectionVarbsConfigDerived/sectionChildrenDerived/ChildName";
+} from "../stateSchemas/derivedFromChildrenSchemas/ChildName";
 import {
   ChildSectionName,
   childToSectionName,
-} from "../sectionVarbsConfigDerived/sectionChildrenDerived/ChildSectionName";
+} from "../stateSchemas/derivedFromChildrenSchemas/ChildSectionName";
 import { SectionName } from "../stateSchemas/SectionName";
 import { Obj } from "../utils/Obj";
 import { SectionPack } from "./SectionPack";

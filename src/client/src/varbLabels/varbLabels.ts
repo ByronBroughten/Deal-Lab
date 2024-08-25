@@ -3,11 +3,11 @@ import {
   RelLocalVarbInfo,
   relVarbInfoS,
 } from "../sharedWithServer/SectionInfos/RelVarbInfo";
+import { SwitchTargetKey } from "../sharedWithServer/stateSchemas/allBaseSectionVarbs/baseSwitchNames";
 import {
   sectionVarbNames,
   VarbName,
-} from "../sharedWithServer/sectionVarbsConfigDerived/baseSectionsDerived/baseSectionsVarbsTypes";
-import { SwitchTargetKey } from "../sharedWithServer/stateSchemas/allBaseSectionVarbs/baseSwitchNames";
+} from "../sharedWithServer/stateSchemas/derivedFromBaseSchemas/baseSectionsVarbsTypes";
 import {
   SectionName,
   sectionNames,

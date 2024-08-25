@@ -1,8 +1,8 @@
 import request from "supertest";
 import { SectionPackArrsReq } from "../../client/src/sharedWithServer/apiQueriesShared/makeReqAndRes";
 import { constant } from "../../client/src/sharedWithServer/Constants";
-import { childToSectionName } from "../../client/src/sharedWithServer/sectionVarbsConfigDerived/sectionChildrenDerived/ChildSectionName";
 import { PackBuilderSection } from "../../client/src/sharedWithServer/StateOperators/Packers/PackBuilderSection";
+import { childToSectionName } from "../../client/src/sharedWithServer/stateSchemas/derivedFromChildrenSchemas/ChildSectionName";
 import { DbUserGetter } from "../../DbUserService/DbUserGetter";
 import { runApp } from "../../runApp";
 import { SectionArrReqMaker } from "./apiQueriesTestTools/SectionArrReqMaker";

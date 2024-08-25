@@ -1,12 +1,12 @@
-import {
-  VarbValueName,
-  sectionVarbValueName,
-} from "../../sectionVarbsConfigDerived/baseSectionsDerived/baseSectionValues";
-import {
-  VarbName,
-  sectionVarbNames,
-} from "../../sectionVarbsConfigDerived/baseSectionsDerived/baseSectionsVarbsTypes";
 import { StrictOmit } from "../../utils/types";
+import {
+  sectionVarbNames,
+  VarbName,
+} from "../derivedFromBaseSchemas/baseSectionsVarbsTypes";
+import {
+  sectionVarbValueName,
+  VarbValueName,
+} from "../derivedFromBaseSchemas/baseSectionValues";
 import { SectionName } from "../SectionName";
 import { GeneralUpdateVarb, UpdateVarb, updateVarb, uvS } from "./updateVarb";
 

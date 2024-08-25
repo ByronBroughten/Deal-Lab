@@ -1,19 +1,19 @@
 import { isString } from "lodash";
 import { isVarbName } from "../../../SectionInfos/VarbInfoBase";
 import { VarbPathName } from "../../../SectionInfos/VarbPathNameInfo";
-import { GroupVarbNameBase } from "../../../sectionVarbsConfigDerived/baseSectionsDerived/baseGroupNames";
+import { switchKeyToVarbNames } from "../../allBaseSectionVarbs/baseSwitchNames";
+import { GroupVarbNameBase } from "../../derivedFromBaseSchemas/baseGroupNames";
 import {
-  VarbNameWide,
   safeGroupVarbName,
   validateAnyVarbName,
-} from "../../../sectionVarbsConfigDerived/baseSectionsDerived/baseSectionsVarbsTypes";
-import { ChildName } from "../../../sectionVarbsConfigDerived/sectionChildrenDerived/ChildName";
+  VarbNameWide,
+} from "../../derivedFromBaseSchemas/baseSectionsVarbsTypes";
+import { ChildName } from "../../derivedFromChildrenSchemas/ChildName";
 import {
   LeftRightPropCalcName,
   NumPropCalcName,
 } from "../../StateValue/stateValuesShared/calculations";
 import { ValueName } from "../../ValueName";
-import { switchKeyToVarbNames } from "../../allBaseSectionVarbs/baseSwitchNames";
 import { UpdateFnName } from "./UpdateFnName";
 import {
   CompletionStatusProps,

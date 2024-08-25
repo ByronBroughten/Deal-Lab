@@ -1,8 +1,8 @@
-import { VarbName } from "../sectionVarbsConfigDerived/baseSectionsDerived/baseSectionsVarbsTypes";
+import { VarbName } from "../stateSchemas/derivedFromBaseSchemas/baseSectionsVarbsTypes";
 import {
   DbSectionName,
   DbStoreName,
-} from "../sectionVarbsConfigDerived/sectionChildrenDerived/DbStoreName";
+} from "../stateSchemas/derivedFromChildrenSchemas/DbStoreName";
 import { SectionName } from "../stateSchemas/SectionName";
 import { VarbValue } from "../stateSchemas/StateValue";
 

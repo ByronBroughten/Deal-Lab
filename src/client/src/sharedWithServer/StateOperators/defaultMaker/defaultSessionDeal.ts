@@ -1,5 +1,5 @@
-import { VarbName } from "../../sectionVarbsConfigDerived/baseSectionsDerived/baseSectionsVarbsTypes";
 import { GetterSection } from "../../StateGetters/GetterSection";
+import { VarbName } from "../../stateSchemas/derivedFromBaseSchemas/baseSectionsVarbsTypes";
 import { DealMode } from "../../stateSchemas/StateValue/dealMode";
 import { PackBuilderSection } from "../Packers/PackBuilderSection";
 

@@ -35,33 +35,6 @@ import {
   pathSectionName,
   SectionPathName,
 } from "../sectionPaths/sectionPathNames";
-import {
-  GroupBaseVI,
-  GroupVarbNameBase,
-} from "../sectionVarbsConfigDerived/baseSectionsDerived/baseGroupNames";
-import { VarbName } from "../sectionVarbsConfigDerived/baseSectionsDerived/baseSectionsVarbsTypes";
-import {
-  ChildIdArrsWide,
-  ChildName,
-  DbChildInfo,
-  DescendantIds,
-  FeChildInfo,
-  GeneralChildIdArrs,
-} from "../sectionVarbsConfigDerived/sectionChildrenDerived/ChildName";
-import { ChildSectionName } from "../sectionVarbsConfigDerived/sectionChildrenDerived/ChildSectionName";
-import {
-  DescendantOfSnByNodeInfo,
-  DescendantOfSnInfo,
-  DescOfSnDbIdInfo,
-} from "../sectionVarbsConfigDerived/sectionChildrenDerived/DescendantName";
-import {
-  noParentWarning,
-  ParentName,
-  ParentNameSafe,
-  PiblingName,
-  SelfChildName,
-  StepSiblingName,
-} from "../sectionVarbsConfigDerived/sectionChildrenDerived/ParentName";
 import { SectionValuesGeneric } from "../State/RawSection";
 import {
   ContextPathIdxSpecifier,
@@ -73,6 +46,33 @@ import { SectionMeta } from "../StateMeta/SectionMeta";
 import { PackMakerSection } from "../StateOperators/Packers/PackMakerSection";
 import { DbSectionInfo } from "../stateSchemas/allBaseSectionVarbs/DbSectionInfo";
 import { GenericChildTraits } from "../stateSchemas/allChildrenTraits";
+import {
+  GroupBaseVI,
+  GroupVarbNameBase,
+} from "../stateSchemas/derivedFromBaseSchemas/baseGroupNames";
+import { VarbName } from "../stateSchemas/derivedFromBaseSchemas/baseSectionsVarbsTypes";
+import {
+  ChildIdArrsWide,
+  ChildName,
+  DbChildInfo,
+  DescendantIds,
+  FeChildInfo,
+  GeneralChildIdArrs,
+} from "../stateSchemas/derivedFromChildrenSchemas/ChildName";
+import { ChildSectionName } from "../stateSchemas/derivedFromChildrenSchemas/ChildSectionName";
+import {
+  DescendantOfSnByNodeInfo,
+  DescendantOfSnInfo,
+  DescOfSnDbIdInfo,
+} from "../stateSchemas/derivedFromChildrenSchemas/DescendantName";
+import {
+  noParentWarning,
+  ParentName,
+  ParentNameSafe,
+  PiblingName,
+  SelfChildName,
+  StepSiblingName,
+} from "../stateSchemas/derivedFromChildrenSchemas/ParentName";
 import {
   GroupKey,
   periodicName,

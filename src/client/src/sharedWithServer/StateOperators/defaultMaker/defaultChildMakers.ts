@@ -1,6 +1,6 @@
 import { SectionPack } from "../../SectionPacks/SectionPack";
-import { ChildName } from "../../sectionVarbsConfigDerived/sectionChildrenDerived/ChildName";
-import { ChildSectionName } from "../../sectionVarbsConfigDerived/sectionChildrenDerived/ChildSectionName";
+import { ChildName } from "../../stateSchemas/derivedFromChildrenSchemas/ChildName";
+import { ChildSectionName } from "../../stateSchemas/derivedFromChildrenSchemas/ChildSectionName";
 import { SectionName } from "../../stateSchemas/SectionName";
 import { Obj } from "../../utils/Obj";
 import { UpdaterSection } from "../Updaters/UpdaterSection";
