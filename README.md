@@ -7,17 +7,17 @@ The app is full stack, with a client and server, both of which are written in Ty
 
 The app is structured as a monorepo in which the client’s files are nested inside the server repository. This is to let the server access a subset of code used by the client, located in /sharedWithServer. Below is a simplified sketch of the general file structure.
 
-    DealLab  
-    |–package.json  
-  |–/src  
-  |–|–index.ts (server)  
-  |–|–/routes  
-  |–|–/client  
-  |–|–|–package.json  
-  |–|–|–/src  
-  |–|–|–|–index.ts (client)  
-  |–|–|–|–/Components  
-  |–|–|–|–/sharedWithServer  
+      DealLab  
+      |–package.json  
+      |–/src  
+      |–|–index.ts (server)  
+      |–|–/routes  
+      |–|–/client  
+      |–|–|–package.json  
+      |–|–|–/src  
+      |–|–|–|–index.ts (client)  
+      |–|–|–|–/Components  
+      |–|–|–|–/sharedWithServer  
 
 ## Shared Resources
 /sharedWithServer contains eight categories of code that are shared between the client and server. This code largely structures the app.
@@ -38,17 +38,17 @@ __State__: classes that are designed to allow for updates while preventing mutat
 
 __StateGetters__: classes used to access state data from the perspective of particular aspects of state, i.e., from the perspective of particular sections, variables, or from the overview. For example, there is a GetterSection class of which each instance represents a particular section in State and has methods for retrieving data in relation to that section. For example: 
 
-  const property = GetterOverview.section(“property”, propertyId);
+    const property = GetterOverview.section(“property”, propertyId);
 
-  const purchasePrice = property.variable(“purchasePrice”);
+    const purchasePrice = property.variable(“purchasePrice”);
 
-  const num: number = purchasePrice.value();
+    const num: number = purchasePrice.value();
 
-  const unit1 = property.firstChild(“unit”);
+    const unit1 = property.firstChild(“unit”);
 
-  const deal = property.parent(“deal);
+    const deal = property.parent(“deal);
 
-  const cashFlow = deal.variable(“cashFlow”);
+    const cashFlow = deal.variable(“cashFlow”);
 
 The methods of these classes constrain which parameters may be fed to them depending on what the class instance represents. For example, it will only let you retrieve a “purchasePrice” variable from GetterSection<“property”>. Further, outputs are also typed, so the IDE can tell you the type of the value had by GetterVariable<“property”, “purchasePrice”>. All such typing is based on the stateSchemas.
 
