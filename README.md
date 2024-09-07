@@ -75,13 +75,16 @@ Example:
 
 Further, there are multiple levels of StateOperators. The most basic level is simply for adding and removing child sections and updating single values. The higher levels encapsulate the more basic levels and manage additional tasks like solving for all of the variables that are supposed to be solved after each basic operation, and solving them all in the right order. For example, after the purchasePrice variable is updated, so too will need to be any variable that is a function of the purchase price, such as possibly the down payment, loan amount, mortgage payment amount, and cash flow, in that order (among other variables).
 
-__StateTransports__: used for sending structured data from the front-end to the server and vice-versa, or for storing data in caches. Essentially, they are pojo representations of sections that can be loaded into state instances. Their structures are defined by Typescript types derived from the stateSchemas.
+#### StateTransports
+Used for sending structured data from the front-end to the server and vice-versa, or for storing data in caches. Essentially, they are pojo representations of sections that can be loaded into state instances. Their structures are defined by Typescript types derived from the stateSchemas.
 
 The most common transport type is SectionPack (i.e., SectionPack<“property”>, SectionPack<“deal”>, etc.) which contains all the data of a section’s variables and its children.
 
-__ApiQueries__: types for coordinating requests and responses between the client and server and for ensuring that proper requests and responses are used in query tests, whether on the front-end or back-end.
+#### ApiQueries
+Types for coordinating requests and responses between the client and server and for ensuring that proper requests and responses are used in query tests, whether on the front-end or back-end.
 
-__Utils__: simple utility functions that are relevant to both the client and server.
+#### Utils
+Simple utility functions that are relevant to both the client and server.
 
 ## Front End
 The front-end uses React with hooks. All the React components are functional and use lifecycle hooks to access and manipulate state. StateGetters are used in components for displaying state data to the user. For example, below is a simple representation of a Property component:
