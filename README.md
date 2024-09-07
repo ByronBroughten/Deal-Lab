@@ -1,4 +1,4 @@
-### DealLab
+# DealLab
 
 ## Purpose and Overview
 The purpose of Deallab is to help beginner and experienced real estate investors analyze real estate deals with minimal data entry and high potential for experimentation. It calculates metrics for analyzing real estate and allows users to save and swap out parts of deals and use equations with responsive variables in place of simple numeric inputs. More details about the app’s function can be found on its [landing page](https://deallab.app/).
@@ -22,13 +22,15 @@ The app is structured as a monorepo in which the client’s files are nested ins
 ## Shared Resources
 `/sharedWithServer` contains eight categories of code that are shared between the client and server. This code largely structures the app.
 
-__Constants__: configuration values for things like coordinating the routes between client api calls and server endpoints, as well as other parameters.
+### Constants
+Configuration values for things like coordinating the routes between client api calls and server endpoints, as well as other parameters.
 
-__stateSchemas__: defines the building blocks of the app in terms of “sections” and “variables”.
+### stateSchemas
+Defines the building blocks of the app in terms of “sections” and “variables”.
 
-Sections represent deals, properties, loans, menus, and many other things. Each type of section may have one or more instances and has a defined set of variables attached to it (more on variables soon). Sections can also have children, i.e., other sections nested under them, and each type of section has a defined set of permissible child sections. For example, deals may have “property” and “financing” child sections, properties may have units, etc. When a section is deleted, so too are its children. There are around 80 different types of sections.
+__Sections__ represent deals, properties, loans, menus, and many other things. Each type of section may have one or more instances and has a defined set of variables attached to it (more on variables soon). Sections can also have children, i.e., other sections nested under them, and each type of section has a defined set of permissible child sections. For example, deals may have “property” and “financing” child sections, properties may have units, etc. When a section is deleted, so too are its children. There are around 80 different types of sections.
 
-Variables are attached to sections and contain values that may be updated. For example, properties have variables for things like their purchase price, year built, address, and so on. The values that variables contain can be numbers, booleans, strings, or specific object types.  Some values, like a property’s purchase price, may be updated by the user’s input. Conversely, some values are the products of calculations involving other variables. For example, a deal’s return on investment value is the product of its annual cash flow value divided by its total investment value. stateSchemas define which variables have which types of values as well as the way in which each is updated. There are hundreds of variables.
+__Variables__ are attached to sections and contain values that may be updated. For example, properties have variables for things like their purchase price, year built, address, and so on. The values that variables contain can be numbers, booleans, strings, or specific object types.  Some values, like a property’s purchase price, may be updated by the user’s input. Conversely, some values are the products of calculations involving other variables. For example, a deal’s return on investment value is the product of its annual cash flow value divided by its total investment value. stateSchemas define which variables have which types of values as well as the way in which each is updated. There are hundreds of variables.
 
 Both the state on the front-end and the MongoDb database on the back-end rely on definitions from stateSchemas to structure and/or validate data. That is, a property being saved to the database is constrained to having the same allowable children and variables as a property in state on the front-end, based on the same shared schemas, the single source of truth
 
