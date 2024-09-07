@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
+import { UserInfoTokenProp } from "../../client/src/modules/services/userTokenS";
 import { DbUserService } from "../../DbUserService";
-import { UserInfoTokenProp } from "../../client/src/App/modules/services/userTokenS";
 import { getAuthWare } from "../../middleware/authWare";
 import { userJwtWare } from "../../middleware/jwtWare";
 import { sendSuccess } from "./routesShared/sendSuccess";

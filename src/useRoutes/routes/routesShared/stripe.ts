@@ -1,6 +1,6 @@
 import { Request } from "express";
 import Stripe from "stripe";
-import { getErrorMessage } from "../../../client/src/App/utils/error";
+import { getErrorMessage } from "../../../client/src/utils/error";
 
 export function getStripe(): Stripe {
   const secret = process.env.STRIPE_SECRET;

@@ -1,5 +1,5 @@
 import { pick } from "lodash";
-import { SolverFeStore } from "../../../App/modules/FeStore/SolverFeStore";
+import { SolverFeStore } from "../../../modules/FeStore/SolverFeStore";
 import { SolveState } from "../../State/SolveState";
 import { StateSections } from "../../State/StateSections";
 import { GetterSectionsProps } from "../../StateGetters/Bases/GetterSectionsBase";

@@ -1,8 +1,8 @@
-import { GetterFeStore } from "../App/modules/FeStore/GetterFeStore";
+import { GetterFeStore } from "../modules/FeStore/GetterFeStore";
 import {
   AddToStoreOptions,
   PrepperFeStore,
-} from "../App/modules/FeStore/PrepperFeStore";
+} from "../modules/FeStore/PrepperFeStore";
 import { MainState, MainStateProps } from "./State/MainState";
 import { GetterSections } from "./StateGetters/GetterSections";
 import { FeSectionInfo } from "./StateGetters/Identifiers/FeInfo";

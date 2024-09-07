@@ -1,4 +1,4 @@
-import { fixedVariableLabel } from "../../../varbLabels/varbLabels";
+import { fixedVariableLabel } from "../../../modules/varbLabels/varbLabels";
 import { constants } from "../../Constants";
 import { targetNames } from "../../stateSchemas/allBaseSectionVarbs/baseSwitchNames";
 import { VarbName } from "../../stateSchemas/derivedFromBaseSchemas/baseSectionsVarbsTypes";

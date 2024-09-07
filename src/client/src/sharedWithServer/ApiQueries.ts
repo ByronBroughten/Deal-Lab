@@ -1,4 +1,4 @@
-import { UserInfoTokenProp } from "../App/modules/services/userTokenS";
+import { UserInfoTokenProp } from "../modules/services/userTokenS";
 import { EstimatorPlanValues } from "./apiQueriesShared/EstimatorPlanValues";
 import {
   DbIdRes,

@@ -1,4 +1,4 @@
-import { fixedVariableLabel } from "../../../varbLabels/varbLabels";
+import { fixedVariableLabel } from "../../../modules/varbLabels/varbLabels";
 import { pathSectionName } from "../../StateGetters/Identifiers/sectionPaths/sectionPathNames";
 import {
   ValueFixedVarbPathName,

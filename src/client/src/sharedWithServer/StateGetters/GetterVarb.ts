@@ -4,7 +4,7 @@ import {
   LabelOverrideSwitches,
   VarbInfoTextProps,
   VarbLabel,
-} from "../../varbLabels/varbLabels";
+} from "../../modules/varbLabels/varbLabels";
 import { StateVarb } from "../State/StateSectionsTypes";
 import { DisplayOverrideSwitches } from "../stateSchemas/allDisplaySectionVarbs/displayVarb";
 import { SectionNameByType } from "../stateSchemas/SectionNameByType";
