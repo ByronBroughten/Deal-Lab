@@ -22,10 +22,10 @@ The app is structured as a monorepo in which the client’s files are nested ins
 ## Shared Resources
 `/sharedWithServer` contains eight categories of code that are shared between the client and server. This code largely structures the app.
 
-### Constants
+#### Constants
 Configuration values for things like coordinating the routes between client api calls and server endpoints, as well as other parameters.
 
-### stateSchemas
+#### stateSchemas
 Defines the building blocks of the app in terms of “sections” and “variables”.
 
 __Sections__ represent deals, properties, loans, menus, and many other things. Each type of section may have one or more instances and has a defined set of variables attached to it (more on variables soon). Sections can also have children, i.e., other sections nested under them, and each type of section has a defined set of permissible child sections. For example, deals may have “property” and “financing” child sections, properties may have units, etc. When a section is deleted, so too are its children. There are around 80 different types of sections.
@@ -36,9 +36,11 @@ Both the state on the front-end and the MongoDb database on the back-end rely on
 
 Many Typescript types are also derived from stateSchemas and are shared across the client and server. This allows for full-stack type safe code with regard to core app structures.
 
-__State__: classes that are designed to allow for updates while preventing mutations. Each instance of state can comprise many different sections, though there is always a section of type “root” that is the top ancestor of the other sections. While state is used for displaying and updating data on the front-end, it can also be used on the back-end to take advantage of all the robust ways there are to access and manipulate data in the form of State, described more below.
+#### State
+Classes that are designed to allow for updates while preventing mutations. Each instance of state can comprise many different sections, though there is always a section of type “root” that is the top ancestor of the other sections. While state is used for displaying and updating data on the front-end, it can also be used on the back-end to take advantage of all the robust ways there are to access and manipulate data in the form of State, described more below.
 
-__StateGetters__: classes used to access state data from the perspective of particular aspects of state, i.e., from the perspective of particular sections, variables, or from the overview. For example, there is a GetterSection class of which each instance represents a particular section in State and has methods for retrieving data in relation to that section. For example: 
+#### StateGetters
+Classes used to access state data from the perspective of particular aspects of state, i.e., from the perspective of particular sections, variables, or from the overview. For example, there is a GetterSection class of which each instance represents a particular section in State and has methods for retrieving data in relation to that section. For example: 
 
     const property = GetterOverview.section(“property”, propertyId);
 
@@ -54,7 +56,8 @@ __StateGetters__: classes used to access state data from the perspective of part
 
 The methods of these classes constrain which parameters may be fed to them depending on what the class instance represents. For example, it will only let you retrieve a “purchasePrice” variable from GetterSection<“property”>. Further, outputs are also typed, so the IDE can tell you the type of the value had by GetterVariable<“property”, “purchasePrice”>. All such typing is based on the stateSchemas.
 
-__StateOperators__: classes for updating state. These are similar to the StateGetters, but rather than merely navigate and retrieve pieces of state they can also create new state instances with updated values.
+#### StateOperators
+Classes for updating state. These are similar to the StateGetters, but rather than merely navigate and retrieve pieces of state they can also create new state instances with updated values.
 
       property.variable(“purchasePrice”).update(250000);
 
