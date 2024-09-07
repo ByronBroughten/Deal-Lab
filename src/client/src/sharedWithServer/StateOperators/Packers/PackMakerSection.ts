@@ -1,4 +1,3 @@
-import { SectionNameByType } from "../../SectionNameByType";
 import {
   ChildSpNums,
   OneRawSection,
@@ -22,6 +21,7 @@ import {
 } from "../../stateSchemas/derivedFromChildrenSchemas/ChildName";
 import { ChildSectionName } from "../../stateSchemas/derivedFromChildrenSchemas/ChildSectionName";
 import { SectionName } from "../../stateSchemas/SectionName";
+import { SectionNameByType } from "../../stateSchemas/SectionNameByType";
 import {
   ChildPackArrs,
   ChildSectionPack,

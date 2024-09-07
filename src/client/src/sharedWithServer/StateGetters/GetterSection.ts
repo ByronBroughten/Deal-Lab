@@ -1,8 +1,3 @@
-import {
-  SectionNameByType,
-  sectionNameS,
-  SectionNameType,
-} from "../SectionNameByType";
 import { SectionValuesGeneric } from "../State/RawSection";
 import {
   ContextPathIdxSpecifier,
@@ -46,6 +41,11 @@ import {
   timespanName,
 } from "../stateSchemas/GroupName";
 import { SectionName } from "../stateSchemas/SectionName";
+import {
+  SectionNameByType,
+  sectionNameS,
+  SectionNameType,
+} from "../stateSchemas/SectionNameByType";
 import { SectionMeta } from "../stateSchemas/StateMeta/SectionMeta";
 import {
   SectionValues,

@@ -1,4 +1,3 @@
-import { validateSectionPackArrByType } from "../SectionNameByType";
 import {
   ChildName,
   validateChildName,
@@ -8,6 +7,7 @@ import {
   childToSectionName,
 } from "../stateSchemas/derivedFromChildrenSchemas/ChildSectionName";
 import { SectionName } from "../stateSchemas/SectionName";
+import { validateSectionPackArrByType } from "../stateSchemas/SectionNameByType";
 import { Obj } from "../utils/Obj";
 import { SectionPack } from "./SectionPack";
 

@@ -1,30 +1,27 @@
-import { StringTypeChecker } from "../App/utils/StringTypeChecker";
-import {
-  BaseNameArrs,
-  baseNameArrs,
-} from "./stateSchemas/derivedFromBaseSchemas/baseNameArrs";
-import {
-  ChildName,
-  getChildNames,
-} from "./stateSchemas/derivedFromChildrenSchemas/ChildName";
-import {
-  ChildToSectionName,
-  childToSectionName,
-} from "./stateSchemas/derivedFromChildrenSchemas/ChildSectionName";
-import { ParentName } from "./stateSchemas/derivedFromChildrenSchemas/ParentName";
-import {
-  RelNameArrs,
-  relNameArrs,
-} from "./stateSchemas/derivedFromRelSchemas/relNameArrs";
-import { SectionName } from "./stateSchemas/SectionName";
-import { SectionValues } from "./stateSchemas/StateValue";
+import { StringTypeChecker } from "../../App/utils/StringTypeChecker";
 import {
   isSectionPack,
   SectionPack,
   validateSectionPack,
-} from "./StateTransports/SectionPack";
-import { Arr } from "./utils/Arr";
-import { PropKeyOfValue } from "./utils/Obj/SubType";
+} from "../StateTransports/SectionPack";
+import { Arr } from "../utils/Arr";
+import { PropKeyOfValue } from "../utils/Obj/SubType";
+import {
+  BaseNameArrs,
+  baseNameArrs,
+} from "./derivedFromBaseSchemas/baseNameArrs";
+import {
+  ChildName,
+  getChildNames,
+} from "./derivedFromChildrenSchemas/ChildName";
+import {
+  ChildToSectionName,
+  childToSectionName,
+} from "./derivedFromChildrenSchemas/ChildSectionName";
+import { ParentName } from "./derivedFromChildrenSchemas/ParentName";
+import { RelNameArrs, relNameArrs } from "./derivedFromRelSchemas/relNameArrs";
+import { SectionName } from "./SectionName";
+import { SectionValues } from "./StateValue";
 
 type NameArrs = BaseNameArrs & RelNameArrs;
 function makeNameArrs(): NameArrs {
@@ -97,14 +94,6 @@ export function isSectionPackByType<ST extends SectionNameType = "all">(
     return true;
   } else return false;
 }
-export function validateSectionPackByType<ST extends SectionNameType = "all">(
-  value: any,
-  sectionType?: ST
-): SectionPackByType<ST> {
-  validateSectionPack(value);
-  sectionNameS.validate(value.sectionName, sectionType);
-  return value;
-}
 
 type ValidateSectionPackArrProps = {
   value: any;
@@ -123,4 +112,13 @@ export function validateSectionPackArrByType<ST extends SectionNameType>({
   } else {
     throw new Error("Payload is not a valid sectionPack array.");
   }
+}
+
+function validateSectionPackByType<ST extends SectionNameType = "all">(
+  value: any,
+  sectionType?: ST
+): SectionPackByType<ST> {
+  validateSectionPack(value);
+  sectionNameS.validate(value.sectionName, sectionType);
+  return value;
 }

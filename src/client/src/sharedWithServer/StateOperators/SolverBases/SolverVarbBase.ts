@@ -1,6 +1,5 @@
-import { SectionNameByType } from "../../SectionNameByType";
 import { GetterVarbBase } from "../../StateGetters/Bases/GetterVarbBase";
-
+import { SectionNameByType } from "../../stateSchemas/SectionNameByType";
 import { SolverSectionBase, SolverSectionProps } from "./SolverSectionBase";
 
 export interface SolverVarbProps<SN extends SectionNameByType<"hasVarb">>

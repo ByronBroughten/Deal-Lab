@@ -1,4 +1,3 @@
-import { SectionNameByType } from "../../SectionNameByType";
 import { SectionValuesGeneric } from "../../State/RawSection";
 import { Obj } from "../../utils/Obj";
 import {
@@ -31,6 +30,7 @@ import {
   sectionChildNameNames,
 } from "../derivedFromChildrenSchemas/ChildSectionName";
 import { SectionName } from "../SectionName";
+import { SectionNameByType } from "../SectionNameByType";
 import {
   CorePropName,
   sectionMetasCore,

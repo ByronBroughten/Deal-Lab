@@ -1,4 +1,3 @@
-import { SectionNameByType } from "../../SectionNameByType";
 import { StateSections } from "../../State/StateSections";
 import { GetterSectionProps } from "../../StateGetters/Bases/GetterSectionBase";
 import { GetterSection } from "../../StateGetters/GetterSection";
@@ -12,6 +11,7 @@ import {
 } from "../../stateSchemas/derivedFromChildrenSchemas/ChildName";
 import { ChildSectionName } from "../../stateSchemas/derivedFromChildrenSchemas/ChildSectionName";
 import { SectionName } from "../../stateSchemas/SectionName";
+import { SectionNameByType } from "../../stateSchemas/SectionNameByType";
 import { SectionValues, VarbValue } from "../../stateSchemas/StateValue";
 import { NumObjOutput } from "../../stateSchemas/StateValue/NumObj";
 import {

@@ -1,9 +1,4 @@
 import {
-  SectionNameByType,
-  sectionNameS,
-  SectionNameType,
-} from "../../SectionNameByType";
-import {
   VarbName,
   VarbNameWide,
 } from "../../stateSchemas/derivedFromBaseSchemas/baseSectionsVarbsTypes";
@@ -12,6 +7,11 @@ import {
   ParentNameSafe,
 } from "../../stateSchemas/derivedFromChildrenSchemas/ParentName";
 import { SectionName } from "../../stateSchemas/SectionName";
+import {
+  SectionNameByType,
+  sectionNameS,
+  SectionNameType,
+} from "../../stateSchemas/SectionNameByType";
 import { StateValue } from "../../stateSchemas/StateValue";
 import { IdS } from "../../utils/IdS";
 import { SectionNameProp } from "./SectionNameProp";

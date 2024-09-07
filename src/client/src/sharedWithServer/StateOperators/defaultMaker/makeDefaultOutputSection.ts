@@ -1,4 +1,4 @@
-import { ChildNameOfType } from "../../SectionNameByType";
+import { ChildNameOfType } from "../../stateSchemas/SectionNameByType";
 import { DealMode, getDealModes } from "../../stateSchemas/StateValue/dealMode";
 import { SectionPack } from "../../StateTransports/SectionPack";
 import { PackBuilderSection } from "../Packers/PackBuilderSection";

@@ -1,6 +1,6 @@
-import { SectionNameByType } from "../SectionNameByType";
 import { DbSectionInfo } from "../stateSchemas/allBaseSectionVarbs/DbSectionInfo";
 import { SectionName } from "../stateSchemas/SectionName";
+import { SectionNameByType } from "../stateSchemas/SectionNameByType";
 import {
   SectionsMeta,
   sectionsMeta,

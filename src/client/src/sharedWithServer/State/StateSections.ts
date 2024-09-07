@@ -1,6 +1,9 @@
 import { pick } from "lodash";
-import { SectionNameByType, sectionNameS } from "../SectionNameByType";
 import { FeSectionInfo, FeVarbInfo } from "../StateGetters/Identifiers/FeInfo";
+import {
+  SectionNameByType,
+  sectionNameS,
+} from "../stateSchemas/SectionNameByType";
 import { Arr, ValueNotFoundError } from "../utils/Arr";
 import { IdS } from "../utils/IdS";
 import { Obj } from "../utils/Obj";

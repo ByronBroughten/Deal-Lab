@@ -5,9 +5,9 @@ import {
   VarbInfoTextProps,
   VarbLabel,
 } from "../../varbLabels/varbLabels";
-import { SectionNameByType } from "../SectionNameByType";
 import { StateVarb } from "../State/StateSectionsTypes";
 import { DisplayOverrideSwitches } from "../stateSchemas/allDisplaySectionVarbs/displayVarb";
+import { SectionNameByType } from "../stateSchemas/SectionNameByType";
 import { VarbMeta } from "../stateSchemas/StateMeta/VarbMeta";
 import {
   StateValue,

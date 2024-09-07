@@ -1,4 +1,3 @@
-import { SectionNameByType } from "../../SectionNameByType";
 import { GetterSectionProps } from "../../StateGetters/Bases/GetterSectionBase";
 import { GetterVarbBase } from "../../StateGetters/Bases/GetterVarbBase";
 import { GetterSection } from "../../StateGetters/GetterSection";
@@ -13,6 +12,7 @@ import {
   UpdateFnProps,
 } from "../../stateSchemas/allUpdateSectionVarbs/updateVarb/UpdateFnProps";
 import { PathInVarbInfo } from "../../stateSchemas/derivedFromChildrenSchemas/RelInOutVarbInfo";
+import { SectionNameByType } from "../../stateSchemas/SectionNameByType";
 import { StateValue } from "../../stateSchemas/StateValue";
 import { InEntityValueInfo } from "../../stateSchemas/StateValue/InEntityValue";
 import {

@@ -1,8 +1,8 @@
-import { SectionNameByType } from "../../SectionNameByType";
 import { GetterSectionBase } from "../../StateGetters/Bases/GetterSectionBase";
 import { GetterSection } from "../../StateGetters/GetterSection";
 import { GetterVarb } from "../../StateGetters/GetterVarb";
 import { FeVarbInfo } from "../../StateGetters/Identifiers/FeInfo";
+import { SectionNameByType } from "../../stateSchemas/SectionNameByType";
 import { OutEntityGetterVarb } from "./OutEntityGetterVarb";
 
 export class OutVarbGetterSection<

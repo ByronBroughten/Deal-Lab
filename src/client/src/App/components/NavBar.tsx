@@ -1,8 +1,8 @@
 import { AppBar, Box, Toolbar } from "@mui/material";
 import { rem } from "polished";
 import styled from "styled-components";
-import logo from "../../icons/logo500DealLab.png";
-import logoAndName from "../../icons/logoAndNameDealLab.png";
+import logo from "../../pictures/logo500DealLab.png";
+import logoAndName from "../../pictures/logoAndNameDealLab.png";
 import { constant } from "../../sharedWithServer/Constants";
 import { nativeTheme } from "../theme/nativeTheme";
 import theme from "../theme/Theme";

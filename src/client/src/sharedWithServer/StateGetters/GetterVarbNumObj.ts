@@ -1,5 +1,5 @@
 import { round } from "lodash";
-import { SectionNameByType } from "../SectionNameByType";
+import { SectionNameByType } from "../stateSchemas/SectionNameByType";
 import {
   EntitiesAndEditorText,
   NumberOrQ,

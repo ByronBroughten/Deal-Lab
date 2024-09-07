@@ -1,4 +1,3 @@
-import { SectionNameByType, SectionNameType } from "../../SectionNameByType";
 import { GetterSectionBase } from "../../StateGetters/Bases/GetterSectionBase";
 import {
   GetterSection,
@@ -12,6 +11,10 @@ import {
 } from "../../stateSchemas/derivedFromChildrenSchemas/ChildName";
 import { ChildSectionName } from "../../stateSchemas/derivedFromChildrenSchemas/ChildSectionName";
 import { SectionName } from "../../stateSchemas/SectionName";
+import {
+  SectionNameByType,
+  SectionNameType,
+} from "../../stateSchemas/SectionNameByType";
 import { SectionValues } from "../../stateSchemas/StateValue";
 import {
   ChildArrPack,

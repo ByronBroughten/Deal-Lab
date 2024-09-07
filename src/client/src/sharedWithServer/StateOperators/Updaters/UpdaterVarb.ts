@@ -1,7 +1,7 @@
-import { SectionNameByType } from "../../SectionNameByType";
 import { StateVarb } from "../../State/StateSectionsTypes";
 import { GetterVarbBase } from "../../StateGetters/Bases/GetterVarbBase";
 import { GetterVarb } from "../../StateGetters/GetterVarb";
+import { SectionNameByType } from "../../stateSchemas/SectionNameByType";
 import { VarbMeta } from "../../stateSchemas/StateMeta/VarbMeta";
 import { StateValue } from "../../stateSchemas/StateValue";
 

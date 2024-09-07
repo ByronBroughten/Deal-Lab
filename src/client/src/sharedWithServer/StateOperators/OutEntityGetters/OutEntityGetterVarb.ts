@@ -1,10 +1,10 @@
-import { SectionNameByType } from "../../SectionNameByType";
 import { GetterVarbBase } from "../../StateGetters/Bases/GetterVarbBase";
 import { GetterVarb } from "../../StateGetters/GetterVarb";
 import { InEntityGetterVarb } from "../../StateGetters/InEntityGetterVarb";
+import { SectionNameByType } from "../../stateSchemas/SectionNameByType";
 import {
   OutEntity,
-  OutEntityInfo
+  OutEntityInfo,
 } from "../../stateSchemas/StateValue/stateValuesShared/entities";
 import { Arr } from "../../utils/Arr";
 

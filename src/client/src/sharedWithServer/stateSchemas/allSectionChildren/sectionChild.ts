@@ -1,7 +1,7 @@
-import { SectionNameByType } from "../../SectionNameByType";
 import { Merge } from "../../utils/Obj/merge";
 import { StrictPick, StrictPickPartial } from "../../utils/types";
 import { SectionName } from "../SectionName";
+import { SectionNameByType } from "../SectionNameByType";
 
 export function sectionChild<
   SN extends SectionName,

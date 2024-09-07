@@ -1,9 +1,9 @@
-import { SectionNameByType } from "../../SectionNameByType";
 import {
   GetterSectionBase,
   GetterSectionProps,
 } from "../../StateGetters/Bases/GetterSectionBase";
 import { FeSectionInfo } from "../../StateGetters/Identifiers/FeInfo";
+import { SectionNameByType } from "../../stateSchemas/SectionNameByType";
 import { SolverSectionsBase, SolverSectionsProps } from "./SolverSectionsBase";
 
 export interface SolverSectionProps<SN extends SectionNameByType>

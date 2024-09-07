@@ -1,4 +1,3 @@
-import { SectionNameByType } from "../../SectionNameByType";
 import { OneRawSection } from "../../State/RawSection";
 import {
   GetterSectionBase,
@@ -7,6 +6,7 @@ import {
 import { GetterSection } from "../../StateGetters/GetterSection";
 import { FeSectionInfo } from "../../StateGetters/Identifiers/FeInfo";
 import { SectionName } from "../../stateSchemas/SectionName";
+import { SectionNameByType } from "../../stateSchemas/SectionNameByType";
 import { SectionPack } from "../../StateTransports/SectionPack";
 import { UpdaterSection } from "../Updaters/UpdaterSection";
 

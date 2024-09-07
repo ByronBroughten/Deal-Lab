@@ -1,10 +1,10 @@
-import { SectionNameByType } from "../../../sharedWithServer/SectionNameByType";
 import {
   GetterSectionBase,
   GetterSectionProps,
 } from "../../../sharedWithServer/StateGetters/Bases/GetterSectionBase";
 import { GetterSection } from "../../../sharedWithServer/StateGetters/GetterSection";
 import { SectionName } from "../../../sharedWithServer/stateSchemas/SectionName";
+import { SectionNameByType } from "../../../sharedWithServer/stateSchemas/SectionNameByType";
 import {
   ApiQuerierBase,
   ApiQuerierBaseProps,

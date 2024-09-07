@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import logo from "../../icons/logo500DealLab.png";
+import logo from "../../pictures/logo500DealLab.png";
 import { useGoToPage } from "./customHooks/useGoToPage";
 import { PlainIconBtn } from "./general/PlainIconBtn";
 

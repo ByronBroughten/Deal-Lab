@@ -1,5 +1,8 @@
-import { SectionNameByType, sectionNameS } from "../../SectionNameByType";
 import { StateSections } from "../../State/StateSections";
+import {
+  SectionNameByType,
+  sectionNameS,
+} from "../../stateSchemas/SectionNameByType";
 import { IdS } from "../../utils/IdS";
 import { FeSectionInfo } from "../Identifiers/FeInfo";
 import { GetterListBase, GetterListProps } from "./GetterListBase";

@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import styled from "styled-components";
-import { SectionNameByType } from "../../../../../../../sharedWithServer/SectionNameByType";
 import { FeSectionInfo } from "../../../../../../../sharedWithServer/StateGetters/Identifiers/FeInfo";
+import { SectionNameByType } from "../../../../../../../sharedWithServer/stateSchemas/SectionNameByType";
 import { nativeTheme } from "../../../../../../theme/nativeTheme";
 import { FormSection } from "../../../../../appWide/FormSection";
 import { VarbListGenericMenuType } from "../../../../../appWide/ListGroup/ListGroupShared/VarbListGeneric";

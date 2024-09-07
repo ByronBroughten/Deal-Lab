@@ -1,10 +1,10 @@
 import { Box, SxProps } from "@mui/material";
+import { FeSectionInfo } from "../../../../../../../sharedWithServer/StateGetters/Identifiers/FeInfo";
+import { VarbName } from "../../../../../../../sharedWithServer/stateSchemas/derivedFromBaseSchemas/baseSectionsVarbsTypes";
 import {
   SectionNameByType,
   sectionNameS,
-} from "../../../../../../../sharedWithServer/SectionNameByType";
-import { FeSectionInfo } from "../../../../../../../sharedWithServer/StateGetters/Identifiers/FeInfo";
-import { VarbName } from "../../../../../../../sharedWithServer/stateSchemas/derivedFromBaseSchemas/baseSectionsVarbsTypes";
+} from "../../../../../../../sharedWithServer/stateSchemas/SectionNameByType";
 import { StateValue } from "../../../../../../../sharedWithServer/stateSchemas/StateValue";
 import { Arr } from "../../../../../../../sharedWithServer/utils/Arr";
 import { useGetterSection } from "../../../../../../stateClassHooks/useGetterSection";

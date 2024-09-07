@@ -1,13 +1,13 @@
 import { BiReset } from "react-icons/bi";
 import { HiOutlineTemplate } from "react-icons/hi";
 import styled from "styled-components";
-import { SectionNameByType } from "../../../../../sharedWithServer/SectionNameByType";
+import { SectionNameByType } from "../../../../../sharedWithServer/stateSchemas/SectionNameByType";
 import { useActionWithProps } from "../../../../stateClassHooks/useAction";
 import theme from "../../../../theme/Theme";
-import { useConfirmationModal } from "../../../Modals/ConfirmationModalProvider";
-import { ListRouteName } from "../../../UserListEditorPage/UserComponentClosed";
 import { useMakeGoToPage } from "../../../customHooks/useGoToPage";
 import { MuiRow } from "../../../general/MuiRow";
+import { useConfirmationModal } from "../../../Modals/ConfirmationModalProvider";
+import { ListRouteName } from "../../../UserListEditorPage/UserComponentClosed";
 import { ActionLoadBtn } from "./ActionBtns/ActionLoadBtn";
 import { ActionMenuProps } from "./ActionBtns/ActionMenuTypes";
 import { ActionSaveAsNewBtn } from "./ActionBtns/SaveAsNewBtn";
