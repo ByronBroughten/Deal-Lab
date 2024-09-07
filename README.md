@@ -112,22 +112,22 @@ Unit testing is performed with jest. Most of the current tests are for top-level
 
 ## Possible Projects
 1. Enable the app to load property listing data from an api to optionally fill inputs for things like purchase price, year built, annual taxes, and whatever else.
-* An api that could possibly be used to implement this: https://www.rentcast.io/api
-* Another option is to create a web-scraper that gathers data from online listing websites.
+    * An api that could possibly be used to implement this: https://www.rentcast.io/api
+    * Another option is to create a web-scraper that gathers data from online listing websites.
 
 2. Enable users to circle an area on a map, filter the types of properties they want to analyze, and apply a responsive deal template to the filtered properties in the circled area such that all of the properties are analyzed at once according to the user’s specifications.
-* This would require the accomplishment of project 1.
+    * This would require the accomplishment of project 1.
 
 3. Transition the app from Create React App to Next.js
-* This is needed in order to upgrade the current deployment from a depreciating Heroku stack to a newer stack.
+    * This is needed in order to upgrade the current deployment from a depreciating Heroku stack to a newer stack.
 
 4. Fully transition the app to the Material UI 5 styling system.
-* This would simply involve replacing the rest of the components based on Styled-Components with Material UI components and styling.
+    * This would simply involve replacing the rest of the components based on Styled-Components with Material UI components and styling.
 
 5. Figure out and implement a way to deploy the codebase as a mobile app for IOS and Android with minimal code duplication, assuming the UI can be managed with styling breakpoints.
 
 6. Reduce throughput between the client and server and between the server and database when deals are edited and saved.
-* The main challenge with this is to implement a way to update aspects of sections in the database rather than overwriting entire sections after even just small edits. For example, instead of replacing an entire saved deal when the user edits a property’s purchase price, as is the case now, it would save just the purchase price variable, or perhaps that variable and all of the other connected solved variables.
+    * The main challenge with this is to implement a way to update aspects of sections in the database rather than overwriting entire sections after even just small edits. For example, instead of replacing an entire saved deal when the user edits a property’s purchase price, as is the case now, it would save just the purchase price variable, or perhaps that variable and all of the other connected solved variables.
 
 ## Technology Used
 
