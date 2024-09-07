@@ -10,14 +10,14 @@ The app is structured as a monorepo in which the client’s files are nested ins
   DealLab  
   |–package.json  
   |–/src  
-  |–|–index.ts (server)
-  |–|–/routes
-  |–|–/client
-  |–|–|–package.json
-  |–|–|–/src
-  |–|–|–|–index.ts (client)
-  |–|–|–|–/Components
-  |–|–|–|–/sharedWithServer
+  |–|–index.ts (server)  
+  |–|–/routes  
+  |–|–/client  
+  |–|–|–package.json  
+  |–|–|–/src  
+  |–|–|–|–index.ts (client)  
+  |–|–|–|–/Components  
+  |–|–|–|–/sharedWithServer  
 
 ## Shared Resources
 /sharedWithServer contains eight categories of code that are shared between the client and server. This code largely structures the app.
