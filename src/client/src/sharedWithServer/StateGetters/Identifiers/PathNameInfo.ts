@@ -1,12 +1,12 @@
 import { z } from "zod";
+import { SectionName } from "../../stateSchemas/SectionName";
+import { zS } from "../../utils/zod";
+import { NanoIdProp } from "./NanoIdInfo";
 import {
   PathNameOfSection,
   SectionPathName,
   SectionPathVarbName,
-} from "../../sectionPaths/sectionPathNames";
-import { SectionName } from "../../stateSchemas/SectionName";
-import { zS } from "../../utils/zod";
-import { NanoIdProp } from "./NanoIdInfo";
+} from "./sectionPaths/sectionPathNames";
 import { MakeVarbProp, MixedInfoProps } from "./VarbInfoBase";
 
 interface PathNameProp<PN extends SectionPathName> {

@@ -1,12 +1,12 @@
 import { z } from "zod";
 import { Obj } from "../../utils/Obj";
+import { validateS } from "../../utils/validateS";
 import { zS } from "../../utils/zod";
-import { validateS } from "../../validateS";
-import { EntitiesProp, MainTextProp } from "./stateValuesShared/ValueObj";
 import {
   validateValueInEntities,
   zValueInEntities,
 } from "./stateValuesShared/entities";
+import { EntitiesProp, MainTextProp } from "./stateValuesShared/ValueObj";
 
 export interface StringObj extends EntitiesProp, MainTextProp {}
 

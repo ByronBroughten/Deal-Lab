@@ -14,7 +14,7 @@ import {
 import { valueMetas } from "../client/src/sharedWithServer/stateSchemas/valueMetas";
 import { ValueName } from "../client/src/sharedWithServer/stateSchemas/ValueName";
 import { dbLimits } from "../client/src/sharedWithServer/utils/dbLimits";
-import { validateS } from "../client/src/sharedWithServer/validateS";
+import { validateS } from "../client/src/sharedWithServer/utils/validateS";
 
 const mInEntities = mFromValidator(validateValueInEntities);
 

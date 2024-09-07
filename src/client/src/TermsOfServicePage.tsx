@@ -63,7 +63,9 @@ export function TermsOfServicePage() {
       <h2>3. Disclaimer</h2>
 
       <p>
-        {`All the materials on HomeEstimator’s Website are provided "as is".
+        {`All the materials on ${constant(
+          "appName"
+        )}’s Website are provided "as is".
         ${constant(
           "appName"
         )} makes no warranties, may it be expressed or implied,

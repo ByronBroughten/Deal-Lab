@@ -1,11 +1,11 @@
 import mongoose, { FilterQuery, QueryOptions } from "mongoose";
 import ThirdPartyEmailPassword from "supertokens-node/recipe/thirdpartyemailpassword";
+import {
+  DbPack,
+  DbSectionPack,
+} from "./client/src/sharedWithServer//StateTransports/DbSectionPack";
 import { EstimatorPlanValues } from "./client/src/sharedWithServer/apiQueriesShared/EstimatorPlanValues";
 import { constants } from "./client/src/sharedWithServer/Constants";
-import {
-  StoreName,
-  StoreSectionName,
-} from "./client/src/sharedWithServer/sectionStores";
 import { GetterSection } from "./client/src/sharedWithServer/StateGetters/GetterSection";
 import {
   OneDbSectionValueInfo,
@@ -28,9 +28,9 @@ import {
 } from "./client/src/sharedWithServer/stateSchemas/derivedFromChildrenSchemas/DbStoreName";
 import { SectionName } from "./client/src/sharedWithServer/stateSchemas/SectionName";
 import {
-  DbPack,
-  DbSectionPack,
-} from "./client/src/sharedWithServer/stateSchemas/StateTransports/DbSectionPack";
+  StoreName,
+  StoreSectionName,
+} from "./client/src/sharedWithServer/stateSchemas/sectionStores";
 import {
   StateValue,
   VarbValue,

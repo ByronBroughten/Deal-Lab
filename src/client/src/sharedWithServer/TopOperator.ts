@@ -3,7 +3,6 @@ import {
   AddToStoreOptions,
   PrepperFeStore,
 } from "../App/modules/FeStore/PrepperFeStore";
-import { isStoreNameByType, StoreSectionName } from "./sectionStores";
 import { MainState, MainStateProps } from "./State/MainState";
 import { GetterSections } from "./StateGetters/GetterSections";
 import { FeSectionInfo } from "./StateGetters/Identifiers/FeInfo";
@@ -16,6 +15,10 @@ import { SolvePrepper } from "./StateOperators/SolvePreppers/SolvePrepper";
 import { SolvePrepperSection } from "./StateOperators/SolvePreppers/SolvePrepperSection";
 import { SolverBase } from "./StateOperators/SolverBases/SolverBase";
 import { Solver } from "./StateOperators/Solvers/Solver";
+import {
+  isStoreNameByType,
+  StoreSectionName,
+} from "./stateSchemas/sectionStores";
 import { DealMode } from "./stateSchemas/StateValue/dealMode";
 import { SectionPack } from "./StateTransports/SectionPack";
 import { UserData } from "./StateTransports/UserData";

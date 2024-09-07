@@ -1,5 +1,4 @@
 import { SectionNameByType } from "../../SectionNameByType";
-import { SectionPathContextName } from "../../sectionPaths/sectionPathContexts";
 import { InitRawFeSectionProps } from "../../State/initRawSection";
 import { StateSections } from "../../State/StateSections";
 import {
@@ -10,6 +9,7 @@ import { GetterSectionProps } from "../../StateGetters/Bases/GetterSectionBase";
 import { NotAVarbNameError } from "../../StateGetters/Bases/GetterVarbBase";
 import { GetterSections } from "../../StateGetters/GetterSections";
 import { FeSectionInfo } from "../../StateGetters/Identifiers/FeInfo";
+import { SectionPathContextName } from "../../StateGetters/Identifiers/sectionPaths/sectionPathContexts";
 import { VarbName } from "../../stateSchemas/derivedFromBaseSchemas/baseSectionsVarbsTypes";
 import {
   ChildArrInfo,

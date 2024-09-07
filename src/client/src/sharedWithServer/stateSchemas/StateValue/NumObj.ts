@@ -2,7 +2,7 @@ import { z } from "zod";
 import { NotANumberError } from "../../utils/math";
 import { Obj } from "../../utils/Obj";
 import { StrictPick } from "../../utils/types";
-import { validateS } from "../../validateS";
+import { validateS } from "../../utils/validateS";
 import {
   validateValueInEntities,
   ValueInEntity,

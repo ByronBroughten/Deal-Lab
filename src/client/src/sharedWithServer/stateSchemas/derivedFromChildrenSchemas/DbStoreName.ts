@@ -1,11 +1,11 @@
+import { Obj } from "../../utils/Obj";
+import { allSectionChildren } from "../allSectionChildren";
 import {
   indexStoreNames,
   StoreName,
   storeNames,
   StoreSectionName,
-} from "../../sectionStores";
-import { Obj } from "../../utils/Obj";
-import { allSectionChildren } from "../allSectionChildren";
+} from "../sectionStores";
 import { ChildName } from "./ChildName";
 import {
   ChildSectionName,

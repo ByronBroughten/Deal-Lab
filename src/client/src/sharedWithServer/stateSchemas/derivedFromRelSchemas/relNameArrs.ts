@@ -1,6 +1,6 @@
-import { indexStoreSectionNames, storeSectionNames } from "../../sectionStores";
 import { hasChildSectionNames } from "../derivedFromChildrenSchemas/ChildName";
 import { SectionName } from "../SectionName";
+import { indexStoreSectionNames, storeSectionNames } from "../sectionStores";
 
 export const relNameArrs = {
   hasIndexStore: indexStoreSectionNames,

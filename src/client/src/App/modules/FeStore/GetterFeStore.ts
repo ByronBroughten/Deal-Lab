@@ -1,14 +1,14 @@
 import { constants } from "../../../sharedWithServer/Constants";
-import {
-  FeStoreInfo,
-  StoreName,
-  StoreSectionName,
-} from "../../../sharedWithServer/sectionStores";
 import { GetterSectionBase } from "../../../sharedWithServer/StateGetters/Bases/GetterSectionBase";
 import { GetterSectionsProps } from "../../../sharedWithServer/StateGetters/Bases/GetterSectionsBase";
 import { GetterSection } from "../../../sharedWithServer/StateGetters/GetterSection";
 import { GetterSections } from "../../../sharedWithServer/StateGetters/GetterSections";
 import { StoreId } from "../../../sharedWithServer/StateGetters/Identifiers/StoreId";
+import {
+  FeStoreInfo,
+  StoreName,
+  StoreSectionName,
+} from "../../../sharedWithServer/stateSchemas/sectionStores";
 import { StateValue } from "../../../sharedWithServer/stateSchemas/StateValue";
 import { Obj } from "../../../sharedWithServer/utils/Obj";
 import { Str } from "../../../sharedWithServer/utils/Str";

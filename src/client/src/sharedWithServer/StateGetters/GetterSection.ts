@@ -3,12 +3,6 @@ import {
   sectionNameS,
   SectionNameType,
 } from "../SectionNameByType";
-import { sectionPathContexts } from "../sectionPaths/sectionPathContexts";
-import {
-  AbsolutePathNode,
-  pathSectionName,
-  SectionPathName,
-} from "../sectionPaths/sectionPathNames";
 import { SectionValuesGeneric } from "../State/RawSection";
 import {
   ContextPathIdxSpecifier,
@@ -16,7 +10,6 @@ import {
   SectionNotFoundError,
   TooManySectionsFoundError,
 } from "../State/StateSectionsTypes";
-import { SectionMeta } from "../StateMeta/SectionMeta";
 import { PackMakerSection } from "../StateOperators/Packers/PackMakerSection";
 import { DbSectionInfo } from "../stateSchemas/allBaseSectionVarbs/DbSectionInfo";
 import { GenericChildTraits } from "../stateSchemas/allChildrenTraits";
@@ -53,6 +46,7 @@ import {
   timespanName,
 } from "../stateSchemas/GroupName";
 import { SectionName } from "../stateSchemas/SectionName";
+import { SectionMeta } from "../stateSchemas/StateMeta/SectionMeta";
 import {
   SectionValues,
   StateValue,
@@ -92,6 +86,12 @@ import {
 } from "./Identifiers/MixedSectionInfo";
 import { RelSectionInfo } from "./Identifiers/RelInfo";
 import { SectionId } from "./Identifiers/SectionId";
+import { sectionPathContexts } from "./Identifiers/sectionPaths/sectionPathContexts";
+import {
+  AbsolutePathNode,
+  pathSectionName,
+  SectionPathName,
+} from "./Identifiers/sectionPaths/sectionPathNames";
 import { StoreId } from "./Identifiers/StoreId";
 import {
   DbSectionInfoMixed,

@@ -1,4 +1,8 @@
 import {
+  validateDbSectionPack,
+  validateDbSectionPackArrs,
+} from "../../../client/src/sharedWithServer//StateTransports/DbSectionPack";
+import {
   DbPackInfoSectionReq,
   SectionPackArrsReq,
   SectionPackReq,
@@ -8,10 +12,6 @@ import {
   dbStoreNameS,
   DbStoreType,
 } from "../../../client/src/sharedWithServer/stateSchemas/derivedFromChildrenSchemas/DbStoreName";
-import {
-  validateDbSectionPack,
-  validateDbSectionPackArrs,
-} from "../../../client/src/sharedWithServer/stateSchemas/StateTransports/DbSectionPack";
 import { IdS } from "../../../client/src/sharedWithServer/utils/IdS";
 import { Authed, validateAuthData } from "../../../middleware/authWare";
 import { JwtReq, WithJWT } from "../../../middleware/jwtWare";

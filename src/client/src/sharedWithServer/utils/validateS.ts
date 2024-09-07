@@ -1,7 +1,7 @@
-import { ValidationError } from "./utils/Error";
-import { Str } from "./utils/Str";
-import { dbLimits } from "./utils/dbLimits";
-import { mathS } from "./utils/math";
+import { dbLimits } from "./dbLimits";
+import { ValidationError } from "./Error";
+import { mathS } from "./math";
+import { Str } from "./Str";
 
 export const validateS = {
   boolean: (value: any): boolean => {

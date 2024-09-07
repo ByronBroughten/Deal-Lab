@@ -1,7 +1,3 @@
-import {
-  SectionPathName,
-  SectionPathVarbName,
-} from "../../../sectionPaths/sectionPathNames";
 import { mixedInfoS } from "../../../StateGetters/Identifiers/MixedSectionInfo";
 import { PathNameVarbInfoMixed } from "../../../StateGetters/Identifiers/PathNameInfo";
 import {
@@ -9,6 +5,10 @@ import {
   RelLocalVarbInfo,
   relVarbInfoS,
 } from "../../../StateGetters/Identifiers/RelVarbInfo";
+import {
+  SectionPathName,
+  SectionPathVarbName,
+} from "../../../StateGetters/Identifiers/sectionPaths/sectionPathNames";
 import { isVarbName } from "../../../StateGetters/Identifiers/VarbInfoBase";
 import {
   VarbPathName,

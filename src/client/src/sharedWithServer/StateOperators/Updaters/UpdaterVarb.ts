@@ -2,7 +2,7 @@ import { SectionNameByType } from "../../SectionNameByType";
 import { StateVarb } from "../../State/StateSectionsTypes";
 import { GetterVarbBase } from "../../StateGetters/Bases/GetterVarbBase";
 import { GetterVarb } from "../../StateGetters/GetterVarb";
-import { VarbMeta } from "../../StateMeta/VarbMeta";
+import { VarbMeta } from "../../stateSchemas/StateMeta/VarbMeta";
 import { StateValue } from "../../stateSchemas/StateValue";
 
 export class UpdaterVarb<

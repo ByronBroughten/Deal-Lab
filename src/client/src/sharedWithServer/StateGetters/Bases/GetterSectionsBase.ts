@@ -1,5 +1,5 @@
 import { StateSections } from "../../State/StateSections";
-import { sectionsMeta } from "../../StateMeta/SectionsMeta";
+import { sectionsMeta } from "../../stateSchemas/StateMeta/SectionsMeta";
 
 export interface GetterSectionsProps {
   sectionsShare: SectionsShare;

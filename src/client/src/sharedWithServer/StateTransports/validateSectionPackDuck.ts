@@ -4,17 +4,17 @@ import {
   RawSections,
   SectionValuesGeneric,
 } from "../State/RawSection";
-import { sectionsMeta } from "../StateMeta/SectionsMeta";
 import { sectionVarbNames } from "../stateSchemas/derivedFromBaseSchemas/baseSectionsVarbsTypes";
 import { validateSectionVarbValue } from "../stateSchemas/derivedFromBaseSchemas/baseSectionValues";
 import { getChildNames } from "../stateSchemas/derivedFromChildrenSchemas/ChildName";
 import { selfAndDescSectionNames } from "../stateSchemas/derivedFromChildrenSchemas/DescendantName";
 import { SectionName, validateSectionName } from "../stateSchemas/SectionName";
+import { sectionsMeta } from "../stateSchemas/StateMeta/SectionsMeta";
 import { Arr } from "../utils/Arr";
 import { ValidationError } from "../utils/Error";
 import { IdS } from "../utils/IdS";
 import { Obj } from "../utils/Obj";
-import { validateS } from "../validateS";
+import { validateS } from "../utils/validateS";
 import { SectionPack } from "./SectionPack";
 
 export function validateSectionPackDuck<SN extends SectionName = any>(

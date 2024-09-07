@@ -13,8 +13,8 @@ import { VarbPathNameInfoMixed } from "../../../StateGetters/Identifiers/VarbPat
 import { Arr } from "../../../utils/Arr";
 import { IdS } from "../../../utils/IdS";
 import { Obj } from "../../../utils/Obj";
+import { validateS } from "../../../utils/validateS";
 import { zS } from "../../../utils/zod";
-import { validateS } from "../../../validateS";
 import { PathInVarbInfo } from "../../derivedFromChildrenSchemas/RelInOutVarbInfo";
 
 export function validateEntityId(value: any): string {

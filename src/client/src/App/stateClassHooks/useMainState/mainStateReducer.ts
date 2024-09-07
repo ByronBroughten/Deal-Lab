@@ -1,9 +1,4 @@
 import { ContentState } from "draft-js";
-import {
-  FeStoreInfo,
-  StoreNameProp,
-  StoreSectionName,
-} from "../../../sharedWithServer/sectionStores";
 import { MainState } from "../../../sharedWithServer/State/MainState";
 import {
   FeSectionInfo,
@@ -19,6 +14,11 @@ import { SolvePrepperVarb } from "../../../sharedWithServer/StateOperators/Solve
 import { AddChildOptions } from "../../../sharedWithServer/StateOperators/Updaters/UpdaterSection";
 import { ChildName } from "../../../sharedWithServer/stateSchemas/derivedFromChildrenSchemas/ChildName";
 import { SectionName } from "../../../sharedWithServer/stateSchemas/SectionName";
+import {
+  FeStoreInfo,
+  StoreNameProp,
+  StoreSectionName,
+} from "../../../sharedWithServer/stateSchemas/sectionStores";
 import { SectionValues } from "../../../sharedWithServer/stateSchemas/StateValue";
 import { DealMode } from "../../../sharedWithServer/stateSchemas/StateValue/dealMode";
 import { SectionPack } from "../../../sharedWithServer/StateTransports/SectionPack";

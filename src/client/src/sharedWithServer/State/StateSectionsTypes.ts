@@ -1,4 +1,4 @@
-import { SectionPathContextName } from "../sectionPaths/sectionPathContexts";
+import { SectionPathContextName } from "../StateGetters/Identifiers/sectionPaths/sectionPathContexts";
 import {
   ChildIdArrsNarrow,
   ChildName,

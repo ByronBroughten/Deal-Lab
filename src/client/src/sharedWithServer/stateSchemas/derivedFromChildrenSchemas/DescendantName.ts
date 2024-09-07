@@ -1,4 +1,4 @@
-import { AbsolutePathNode } from "../../sectionPaths/sectionPathNames";
+import { AbsolutePathNode } from "../../StateGetters/Identifiers/sectionPaths/sectionPathNames";
 import { SectionName } from "../SectionName";
 import { ChildName, getChildNames } from "./ChildName";
 import { childToSectionName } from "./ChildSectionName";

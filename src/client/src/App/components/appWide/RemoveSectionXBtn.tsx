@@ -1,5 +1,5 @@
-import { FeStoreInfo } from "../../../sharedWithServer/sectionStores";
 import { FeSectionInfo } from "../../../sharedWithServer/StateGetters/Identifiers/FeInfo";
+import { FeStoreInfo } from "../../../sharedWithServer/stateSchemas/sectionStores";
 import { useAction, useActionWithProps } from "../../stateClassHooks/useAction";
 import { MuiStandardPropsNext } from "../general/StandardProps";
 import { XBtn } from "./Xbtn";

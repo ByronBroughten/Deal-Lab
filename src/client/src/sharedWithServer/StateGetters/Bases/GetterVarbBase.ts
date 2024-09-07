@@ -1,5 +1,5 @@
-import { VarbMeta } from "../../StateMeta/VarbMeta";
 import { SectionName } from "../../stateSchemas/SectionName";
+import { VarbMeta } from "../../stateSchemas/StateMeta/VarbMeta";
 import { isValidVarbNames } from "../Identifiers/VarbInfoBase";
 import { GetterSectionBase, GetterSectionProps } from "./GetterSectionBase";
 

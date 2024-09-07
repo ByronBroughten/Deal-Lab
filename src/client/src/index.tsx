@@ -14,9 +14,8 @@ AppRegistry.runApplication("App", {
 // State
 // StateGetters (includes StateMeta)
 // *StateOperators
-// *ApiQueries (includes query types)
-
 // Transports (SectionPacks)
+// *ApiQueries (includes query types)
 // utils
 
 // Trigger rebuild

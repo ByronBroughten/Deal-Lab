@@ -2,7 +2,7 @@ import {
   StoreName,
   StoreSectionName,
   validateStoreName,
-} from "../sectionStores";
+} from "../stateSchemas/sectionStores";
 import { validateDbSectionPack } from "../StateTransports/DbSectionPack";
 import { SectionPack } from "../StateTransports/SectionPack";
 import { IdS } from "../utils/IdS";

@@ -1,8 +1,8 @@
 import { cloneDeep } from "lodash";
-import { InUpdatePack } from "../StateMeta/VarbMeta";
 import { InVarbInfo } from "../StateOperators/Solvers/SolverVarb";
 import { UpdateOverrideSwitch } from "../stateSchemas/allUpdateSectionVarbs/updateVarb/UpdateOverrideSwitch";
 import { SectionName } from "../stateSchemas/SectionName";
+import { InUpdatePack } from "../stateSchemas/StateMeta/VarbMeta";
 import {
   FixedInEntity,
   InEntity,

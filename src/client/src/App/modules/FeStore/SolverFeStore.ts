@@ -1,10 +1,3 @@
-import {
-  FeStoreInfo,
-  isStoreNameByType,
-  StoreName,
-  StoreNameProp,
-  StoreSectionName,
-} from "../../../sharedWithServer/sectionStores";
 import { GetterSection } from "../../../sharedWithServer/StateGetters/GetterSection";
 import { GetterSections } from "../../../sharedWithServer/StateGetters/GetterSections";
 import { DbIdProp } from "../../../sharedWithServer/StateGetters/Identifiers/NanoIdInfo";
@@ -18,6 +11,13 @@ import { SolverSectionsProps } from "../../../sharedWithServer/StateOperators/So
 import { SolverSection } from "../../../sharedWithServer/StateOperators/Solvers/SolverSection";
 import { SolverSections } from "../../../sharedWithServer/StateOperators/Solvers/SolverSections";
 import { ChildSectionName } from "../../../sharedWithServer/stateSchemas/derivedFromChildrenSchemas/ChildSectionName";
+import {
+  FeStoreInfo,
+  isStoreNameByType,
+  StoreName,
+  StoreNameProp,
+  StoreSectionName,
+} from "../../../sharedWithServer/stateSchemas/sectionStores";
 import { SectionValues } from "../../../sharedWithServer/stateSchemas/StateValue";
 import {
   changeSavingToToSave,

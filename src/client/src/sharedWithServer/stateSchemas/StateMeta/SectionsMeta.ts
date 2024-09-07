@@ -1,9 +1,9 @@
-import { VarbNames } from "../StateGetters/Identifiers/VarbInfoBase";
-import { SectionName, sectionNames } from "../stateSchemas/SectionName";
-import { valueMetas } from "../stateSchemas/valueMetas";
-import { ValueMeta } from "../stateSchemas/valueMetas/valueMetaGeneric";
-import { ValueName } from "../stateSchemas/ValueName";
-import { Obj } from "../utils/Obj";
+import { VarbNames } from "../../StateGetters/Identifiers/VarbInfoBase";
+import { Obj } from "../../utils/Obj";
+import { SectionName, sectionNames } from "../SectionName";
+import { valueMetas } from "../valueMetas";
+import { ValueMeta } from "../valueMetas/valueMetaGeneric";
+import { ValueName } from "../ValueName";
 import { SectionMeta, VarbMetas } from "./SectionMeta";
 import { VarbMeta } from "./VarbMeta";
 

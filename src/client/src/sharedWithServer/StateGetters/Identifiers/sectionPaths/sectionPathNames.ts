@@ -1,8 +1,8 @@
-import { VarbName } from "../stateSchemas/derivedFromBaseSchemas/baseSectionsVarbsTypes";
-import { ChildName } from "../stateSchemas/derivedFromChildrenSchemas/ChildName";
-import { SectionName } from "../stateSchemas/SectionName";
-import { Obj } from "../utils/Obj";
-import { SubType } from "../utils/types";
+import { VarbName } from "../../../stateSchemas/derivedFromBaseSchemas/baseSectionsVarbsTypes";
+import { ChildName } from "../../../stateSchemas/derivedFromChildrenSchemas/ChildName";
+import { SectionName } from "../../../stateSchemas/SectionName";
+import { Obj } from "../../../utils/Obj";
+import { SubType } from "../../../utils/types";
 
 const sectionPathNameToSn = checkPathTypeToSectionName({
   // if any of these sectionPathNames are to be removed or invalidated after deploy, then the sectionInfos stored in the db that point to those sectionPathNames need to be addressed.

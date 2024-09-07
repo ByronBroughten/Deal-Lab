@@ -1,14 +1,11 @@
 import {
-  AbsolutePathInfo,
-  absolutePathInfo,
-} from "../StateGetters/Identifiers/AbsolutePathInfo";
-import {
   ChildName,
   isChildName,
-} from "../stateSchemas/derivedFromChildrenSchemas/ChildName";
-import { childToSectionName } from "../stateSchemas/derivedFromChildrenSchemas/ChildSectionName";
-import { SectionName } from "../stateSchemas/SectionName";
-import { Obj } from "../utils/Obj";
+} from "../../../stateSchemas/derivedFromChildrenSchemas/ChildName";
+import { childToSectionName } from "../../../stateSchemas/derivedFromChildrenSchemas/ChildSectionName";
+import { SectionName } from "../../../stateSchemas/SectionName";
+import { Obj } from "../../../utils/Obj";
+import { AbsolutePathInfo, absolutePathInfo } from "../AbsolutePathInfo";
 import {
   SectionNameOfPath,
   SectionPathName,

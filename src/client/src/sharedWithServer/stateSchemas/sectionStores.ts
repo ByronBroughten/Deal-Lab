@@ -1,6 +1,6 @@
-import { FeIdProp } from "./StateGetters/Identifiers/NanoIdInfo";
-import { Arr } from "./utils/Arr";
-import { Obj } from "./utils/Obj";
+import { FeIdProp } from "../StateGetters/Identifiers/NanoIdInfo";
+import { Arr } from "../utils/Arr";
+import { Obj } from "../utils/Obj";
 
 export const sectionStores = {
   outputSection: "outputSection",

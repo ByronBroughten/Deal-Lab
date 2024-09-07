@@ -1,5 +1,3 @@
-import { sectionStores } from "../sectionStores";
-import { SectionName, sectionNames } from "./SectionName";
 import { relOmniParentChildren } from "./allSectionChildren/omniParentChildren";
 import {
   GeneralChildSection,
@@ -9,6 +7,8 @@ import {
   GeneralChildrenSections,
   sectionChildren,
 } from "./allSectionChildren/sectionChildren";
+import { SectionName, sectionNames } from "./SectionName";
+import { sectionStores } from "./sectionStores";
 
 type Defaults = {
   [SN in SectionName]: {};

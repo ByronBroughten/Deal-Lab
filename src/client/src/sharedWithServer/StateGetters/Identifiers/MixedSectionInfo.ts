@@ -1,7 +1,3 @@
-import {
-  SectionPathName,
-  SectionPathVarbName,
-} from "../../sectionPaths/sectionPathNames";
 import { SectionName } from "../../stateSchemas/SectionName";
 import { DistributiveOmit } from "../../utils/types";
 import {
@@ -16,6 +12,10 @@ import {
   PathNameVarbInfoMixed,
 } from "./PathNameInfo";
 import { RelSectionInfo } from "./RelInfo";
+import {
+  SectionPathName,
+  SectionPathVarbName,
+} from "./sectionPaths/sectionPathNames";
 import {
   DbSectionInfoMixed,
   FeSectionInfoMixed,

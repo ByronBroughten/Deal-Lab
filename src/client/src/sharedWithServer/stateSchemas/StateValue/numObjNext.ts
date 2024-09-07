@@ -1,5 +1,5 @@
 import { fixedVariableLabel } from "../../../varbLabels/varbLabels";
-import { pathSectionName } from "../../sectionPaths/sectionPathNames";
+import { pathSectionName } from "../../StateGetters/Identifiers/sectionPaths/sectionPathNames";
 import {
   ValueFixedVarbPathName,
   ValueInEntityInfo,

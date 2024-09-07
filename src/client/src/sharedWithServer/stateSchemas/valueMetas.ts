@@ -1,20 +1,20 @@
 import { z } from "zod";
 import { Arr } from "../utils/Arr";
 import { ValidationError } from "../utils/Error";
-import { validateS } from "../validateS";
+import { validateS } from "../utils/validateS";
 import { StateValue } from "./StateValue";
 import { inEntityInfoValueSchema } from "./StateValue/InEntityValue";
 import { numObjMeta } from "./StateValue/NumObj";
-import { stringObjMeta } from "./StateValue/StringObj";
 import {
   isChangesSaving,
   isChangesToSave,
   validateChangesSaving,
   validateChangesToSave,
 } from "./StateValue/sectionChanges";
-import { ValueName, valueNames } from "./ValueName";
+import { stringObjMeta } from "./StateValue/StringObj";
 import { checkValueMetas } from "./valueMetas/valueMetaGeneric";
 import { unionMetas } from "./valueMetas/valueMetaUnions";
+import { ValueName, valueNames } from "./ValueName";
 
 export const valueMetas = checkValueMetas({
   number: {

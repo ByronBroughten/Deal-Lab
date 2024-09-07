@@ -1,9 +1,9 @@
+import { mixedInfoS } from "../../../StateGetters/Identifiers/MixedSectionInfo";
+import { relVarbInfoS } from "../../../StateGetters/Identifiers/RelVarbInfo";
 import {
   SectionPathName,
   SectionPathVarbName,
-} from "../../../sectionPaths/sectionPathNames";
-import { mixedInfoS } from "../../../StateGetters/Identifiers/MixedSectionInfo";
-import { relVarbInfoS } from "../../../StateGetters/Identifiers/RelVarbInfo";
+} from "../../../StateGetters/Identifiers/sectionPaths/sectionPathNames";
 import { VarbPathName } from "../../../StateGetters/Identifiers/VarbPathNameInfo";
 import { IdS } from "../../../utils/IdS";
 import { Obj } from "../../../utils/Obj";

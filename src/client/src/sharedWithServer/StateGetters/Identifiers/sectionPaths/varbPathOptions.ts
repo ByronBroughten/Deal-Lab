@@ -1,13 +1,16 @@
 import {
+  DealMode,
+  getDealModes,
+} from "../../../stateSchemas/StateValue/dealMode";
+import {
   fixedVarbPathNames,
   ValueFixedVarbPathName,
-} from "../StateGetters/Identifiers/ValueInEntityInfo";
+} from "../ValueInEntityInfo";
 import {
   getVarbPathParams,
   VarbPathNameProp,
   VarbPathParams,
-} from "../StateGetters/Identifiers/VarbPathNameInfo";
-import { DealMode, getDealModes } from "../stateSchemas/StateValue/dealMode";
+} from "../VarbPathNameInfo";
 
 export type VarbPathArrParam<
   VPN extends ValueFixedVarbPathName = ValueFixedVarbPathName

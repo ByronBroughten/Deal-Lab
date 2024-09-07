@@ -1,36 +1,36 @@
-import { SectionNameByType } from "../SectionNameByType";
-import { SectionValuesGeneric } from "../State/RawSection";
+import { SectionNameByType } from "../../SectionNameByType";
+import { SectionValuesGeneric } from "../../State/RawSection";
+import { Obj } from "../../utils/Obj";
 import {
   allChildrenTraits,
   ChildrenTraits,
   GenericChildTraits,
-} from "../stateSchemas/allChildrenTraits";
+} from "../allChildrenTraits";
 import {
   GetSectionTraits,
   getSectionTraits,
   SectionTrait,
   sectionTrait,
-} from "../stateSchemas/allSectionTraits";
+} from "../allSectionTraits";
 import {
   sectionVarbNames,
   VarbName,
-} from "../stateSchemas/derivedFromBaseSchemas/baseSectionsVarbsTypes";
+} from "../derivedFromBaseSchemas/baseSectionsVarbsTypes";
 import {
   ChildIdArrsNarrow,
   ChildIdArrsWide,
   ChildName,
   getChildNames,
   isChildName,
-} from "../stateSchemas/derivedFromChildrenSchemas/ChildName";
+} from "../derivedFromChildrenSchemas/ChildName";
 import {
   childrenSectionNames,
   ChildSectionName,
   ChildSectionNameName,
   childToSectionName,
   sectionChildNameNames,
-} from "../stateSchemas/derivedFromChildrenSchemas/ChildSectionName";
-import { SectionName } from "../stateSchemas/SectionName";
-import { Obj } from "../utils/Obj";
+} from "../derivedFromChildrenSchemas/ChildSectionName";
+import { SectionName } from "../SectionName";
 import {
   CorePropName,
   sectionMetasCore,

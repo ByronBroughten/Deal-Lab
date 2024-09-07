@@ -1,9 +1,9 @@
 import { pick } from "lodash";
 import { FeSectionInfo, FeVarbInfo } from "../StateGetters/Identifiers/FeInfo";
 import { VarbNames } from "../StateGetters/Identifiers/VarbInfoBase";
-import { sectionsMeta } from "../StateMeta/SectionsMeta";
 import { ChildIdArrsNarrow } from "../stateSchemas/derivedFromChildrenSchemas/ChildName";
 import { SectionName } from "../stateSchemas/SectionName";
+import { sectionsMeta } from "../stateSchemas/StateMeta/SectionsMeta";
 import { SectionValues, StateValue } from "../stateSchemas/StateValue";
 import { IdS } from "../utils/IdS";
 import { StrictPick, StrictPickPartial } from "../utils/types";

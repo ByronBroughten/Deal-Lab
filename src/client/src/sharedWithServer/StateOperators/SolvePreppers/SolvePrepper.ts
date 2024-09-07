@@ -1,17 +1,17 @@
-import {
-  activeDealPathIdx,
-  SectionPathContextName,
-} from "../../sectionPaths/sectionPathContexts";
-import { StoreName } from "../../sectionStores";
 import { GetterList } from "../../StateGetters/GetterList";
 import { GetterSections } from "../../StateGetters/GetterSections";
 import {
   FeSectionInfo,
   FeVarbInfo,
 } from "../../StateGetters/Identifiers/FeInfo";
+import {
+  activeDealPathIdx,
+  SectionPathContextName,
+} from "../../StateGetters/Identifiers/sectionPaths/sectionPathContexts";
 import { FeChildInfo } from "../../stateSchemas/derivedFromChildrenSchemas/ChildName";
 import { ChildSectionName } from "../../stateSchemas/derivedFromChildrenSchemas/ChildSectionName";
 import { SectionName } from "../../stateSchemas/SectionName";
+import { StoreName } from "../../stateSchemas/sectionStores";
 import { SectionPack } from "../../StateTransports/SectionPack";
 import { defaultMaker } from "../defaultMaker/defaultMaker";
 import { AddChildOptions } from "../Updaters/UpdaterSection";

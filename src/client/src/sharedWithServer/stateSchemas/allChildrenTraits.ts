@@ -1,14 +1,14 @@
 import {
   indexesForSpecifiers,
   SectionPathContextName,
-} from "../sectionPaths/sectionPathContexts";
-import { StoreName } from "../sectionStores";
+} from "../StateGetters/Identifiers/sectionPaths/sectionPathContexts";
 import { Merge } from "../utils/Obj/merge";
 import {
   ChildName,
   sectionToChildNames,
 } from "./derivedFromChildrenSchemas/ChildName";
 import { SectionName, sectionNames } from "./SectionName";
+import { StoreName } from "./sectionStores";
 
 type GenericAllChildrenTraits = {
   [SN in SectionName]: GenericChildrenTraits<SN>;

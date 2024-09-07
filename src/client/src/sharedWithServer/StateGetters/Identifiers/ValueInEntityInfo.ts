@@ -3,7 +3,7 @@ import { Arr } from "../../utils/Arr";
 import { ValidationError } from "../../utils/Error";
 import { IdS } from "../../utils/IdS";
 import { Obj } from "../../utils/Obj";
-import { validateS } from "../../validateS";
+import { validateS } from "../../utils/validateS";
 import {
   VarbPathName,
   VarbPathNameDbInfoMixed,

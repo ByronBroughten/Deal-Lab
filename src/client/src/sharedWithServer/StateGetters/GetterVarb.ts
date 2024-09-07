@@ -7,8 +7,8 @@ import {
 } from "../../varbLabels/varbLabels";
 import { SectionNameByType } from "../SectionNameByType";
 import { StateVarb } from "../State/StateSectionsTypes";
-import { VarbMeta } from "../StateMeta/VarbMeta";
 import { DisplayOverrideSwitches } from "../stateSchemas/allDisplaySectionVarbs/displayVarb";
+import { VarbMeta } from "../stateSchemas/StateMeta/VarbMeta";
 import {
   StateValue,
   StateValueOrAny,

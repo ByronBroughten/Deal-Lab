@@ -9,7 +9,7 @@ import { validateStateValue } from "../stateSchemas/valueMetas";
 import { Arr } from "../utils/Arr";
 import { IdS } from "../utils/IdS";
 import { Obj } from "../utils/Obj";
-import { validateS } from "../validateS";
+import { validateS } from "../utils/validateS";
 
 type GeneralChildNumArrs = Record<string, number[]>;
 export type ChildSpNums<SN extends SectionName> = {
