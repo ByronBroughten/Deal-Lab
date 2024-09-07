@@ -133,8 +133,9 @@ Unit testing is performed with jest. Most of the current tests are for top-level
 
 #### Front-End
 
+- Typescript
 - React
-- CSS/Styled Components
+- Material UI 5 with Emotion/CSS in JS
 - Axios
 - Jest
 - Stripe
@@ -142,10 +143,10 @@ Unit testing is performed with jest. Most of the current tests are for top-level
 
 #### Back-End
 
+- Typescript
 - Node.js
 - Express
 - MongoDB
-- Zod (validation schema library)
 - Mongoose
 - Jest
 - Stripe
