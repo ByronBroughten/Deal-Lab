@@ -56,7 +56,7 @@ __StateOperators__: classes for updating state. These are similar to the StateGe
 
       property.variable(“purchasePrice”).update(250000);
 
-__StateOperators__ have a private “store” property, which is an object that holds state. The store is shared across all connected instances of StateGetters and StateOperators. When a StateOperator completes a state update, the old State instance in the store is replaced with the updated State instance. From there, more operations may be carried out until the desired state is reached.
+StateOperators have a private “store” property, which is an object that holds state. The store is shared across all connected instances of StateGetters and StateOperators. When a StateOperator completes a state update, the old State instance in the store is replaced with the updated State instance. From there, more operations may be carried out until the desired state is reached.
 
 Example:
 
