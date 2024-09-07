@@ -5,7 +5,7 @@ The purpose of Deallab is to help beginner and experienced real estate investors
 
 The app is full stack, with a client and server, both of which are written in Typescript.
 
-The app is structured as a monorepo in which the client’s files are nested inside the server repository. This is to let the server access a subset of code used by the client, located in /sharedWithServer. Below is a simplified sketch of the general file structure.
+The app is structured as a monorepo in which the client’s files are nested inside the server repository. This is to let the server access a subset of code used by the client, located in `/sharedWithServer`. Below is a simplified sketch of the general file structure.
 
       DealLab  
       |–package.json  
@@ -20,7 +20,7 @@ The app is structured as a monorepo in which the client’s files are nested ins
       |–|–|–|–/sharedWithServer  
 
 ## Shared Resources
-/sharedWithServer contains eight categories of code that are shared between the client and server. This code largely structures the app.
+`/sharedWithServer` contains eight categories of code that are shared between the client and server. This code largely structures the app.
 
 __Constants__: configuration values for things like coordinating the routes between client api calls and server endpoints, as well as other parameters.
 
