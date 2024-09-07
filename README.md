@@ -1,7 +1,7 @@
 ### DealLab
 
 ## Purpose and Overview
-The purpose of Deallab is to help beginner and experienced real estate investors analyze real estate deals with minimal data entry and high potential for experimentation. It calculates metrics for analyzing real estate and allows users to save and swap out parts of deals and use equations with responsive variables in place of simple numeric inputs. More details about the app’s function can be found on its landing page.
+The purpose of Deallab is to help beginner and experienced real estate investors analyze real estate deals with minimal data entry and high potential for experimentation. It calculates metrics for analyzing real estate and allows users to save and swap out parts of deals and use equations with responsive variables in place of simple numeric inputs. More details about the app’s function can be found on its [landing page](https://deallab.app/).
 
 The app is full stack, with a client and server, both of which are written in Typescript.
 
