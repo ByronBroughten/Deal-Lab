@@ -66,7 +66,7 @@ Example:
       
       unit.variable(“rent”).update(1500);
       
-      *After these operations, both “property” and “unit” would reference state with the updated values for both purchasePrice and rent*
+*After these operations, both “property” and “unit” would reference state with the updated values for both purchasePrice and rent*
 
 Further, there are multiple levels of StateOperators. The most basic level is simply for adding and removing child sections and updating single values. The higher levels encapsulate the more basic levels and manage additional tasks like solving for all of the variables that are supposed to be solved after each basic operation, and solving them all in the right order. For example, after the purchasePrice variable is updated, so too will need to be any variable that is a function of the purchase price, such as possibly the down payment, loan amount, mortgage payment amount, and cash flow, in that order (among other variables).
 
