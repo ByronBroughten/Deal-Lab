@@ -7,9 +7,9 @@ The app is full stack, with a client and server, both of which are written in Ty
 
 The app is structured as a monorepo in which the client’s files are nested inside the server repository. This is to let the server access a subset of code used by the client, located in /sharedWithServer. Below is a simplified sketch of the general file structure.
 
-  DealLab\n
-  |–package.json
-  |–/src
+  DealLab  
+  |–package.json  
+  |–/src  
   |–|–index.ts (server)
   |–|–/routes
   |–|–/client
