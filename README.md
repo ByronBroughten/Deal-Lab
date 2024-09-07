@@ -54,18 +54,19 @@ The methods of these classes constrain which parameters may be fed to them depen
 
 __StateOperators__: classes for updating state. These are similar to the StateGetters, but rather than merely navigate and retrieve pieces of state they can also create new state instances with updated values.
 
-  property.variable(“purchasePrice”).update(250000);
+      property.variable(“purchasePrice”).update(250000);
 
 __StateOperators__ have a private “store” property, which is an object that holds state. The store is shared across all connected instances of StateGetters and StateOperators. When a StateOperator completes a state update, the old State instance in the store is replaced with the updated State instance. From there, more operations may be carried out until the desired state is reached.
 
 Example:
 
-  property.variable(“purchasePrice”).update(250000);
+      property.variable(“purchasePrice”).update(250000);
 
-  const unit = property.firstChild(“unit”);
-  unit.variable(“rent”).update(1500);
-
-  *After these operations, both “property” and “unit” would reference state with the updated values for both purchasePrice and rent*
+      const unit = property.firstChild(“unit”);
+      
+      unit.variable(“rent”).update(1500);
+      
+      *After these operations, both “property” and “unit” would reference state with the updated values for both purchasePrice and rent*
 
 Further, there are multiple levels of StateOperators. The most basic level is simply for adding and removing child sections and updating single values. The higher levels encapsulate the more basic levels and manage additional tasks like solving for all of the variables that are supposed to be solved after each basic operation, and solving them all in the right order. For example, after the purchasePrice variable is updated, so too will need to be any variable that is a function of the purchase price, such as possibly the down payment, loan amount, mortgage payment amount, and cash flow, in that order (among other variables).
 
@@ -80,14 +81,14 @@ __Utils__: simple utility functions that are relevant to both the client and ser
 ## Front End
 The front-end uses React with hooks. All the React components are functional and use lifecycle hooks to access and manipulate state. StateGetters are used in components for displaying state data to the user. For example, below is a simple representation of a Property component:
 
-  const property = useGetterSection(“property”, props.id);
-  return (
-    <StyledSection>
-      <VariableInput id=property.varbId(“purchasePrice”)>
-      <VariableInput id=property.varbId(“yearBuilt”)>
-      …
-    </StyledSection>
-  )
+      const property = useGetterSection(“property”, props.id);
+      return (
+        <StyledSection>
+          <VariableInput id=property.varbId(“purchasePrice”)>
+          <VariableInput id=property.varbId(“yearBuilt”)>
+          …
+        </StyledSection>
+      )
 
 All state operations are conducted through a reducer from React’s useReducer lifecycle hook, and all reducer actions use StateOperators for creating updated state instances before passing the updated state to the DOM. There are convenience hooks for accessing common reducer operations, such as useAddChild, useRemoveSection, and useUpdateValue.
 
