@@ -2,9 +2,9 @@ import { Box, SxProps } from "@mui/material";
 import React from "react";
 import { Text, View } from "react-native";
 import styled from "styled-components";
+import { arrSx } from "../../../../../../modules/utils/mui";
 import { nativeTheme } from "../../../../../../theme/nativeTheme";
 import theme from "../../../../../../theme/Theme";
-import { arrSx } from "../../../../../../utils/mui";
 import { AddItemBtn } from "../AddItemBtn";
 import { VarbListTableStyled } from "./VarbListTableSectionStyled/VarbListTableStyled";
 

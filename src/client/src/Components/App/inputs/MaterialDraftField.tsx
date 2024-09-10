@@ -1,6 +1,6 @@
 import { Editor, EditorProps, EditorState } from "draft-js";
 import React from "react";
-import useFocusEditor from "../../../modules/customHooks/useFocusEditor";
+import useFocusEditor from "../../../modules/utilityHooks/useFocusEditor";
 
 export type EditorRef = React.MutableRefObject<null | Editor>;
 

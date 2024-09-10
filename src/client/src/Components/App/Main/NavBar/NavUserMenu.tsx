@@ -2,10 +2,10 @@ import { rem } from "polished";
 import { BiLogOut, BiUserCircle } from "react-icons/bi";
 import { MdAccountCircle } from "react-icons/md";
 import styled from "styled-components";
-import { useUserSubscription } from "../../../../modules/customHooks/useSubscriptions";
-import { useToggle } from "../../../../modules/customHooks/useToggle";
-import { goToCustomerPortalPage } from "../../../../modules/services/stripeService";
-import { useQueryAction } from "../../../../stateHooks/useQueryAction";
+import { stripeS } from "../../../../modules/services/stripeS";
+import { useQueryAction } from "../../../../modules/stateHooks/useQueryAction";
+import { useUserSubscription } from "../../../../modules/utilityHooks/useSubscriptions";
+import { useToggle } from "../../../../modules/utilityHooks/useToggle";
 import theme from "../../../../theme/Theme";
 import { StandardProps } from "../../../general/StandardProps";
 import { NavDropdownMenuBtn } from "../../appWide/ListGroup/ListGroupShared/ListMenuSimple/NavDropdownMenuBtn";
@@ -17,7 +17,6 @@ function BtnDiv({ children, className }: StandardProps) {
 
 export function NavUserMenu() {
   const queryAction = useQueryAction();
-
   const { userIsPro } = useUserSubscription();
   const { value: doCloseMenuToggle, toggle: closeMenu } = useToggle();
   return (
@@ -33,7 +32,7 @@ export function NavUserMenu() {
             <NavDropdownMenuBtn
               text="Account"
               icon={<MdAccountCircle size={22} />}
-              onClick={goToCustomerPortalPage}
+              onClick={() => stripeS.goToCustomerPortalPage()}
             />
           </BtnDiv>
         )}

@@ -6,7 +6,6 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-// sharedWithServer
 
 // *Constants
 // Schemas (includes sectionStores)

@@ -1,4 +1,4 @@
-import { StringTypeChecker } from "../../utils/StringTypeChecker";
+import { StringTypeChecker } from "../../modules/utils/StringTypeChecker";
 import {
   isSectionPack,
   SectionPack,

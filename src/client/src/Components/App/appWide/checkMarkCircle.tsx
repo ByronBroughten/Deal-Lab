@@ -1,9 +1,9 @@
 import { Box, SxProps } from "@mui/material";
 import { BsCircle } from "react-icons/bs";
 import { IoMdCheckmarkCircle } from "react-icons/io";
+import { arrSx } from "../../../modules/utils/mui";
 import { nativeTheme } from "../../../theme/nativeTheme";
 import theme from "../../../theme/Theme";
-import { arrSx } from "../../../utils/mui";
 
 type Props = { checked?: boolean; sx?: SxProps; className?: string };
 export function CheckMarkCircle({ checked = false, sx, className }: Props) {

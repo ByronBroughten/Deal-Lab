@@ -1,9 +1,9 @@
 import { Box, SxProps } from "@mui/material";
 import React from "react";
+import { arrSx } from "../../../modules/utils/mui";
 import { SectionName } from "../../../sharedWithServer/stateSchemas/SectionName";
 import { UnionValueName } from "../../../sharedWithServer/stateSchemas/StateValue/unionValues";
 import { nativeTheme } from "../../../theme/nativeTheme";
-import { arrSx } from "../../../utils/mui";
 import { NumEditorType } from "../inputs/NumObjEntityEditor";
 import { MuiSelect, MuiSelectProps } from "./MuiSelect";
 

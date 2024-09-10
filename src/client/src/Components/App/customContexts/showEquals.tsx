@@ -1,4 +1,4 @@
-import { makeContextUseContext } from "../../../utils/react";
+import { makeContextUseContext } from "../../../modules/utils/react";
 
 type ShowEqualsStatus = "showAll" | "showPure";
 

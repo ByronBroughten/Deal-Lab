@@ -1,6 +1,6 @@
 import styled from "styled-components";
+import { useGetterMain } from "../../../../../modules/stateHooks/useMain";
 import { ValueInEntityInfo } from "../../../../../sharedWithServer/StateGetters/Identifiers/ValueInEntityInfo";
-import { useGetterMain } from "../../../../../stateHooks/useMain";
 import theme from "../../../../../theme/Theme";
 import { VarbSelectorRow } from "./VarbSelectorRow";
 

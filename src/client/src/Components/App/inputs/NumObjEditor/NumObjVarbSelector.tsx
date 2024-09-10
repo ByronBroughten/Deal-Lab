@@ -1,17 +1,17 @@
 import { EditorState } from "draft-js";
 import React from "react";
 import styled from "styled-components";
-import { useToggleView } from "../../../../modules/customHooks/useToggleView";
+import { useGetterSection } from "../../../../modules/stateHooks/useGetterSection";
+import { useToggleView } from "../../../../modules/utilityHooks/useToggleView";
+import { SetEditorState } from "../../../../modules/utils/DraftS";
 import { FeVarbInfo } from "../../../../sharedWithServer/StateGetters/Identifiers/FeInfo";
 import { mixedInfoS } from "../../../../sharedWithServer/StateGetters/Identifiers/MixedSectionInfo";
 import {
   ValueFixedVarbPathName,
   ValueInEntityInfo,
 } from "../../../../sharedWithServer/StateGetters/Identifiers/ValueInEntityInfo";
-import { useGetterSection } from "../../../../stateHooks/useGetterSection";
 import { nativeTheme } from "../../../../theme/nativeTheme";
 import theme from "../../../../theme/Theme";
-import { SetEditorState } from "../../../../utils/DraftS";
 import { DropdownContainer } from "../../../general/DropdownContainer";
 import { HollowBtn } from "../../appWide/HollowBtn";
 import { icons } from "../../Icons";

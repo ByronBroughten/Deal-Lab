@@ -1,8 +1,8 @@
 import { SxProps } from "@mui/material";
+import { arrSx } from "../../../modules/utils/mui";
 import { GetterVarb } from "../../../sharedWithServer/StateGetters/GetterVarb";
 import { FeVarbInfo } from "../../../sharedWithServer/StateGetters/Identifiers/FeInfo";
 import { nativeTheme } from "../../../theme/nativeTheme";
-import { arrSx } from "../../../utils/mui";
 import { MaterialDraftEditor } from "./MaterialDraftEditor";
 import { useDraftInput } from "./useDraftInput";
 

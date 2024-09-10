@@ -1,9 +1,9 @@
+import { useGetterSectionOnlyOne } from "../../../../../modules/stateHooks/useGetterSection";
 import { constants } from "../../../../../sharedWithServer/Constants";
 import { FeRouteName } from "../../../../../sharedWithServer/Constants/feRoutes";
 import { ChildName } from "../../../../../sharedWithServer/stateSchemas/derivedFromChildrenSchemas/ChildName";
 import { StateValue } from "../../../../../sharedWithServer/stateSchemas/StateValue";
 import { StrictExtract } from "../../../../../sharedWithServer/utils/types";
-import { useGetterSectionOnlyOne } from "../../../../../stateHooks/useGetterSection";
 import { useGoToPage } from "../../../customHooks/useGoToPage";
 
 export type ActiveDealChildName = StrictExtract<

@@ -1,10 +1,10 @@
 import { SxProps } from "@mui/material";
+import { useGetterSection } from "../../../../../../../../../modules/stateHooks/useGetterSection";
+import { arrSx } from "../../../../../../../../../modules/utils/mui";
 import { GetterSection } from "../../../../../../../../../sharedWithServer/StateGetters/GetterSection";
 import { FeIdProp } from "../../../../../../../../../sharedWithServer/StateGetters/Identifiers/NanoIdInfo";
 import { VarbName } from "../../../../../../../../../sharedWithServer/stateSchemas/derivedFromBaseSchemas/baseSectionsVarbsTypes";
-import { useGetterSection } from "../../../../../../../../../stateHooks/useGetterSection";
 import { nativeTheme } from "../../../../../../../../../theme/nativeTheme";
-import { arrSx } from "../../../../../../../../../utils/mui";
 import { MuiRow } from "../../../../../../../../general/MuiRow";
 import { SubSectionBtn } from "../../../../../../../appWide/GeneralSection/GeneralSectionTitle/SubSectionBtn";
 import { StyledActionBtn } from "../../../../../../../appWide/GeneralSection/MainSection/StyledActionBtn";

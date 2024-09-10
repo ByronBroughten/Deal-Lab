@@ -1,4 +1,4 @@
-import { sxProps } from "../../utils/mui";
+import { sxProps } from "../../modules/utils/mui";
 import { unitSizes } from "./unitSizes";
 
 export const inputStyles = {

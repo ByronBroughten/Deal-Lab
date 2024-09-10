@@ -1,5 +1,5 @@
 import React from "react";
-import { sxProps } from "../../utils/mui";
+import { sxProps } from "../../modules/utils/mui";
 import { inputStyles } from "./inputsStyles";
 import { themeColors } from "./themeColors";
 import { themeStandards } from "./themeStandards";

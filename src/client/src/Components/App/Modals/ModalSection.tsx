@@ -1,8 +1,8 @@
 import { Box, ClickAwayListener, SxProps } from "@mui/material";
 import React from "react";
 import { AiOutlineClose } from "react-icons/ai";
+import { arrSx } from "../../../modules/utils/mui";
 import { nativeTheme } from "../../../theme/nativeTheme";
-import { arrSx } from "../../../utils/mui";
 import ChunkTitle from "../../general/ChunkTitle";
 import { ModalWrapper, ModalWrapperProps } from "../../general/ModalWrapper";
 import { PlainIconBtn } from "../../general/PlainIconBtn";

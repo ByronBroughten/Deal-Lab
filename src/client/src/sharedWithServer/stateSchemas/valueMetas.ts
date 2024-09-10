@@ -1,4 +1,3 @@
-import { z } from "zod";
 import { Arr } from "../utils/Arr";
 import { ValidationError } from "../utils/Error";
 import { validateS } from "../utils/validateS";
@@ -21,25 +20,21 @@ export const valueMetas = checkValueMetas({
     is: (v: any): v is number => typeof v === "number",
     validate: validateS.number,
     initDefault: () => 0,
-    zod: z.number(),
   },
   dateTime: {
     is: (v: any): v is number => typeof v === "number",
     validate: validateS.number,
     initDefault: () => 0,
-    zod: z.number(),
   },
   boolean: {
     is: (v: any): v is boolean => typeof v === "boolean",
     validate: validateS.boolean,
     initDefault: () => true,
-    zod: z.boolean(),
   },
   string: {
     is: (v: any): v is string => typeof v === "string",
     validate: validateS.stringOneLine,
     initDefault: () => "",
-    zod: z.string(),
   },
   stringArray: {
     is(v: any): v is string[] {
@@ -65,7 +60,6 @@ export const valueMetas = checkValueMetas({
       }
     },
     initDefault: () => [] as string[],
-    zod: z.array(z.string()),
   },
   stringObj: stringObjMeta,
   numObj: numObjMeta,
@@ -74,13 +68,11 @@ export const valueMetas = checkValueMetas({
     is: isChangesToSave,
     validate: validateChangesToSave,
     initDefault: () => ({}),
-    zod: z.any(),
   },
   changesSaving: {
     is: isChangesSaving,
     validate: validateChangesSaving,
     initDefault: () => ({}),
-    zod: z.any(),
   },
   ...unionMetas,
 });
@@ -110,12 +102,6 @@ export function isStateValue(value: any): value is StateValue {
   }
   return false;
 }
-
-const zValueArr = Object.values(valueMetas).map((schema) => schema.zod) as [
-  z.ZodTypeAny,
-  z.ZodTypeAny
-];
-export const zValue = z.union(zValueArr);
 
 export function isObjValue(
   value: any

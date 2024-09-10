@@ -4,14 +4,14 @@ import React, { useEffect, useState } from "react";
 import {
   CreateEditorProps,
   EditorUpdaterVarb,
-} from "../../../modules/EditorUpdaterVarb";
+} from "../../../modules/draftjs/EditorUpdaterVarb";
+import { useAction } from "../../../modules/stateHooks/useAction";
+import { useGetterVarb } from "../../../modules/stateHooks/useGetterVarb";
+import { SetEditorState } from "../../../modules/utils/DraftS";
 import { constants } from "../../../sharedWithServer/Constants";
 import { FeVarbInfo } from "../../../sharedWithServer/StateGetters/Identifiers/FeInfo";
 import { isEditorValueName } from "../../../sharedWithServer/stateSchemas/StateValue/EditorValue";
 import { StrictOmit } from "../../../sharedWithServer/utils/types";
-import { useAction } from "../../../stateHooks/useAction";
-import { useGetterVarb } from "../../../stateHooks/useGetterVarb";
-import { SetEditorState } from "../../../utils/DraftS";
 
 interface UseDraftInputProps
   extends FeVarbInfo,

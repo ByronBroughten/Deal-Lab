@@ -1,5 +1,5 @@
+import { useGetterSection } from "../../../../../../../modules/stateHooks/useGetterSection";
 import { GetterSection } from "../../../../../../../sharedWithServer/StateGetters/GetterSection";
-import { useGetterSection } from "../../../../../../../stateHooks/useGetterSection";
 import { MakeEditor, SelectEditor } from "../../../../../appWide/SelectEditor";
 import { VarbStringLabel } from "../../../../../appWide/VarbStringLabel";
 import { NumObjEntityEditor } from "../../../../../inputs/NumObjEntityEditor";

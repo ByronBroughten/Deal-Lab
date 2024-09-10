@@ -6,8 +6,6 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Normalize } from "styled-normalize";
 import { SuperTokensWrapper } from "supertokens-auth-react";
-import { IdOfSectionToSaveProvider } from "../ContextsAndProviders/useIdOfSectionToSave";
-import { MainStateProvider } from "../ContextsAndProviders/useMainState";
 import { initSupertokens } from "../modules/initSupertokens";
 import { GlobalFonts } from "../theme/fonts/fonts";
 import {
@@ -20,6 +18,8 @@ import { ShowEqualsProvider } from "./App/customContexts/showEquals";
 import { Main } from "./App/Main";
 import { ModalProviders } from "./App/ModalProviders";
 import { Modals } from "./App/Modals";
+import { IdOfSectionToSaveProvider } from "./ContextsAndProviders/IdOfSectionToSaveProvider";
+import { MainStateProvider } from "./ContextsAndProviders/MainStateProvider";
 
 const styledComponentsGlobalStyle = <StyledComponentsGlobalStyle />;
 const styledComponentsGlobalFonts = <GlobalFonts />;

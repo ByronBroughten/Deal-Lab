@@ -4,8 +4,8 @@ import {
   RadioGroup,
   SxProps,
 } from "@mui/material";
+import { MuiRadioOnChange } from "../../../modules/utils/mui";
 import { nativeTheme } from "../../../theme/nativeTheme";
-import { MuiRadioOnChange } from "../../../utils/mui";
 import Radio from "../../general/Radio";
 import { VarbStringLabel } from "./VarbStringLabel";
 

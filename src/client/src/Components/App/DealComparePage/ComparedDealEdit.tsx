@@ -1,7 +1,7 @@
 import { Box, SxProps } from "@mui/material";
-import { useGetterSectionOnlyOne } from "../../../stateHooks/useGetterSection";
+import { useGetterSectionOnlyOne } from "../../../modules/stateHooks/useGetterSection";
+import { arrSx } from "../../../modules/utils/mui";
 import { nativeTheme } from "../../../theme/nativeTheme";
-import { arrSx } from "../../../utils/mui";
 import { MuiRow } from "../../general/MuiRow";
 import { RemoveSectionXBtn } from "../appWide/RemoveSectionXBtn";
 import { icons } from "../Icons";

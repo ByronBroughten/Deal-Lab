@@ -1,4 +1,4 @@
-import { useGetterSection } from "../../../../../../../stateHooks/useGetterSection";
+import { useGetterSection } from "../../../../../../../modules/stateHooks/useGetterSection";
 import { MuiRow } from "../../../../../../general/MuiRow";
 import { FormSectionNext } from "../../../../../appWide/FormSectionNext";
 import { MiscOnetimeValue } from "../PropertyEditor/ViewChunks/ViewParts/MiscOnetimeValue";

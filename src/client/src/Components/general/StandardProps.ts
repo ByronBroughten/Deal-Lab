@@ -2,7 +2,7 @@ import { SxProps } from "@mui/material";
 import { CSSProperties } from "@mui/material/styles/createTypography";
 import React from "react";
 import { ViewStyle } from "react-native";
-import { MuiSelectOnChange } from "../../utils/mui";
+import { MuiSelectOnChange } from "../../modules/utils/mui";
 
 export type StandardProps = { className?: string; children?: React.ReactNode };
 export type StandardBtnProps = StandardProps & {

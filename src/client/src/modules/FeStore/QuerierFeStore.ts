@@ -4,11 +4,11 @@ import { GetterSections } from "../../sharedWithServer/StateGetters/GetterSectio
 import { StoreId } from "../../sharedWithServer/StateGetters/Identifiers/StoreId";
 import { Obj } from "../../sharedWithServer/utils/Obj";
 import { StrictOmit } from "../../sharedWithServer/utils/types";
+import { GetterFeStore } from "./GetterFeStore";
 import {
   QuerierSectionBase,
   QuerierSectionBaseProps,
-} from "../SectionActors/QuerierSectionBase";
-import { GetterFeStore } from "./GetterFeStore";
+} from "./QuerierFeStore/QuerierSectionBase";
 
 interface Props
   extends StrictOmit<

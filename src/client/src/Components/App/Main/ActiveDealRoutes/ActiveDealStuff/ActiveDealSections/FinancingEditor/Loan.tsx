@@ -1,8 +1,8 @@
 import { SxProps } from "@mui/material";
+import { useGetterSection } from "../../../../../../../modules/stateHooks/useGetterSection";
+import { arrSx } from "../../../../../../../modules/utils/mui";
 import { StateValue } from "../../../../../../../sharedWithServer/stateSchemas/StateValue";
-import { useGetterSection } from "../../../../../../../stateHooks/useGetterSection";
 import { nativeTheme } from "../../../../../../../theme/nativeTheme";
-import { arrSx } from "../../../../../../../utils/mui";
 import MainSectionBody from "../../../../../appWide/GeneralSection/MainSection/MainSectionBody";
 import { MainSectionInner } from "../../../../../appWide/GeneralSection/MainSectionInner";
 import { MainSectionTopRows } from "../../../../../appWide/MainSectionTopRows";

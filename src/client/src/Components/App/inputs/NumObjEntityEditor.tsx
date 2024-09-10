@@ -1,11 +1,13 @@
 import { Box, SxProps } from "@mui/material";
 import { EditorState } from "draft-js";
 import React from "react";
-import { SectionInfoContextProvider } from "../../../ContextsAndProviders/useSectionContext";
-import { useOnOutsideClickEffect } from "../../../modules/customHooks/useOnOutsideClickRef";
-import { useToggleView } from "../../../modules/customHooks/useToggleView";
 import { SetEditorState } from "../../../modules/draftjs/draftUtils";
 import { insertChars } from "../../../modules/draftjs/insert";
+import { useGetterSections } from "../../../modules/stateHooks/useGetterSections";
+import { useGetterVarb } from "../../../modules/stateHooks/useGetterVarb";
+import { useOnOutsideClickEffect } from "../../../modules/utilityHooks/useOnOutsideClickRef";
+import { useToggleView } from "../../../modules/utilityHooks/useToggleView";
+import { arrSx } from "../../../modules/utils/mui";
 import { GetterVarb } from "../../../sharedWithServer/StateGetters/GetterVarb";
 import { EditorTextStatus } from "../../../sharedWithServer/StateGetters/GetterVarbNumObj";
 import {
@@ -15,10 +17,8 @@ import {
 import { ValueFixedVarbPathName } from "../../../sharedWithServer/StateGetters/Identifiers/ValueInEntityInfo";
 import { SectionName } from "../../../sharedWithServer/stateSchemas/SectionName";
 import { Obj } from "../../../sharedWithServer/utils/Obj";
-import { useGetterSections } from "../../../stateHooks/useGetterSections";
-import { useGetterVarb } from "../../../stateHooks/useGetterVarb";
 import { nativeTheme } from "../../../theme/nativeTheme";
-import { arrSx } from "../../../utils/mui";
+import { SectionInfoContextProvider } from "../../ContextsAndProviders/SectionInfoContextProvider";
 import { VarbStringLabel } from "../appWide/VarbStringLabel";
 import { useShowEqualsContext } from "../customContexts/showEquals";
 import { MaterialDraftEditor } from "./MaterialDraftEditor";

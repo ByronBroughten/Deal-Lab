@@ -1,7 +1,7 @@
 import { Box, SxProps } from "@mui/material";
-import { useGetterSection } from "../../../../../../../stateHooks/useGetterSection";
+import { useGetterSection } from "../../../../../../../modules/stateHooks/useGetterSection";
+import { arrSx } from "../../../../../../../modules/utils/mui";
 import { nativeTheme } from "../../../../../../../theme/nativeTheme";
-import { arrSx } from "../../../../../../../utils/mui";
 import {
   DealDetailRowVarbFound,
   DealDetailRowVarbNotFoundTopLevel,

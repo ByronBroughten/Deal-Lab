@@ -27,7 +27,7 @@ import { SectionPack } from "../../sharedWithServer/StateTransports/SectionPack"
 import { IdS } from "../../sharedWithServer/utils/IdS";
 import { Obj } from "../../sharedWithServer/utils/Obj";
 import { timeS } from "../../sharedWithServer/utils/timeS";
-import { showDealLimitReachedMessage } from "../../stateHooks/useStorageLimitReached";
+import { showDealLimitReachedMessage } from "../stateHooks/useStorageLimitReached";
 import { GetterFeStore } from "./GetterFeStore";
 
 export interface AddToStoreProps<CN extends StoreName = StoreName>

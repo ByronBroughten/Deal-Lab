@@ -1,6 +1,6 @@
 import React from "react";
-import useOnOutsideClickRef from "../../modules/customHooks/useOnOutsideClickRef";
-import { useToggleView } from "../../modules/customHooks/useToggleView";
+import useOnOutsideClickRef from "../../modules/utilityHooks/useOnOutsideClickRef";
+import { useToggleView } from "../../modules/utilityHooks/useToggleView";
 import { Column } from "../App/ReactNative/Column";
 import { DropdownContainer } from "./DropdownContainer";
 

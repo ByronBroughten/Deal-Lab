@@ -1,4 +1,3 @@
-import { z } from "zod";
 import { ValidationError } from "../../utils/Error";
 import { StateValue } from "../StateValue";
 import {
@@ -13,11 +12,6 @@ function makeUnionMeta<UN extends UnionValueName>(
 ): ValueMeta<UN> {
   const valueArr = unionValueArr(valueName);
   const first = valueArr[0];
-  const zodSchema = z.union([
-    z.literal(first),
-    z.literal(first),
-    ...valueArr.map((str) => z.literal(str)),
-  ]);
   return {
     is: (value): value is StateValue<UN> =>
       (valueArr as readonly any[]).includes(value),
@@ -31,7 +25,6 @@ function makeUnionMeta<UN extends UnionValueName>(
       }
     },
     initDefault: () => first as StateValue<UN>,
-    zod: zodSchema,
   };
 }
 

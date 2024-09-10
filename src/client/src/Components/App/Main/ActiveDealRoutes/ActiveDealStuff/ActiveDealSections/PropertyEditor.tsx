@@ -1,7 +1,7 @@
 import React from "react";
+import { useGetterSection } from "../../../../../../modules/stateHooks/useGetterSection";
 import { FeIdProp } from "../../../../../../sharedWithServer/StateGetters/Identifiers/NanoIdInfo";
 import { StateValue } from "../../../../../../sharedWithServer/stateSchemas/StateValue";
-import { useGetterSection } from "../../../../../../stateHooks/useGetterSection";
 import { PropertyBrrrrView } from "./PropertyEditor/PropertyBrrrrView";
 import { PropertyBuyAndHoldView } from "./PropertyEditor/PropertyBuyAndHoldView";
 import { PropertyFixAndFlipView } from "./PropertyEditor/PropertyFixAndFlipView";

@@ -3,9 +3,9 @@ import { darken, lighten } from "polished";
 import React from "react";
 import { css } from "styled-components";
 import styled from "styled-components/macro";
-import useOnOutsideClickRef from "../../../modules/customHooks/useOnOutsideClickRef";
 import { getEntityStrategy } from "../../../modules/draftjs/getEntityStrategies";
 import { insertEntity } from "../../../modules/draftjs/insert";
+import useOnOutsideClickRef from "../../../modules/utilityHooks/useOnOutsideClickRef";
 import { FeVarbInfo } from "../../../sharedWithServer/StateGetters/Identifiers/FeInfo";
 import ErrorMessage from "../appWide/ErrorMessage";
 import ItemOrCommaSpan, {

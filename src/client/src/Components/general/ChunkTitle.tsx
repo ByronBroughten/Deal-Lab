@@ -1,6 +1,6 @@
 import { FormLabel, SxProps } from "@mui/material";
+import { arrSx } from "../../modules/utils/mui";
 import { nativeTheme } from "../../theme/nativeTheme";
-import { arrSx } from "../../utils/mui";
 import { StandardProps } from "./StandardProps";
 
 type Props = StandardProps & { sx?: SxProps; id?: string };

@@ -1,10 +1,10 @@
 import { SxProps } from "@mui/material";
 import { EditorState } from "draft-js";
 import React from "react";
+import { useGetterSectionOnlyOne } from "../../../modules/stateHooks/useGetterSection";
 import { FeVarbInfo } from "../../../sharedWithServer/StateGetters/Identifiers/FeInfo";
 import { DealMode } from "../../../sharedWithServer/stateSchemas/StateValue/dealMode";
 import { timeS } from "../../../sharedWithServer/utils/timeS";
-import { useGetterSectionOnlyOne } from "../../../stateHooks/useGetterSection";
 import { nativeTheme } from "../../../theme/nativeTheme";
 import { MuiRow } from "../../general/MuiRow";
 import { StyledActionBtn } from "../appWide/GeneralSection/MainSection/StyledActionBtn";

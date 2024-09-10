@@ -1,12 +1,12 @@
 import { Box, SxProps } from "@mui/material";
+import { useAction } from "../../../../modules/stateHooks/useAction";
+import { useGetterSection } from "../../../../modules/stateHooks/useGetterSection";
+import { useVariableLabels } from "../../../../modules/stateHooks/useVariableLabels";
+import { arrSx } from "../../../../modules/utils/mui";
 import { FeIdProp } from "../../../../sharedWithServer/StateGetters/Identifiers/NanoIdInfo";
 import { AddChildOptions } from "../../../../sharedWithServer/StateOperators/Updaters/UpdaterSection";
 import { inEntityValueInfo } from "../../../../sharedWithServer/stateSchemas/StateValue/InEntityValue";
-import { useAction } from "../../../../stateHooks/useAction";
-import { useGetterSection } from "../../../../stateHooks/useGetterSection";
-import { useVariableLabels } from "../../../../stateHooks/useVariableLabels";
 import { nativeTheme } from "../../../../theme/nativeTheme";
-import { arrSx } from "../../../../utils/mui";
 import { MuiRow } from "../../../general/MuiRow";
 import { OnVarbSelect } from "../../inputs/NumObjEditor/NumObjVarbSelector/VarbSelectorCollection";
 import { useDealModeContextVarbSelectModal } from "../../Modals/VarbSelectModalProvider";

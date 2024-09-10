@@ -1,8 +1,8 @@
+import { useGetterSectionsProps } from "../../../../../../../../modules/stateHooks/useGetterSectionsProps";
+import { useGetterVarb } from "../../../../../../../../modules/stateHooks/useGetterVarb";
 import { GetterVarb } from "../../../../../../../../sharedWithServer/StateGetters/GetterVarb";
 import { FeVarbInfo } from "../../../../../../../../sharedWithServer/StateGetters/Identifiers/FeInfo";
 import { InEntityGetterVarb } from "../../../../../../../../sharedWithServer/StateGetters/InEntityGetterVarb";
-import { useGetterSectionsProps } from "../../../../../../../../stateHooks/useGetterSectionsProps";
-import { useGetterVarb } from "../../../../../../../../stateHooks/useGetterVarb";
 import {
   DealDetailRowDropDown,
   DealDetailRowEndPoint,

@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import { toast } from "react-toastify";
+import { arrSx } from "../../../../../modules/utils/mui";
 import { nativeTheme } from "../../../../../theme/nativeTheme";
-import { arrSx } from "../../../../../utils/mui";
 import { MuiBtnPropsNext } from "../../../../general/StandardProps";
 import { HollowBtn } from "../../../appWide/HollowBtn";
 import { icons } from "../../../Icons";

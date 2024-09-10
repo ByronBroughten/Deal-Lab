@@ -1,4 +1,4 @@
-import { useGetterSection } from "../../../../../../../../stateHooks/useGetterSection";
+import { useGetterSection } from "../../../../../../../../modules/stateHooks/useGetterSection";
 import { nativeTheme } from "../../../../../../../../theme/nativeTheme";
 import { SelectEditor } from "../../../../../../appWide/SelectEditor";
 import { NumObjEntityEditor } from "../../../../../../inputs/NumObjEntityEditor";

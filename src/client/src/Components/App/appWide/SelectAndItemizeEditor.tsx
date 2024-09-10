@@ -1,11 +1,11 @@
 import { Box } from "@mui/material";
 import React from "react";
+import { useGetterVarbNext } from "../../../modules/stateHooks/useGetterVarb";
+import { arrSx } from "../../../modules/utils/mui";
 import { SectionName } from "../../../sharedWithServer/stateSchemas/SectionName";
 import { StateValue } from "../../../sharedWithServer/stateSchemas/StateValue";
 import { UnionValueName } from "../../../sharedWithServer/stateSchemas/StateValue/unionValues";
-import { useGetterVarbNext } from "../../../stateHooks/useGetterVarb";
 import { nativeTheme } from "../../../theme/nativeTheme";
-import { arrSx } from "../../../utils/mui";
 import { MuiRow } from "../../general/MuiRow";
 import { useIsDevices } from "../customHooks/useMediaQueries";
 import { useInputModalWithContext } from "../Modals/InputModalProvider";

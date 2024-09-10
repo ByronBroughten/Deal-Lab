@@ -1,4 +1,3 @@
-import { z } from "zod";
 import { ValidationError } from "../utils/Error";
 
 export const sectionNames = [
@@ -111,9 +110,6 @@ export type SectionName = (typeof sectionNames)[number];
 export function isSectionName(value: any): value is SectionName {
   return sectionNames.includes(value);
 }
-export const zSectionName = z
-  .string()
-  .refine((str) => isSectionName(str), "Not a valid sectionName");
 
 export const sectionNamesToNull = sectionNames.reduce((toNull, sectionName) => {
   toNull[sectionName] = null;

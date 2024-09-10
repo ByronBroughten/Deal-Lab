@@ -1,8 +1,8 @@
 import { Box } from "@mui/material";
 import { BsArrowUpCircle } from "react-icons/bs";
 import { View } from "react-native";
-import { useUserSubscription } from "../../../../modules/customHooks/useSubscriptions";
-import { useUserDataStatus } from "../../../../stateHooks/useFeStore";
+import { useUserDataStatus } from "../../../../modules/stateHooks/useFeStore";
+import { useUserSubscription } from "../../../../modules/utilityHooks/useSubscriptions";
 import { nativeTheme } from "../../../../theme/nativeTheme";
 import { MuiRow } from "../../../general/MuiRow";
 import { NavBtn } from "./NavBtn";

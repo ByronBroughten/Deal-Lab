@@ -1,7 +1,7 @@
 import { Button } from "@mui/material";
 import { StyleSheet, Text, View } from "react-native";
 import styled from "styled-components";
-import { goToPaymentPage } from "../../../../modules/services/stripeService";
+import { stripeS } from "../../../../modules/services/stripeS";
 import theme from "../../../../theme/Theme";
 import { NavBarPanel } from "./NavBarPanel";
 
@@ -43,7 +43,10 @@ export function UpgradeUserToProPanel() {
             </View>
           </View>
         </View>
-        <Button className="PaymentForm-payBtn" onClick={goToPaymentPage}>
+        <Button
+          className="PaymentForm-payBtn"
+          onClick={() => stripeS.goToPaymentPage()}
+        >
           Upgrade Page
         </Button>
       </div>

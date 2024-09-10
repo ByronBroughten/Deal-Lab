@@ -1,4 +1,3 @@
-import { z } from "zod";
 import { NotANumberError } from "../../utils/math";
 import { Obj } from "../../utils/Obj";
 import { StrictPick } from "../../utils/types";
@@ -6,7 +5,6 @@ import { validateS } from "../../utils/validateS";
 import {
   validateValueInEntities,
   ValueInEntity,
-  zValueInEntities,
 } from "./stateValuesShared/entities";
 import { EntitiesProp, MainTextProp } from "./stateValuesShared/ValueObj";
 
@@ -50,14 +48,7 @@ export function numberOrQ(val: number) {
   }
 }
 
-const zNumObj = z.object({
-  mainText: z.string(),
-  entities: zValueInEntities,
-  solvableText: z.string(),
-} as { [K in keyof NumObj]: any });
-
 function isNumObj(value: any): value is NumObj {
-  // top speed is important here, which is why we don't use zod
   return (
     Obj.isObjToAny(value) &&
     "mainText" in value &&
@@ -87,5 +78,4 @@ export const numObjMeta = {
     entities,
     solvableText,
   }),
-  zod: zNumObj,
 };

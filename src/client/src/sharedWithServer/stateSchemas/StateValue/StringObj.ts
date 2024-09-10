@@ -1,11 +1,6 @@
-import { z } from "zod";
 import { Obj } from "../../utils/Obj";
 import { validateS } from "../../utils/validateS";
-import { zS } from "../../utils/zod";
-import {
-  validateValueInEntities,
-  zValueInEntities,
-} from "./stateValuesShared/entities";
+import { validateValueInEntities } from "./stateValuesShared/entities";
 import { EntitiesProp, MainTextProp } from "./stateValuesShared/ValueObj";
 
 export interface StringObj extends EntitiesProp, MainTextProp {}
@@ -47,14 +42,8 @@ const initDefaultStringObj = ({
   entities = [],
 }: Partial<StringObj> = {}) => ({ mainText, entities });
 
-const zStringObj = z.object({
-  mainText: zS.string,
-  entities: zValueInEntities,
-} as { [K in keyof StringObj]: any });
-
 export const stringObjMeta = {
   is: isStringObj,
   validate: validateStringObj,
   initDefault: initDefaultStringObj,
-  zod: zStringObj,
 };

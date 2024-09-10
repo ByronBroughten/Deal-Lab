@@ -2,14 +2,14 @@ import { Box } from "@mui/material";
 import React from "react";
 import { unstable_batchedUpdates } from "react-dom";
 import { View } from "react-native";
-import { constant } from "../../../sharedWithServer/Constants";
-import { FeRouteName } from "../../../sharedWithServer/Constants/feRoutes";
 import {
   showDealLimitReachedMessage,
   useIsAtDealLimit,
-} from "../../../stateHooks/useStorageLimitReached";
+} from "../../../modules/stateHooks/useStorageLimitReached";
+import { arrSx } from "../../../modules/utils/mui";
+import { constant } from "../../../sharedWithServer/Constants";
+import { FeRouteName } from "../../../sharedWithServer/Constants/feRoutes";
 import { nativeTheme } from "../../../theme/nativeTheme";
-import { arrSx } from "../../../utils/mui";
 import { MuiRow } from "../../general/MuiRow";
 import { Row } from "../../general/Row";
 import { MuiBtnPropsNext } from "../../general/StandardProps";

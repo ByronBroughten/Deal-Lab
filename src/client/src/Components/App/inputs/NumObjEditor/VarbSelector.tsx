@@ -1,10 +1,10 @@
 import { Box, SxProps } from "@mui/material";
 import styled from "styled-components";
+import { useGetterMainOnlyChild } from "../../../../modules/stateHooks/useMain";
+import { arrSx } from "../../../../modules/utils/mui";
 import { ValueInEntityInfo } from "../../../../sharedWithServer/StateGetters/Identifiers/ValueInEntityInfo";
-import { useGetterMainOnlyChild } from "../../../../stateHooks/useMain";
 import ccs from "../../../../theme/cssChunks";
 import { nativeTheme } from "../../../../theme/nativeTheme";
-import { arrSx } from "../../../../utils/mui";
 import {
   OnVarbSelect,
   VarbSelectorCollection,

@@ -6,8 +6,8 @@ import {
   SxProps,
 } from "@mui/material";
 import React from "react";
+import { arrSx, MuiSelectOnChange } from "../../../modules/utils/mui";
 import { nativeTheme } from "../../../theme/nativeTheme";
-import { arrSx, MuiSelectOnChange } from "../../../utils/mui";
 
 export type SelectItemProp = [string, string] | null;
 export interface MuiSelectStyledProps {

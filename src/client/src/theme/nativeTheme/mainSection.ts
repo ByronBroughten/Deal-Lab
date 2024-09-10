@@ -1,4 +1,4 @@
-import { sxProps } from "../../utils/mui";
+import { sxProps } from "../../modules/utils/mui";
 import { themeColors } from "./themeColors";
 import { themeShadows } from "./themeShadows";
 import { unitSizes } from "./unitSizes";

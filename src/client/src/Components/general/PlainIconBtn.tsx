@@ -1,7 +1,7 @@
 import { Button } from "@mui/material";
 import styled from "styled-components";
+import { arrSx } from "../../modules/utils/mui";
 import theme from "../../theme/Theme";
-import { arrSx } from "../../utils/mui";
 import { MuiBtnPropsNext } from "./StandardProps";
 
 export interface PlainIconBtnProps extends MuiBtnPropsNext {

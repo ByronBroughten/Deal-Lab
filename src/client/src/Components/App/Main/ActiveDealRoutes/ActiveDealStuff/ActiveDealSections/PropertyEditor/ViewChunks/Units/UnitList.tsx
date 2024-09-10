@@ -1,7 +1,7 @@
 import styled from "styled-components";
+import { useAction } from "../../../../../../../../../modules/stateHooks/useAction";
+import { useGetterSection } from "../../../../../../../../../modules/stateHooks/useGetterSection";
 import { Arr } from "../../../../../../../../../sharedWithServer/utils/Arr";
-import { useAction } from "../../../../../../../../../stateHooks/useAction";
-import { useGetterSection } from "../../../../../../../../../stateHooks/useGetterSection";
 import ccs from "../../../../../../../../../theme/cssChunks";
 import theme from "../../../../../../../../../theme/Theme";
 import useHowMany from "../../../../../../../customHooks/useHowMany";

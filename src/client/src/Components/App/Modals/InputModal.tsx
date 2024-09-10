@@ -1,8 +1,8 @@
 import React from "react";
-import { IdOfSectionToSaveProvider } from "../../../ContextsAndProviders/useIdOfSectionToSave";
 import { DealMode } from "../../../sharedWithServer/stateSchemas/StateValue/dealMode";
 import { timeS } from "../../../sharedWithServer/utils/timeS";
 import { nativeTheme } from "../../../theme/nativeTheme";
+import { IdOfSectionToSaveProvider } from "../../ContextsAndProviders/IdOfSectionToSaveProvider";
 import { DealModeProvider } from "../customContexts/dealModeContext";
 import {
   InputModalOptions,

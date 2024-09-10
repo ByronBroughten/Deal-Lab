@@ -1,6 +1,6 @@
 import { Box, SxProps } from "@mui/material";
+import { arrSx } from "../../../modules/utils/mui";
 import { nativeTheme } from "../../../theme/nativeTheme";
-import { arrSx } from "../../../utils/mui";
 
 export type SectionTitleProps = {
   className?: string;

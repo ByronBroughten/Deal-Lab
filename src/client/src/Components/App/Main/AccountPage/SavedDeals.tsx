@@ -1,17 +1,17 @@
 import { Box } from "@mui/material";
 import { View } from "react-native";
 import { MoonLoader } from "react-spinners";
-import { IdOfSectionToSaveProvider } from "../../../../ContextsAndProviders/useIdOfSectionToSave";
-import { constants } from "../../../../sharedWithServer/Constants";
-import { StoreId } from "../../../../sharedWithServer/StateGetters/Identifiers/StoreId";
-import { useActionWithProps } from "../../../../stateHooks/useAction";
+import { useActionWithProps } from "../../../../modules/stateHooks/useAction";
 import {
   useGetterFeStore,
   useUserDataStatus,
-} from "../../../../stateHooks/useFeStore";
-import { useGetterSectionOnlyOne } from "../../../../stateHooks/useGetterSection";
-import { useQueryAction } from "../../../../stateHooks/useQueryAction";
+} from "../../../../modules/stateHooks/useFeStore";
+import { useGetterSectionOnlyOne } from "../../../../modules/stateHooks/useGetterSection";
+import { useQueryAction } from "../../../../modules/stateHooks/useQueryAction";
+import { constants } from "../../../../sharedWithServer/Constants";
+import { StoreId } from "../../../../sharedWithServer/StateGetters/Identifiers/StoreId";
 import { nativeTheme } from "../../../../theme/nativeTheme";
+import { IdOfSectionToSaveProvider } from "../../../ContextsAndProviders/IdOfSectionToSaveProvider";
 import ChunkTitle from "../../../general/ChunkTitle";
 import { MuiRow } from "../../../general/MuiRow";
 import { StyledActionBtn } from "../../appWide/GeneralSection/MainSection/StyledActionBtn";

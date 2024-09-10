@@ -1,5 +1,5 @@
+import { useGetterSection } from "../../../modules/stateHooks/useGetterSection";
 import { SectionName } from "../../../sharedWithServer/stateSchemas/SectionName";
-import { useGetterSection } from "../../../stateHooks/useGetterSection";
 import { getLabelInfo, GroupEditorProps } from "./GroupEditor/GroupEditorProps";
 import { NumObjEntityEditor } from "./NumObjEntityEditor";
 

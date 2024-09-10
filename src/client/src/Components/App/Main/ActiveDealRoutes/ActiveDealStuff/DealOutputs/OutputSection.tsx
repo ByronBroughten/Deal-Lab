@@ -1,12 +1,12 @@
 import { Box, SxProps } from "@mui/material";
 import { CgDetailsLess, CgDetailsMore } from "react-icons/cg";
-import { IdOfSectionToSaveProvider } from "../../../../../../ContextsAndProviders/useIdOfSectionToSave";
-import { useToggleView } from "../../../../../../modules/customHooks/useToggleView";
+import { useGetterSection } from "../../../../../../modules/stateHooks/useGetterSection";
+import { useToggleView } from "../../../../../../modules/utilityHooks/useToggleView";
 import { outputListName } from "../../../../../../sharedWithServer/StateOperators/defaultMaker/makeDefaultOutputSection";
 import { StateValue } from "../../../../../../sharedWithServer/stateSchemas/StateValue";
 import { dealModeLabels } from "../../../../../../sharedWithServer/stateSchemas/StateValue/unionValues";
-import { useGetterSection } from "../../../../../../stateHooks/useGetterSection";
 import { nativeTheme } from "../../../../../../theme/nativeTheme";
+import { IdOfSectionToSaveProvider } from "../../../../../ContextsAndProviders/IdOfSectionToSaveProvider";
 import { MuiRow } from "../../../../../general/MuiRow";
 import { CheckMarkCircle } from "../../../../appWide/checkMarkCircle";
 import { EditSectionBtn } from "../../../../appWide/EditSectionBtn";

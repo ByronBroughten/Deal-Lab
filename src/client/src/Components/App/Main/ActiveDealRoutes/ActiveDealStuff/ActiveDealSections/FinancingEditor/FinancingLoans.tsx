@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
+import { useAction } from "../../../../../../../modules/stateHooks/useAction";
+import { useGetterSection } from "../../../../../../../modules/stateHooks/useGetterSection";
 import { FeIdProp } from "../../../../../../../sharedWithServer/StateGetters/Identifiers/NanoIdInfo";
-import { useAction } from "../../../../../../../stateHooks/useAction";
-import { useGetterSection } from "../../../../../../../stateHooks/useGetterSection";
 import { nativeTheme } from "../../../../../../../theme/nativeTheme";
 import { SubSectionBtn } from "../../../../../appWide/GeneralSection/GeneralSectionTitle/SubSectionBtn";
 import { Loan } from "./Loan";

@@ -1,8 +1,8 @@
 import React from "react";
 import { Navigate, Route } from "react-router-dom";
-import { IdOfSectionToSaveProvider } from "../../../ContextsAndProviders/useIdOfSectionToSave";
+import { useGetterSections } from "../../../modules/stateHooks/useGetterSections";
 import { feRoutes } from "../../../sharedWithServer/Constants/feRoutes";
-import { useGetterSections } from "../../../stateHooks/useGetterSections";
+import { IdOfSectionToSaveProvider } from "../../ContextsAndProviders/IdOfSectionToSaveProvider";
 import { DealModeProvider } from "../customContexts/dealModeContext";
 import { ActiveDealMain } from "./ActiveDealRoutes/ActiveDealMain";
 import {

@@ -1,6 +1,6 @@
 import { EditorState } from "draft-js";
 import { Dispatch, SetStateAction } from "react";
-import { isEditorChanged } from "../../../utils/DraftS";
+import { isEditorChanged } from "../../../modules/utils/DraftS";
 
 interface UseOnChangeProps {
   editorState: EditorState;

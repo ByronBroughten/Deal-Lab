@@ -1,5 +1,5 @@
-import { sxProps } from "../utils/mui";
-import { reactNativeS } from "../utils/reactNative";
+import { sxProps } from "../modules/utils/mui";
+import { reactNativeS } from "../modules/utils/reactNative";
 import { comparedDeal } from "./nativeTheme/comparedDeal";
 import { inputStyles } from "./nativeTheme/inputsStyles";
 import { mainSection } from "./nativeTheme/mainSection";

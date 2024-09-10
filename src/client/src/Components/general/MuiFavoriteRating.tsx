@@ -1,13 +1,13 @@
 import { Box, InputLabel, Rating } from "@mui/material";
 import { MdFavorite, MdFavoriteBorder } from "react-icons/md";
 import styled from "styled-components";
+import { useAction } from "../../modules/stateHooks/useAction";
+import { useGetterVarb } from "../../modules/stateHooks/useGetterVarb";
 import {
   FeVarbInfo,
   FeVarbInfoNext,
 } from "../../sharedWithServer/StateGetters/Identifiers/FeInfo";
 import { numObj } from "../../sharedWithServer/stateSchemas/StateValue/NumObj";
-import { useAction } from "../../stateHooks/useAction";
-import { useGetterVarb } from "../../stateHooks/useGetterVarb";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { VarbStringLabel } from "../App/appWide/VarbStringLabel";
 

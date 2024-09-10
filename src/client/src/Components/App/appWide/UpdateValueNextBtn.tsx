@@ -1,6 +1,6 @@
 import React from "react";
+import { useAction } from "../../../modules/stateHooks/useAction";
 import { FeVarbValueInfo } from "../../../sharedWithServer/StateGetters/Identifiers/FeInfo";
-import { useAction } from "../../../stateHooks/useAction";
 import { StandardProps } from "../../general/StandardProps";
 import { NextBtn } from "./NextBtn";
 

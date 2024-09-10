@@ -1,9 +1,5 @@
-import { z } from "zod";
-import { SectionName } from "../../stateSchemas/SectionName";
-import { zS } from "../../utils/zod";
 import { NanoIdProp } from "./NanoIdInfo";
 import {
-  PathNameOfSection,
   SectionPathName,
   SectionPathVarbName,
 } from "./sectionPaths/sectionPathNames";
@@ -13,21 +9,12 @@ interface PathNameProp<PN extends SectionPathName> {
   pathName: PN;
 }
 
-interface SectionPathNameProp<SN extends SectionName>
-  extends PathNameProp<PathNameOfSection<SN>> {}
-
-export const zSectionPathProp = z.object({
-  pathName: zS.string,
-});
 export function isSectionPath(value: any) {
   return Array.isArray(value) && value.every((val) => typeof val === "string");
 }
 
 const pathNameInfoTypes = ["pathName", "pathNameDbId"] as const;
 type PathNameInfoType = (typeof pathNameInfoTypes)[number];
-type PathNameInfoTypeProp = {
-  infoType: PathNameInfoType;
-};
 
 export function isPathInfoType(value: any): value is PathNameInfoType {
   return pathNameInfoTypes.includes(value);
@@ -35,9 +22,7 @@ export function isPathInfoType(value: any): value is PathNameInfoType {
 
 interface PathNameInfo<PN extends SectionPathName = SectionPathName>
   extends PathNameProp<PN> {}
-interface PathNameDbInfo<PN extends SectionPathName> extends PathNameInfo<PN> {
-  dbId: string;
-}
+
 interface PathNameVarbInfo<
   PN extends SectionPathName = SectionPathName,
   VN extends SectionPathVarbName<PN> = SectionPathVarbName<PN>

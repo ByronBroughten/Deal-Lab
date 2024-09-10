@@ -1,5 +1,5 @@
+import { arrSx } from "../../../modules/utils/mui";
 import { nativeTheme } from "../../../theme/nativeTheme";
-import { arrSx } from "../../../utils/mui";
 import { PlainIconBtn, PlainIconBtnProps } from "../../general/PlainIconBtn";
 
 export function HollowBtn({ className, sx, ...rest }: PlainIconBtnProps) {

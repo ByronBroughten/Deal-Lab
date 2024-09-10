@@ -1,8 +1,8 @@
-import { IdOfSectionToSaveProvider } from "../../../ContextsAndProviders/useIdOfSectionToSave";
+import { useAction } from "../../../modules/stateHooks/useAction";
+import { useGetterSectionOnlyOne } from "../../../modules/stateHooks/useGetterSection";
 import { constants } from "../../../sharedWithServer/Constants";
-import { useAction } from "../../../stateHooks/useAction";
-import { useGetterSectionOnlyOne } from "../../../stateHooks/useGetterSection";
 import { nativeTheme } from "../../../theme/nativeTheme";
+import { IdOfSectionToSaveProvider } from "../../ContextsAndProviders/IdOfSectionToSaveProvider";
 import { MuiRow } from "../../general/MuiRow";
 import { BackBtnWrapper } from "../appWide/BackBtnWrapper";
 import { StyledActionBtn } from "../appWide/GeneralSection/MainSection/StyledActionBtn";

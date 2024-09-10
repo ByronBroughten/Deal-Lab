@@ -1,6 +1,6 @@
 import { SxProps } from "@mui/material";
+import { arrSx } from "../../../../../modules/utils/mui";
 import { nativeTheme } from "../../../../../theme/nativeTheme";
-import { arrSx } from "../../../../../utils/mui";
 import { MainSection } from "../../../appWide/GeneralSection/MainSection";
 import { useIsDevices } from "../../../customHooks/useMediaQueries";
 

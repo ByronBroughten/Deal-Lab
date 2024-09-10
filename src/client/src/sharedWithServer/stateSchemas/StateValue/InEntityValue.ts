@@ -1,4 +1,3 @@
-import { z } from "zod";
 import {
   validateInEntityInfo,
   ValueInEntityInfo,
@@ -6,12 +5,7 @@ import {
 import { isVarbPathName } from "../../StateGetters/Identifiers/VarbPathNameInfo";
 import { IdS } from "../../utils/IdS";
 import { Obj } from "../../utils/Obj";
-import { zS } from "../../utils/zod";
-import {
-  EntityIdProp,
-  validateEntityId,
-  zValueEntityInfo,
-} from "./stateValuesShared/entities";
+import { EntityIdProp, validateEntityId } from "./stateValuesShared/entities";
 
 export type InEntityValue = InEntityValueInfo | null;
 
@@ -57,14 +51,8 @@ function infoTypeCheck(value: any): boolean {
   }
 }
 
-const zInEntityValueInfo = zValueEntityInfo.and(
-  z.object({ entityId: zS.nanoId })
-);
-const zInEntityVarbInfoValue = z.union([z.null(), zInEntityValueInfo]);
-
 export const inEntityInfoValueSchema = {
   is: isInEntityValue,
   initDefault: () => null as InEntityValue,
   validate: validateInEntityValue,
-  zod: zInEntityVarbInfoValue,
 };

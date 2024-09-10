@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import React from "react";
-import { useGetterSection } from "../../../../../stateHooks/useGetterSection";
+import { useGetterSection } from "../../../../../modules/stateHooks/useGetterSection";
 import { NumObjEntityEditor } from "../../../inputs/NumObjEntityEditor";
 import { TimespanEditor } from "../../../inputs/TimespanEditor";
 import { NameEditorCell } from "../../ListGroup/ListGroupShared/NameEditorCell";

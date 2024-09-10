@@ -1,6 +1,6 @@
 import { Box, SxProps } from "@mui/material";
 import React from "react";
-import { arrSx } from "../../../utils/mui";
+import { arrSx } from "../../../modules/utils/mui";
 import { MuiRow } from "../../general/MuiRow";
 import { IconProps } from "../Icons";
 import { InfoIcon } from "./InfoIcon";

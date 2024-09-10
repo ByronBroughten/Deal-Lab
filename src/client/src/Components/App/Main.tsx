@@ -2,11 +2,15 @@ import * as reactRouterDom from "react-router-dom";
 import { Navigate, Outlet, Route, Routes } from "react-router-dom";
 import styled from "styled-components";
 import { getSuperTokensRoutesForReactRouterDom } from "supertokens-auth-react";
-import { useControlUserData } from "../../modules/customHooks/useControlUserData";
-import { useSubscriptions } from "../../modules/customHooks/useSubscriptions";
+import { useAutoSave } from "../../modules/stateHooks/useAutoSave";
+import {
+  useAddDeal,
+  useEditDeal,
+  useSolve,
+} from "../../modules/stateHooks/useLoading";
+import { useControlUserData } from "../../modules/utilityHooks/useControlUserData";
+import { useSubscriptions } from "../../modules/utilityHooks/useSubscriptions";
 import { feRoutes } from "../../sharedWithServer/Constants/feRoutes";
-import { useAutoSave } from "../../stateHooks/useAutoSave";
-import { useAddDeal, useEditDeal, useSolve } from "../../stateHooks/useLoading";
 import { nativeTheme } from "../../theme/nativeTheme";
 import NotFound from "../general/NotFound";
 import { PageContent } from "../general/PageContent";

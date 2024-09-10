@@ -1,6 +1,6 @@
 import { SxProps } from "@mui/material";
-import { useGetterSection } from "../../../../../../../../stateHooks/useGetterSection";
-import { arrSx } from "../../../../../../../../utils/mui";
+import { useGetterSection } from "../../../../../../../../modules/stateHooks/useGetterSection";
+import { arrSx } from "../../../../../../../../modules/utils/mui";
 import { SelectAndItemizeEditor } from "../../../../../../appWide/SelectAndItemizeEditor";
 import { ToggledNode } from "../../../../../../appWide/ToggledNode";
 import { NumObjEntityEditor } from "../../../../../../inputs/NumObjEntityEditor";

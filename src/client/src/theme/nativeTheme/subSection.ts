@@ -1,4 +1,4 @@
-import { reactNativeS } from "../../utils/reactNative";
+import { reactNativeS } from "../../modules/utils/reactNative";
 import { themeColors } from "./themeColors";
 import { unitSizes } from "./unitSizes";
 

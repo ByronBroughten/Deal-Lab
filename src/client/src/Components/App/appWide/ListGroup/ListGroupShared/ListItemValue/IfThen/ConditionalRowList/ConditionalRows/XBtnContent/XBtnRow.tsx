@@ -1,6 +1,6 @@
 import React from "react";
-import { useAction } from "../../../../../../../../../../stateHooks/useAction";
-import { useGetterSection } from "../../../../../../../../../../stateHooks/useGetterSection";
+import { useAction } from "../../../../../../../../../../modules/stateHooks/useAction";
+import { useGetterSection } from "../../../../../../../../../../modules/stateHooks/useGetterSection";
 import SolidBtn from "../../../../../../../SolidBtn";
 import { XBtn } from "../../../../../../../Xbtn";
 import { conditionalRowSectionName } from "../../ConditionalRows";

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useGetterSection } from "../../../../../../../../stateHooks/useGetterSection";
+import { useGetterSection } from "../../../../../../../../modules/stateHooks/useGetterSection";
 import theme from "../../../../../../../../theme/Theme";
 import { NumObjEntityEditor } from "../../../../../../inputs/NumObjEntityEditor";
 import SolidBtn from "../../../../../SolidBtn";

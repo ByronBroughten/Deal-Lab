@@ -1,6 +1,6 @@
 import { Box, styled, SxProps } from "@mui/material";
+import { arrSx } from "../../../../modules/utils/mui";
 import { nativeTheme } from "../../../../theme/nativeTheme";
-import { arrSx } from "../../../../utils/mui";
 import { PlainIconBtn } from "../../../general/PlainIconBtn";
 import { useIsDevices } from "../../customHooks/useMediaQueries";
 

@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
-import { useAction } from "../../../stateHooks/useAction";
-import { useGetterSectionOnlyOne } from "../../../stateHooks/useGetterSection";
+import { useAction } from "../../../modules/stateHooks/useAction";
+import { useGetterSectionOnlyOne } from "../../../modules/stateHooks/useGetterSection";
 import { nativeTheme } from "../../../theme/nativeTheme";
 import { MuiRow } from "../../general/MuiRow";
 import { LoadedVarbListNext } from "../appWide/VarbLists/LoadedVarbListNext";

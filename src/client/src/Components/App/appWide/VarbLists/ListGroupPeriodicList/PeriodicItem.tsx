@@ -1,6 +1,6 @@
 import React from "react";
+import { useGetterSection } from "../../../../../modules/stateHooks/useGetterSection";
 import { groupAdornment } from "../../../../../modules/varbLabels/varbLabelUtils";
-import { useGetterSection } from "../../../../../stateHooks/useGetterSection";
 import { VarbListItemSimple } from "../../ListGroup/ListGroupShared/VarbListItemSimple";
 
 interface MemoProps {

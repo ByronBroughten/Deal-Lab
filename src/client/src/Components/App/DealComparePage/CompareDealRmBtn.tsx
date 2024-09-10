@@ -1,8 +1,8 @@
 import { SxProps } from "@mui/material";
+import { useAction } from "../../../modules/stateHooks/useAction";
+import { arrSx } from "../../../modules/utils/mui";
 import { FeIdProp } from "../../../sharedWithServer/StateGetters/Identifiers/NanoIdInfo";
-import { useAction } from "../../../stateHooks/useAction";
 import { nativeTheme } from "../../../theme/nativeTheme";
-import { arrSx } from "../../../utils/mui";
 import { XBtn } from "../appWide/Xbtn";
 
 interface Props extends FeIdProp {

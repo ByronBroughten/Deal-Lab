@@ -1,13 +1,9 @@
 import { nanoid } from "nanoid";
-import { z } from "zod";
 import { Str } from "./Str";
 
 type ID = string;
 export const IdS = {
   length: 12,
-  get zodSchema() {
-    return z.string().max(this.length).min(this.length);
-  },
   is(value: any): value is ID {
     return typeof value === "string" && value.length === this.length;
   },

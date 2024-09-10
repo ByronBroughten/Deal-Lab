@@ -1,6 +1,6 @@
+import { useAction } from "../../../../modules/stateHooks/useAction";
+import { useGetterSection } from "../../../../modules/stateHooks/useGetterSection";
 import { SectionValues } from "../../../../sharedWithServer/stateSchemas/StateValue";
-import { useAction } from "../../../../stateHooks/useAction";
-import { useGetterSection } from "../../../../stateHooks/useGetterSection";
 import {
   VarbListGeneric,
   VarbListGenericMenuType,

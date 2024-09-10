@@ -1,6 +1,6 @@
 import { rem } from "polished";
 import styled from "styled-components";
-import { useGetterSection } from "../../../../../../../../../../stateHooks/useGetterSection";
+import { useGetterSection } from "../../../../../../../../../../modules/stateHooks/useGetterSection";
 import theme from "../../../../../../../../../../theme/Theme";
 import { RemoveSectionXBtn } from "../../../../../../../../appWide/RemoveSectionXBtn";
 import { NumObjEntityEditor } from "../../../../../../../../inputs/NumObjEntityEditor";

@@ -1,8 +1,8 @@
 import React from "react";
 import { unstable_batchedUpdates } from "react-dom";
-import { authS } from "../../../modules/customHooks/authS";
-import { useDispatchAndSave } from "../../../stateHooks/useAction";
-import { useUserDataStatus } from "../../../stateHooks/useFeStore";
+import { authS } from "../../../modules/services/authS";
+import { useDispatchAndSave } from "../../../modules/stateHooks/useAction";
+import { useUserDataStatus } from "../../../modules/stateHooks/useFeStore";
 import { useGoToPage } from "./useGoToPage";
 
 export function useHandleAuth() {

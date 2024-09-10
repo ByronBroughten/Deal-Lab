@@ -1,5 +1,5 @@
 import { Box, SxProps } from "@mui/material";
-import { useGetterSection } from "../../../../../../../stateHooks/useGetterSection";
+import { useGetterSection } from "../../../../../../../modules/stateHooks/useGetterSection";
 import { LabeledVarbFinder } from "../../../../../appWide/LabeledVarbNext";
 import { LabeledVarbRow } from "../../../../../appWide/LabeledVarbRow";
 

@@ -1,10 +1,10 @@
 import { Box } from "@mui/material";
 import { unstable_batchedUpdates } from "react-dom";
 import { View } from "react-native";
+import { useAction } from "../../../modules/stateHooks/useAction";
+import { useGetterSectionOnlyOne } from "../../../modules/stateHooks/useGetterSection";
+import { useGetterMain } from "../../../modules/stateHooks/useMain";
 import { GetterSection } from "../../../sharedWithServer/StateGetters/GetterSection";
-import { useAction } from "../../../stateHooks/useAction";
-import { useGetterSectionOnlyOne } from "../../../stateHooks/useGetterSection";
-import { useGetterMain } from "../../../stateHooks/useMain";
 import { nativeTheme } from "../../../theme/nativeTheme";
 import { PlainIconBtn } from "../../general/PlainIconBtn";
 import { icons } from "../Icons";

@@ -1,9 +1,9 @@
-import { IdOfSectionToSaveProvider } from "../../../ContextsAndProviders/useIdOfSectionToSave";
+import { useActionWithProps } from "../../../modules/stateHooks/useAction";
+import { useGetterSectionOnlyOne } from "../../../modules/stateHooks/useGetterSection";
 import { constant } from "../../../sharedWithServer/Constants";
 import { StoreId } from "../../../sharedWithServer/StateGetters/Identifiers/StoreId";
-import { useActionWithProps } from "../../../stateHooks/useAction";
-import { useGetterSectionOnlyOne } from "../../../stateHooks/useGetterSection";
 import { nativeTheme } from "../../../theme/nativeTheme";
+import { IdOfSectionToSaveProvider } from "../../ContextsAndProviders/IdOfSectionToSaveProvider";
 import { Row } from "../../general/Row";
 import { FormSection } from "../appWide/FormSection";
 import MainSectionBody from "../appWide/GeneralSection/MainSection/MainSectionBody";

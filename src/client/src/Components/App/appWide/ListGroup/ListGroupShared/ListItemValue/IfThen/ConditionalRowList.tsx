@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import { rem } from "polished";
 import styled from "styled-components";
-import { useGetterSection } from "../../../../../../../stateHooks/useGetterSection";
+import { useGetterSection } from "../../../../../../../modules/stateHooks/useGetterSection";
 import { nativeTheme } from "../../../../../../../theme/nativeTheme";
 import theme from "../../../../../../../theme/Theme";
 import ConditionalRows from "./ConditionalRowList/ConditionalRows";

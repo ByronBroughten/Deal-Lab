@@ -1,5 +1,5 @@
 import { Button } from "@mui/material";
-import { arrSx } from "../../utils/mui";
+import { arrSx } from "../../modules/utils/mui";
 
 type Props = any;
 export function PlainBtn({ children, sx, ...rest }: Props) {

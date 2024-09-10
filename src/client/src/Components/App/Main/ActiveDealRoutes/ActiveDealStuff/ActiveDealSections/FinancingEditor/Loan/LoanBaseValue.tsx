@@ -1,4 +1,5 @@
 import { Box, SxProps } from "@mui/material";
+import { useGetterSection } from "../../../../../../../../modules/stateHooks/useGetterSection";
 import { FeSectionInfo } from "../../../../../../../../sharedWithServer/StateGetters/Identifiers/FeInfo";
 import { VarbName } from "../../../../../../../../sharedWithServer/stateSchemas/derivedFromBaseSchemas/baseSectionsVarbsTypes";
 import {
@@ -7,7 +8,6 @@ import {
 } from "../../../../../../../../sharedWithServer/stateSchemas/SectionNameByType";
 import { StateValue } from "../../../../../../../../sharedWithServer/stateSchemas/StateValue";
 import { Arr } from "../../../../../../../../sharedWithServer/utils/Arr";
-import { useGetterSection } from "../../../../../../../../stateHooks/useGetterSection";
 import { nativeTheme } from "../../../../../../../../theme/nativeTheme";
 import { FormSectionLabeled } from "../../../../../../appWide/FormSectionLabeled";
 import { LabeledVarbRow } from "../../../../../../appWide/LabeledVarbRow";

@@ -1,7 +1,7 @@
 import React from "react";
 import styled, { css } from "styled-components";
-import useOnOutsideClickRef from "../../../modules/customHooks/useOnOutsideClickRef";
-import { useToggleView } from "../../../modules/customHooks/useToggleView";
+import useOnOutsideClickRef from "../../../modules/utilityHooks/useOnOutsideClickRef";
+import { useToggleView } from "../../../modules/utilityHooks/useToggleView";
 import theme from "../../../theme/Theme";
 import { DropdownBtn } from "./DropdownBtn";
 

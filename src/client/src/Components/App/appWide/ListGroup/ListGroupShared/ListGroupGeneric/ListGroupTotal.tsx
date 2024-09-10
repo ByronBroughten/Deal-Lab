@@ -1,5 +1,5 @@
+import { useGetterVarb } from "../../../../../../modules/stateHooks/useGetterVarb";
 import { FeVarbInfo } from "../../../../../../sharedWithServer/StateGetters/Identifiers/FeInfo";
-import { useGetterVarb } from "../../../../../../stateHooks/useGetterVarb";
 
 type Props = { varbInfo: FeVarbInfo };
 export function ListGroupTotal({ varbInfo }: Props) {

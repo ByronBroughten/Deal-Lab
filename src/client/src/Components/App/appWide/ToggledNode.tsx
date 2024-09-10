@@ -1,10 +1,10 @@
 import { Box } from "@mui/material";
 import React from "react";
+import { useGetterVarb } from "../../../modules/stateHooks/useGetterVarb";
 import {
   FeVarbInfo,
   FeVarbInfoNext,
 } from "../../../sharedWithServer/StateGetters/Identifiers/FeInfo";
-import { useGetterVarb } from "../../../stateHooks/useGetterVarb";
 import { nativeTheme } from "../../../theme/nativeTheme";
 import { TogglerBooleanVarb } from "./TogglerBooleanVarb";
 import { VarbStringLabel } from "./VarbStringLabel";

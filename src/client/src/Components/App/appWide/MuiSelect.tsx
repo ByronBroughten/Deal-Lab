@@ -1,14 +1,14 @@
 import { SxProps } from "@mui/material";
 import React from "react";
 import { unstable_batchedUpdates } from "react-dom";
+import { useAction } from "../../../modules/stateHooks/useAction";
+import { useGetterVarbNext } from "../../../modules/stateHooks/useGetterVarb";
+import { MuiSelectOnChange } from "../../../modules/utils/mui";
 import { FeVarbInfoNext } from "../../../sharedWithServer/StateGetters/Identifiers/FeInfo";
 import { SectionName } from "../../../sharedWithServer/stateSchemas/SectionName";
 import { StateValue } from "../../../sharedWithServer/stateSchemas/StateValue";
 import { UnionValueName } from "../../../sharedWithServer/stateSchemas/StateValue/unionValues";
 import { validateStateValue } from "../../../sharedWithServer/stateSchemas/valueMetas";
-import { useAction } from "../../../stateHooks/useAction";
-import { useGetterVarbNext } from "../../../stateHooks/useGetterVarb";
-import { MuiSelectOnChange } from "../../../utils/mui";
 import { MuiSelectStyled } from "./MuiSelectStyled";
 
 export type MuiSelectItems<UVN extends UnionValueName> = (

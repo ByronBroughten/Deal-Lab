@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import useOnOutsideClickRef from "../../../../modules/customHooks/useOnOutsideClickRef";
-import { useToggleView } from "../../../../modules/customHooks/useToggleView";
+import useOnOutsideClickRef from "../../../../modules/utilityHooks/useOnOutsideClickRef";
+import { useToggleView } from "../../../../modules/utilityHooks/useToggleView";
 import { nativeTheme } from "../../../../theme/nativeTheme";
 import theme from "../../../../theme/Theme";
 import { StandardProps } from "../../../general/StandardProps";

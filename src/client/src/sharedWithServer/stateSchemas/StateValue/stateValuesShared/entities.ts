@@ -1,7 +1,5 @@
 import { pick } from "lodash";
-import { z } from "zod";
 import { FeVarbInfo } from "../../../StateGetters/Identifiers/FeInfo";
-import { PathDbVarbInfoMixed } from "../../../StateGetters/Identifiers/PathNameInfo";
 import {
   validateInEntityInfoCustom,
   validateInEntityInfoFixed,
@@ -9,12 +7,10 @@ import {
   ValueFixedVarbPathInfo,
   ValueInEntityInfo,
 } from "../../../StateGetters/Identifiers/ValueInEntityInfo";
-import { VarbPathNameInfoMixed } from "../../../StateGetters/Identifiers/VarbPathNameInfo";
 import { Arr } from "../../../utils/Arr";
 import { IdS } from "../../../utils/IdS";
 import { Obj } from "../../../utils/Obj";
 import { validateS } from "../../../utils/validateS";
-import { zS } from "../../../utils/zod";
 import { PathInVarbInfo } from "../../derivedFromChildrenSchemas/RelInOutVarbInfo";
 
 export function validateEntityId(value: any): string {
@@ -22,18 +18,6 @@ export function validateEntityId(value: any): string {
 }
 export type EntityIdProp = { entityId: string };
 export type OutEntity = FeVarbInfo & EntityIdProp;
-
-const varbPathZSchema: Record<keyof VarbPathNameInfoMixed, any> = {
-  infoType: z.literal("varbPathName"),
-  varbPathName: zS.string,
-};
-
-const pathDbIdZSchema: Record<keyof PathDbVarbInfoMixed, any> = {
-  infoType: z.literal("pathNameDbId"),
-  pathName: zS.string,
-  varbName: zS.string,
-  id: zS.nanoId,
-};
 
 interface InEntityBase {
   entityId: string;
@@ -132,22 +116,3 @@ export interface OutEntityInfo extends EntityIdProp {
   feId: string;
   varbName: string;
 }
-
-const zValueInEntityBase = z.object({
-  entityId: zS.nanoId,
-  entitySource: zS.string,
-  length: zS.number,
-  offset: zS.number,
-});
-
-const zValueInEntity = z.union([
-  zValueInEntityBase.extend(varbPathZSchema),
-  zValueInEntityBase.extend(pathDbIdZSchema),
-]);
-
-export const zValueInEntities = z.array(zValueInEntity);
-
-export const zValueEntityInfo = z.union([
-  z.object(varbPathZSchema),
-  z.object(pathDbIdZSchema),
-]);

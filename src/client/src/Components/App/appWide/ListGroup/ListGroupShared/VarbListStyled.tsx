@@ -1,6 +1,6 @@
 import { Box, SxProps } from "@mui/material";
+import { arrSx } from "../../../../../modules/utils/mui";
 import theme from "../../../../../theme/Theme";
-import { arrSx } from "../../../../../utils/mui";
 import { StandardProps } from "../../../../general/StandardProps";
 
 export function VarbListStyled({

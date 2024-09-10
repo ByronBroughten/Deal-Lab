@@ -1,7 +1,7 @@
 import { SxProps } from "@mui/material";
+import { arrSx } from "../../../modules/utils/mui";
 import { constants } from "../../../sharedWithServer/Constants";
 import { nativeTheme } from "../../../theme/nativeTheme";
-import { arrSx } from "../../../utils/mui";
 import { HollowBtn } from "../appWide/HollowBtn";
 import { useInputModalWithContext } from "../Modals/InputModalProvider";
 import { DealCompareDealSelectMenu } from "./DealCompareDealSelectMenu";

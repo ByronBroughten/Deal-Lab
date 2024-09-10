@@ -1,4 +1,4 @@
-import { useGetterSection } from "../../../../../../../../stateHooks/useGetterSection";
+import { useGetterSection } from "../../../../../../../../modules/stateHooks/useGetterSection";
 import { MuiFavoriteRating } from "../../../../../../../general/MuiFavoriteRating";
 import { MuiRow } from "../../../../../../../general/MuiRow";
 import { FormSectionNext } from "../../../../../../appWide/FormSectionNext";

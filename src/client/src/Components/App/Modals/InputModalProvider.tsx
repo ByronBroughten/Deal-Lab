@@ -1,8 +1,8 @@
 import React from "react";
-import { useIdOfSectionToSave } from "../../../ContextsAndProviders/useIdOfSectionToSave";
 import { DealMode } from "../../../sharedWithServer/stateSchemas/StateValue/dealMode";
 import { timeS } from "../../../sharedWithServer/utils/timeS";
 import { StrictOmit } from "../../../sharedWithServer/utils/types";
+import { useIdOfSectionToSave } from "../../ContextsAndProviders/IdOfSectionToSaveProvider";
 import { useDealModeContext } from "../customContexts/dealModeContext";
 
 export interface InputModalOptions {

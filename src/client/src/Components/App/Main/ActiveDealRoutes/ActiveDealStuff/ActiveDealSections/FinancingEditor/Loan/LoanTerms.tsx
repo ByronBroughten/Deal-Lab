@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
+import { useGetterSection } from "../../../../../../../../modules/stateHooks/useGetterSection";
 import { FeIdProp } from "../../../../../../../../sharedWithServer/StateGetters/Identifiers/NanoIdInfo";
-import { useGetterSection } from "../../../../../../../../stateHooks/useGetterSection";
 import { nativeTheme } from "../../../../../../../../theme/nativeTheme";
 import { MuiRow } from "../../../../../../../general/MuiRow";
 import { FormSectionNext } from "../../../../../../appWide/FormSectionNext";

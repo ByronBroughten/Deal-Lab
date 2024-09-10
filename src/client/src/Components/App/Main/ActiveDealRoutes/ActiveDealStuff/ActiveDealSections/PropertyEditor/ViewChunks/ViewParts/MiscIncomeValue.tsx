@@ -1,5 +1,5 @@
+import { useGetterSection } from "../../../../../../../../../modules/stateHooks/useGetterSection";
 import { periodicName } from "../../../../../../../../../sharedWithServer/stateSchemas/GroupName";
-import { useGetterSection } from "../../../../../../../../../stateHooks/useGetterSection";
 import { nativeTheme } from "../../../../../../../../../theme/nativeTheme";
 import { SelectAndItemizeEditor } from "../../../../../../../appWide/SelectAndItemizeEditor";
 import { PeriodicEditor } from "../../../../../../../inputs/PeriodicEditor";

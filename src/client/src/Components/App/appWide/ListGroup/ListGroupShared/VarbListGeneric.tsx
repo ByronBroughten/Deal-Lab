@@ -1,10 +1,10 @@
 import { SxProps } from "@mui/material";
 import React, { ReactNode } from "react";
+import { useAction } from "../../../../../modules/stateHooks/useAction";
+import { useGetterSection } from "../../../../../modules/stateHooks/useGetterSection";
 import { FeSectionInfo } from "../../../../../sharedWithServer/StateGetters/Identifiers/FeInfo";
 import { ChildName } from "../../../../../sharedWithServer/stateSchemas/derivedFromChildrenSchemas/ChildName";
 import { SectionNameByType } from "../../../../../sharedWithServer/stateSchemas/SectionNameByType";
-import { useAction } from "../../../../../stateHooks/useAction";
-import { useGetterSection } from "../../../../../stateHooks/useGetterSection";
 import { VarbListTableSectionGeneric } from "./VarbListGeneric/VarbListTableSectionGeneric";
 import { VarbListMenuDual } from "./VarbListMenuDual";
 import { VarbListStyled } from "./VarbListStyled";

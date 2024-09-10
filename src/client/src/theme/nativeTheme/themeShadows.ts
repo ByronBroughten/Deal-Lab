@@ -1,4 +1,4 @@
-import { sxProps } from "../../utils/mui";
+import { sxProps } from "../../modules/utils/mui";
 
 export const themeShadows = {
   oldShadow1:

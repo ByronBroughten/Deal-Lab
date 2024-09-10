@@ -2,9 +2,9 @@ import { Box, SxProps } from "@mui/material";
 import { Editor, EditorState } from "draft-js";
 import React from "react";
 import { insertChars } from "../../../modules/draftjs/insert";
+import { arrSx } from "../../../modules/utils/mui";
 import { materialDraftEditor } from "../../../theme/nativeTheme/materialDraftEditor";
 import { ThemeName } from "../../../theme/Theme";
-import { arrSx } from "../../../utils/mui";
 import { MaterialDraftField } from "./MaterialDraftField";
 import { useOnChange } from "./useOnChange";
 

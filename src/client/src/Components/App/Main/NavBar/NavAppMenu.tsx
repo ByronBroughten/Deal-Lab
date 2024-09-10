@@ -1,7 +1,7 @@
 import { AiOutlineMenu } from "react-icons/ai";
 import styled from "styled-components";
-import { useUserSubscription } from "../../../../modules/customHooks/useSubscriptions";
-import { useToggle } from "../../../../modules/customHooks/useToggle";
+import { useUserSubscription } from "../../../../modules/utilityHooks/useSubscriptions";
+import { useToggle } from "../../../../modules/utilityHooks/useToggle";
 import theme from "../../../../theme/Theme";
 import { Sidebar } from "../../../general/SideBar";
 import { AppMenuDropdown, AppMenuProps } from "./AppMenuDropdown";
