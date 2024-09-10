@@ -1,10 +1,10 @@
 import React from "react";
 import { AiOutlinePlus } from "react-icons/ai";
 import { nativeTheme } from "../../../../../theme/nativeTheme";
-import { MuiBtnPropsNext } from "../../../../general/StandardProps";
+import { MuiBtnProps } from "../../../../general/StandardProps";
 import { SectionBtn } from "../../SectionBtn";
 
-interface Props extends MuiBtnPropsNext {
+interface Props extends MuiBtnProps {
   middle?: React.ReactNode;
 }
 export function AddItemBtn({

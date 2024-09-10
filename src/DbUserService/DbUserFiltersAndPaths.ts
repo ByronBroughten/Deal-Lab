@@ -2,7 +2,7 @@ import mongoose, { Document } from "mongoose";
 import { OneDbSectionVarbInfo } from "../client/src/sharedWithServer/StateGetters/Identifiers/DbStoreInfo";
 import { DbStoreName } from "../client/src/sharedWithServer/stateSchemas/derivedFromChildrenSchemas/DbStoreName";
 import { SectionName } from "../client/src/sharedWithServer/stateSchemas/SectionName";
-import { ResStatusError } from "../useErrorHandling";
+import { ResStatusError } from "../runApp/useErrorHandling";
 import { DbSectionsModelCore } from "./DbUserModel";
 
 export const queryOptions = {

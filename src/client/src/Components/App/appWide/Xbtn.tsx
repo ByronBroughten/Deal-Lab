@@ -2,9 +2,9 @@ import { AiOutlineClose } from "react-icons/ai";
 import { arrSx } from "../../../modules/utils/mui";
 import { nativeTheme } from "../../../theme/nativeTheme";
 import { PlainIconBtn } from "../../general/PlainIconBtn";
-import { MuiBtnPropsNext } from "../../general/StandardProps";
+import { MuiBtnProps } from "../../general/StandardProps";
 
-interface Props extends MuiBtnPropsNext {}
+interface Props extends MuiBtnProps {}
 export function XBtn({ children, className, sx, ...rest }: Props) {
   return (
     <PlainIconBtn

@@ -16,7 +16,7 @@ import { selfAndDescSectionNames } from "../client/src/sharedWithServer/stateSch
 import { SectionName } from "../client/src/sharedWithServer/stateSchemas/SectionName";
 import { sectionsMeta } from "../client/src/sharedWithServer/stateSchemas/StateMeta/SectionsMeta";
 import { SectionPack } from "../client/src/sharedWithServer/StateTransports/SectionPack";
-import { ResStatusError } from "../useErrorHandling";
+import { ResStatusError } from "../runApp/useErrorHandling";
 import { mongooseId, mongooseValues } from "./mongooseValues";
 
 export type DbSectionsModelCore = RawDbUser & { _id: mongoose.Types.ObjectId };

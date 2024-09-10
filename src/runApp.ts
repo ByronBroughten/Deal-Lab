@@ -2,18 +2,18 @@ require("express-async-errors");
 require("dotenv").config();
 import config from "config";
 import express from "express";
-import { runStartup } from "./runStartup";
-import { logger } from "./runStartup/logger";
-import { useBasics } from "./useBasics";
-import { useErrorHandling } from "./useErrorHandling";
-import { useCoreRoutes } from "./useRoutes/useCoreRoutes";
-import { useStripeWebhooks } from "./useRoutes/useStripeWebhooks";
+import { runStartup } from "./runApp/runStartup";
+import { logger } from "./runApp/runStartup/logger";
+import { useBasics } from "./runApp/useBasics";
+import { useErrorHandling } from "./runApp/useErrorHandling";
+import { useCoreRoutes } from "./runApp/useRoutesCore";
+import { useStripeRoutes } from "./runApp/useRoutesStripe";
 
 export function runApp() {
   runStartup();
   const app = express();
   useBasics(app);
-  useStripeWebhooks(app);
+  useStripeRoutes(app);
   useCoreRoutes(app);
   useErrorHandling(app);
 

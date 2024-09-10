@@ -17,7 +17,7 @@ import { Arr } from "../client/src/sharedWithServer/utils/Arr";
 import { stripeS } from "../client/src/sharedWithServer/utils/stripe";
 import { timeS } from "../client/src/sharedWithServer/utils/timeS";
 import { DbUserService } from "../DbUserService";
-import { createUserJwt } from "../middleware/jwtWare";
+import { createUserJwt } from "../runApp/useRoutes/middleware/jwtWare";
 import { DbSectionsRaw, DbUserSpecifierType } from "./DbUserFiltersAndPaths";
 import { DbUserQuickGetter } from "./DbUserQuickGetter";
 import { isProEmail } from "./isProEmail";

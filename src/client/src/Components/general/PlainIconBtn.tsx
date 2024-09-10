@@ -2,9 +2,9 @@ import { Button } from "@mui/material";
 import styled from "styled-components";
 import { arrSx } from "../../modules/utils/mui";
 import theme from "../../theme/Theme";
-import { MuiBtnPropsNext } from "./StandardProps";
+import { MuiBtnProps } from "./StandardProps";
 
-export interface PlainIconBtnProps extends MuiBtnPropsNext {
+export interface PlainIconBtnProps extends MuiBtnProps {
   left?: React.ReactNode;
   middle?: React.ReactNode;
   right?: React.ReactNode;

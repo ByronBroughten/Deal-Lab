@@ -1,11 +1,11 @@
 import { AiOutlinePlus } from "react-icons/ai";
 import styled from "styled-components";
 import theme from "../../../../../../../../../../theme/Theme";
-import { MuiBtnPropsNext } from "../../../../../../../../../general/StandardProps";
+import { MuiBtnProps } from "../../../../../../../../../general/StandardProps";
 import { SectionBtn } from "../../../../../../../../appWide/SectionBtn";
 import { unitItemHeight, unitItemWidth } from "./UnitItem";
 
-type Props = MuiBtnPropsNext;
+type Props = MuiBtnProps;
 export function AddUnitBtn({ sx, ...rest }: Props) {
   return (
     <div className="UnitItem-root">

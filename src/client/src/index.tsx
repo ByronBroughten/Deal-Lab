@@ -7,19 +7,8 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
-// *Constants
-// Schemas (includes sectionStores)
-
-// State
-// StateGetters (includes StateMeta)
-// *StateOperators
-// Transports (SectionPacks)
-// *ApiQueries (includes query types)
-// utils
-
-// Trigger rebuild
-// MLS-ilizer: select an area and analyze all the properties
-// in that area simultaneously according to your formulas
+// remove ReactNativeWeb
+// remove styled-somponents
 
 // Utility checkboxes update slowly after being clicked
 // Xing out a utility line item causes crash

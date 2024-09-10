@@ -2,11 +2,11 @@ import { Box } from "@mui/material";
 import { toast } from "react-toastify";
 import { arrSx } from "../../../../../modules/utils/mui";
 import { nativeTheme } from "../../../../../theme/nativeTheme";
-import { MuiBtnPropsNext } from "../../../../general/StandardProps";
+import { MuiBtnProps } from "../../../../general/StandardProps";
 import { HollowBtn } from "../../../appWide/HollowBtn";
 import { icons } from "../../../Icons";
 
-interface Props extends MuiBtnPropsNext {
+interface Props extends MuiBtnProps {
   styleDisabled?: boolean;
   warningText?: string;
   btnText?: React.ReactNode;

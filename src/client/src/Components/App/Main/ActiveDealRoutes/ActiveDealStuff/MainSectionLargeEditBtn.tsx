@@ -1,8 +1,8 @@
 import { nativeTheme } from "../../../../../theme/nativeTheme";
-import { MuiBtnPropsNext } from "../../../../general/StandardProps";
+import { MuiBtnProps } from "../../../../general/StandardProps";
 import { HollowBtn } from "../../../appWide/HollowBtn";
 
-export function MainSectionLargeEditBtn({ sx, ...rest }: MuiBtnPropsNext) {
+export function MainSectionLargeEditBtn({ sx, ...rest }: MuiBtnProps) {
   return (
     <HollowBtn
       {...{

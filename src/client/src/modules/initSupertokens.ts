@@ -4,11 +4,11 @@ import ThirdPartyEmailPassword, {
   Facebook,
   Google,
 } from "supertokens-auth-react/recipe/thirdpartyemailpassword";
-import { constants } from "../sharedWithServer/Constants";
+import { constant } from "../sharedWithServer/Constants";
 
 export function initSupertokens(): void {
   SuperTokens.init({
-    appInfo: constants.superTokens.appInfo,
+    appInfo: constant("superTokens").appInfo,
     recipeList: [
       Session.init(),
       ThirdPartyEmailPassword.init({
@@ -21,7 +21,7 @@ export function initSupertokens(): void {
         },
         getRedirectionURL: async (context) => {
           if (context.action === "SUCCESS") {
-            return constants.auth.successUrl;
+            return constant("auth").successUrl;
           }
         },
         signInAndUpFeature: {

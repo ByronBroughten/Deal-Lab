@@ -12,7 +12,7 @@ import { FeRouteName } from "../../../sharedWithServer/Constants/feRoutes";
 import { nativeTheme } from "../../../theme/nativeTheme";
 import { MuiRow } from "../../general/MuiRow";
 import { Row } from "../../general/Row";
-import { MuiBtnPropsNext } from "../../general/StandardProps";
+import { MuiBtnProps } from "../../general/StandardProps";
 import { HollowBtn } from "../appWide/HollowBtn";
 import { useGoToPage, useMakeGoToPage } from "../customHooks/useGoToPage";
 import { icons } from "../Icons";
@@ -74,7 +74,7 @@ export function AccountPage() {
 }
 
 const size = 180;
-interface AccountBtnProps extends MuiBtnPropsNext {
+interface AccountBtnProps extends MuiBtnProps {
   feRouteName?: FeRouteName;
   onClick?: () => void;
   icon?: React.ReactNode;
