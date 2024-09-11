@@ -1,13 +1,9 @@
-import { AppRegistry } from "react-native";
+import React from "react";
+import ReactDOM from "react-dom";
 import { App } from "./Components/App";
 
-AppRegistry.registerComponent("App", () => App);
-AppRegistry.runApplication("App", {
-  initialProps: {},
-  rootTag: document.getElementById("root"),
-});
+ReactDOM.render(<App />, document.getElementById("root"));
 
-// remove ReactNativeWeb
 // remove styled-somponents
 
 // Utility checkboxes update slowly after being clicked

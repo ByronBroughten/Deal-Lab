@@ -1,5 +1,5 @@
 import { useMediaQuery } from "@mui/material";
-import { useWindowDimensions } from "react-native";
+import { useWindowHeight } from "@react-hook/window-size";
 import { arrSx } from "../../modules/utils/mui";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { Column } from "./Column";
@@ -7,8 +7,8 @@ import { MuiStandardProps } from "./StandardProps";
 
 export function PageContent({ sx, ...rest }: MuiStandardProps) {
   const isTablet = useMediaQuery("(min-width:1024px)");
+  const windowHeight = useWindowHeight();
 
-  const dimensions = useWindowDimensions();
   const { s6, s15 } = nativeTheme;
   const paddingLR = isTablet ? s6 : s15;
   return (
@@ -19,7 +19,7 @@ export function PageContent({ sx, ...rest }: MuiStandardProps) {
           {
             alignItems: "center",
             overflow: "hidden",
-            minHeight: dimensions.height - nativeTheme.navBar.height,
+            minHeight: windowHeight - nativeTheme.navBar.height,
             paddingTop: nativeTheme.s4,
             paddingBottom: nativeTheme.s4,
             paddingLeft: paddingLR,

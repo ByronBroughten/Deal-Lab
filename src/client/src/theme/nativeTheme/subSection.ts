@@ -1,16 +1,14 @@
-import { reactNativeS } from "../../modules/utils/reactNative";
+import { sxProps } from "../../modules/utils/mui";
 import { themeColors } from "./themeColors";
 import { unitSizes } from "./unitSizes";
 
-const { view } = reactNativeS;
-
-const borderLines = view({
+const borderLines = sxProps({
   borderStyle: "solid",
   borderWidth: 1,
   borderColor: themeColors["gray-400"],
 });
 
-const border = view({
+const border = sxProps({
   ...borderLines,
   borderRadius: unitSizes.br0,
 });

@@ -1,5 +1,4 @@
 import { sxProps } from "../modules/utils/mui";
-import { reactNativeS } from "../modules/utils/reactNative";
 import { comparedDeal } from "./nativeTheme/comparedDeal";
 import { inputStyles } from "./nativeTheme/inputsStyles";
 import { mainSection } from "./nativeTheme/mainSection";
@@ -8,9 +7,6 @@ import { subSection } from "./nativeTheme/subSection";
 import { themeColors } from "./nativeTheme/themeColors";
 import { themeShadows } from "./nativeTheme/themeShadows";
 import { unitSizes } from "./nativeTheme/unitSizes";
-
-const view = reactNativeS.view;
-const text = reactNativeS.text;
 
 const mediaQuery = {
   mediaPhone: 768,
@@ -25,13 +21,6 @@ export const nativeTheme = {
   pageTitleFs: unitSizes.fs30,
   pageInfoDotSize: 28,
   chunkTitleFs: unitSizes.fs24,
-  standardBorder(borderColor: string) {
-    return view({
-      borderStyle: "solid",
-      borderWidth: 1,
-      borderColor,
-    });
-  },
   sideBar: {
     width: "150px",
   },
@@ -44,14 +33,14 @@ export const nativeTheme = {
   comparedDealRoot: {
     padding: unitSizes.s35,
   },
-  navBar: view({
+  navBar: {
     height: 70,
     activeBtn: themeColors["gray-200"],
-  }),
+  },
   formSection: sxProps({
     borderTop: `solid 1px ${themeColors.borderColor}`,
   }),
-  dealMenuElement: view({
+  dealMenuElement: sxProps({
     margin: unitSizes.s3,
   }),
   disabledBtn: {
