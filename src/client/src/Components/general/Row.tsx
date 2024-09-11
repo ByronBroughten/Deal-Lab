@@ -1,12 +1,21 @@
+import { Box } from "@mui/material";
 import React from "react";
-import { View, ViewStyle } from "react-native";
+import { arrSx } from "../../modules/utils/mui";
+import { MuiStandardProps } from "./StandardProps";
 
-type Props = { style?: ViewStyle; children: React.ReactNode };
-export function Row({ style, ...rest }: Props) {
+export function Row({ sx, ...rest }: MuiStandardProps) {
   return (
-    <View
+    <Box
       {...{
-        style: { ...style, flexDirection: "row" },
+        sx: [
+          {
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "flex-start",
+            alignItems: "center",
+          },
+          ...arrSx(sx),
+        ],
         ...rest,
       }}
     />

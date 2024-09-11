@@ -1,7 +1,6 @@
 import { Box } from "@mui/material";
 import React from "react";
 import { unstable_batchedUpdates } from "react-dom";
-import { View } from "react-native";
 import {
   showDealLimitReachedMessage,
   useIsAtDealLimit,
@@ -10,6 +9,7 @@ import { arrSx } from "../../../modules/utils/mui";
 import { constant } from "../../../sharedWithServer/Constants";
 import { FeRouteName } from "../../../sharedWithServer/Constants/feRoutes";
 import { nativeTheme } from "../../../theme/nativeTheme";
+import { Column } from "../../general/Column";
 import { MuiRow } from "../../general/MuiRow";
 import { Row } from "../../general/Row";
 import { MuiBtnProps } from "../../general/StandardProps";
@@ -32,9 +32,9 @@ export function AccountPage() {
   };
 
   return (
-    <View>
+    <Column>
       <MuiRow sx={{ justifyContent: "center" }}>
-        <Row style={{ flexWrap: "wrap" }}>
+        <Row sx={{ flexWrap: "wrap" }}>
           <AccountBtn
             onClick={openAddDeal}
             text={<Box>{`New ${constant("appUnit")}`}</Box>}
@@ -47,7 +47,7 @@ export function AccountPage() {
           />
         </Row>
         <Row
-          style={{
+          sx={{
             flexWrap: "wrap",
             justifyContent: "center",
           }}
@@ -69,7 +69,7 @@ export function AccountPage() {
         </Row>
       </MuiRow>
       <SavedDeals />
-    </View>
+    </Column>
   );
 }
 

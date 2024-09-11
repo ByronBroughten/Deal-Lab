@@ -1,48 +1,35 @@
 import { Button } from "@mui/material";
-import { StyleSheet, Text, View } from "react-native";
 import styled from "styled-components";
 import { stripeS } from "../../../../modules/services/stripeS";
 import theme from "../../../../theme/Theme";
+import { Column } from "../../../general/Column";
+import { TextNext } from "../../../general/TextNext";
 import { NavBarPanel } from "./NavBarPanel";
-
-const styles = StyleSheet.create({
-  banner: {},
-  pitch: {
-    backgroundColor: theme.light,
-    borderRadius: 5,
-    padding: theme.s3,
-  },
-  upgradeToProTitle: {
-    fontSize: 20,
-    color: theme.primaryNext,
-  },
-  subSectionSpace: {
-    marginTop: theme.s3,
-  },
-  list: {},
-
-  boldText: {
-    color: theme.light,
-  },
-  normalText: { fontSize: 16 },
-});
 
 export function UpgradeUserToProPanel() {
   return (
     <Styled>
       <div>
-        <View style={styles.pitch}>
-          <View style={styles.banner}>
-            <Text style={styles.upgradeToProTitle}>Upgrade to Pro</Text>
-          </View>
-          <View>
-            <View style={styles.subSectionSpace}>
-              <Text
-                style={styles.normalText}
-              >{`Save and load hundreds of deals, components, and variables. Try it out with a 7 day free trial`}</Text>
-            </View>
-          </View>
-        </View>
+        <Column
+          sx={{
+            backgroundColor: theme.light,
+            borderRadius: 5,
+            padding: theme.s3,
+          }}
+        >
+          <Column>
+            <TextNext sx={{ fontSize: 20, color: theme.primaryNext }}>
+              Upgrade to Pro
+            </TextNext>
+          </Column>
+          <Column>
+            <Column sx={{ marginTop: theme.s3 }}>
+              <TextNext
+                sx={{ fontSize: 16 }}
+              >{`Save and load hundreds of deals, components, and variables. Try it out with a 7 day free trial`}</TextNext>
+            </Column>
+          </Column>
+        </Column>
         <Button
           className="PaymentForm-payBtn"
           onClick={() => stripeS.goToPaymentPage()}

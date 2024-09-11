@@ -1,5 +1,4 @@
 import { Box } from "@mui/material";
-import { View } from "react-native";
 import { MoonLoader } from "react-spinners";
 import { useActionWithProps } from "../../../../modules/stateHooks/useAction";
 import {
@@ -13,6 +12,7 @@ import { StoreId } from "../../../../sharedWithServer/StateGetters/Identifiers/S
 import { nativeTheme } from "../../../../theme/nativeTheme";
 import { IdOfSectionToSaveProvider } from "../../../ContextsAndProviders/IdOfSectionToSaveProvider";
 import ChunkTitle from "../../../general/ChunkTitle";
+import { Column } from "../../../general/Column";
 import { MuiRow } from "../../../general/MuiRow";
 import { StyledActionBtn } from "../../appWide/GeneralSection/MainSection/StyledActionBtn";
 import { useIsDevices } from "../../customHooks/useMediaQueries";
@@ -103,7 +103,7 @@ export function SavedDeals() {
         boxShadow: nativeTheme.oldShadow4,
       }}
     >
-      <View style={{ alignItems: "center", flex: 1 }}>
+      <Column sx={{ alignItems: "center", flex: 1 }}>
         <ChunkTitle>{`Saved ${constants.appUnitPlural}`}</ChunkTitle>
         {loading && (
           <MoonLoader
@@ -200,7 +200,7 @@ export function SavedDeals() {
             </Box>
           </>
         )}
-      </View>
+      </Column>
     </MuiRow>
   );
 }

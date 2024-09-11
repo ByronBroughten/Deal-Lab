@@ -1,5 +1,4 @@
 import { Box } from "@mui/material";
-import { View } from "react-native";
 import { MoonLoader } from "react-spinners";
 import { useGetterSectionOnlyOne } from "../../../../modules/stateHooks/useGetterSection";
 import { constants } from "../../../../sharedWithServer/Constants";
@@ -14,6 +13,7 @@ import { PageTitle } from "../../appWide/PageTitle";
 import { useGoToPage } from "../../customHooks/useGoToPage";
 import { useIsDevices } from "../../customHooks/useMediaQueries";
 import { BigStringEditor } from "../../inputs/BigStringEditor";
+import { Column } from "./../../../general/Column";
 import { OutputSection } from "./ActiveDealStuff/DealOutputs/OutputSection";
 import { DealSubSectionClosed } from "./ActiveDealStuff/DealSubSectionClosed";
 import { FinishBtn } from "./ActiveDealStuff/FinishBtn";
@@ -79,7 +79,7 @@ function CurrentActiveDeal() {
         text={`${dealModeLabels[dealMode]}`}
       />
       <Row
-        style={{
+        sx={{
           alignItems: "flex-end",
           marginTop: nativeTheme.s35,
         }}
@@ -91,7 +91,7 @@ function CurrentActiveDeal() {
           }}
         />
       </Row>
-      <View>
+      <Column>
         <DealSubSectionClosed {...dealElementProps} childName="property" />
         <DealSubSectionClosed
           {...dealElementProps}
@@ -106,7 +106,7 @@ function CurrentActiveDeal() {
         {isDealMode(dealMode, "hasMgmt") && (
           <DealSubSectionClosed {...dealElementProps} childName="mgmtOngoing" />
         )}
-      </View>
+      </Column>
       <OutputSection
         {...{
           ...dealElementProps,

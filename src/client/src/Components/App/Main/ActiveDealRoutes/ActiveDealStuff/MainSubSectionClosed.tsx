@@ -1,6 +1,6 @@
 import { SxProps } from "@mui/material";
-import { View } from "react-native";
 import { nativeTheme } from "../../../../../theme/nativeTheme";
+import { Column } from "../../../../general/Column";
 import { MainSection } from "../../../appWide/GeneralSection/MainSection";
 
 type Props = {
@@ -27,7 +27,7 @@ export function MainSubSectionClosed({
     >
       <div>{titleRow}</div>
       {detailsSection && (
-        <View style={{ marginTop: nativeTheme.s25 }}>{detailsSection}</View>
+        <Column sx={{ marginTop: nativeTheme.s25 }}>{detailsSection}</Column>
       )}
     </MainSection>
   );

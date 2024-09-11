@@ -1,9 +1,11 @@
 import React from "react";
-import { View, ViewProps } from "react-native";
+import { arrSx } from "../../modules/utils/mui";
+import { Column } from "./Column";
+import { MuiStandardProps } from "./StandardProps";
 
 interface Props {
-  RelativeProps?: ViewProps;
-  AbsoluteProps?: ViewProps;
+  RelativeProps?: MuiStandardProps;
+  AbsoluteProps?: MuiStandardProps;
   children: React.ReactNode;
 }
 export function DropdownContainer({
@@ -12,20 +14,20 @@ export function DropdownContainer({
   children,
 }: Props) {
   return (
-    <View
+    <Column
       {...{
         ...RelativeProps,
-        style: [RelativeProps?.style, { position: "relative" }],
+        sx: [...arrSx(RelativeProps?.sx), { position: "relative" }],
       }}
     >
-      <View
+      <Column
         {...{
           ...AbsoluteProps,
-          style: [AbsoluteProps?.style, { position: "absolute" }],
+          style: [...arrSx(AbsoluteProps?.sx), { position: "absolute" }],
         }}
       >
         {children}
-      </View>
-    </View>
+      </Column>
+    </Column>
   );
 }

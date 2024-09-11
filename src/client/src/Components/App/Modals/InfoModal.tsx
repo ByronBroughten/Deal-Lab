@@ -1,9 +1,10 @@
 import { SxProps } from "@mui/material";
-import { StyleSheet, Text } from "react-native";
 import { timeS } from "../../../sharedWithServer/utils/timeS";
 import { nativeTheme } from "../../../theme/nativeTheme";
 import theme from "../../../theme/Theme";
+import { Column } from "../../general/Column";
 import { MuiRow } from "../../general/MuiRow";
+import { TextNext } from "../../general/TextNext";
 import { HollowBtn } from "../appWide/HollowBtn";
 import { icons } from "../Icons";
 import {
@@ -12,13 +13,6 @@ import {
   useInfoModal,
 } from "./InfoModalProvider";
 import { ModalSection } from "./ModalSection";
-
-const styles = StyleSheet.create({
-  text: {
-    fontSize: 16,
-    color: theme.dark,
-  },
-});
 
 function getInfoModalOptions(modalState: InfoModalState): InfoModalOptions {
   return {
@@ -65,23 +59,32 @@ export function InfoModal({ modalWrapperProps }: Props) {
         modalWrapperProps,
       }}
     >
-      <Text style={styles.text}>{info}</Text>
+      <TextNext
+        sx={{
+          fontSize: 16,
+          color: theme.dark,
+        }}
+      >
+        {info}
+      </TextNext>
       {moreInfoLink && (
-        <HollowBtn
-          {...{
-            href: moreInfoLink,
-            target: "none",
-          }}
-          sx={{
-            fontSize: 18,
-            paddingX: nativeTheme.s3,
-            marginTop: nativeTheme.s3,
-            width: "50%",
-            borderColor: nativeTheme["gray-300"],
-            boxShadow: nativeTheme.oldShadow1,
-          }}
-          middle="More Info"
-        />
+        <Column sx={{ alignItems: "center" }}>
+          <HollowBtn
+            {...{
+              href: moreInfoLink,
+              target: "none",
+            }}
+            sx={{
+              fontSize: 18,
+              paddingX: nativeTheme.s3,
+              marginTop: nativeTheme.s3,
+              width: "50%",
+              borderColor: nativeTheme["gray-300"],
+              boxShadow: nativeTheme.oldShadow1,
+            }}
+            middle="More Info"
+          />
+        </Column>
       )}
     </ModalSection>
   );

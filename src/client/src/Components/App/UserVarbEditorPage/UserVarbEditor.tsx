@@ -21,8 +21,7 @@ export function UserVarbEditor() {
   return (
     <SubSectionOpen>
       <Row
-        style={{
-          alignItems: "flex-start",
+        sx={{
           flexWrap: "wrap",
           paddingBottom: nativeTheme.s3,
         }}

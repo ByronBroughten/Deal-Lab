@@ -77,8 +77,7 @@ export function ListGroupEditor({ listName }: Props) {
     <BackBtnWrapper {...{ to: -1, label: "Back" }}>
       <SubSectionOpen>
         <Row
-          style={{
-            alignItems: "flex-start",
+          sx={{
             flexWrap: "wrap",
             paddingBottom: nativeTheme.s3,
           }}

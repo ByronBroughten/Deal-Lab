@@ -1,18 +1,19 @@
-import { Text, View } from "react-native";
 import { nativeTheme } from "../../theme/nativeTheme";
+import { Column } from "./Column";
+import { TextNext } from "./TextNext";
 
 export function UnderConstruction() {
   return (
-    <View
-      style={{
+    <Column
+      sx={{
         flex: 1,
         padding: nativeTheme.s5,
         justifyContent: "center",
       }}
     >
-      <Text style={{ fontSize: 30, color: nativeTheme.primary.main }}>
+      <TextNext sx={{ fontSize: 30, color: nativeTheme.primary.main }}>
         Under Construction
-      </Text>
-    </View>
+      </TextNext>
+    </Column>
   );
 }

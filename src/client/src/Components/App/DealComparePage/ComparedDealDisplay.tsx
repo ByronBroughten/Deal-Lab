@@ -1,9 +1,10 @@
 import { Box, SxProps } from "@mui/material";
-import { Text, View } from "react-native";
 import { useGetterSectionOnlyOne } from "../../../modules/stateHooks/useGetterSection";
 import { arrSx } from "../../../modules/utils/mui";
 import { nativeTheme } from "../../../theme/nativeTheme";
+import { Column } from "../../general/Column";
 import { MuiRow } from "../../general/MuiRow";
+import { TextNext } from "../../general/TextNext";
 import { icons } from "../Icons";
 
 type Props = {
@@ -35,17 +36,6 @@ export function ComparedDealDisplay({ feId, sx }: Props) {
       ]}
     >
       <Box sx={{ height: 85 }}>
-        {/* <Box
-          sx={{
-            display: "flex"
-            flex: 1,
-            paddingTop: nativeTheme.s3,
-            paddingBottom: nativeTheme.s25,
-            alignItems: "center",
-            justifyContent: "flex-start",
-            maxWidth: 200,
-          }}
-        > */}
         <MuiRow
           sx={{
             alignItems: "flex-start",
@@ -80,13 +70,12 @@ export function ComparedDealDisplay({ feId, sx }: Props) {
             </Box>
           </MuiRow>
         </MuiRow>
-        {/* </Box> */}
       </Box>
       {compareValues.map((compareValue) => {
         const info = compareValue.valueEntityInfo();
         const varb = dealSystem.varbByFocalMixed(info);
         return (
-          <View
+          <Box
             key={compareValue.feId}
             style={{
               height: nativeTheme.comparedDealValue.height,
@@ -96,20 +85,20 @@ export function ComparedDealDisplay({ feId, sx }: Props) {
               ...nativeTheme.formSection,
             }}
           >
-            <View style={{ alignItems: "center" }}>
-              <Text
-                numberOfLines={1}
-                style={{ color: nativeTheme.primary.main, fontSize: 16 }}
+            <Column sx={{ alignItems: "center" }}>
+              <TextNext
+                // numberOfLines={1}
+                sx={{ color: nativeTheme.primary.main, fontSize: 16 }}
               >
                 {varb.inputLabel}
-              </Text>
-            </View>
-            <View style={{ alignItems: "center" }}>
-              <Text numberOfLines={1} style={{ fontSize: 16 }}>
+              </TextNext>
+            </Column>
+            <Column sx={{ alignItems: "center" }}>
+              <TextNext sx={{ fontSize: 16 }}>
                 {varb.displayValue === "N/A" ? "N/A" : varb.displayVarb()}
-              </Text>
-            </View>
-          </View>
+              </TextNext>
+            </Column>
+          </Box>
         );
       })}
     </Box>

@@ -1,11 +1,11 @@
 import { Box } from "@mui/material";
 import { unstable_batchedUpdates } from "react-dom";
-import { View } from "react-native";
 import { useAction } from "../../../modules/stateHooks/useAction";
 import { useGetterSectionOnlyOne } from "../../../modules/stateHooks/useGetterSection";
 import { useGetterMain } from "../../../modules/stateHooks/useMain";
 import { GetterSection } from "../../../sharedWithServer/StateGetters/GetterSection";
 import { nativeTheme } from "../../../theme/nativeTheme";
+import { Column } from "../../general/Column";
 import { PlainIconBtn } from "../../general/PlainIconBtn";
 import { icons } from "../Icons";
 import { MaterialStringEditor } from "../inputs/MaterialStringEditor";
@@ -48,7 +48,7 @@ export function DealCompareDealSelectMenu({ closeMenu }: Props) {
   const nameFilterVarb = selectMenu.varbNext("dealNameFilter");
   const filteredDeals = useFilteredDealsToCompare();
   return (
-    <View>
+    <Column>
       <MaterialStringEditor
         {...{
           ...nameFilterVarb.feVarbInfo,
@@ -60,8 +60,8 @@ export function DealCompareDealSelectMenu({ closeMenu }: Props) {
           },
         }}
       />
-      <View
-        style={{
+      <Column
+        sx={{
           marginTop: nativeTheme.s25,
           ...nativeTheme.subSection.borderLines,
           borderRadius: nativeTheme.br0,
@@ -83,9 +83,9 @@ export function DealCompareDealSelectMenu({ closeMenu }: Props) {
           filteredDeals.map((deal, idx) => {
             const displayName = deal.valueNext("displayName").mainText;
             return (
-              <View
+              <Column
                 key={deal.feId}
-                style={{
+                sx={{
                   borderStyle: "solid",
                   borderTopWidth: idx === 0 ? 0 : 1,
                   borderColor: nativeTheme.subSection.borderLines.borderColor,
@@ -120,10 +120,10 @@ export function DealCompareDealSelectMenu({ closeMenu }: Props) {
                     });
                   }}
                 />
-              </View>
+              </Column>
             );
           })}
-      </View>
-    </View>
+      </Column>
+    </Column>
   );
 }

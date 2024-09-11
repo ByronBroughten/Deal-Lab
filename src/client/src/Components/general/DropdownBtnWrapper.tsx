@@ -1,8 +1,8 @@
 import React from "react";
 import useOnOutsideClickRef from "../../modules/utilityHooks/useOnOutsideClickRef";
 import { useToggleView } from "../../modules/utilityHooks/useToggleView";
-import { Column } from "./Column";
 import { DropdownContainer } from "./DropdownContainer";
+import { RefColumn } from "./RefColumn";
 
 interface Props {
   renderDropdownBtn: (
@@ -22,13 +22,13 @@ export function DropdownBtnWrapper({
 
   const ref = useOnOutsideClickRef(closeDropdown) as React.ForwardedRef<any>;
   return (
-    <Column ref={ref} sx={{ zIndex: 2 }}>
+    <RefColumn ref={ref} sx={{ zIndex: 2 }}>
       {renderDropdownBtn(toggleDropdown, dropdownIsOpen)}
       {dropdownIsOpen && (
         <DropdownContainer>
           {renderDropdownContent({ closeDropdown })}
         </DropdownContainer>
       )}
-    </Column>
+    </RefColumn>
   );
 }

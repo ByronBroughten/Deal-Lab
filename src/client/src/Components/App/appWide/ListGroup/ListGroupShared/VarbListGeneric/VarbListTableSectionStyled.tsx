@@ -1,10 +1,11 @@
 import { Box, SxProps } from "@mui/material";
 import React from "react";
-import { Text, View } from "react-native";
 import styled from "styled-components";
 import { arrSx } from "../../../../../../modules/utils/mui";
 import { nativeTheme } from "../../../../../../theme/nativeTheme";
 import theme from "../../../../../../theme/Theme";
+import { Column } from "../../../../../general/Column";
+import { TextNext } from "../../../../../general/TextNext";
 import { AddItemBtn } from "../AddItemBtn";
 import { VarbListTableStyled } from "./VarbListTableSectionStyled/VarbListTableStyled";
 
@@ -46,8 +47,8 @@ export function VarbListTableSectionStyled({
       {areRows && (
         <div className="VarbListTable-tableContainer">
           {varbListTotal && (
-            <View
-              style={{
+            <Column
+              sx={{
                 justifyContent: "center",
                 alignItems: "center",
                 height: 30,
@@ -57,10 +58,10 @@ export function VarbListTableSectionStyled({
                 borderBottomWidth: 0,
               }}
             >
-              <Text
-                style={{ color: nativeTheme["gray-700"], fontSize: 18 }}
-              >{`Total: ${varbListTotal}`}</Text>
-            </View>
+              <TextNext
+                sx={{ color: nativeTheme["gray-700"], fontSize: 18 }}
+              >{`Total: ${varbListTotal}`}</TextNext>
+            </Column>
           )}
           <VarbListTableStyled sx={tableSx} headers={headers} rows={rows} />
           <AddItemBtn

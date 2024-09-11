@@ -1,17 +1,17 @@
-import { View } from "react-native";
 import { nativeTheme } from "../../../theme/nativeTheme";
+import { Column } from "../../general/Column";
 import { DealCompareRmValueBtn } from "./CompareDealRmBtn";
 
 type Props = { compareValueFeIds: string[] };
 export function ComparedDealRmValueBtns({ compareValueFeIds }: Props) {
   return (
-    <View
-      style={{
+    <Column
+      sx={{
         paddingTop: nativeTheme.comparedDealRoot.padding,
       }}
     >
-      <View style={{ height: nativeTheme.comparedDealHead.height }} />
-      <View>
+      <Column sx={{ height: nativeTheme.comparedDealHead.height }} />
+      <Column>
         {compareValueFeIds.map((feId, idx) => (
           <DealCompareRmValueBtn
             {...{
@@ -25,7 +25,7 @@ export function ComparedDealRmValueBtns({ compareValueFeIds }: Props) {
             }}
           />
         ))}
-      </View>
-    </View>
+      </Column>
+    </Column>
   );
 }

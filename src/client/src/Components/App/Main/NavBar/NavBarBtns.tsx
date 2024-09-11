@@ -1,9 +1,9 @@
 import { Box } from "@mui/material";
 import { BsArrowUpCircle } from "react-icons/bs";
-import { View } from "react-native";
 import { useUserDataStatus } from "../../../../modules/stateHooks/useFeStore";
 import { useUserSubscription } from "../../../../modules/utilityHooks/useSubscriptions";
 import { nativeTheme } from "../../../../theme/nativeTheme";
+import { Column } from "../../../general/Column";
 import { MuiRow } from "../../../general/MuiRow";
 import { NavBtn } from "./NavBtn";
 import { NavDropDown } from "./NavDropDown";
@@ -63,7 +63,7 @@ export function NavBarBtns() {
   };
   const scenarioKey = useScenarioKey();
   return (
-    <View style={{ flexDirection: "row" }}>{scenarios[scenarioKey]()}</View>
+    <Column sx={{ flexDirection: "row" }}>{scenarios[scenarioKey]()}</Column>
   );
 }
 

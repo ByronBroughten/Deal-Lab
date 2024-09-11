@@ -1,6 +1,5 @@
 import { SxProps } from "@mui/material";
 import { Box } from "@mui/system";
-import { Text } from "react-native";
 import { PulseLoader } from "react-spinners";
 import {
   useAction,
@@ -12,7 +11,6 @@ import {
   useGetterSectionOnlyOne,
 } from "../../../../modules/stateHooks/useGetterSection";
 import { arrSx } from "../../../../modules/utils/mui";
-import { reactNativeS } from "../../../../modules/utils/reactNative";
 import { constants } from "../../../../sharedWithServer/Constants";
 import {
   DbIdProp,
@@ -23,6 +21,7 @@ import { timeS } from "../../../../sharedWithServer/utils/timeS";
 import { nativeTheme } from "../../../../theme/nativeTheme";
 import { MuiRow } from "../../../general/MuiRow";
 import { Row } from "../../../general/Row";
+import { TextNext } from "../../../general/TextNext";
 import { StyledActionBtn } from "../../appWide/GeneralSection/MainSection/StyledActionBtn";
 import { LabelText, StyledLabeledVarb } from "../../appWide/LabeledVarbNext";
 import { showToastInfo } from "../../appWide/toast";
@@ -45,24 +44,23 @@ const titleSx = (displayName: string, minWidth: number | string) => ({
 });
 
 const dealTypeProps = {
-  style: {
+  sx: {
     fontSize: nativeTheme.fs16,
     marginLeft: nativeTheme.s2,
   },
-};
+} as const;
 
 const iconProps = {
   style: {
     color: nativeTheme.primary.main,
   },
   size: 25,
-};
+} as const;
 
-const rowStyle = reactNativeS.view({
+const rowStyle = {
   margin: nativeTheme.s1,
   marginRight: nativeTheme.s25,
-  alignItems: "center",
-});
+} as const;
 
 type SavedDealProps = {
   dbId: string;
@@ -178,7 +176,7 @@ function TabAndDeskVersion({ dbId, isInactive, sx }: SavedDealProps) {
         ...arrSx(sx),
       ]}
     >
-      <Row style={{ justifyContent: "space-between" }}>
+      <Row sx={{ justifyContent: "space-between" }}>
         <Box sx={titleSx(strDisplayName, 400)}>
           {strDisplayName || "Untitled"}
           {/* <BareStringEditor
@@ -192,21 +190,21 @@ function TabAndDeskVersion({ dbId, isInactive, sx }: SavedDealProps) {
         </Box>
         {
           <Row
-            style={{
+            sx={{
               ...rowStyle,
               paddingLeft: nativeTheme.s4,
             }}
           >
-            <Text>Created </Text>
-            <Text>{dateCreated}</Text>
+            <TextNext>Created </TextNext>
+            <TextNext>{dateCreated}</TextNext>
           </Row>
         }
       </Row>
-      <Row style={{ justifyContent: "space-between" }}>
-        <Row style={rowStyle}>
+      <Row sx={{ justifyContent: "space-between" }}>
+        <Row sx={rowStyle}>
           {icons[dealMode](iconProps)}
           {isDesktop && (
-            <Text {...dealTypeProps}>{dealModeLabels[dealMode]}</Text>
+            <TextNext {...dealTypeProps}>{dealModeLabels[dealMode]}</TextNext>
           )}
 
           {!isComplete && (

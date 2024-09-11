@@ -1,13 +1,13 @@
 import { SxProps } from "@mui/material";
 import { unstable_batchedUpdates } from "react-dom";
 import { AiOutlineSave } from "react-icons/ai";
-import { View } from "react-native";
 import { useAction } from "../../../../../../modules/stateHooks/useAction";
 import { useGetterFeStore } from "../../../../../../modules/stateHooks/useFeStore";
 import { useGetterSection } from "../../../../../../modules/stateHooks/useGetterSection";
 import { useToggleView } from "../../../../../../modules/utilityHooks/useToggleView";
 import { FeInfoByType } from "../../../../../../sharedWithServer/StateGetters/Identifiers/FeInfo";
 import { nativeTheme } from "../../../../../../theme/nativeTheme";
+import { Column } from "../../../../../general/Column";
 import { DropdownBtnWrapper } from "../../../../../general/DropdownBtnWrapper";
 import { icon } from "../../../../Icons";
 import { MaterialStringEditor } from "../../../../inputs/MaterialStringEditor";
@@ -60,8 +60,8 @@ function Dropdown(feInfo: FeInfoByType<"hasIndexStore">) {
     });
 
   return (
-    <View
-      style={{
+    <Column
+      sx={{
         position: "relative",
         left: 8,
         backgroundColor: nativeTheme.light,
@@ -110,6 +110,6 @@ function Dropdown(feInfo: FeInfoByType<"hasIndexStore">) {
           },
         }}
       />
-    </View>
+    </Column>
   );
 }

@@ -52,7 +52,7 @@ export const NumObjVarbSelector = React.memo(
       ref: PopperRef
     ) => {
       const varbInfo = { sectionName, feId, varbName } as const;
-      const { toggleVarbs, varbsIsOpen, closeVarbs } = useToggleView("varbs");
+      const { toggleVarbs, varbsIsOpen } = useToggleView("varbs");
       const focalSection = useGetterSection(varbInfo);
 
       const onVarbSelectCore = (
@@ -123,8 +123,7 @@ export const NumObjVarbSelector = React.memo(
               {varbsIsOpen && (
                 <DropdownContainer
                   {...{
-                    closeDropdown: closeVarbs,
-                    AbsoluteProps: { style: { top: 1, left: -1 } },
+                    AbsoluteProps: { sx: { top: 1, left: -1 } },
                   }}
                 >
                   <VarbSelectorShell>

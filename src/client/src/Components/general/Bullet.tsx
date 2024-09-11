@@ -1,44 +1,31 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
 import theme from "../../theme/Theme";
+import { Column } from "./Column";
+import { Row } from "./Row";
+import { TextNext } from "./TextNext";
 
 interface BulletProps {
   text: string | React.ReactElement;
   key: string;
 }
 
-const styles = StyleSheet.create({
-  bulletItem: {
-    marginTop: theme.s2,
-    flexDirection: "column",
-    alignItems: "flex-start",
-  },
-  row: {
-    flexDirection: "row",
-    alignItems: "flex-start",
-    flexWrap: "wrap",
-    flex: 1,
-  },
-  bullet: {
-    width: 12,
-  },
-  bulletText: {
-    flex: 1,
-  },
-  normalText: { fontSize: 16 },
-});
-
 export function Bullet({ text, key }: BulletProps) {
   return (
-    <View style={styles.bulletItem} key={key}>
-      <View style={styles.row}>
-        <View style={styles.bullet}>
-          <Text style={styles.normalText}>{"\u2022" + " "}</Text>
-        </View>
-        <View style={styles.bulletText}>
-          <Text style={styles.normalText}>{text}</Text>
-        </View>
-      </View>
-    </View>
+    <Column
+      sx={{
+        marginTop: theme.s2,
+        alignItems: "flex-start",
+      }}
+      key={key}
+    >
+      <Row>
+        <Column sx={{ width: 12 }}>
+          <TextNext sx={{ fontSize: 16 }}>{"\u2022" + " "}</TextNext>
+        </Column>
+        <Column sx={{ flex: 1 }}>
+          <TextNext sx={{ fontSize: 16 }}>{text}</TextNext>
+        </Column>
+      </Row>
+    </Column>
   );
 }
