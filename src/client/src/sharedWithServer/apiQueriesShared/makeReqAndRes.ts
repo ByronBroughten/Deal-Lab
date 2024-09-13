@@ -4,7 +4,7 @@ import {
   DbStoreNameByType,
   DbStoreNameProp,
   SectionQueryName,
-} from "../stateSchemas/derivedFromChildrenSchemas/DbStoreName";
+} from "../stateSchemas/fromSchema6SectionChildren/DbStoreName";
 import { ChildPackArrs } from "../StateTransports/ChildSectionPack";
 import { DbPack } from "../StateTransports/DbSectionPack";
 import { SectionPack } from "../StateTransports/SectionPack";

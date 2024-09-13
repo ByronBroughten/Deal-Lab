@@ -5,8 +5,8 @@ import {
 } from "../../StateGetters/Bases/GetterSectionBase";
 import { GetterSection } from "../../StateGetters/GetterSection";
 import { FeSectionInfo } from "../../StateGetters/Identifiers/FeInfo";
-import { SectionName } from "../../stateSchemas/SectionName";
-import { SectionNameByType } from "../../stateSchemas/SectionNameByType";
+import { SectionName } from "../../stateSchemas/schema2SectionNames";
+import { SectionNameByType } from "../../stateSchemas/schema6SectionChildren/SectionNameByType";
 import { SectionPack } from "../../StateTransports/SectionPack";
 import { UpdaterSection } from "../Updaters/UpdaterSection";
 

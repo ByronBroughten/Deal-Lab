@@ -1,11 +1,11 @@
-import { validateAnyVarbName } from "../stateSchemas/derivedFromBaseSchemas/baseSectionsVarbsTypes";
+import { validateAnyVarbName } from "../stateSchemas/fromSchema3SectionStructures/baseSectionsVarbsTypes";
 import {
   ChildName,
   validateAnyChildName,
-} from "../stateSchemas/derivedFromChildrenSchemas/ChildName";
-import { SectionName } from "../stateSchemas/SectionName";
-import { StateValue } from "../stateSchemas/StateValue";
-import { validateStateValue } from "../stateSchemas/valueMetas";
+} from "../stateSchemas/fromSchema6SectionChildren/ChildName";
+import { SectionName } from "../stateSchemas/schema2SectionNames";
+import { validateStateValue } from "../stateSchemas/schema4ValueTraits";
+import { StateValue } from "../stateSchemas/schema4ValueTraits/StateValue";
 import { Arr } from "../utils/Arr";
 import { IdS } from "../utils/IdS";
 import { Obj } from "../utils/Obj";

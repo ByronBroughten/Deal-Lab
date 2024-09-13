@@ -10,7 +10,7 @@ import { GetterSection } from "../client/src/sharedWithServer/StateGetters/Gette
 import { makeDefaultSessionDeal } from "../client/src/sharedWithServer/StateOperators/defaultMaker/defaultSessionDeal";
 import { PackBuilderSection } from "../client/src/sharedWithServer/StateOperators/Packers/PackBuilderSection";
 import { PackBuilderSections } from "../client/src/sharedWithServer/StateOperators/Packers/PackBuilderSections";
-import { storeNames } from "../client/src/sharedWithServer/stateSchemas/sectionStores";
+import { storeNames } from "../client/src/sharedWithServer/stateSchemas/schema6SectionChildren/sectionStores";
 import { SectionPack } from "../client/src/sharedWithServer/StateTransports/SectionPack";
 import { UserData } from "../client/src/sharedWithServer/StateTransports/UserData";
 import { Arr } from "../client/src/sharedWithServer/utils/Arr";

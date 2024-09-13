@@ -1,6 +1,6 @@
-import { StateValue } from "../../stateSchemas/StateValue";
-import { getDealModes } from "../../stateSchemas/StateValue/dealMode";
-import { numObj } from "../../stateSchemas/StateValue/NumObj";
+import { StateValue } from "../../stateSchemas/schema4ValueTraits/StateValue";
+import { getDealModes } from "../../stateSchemas/schema4ValueTraits/StateValue/dealMode";
+import { numObj } from "../../stateSchemas/schema4ValueTraits/StateValue/NumObj";
 import { SectionPack } from "../../StateTransports/SectionPack";
 import { makeHomeAdvisorNahbCapExList } from "../exampleMakers/makeExampleCapEx";
 import { makeDefault } from "./makeDefault";

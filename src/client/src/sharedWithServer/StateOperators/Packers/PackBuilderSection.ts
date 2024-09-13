@@ -8,14 +8,14 @@ import {
   ChildName,
   DbChildInfo,
   FeChildInfo,
-} from "../../stateSchemas/derivedFromChildrenSchemas/ChildName";
-import { ChildSectionName } from "../../stateSchemas/derivedFromChildrenSchemas/ChildSectionName";
-import { SectionName } from "../../stateSchemas/SectionName";
+} from "../../stateSchemas/fromSchema6SectionChildren/ChildName";
+import { ChildSectionName } from "../../stateSchemas/fromSchema6SectionChildren/ChildSectionName";
+import { SectionName } from "../../stateSchemas/schema2SectionNames";
+import { SectionValues } from "../../stateSchemas/schema4ValueTraits/StateValue";
 import {
   SectionNameByType,
   SectionNameType,
-} from "../../stateSchemas/SectionNameByType";
-import { SectionValues } from "../../stateSchemas/StateValue";
+} from "../../stateSchemas/schema6SectionChildren/SectionNameByType";
 import {
   ChildArrPack,
   ChildPackArrs,

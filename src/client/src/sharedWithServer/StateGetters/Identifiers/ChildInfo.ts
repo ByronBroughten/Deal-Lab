@@ -1,8 +1,8 @@
-import { VarbName } from "../../stateSchemas/derivedFromBaseSchemas/baseSectionsVarbsTypes";
-import { ChildName } from "../../stateSchemas/derivedFromChildrenSchemas/ChildName";
-import { ChildSectionName } from "../../stateSchemas/derivedFromChildrenSchemas/ChildSectionName";
-import { SectionName } from "../../stateSchemas/SectionName";
-import { VarbValue } from "../../stateSchemas/StateValue";
+import { VarbName } from "../../stateSchemas/fromSchema3SectionStructures/baseSectionsVarbsTypes";
+import { ChildName } from "../../stateSchemas/fromSchema6SectionChildren/ChildName";
+import { ChildSectionName } from "../../stateSchemas/fromSchema6SectionChildren/ChildSectionName";
+import { SectionName } from "../../stateSchemas/schema2SectionNames";
+import { VarbValue } from "../../stateSchemas/schema4ValueTraits/StateValue";
 
 export type ChildVarbInfo<
   SN extends SectionName,

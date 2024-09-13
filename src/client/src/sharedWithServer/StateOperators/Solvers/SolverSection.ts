@@ -3,17 +3,20 @@ import { GetterSectionProps } from "../../StateGetters/Bases/GetterSectionBase";
 import { GetterSection } from "../../StateGetters/GetterSection";
 import { FeSectionInfo } from "../../StateGetters/Identifiers/FeInfo";
 import { VarbInfoMixedFocal } from "../../StateGetters/Identifiers/MixedSectionInfo";
-import { VarbName } from "../../stateSchemas/derivedFromBaseSchemas/baseSectionsVarbsTypes";
+import { VarbName } from "../../stateSchemas/fromSchema3SectionStructures/baseSectionsVarbsTypes";
 import {
   ChildName,
   DbChildInfo,
   FeChildInfo,
-} from "../../stateSchemas/derivedFromChildrenSchemas/ChildName";
-import { ChildSectionName } from "../../stateSchemas/derivedFromChildrenSchemas/ChildSectionName";
-import { SectionName } from "../../stateSchemas/SectionName";
-import { SectionNameByType } from "../../stateSchemas/SectionNameByType";
-import { SectionValues, VarbValue } from "../../stateSchemas/StateValue";
-import { NumObjOutput } from "../../stateSchemas/StateValue/NumObj";
+} from "../../stateSchemas/fromSchema6SectionChildren/ChildName";
+import { ChildSectionName } from "../../stateSchemas/fromSchema6SectionChildren/ChildSectionName";
+import { SectionName } from "../../stateSchemas/schema2SectionNames";
+import {
+  SectionValues,
+  VarbValue,
+} from "../../stateSchemas/schema4ValueTraits/StateValue";
+import { NumObjOutput } from "../../stateSchemas/schema4ValueTraits/StateValue/NumObj";
+import { SectionNameByType } from "../../stateSchemas/schema6SectionChildren/SectionNameByType";
 import {
   ChildPackArrs,
   ChildPackInfo,

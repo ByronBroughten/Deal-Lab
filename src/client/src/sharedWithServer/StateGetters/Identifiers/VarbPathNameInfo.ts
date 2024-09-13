@@ -1,8 +1,8 @@
 import { fixedVariableLabel } from "../../../modules/varbLabels/varbLabels";
 import { constants } from "../../Constants";
-import { targetNames } from "../../stateSchemas/allBaseSectionVarbs/baseSwitchNames";
-import { VarbName } from "../../stateSchemas/derivedFromBaseSchemas/baseSectionsVarbsTypes";
-import { VarbValue } from "../../stateSchemas/StateValue";
+import { VarbName } from "../../stateSchemas/fromSchema3SectionStructures/baseSectionsVarbsTypes";
+import { targetNames } from "../../stateSchemas/schema3SectionStructures/baseSwitchNames";
+import { VarbValue } from "../../stateSchemas/schema4ValueTraits/StateValue";
 import { ValidationError } from "../../utils/Error";
 import { Obj } from "../../utils/Obj";
 import { DbIdProp } from "./NanoIdInfo";

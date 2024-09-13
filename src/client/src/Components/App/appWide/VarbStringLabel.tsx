@@ -5,7 +5,7 @@ import {
   VarbInfoTextProps,
 } from "../../../modules/varbLabels/varbLabels";
 import { SectionVarbNames } from "../../../sharedWithServer/StateGetters/Identifiers/FeInfo";
-import { SectionName } from "../../../sharedWithServer/stateSchemas/SectionName";
+import { SectionName } from "../../../sharedWithServer/stateSchemas/schema2SectionNames";
 import { IconProps } from "../Icons";
 import { LabelWithInfo } from "./LabelWithInfo";
 

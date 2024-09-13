@@ -13,8 +13,8 @@ import { PackMakerSection } from "../../../client/src/sharedWithServer/StateOper
 import { SolverSection } from "../../../client/src/sharedWithServer/StateOperators/Solvers/SolverSection";
 import { SolverSections } from "../../../client/src/sharedWithServer/StateOperators/Solvers/SolverSections";
 import { UpdaterSection } from "../../../client/src/sharedWithServer/StateOperators/Updaters/UpdaterSection";
+import { StoreName } from "../../../client/src/sharedWithServer/stateSchemas/schema6SectionChildren/sectionStores";
 import { SectionNameByType } from "../../../client/src/sharedWithServer/stateSchemas/SectionNameByType";
-import { StoreName } from "../../../client/src/sharedWithServer/stateSchemas/sectionStores";
 
 export function makeLastSectionProps<SN extends SectionNameByType>(
   props: GetterListProps<SN>

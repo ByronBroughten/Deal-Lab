@@ -1,13 +1,13 @@
 import { SxProps } from "@mui/material";
 import { FeVI } from "../../../../sharedWithServer/StateGetters/Identifiers/FeInfo";
 import { ValueFixedVarbPathName } from "../../../../sharedWithServer/StateGetters/Identifiers/ValueInEntityInfo";
-import { GroupBaseVI } from "../../../../sharedWithServer/stateSchemas/derivedFromBaseSchemas/baseGroupNames";
+import { GroupBaseVI } from "../../../../sharedWithServer/stateSchemas/fromSchema3SectionStructures/baseGroupNames";
+import { SectionName } from "../../../../sharedWithServer/stateSchemas/schema2SectionNames";
 import {
   GroupKey,
   GroupName,
   groupVarbName,
-} from "../../../../sharedWithServer/stateSchemas/GroupName";
-import { SectionName } from "../../../../sharedWithServer/stateSchemas/SectionName";
+} from "../../../../sharedWithServer/stateSchemas/schema3SectionStructures/GroupName";
 import { StrictOmit } from "../../../../sharedWithServer/utils/types";
 import { LabelProps, NumEditorType } from "../NumObjEntityEditor";
 

@@ -1,5 +1,5 @@
-import { ChildName } from "../../stateSchemas/derivedFromChildrenSchemas/ChildName";
-import { SectionName } from "../../stateSchemas/SectionName";
+import { ChildName } from "../../stateSchemas/fromSchema6SectionChildren/ChildName";
+import { SectionName } from "../../stateSchemas/schema2SectionNames";
 import { DbIdProp, NanoIdProp } from "./NanoIdInfo";
 import { SectionNameProp } from "./SectionNameProp";
 import { AbsolutePathNode } from "./sectionPaths/sectionPathNames";

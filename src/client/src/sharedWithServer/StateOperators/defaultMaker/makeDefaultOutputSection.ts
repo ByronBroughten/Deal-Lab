@@ -1,5 +1,8 @@
-import { ChildNameOfType } from "../../stateSchemas/SectionNameByType";
-import { DealMode, getDealModes } from "../../stateSchemas/StateValue/dealMode";
+import {
+  DealMode,
+  getDealModes,
+} from "../../stateSchemas/schema4ValueTraits/StateValue/dealMode";
+import { ChildNameOfType } from "../../stateSchemas/schema6SectionChildren/SectionNameByType";
 import { SectionPack } from "../../StateTransports/SectionPack";
 import { PackBuilderSection } from "../Packers/PackBuilderSection";
 import { makeDefaultOutputList } from "./makeDefaultOutputList";

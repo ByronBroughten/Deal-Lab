@@ -7,7 +7,7 @@ import { useAction } from "../../../modules/stateHooks/useAction";
 import { useGetterFeStore } from "../../../modules/stateHooks/useFeStore";
 import { useGetterSection } from "../../../modules/stateHooks/useGetterSection";
 import { FeSectionInfo } from "../../../sharedWithServer/StateGetters/Identifiers/FeInfo";
-import { SectionNameByType } from "../../../sharedWithServer/stateSchemas/SectionNameByType";
+import { SectionNameByType } from "../../../sharedWithServer/stateSchemas/schema6SectionChildren/SectionNameByType";
 import ccs from "../../../theme/cssChunks";
 import theme, {
   ThemeName,

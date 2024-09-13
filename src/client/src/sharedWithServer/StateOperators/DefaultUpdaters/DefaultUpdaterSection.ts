@@ -2,11 +2,11 @@ import { FeSectionInfo } from "../../StateGetters/Identifiers/FeInfo";
 import {
   ChildName,
   FeChildInfo,
-} from "../../stateSchemas/derivedFromChildrenSchemas/ChildName";
-import { ChildSectionName } from "../../stateSchemas/derivedFromChildrenSchemas/ChildSectionName";
-import { SectionName } from "../../stateSchemas/SectionName";
-import { SectionNameByType } from "../../stateSchemas/SectionNameByType";
-import { SectionValues } from "../../stateSchemas/StateValue";
+} from "../../stateSchemas/fromSchema6SectionChildren/ChildName";
+import { ChildSectionName } from "../../stateSchemas/fromSchema6SectionChildren/ChildSectionName";
+import { SectionName } from "../../stateSchemas/schema2SectionNames";
+import { SectionValues } from "../../stateSchemas/schema4ValueTraits/StateValue";
+import { SectionNameByType } from "../../stateSchemas/schema6SectionChildren/SectionNameByType";
 import { SectionPack } from "../../StateTransports/SectionPack";
 import { AddChildWithPackOptions } from "../Packers/PackBuilderSection";
 import { UpdaterSection } from "../Updaters/UpdaterSection";

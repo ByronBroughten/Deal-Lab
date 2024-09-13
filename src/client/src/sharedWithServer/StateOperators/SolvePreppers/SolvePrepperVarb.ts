@@ -1,7 +1,7 @@
 import { GetterVarb } from "../../StateGetters/GetterVarb";
 import { InEntityGetterVarb } from "../../StateGetters/InEntityGetterVarb";
-import { SectionName } from "../../stateSchemas/SectionName";
-import { StateValue } from "../../stateSchemas/StateValue";
+import { SectionName } from "../../stateSchemas/schema2SectionNames";
+import { StateValue } from "../../stateSchemas/schema4ValueTraits/StateValue";
 import { EntityPrepperVarb } from "../EntityPreppers/EntityPrepperVarb";
 import { OutEntityGetterVarb } from "../OutEntityGetters/OutEntityGetterVarb";
 import { UpdaterVarb } from "../Updaters/UpdaterVarb";

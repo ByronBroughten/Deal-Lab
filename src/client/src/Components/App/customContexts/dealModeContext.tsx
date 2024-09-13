@@ -1,5 +1,5 @@
 import { makeContextUseContext } from "../../../modules/utils/react";
-import { DealMode } from "../../../sharedWithServer/stateSchemas/StateValue/dealMode";
+import { DealMode } from "../../../sharedWithServer/stateSchemas/schema4ValueTraits/StateValue/dealMode";
 
 const [DealModeContext, use] = makeContextUseContext(
   "DealModeContext",

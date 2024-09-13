@@ -1,6 +1,6 @@
 import { SxProps } from "@mui/material";
 import { FeRouteName } from "../../../sharedWithServer/Constants/feRoutes";
-import { listChildrenNames } from "../../../sharedWithServer/stateSchemas/sectionStores";
+import { listChildrenNames } from "../../../sharedWithServer/stateSchemas/schema6SectionChildren/sectionStores";
 import { Arr } from "../../../sharedWithServer/utils/Arr";
 import { useMakeGoToPage } from "../customHooks/useGoToPage";
 import { MainSubSectionClosed } from "../Main/ActiveDealRoutes/ActiveDealStuff/MainSubSectionClosed";

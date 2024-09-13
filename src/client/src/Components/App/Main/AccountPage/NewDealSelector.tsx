@@ -3,7 +3,7 @@ import { unstable_batchedUpdates } from "react-dom";
 import { useActionNoSave } from "../../../../modules/stateHooks/useAction";
 import { useGetterSectionOnlyOne } from "../../../../modules/stateHooks/useGetterSection";
 import { constants } from "../../../../sharedWithServer/Constants";
-import { dealModeLabels } from "../../../../sharedWithServer/stateSchemas/StateValue/unionValues";
+import { dealModeLabels } from "../../../../sharedWithServer/stateSchemas/schema4ValueTraits/StateValue/unionValues";
 import { nativeTheme } from "../../../../theme/nativeTheme";
 import { MuiRow } from "../../../general/MuiRow";
 import { HollowBtn } from "../../appWide/HollowBtn";

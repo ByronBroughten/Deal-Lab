@@ -1,7 +1,7 @@
 import { pick } from "lodash";
-import { SectionValues } from "../../stateSchemas/StateValue";
-import { numObj } from "../../stateSchemas/StateValue/NumObj";
-import { stringObj } from "../../stateSchemas/StateValue/StringObj";
+import { SectionValues } from "../../stateSchemas/schema4ValueTraits/StateValue";
+import { numObj } from "../../stateSchemas/schema4ValueTraits/StateValue/NumObj";
+import { stringObj } from "../../stateSchemas/schema4ValueTraits/StateValue/StringObj";
 import { isSectionPack } from "../../StateTransports/SectionPack";
 import { Obj } from "../../utils/Obj";
 import { PackBuilderSection } from "./PackBuilderSection";

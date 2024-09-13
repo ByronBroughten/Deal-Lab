@@ -1,6 +1,6 @@
-import { allBaseSectionVarbs } from "../../stateSchemas/allBaseSectionVarbs";
-import { VarbName } from "../../stateSchemas/derivedFromBaseSchemas/baseSectionsVarbsTypes";
-import { SectionName } from "../../stateSchemas/SectionName";
+import { VarbName } from "../../stateSchemas/fromSchema3SectionStructures/baseSectionsVarbsTypes";
+import { SectionName } from "../../stateSchemas/schema2SectionNames";
+import { schema2SectionStructures } from "../../stateSchemas/schema3SectionStructures";
 import { Obj } from "../../utils/Obj";
 import { NanoIdProp } from "./NanoIdInfo";
 import { SectionNameProp } from "./SectionNameProp";
@@ -56,7 +56,7 @@ export interface VarbNames<SN extends SectionName = SectionName>
     VarbProp {}
 
 export function isValidVarbNames({ sectionName, varbName }: VarbNames) {
-  const varbNames = Obj.keys(allBaseSectionVarbs[sectionName]) as string[];
+  const varbNames = Obj.keys(schema2SectionStructures[sectionName]) as string[];
   if (varbNames.includes(varbName)) return true;
   else return false;
 }

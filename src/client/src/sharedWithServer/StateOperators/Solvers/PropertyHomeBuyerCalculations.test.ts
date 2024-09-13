@@ -1,4 +1,4 @@
-import { numObj } from "../../stateSchemas/StateValue/NumObj";
+import { numObj } from "../../stateSchemas/schema4ValueTraits/StateValue/NumObj";
 import { SolverActiveDeal } from "./SolverActiveDeal";
 import { SolverSection } from "./SolverSection";
 import {

@@ -15,11 +15,11 @@ import { SolvePrepper } from "./StateOperators/SolvePreppers/SolvePrepper";
 import { SolvePrepperSection } from "./StateOperators/SolvePreppers/SolvePrepperSection";
 import { SolverBase } from "./StateOperators/SolverBases/SolverBase";
 import { Solver } from "./StateOperators/Solvers/Solver";
+import { DealMode } from "./stateSchemas/schema4ValueTraits/StateValue/dealMode";
 import {
   isStoreNameByType,
   StoreSectionName,
-} from "./stateSchemas/sectionStores";
-import { DealMode } from "./stateSchemas/StateValue/dealMode";
+} from "./stateSchemas/schema6SectionChildren/sectionStores";
 import { SectionPack } from "./StateTransports/SectionPack";
 import { UserData } from "./StateTransports/UserData";
 import { Obj } from "./utils/Obj";

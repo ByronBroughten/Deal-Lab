@@ -1,12 +1,12 @@
 import { Box, SxProps } from "@mui/material";
 import { useGetterSection } from "../../../../../../../../modules/stateHooks/useGetterSection";
 import { FeSectionInfo } from "../../../../../../../../sharedWithServer/StateGetters/Identifiers/FeInfo";
-import { VarbName } from "../../../../../../../../sharedWithServer/stateSchemas/derivedFromBaseSchemas/baseSectionsVarbsTypes";
+import { VarbName } from "../../../../../../../../sharedWithServer/stateSchemas/fromSchema3SectionStructures/baseSectionsVarbsTypes";
+import { StateValue } from "../../../../../../../../sharedWithServer/stateSchemas/schema4ValueTraits/StateValue";
 import {
   SectionNameByType,
   sectionNameS,
-} from "../../../../../../../../sharedWithServer/stateSchemas/SectionNameByType";
-import { StateValue } from "../../../../../../../../sharedWithServer/stateSchemas/StateValue";
+} from "../../../../../../../../sharedWithServer/stateSchemas/schema6SectionChildren/SectionNameByType";
 import { Arr } from "../../../../../../../../sharedWithServer/utils/Arr";
 import { nativeTheme } from "../../../../../../../../theme/nativeTheme";
 import { FormSectionLabeled } from "../../../../../../appWide/FormSectionLabeled";

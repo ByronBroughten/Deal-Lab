@@ -1,4 +1,4 @@
-import { SectionName } from "../stateSchemas/SectionName";
+import { SectionName } from "../stateSchemas/schema2SectionNames";
 import { GetterSectionBase } from "./Bases/GetterSectionBase";
 import { GetterSection } from "./GetterSection";
 import { GetterSections } from "./GetterSections";

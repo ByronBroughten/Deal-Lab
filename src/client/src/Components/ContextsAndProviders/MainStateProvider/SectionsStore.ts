@@ -8,7 +8,7 @@ import { makeDefaultMain } from "../../../sharedWithServer/StateOperators/defaul
 import { PackBuilderSection } from "../../../sharedWithServer/StateOperators/Packers/PackBuilderSection";
 import { SolverSection } from "../../../sharedWithServer/StateOperators/Solvers/SolverSection";
 import { SolverSections } from "../../../sharedWithServer/StateOperators/Solvers/SolverSections";
-import { allBaseSectionVarbs } from "../../../sharedWithServer/stateSchemas/allBaseSectionVarbs";
+import { schema2SectionStructures } from "../../../sharedWithServer/stateSchemas/schema3SectionStructures";
 import {
   ChildSectionPack,
   validateSectionPackArrs,
@@ -113,7 +113,7 @@ export class SectionsStore {
     }
   }
   private static newHashIfbaseSectionsVarbsChanged(): string | null {
-    const hashed = hash(allBaseSectionVarbs);
+    const hashed = hash(schema2SectionStructures);
     const storedHash = localStorage.getItem(tokenKey.sectionsConfigHash);
     const baseSectionsVarbsChanged = hashed !== storedHash;
     if (baseSectionsVarbsChanged) return hashed;

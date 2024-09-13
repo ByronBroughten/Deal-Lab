@@ -1,4 +1,4 @@
-import { SectionName } from "../../stateSchemas/SectionName";
+import { SectionName } from "../../stateSchemas/schema2SectionNames";
 import { SectionPack } from "../../StateTransports/SectionPack";
 import { StrictExclude } from "../../utils/types";
 import { PackBuilderSection } from "../Packers/PackBuilderSection";

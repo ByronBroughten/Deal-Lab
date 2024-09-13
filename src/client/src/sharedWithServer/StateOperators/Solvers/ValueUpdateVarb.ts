@@ -6,26 +6,29 @@ import { GetterVarbNumObj } from "../../StateGetters/GetterVarbNumObj";
 import { RelVarbInfo } from "../../StateGetters/Identifiers/RelVarbInfo";
 import { DbVarbInfoMixed } from "../../StateGetters/Identifiers/VarbInfoBase";
 import { InEntityGetterVarb } from "../../StateGetters/InEntityGetterVarb";
+import { PathInVarbInfo } from "../../stateSchemas/fromSchema6SectionChildren/RelInOutVarbInfo";
+import { StateValue } from "../../stateSchemas/schema4ValueTraits/StateValue";
+import { InEntityValueInfo } from "../../stateSchemas/schema4ValueTraits/StateValue/InEntityValue";
+import {
+  notApplicableString,
+  NumObj,
+} from "../../stateSchemas/schema4ValueTraits/StateValue/NumObj";
+import calculations, {
+  isCalculationName,
+  NumberProps,
+} from "../../stateSchemas/schema4ValueTraits/StateValue/stateValuesShared/calculations";
+import { ValueInEntity } from "../../stateSchemas/schema4ValueTraits/StateValue/stateValuesShared/entities";
+import {
+  StringObj,
+  stringObj,
+} from "../../stateSchemas/schema4ValueTraits/StateValue/StringObj";
+import { UnionValue } from "../../stateSchemas/schema4ValueTraits/StateValue/unionValues";
 import {
   CompletionStatusProps,
   UpdateFnProp,
   UpdateFnProps,
-} from "../../stateSchemas/allUpdateSectionVarbs/updateVarb/UpdateFnProps";
-import { PathInVarbInfo } from "../../stateSchemas/derivedFromChildrenSchemas/RelInOutVarbInfo";
-import { SectionNameByType } from "../../stateSchemas/SectionNameByType";
-import { StateValue } from "../../stateSchemas/StateValue";
-import { InEntityValueInfo } from "../../stateSchemas/StateValue/InEntityValue";
-import {
-  notApplicableString,
-  NumObj,
-} from "../../stateSchemas/StateValue/NumObj";
-import calculations, {
-  isCalculationName,
-  NumberProps,
-} from "../../stateSchemas/StateValue/stateValuesShared/calculations";
-import { ValueInEntity } from "../../stateSchemas/StateValue/stateValuesShared/entities";
-import { StringObj, stringObj } from "../../stateSchemas/StateValue/StringObj";
-import { UnionValue } from "../../stateSchemas/StateValue/unionValues";
+} from "../../stateSchemas/schema5VariablesLogic/updateVarb/UpdateFnProps";
+import { SectionNameByType } from "../../stateSchemas/schema6SectionChildren/SectionNameByType";
 import { Arr } from "../../utils/Arr";
 import { Obj } from "../../utils/Obj";
 import { timeS } from "../../utils/timeS";

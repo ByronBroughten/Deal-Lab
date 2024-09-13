@@ -7,7 +7,7 @@ import {
 import { validateSubscriptionValues } from "../../sharedWithServer/apiQueriesShared/EstimatorPlanValues";
 import { constant, constants } from "../../sharedWithServer/Constants";
 import { ApiQueryName } from "../../sharedWithServer/Constants/queryPaths";
-import { validateSectionPackArrByType } from "../../sharedWithServer/stateSchemas/SectionNameByType";
+import { validateSectionPackArrByType } from "../../sharedWithServer/stateSchemas/schema6SectionChildren/SectionNameByType";
 import {
   SectionPack,
   validateSectionPack,

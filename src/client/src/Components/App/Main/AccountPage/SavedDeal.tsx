@@ -16,7 +16,7 @@ import {
   DbIdProp,
   FeIdProp,
 } from "../../../../sharedWithServer/StateGetters/Identifiers/NanoIdInfo";
-import { dealModeLabels } from "../../../../sharedWithServer/stateSchemas/StateValue/unionValues";
+import { dealModeLabels } from "../../../../sharedWithServer/stateSchemas/schema4ValueTraits/StateValue/unionValues";
 import { timeS } from "../../../../sharedWithServer/utils/timeS";
 import { nativeTheme } from "../../../../theme/nativeTheme";
 import { MuiRow } from "../../../general/MuiRow";

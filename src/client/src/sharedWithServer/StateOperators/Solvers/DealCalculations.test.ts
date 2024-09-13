@@ -1,13 +1,16 @@
-import { switchKeyToVarbNames } from "../../stateSchemas/allBaseSectionVarbs/baseSwitchNames";
-import { VarbName } from "../../stateSchemas/derivedFromBaseSchemas/baseSectionsVarbsTypes";
-import { ChildName } from "../../stateSchemas/derivedFromChildrenSchemas/ChildName";
+import { VarbName } from "../../stateSchemas/fromSchema3SectionStructures/baseSectionsVarbsTypes";
+import { ChildName } from "../../stateSchemas/fromSchema6SectionChildren/ChildName";
+import { switchKeyToVarbNames } from "../../stateSchemas/schema3SectionStructures/baseSwitchNames";
 import {
   DealMode,
   dealModes,
   isDealMode,
-} from "../../stateSchemas/StateValue/dealMode";
-import { numObj, NumObjOutput } from "../../stateSchemas/StateValue/NumObj";
-import { roundS } from "../../stateSchemas/StateValue/stateValuesShared/calculations/numUnitParams";
+} from "../../stateSchemas/schema4ValueTraits/StateValue/dealMode";
+import {
+  numObj,
+  NumObjOutput,
+} from "../../stateSchemas/schema4ValueTraits/StateValue/NumObj";
+import { roundS } from "../../stateSchemas/schema4ValueTraits/StateValue/stateValuesShared/calculations/numUnitParams";
 import { mathS, validateNumber } from "../../utils/math";
 import { StrictExtract } from "../../utils/types";
 import { SolverActiveDeal } from "./SolverActiveDeal";

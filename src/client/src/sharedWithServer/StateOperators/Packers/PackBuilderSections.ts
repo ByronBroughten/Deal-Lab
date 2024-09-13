@@ -3,7 +3,7 @@ import { StateSections } from "../../State/StateSections";
 import { GetterSectionsBase } from "../../StateGetters/Bases/GetterSectionsBase";
 import { GetterSections } from "../../StateGetters/GetterSections";
 import { FeSectionInfo } from "../../StateGetters/Identifiers/FeInfo";
-import { SectionName } from "../../stateSchemas/SectionName";
+import { SectionName } from "../../stateSchemas/schema2SectionNames";
 import { SectionPack } from "../../StateTransports/SectionPack";
 import { defaultMaker } from "../defaultMaker/defaultMaker";
 import { PackBuilderSection } from "./PackBuilderSection";

@@ -18,10 +18,10 @@ import {
   ChildName,
   FeChildInfo,
   getChildNames,
-} from "../../stateSchemas/derivedFromChildrenSchemas/ChildName";
-import { ChildSectionName } from "../../stateSchemas/derivedFromChildrenSchemas/ChildSectionName";
-import { SectionName } from "../../stateSchemas/SectionName";
-import { SectionNameByType } from "../../stateSchemas/SectionNameByType";
+} from "../../stateSchemas/fromSchema6SectionChildren/ChildName";
+import { ChildSectionName } from "../../stateSchemas/fromSchema6SectionChildren/ChildSectionName";
+import { SectionName } from "../../stateSchemas/schema2SectionNames";
+import { SectionNameByType } from "../../stateSchemas/schema6SectionChildren/SectionNameByType";
 import {
   ChildPackArrs,
   ChildSectionPack,

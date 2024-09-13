@@ -3,9 +3,9 @@ import {
   SectionNotFoundError,
   TooManySectionsFoundError,
 } from "../State/StateSectionsTypes";
-import { VarbName } from "../stateSchemas/derivedFromBaseSchemas/baseSectionsVarbsTypes";
-import { SectionNameByType } from "../stateSchemas/SectionNameByType";
-import { VarbValue } from "../stateSchemas/StateValue";
+import { VarbName } from "../stateSchemas/fromSchema3SectionStructures/baseSectionsVarbsTypes";
+import { VarbValue } from "../stateSchemas/schema4ValueTraits/StateValue";
+import { SectionNameByType } from "../stateSchemas/schema6SectionChildren/SectionNameByType";
 import { Arr } from "../utils/Arr";
 import { GetterListBase } from "./Bases/GetterListBase";
 import { GetterSection } from "./GetterSection";

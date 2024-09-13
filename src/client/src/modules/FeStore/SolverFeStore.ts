@@ -10,19 +10,19 @@ import { SolverSectionBase } from "../../sharedWithServer/StateOperators/SolverB
 import { SolverSectionsProps } from "../../sharedWithServer/StateOperators/SolverBases/SolverSectionsBase";
 import { SolverSection } from "../../sharedWithServer/StateOperators/Solvers/SolverSection";
 import { SolverSections } from "../../sharedWithServer/StateOperators/Solvers/SolverSections";
-import { ChildSectionName } from "../../sharedWithServer/stateSchemas/derivedFromChildrenSchemas/ChildSectionName";
+import { ChildSectionName } from "../../sharedWithServer/stateSchemas/fromSchema6SectionChildren/ChildSectionName";
+import { SectionValues } from "../../sharedWithServer/stateSchemas/schema4ValueTraits/StateValue";
+import {
+  changeSavingToToSave,
+  ChangeToSave,
+} from "../../sharedWithServer/stateSchemas/schema4ValueTraits/StateValue/sectionChanges";
 import {
   FeStoreInfo,
   isStoreNameByType,
   StoreName,
   StoreNameProp,
   StoreSectionName,
-} from "../../sharedWithServer/stateSchemas/sectionStores";
-import { SectionValues } from "../../sharedWithServer/stateSchemas/StateValue";
-import {
-  changeSavingToToSave,
-  ChangeToSave,
-} from "../../sharedWithServer/stateSchemas/StateValue/sectionChanges";
+} from "../../sharedWithServer/stateSchemas/schema6SectionChildren/sectionStores";
 import { SectionPack } from "../../sharedWithServer/StateTransports/SectionPack";
 import { IdS } from "../../sharedWithServer/utils/IdS";
 import { Obj } from "../../sharedWithServer/utils/Obj";

@@ -4,12 +4,12 @@ import { GetterSectionsProps } from "../../sharedWithServer/StateGetters/Bases/G
 import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection";
 import { GetterSections } from "../../sharedWithServer/StateGetters/GetterSections";
 import { StoreId } from "../../sharedWithServer/StateGetters/Identifiers/StoreId";
+import { StateValue } from "../../sharedWithServer/stateSchemas/schema4ValueTraits/StateValue";
 import {
   FeStoreInfo,
   StoreName,
   StoreSectionName,
-} from "../../sharedWithServer/stateSchemas/sectionStores";
-import { StateValue } from "../../sharedWithServer/stateSchemas/StateValue";
+} from "../../sharedWithServer/stateSchemas/schema6SectionChildren/sectionStores";
 import { Obj } from "../../sharedWithServer/utils/Obj";
 import { Str } from "../../sharedWithServer/utils/Str";
 

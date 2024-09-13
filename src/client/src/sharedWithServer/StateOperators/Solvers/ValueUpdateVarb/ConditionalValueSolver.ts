@@ -1,7 +1,7 @@
 import { GetterSectionBase } from "../../../StateGetters/Bases/GetterSectionBase";
 import { GetterSection } from "../../../StateGetters/GetterSection";
 import { GetterVarb } from "../../../StateGetters/GetterVarb";
-import { NumObj } from "../../../stateSchemas/StateValue/NumObj";
+import { NumObj } from "../../../stateSchemas/schema4ValueTraits/StateValue/NumObj";
 
 const conditionalTypes = ["if", "or if"] as const;
 type ConditionalTypeName = (typeof conditionalTypes)[number];

@@ -2,10 +2,10 @@ import { SectionPathContextName } from "../StateGetters/Identifiers/sectionPaths
 import {
   ChildIdArrsNarrow,
   ChildName,
-} from "../stateSchemas/derivedFromChildrenSchemas/ChildName";
-import { SectionName } from "../stateSchemas/SectionName";
-import { StateValue } from "../stateSchemas/StateValue";
-import { OutEntity } from "../stateSchemas/StateValue/stateValuesShared/entities";
+} from "../stateSchemas/fromSchema6SectionChildren/ChildName";
+import { SectionName } from "../stateSchemas/schema2SectionNames";
+import { StateValue } from "../stateSchemas/schema4ValueTraits/StateValue";
+import { OutEntity } from "../stateSchemas/schema4ValueTraits/StateValue/stateValuesShared/entities";
 
 export class SectionNotFoundError extends Error {}
 export class TooManySectionsFoundError extends Error {}

@@ -10,7 +10,7 @@ import { useGetterVarb } from "../../../modules/stateHooks/useGetterVarb";
 import { SetEditorState } from "../../../modules/utils/DraftS";
 import { constants } from "../../../sharedWithServer/Constants";
 import { FeVarbInfo } from "../../../sharedWithServer/StateGetters/Identifiers/FeInfo";
-import { isEditorValueName } from "../../../sharedWithServer/stateSchemas/StateValue/EditorValue";
+import { isEditorValueName } from "../../../sharedWithServer/stateSchemas/schema4ValueTraits/StateValue/EditorValue";
 import { StrictOmit } from "../../../sharedWithServer/utils/types";
 
 interface UseDraftInputProps

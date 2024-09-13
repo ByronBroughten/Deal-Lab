@@ -9,8 +9,8 @@ import {
   FeVarbInfo,
 } from "../../StateGetters/Identifiers/FeInfo";
 import { StoreId } from "../../StateGetters/Identifiers/StoreId";
-import { SectionName } from "../../stateSchemas/SectionName";
-import { StoreSectionName } from "../../stateSchemas/sectionStores";
+import { SectionName } from "../../stateSchemas/schema2SectionNames";
+import { StoreSectionName } from "../../stateSchemas/schema6SectionChildren/sectionStores";
 import { SectionPack } from "../../StateTransports/SectionPack";
 import { defaultMaker } from "../defaultMaker/defaultMaker";
 import { PackBuilderSections } from "../Packers/PackBuilderSections";

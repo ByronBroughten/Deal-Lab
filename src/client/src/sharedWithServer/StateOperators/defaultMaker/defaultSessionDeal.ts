@@ -1,6 +1,6 @@
 import { GetterSection } from "../../StateGetters/GetterSection";
-import { VarbName } from "../../stateSchemas/derivedFromBaseSchemas/baseSectionsVarbsTypes";
-import { DealMode } from "../../stateSchemas/StateValue/dealMode";
+import { VarbName } from "../../stateSchemas/fromSchema3SectionStructures/baseSectionsVarbsTypes";
+import { DealMode } from "../../stateSchemas/schema4ValueTraits/StateValue/dealMode";
 import { PackBuilderSection } from "../Packers/PackBuilderSection";
 
 const outputPerDeal: Record<DealMode, VarbName<"deal">> = {

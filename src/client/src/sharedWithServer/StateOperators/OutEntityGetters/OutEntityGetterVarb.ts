@@ -1,11 +1,11 @@
 import { GetterVarbBase } from "../../StateGetters/Bases/GetterVarbBase";
 import { GetterVarb } from "../../StateGetters/GetterVarb";
 import { InEntityGetterVarb } from "../../StateGetters/InEntityGetterVarb";
-import { SectionNameByType } from "../../stateSchemas/SectionNameByType";
 import {
   OutEntity,
   OutEntityInfo,
-} from "../../stateSchemas/StateValue/stateValuesShared/entities";
+} from "../../stateSchemas/schema4ValueTraits/StateValue/stateValuesShared/entities";
+import { SectionNameByType } from "../../stateSchemas/schema6SectionChildren/SectionNameByType";
 import { Arr } from "../../utils/Arr";
 
 export class OutEntityGetterVarb<

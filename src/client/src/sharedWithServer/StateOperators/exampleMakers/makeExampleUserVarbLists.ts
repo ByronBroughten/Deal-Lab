@@ -1,6 +1,6 @@
-import { numObj } from "../../stateSchemas/StateValue/NumObj";
-import { numObjNext } from "../../stateSchemas/StateValue/numObjNext";
-import { stringObj } from "../../stateSchemas/StateValue/StringObj";
+import { numObj } from "../../stateSchemas/schema4ValueTraits/StateValue/NumObj";
+import { numObjNext } from "../../stateSchemas/schema4ValueTraits/StateValue/numObjNext";
+import { stringObj } from "../../stateSchemas/schema4ValueTraits/StateValue/StringObj";
 import { SectionPack } from "../../StateTransports/SectionPack";
 import { IdS } from "../../utils/IdS";
 import { PackBuilderSection } from "../Packers/PackBuilderSection";

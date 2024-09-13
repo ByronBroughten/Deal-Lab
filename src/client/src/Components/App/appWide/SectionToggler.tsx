@@ -1,8 +1,8 @@
 import { Box, SxProps } from "@mui/material";
 import { useGetterVarbNext } from "../../../modules/stateHooks/useGetterVarb";
 import { FeVarbInfoNext } from "../../../sharedWithServer/StateGetters/Identifiers/FeInfo";
-import { VarbName } from "../../../sharedWithServer/stateSchemas/derivedFromBaseSchemas/baseSectionsVarbsTypes";
-import { SectionName } from "../../../sharedWithServer/stateSchemas/SectionName";
+import { VarbName } from "../../../sharedWithServer/stateSchemas/fromSchema3SectionStructures/baseSectionsVarbsTypes";
+import { SectionName } from "../../../sharedWithServer/stateSchemas/schema2SectionNames";
 import ChunkTitle from "../../general/ChunkTitle";
 import { MuiRow } from "../../general/MuiRow";
 import { TogglerBooleanVarb } from "./TogglerBooleanVarb";

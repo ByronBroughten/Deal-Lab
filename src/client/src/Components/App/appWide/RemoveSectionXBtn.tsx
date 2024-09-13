@@ -3,7 +3,7 @@ import {
   useActionWithProps,
 } from "../../../modules/stateHooks/useAction";
 import { FeSectionInfo } from "../../../sharedWithServer/StateGetters/Identifiers/FeInfo";
-import { FeStoreInfo } from "../../../sharedWithServer/stateSchemas/sectionStores";
+import { FeStoreInfo } from "../../../sharedWithServer/stateSchemas/schema6SectionChildren/sectionStores";
 import { MuiStandardProps } from "../../general/StandardProps";
 import { XBtn } from "./Xbtn";
 

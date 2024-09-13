@@ -5,7 +5,7 @@ import { QueryReq } from "../../../client/src/sharedWithServer/ApiQueries";
 import { EstimatorPlanValues } from "../../../client/src/sharedWithServer/apiQueriesShared/EstimatorPlanValues";
 import { constants } from "../../../client/src/sharedWithServer/Constants";
 import { ApiQueryName } from "../../../client/src/sharedWithServer/Constants/queryPaths";
-import { validateLabSubscription } from "../../../client/src/sharedWithServer/stateSchemas/StateValue/unionValues";
+import { validateLabSubscription } from "../../../client/src/sharedWithServer/stateSchemas/schema4ValueTraits/StateValue/unionValues";
 import { ValidationError } from "../../../client/src/sharedWithServer/utils/Error";
 import { mathS } from "../../../client/src/sharedWithServer/utils/math";
 import { Obj } from "../../../client/src/sharedWithServer/utils/Obj";

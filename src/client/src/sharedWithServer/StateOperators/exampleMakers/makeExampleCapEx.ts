@@ -1,5 +1,5 @@
-import { numToObj } from "../../stateSchemas/StateValue/NumObj";
-import { stringObj } from "../../stateSchemas/StateValue/StringObj";
+import { numToObj } from "../../stateSchemas/schema4ValueTraits/StateValue/NumObj";
+import { stringObj } from "../../stateSchemas/schema4ValueTraits/StateValue/StringObj";
 import { SectionPack } from "../../StateTransports/SectionPack";
 import { timeS } from "../../utils/timeS";
 import { makeExample } from "./makeExample";

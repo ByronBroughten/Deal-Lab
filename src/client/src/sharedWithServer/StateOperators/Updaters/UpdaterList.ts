@@ -1,7 +1,7 @@
 import { RawFeSection } from "../../State/StateSectionsTypes";
 import { GetterListBase } from "../../StateGetters/Bases/GetterListBase";
 import { GetterList } from "../../StateGetters/GetterList";
-import { SectionName } from "../../stateSchemas/SectionName";
+import { SectionName } from "../../stateSchemas/schema2SectionNames";
 import { Arr } from "../../utils/Arr";
 import { UpdaterSection } from "./UpdaterSection";
 import { UpdaterSections } from "./UpdaterSections";

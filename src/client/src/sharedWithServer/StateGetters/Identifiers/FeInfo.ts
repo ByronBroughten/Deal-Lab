@@ -1,18 +1,18 @@
 import {
   VarbName,
   VarbNameWide,
-} from "../../stateSchemas/derivedFromBaseSchemas/baseSectionsVarbsTypes";
+} from "../../stateSchemas/fromSchema3SectionStructures/baseSectionsVarbsTypes";
 import {
   ParentName,
   ParentNameSafe,
-} from "../../stateSchemas/derivedFromChildrenSchemas/ParentName";
-import { SectionName } from "../../stateSchemas/SectionName";
+} from "../../stateSchemas/fromSchema6SectionChildren/ParentName";
+import { SectionName } from "../../stateSchemas/schema2SectionNames";
+import { StateValue } from "../../stateSchemas/schema4ValueTraits/StateValue";
 import {
   SectionNameByType,
   sectionNameS,
   SectionNameType,
-} from "../../stateSchemas/SectionNameByType";
-import { StateValue } from "../../stateSchemas/StateValue";
+} from "../../stateSchemas/schema6SectionChildren/SectionNameByType";
 import { IdS } from "../../utils/IdS";
 import { SectionNameProp } from "./SectionNameProp";
 import { VarbProp, VarbPropNext } from "./VarbInfoBase";

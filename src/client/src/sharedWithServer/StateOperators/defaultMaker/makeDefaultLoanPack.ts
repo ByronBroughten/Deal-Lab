@@ -1,5 +1,5 @@
-import { FinancingMode } from "../../stateSchemas/StateValue/financingMode";
-import { numObj } from "../../stateSchemas/StateValue/NumObj";
+import { FinancingMode } from "../../stateSchemas/schema4ValueTraits/StateValue/financingMode";
+import { numObj } from "../../stateSchemas/schema4ValueTraits/StateValue/NumObj";
 import { SectionPack } from "../../StateTransports/SectionPack";
 import { PackBuilderSection } from "../Packers/PackBuilderSection";
 

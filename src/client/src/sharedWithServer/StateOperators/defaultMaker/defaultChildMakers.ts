@@ -1,6 +1,6 @@
-import { ChildName } from "../../stateSchemas/derivedFromChildrenSchemas/ChildName";
-import { ChildSectionName } from "../../stateSchemas/derivedFromChildrenSchemas/ChildSectionName";
-import { SectionName } from "../../stateSchemas/SectionName";
+import { ChildName } from "../../stateSchemas/fromSchema6SectionChildren/ChildName";
+import { ChildSectionName } from "../../stateSchemas/fromSchema6SectionChildren/ChildSectionName";
+import { SectionName } from "../../stateSchemas/schema2SectionNames";
 import { SectionPack } from "../../StateTransports/SectionPack";
 import { Obj } from "../../utils/Obj";
 import { UpdaterSection } from "../Updaters/UpdaterSection";

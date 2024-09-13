@@ -1,7 +1,7 @@
 import { useAction } from "../../../../../../../../modules/stateHooks/useAction";
 import { useGetterSection } from "../../../../../../../../modules/stateHooks/useGetterSection";
 import { capExDisplayNames } from "../../../../../../../../sharedWithServer/StateOperators/exampleMakers/makeExamplePeriodicListProps";
-import { SectionValues } from "../../../../../../../../sharedWithServer/stateSchemas/StateValue";
+import { SectionValues } from "../../../../../../../../sharedWithServer/stateSchemas/schema4ValueTraits/StateValue";
 import { VarbListGenericMenuType } from "../../../../../../appWide/ListGroup/ListGroupShared/VarbListGeneric";
 import { VarbListTableCapEx } from "../../../../../../appWide/ListGroup/ListGroupShared/VarbListGeneric/VarbListTableCapEx";
 import { CapExItem } from "../../../../../../appWide/VarbLists/ListGroupPeriodicList/CapExItem";

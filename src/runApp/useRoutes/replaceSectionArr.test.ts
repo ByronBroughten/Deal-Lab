@@ -2,7 +2,7 @@ import request from "supertest";
 import { SectionPackArrsReq } from "../../client/src/sharedWithServer/apiQueriesShared/makeReqAndRes";
 import { constant } from "../../client/src/sharedWithServer/Constants";
 import { PackBuilderSection } from "../../client/src/sharedWithServer/StateOperators/Packers/PackBuilderSection";
-import { childToSectionName } from "../../client/src/sharedWithServer/stateSchemas/derivedFromChildrenSchemas/ChildSectionName";
+import { childToSectionName } from "../../client/src/sharedWithServer/stateSchemas/fromSchema6SectionChildren/ChildSectionName";
 import { DbUserGetter } from "../../DbUserService/DbUserGetter";
 import { runApp } from "../../runApp";
 import { SectionArrReqMaker } from "./apiQueriesTestTools/SectionArrReqMaker";

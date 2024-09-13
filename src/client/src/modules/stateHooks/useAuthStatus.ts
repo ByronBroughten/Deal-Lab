@@ -1,4 +1,4 @@
-import { StateValue } from "../../sharedWithServer/stateSchemas/StateValue";
+import { StateValue } from "../../sharedWithServer/stateSchemas/schema4ValueTraits/StateValue";
 import { useGetterSectionOnlyOne } from "./useGetterSection";
 
 export function useAuthStatus(): StateValue<"authStatus"> {

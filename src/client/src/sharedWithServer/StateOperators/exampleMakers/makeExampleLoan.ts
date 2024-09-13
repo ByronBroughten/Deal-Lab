@@ -1,5 +1,8 @@
-import { SectionValues, StateValue } from "../../stateSchemas/StateValue";
-import { NumObj } from "../../stateSchemas/StateValue/NumObj";
+import {
+  SectionValues,
+  StateValue,
+} from "../../stateSchemas/schema4ValueTraits/StateValue";
+import { NumObj } from "../../stateSchemas/schema4ValueTraits/StateValue/NumObj";
 import { StrictPick } from "../../utils/types";
 import { makeExample } from "./makeExample";
 

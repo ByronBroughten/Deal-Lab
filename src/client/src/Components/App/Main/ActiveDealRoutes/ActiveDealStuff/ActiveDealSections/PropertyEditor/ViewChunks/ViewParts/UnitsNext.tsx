@@ -3,7 +3,7 @@ import { useGetterSection } from "../../../../../../../../../modules/stateHooks/
 import { arrSx } from "../../../../../../../../../modules/utils/mui";
 import { GetterSection } from "../../../../../../../../../sharedWithServer/StateGetters/GetterSection";
 import { FeIdProp } from "../../../../../../../../../sharedWithServer/StateGetters/Identifiers/NanoIdInfo";
-import { VarbName } from "../../../../../../../../../sharedWithServer/stateSchemas/derivedFromBaseSchemas/baseSectionsVarbsTypes";
+import { VarbName } from "../../../../../../../../../sharedWithServer/stateSchemas/fromSchema3SectionStructures/baseSectionsVarbsTypes";
 import { nativeTheme } from "../../../../../../../../../theme/nativeTheme";
 import { MuiRow } from "../../../../../../../../general/MuiRow";
 import { SubSectionBtn } from "../../../../../../../appWide/GeneralSection/GeneralSectionTitle/SubSectionBtn";

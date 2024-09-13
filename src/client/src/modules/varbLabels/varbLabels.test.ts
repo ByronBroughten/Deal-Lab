@@ -1,10 +1,10 @@
 import {
   sectionVarbNames,
   VarbNameWide,
-} from "../../sharedWithServer/stateSchemas/derivedFromBaseSchemas/baseSectionsVarbsTypes";
-import { sectionVarbValueName } from "../../sharedWithServer/stateSchemas/derivedFromBaseSchemas/baseSectionValues";
-import { sectionNames } from "../../sharedWithServer/stateSchemas/SectionName";
-import { ValueName } from "../../sharedWithServer/stateSchemas/ValueName";
+} from "../../sharedWithServer/stateSchemas/fromSchema3SectionStructures/baseSectionsVarbsTypes";
+import { sectionVarbValueName } from "../../sharedWithServer/stateSchemas/fromSchema3SectionStructures/baseSectionValues";
+import { ValueName } from "../../sharedWithServer/stateSchemas/schema1ValueNames";
+import { sectionNames } from "../../sharedWithServer/stateSchemas/schema2SectionNames";
 import { varbLabels } from "./varbLabels";
 
 function checkAllVarbLabels() {

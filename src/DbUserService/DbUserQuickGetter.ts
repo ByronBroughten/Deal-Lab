@@ -2,7 +2,7 @@ import { DbSectionPack } from "../client/src/sharedWithServer//StateTransports/D
 import {
   DbStoreInfo,
   DbStoreName,
-} from "../client/src/sharedWithServer/stateSchemas/derivedFromChildrenSchemas/DbStoreName";
+} from "../client/src/sharedWithServer/stateSchemas/fromSchema6SectionChildren/DbStoreName";
 import {
   DbSectionsRaw,
   SectionPackNotFoundError,

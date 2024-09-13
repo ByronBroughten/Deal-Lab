@@ -3,7 +3,7 @@ import { lighten } from "polished";
 import styled, { css } from "styled-components";
 import { getEntityStrategy } from "../../../../modules/draftjs/getEntityStrategies";
 import { useGetterSectionContext } from "../../../../modules/stateHooks/useGetterSection";
-import { EntityMapData } from "../../../../sharedWithServer/stateSchemas/StateValue/stateValuesShared/entities";
+import { EntityMapData } from "../../../../sharedWithServer/stateSchemas/schema4ValueTraits/StateValue/stateValuesShared/entities";
 import theme from "../../../../theme/Theme";
 import { EntitySpanBasic } from "./EntitySpanBasic";
 

@@ -10,15 +10,15 @@ import { GetterVarb } from "../../sharedWithServer/StateGetters/GetterVarb";
 import { GetterVarbNumObj } from "../../sharedWithServer/StateGetters/GetterVarbNumObj";
 import { InEntityGetterVarb } from "../../sharedWithServer/StateGetters/InEntityGetterVarb";
 import { UpdaterVarb } from "../../sharedWithServer/StateOperators/Updaters/UpdaterVarb";
-import { isEditorUpdateFnName } from "../../sharedWithServer/stateSchemas/allUpdateSectionVarbs/updateVarb/UpdateFnName";
-import { SectionName } from "../../sharedWithServer/stateSchemas/SectionName";
-import { EditorValueName } from "../../sharedWithServer/stateSchemas/StateValue/EditorValue";
+import { SectionName } from "../../sharedWithServer/stateSchemas/schema2SectionNames";
+import { EditorValueName } from "../../sharedWithServer/stateSchemas/schema4ValueTraits/StateValue/EditorValue";
 import {
   EntitiesAndEditorText,
   NumObj,
-} from "../../sharedWithServer/stateSchemas/StateValue/NumObj";
-import { ValueInEntity } from "../../sharedWithServer/stateSchemas/StateValue/stateValuesShared/entities";
-import { StringObj } from "../../sharedWithServer/stateSchemas/StateValue/StringObj";
+} from "../../sharedWithServer/stateSchemas/schema4ValueTraits/StateValue/NumObj";
+import { ValueInEntity } from "../../sharedWithServer/stateSchemas/schema4ValueTraits/StateValue/stateValuesShared/entities";
+import { StringObj } from "../../sharedWithServer/stateSchemas/schema4ValueTraits/StateValue/StringObj";
+import { isEditorUpdateFnName } from "../../sharedWithServer/stateSchemas/schema5VariablesLogic/updateVarb/UpdateFnName";
 import { Arr } from "../../sharedWithServer/utils/Arr";
 import { EntityMap, EntityRanges, RawEditorState } from "../utils/DraftS";
 import { draftUtils, numObjToRawContent } from "./draftUtils";

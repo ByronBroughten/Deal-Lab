@@ -5,10 +5,10 @@ import { useAction } from "../../../modules/stateHooks/useAction";
 import { useGetterVarbNext } from "../../../modules/stateHooks/useGetterVarb";
 import { MuiSelectOnChange } from "../../../modules/utils/mui";
 import { FeVarbInfoNext } from "../../../sharedWithServer/StateGetters/Identifiers/FeInfo";
-import { SectionName } from "../../../sharedWithServer/stateSchemas/SectionName";
-import { StateValue } from "../../../sharedWithServer/stateSchemas/StateValue";
-import { UnionValueName } from "../../../sharedWithServer/stateSchemas/StateValue/unionValues";
-import { validateStateValue } from "../../../sharedWithServer/stateSchemas/valueMetas";
+import { SectionName } from "../../../sharedWithServer/stateSchemas/schema2SectionNames";
+import { validateStateValue } from "../../../sharedWithServer/stateSchemas/schema4ValueTraits";
+import { StateValue } from "../../../sharedWithServer/stateSchemas/schema4ValueTraits/StateValue";
+import { UnionValueName } from "../../../sharedWithServer/stateSchemas/schema4ValueTraits/StateValue/unionValues";
 import { MuiSelectStyled } from "./MuiSelectStyled";
 
 export type MuiSelectItems<UVN extends UnionValueName> = (

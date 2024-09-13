@@ -9,19 +9,22 @@ import { NotAVarbNameError } from "../../StateGetters/Bases/GetterVarbBase";
 import { GetterSections } from "../../StateGetters/GetterSections";
 import { FeSectionInfo } from "../../StateGetters/Identifiers/FeInfo";
 import { SectionPathContextName } from "../../StateGetters/Identifiers/sectionPaths/sectionPathContexts";
-import { VarbName } from "../../stateSchemas/derivedFromBaseSchemas/baseSectionsVarbsTypes";
+import { VarbName } from "../../stateSchemas/fromSchema3SectionStructures/baseSectionsVarbsTypes";
 import {
   ChildArrInfo,
   ChildIdArrsNarrow,
   ChildName,
   CreateChildInfo,
   FeChildInfo,
-} from "../../stateSchemas/derivedFromChildrenSchemas/ChildName";
-import { ChildSectionName } from "../../stateSchemas/derivedFromChildrenSchemas/ChildSectionName";
-import { ParentNameSafe } from "../../stateSchemas/derivedFromChildrenSchemas/ParentName";
-import { SectionName } from "../../stateSchemas/SectionName";
-import { SectionNameByType } from "../../stateSchemas/SectionNameByType";
-import { SectionValues, StateValue } from "../../stateSchemas/StateValue";
+} from "../../stateSchemas/fromSchema6SectionChildren/ChildName";
+import { ChildSectionName } from "../../stateSchemas/fromSchema6SectionChildren/ChildSectionName";
+import { ParentNameSafe } from "../../stateSchemas/fromSchema6SectionChildren/ParentName";
+import { SectionName } from "../../stateSchemas/schema2SectionNames";
+import {
+  SectionValues,
+  StateValue,
+} from "../../stateSchemas/schema4ValueTraits/StateValue";
+import { SectionNameByType } from "../../stateSchemas/schema6SectionChildren/SectionNameByType";
 import { Arr } from "../../utils/Arr";
 import { ValidationError } from "../../utils/Error";
 import { IdS } from "../../utils/IdS";

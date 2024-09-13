@@ -1,6 +1,10 @@
-import { numObj, NumObj, numToObj } from "../../stateSchemas/StateValue/NumObj";
-import { numObjNext } from "../../stateSchemas/StateValue/numObjNext";
-import { stringObj } from "../../stateSchemas/StateValue/StringObj";
+import {
+  numObj,
+  NumObj,
+  numToObj,
+} from "../../stateSchemas/schema4ValueTraits/StateValue/NumObj";
+import { numObjNext } from "../../stateSchemas/schema4ValueTraits/StateValue/numObjNext";
+import { stringObj } from "../../stateSchemas/schema4ValueTraits/StateValue/StringObj";
 import { makeExample } from "./makeExample";
 
 export function makeNationalUtilityAverageList() {

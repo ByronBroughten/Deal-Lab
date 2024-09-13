@@ -1,6 +1,6 @@
-import { switchKeyToVarbNames } from "../../stateSchemas/allBaseSectionVarbs/baseSwitchNames";
-import { VarbName } from "../../stateSchemas/derivedFromBaseSchemas/baseSectionsVarbsTypes";
-import { numObj } from "../../stateSchemas/StateValue/NumObj";
+import { VarbName } from "../../stateSchemas/fromSchema3SectionStructures/baseSectionsVarbsTypes";
+import { switchKeyToVarbNames } from "../../stateSchemas/schema3SectionStructures/baseSwitchNames";
+import { numObj } from "../../stateSchemas/schema4ValueTraits/StateValue/NumObj";
 import { SolverSection } from "./SolverSection";
 import {
   addHoldingTaxesHomeInsYearly,

@@ -3,7 +3,7 @@ import { FeSectionInfo, FeVarbInfo } from "../StateGetters/Identifiers/FeInfo";
 import {
   SectionNameByType,
   sectionNameS,
-} from "../stateSchemas/SectionNameByType";
+} from "../stateSchemas/schema6SectionChildren/SectionNameByType";
 import { Arr, ValueNotFoundError } from "../utils/Arr";
 import { IdS } from "../utils/IdS";
 import { Obj } from "../utils/Obj";

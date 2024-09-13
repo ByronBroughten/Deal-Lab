@@ -2,7 +2,7 @@ import {
   GroupKey,
   GroupName,
   GroupRecord,
-} from "../../sharedWithServer/stateSchemas/GroupName";
+} from "../../sharedWithServer/stateSchemas/schema3SectionStructures/GroupName";
 
 export const periodicEndAdornments: GroupRecord<"periodic", string> = {
   monthly: "/month",

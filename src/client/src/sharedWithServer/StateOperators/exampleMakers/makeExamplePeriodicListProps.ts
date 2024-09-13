@@ -1,5 +1,8 @@
-import { NumObj, numObj } from "../../stateSchemas/StateValue/NumObj";
-import { numObjNext } from "../../stateSchemas/StateValue/numObjNext";
+import {
+  NumObj,
+  numObj,
+} from "../../stateSchemas/schema4ValueTraits/StateValue/NumObj";
+import { numObjNext } from "../../stateSchemas/schema4ValueTraits/StateValue/numObjNext";
 import { Obj } from "../../utils/Obj";
 
 export type ExampleCapExProps = [string, number | NumObj, number | NumObj][];

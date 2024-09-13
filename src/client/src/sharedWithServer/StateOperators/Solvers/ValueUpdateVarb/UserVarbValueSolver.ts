@@ -1,7 +1,10 @@
 import { GetterSectionBase } from "../../../StateGetters/Bases/GetterSectionBase";
 import { GetterSection } from "../../../StateGetters/GetterSection";
 import { GetterVarbNumObj } from "../../../StateGetters/GetterVarbNumObj";
-import { NumObj, numObj } from "../../../stateSchemas/StateValue/NumObj";
+import {
+  NumObj,
+  numObj,
+} from "../../../stateSchemas/schema4ValueTraits/StateValue/NumObj";
 
 export class UserVarbValueSolver extends GetterSectionBase<"numVarbItem"> {
   get get() {

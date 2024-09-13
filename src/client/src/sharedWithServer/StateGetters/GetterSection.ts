@@ -6,13 +6,11 @@ import {
   TooManySectionsFoundError,
 } from "../State/StateSectionsTypes";
 import { PackMakerSection } from "../StateOperators/Packers/PackMakerSection";
-import { DbSectionInfo } from "../stateSchemas/allBaseSectionVarbs/DbSectionInfo";
-import { GenericChildTraits } from "../stateSchemas/allChildrenTraits";
 import {
   GroupBaseVI,
   GroupVarbNameBase,
-} from "../stateSchemas/derivedFromBaseSchemas/baseGroupNames";
-import { VarbName } from "../stateSchemas/derivedFromBaseSchemas/baseSectionsVarbsTypes";
+} from "../stateSchemas/fromSchema3SectionStructures/baseGroupNames";
+import { VarbName } from "../stateSchemas/fromSchema3SectionStructures/baseSectionsVarbsTypes";
 import {
   ChildIdArrsWide,
   ChildName,
@@ -20,13 +18,13 @@ import {
   DescendantIds,
   FeChildInfo,
   GeneralChildIdArrs,
-} from "../stateSchemas/derivedFromChildrenSchemas/ChildName";
-import { ChildSectionName } from "../stateSchemas/derivedFromChildrenSchemas/ChildSectionName";
+} from "../stateSchemas/fromSchema6SectionChildren/ChildName";
+import { ChildSectionName } from "../stateSchemas/fromSchema6SectionChildren/ChildSectionName";
 import {
   DescendantOfSnByNodeInfo,
   DescendantOfSnInfo,
   DescOfSnDbIdInfo,
-} from "../stateSchemas/derivedFromChildrenSchemas/DescendantName";
+} from "../stateSchemas/fromSchema6SectionChildren/DescendantName";
 import {
   noParentWarning,
   ParentName,
@@ -34,28 +32,29 @@ import {
   PiblingName,
   SelfChildName,
   StepSiblingName,
-} from "../stateSchemas/derivedFromChildrenSchemas/ParentName";
+} from "../stateSchemas/fromSchema6SectionChildren/ParentName";
+import { ValueName } from "../stateSchemas/schema1ValueNames";
+import { SectionName } from "../stateSchemas/schema2SectionNames";
+import { DbSectionInfo } from "../stateSchemas/schema3SectionStructures/DbSectionInfo";
 import {
   GroupKey,
   periodicName,
   timespanName,
-} from "../stateSchemas/GroupName";
-import { SectionName } from "../stateSchemas/SectionName";
-import {
-  SectionNameByType,
-  sectionNameS,
-  SectionNameType,
-} from "../stateSchemas/SectionNameByType";
-import { SectionMeta } from "../stateSchemas/StateMeta/SectionMeta";
+} from "../stateSchemas/schema3SectionStructures/GroupName";
 import {
   SectionValues,
   StateValue,
   StateValueOrAny,
   ValueNameOrAny,
   VarbValue,
-} from "../stateSchemas/StateValue";
-import { InEntityValue } from "../stateSchemas/StateValue/InEntityValue";
-import { ValueName } from "../stateSchemas/ValueName";
+} from "../stateSchemas/schema4ValueTraits/StateValue";
+import { InEntityValue } from "../stateSchemas/schema4ValueTraits/StateValue/InEntityValue";
+import {
+  SectionNameByType,
+  sectionNameS,
+  SectionNameType,
+} from "../stateSchemas/schema6SectionChildren/SectionNameByType";
+import { GenericChildTraits } from "../stateSchemas/schema8ChildrenTraits";
 import { SectionPack } from "../StateTransports/SectionPack";
 import { Arr } from "../utils/Arr";
 import { Obj } from "../utils/Obj";
@@ -98,6 +97,7 @@ import {
   FeSectionInfoMixed,
 } from "./Identifiers/VarbInfoBase";
 import { getVarbPathParams } from "./Identifiers/VarbPathNameInfo";
+import { SectionMeta } from "./StateMeta/SectionMeta";
 
 export interface GetterSectionRequiredProps<SN extends SectionName>
   extends FeSectionInfo<SN>,

@@ -1,6 +1,6 @@
 import { useAction } from "../../../../../../../../modules/stateHooks/useAction";
 import { useGetterSection } from "../../../../../../../../modules/stateHooks/useGetterSection";
-import { SectionValues } from "../../../../../../../../sharedWithServer/stateSchemas/StateValue";
+import { SectionValues } from "../../../../../../../../sharedWithServer/stateSchemas/schema4ValueTraits/StateValue";
 import { VarbListGenericMenuType } from "../../../../../../appWide/ListGroup/ListGroupShared/VarbListGeneric";
 import { VarbListStandardHeaders } from "../../../../../../appWide/ListGroup/ListGroupShared/VarbListGeneric/VarbListStandardHeaders";
 import { VarbListTableSectionGeneric } from "../../../../../../appWide/ListGroup/ListGroupShared/VarbListGeneric/VarbListTableSectionGeneric";

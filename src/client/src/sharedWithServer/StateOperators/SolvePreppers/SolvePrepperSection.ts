@@ -3,16 +3,16 @@ import { StateSections } from "../../State/StateSections";
 import { GetterSectionProps } from "../../StateGetters/Bases/GetterSectionBase";
 import { GetterSection } from "../../StateGetters/GetterSection";
 import { FeSectionInfo } from "../../StateGetters/Identifiers/FeInfo";
-import { VarbName } from "../../stateSchemas/derivedFromBaseSchemas/baseSectionsVarbsTypes";
+import { VarbName } from "../../stateSchemas/fromSchema3SectionStructures/baseSectionsVarbsTypes";
 import {
   ChildName,
   DbChildInfo,
   FeChildInfo,
-} from "../../stateSchemas/derivedFromChildrenSchemas/ChildName";
-import { ChildSectionName } from "../../stateSchemas/derivedFromChildrenSchemas/ChildSectionName";
-import { ParentNameSafe } from "../../stateSchemas/derivedFromChildrenSchemas/ParentName";
-import { SectionName } from "../../stateSchemas/SectionName";
-import { SectionValues } from "../../stateSchemas/StateValue";
+} from "../../stateSchemas/fromSchema6SectionChildren/ChildName";
+import { ChildSectionName } from "../../stateSchemas/fromSchema6SectionChildren/ChildSectionName";
+import { ParentNameSafe } from "../../stateSchemas/fromSchema6SectionChildren/ParentName";
+import { SectionName } from "../../stateSchemas/schema2SectionNames";
+import { SectionValues } from "../../stateSchemas/schema4ValueTraits/StateValue";
 import {
   ChildArrPack,
   ChildPackArrs,

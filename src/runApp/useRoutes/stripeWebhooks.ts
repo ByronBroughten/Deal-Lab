@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express";
 import Stripe from "stripe";
 import { PackBuilderSection } from "../../client/src/sharedWithServer/StateOperators/Packers/PackBuilderSection";
-import { SectionValues } from "../../client/src/sharedWithServer/stateSchemas/StateValue";
+import { SectionValues } from "../../client/src/sharedWithServer/stateSchemas/schema4ValueTraits/StateValue";
 import { timeS } from "../../client/src/sharedWithServer/utils/timeS";
 import { DbUserService } from "../../DbUserService";
 import { getStripeEvent } from "./routesShared/stripe";

@@ -1,18 +1,18 @@
 import { Schema } from "mongoose";
-import { validateInEntityValue } from "../client/src/sharedWithServer/stateSchemas/StateValue/InEntityValue";
-import { NumObj } from "../client/src/sharedWithServer/stateSchemas/StateValue/NumObj";
+import { ValueName } from "../client/src/sharedWithServer/stateSchemas/schema1ValueNames";
+import { valueTraits } from "../client/src/sharedWithServer/stateSchemas/schema4ValueTraits";
+import { validateInEntityValue } from "../client/src/sharedWithServer/stateSchemas/schema4ValueTraits/StateValue/InEntityValue";
+import { NumObj } from "../client/src/sharedWithServer/stateSchemas/schema4ValueTraits/StateValue/NumObj";
 import {
   validateChangeSaving,
   validateChangesToSave,
-} from "../client/src/sharedWithServer/stateSchemas/StateValue/sectionChanges";
-import { validateValueInEntities } from "../client/src/sharedWithServer/stateSchemas/StateValue/stateValuesShared/entities";
-import { StringObj } from "../client/src/sharedWithServer/stateSchemas/StateValue/StringObj";
+} from "../client/src/sharedWithServer/stateSchemas/schema4ValueTraits/StateValue/sectionChanges";
+import { validateValueInEntities } from "../client/src/sharedWithServer/stateSchemas/schema4ValueTraits/StateValue/stateValuesShared/entities";
+import { StringObj } from "../client/src/sharedWithServer/stateSchemas/schema4ValueTraits/StateValue/StringObj";
 import {
   UnionValueName,
   unionValueNames,
-} from "../client/src/sharedWithServer/stateSchemas/StateValue/unionValues";
-import { valueMetas } from "../client/src/sharedWithServer/stateSchemas/valueMetas";
-import { ValueName } from "../client/src/sharedWithServer/stateSchemas/ValueName";
+} from "../client/src/sharedWithServer/stateSchemas/schema4ValueTraits/StateValue/unionValues";
 import { dbLimits } from "../client/src/sharedWithServer/utils/dbLimits";
 import { validateS } from "../client/src/sharedWithServer/utils/validateS";
 
@@ -43,7 +43,7 @@ const mStringObj: Record<keyof StringObj, any> = {
 };
 
 const unions = unionValueNames.reduce((unions, name) => {
-  unions[name] = mFromValidator(valueMetas[name].validate);
+  unions[name] = mFromValidator(valueTraits[name].validate);
   return unions;
 }, {} as Record<UnionValueName, any>);
 

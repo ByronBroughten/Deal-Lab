@@ -1,10 +1,10 @@
-import { VarbName } from "../../stateSchemas/derivedFromBaseSchemas/baseSectionsVarbsTypes";
+import { VarbName } from "../../stateSchemas/fromSchema3SectionStructures/baseSectionsVarbsTypes";
 import {
   DbSectionName,
   DbStoreName,
-} from "../../stateSchemas/derivedFromChildrenSchemas/DbStoreName";
-import { SectionName } from "../../stateSchemas/SectionName";
-import { VarbValue } from "../../stateSchemas/StateValue";
+} from "../../stateSchemas/fromSchema6SectionChildren/DbStoreName";
+import { SectionName } from "../../stateSchemas/schema2SectionNames";
+import { VarbValue } from "../../stateSchemas/schema4ValueTraits/StateValue";
 
 export type OneDbSectionVarbInfo<
   CN extends DbStoreName,

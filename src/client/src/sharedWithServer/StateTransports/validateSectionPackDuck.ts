@@ -4,12 +4,15 @@ import {
   RawSections,
   SectionValuesGeneric,
 } from "../State/RawSection";
-import { sectionVarbNames } from "../stateSchemas/derivedFromBaseSchemas/baseSectionsVarbsTypes";
-import { validateSectionVarbValue } from "../stateSchemas/derivedFromBaseSchemas/baseSectionValues";
-import { getChildNames } from "../stateSchemas/derivedFromChildrenSchemas/ChildName";
-import { selfAndDescSectionNames } from "../stateSchemas/derivedFromChildrenSchemas/DescendantName";
-import { SectionName, validateSectionName } from "../stateSchemas/SectionName";
-import { sectionsMeta } from "../stateSchemas/StateMeta/SectionsMeta";
+import { sectionsMeta } from "../StateGetters/StateMeta/SectionsMeta";
+import { sectionVarbNames } from "../stateSchemas/fromSchema3SectionStructures/baseSectionsVarbsTypes";
+import { validateSectionVarbValue } from "../stateSchemas/fromSchema3SectionStructures/baseSectionValues";
+import { getChildNames } from "../stateSchemas/fromSchema6SectionChildren/ChildName";
+import { selfAndDescSectionNames } from "../stateSchemas/fromSchema6SectionChildren/DescendantName";
+import {
+  SectionName,
+  validateSectionName,
+} from "../stateSchemas/schema2SectionNames";
 import { Arr } from "../utils/Arr";
 import { ValidationError } from "../utils/Error";
 import { IdS } from "../utils/IdS";

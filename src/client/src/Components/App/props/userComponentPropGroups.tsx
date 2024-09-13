@@ -4,7 +4,7 @@ import { FaFaucet, FaHandHoldingUsd, FaMoneyCheckAlt } from "react-icons/fa";
 import { MdAttachMoney, MdOutlineRoofing, MdSell } from "react-icons/md";
 import { VscOutput } from "react-icons/vsc";
 import { constants } from "../../../sharedWithServer/Constants";
-import { StoreName } from "../../../sharedWithServer/stateSchemas/sectionStores";
+import { StoreName } from "../../../sharedWithServer/stateSchemas/schema6SectionChildren/sectionStores";
 import { icons } from "../Icons";
 
 type Props = {

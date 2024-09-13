@@ -1,5 +1,5 @@
 import { useGetterSection } from "../../../../../../modules/stateHooks/useGetterSection";
-import { StateValue } from "../../../../../../sharedWithServer/stateSchemas/StateValue";
+import { StateValue } from "../../../../../../sharedWithServer/stateSchemas/schema4ValueTraits/StateValue";
 import { TimespanEditor } from "../../../../inputs/TimespanEditor";
 import { FinancingEditorBody } from "./FinancingEditor/FinancingEditorBody";
 import { FinancingLoans } from "./FinancingEditor/FinancingLoans";

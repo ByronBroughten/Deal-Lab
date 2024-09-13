@@ -1,8 +1,8 @@
 import { GetterSectionBase } from "../../StateGetters/Bases/GetterSectionBase";
 import { GetterSection } from "../../StateGetters/GetterSection";
 import { FeVarbInfo } from "../../StateGetters/Identifiers/FeInfo";
-import { VarbName } from "../../stateSchemas/derivedFromBaseSchemas/baseSectionsVarbsTypes";
-import { SectionName } from "../../stateSchemas/SectionName";
+import { VarbName } from "../../stateSchemas/fromSchema3SectionStructures/baseSectionsVarbsTypes";
+import { SectionName } from "../../stateSchemas/schema2SectionNames";
 import { EntityPrepperVarb } from "./EntityPrepperVarb";
 
 export class EntityPrepperSection<

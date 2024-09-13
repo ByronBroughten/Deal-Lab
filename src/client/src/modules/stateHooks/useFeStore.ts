@@ -1,5 +1,5 @@
 import { useSectionsContext } from "../../Components/ContextsAndProviders/MainStateProvider";
-import { StateValue } from "../../sharedWithServer/stateSchemas/StateValue";
+import { StateValue } from "../../sharedWithServer/stateSchemas/schema4ValueTraits/StateValue";
 import { GetterFeStore } from "../FeStore/GetterFeStore";
 
 export function useGetterFeStore() {

@@ -3,16 +3,16 @@ import {
   RelLocalVarbInfo,
   relVarbInfoS,
 } from "../../sharedWithServer/StateGetters/Identifiers/RelVarbInfo";
-import { SwitchTargetKey } from "../../sharedWithServer/stateSchemas/allBaseSectionVarbs/baseSwitchNames";
 import {
   sectionVarbNames,
   VarbName,
-} from "../../sharedWithServer/stateSchemas/derivedFromBaseSchemas/baseSectionsVarbsTypes";
+} from "../../sharedWithServer/stateSchemas/fromSchema3SectionStructures/baseSectionsVarbsTypes";
 import {
   SectionName,
   sectionNames,
-} from "../../sharedWithServer/stateSchemas/SectionName";
-import { dealModeLabels } from "../../sharedWithServer/stateSchemas/StateValue/unionValues";
+} from "../../sharedWithServer/stateSchemas/schema2SectionNames";
+import { SwitchTargetKey } from "../../sharedWithServer/stateSchemas/schema3SectionStructures/baseSwitchNames";
+import { dealModeLabels } from "../../sharedWithServer/stateSchemas/schema4ValueTraits/StateValue/unionValues";
 import { StrictOmit } from "../../sharedWithServer/utils/types";
 
 const multis = {

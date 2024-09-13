@@ -7,7 +7,7 @@ import {
   FeVarbInfo,
   FeVarbInfoNext,
 } from "../../sharedWithServer/StateGetters/Identifiers/FeInfo";
-import { numObj } from "../../sharedWithServer/stateSchemas/StateValue/NumObj";
+import { numObj } from "../../sharedWithServer/stateSchemas/schema4ValueTraits/StateValue/NumObj";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { VarbStringLabel } from "../App/appWide/VarbStringLabel";
 

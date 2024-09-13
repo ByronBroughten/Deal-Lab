@@ -1,5 +1,5 @@
-import { StateValue } from "../stateSchemas/StateValue";
-import { isLabSubscription } from "../stateSchemas/StateValue/unionValues";
+import { StateValue } from "../stateSchemas/schema4ValueTraits/StateValue";
+import { isLabSubscription } from "../stateSchemas/schema4ValueTraits/StateValue/unionValues";
 import { Obj } from "../utils/Obj";
 
 export interface EstimatorPlanValues {

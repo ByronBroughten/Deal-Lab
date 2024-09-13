@@ -1,13 +1,13 @@
 import {
   ChildName,
   validateChildName,
-} from "../stateSchemas/derivedFromChildrenSchemas/ChildName";
+} from "../stateSchemas/fromSchema6SectionChildren/ChildName";
 import {
   ChildSectionName,
   childToSectionName,
-} from "../stateSchemas/derivedFromChildrenSchemas/ChildSectionName";
-import { SectionName } from "../stateSchemas/SectionName";
-import { validateSectionPackArrByType } from "../stateSchemas/SectionNameByType";
+} from "../stateSchemas/fromSchema6SectionChildren/ChildSectionName";
+import { SectionName } from "../stateSchemas/schema2SectionNames";
+import { validateSectionPackArrByType } from "../stateSchemas/schema6SectionChildren/SectionNameByType";
 import { Obj } from "../utils/Obj";
 import { SectionPack } from "./SectionPack";
 

@@ -1,5 +1,5 @@
 import { pick } from "lodash";
-import { SectionNameByType } from "../../stateSchemas/SectionNameByType";
+import { SectionNameByType } from "../../stateSchemas/schema6SectionChildren/SectionNameByType";
 import { GetterSectionsBase, GetterSectionsProps } from "./GetterSectionsBase";
 
 export interface GetterListProps<SN extends SectionNameByType>

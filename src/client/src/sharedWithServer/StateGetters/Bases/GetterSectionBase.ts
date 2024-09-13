@@ -2,7 +2,7 @@ import { StateSections } from "../../State/StateSections";
 import {
   SectionNameByType,
   sectionNameS,
-} from "../../stateSchemas/SectionNameByType";
+} from "../../stateSchemas/schema6SectionChildren/SectionNameByType";
 import { IdS } from "../../utils/IdS";
 import { FeSectionInfo } from "../Identifiers/FeInfo";
 import { GetterListBase, GetterListProps } from "./GetterListBase";

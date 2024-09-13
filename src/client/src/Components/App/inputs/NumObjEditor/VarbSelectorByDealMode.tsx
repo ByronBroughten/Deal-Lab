@@ -5,7 +5,7 @@ import { mixedInfoS } from "../../../../sharedWithServer/StateGetters/Identifier
 import { fixedVarbOptionArrs } from "../../../../sharedWithServer/StateGetters/Identifiers/sectionPaths/varbPathOptions";
 import { ValueCustomVarbPathInfo } from "../../../../sharedWithServer/StateGetters/Identifiers/ValueInEntityInfo";
 import { collectionNamesFixed } from "../../../../sharedWithServer/StateGetters/Identifiers/VarbPathNameInfo";
-import { DealMode } from "../../../../sharedWithServer/stateSchemas/StateValue/dealMode";
+import { DealMode } from "../../../../sharedWithServer/stateSchemas/schema4ValueTraits/StateValue/dealMode";
 import { OnVarbSelect } from "./NumObjVarbSelector/VarbSelectorCollection";
 import { CollectionProps, VarbSelector } from "./VarbSelector";
 

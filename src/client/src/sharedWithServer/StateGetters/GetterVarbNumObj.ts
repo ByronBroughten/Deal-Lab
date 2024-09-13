@@ -1,12 +1,12 @@
 import { round } from "lodash";
-import { SectionNameByType } from "../stateSchemas/SectionNameByType";
 import {
   EntitiesAndEditorText,
   NumberOrQ,
   NumObj,
   NumObjOutput,
-} from "../stateSchemas/StateValue/NumObj";
-import { ValueInEntity } from "../stateSchemas/StateValue/stateValuesShared/entities";
+} from "../stateSchemas/schema4ValueTraits/StateValue/NumObj";
+import { ValueInEntity } from "../stateSchemas/schema4ValueTraits/StateValue/stateValuesShared/entities";
+import { SectionNameByType } from "../stateSchemas/schema6SectionChildren/SectionNameByType";
 import { Arr } from "../utils/Arr";
 import { arithmeticOperatorsArr, evaluate, mathS } from "../utils/math";
 import { Str } from "../utils/Str";

@@ -3,7 +3,7 @@ import React from "react";
 import { SetEditorState } from "../../../modules/utils/DraftS";
 import { FeVarbInfo } from "../../../sharedWithServer/StateGetters/Identifiers/FeInfo";
 import { ValueInEntityInfo } from "../../../sharedWithServer/StateGetters/Identifiers/ValueInEntityInfo";
-import { DealMode } from "../../../sharedWithServer/stateSchemas/StateValue/dealMode";
+import { DealMode } from "../../../sharedWithServer/stateSchemas/schema4ValueTraits/StateValue/dealMode";
 import { timeS } from "../../../sharedWithServer/utils/timeS";
 import { StrictOmit } from "../../../sharedWithServer/utils/types";
 import { useDealModeContext } from "../customContexts/dealModeContext";

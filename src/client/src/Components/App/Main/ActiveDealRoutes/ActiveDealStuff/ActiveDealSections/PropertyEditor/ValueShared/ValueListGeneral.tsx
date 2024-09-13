@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import styled from "styled-components";
 import { FeSectionInfo } from "../../../../../../../../sharedWithServer/StateGetters/Identifiers/FeInfo";
-import { SectionNameByType } from "../../../../../../../../sharedWithServer/stateSchemas/SectionNameByType";
+import { SectionNameByType } from "../../../../../../../../sharedWithServer/stateSchemas/schema6SectionChildren/SectionNameByType";
 import { nativeTheme } from "../../../../../../../../theme/nativeTheme";
 import { MuiRow } from "../../../../../../../general/MuiRow";
 import { FormSection } from "../../../../../../appWide/FormSection";

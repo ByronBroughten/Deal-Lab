@@ -5,14 +5,14 @@ import {
 import { GetterVarb } from "../../StateGetters/GetterVarb";
 import { VarbInfoMixedFocal } from "../../StateGetters/Identifiers/MixedSectionInfo";
 import { InEntityGetterVarb } from "../../StateGetters/InEntityGetterVarb";
-import { SectionName } from "../../stateSchemas/SectionName";
+import { SectionName } from "../../stateSchemas/schema2SectionNames";
 import {
   entityS,
   InEntity,
   OutEntity,
   OutEntityInfo,
   ValueInEntity,
-} from "../../stateSchemas/StateValue/stateValuesShared/entities";
+} from "../../stateSchemas/schema4ValueTraits/StateValue/stateValuesShared/entities";
 import { OutEntityGetterVarb } from "../OutEntityGetters/OutEntityGetterVarb";
 import { UpdaterVarb } from "../Updaters/UpdaterVarb";
 

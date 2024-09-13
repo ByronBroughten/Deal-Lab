@@ -2,7 +2,7 @@ import {
   GetterSectionBase,
   GetterSectionProps,
 } from "../../../StateGetters/Bases/GetterSectionBase";
-import { SectionName } from "../../../stateSchemas/SectionName";
+import { SectionName } from "../../../stateSchemas/schema2SectionNames";
 import { SolverProps } from "../../Solvers/Solver";
 import { SolvePrepperBase } from "./SolvePrepperBase";
 

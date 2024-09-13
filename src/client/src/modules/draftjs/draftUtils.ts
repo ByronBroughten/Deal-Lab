@@ -5,7 +5,7 @@ import {
   RawDraftContentState,
 } from "draft-js";
 import { Dispatch, SetStateAction } from "react";
-import { NumObj } from "../../sharedWithServer/stateSchemas/StateValue/NumObj";
+import { NumObj } from "../../sharedWithServer/stateSchemas/schema4ValueTraits/StateValue/NumObj";
 import { RawEditorState } from "../utils/DraftS";
 
 export type SetEditorState = Dispatch<SetStateAction<EditorState>>;

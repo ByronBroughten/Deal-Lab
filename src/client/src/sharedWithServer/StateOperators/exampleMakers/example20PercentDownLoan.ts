@@ -1,5 +1,5 @@
-import { numObj } from "../../stateSchemas/StateValue/NumObj";
-import { stringObj } from "../../stateSchemas/StateValue/StringObj";
+import { numObj } from "../../stateSchemas/schema4ValueTraits/StateValue/NumObj";
+import { stringObj } from "../../stateSchemas/schema4ValueTraits/StateValue/StringObj";
 import { SectionPack } from "../../StateTransports/SectionPack";
 import { SolvePrepperSection } from "../SolvePreppers/SolvePrepperSection";
 import { makeExampleLoan } from "./makeExampleLoan";

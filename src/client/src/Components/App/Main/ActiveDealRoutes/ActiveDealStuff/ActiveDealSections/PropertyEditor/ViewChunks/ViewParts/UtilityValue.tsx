@@ -1,8 +1,8 @@
 import { useGetterSection } from "../../../../../../../../../modules/stateHooks/useGetterSection";
-import { periodicName } from "../../../../../../../../../sharedWithServer/stateSchemas/GroupName";
-import { StateValue } from "../../../../../../../../../sharedWithServer/stateSchemas/StateValue";
-import { DealMode } from "../../../../../../../../../sharedWithServer/stateSchemas/StateValue/dealMode";
-import { PeriodicMode } from "../../../../../../../../../sharedWithServer/stateSchemas/StateValue/unionValues";
+import { periodicName } from "../../../../../../../../../sharedWithServer/stateSchemas/schema3SectionStructures/GroupName";
+import { StateValue } from "../../../../../../../../../sharedWithServer/stateSchemas/schema4ValueTraits/StateValue";
+import { DealMode } from "../../../../../../../../../sharedWithServer/stateSchemas/schema4ValueTraits/StateValue/dealMode";
+import { PeriodicMode } from "../../../../../../../../../sharedWithServer/stateSchemas/schema4ValueTraits/StateValue/unionValues";
 import { MuiSelectItems } from "../../../../../../../appWide/MuiSelect";
 import { SelectAndItemizeEditor } from "../../../../../../../appWide/SelectAndItemizeEditor";
 import { PeriodicEditor } from "../../../../../../../inputs/PeriodicEditor";

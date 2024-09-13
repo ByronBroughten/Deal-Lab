@@ -1,9 +1,9 @@
 import { useGetterSection } from "../../../../../../../../../modules/stateHooks/useGetterSection";
-import { StateValue } from "../../../../../../../../../sharedWithServer/stateSchemas/StateValue";
+import { StateValue } from "../../../../../../../../../sharedWithServer/stateSchemas/schema4ValueTraits/StateValue";
 import {
   DealMode,
   isDealMode,
-} from "../../../../../../../../../sharedWithServer/stateSchemas/StateValue/dealMode";
+} from "../../../../../../../../../sharedWithServer/stateSchemas/schema4ValueTraits/StateValue/dealMode";
 import { SelectEditor } from "../../../../../../../appWide/SelectEditor";
 import { VarbStringLabel } from "../../../../../../../appWide/VarbStringLabel";
 import { PeriodicEditor } from "../../../../../../../inputs/PeriodicEditor";

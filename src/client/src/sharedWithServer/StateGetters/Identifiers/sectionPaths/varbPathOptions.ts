@@ -1,7 +1,7 @@
 import {
   DealMode,
   getDealModes,
-} from "../../../stateSchemas/StateValue/dealMode";
+} from "../../../stateSchemas/schema4ValueTraits/StateValue/dealMode";
 import {
   fixedVarbPathNames,
   ValueFixedVarbPathName,

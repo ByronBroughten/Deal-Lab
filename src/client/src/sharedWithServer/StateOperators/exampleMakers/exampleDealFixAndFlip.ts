@@ -1,5 +1,5 @@
-import { numObj } from "../../stateSchemas/StateValue/NumObj";
-import { numObjNext } from "../../stateSchemas/StateValue/numObjNext";
+import { numObj } from "../../stateSchemas/schema4ValueTraits/StateValue/NumObj";
+import { numObjNext } from "../../stateSchemas/schema4ValueTraits/StateValue/numObjNext";
 import { SectionPack } from "../../StateTransports/SectionPack";
 import { makeExampleProperty } from "./makeExampleProperty";
 

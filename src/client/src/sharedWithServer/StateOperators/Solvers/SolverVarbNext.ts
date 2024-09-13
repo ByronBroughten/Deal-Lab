@@ -7,15 +7,15 @@ import { GetterSections } from "../../StateGetters/GetterSections";
 import { GetterVarb } from "../../StateGetters/GetterVarb";
 import { VarbInfoMixedFocal } from "../../StateGetters/Identifiers/MixedSectionInfo";
 import { InEntityGetterVarb } from "../../StateGetters/InEntityGetterVarb";
-import { SectionName } from "../../stateSchemas/SectionName";
-import { StateValue } from "../../stateSchemas/StateValue";
+import { SectionName } from "../../stateSchemas/schema2SectionNames";
+import { StateValue } from "../../stateSchemas/schema4ValueTraits/StateValue";
 import {
   entityS,
   InEntity,
   OutEntity,
   OutEntityInfo,
   ValueInEntity,
-} from "../../stateSchemas/StateValue/stateValuesShared/entities";
+} from "../../stateSchemas/schema4ValueTraits/StateValue/stateValuesShared/entities";
 import { OutEntityGetterVarb } from "../OutEntityGetters/OutEntityGetterVarb";
 import { SolverBase } from "../SolverBases/SolverBase";
 import { SolverVarbProps } from "../SolverBases/SolverVarbBase";

@@ -1,8 +1,8 @@
-import { numObj } from "../../stateSchemas/StateValue/NumObj";
+import { numObj } from "../../stateSchemas/schema4ValueTraits/StateValue/NumObj";
 import {
   UnionValue,
   unionValueArr,
-} from "../../stateSchemas/StateValue/unionValues";
+} from "../../stateSchemas/schema4ValueTraits/StateValue/unionValues";
 import { Arr } from "../../utils/Arr";
 import { SolverActiveDeal } from "./SolverActiveDeal";
 import { SolverSection } from "./SolverSection";

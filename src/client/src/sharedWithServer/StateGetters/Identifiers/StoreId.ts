@@ -1,5 +1,8 @@
 import { constants } from "../../Constants";
-import { StoreName, validateStoreName } from "../../stateSchemas/sectionStores";
+import {
+  StoreName,
+  validateStoreName,
+} from "../../stateSchemas/schema6SectionChildren/sectionStores";
 import { IdS } from "../../utils/IdS";
 import { Str } from "../../utils/Str";
 

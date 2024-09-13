@@ -1,7 +1,11 @@
-import { sectionNames } from "../../stateSchemas/SectionName";
-import { StateValue } from "../../stateSchemas/StateValue";
-import { numObj, NumObj, numToObj } from "../../stateSchemas/StateValue/NumObj";
-import { stringObj } from "../../stateSchemas/StateValue/StringObj";
+import { sectionNames } from "../../stateSchemas/schema2SectionNames";
+import { StateValue } from "../../stateSchemas/schema4ValueTraits/StateValue";
+import {
+  numObj,
+  NumObj,
+  numToObj,
+} from "../../stateSchemas/schema4ValueTraits/StateValue/NumObj";
+import { stringObj } from "../../stateSchemas/schema4ValueTraits/StateValue/StringObj";
 import { SectionPack } from "../../StateTransports/SectionPack";
 import { Arr } from "../../utils/Arr";
 import { DefaultUpdaterSection } from "../DefaultUpdaters/DefaultUpdaterSection";

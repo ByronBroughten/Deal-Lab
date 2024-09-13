@@ -3,7 +3,7 @@ import {
   GetterSectionProps,
 } from "../../StateGetters/Bases/GetterSectionBase";
 import { FeSectionInfo } from "../../StateGetters/Identifiers/FeInfo";
-import { SectionNameByType } from "../../stateSchemas/SectionNameByType";
+import { SectionNameByType } from "../../stateSchemas/schema6SectionChildren/SectionNameByType";
 import { SolverSectionsBase, SolverSectionsProps } from "./SolverSectionsBase";
 
 export interface SolverSectionProps<SN extends SectionNameByType>

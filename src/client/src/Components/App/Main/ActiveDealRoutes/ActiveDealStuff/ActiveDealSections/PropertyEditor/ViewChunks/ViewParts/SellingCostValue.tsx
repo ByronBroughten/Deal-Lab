@@ -1,6 +1,6 @@
 import { SxProps } from "@mui/material";
 import { useGetterSection } from "../../../../../../../../../modules/stateHooks/useGetterSection";
-import { StateValue } from "../../../../../../../../../sharedWithServer/stateSchemas/StateValue";
+import { StateValue } from "../../../../../../../../../sharedWithServer/stateSchemas/schema4ValueTraits/StateValue";
 import { StrictExtract } from "../../../../../../../../../sharedWithServer/utils/types";
 import { SelectAndItemizeEditor } from "../../../../../../../appWide/SelectAndItemizeEditor";
 import { VarbStringLabel } from "../../../../../../../appWide/VarbStringLabel";

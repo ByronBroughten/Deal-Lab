@@ -13,24 +13,24 @@ import {
   initTestDbStoreArrs,
 } from "./client/src/sharedWithServer/StateOperators/exampleMakers/initDbStoreArrs";
 import { PackBuilderSection } from "./client/src/sharedWithServer/StateOperators/Packers/PackBuilderSection";
-import { VarbName } from "./client/src/sharedWithServer/stateSchemas/derivedFromBaseSchemas/baseSectionsVarbsTypes";
-import { ChildSectionName } from "./client/src/sharedWithServer/stateSchemas/derivedFromChildrenSchemas/ChildSectionName";
+import { VarbName } from "./client/src/sharedWithServer/stateSchemas/fromSchema3SectionStructures/baseSectionsVarbsTypes";
+import { ChildSectionName } from "./client/src/sharedWithServer/stateSchemas/fromSchema6SectionChildren/ChildSectionName";
 import {
   DbSectionName,
   DbStoreInfo,
   DbStoreName,
   dbStoreNames,
   getSectionDbStoreNames,
-} from "./client/src/sharedWithServer/stateSchemas/derivedFromChildrenSchemas/DbStoreName";
-import { SectionName } from "./client/src/sharedWithServer/stateSchemas/SectionName";
-import {
-  StoreName,
-  StoreSectionName,
-} from "./client/src/sharedWithServer/stateSchemas/sectionStores";
+} from "./client/src/sharedWithServer/stateSchemas/fromSchema6SectionChildren/DbStoreName";
+import { SectionName } from "./client/src/sharedWithServer/stateSchemas/schema2SectionNames";
 import {
   StateValue,
   VarbValue,
-} from "./client/src/sharedWithServer/stateSchemas/StateValue";
+} from "./client/src/sharedWithServer/stateSchemas/schema4ValueTraits/StateValue";
+import {
+  StoreName,
+  StoreSectionName,
+} from "./client/src/sharedWithServer/stateSchemas/schema6SectionChildren/sectionStores";
 import { ChildPackArrs } from "./client/src/sharedWithServer/StateTransports/ChildSectionPack";
 import {
   DbPack,

@@ -1,7 +1,7 @@
 import { useAction } from "../../../modules/stateHooks/useAction";
 import { useGetterSectionOnlyOne } from "../../../modules/stateHooks/useGetterSection";
 import { StoreId } from "../../../sharedWithServer/StateGetters/Identifiers/StoreId";
-import { ListChildName } from "../../../sharedWithServer/stateSchemas/sectionStores";
+import { ListChildName } from "../../../sharedWithServer/stateSchemas/schema6SectionChildren/sectionStores";
 import { nativeTheme } from "../../../theme/nativeTheme";
 import { IdOfSectionToSaveProvider } from "../../ContextsAndProviders/IdOfSectionToSaveProvider";
 import { Row } from "../../general/Row";

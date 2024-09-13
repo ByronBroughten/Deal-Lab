@@ -14,7 +14,7 @@ import {
   UrlRes,
 } from "./apiQueriesShared/makeReqAndRes";
 import { ApiQueryName } from "./Constants/queryPaths";
-import { SectionQueryName } from "./stateSchemas/derivedFromChildrenSchemas/DbStoreName";
+import { SectionQueryName } from "./stateSchemas/fromSchema6SectionChildren/DbStoreName";
 import { SectionPack } from "./StateTransports/SectionPack";
 import { UserData } from "./StateTransports/UserData";
 

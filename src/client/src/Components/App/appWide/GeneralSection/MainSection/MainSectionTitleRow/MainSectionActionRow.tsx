@@ -1,4 +1,4 @@
-import { SectionNameByType } from "../../../../../../sharedWithServer/stateSchemas/SectionNameByType";
+import { SectionNameByType } from "../../../../../../sharedWithServer/stateSchemas/schema6SectionChildren/SectionNameByType";
 import { ActionMenuProps } from "../ActionBtns/ActionMenuTypes";
 import { StoreSectionActions } from "../StoreSectionActions";
 

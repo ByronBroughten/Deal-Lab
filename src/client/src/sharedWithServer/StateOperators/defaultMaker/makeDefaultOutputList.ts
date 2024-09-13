@@ -1,8 +1,8 @@
 import { mixedInfoS } from "../../StateGetters/Identifiers/MixedSectionInfo";
 import { ValueFixedVarbPathName } from "../../StateGetters/Identifiers/ValueInEntityInfo";
-import { DealMode } from "../../stateSchemas/StateValue/dealMode";
-import { inEntityValueInfo } from "../../stateSchemas/StateValue/InEntityValue";
-import { stringObj } from "../../stateSchemas/StateValue/StringObj";
+import { DealMode } from "../../stateSchemas/schema4ValueTraits/StateValue/dealMode";
+import { inEntityValueInfo } from "../../stateSchemas/schema4ValueTraits/StateValue/InEntityValue";
+import { stringObj } from "../../stateSchemas/schema4ValueTraits/StateValue/StringObj";
 import { SectionPack } from "../../StateTransports/SectionPack";
 import { PackBuilderSection } from "../Packers/PackBuilderSection";
 

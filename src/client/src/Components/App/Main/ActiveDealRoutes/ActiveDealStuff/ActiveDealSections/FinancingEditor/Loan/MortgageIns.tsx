@@ -1,5 +1,5 @@
 import { useGetterSection } from "../../../../../../../../modules/stateHooks/useGetterSection";
-import { periodicName } from "../../../../../../../../sharedWithServer/stateSchemas/GroupName";
+import { periodicName } from "../../../../../../../../sharedWithServer/stateSchemas/schema3SectionStructures/GroupName";
 import { nativeTheme } from "../../../../../../../../theme/nativeTheme";
 import { MuiRow } from "../../../../../../../general/MuiRow";
 import { ToggledNode } from "../../../../../../appWide/ToggledNode";

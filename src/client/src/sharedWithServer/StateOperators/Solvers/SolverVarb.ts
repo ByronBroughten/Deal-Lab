@@ -5,15 +5,15 @@ import { VarbInfoMixedFocal } from "../../StateGetters/Identifiers/MixedSectionI
 import { ValueInEntityInfo } from "../../StateGetters/Identifiers/ValueInEntityInfo";
 import { FeVarbInfoMixed } from "../../StateGetters/Identifiers/VarbInfoBase";
 import { InEntityGetterVarb } from "../../StateGetters/InEntityGetterVarb";
-import { SectionNameByType } from "../../stateSchemas/SectionNameByType";
-import { StateValue } from "../../stateSchemas/StateValue";
+import { StateValue } from "../../stateSchemas/schema4ValueTraits/StateValue";
 import {
   entityS,
   InEntity,
   OutEntity,
   OutEntityInfo,
   ValueInEntity,
-} from "../../stateSchemas/StateValue/stateValuesShared/entities";
+} from "../../stateSchemas/schema4ValueTraits/StateValue/stateValuesShared/entities";
+import { SectionNameByType } from "../../stateSchemas/schema6SectionChildren/SectionNameByType";
 import { IdS } from "../../utils/IdS";
 import { StrictOmit } from "../../utils/types";
 import { EntityPrepperVarb } from "../EntityPreppers/EntityPrepperVarb";

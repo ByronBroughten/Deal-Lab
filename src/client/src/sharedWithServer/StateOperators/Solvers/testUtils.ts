@@ -1,7 +1,7 @@
-import { GroupKey } from "../../stateSchemas/GroupName";
-import { SectionName } from "../../stateSchemas/SectionName";
-import { DealMode } from "../../stateSchemas/StateValue/dealMode";
-import { numObj } from "../../stateSchemas/StateValue/NumObj";
+import { SectionName } from "../../stateSchemas/schema2SectionNames";
+import { GroupKey } from "../../stateSchemas/schema3SectionStructures/GroupName";
+import { DealMode } from "../../stateSchemas/schema4ValueTraits/StateValue/dealMode";
+import { numObj } from "../../stateSchemas/schema4ValueTraits/StateValue/NumObj";
 import { StrictExclude, StrictExtract } from "../../utils/types";
 import { SolverActiveDeal } from "./SolverActiveDeal";
 import { SolverSection } from "./SolverSection";

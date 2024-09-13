@@ -1,20 +1,20 @@
 import mongoose, { Schema } from "mongoose";
 import { DbSectionPack } from "../client/src/sharedWithServer//StateTransports/DbSectionPack";
 import { RawSection } from "../client/src/sharedWithServer/State/RawSection";
-import { VarbName } from "../client/src/sharedWithServer/stateSchemas/derivedFromBaseSchemas/baseSectionsVarbsTypes";
+import { sectionsMeta } from "../client/src/sharedWithServer/StateGetters/StateMeta/SectionsMeta";
+import { VarbName } from "../client/src/sharedWithServer/stateSchemas/fromSchema3SectionStructures/baseSectionsVarbsTypes";
 import {
   ChildName,
   getChildNames,
-} from "../client/src/sharedWithServer/stateSchemas/derivedFromChildrenSchemas/ChildName";
+} from "../client/src/sharedWithServer/stateSchemas/fromSchema6SectionChildren/ChildName";
 import {
   DbSectionName,
   DbStoreName,
   dbStoreNames,
   dbStoreSectionName,
-} from "../client/src/sharedWithServer/stateSchemas/derivedFromChildrenSchemas/DbStoreName";
-import { selfAndDescSectionNames } from "../client/src/sharedWithServer/stateSchemas/derivedFromChildrenSchemas/DescendantName";
-import { SectionName } from "../client/src/sharedWithServer/stateSchemas/SectionName";
-import { sectionsMeta } from "../client/src/sharedWithServer/stateSchemas/StateMeta/SectionsMeta";
+} from "../client/src/sharedWithServer/stateSchemas/fromSchema6SectionChildren/DbStoreName";
+import { selfAndDescSectionNames } from "../client/src/sharedWithServer/stateSchemas/fromSchema6SectionChildren/DescendantName";
+import { SectionName } from "../client/src/sharedWithServer/stateSchemas/schema2SectionNames";
 import { SectionPack } from "../client/src/sharedWithServer/StateTransports/SectionPack";
 import { ResStatusError } from "../runApp/useErrorHandling";
 import { mongooseId, mongooseValues } from "./mongooseValues";

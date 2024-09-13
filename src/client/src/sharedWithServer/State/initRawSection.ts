@@ -1,10 +1,13 @@
 import { pick } from "lodash";
 import { FeSectionInfo, FeVarbInfo } from "../StateGetters/Identifiers/FeInfo";
 import { VarbNames } from "../StateGetters/Identifiers/VarbInfoBase";
-import { ChildIdArrsNarrow } from "../stateSchemas/derivedFromChildrenSchemas/ChildName";
-import { SectionName } from "../stateSchemas/SectionName";
-import { sectionsMeta } from "../stateSchemas/StateMeta/SectionsMeta";
-import { SectionValues, StateValue } from "../stateSchemas/StateValue";
+import { sectionsMeta } from "../StateGetters/StateMeta/SectionsMeta";
+import { ChildIdArrsNarrow } from "../stateSchemas/fromSchema6SectionChildren/ChildName";
+import { SectionName } from "../stateSchemas/schema2SectionNames";
+import {
+  SectionValues,
+  StateValue,
+} from "../stateSchemas/schema4ValueTraits/StateValue";
 import { IdS } from "../utils/IdS";
 import { StrictPick, StrictPickPartial } from "../utils/types";
 import { RawFeSection, StateVarb, StateVarbs } from "./StateSectionsTypes";
@@ -103,7 +106,7 @@ function getValidValue(
   varbNames: VarbNames<SectionName>,
   dbValue: StateValue | undefined
 ): StateValue {
-  const valueMetas = sectionsMeta.value(varbNames);
+  const valueTraits = sectionsMeta.value(varbNames);
   const varbMeta = sectionsMeta.varb(varbNames);
-  return valueMetas.is(dbValue) ? dbValue : varbMeta.initValue;
+  return valueTraits.is(dbValue) ? dbValue : varbMeta.initValue;
 }

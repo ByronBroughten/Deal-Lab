@@ -5,7 +5,7 @@ import { useVariableLabels } from "../../../../modules/stateHooks/useVariableLab
 import { arrSx } from "../../../../modules/utils/mui";
 import { FeIdProp } from "../../../../sharedWithServer/StateGetters/Identifiers/NanoIdInfo";
 import { AddChildOptions } from "../../../../sharedWithServer/StateOperators/Updaters/UpdaterSection";
-import { inEntityValueInfo } from "../../../../sharedWithServer/stateSchemas/StateValue/InEntityValue";
+import { inEntityValueInfo } from "../../../../sharedWithServer/stateSchemas/schema4ValueTraits/StateValue/InEntityValue";
 import { nativeTheme } from "../../../../theme/nativeTheme";
 import { MuiRow } from "../../../general/MuiRow";
 import { OnVarbSelect } from "../../inputs/NumObjEditor/NumObjVarbSelector/VarbSelectorCollection";

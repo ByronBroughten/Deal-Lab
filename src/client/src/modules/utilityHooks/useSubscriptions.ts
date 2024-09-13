@@ -2,7 +2,7 @@ import React from "react";
 import { useLocation } from "react-router-dom";
 import { useGoToPage } from "../../Components/App/customHooks/useGoToPage";
 import { constants } from "../../sharedWithServer/Constants";
-import { StateValue } from "../../sharedWithServer/stateSchemas/StateValue";
+import { StateValue } from "../../sharedWithServer/stateSchemas/schema4ValueTraits/StateValue";
 import { getErrorMessage } from "../../sharedWithServer/utils/Error";
 import { timeS } from "../../sharedWithServer/utils/timeS";
 import { useGetterSectionOnlyOne } from "../stateHooks/useGetterSection";

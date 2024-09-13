@@ -2,7 +2,7 @@ import { GetterSectionBase } from "../../StateGetters/Bases/GetterSectionBase";
 import { GetterSection } from "../../StateGetters/GetterSection";
 import { GetterVarb } from "../../StateGetters/GetterVarb";
 import { FeVarbInfo } from "../../StateGetters/Identifiers/FeInfo";
-import { SectionNameByType } from "../../stateSchemas/SectionNameByType";
+import { SectionNameByType } from "../../stateSchemas/schema6SectionChildren/SectionNameByType";
 import { OutEntityGetterVarb } from "./OutEntityGetterVarb";
 
 export class OutVarbGetterSection<

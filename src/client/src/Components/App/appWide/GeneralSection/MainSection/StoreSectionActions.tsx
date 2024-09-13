@@ -2,7 +2,7 @@ import { BiReset } from "react-icons/bi";
 import { HiOutlineTemplate } from "react-icons/hi";
 import styled from "styled-components";
 import { useActionWithProps } from "../../../../../modules/stateHooks/useAction";
-import { SectionNameByType } from "../../../../../sharedWithServer/stateSchemas/SectionNameByType";
+import { SectionNameByType } from "../../../../../sharedWithServer/stateSchemas/schema6SectionChildren/SectionNameByType";
 import theme from "../../../../../theme/Theme";
 import { MuiRow } from "../../../../general/MuiRow";
 import { useMakeGoToPage } from "../../../customHooks/useGoToPage";

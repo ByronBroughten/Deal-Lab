@@ -3,8 +3,8 @@ import {
   GetterSectionProps,
 } from "../../../sharedWithServer/StateGetters/Bases/GetterSectionBase";
 import { GetterSection } from "../../../sharedWithServer/StateGetters/GetterSection";
-import { SectionName } from "../../../sharedWithServer/stateSchemas/SectionName";
-import { SectionNameByType } from "../../../sharedWithServer/stateSchemas/SectionNameByType";
+import { SectionName } from "../../../sharedWithServer/stateSchemas/schema2SectionNames";
+import { SectionNameByType } from "../../../sharedWithServer/stateSchemas/schema6SectionChildren/SectionNameByType";
 import { ApiQuerierBase, ApiQuerierBaseProps } from "./ApiQuerierBase";
 
 export interface QuerierSectionBaseProps<SN extends SectionNameByType>

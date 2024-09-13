@@ -1,6 +1,6 @@
-import { dbStoreNames } from "../../stateSchemas/derivedFromChildrenSchemas/DbStoreName";
-import { numObj } from "../../stateSchemas/StateValue/NumObj";
-import { stringObj } from "../../stateSchemas/StateValue/StringObj";
+import { dbStoreNames } from "../../stateSchemas/fromSchema6SectionChildren/DbStoreName";
+import { numObj } from "../../stateSchemas/schema4ValueTraits/StateValue/NumObj";
+import { stringObj } from "../../stateSchemas/schema4ValueTraits/StateValue/StringObj";
 import { ChildPackArrs } from "../../StateTransports/ChildSectionPack";
 import { SectionPack } from "../../StateTransports/SectionPack";
 import { timeS } from "../../utils/timeS";

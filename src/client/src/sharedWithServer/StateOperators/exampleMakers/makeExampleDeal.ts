@@ -1,4 +1,4 @@
-import { DealMode } from "../../stateSchemas/StateValue/dealMode";
+import { DealMode } from "../../stateSchemas/schema4ValueTraits/StateValue/dealMode";
 import { SectionPack } from "../../StateTransports/SectionPack";
 import { StrictExclude } from "../../utils/types";
 import { exampleDealBuyAndHold } from "./exampleDealBuyAndHold";

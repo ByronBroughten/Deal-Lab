@@ -15,7 +15,7 @@ import {
   FeVI,
 } from "../../../sharedWithServer/StateGetters/Identifiers/FeInfo";
 import { ValueFixedVarbPathName } from "../../../sharedWithServer/StateGetters/Identifiers/ValueInEntityInfo";
-import { SectionName } from "../../../sharedWithServer/stateSchemas/SectionName";
+import { SectionName } from "../../../sharedWithServer/stateSchemas/schema2SectionNames";
 import { Obj } from "../../../sharedWithServer/utils/Obj";
 import { nativeTheme } from "../../../theme/nativeTheme";
 import { SectionInfoContextProvider } from "../../ContextsAndProviders/SectionInfoContextProvider";

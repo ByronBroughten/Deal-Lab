@@ -8,10 +8,10 @@ import {
   activeDealPathIdx,
   SectionPathContextName,
 } from "../../StateGetters/Identifiers/sectionPaths/sectionPathContexts";
-import { FeChildInfo } from "../../stateSchemas/derivedFromChildrenSchemas/ChildName";
-import { ChildSectionName } from "../../stateSchemas/derivedFromChildrenSchemas/ChildSectionName";
-import { SectionName } from "../../stateSchemas/SectionName";
-import { StoreName } from "../../stateSchemas/sectionStores";
+import { FeChildInfo } from "../../stateSchemas/fromSchema6SectionChildren/ChildName";
+import { ChildSectionName } from "../../stateSchemas/fromSchema6SectionChildren/ChildSectionName";
+import { SectionName } from "../../stateSchemas/schema2SectionNames";
+import { StoreName } from "../../stateSchemas/schema6SectionChildren/sectionStores";
 import { SectionPack } from "../../StateTransports/SectionPack";
 import { defaultMaker } from "../defaultMaker/defaultMaker";
 import { AddChildOptions } from "../Updaters/UpdaterSection";

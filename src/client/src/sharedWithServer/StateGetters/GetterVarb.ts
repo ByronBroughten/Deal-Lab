@@ -6,23 +6,22 @@ import {
   VarbLabel,
 } from "../../modules/varbLabels/varbLabels";
 import { StateVarb } from "../State/StateSectionsTypes";
-import { DisplayOverrideSwitches } from "../stateSchemas/allDisplaySectionVarbs/displayVarb";
-import { SectionNameByType } from "../stateSchemas/SectionNameByType";
-import { VarbMeta } from "../stateSchemas/StateMeta/VarbMeta";
+import { ValueName } from "../stateSchemas/schema1ValueNames";
+import { isObjValue } from "../stateSchemas/schema4ValueTraits";
 import {
   StateValue,
   StateValueOrAny,
   ValueNameOrAny,
-} from "../stateSchemas/StateValue";
-import { StrAdornments } from "../stateSchemas/StateValue/EditorValue";
+} from "../stateSchemas/schema4ValueTraits/StateValue";
+import { StrAdornments } from "../stateSchemas/schema4ValueTraits/StateValue/EditorValue";
 import {
   notApplicableString,
   NumberOrQ,
   NumObjOutput,
-} from "../stateSchemas/StateValue/NumObj";
-import { switchValueNames } from "../stateSchemas/StateValue/unionValues";
-import { isObjValue } from "../stateSchemas/valueMetas";
-import { ValueName } from "../stateSchemas/ValueName";
+} from "../stateSchemas/schema4ValueTraits/StateValue/NumObj";
+import { switchValueNames } from "../stateSchemas/schema4ValueTraits/StateValue/unionValues";
+import { SectionNameByType } from "../stateSchemas/schema6SectionChildren/SectionNameByType";
+import { DisplayOverrideSwitches } from "../stateSchemas/schema9VariablesLabels/displayVarb";
 import { mathS, NotANumberError } from "../utils/math";
 import { GetterVarbBase, NotAVarbNameError } from "./Bases/GetterVarbBase";
 import { GetterSection } from "./GetterSection";
@@ -43,6 +42,7 @@ import {
   VarbNames,
 } from "./Identifiers/VarbInfoBase";
 import { InEntityGetterVarb } from "./InEntityGetterVarb";
+import { VarbMeta } from "./StateMeta/VarbMeta";
 
 class ValueTypeError extends Error {}
 

@@ -1,5 +1,5 @@
 import { GetterSection } from "../../StateGetters/GetterSection";
-import { StateValue } from "../../stateSchemas/StateValue";
+import { StateValue } from "../../stateSchemas/schema4ValueTraits/StateValue";
 import { SectionPack } from "../../StateTransports/SectionPack";
 import { PackBuilderSection } from "../Packers/PackBuilderSection";
 import { makeDefaultLoanPack } from "./makeDefaultLoanPack";

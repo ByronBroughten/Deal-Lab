@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import React from "react";
 import styled from "styled-components";
-import { SectionNameByType } from "../../../sharedWithServer/stateSchemas/SectionNameByType";
+import { SectionNameByType } from "../../../sharedWithServer/stateSchemas/schema6SectionChildren/SectionNameByType";
 import { nativeTheme } from "../../../theme/nativeTheme";
 import theme from "../../../theme/Theme";
 import { MuiRow } from "../../general/MuiRow";

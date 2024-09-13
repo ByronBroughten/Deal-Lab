@@ -3,8 +3,8 @@ import { useSectionInfoContext } from "../../Components/ContextsAndProviders/Sec
 import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection";
 import { GetterSections } from "../../sharedWithServer/StateGetters/GetterSections";
 import { FeSectionInfo } from "../../sharedWithServer/StateGetters/Identifiers/FeInfo";
-import { SectionName } from "../../sharedWithServer/stateSchemas/SectionName";
-import { SectionNameByType } from "../../sharedWithServer/stateSchemas/SectionNameByType";
+import { SectionName } from "../../sharedWithServer/stateSchemas/schema2SectionNames";
+import { SectionNameByType } from "../../sharedWithServer/stateSchemas/schema6SectionChildren/SectionNameByType";
 
 export function useGetterSectionContext() {
   const feInfo = useSectionInfoContext();

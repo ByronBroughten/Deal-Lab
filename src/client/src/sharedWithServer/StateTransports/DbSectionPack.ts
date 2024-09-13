@@ -1,10 +1,10 @@
-import { childToSectionName } from "../stateSchemas/derivedFromChildrenSchemas/ChildSectionName";
+import { childToSectionName } from "../stateSchemas/fromSchema6SectionChildren/ChildSectionName";
 import {
   DbSectionName,
   DbStoreName,
   dbStoreNameS,
   DbStoreType,
-} from "../stateSchemas/derivedFromChildrenSchemas/DbStoreName";
+} from "../stateSchemas/fromSchema6SectionChildren/DbStoreName";
 import { Arr } from "../utils/Arr";
 import { Obj } from "../utils/Obj";
 import { ChildPackArrs } from "./ChildSectionPack";

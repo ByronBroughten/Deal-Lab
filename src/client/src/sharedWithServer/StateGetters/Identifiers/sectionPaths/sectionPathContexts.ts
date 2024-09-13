@@ -1,9 +1,9 @@
 import {
   ChildName,
   isChildName,
-} from "../../../stateSchemas/derivedFromChildrenSchemas/ChildName";
-import { childToSectionName } from "../../../stateSchemas/derivedFromChildrenSchemas/ChildSectionName";
-import { SectionName } from "../../../stateSchemas/SectionName";
+} from "../../../stateSchemas/fromSchema6SectionChildren/ChildName";
+import { childToSectionName } from "../../../stateSchemas/fromSchema6SectionChildren/ChildSectionName";
+import { SectionName } from "../../../stateSchemas/schema2SectionNames";
 import { Obj } from "../../../utils/Obj";
 import { AbsolutePathInfo, absolutePathInfo } from "../AbsolutePathInfo";
 import {

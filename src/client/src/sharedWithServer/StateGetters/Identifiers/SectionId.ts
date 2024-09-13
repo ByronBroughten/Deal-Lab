@@ -2,7 +2,7 @@ import { constants } from "../../Constants";
 import {
   SectionName,
   validateSectionName,
-} from "../../stateSchemas/SectionName";
+} from "../../stateSchemas/schema2SectionNames";
 import { IdS } from "../../utils/IdS";
 import { Str } from "../../utils/Str";
 

@@ -1,10 +1,6 @@
-import { DbSectionInfo } from "../stateSchemas/allBaseSectionVarbs/DbSectionInfo";
-import { SectionName } from "../stateSchemas/SectionName";
-import { SectionNameByType } from "../stateSchemas/SectionNameByType";
-import {
-  SectionsMeta,
-  sectionsMeta,
-} from "../stateSchemas/StateMeta/SectionsMeta";
+import { SectionName } from "../stateSchemas/schema2SectionNames";
+import { DbSectionInfo } from "../stateSchemas/schema3SectionStructures/DbSectionInfo";
+import { SectionNameByType } from "../stateSchemas/schema6SectionChildren/SectionNameByType";
 import { Arr } from "../utils/Arr";
 import {
   GetterSectionsBase,
@@ -20,6 +16,7 @@ import {
   VarbInfoMixed,
 } from "./Identifiers/MixedSectionInfo";
 import { SectionId } from "./Identifiers/SectionId";
+import { SectionsMeta, sectionsMeta } from "./StateMeta/SectionsMeta";
 
 export class GetterSections extends GetterSectionsBase {
   static init(requiredProps: GetterSectionsRequiredProps) {

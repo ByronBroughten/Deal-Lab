@@ -1,5 +1,5 @@
 import { FeSectionInfo } from "../../../../../sharedWithServer/StateGetters/Identifiers/FeInfo";
-import { SectionNameByType } from "../../../../../sharedWithServer/stateSchemas/SectionNameByType";
+import { SectionNameByType } from "../../../../../sharedWithServer/stateSchemas/schema6SectionChildren/SectionNameByType";
 import { ListRouteName } from "../../../UserListEditorPage/UserComponentClosed";
 import { StoreSectionActions } from "../../GeneralSection/MainSection/StoreSectionActions";
 import { VarbListEditorPageMenu } from "./VarbListEditorPageMenu";

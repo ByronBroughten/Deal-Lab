@@ -2,7 +2,7 @@ import { SxProps } from "@mui/material";
 import React from "react";
 import { useGetterSection } from "../../../../../../../../modules/stateHooks/useGetterSection";
 import { FeSectionInfo } from "../../../../../../../../sharedWithServer/StateGetters/Identifiers/FeInfo";
-import { SectionNameByType } from "../../../../../../../../sharedWithServer/stateSchemas/SectionNameByType";
+import { SectionNameByType } from "../../../../../../../../sharedWithServer/stateSchemas/schema6SectionChildren/SectionNameByType";
 import { SelectEditor } from "../../../../../../appWide/SelectEditor";
 import { NumObjEntityEditor } from "../../../../../../inputs/NumObjEntityEditor";
 
