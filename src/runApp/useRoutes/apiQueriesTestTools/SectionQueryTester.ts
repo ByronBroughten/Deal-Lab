@@ -9,7 +9,7 @@ import { GetterListProps } from "../../../client/src/sharedWithServer/StateGette
 import { GetterSectionProps } from "../../../client/src/sharedWithServer/StateGetters/Bases/GetterSectionBase";
 import { GetterSectionsBase } from "../../../client/src/sharedWithServer/StateGetters/Bases/GetterSectionsBase";
 import { GetterList } from "../../../client/src/sharedWithServer/StateGetters/GetterList";
-import { PackMakerSection } from "../../../client/src/sharedWithServer/StateOperators/Packers/PackMakerSection";
+import { PackMakerSection } from "../../../client/src/sharedWithServer/StateGetters/PackMakerSection";
 import { SolverSection } from "../../../client/src/sharedWithServer/StateOperators/Solvers/SolverSection";
 import { SolverSections } from "../../../client/src/sharedWithServer/StateOperators/Solvers/SolverSections";
 import { UpdaterSection } from "../../../client/src/sharedWithServer/StateOperators/Updaters/UpdaterSection";

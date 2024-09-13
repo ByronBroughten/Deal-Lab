@@ -13,6 +13,7 @@ import {
 } from "../../../sharedWithServer/StateGetters/Identifiers/NanoIdInfo";
 import { SolvePrepperSection } from "../../../sharedWithServer/StateOperators/SolvePreppers/SolvePrepperSection";
 import { SolvePrepperVarb } from "../../../sharedWithServer/StateOperators/SolvePreppers/SolvePrepperVarb";
+import { TopOperator } from "../../../sharedWithServer/StateOperators/TopOperator";
 import { AddChildOptions } from "../../../sharedWithServer/StateOperators/Updaters/UpdaterSection";
 import { ChildName } from "../../../sharedWithServer/stateSchemas/fromSchema6SectionChildren/ChildName";
 import { SectionName } from "../../../sharedWithServer/stateSchemas/schema2SectionNames";
@@ -25,7 +26,6 @@ import {
 } from "../../../sharedWithServer/stateSchemas/schema6SectionChildren/sectionStores";
 import { SectionPack } from "../../../sharedWithServer/StateTransports/SectionPack";
 import { UserData } from "../../../sharedWithServer/StateTransports/UserData";
-import { TopOperator } from "../../../sharedWithServer/TopOperator";
 import { Arr } from "../../../sharedWithServer/utils/Arr";
 import { Merge } from "../../../sharedWithServer/utils/Obj/merge";
 

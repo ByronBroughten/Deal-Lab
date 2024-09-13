@@ -1,29 +1,29 @@
-import { GetterFeStore } from "../modules/FeStore/GetterFeStore";
+import { GetterFeStore } from "../../modules/FeStore/GetterFeStore";
 import {
   AddToStoreOptions,
   PrepperFeStore,
-} from "../modules/FeStore/PrepperFeStore";
-import { MainState, MainStateProps } from "./State/MainState";
-import { GetterSections } from "./StateGetters/GetterSections";
-import { FeSectionInfo } from "./StateGetters/Identifiers/FeInfo";
-import { DbIdProp } from "./StateGetters/Identifiers/NanoIdInfo";
-import { StoreId } from "./StateGetters/Identifiers/StoreId";
-import { defaultMaker } from "./StateOperators/defaultMaker/defaultMaker";
-import { makeDefaultSessionDeal } from "./StateOperators/defaultMaker/defaultSessionDeal";
-import { makeEmptyMain } from "./StateOperators/defaultMaker/makeEmptyMain";
-import { SolvePrepper } from "./StateOperators/SolvePreppers/SolvePrepper";
-import { SolvePrepperSection } from "./StateOperators/SolvePreppers/SolvePrepperSection";
-import { SolverBase } from "./StateOperators/SolverBases/SolverBase";
-import { Solver } from "./StateOperators/Solvers/Solver";
-import { DealMode } from "./stateSchemas/schema4ValueTraits/StateValue/dealMode";
+} from "../../modules/FeStore/PrepperFeStore";
+import { MainState, MainStateProps } from "../State/MainState";
+import { GetterSections } from "../StateGetters/GetterSections";
+import { FeSectionInfo } from "../StateGetters/Identifiers/FeInfo";
+import { DbIdProp } from "../StateGetters/Identifiers/NanoIdInfo";
+import { StoreId } from "../StateGetters/Identifiers/StoreId";
+import { DealMode } from "../stateSchemas/schema4ValueTraits/StateValue/dealMode";
 import {
   isStoreNameByType,
   StoreSectionName,
-} from "./stateSchemas/schema6SectionChildren/sectionStores";
-import { SectionPack } from "./StateTransports/SectionPack";
-import { UserData } from "./StateTransports/UserData";
-import { Obj } from "./utils/Obj";
-import { timeS } from "./utils/timeS";
+} from "../stateSchemas/schema6SectionChildren/sectionStores";
+import { SectionPack } from "../StateTransports/SectionPack";
+import { UserData } from "../StateTransports/UserData";
+import { Obj } from "../utils/Obj";
+import { timeS } from "../utils/timeS";
+import { defaultMaker } from "./defaultMaker/defaultMaker";
+import { makeDefaultSessionDeal } from "./defaultMaker/defaultSessionDeal";
+import { makeEmptyMain } from "./defaultMaker/makeEmptyMain";
+import { SolvePrepper } from "./SolvePreppers/SolvePrepper";
+import { SolvePrepperSection } from "./SolvePreppers/SolvePrepperSection";
+import { SolverBase } from "./SolverBases/SolverBase";
+import { Solver } from "./Solvers/Solver";
 
 export class TopOperator extends SolverBase {
   get prepper() {

@@ -2,8 +2,8 @@ import { GetterSection } from "../../StateGetters/GetterSection";
 import { FeSectionInfo } from "../../StateGetters/Identifiers/FeInfo";
 import { SectionName } from "../../stateSchemas/schema2SectionNames";
 import { DealMode } from "../../stateSchemas/schema4ValueTraits/StateValue/dealMode";
-import { TopOperator } from "../../TopOperator";
 import { SolverSectionBase } from "../SolverBases/SolverSectionBase";
+import { TopOperator } from "../TopOperator";
 import { SolverSection } from "./SolverSection";
 import { SolverSections } from "./SolverSections";
 

@@ -4,6 +4,7 @@ import {
   GetterSectionRequiredProps,
 } from "../../StateGetters/GetterSection";
 import { FeSectionInfo } from "../../StateGetters/Identifiers/FeInfo";
+import { PackMakerSection } from "../../StateGetters/PackMakerSection";
 import {
   ChildName,
   DbChildInfo,
@@ -25,7 +26,6 @@ import { SectionPack } from "../../StateTransports/SectionPack";
 import { Obj } from "../../utils/Obj";
 import { AddChildOptions, UpdaterSection } from "../Updaters/UpdaterSection";
 import { PackBuilderSections } from "./PackBuilderSections";
-import { PackMakerSection } from "./PackMakerSection";
 import { SelfPackLoader } from "./SelfPackLoader";
 
 export interface AddChildWithPackOptions<

@@ -1,9 +1,9 @@
 import { numObj } from "../../stateSchemas/schema4ValueTraits/StateValue/NumObj";
 import { numObjNext } from "../../stateSchemas/schema4ValueTraits/StateValue/numObjNext";
 import { SectionPack } from "../../StateTransports/SectionPack";
-import { TopOperator } from "../../TopOperator";
 import { timeS } from "../../utils/timeS";
 import { makeDefaultDealPack } from "../defaultMaker/makeDefaultDeal";
+import { TopOperator } from "../TopOperator";
 import { example20PercentDownFinancing } from "./example20PercentDownLoan";
 import { exampleDealMgmt } from "./makeExampleMgmt";
 import { avgHomeAdvisorNahbCapExProps } from "./makeExamplePeriodicListProps";

@@ -1,33 +1,26 @@
-import {
-  ChildSpNums,
-  OneRawSection,
-  RawSections,
-} from "../../State/RawSection";
-import { StateSections } from "../../State/StateSections";
-import {
-  GetterSectionBase,
-  GetterSectionProps,
-} from "../../StateGetters/Bases/GetterSectionBase";
-import {
-  GetterSection,
-  GetterSectionRequiredProps,
-} from "../../StateGetters/GetterSection";
-import { FeSectionInfo } from "../../StateGetters/Identifiers/FeInfo";
+import { ChildSpNums, OneRawSection, RawSections } from "../State/RawSection";
+import { StateSections } from "../State/StateSections";
 import {
   ChildIdArrsWide,
   ChildName,
   FeChildInfo,
   getChildNames,
-} from "../../stateSchemas/fromSchema6SectionChildren/ChildName";
-import { ChildSectionName } from "../../stateSchemas/fromSchema6SectionChildren/ChildSectionName";
-import { SectionName } from "../../stateSchemas/schema2SectionNames";
-import { SectionNameByType } from "../../stateSchemas/schema6SectionChildren/SectionNameByType";
+} from "../stateSchemas/fromSchema6SectionChildren/ChildName";
+import { ChildSectionName } from "../stateSchemas/fromSchema6SectionChildren/ChildSectionName";
+import { SectionName } from "../stateSchemas/schema2SectionNames";
+import { SectionNameByType } from "../stateSchemas/schema6SectionChildren/SectionNameByType";
 import {
   ChildPackArrs,
   ChildSectionPack,
-} from "../../StateTransports/ChildSectionPack";
-import { SectionPack } from "../../StateTransports/SectionPack";
-import { Obj } from "../../utils/Obj";
+} from "../StateTransports/ChildSectionPack";
+import { SectionPack } from "../StateTransports/SectionPack";
+import { Obj } from "../utils/Obj";
+import {
+  GetterSectionBase,
+  GetterSectionProps,
+} from "./Bases/GetterSectionBase";
+import { GetterSection, GetterSectionRequiredProps } from "./GetterSection";
+import { FeSectionInfo } from "./Identifiers/FeInfo";
 
 export function initSectionPackArrs<
   SN extends SectionName,

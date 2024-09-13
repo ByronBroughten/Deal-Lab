@@ -3,6 +3,7 @@ import { GetterSectionProps } from "../../StateGetters/Bases/GetterSectionBase";
 import { GetterSection } from "../../StateGetters/GetterSection";
 import { FeSectionInfo } from "../../StateGetters/Identifiers/FeInfo";
 import { VarbInfoMixedFocal } from "../../StateGetters/Identifiers/MixedSectionInfo";
+import { PackMakerSection } from "../../StateGetters/PackMakerSection";
 import { VarbName } from "../../stateSchemas/fromSchema3SectionStructures/baseSectionsVarbsTypes";
 import {
   ChildName,
@@ -27,7 +28,6 @@ import {
   AddChildWithPackOptions,
   PackBuilderSection,
 } from "../Packers/PackBuilderSection";
-import { PackMakerSection } from "../Packers/PackMakerSection";
 import { SolvePrepperSection } from "../SolvePreppers/SolvePrepperSection";
 import { SolverSectionBase } from "../SolverBases/SolverSectionBase";
 import {

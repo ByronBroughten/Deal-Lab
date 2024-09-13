@@ -5,7 +5,6 @@ import {
   SectionNotFoundError,
   TooManySectionsFoundError,
 } from "../State/StateSectionsTypes";
-import { PackMakerSection } from "../StateOperators/Packers/PackMakerSection";
 import {
   GroupBaseVI,
   GroupVarbNameBase,
@@ -97,6 +96,7 @@ import {
   FeSectionInfoMixed,
 } from "./Identifiers/VarbInfoBase";
 import { getVarbPathParams } from "./Identifiers/VarbPathNameInfo";
+import { PackMakerSection } from "./PackMakerSection";
 import { SectionMeta } from "./StateMeta/SectionMeta";
 
 export interface GetterSectionRequiredProps<SN extends SectionName>

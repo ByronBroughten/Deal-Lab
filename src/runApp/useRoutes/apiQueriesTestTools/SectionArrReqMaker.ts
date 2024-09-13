@@ -5,9 +5,9 @@ import {
 import { GetterSectionBase } from "../../../client/src/sharedWithServer/StateGetters/Bases/GetterSectionBase";
 import { GetterSectionsBase } from "../../../client/src/sharedWithServer/StateGetters/Bases/GetterSectionsBase";
 import { GetterSection } from "../../../client/src/sharedWithServer/StateGetters/GetterSection";
-import { PackMakerSection } from "../../../client/src/sharedWithServer/StateOperators/Packers/PackMakerSection";
+import { PackMakerSection } from "../../../client/src/sharedWithServer/StateGetters/PackMakerSection";
+import { TopOperator } from "../../../client/src/sharedWithServer/StateOperators/TopOperator";
 import { DbSectionNameByType } from "../../../client/src/sharedWithServer/stateSchemas/fromSchema6SectionChildren/DbStoreName";
-import { TopOperator } from "../../../client/src/sharedWithServer/TopOperator";
 
 export class SectionArrReqMaker<
   SN extends DbSectionNameByType<"sectionQuery">

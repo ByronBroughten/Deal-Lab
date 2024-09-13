@@ -3,7 +3,7 @@ import { react } from "../../modules/utils/react";
 import { MainState } from "../../sharedWithServer/State/MainState";
 import { SolveState } from "../../sharedWithServer/State/SolveState";
 import { StateSections } from "../../sharedWithServer/State/StateSections";
-import { TopOperator } from "../../sharedWithServer/TopOperator";
+import { TopOperator } from "../../sharedWithServer/StateOperators/TopOperator";
 import {
   mainStateReducer,
   StateAction,
