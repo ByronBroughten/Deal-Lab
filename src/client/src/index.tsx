@@ -6,6 +6,9 @@ ReactDOM.render(<App />, document.getElementById("root"));
 
 // remove styled-somponents
 
+// Big gain: replace the database with postgres and send deal edits to the database rather than entire deals.
+// When a deal is selected for editing, flag its sessionDeal as needing to be updated on next homescreen load.
+
 // Utility checkboxes update slowly after being clicked
 // Xing out a utility line item causes crash
 // Add switch for Misc Income
@@ -25,12 +28,11 @@ ReactDOM.render(<App />, document.getElementById("root"));
 // Prepaids will be a switch that opens a modal.
 // The modal will show the three prepaid values, and maybe a list table for custom ones.
 // Maybe upfront costs and delayed costs will work the same way.
-// Nice, I like it.
 
 // Add delayedRepairs section to property
 
 // Make it so editing a deal does not directly update the sessionDeals
-// Rather, the affected session deals reload at the home screen...?
+// Rather, the affected session deals update when the home screen loads.
 
 // Editing the deal's name in Saved Deals causes the whole deal
 // to solve.
@@ -40,9 +42,7 @@ ReactDOM.render(<App />, document.getElementById("root"));
 
 // - Only use the sessionDeal in Saved Deals
 // - Make editing the sessionDeal's displayName trigger:
-// 1. Fetching the deal, updating its displayName, saving
-// 2. A new route that updates the deal's displayName, and then also updating
-//    feStore deal's displayName
+// 1. Updating the deal's displayName in the database
 
 // Allow for loading from an existing deal
 // when creating a new deal(?)
